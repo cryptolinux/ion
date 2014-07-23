@@ -41,8 +41,10 @@ public:
 
     void reassignAmounts(int nChangePosRet); // needed for the subtract-fee-from-amount feature
 
+    void reassignAmounts(int nChangePosRet); // needed for the subtract-fee-from-amount feature
+
 private:
-    const QList<SendCoinsRecipient> recipients;
+    QList<SendCoinsRecipient> recipients;
     CWalletTx* walletTransaction;
     CReserveKey* keyChange;
     CAmount fee;
