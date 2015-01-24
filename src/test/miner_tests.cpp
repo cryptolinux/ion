@@ -3,14 +3,9 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "chainparams.h"
-#include "coins.h"
-#include "consensus/consensus.h"
-#include "consensus/merkle.h"
-#include "consensus/tx_verify.h"
 #include "consensus/validation.h"
-#include "validation.h"
-#include "masternode/masternode-payments.h"
+#include "init.h"
+#include "main.h"
 #include "miner.h"
 #include "policy/policy.h"
 #include "pubkey.h"

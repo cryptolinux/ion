@@ -36,9 +36,13 @@ CTxMemPoolEntry::CTxMemPoolEntry(const CTransactionRef& _tx, const CAmount& _nFe
     nTxSize = ::GetSerializeSize(*_tx, SER_NETWORK, PROTOCOL_VERSION);
     nUsageSize = RecursiveDynamicUsage(tx);
 
-    nCountWithDescendants = 1;
-    nSizeWithDescendants = nTxSize;
-    nModFeesWithDescendants = nFee;
+#include "clientversion.h"
+#include "consensus/validation.h"
+#include "main.h"
+#include "streams.h"
+#include "util.h"
+#include "utilmoneystr.h"
+#include "version.h"
 
     feeDelta = 0;
 

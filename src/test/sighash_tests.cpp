@@ -3,15 +3,13 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "consensus/tx_verify.h"
 #include "consensus/validation.h"
 #include "data/sighash.json.h"
-#include "hash.h"
+#include "main.h"
+#include "random.h"
 #include "script/interpreter.h"
 #include "script/script.h"
 #include "serialize.h"
-#include "streams.h"
-#include "test/test_ion.h"
 #include "util.h"
 #include "utilstrencodings.h"
 #include "version.h"

@@ -6,6 +6,7 @@
 #ifndef ION_XIONCHAIN_H
 #define ION_XIONCHAIN_H
 
+#include "consensus/validation.h"
 #include "libzerocoin/Coin.h"
 #include "libzerocoin/Denominations.h"
 #include "libzerocoin/CoinSpend.h"
