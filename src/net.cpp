@@ -2349,12 +2349,8 @@ void CConnman::ThreadOpenConnections(const std::vector<std::string> connect)
 
         int64_t nANow = GetAdjustedTime();
         int nTries = 0;
-        while (!interruptNet)
-        {
-            CAddrInfo addr = addrman.Select(fFeeler);
-
-            auto dmn = mnList.GetMNByService(addr);
-            bool isMasternode = dmn != nullptr;
+        while (true) {
+            CAddrInfo addr = addrman.Select();
 
             // if we selected an invalid address, restart
             if (!addr.IsValid() || setConnected.count(addr.GetGroup()))

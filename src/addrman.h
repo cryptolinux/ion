@@ -25,14 +25,9 @@
  */
 class CAddrInfo : public CAddress
 {
-
-
 public:
     //! last try whatsoever by us (memory only)
     int64_t nLastTry;
-
-    //! last counted attempt (memory only)
-    int64_t nLastCountAttempt;
 
 private:
     //! where knowledge about this address first came from
@@ -255,8 +250,9 @@ protected:
     //! Select an address to connect to, if newOnly is set to true, only the new table is selected from.
     CAddrInfo Select_(bool newOnly);
 
-    //! Wraps GetRandInt to allow tests to override RandomInt and make it determinismistic.
-    virtual int RandomInt(int nMax);
+    //! Select an address to connect to.
+    //! nUnkBias determines how much to favor new addresses over tried ones (min=0, max=100)
+    CAddrInfo Select_();
 
 #ifdef DEBUG_ADDRMAN
     //! Perform consistency check. Returns an error code or zero.
@@ -566,7 +562,7 @@ public:
     /**
      * Choose an address to connect to.
      */
-    CAddrInfo Select(bool newOnly = false)
+    CAddrInfo Select()
     {
         CAddrInfo addrRet;
         {

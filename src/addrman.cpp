@@ -353,12 +353,9 @@ void CAddrMan::Attempt_(const CService& addr, bool fCountFailure, int64_t nTime)
     }
 }
 
-CAddrInfo CAddrMan::Select_(bool newOnly)
+CAddrInfo CAddrMan::Select_()
 {
     if (size() == 0)
-        return CAddrInfo();
-
-    if (newOnly && nNew == 0)
         return CAddrInfo();
 
     // Use a 50% chance for choosing between tried and new table entries.

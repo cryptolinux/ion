@@ -394,41 +394,6 @@ public:
     unsigned int nTime;
 };
 
-/** getdata / inv message types.
- * These numbers are defined by the protocol. When adding a new value, be sure
- * to mention it in the respective BIP.
- */
-enum GetDataMsg {
-    UNDEFINED = 0,
-    MSG_TX = 1,
-    MSG_BLOCK = 2,
-    // The following can only occur in getdata. Invs always use TX or BLOCK.
-    MSG_FILTERED_BLOCK = 3,  //!< Defined in BIP37
-    // Ion message types
-    // NOTE: declare non-implmented here, we must keep this enum consistent and backwards compatible
-    MSG_LEGACY_TXLOCK_REQUEST = 4,
-    /* MSG_TXLOCK_VOTE = 5, Legacy InstantSend and not used anymore  */
-    MSG_SPORK = 6,
-    /* 7 - 15 were used in old Ion versions and were mainly budget and MN broadcast/ping related*/
-    MSG_DSTX = 16,
-    MSG_GOVERNANCE_OBJECT = 17,
-    MSG_GOVERNANCE_OBJECT_VOTE = 18,
-    /* 19 was used for MSG_MASTERNODE_VERIFY and is not supported anymore */
-    // Nodes may always request a MSG_CMPCT_BLOCK in a getdata, however,
-    // MSG_CMPCT_BLOCK should not appear in any invs except as a part of getdata.
-    MSG_CMPCT_BLOCK = 20, //!< Defined in BIP152
-    MSG_QUORUM_FINAL_COMMITMENT = 21,
-    /* MSG_QUORUM_DUMMY_COMMITMENT = 22, */ // was shortly used on testnet/devnet/regtest
-    MSG_QUORUM_CONTRIB = 23,
-    MSG_QUORUM_COMPLAINT = 24,
-    MSG_QUORUM_JUSTIFICATION = 25,
-    MSG_QUORUM_PREMATURE_COMMITMENT = 26,
-    /* MSG_QUORUM_DEBUG_STATUS = 27, */ // was shortly used on testnet/devnet/regtest
-    MSG_QUORUM_RECOVERED_SIG = 28,
-    MSG_CLSIG = 29,
-    MSG_ISLOCK = 30,
-};
-
 /** inv message data */
 class CInv
 {
