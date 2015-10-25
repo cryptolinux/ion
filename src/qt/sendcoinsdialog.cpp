@@ -191,7 +191,7 @@ void SendCoinsDialog::setModel(WalletModel *_model)
         connect(ui->checkBoxMinimumFee, SIGNAL(stateChanged(int)), this, SLOT(coinControlUpdateLabels()));
         connect(ui->checkBoxFreeTx, SIGNAL(stateChanged(int)), this, SLOT(updateGlobalFeeVariables()));
         connect(ui->checkBoxFreeTx, SIGNAL(stateChanged(int)), this, SLOT(coinControlUpdateLabels()));
-        ui->customFee->setSingleStep(CWallet::minTxFee.GetFeePerK());
+        ui->customFee->setSingleStep(CWallet::GetRequiredFee(1000));
         updateFeeSectionControls();
         updateMinFeeLabel();
         updateSmartFeeLabel();
@@ -768,7 +768,7 @@ void SendCoinsDialog::useAvailableBalance(SendCoinsEntry* entry)
 void SendCoinsDialog::setMinimumFee()
 {
     ui->radioCustomPerKilobyte->setChecked(true);
-    ui->customFee->setValue(CWallet::minTxFee.GetFeePerK());
+    ui->customFee->setValue(CWallet::GetRequiredFee(1000));
 }
 
 void SendCoinsDialog::updateFeeSectionControls()
@@ -818,7 +818,7 @@ void SendCoinsDialog::updateFeeMinimizedLabel()
 void SendCoinsDialog::updateMinFeeLabel()
 {
     if (model && model->getOptionsModel())
-        ui->checkBoxMinimumFee->setText(tr("Pay only the minimum fee of %1").arg(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), CWallet::minTxFee.GetFeePerK()) + "/kB"));
+        ui->checkBoxMinimumFee->setText(tr("Pay only the required fee of %1").arg(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), CWallet::GetRequiredFee(1000)) + "/kB"));
 }
 
 void SendCoinsDialog::updateCoinControlState(CCoinControl& ctrl)
@@ -835,7 +835,7 @@ void SendCoinsDialog::updateCoinControlState(CCoinControl& ctrl)
         ui->labelSmartFee2->hide();
     } else if (feeRate <= CFeeRate(0)) // not enough data => minfee
     {
-        ui->labelSmartFee->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), CWallet::minTxFee.GetFeePerK()) + "/kB");
+        ui->labelSmartFee->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), CWallet::GetRequiredFee(1000)) + "/kB");
         ui->labelSmartFee2->show(); // (Smart fee not initialized yet. This usually takes a few blocks...)
         ui->labelFeeEstimation->setText("");
     } else {
