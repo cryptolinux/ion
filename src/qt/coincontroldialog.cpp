@@ -681,7 +681,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     if (payTxFee.GetFeePerK() > 0)
         dFeeVary = (double)std::max(CWallet::GetRequiredFee(1000), payTxFee.GetFeePerK()) / 1000;
     else
-        dFeeVary = (double)std::max(CWallet::minTxFee.GetFeePerK(), mempool.estimateFee(nTxConfirmTarget).GetFeePerK()) / 1000;
+        dFeeVary = (double)std::max(CWallet::GetRequiredFee(1000), mempool.estimateFee(nTxConfirmTarget).GetFeePerK()) / 1000;
     QString toolTip4 = tr("Can vary +/- %1 uion per input.").arg(dFeeVary);
 
     l3->setToolTip(toolTip4);

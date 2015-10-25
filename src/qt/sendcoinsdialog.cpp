@@ -832,10 +832,6 @@ void SendCoinsDialog::updateCoinControlState(CCoinControl& ctrl)
         ui->labelSmartFee2->hide();
     } else if (feeRate <= CFeeRate(0)) // not enough data => minfee
     {
-        ui->labelFeeEstimation->setText(tr("Estimated to get 6 confirmations near instantly with <b>SwiftX</b>!"));
-        ui->labelSmartFee2->hide();
-    } else if (feeRate <= CFeeRate(0)) // not enough data => minfee
-    {
         ui->labelSmartFee->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), CWallet::GetRequiredFee(1000)) + "/kB");
         ui->labelSmartFee2->show(); // (Smart fee not initialized yet. This usually takes a few blocks...)
         ui->labelFeeEstimation->setText("");
