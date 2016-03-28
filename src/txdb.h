@@ -41,7 +41,14 @@ static const int64_t nMaxBlockDBAndTxIndexCache = 1024;
 //! Max memory allocated to coin DB specific cache (MiB)
 static const int64_t nMaxCoinsDBCache = 8;
 
+<<<<<<< HEAD
 struct CDiskTxPos : public CDiskBlockPos
+=======
+class CCoinsViewDBCursor;
+
+/** CCoinsView backed by the LevelDB coin database (chainstate/) */
+class CCoinsViewDB : public CCoinsView
+>>>>>>> txdb: Add Cursor() method to CCoinsView to iterate over UTXO set
 {
     unsigned int nTxOffset; // after header
 
@@ -60,10 +67,40 @@ struct CDiskTxPos : public CDiskBlockPos
         SetNull();
     }
 
+<<<<<<< HEAD
     void SetNull() {
         CDiskBlockPos::SetNull();
         nTxOffset = 0;
     }
+=======
+    bool GetCoins(const uint256& txid, CCoins& coins) const override;
+    bool HaveCoins(const uint256& txid) const override;
+    uint256 GetBestBlock() const override;
+    bool BatchWrite(CCoinsMap& mapCoins, const uint256& hashBlock) override;
+    CCoinsViewCursor *Cursor() const override;
+};
+
+/** Specialization of CCoinsViewCursor to iterate over a CCoinsViewDB */
+class CCoinsViewDBCursor: public CCoinsViewCursor
+{
+public:
+    ~CCoinsViewDBCursor() {}
+
+    bool GetKey(uint256 &key) const;
+    bool GetValue(CCoins &coins) const;
+    unsigned int GetValueSize() const;
+
+    bool Valid() const;
+    void Next();
+
+private:
+    CCoinsViewDBCursor(CLevelDBIterator* pcursorIn, const uint256 &hashBlockIn):
+        CCoinsViewCursor(hashBlockIn), pcursor(pcursorIn) {}
+    boost::scoped_ptr<CLevelDBIterator> pcursor;
+    std::pair<char, uint256> keyTmp;
+
+    friend class CCoinsViewDB;
+>>>>>>> txdb: Add Cursor() method to CCoinsView to iterate over UTXO set
 };
 
 /** CCoinsView backed by the coin database (chainstate/) */

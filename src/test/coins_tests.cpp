@@ -69,6 +69,7 @@ public:
             hashBestBlock_ = hashBlock;
         return true;
     }
+<<<<<<< HEAD
 };
 
 class CCoinsViewCacheTest : public CCoinsViewCache
@@ -91,6 +92,8 @@ public:
 
     CCoinsMap& map() const { return cacheCoins; }
     size_t& usage() const { return cachedCoinsUsage; }
+=======
+>>>>>>> txdb: Add Cursor() method to CCoinsView to iterate over UTXO set
 };
 
 } // namespace
