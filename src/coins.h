@@ -272,22 +272,6 @@ class CCoinsViewCursor
 public:
     CCoinsViewCursor(const uint256 &hashBlockIn): hashBlock(hashBlockIn) {}
     virtual ~CCoinsViewCursor() {}
-<<<<<<< HEAD
-
-    virtual bool GetKey(COutPoint &key) const = 0;
-    virtual bool GetValue(Coin &coin) const = 0;
-    virtual unsigned int GetValueSize() const = 0;
-
-    virtual bool Valid() const = 0;
-    virtual void Next() = 0;
-
-    //! Get best block at the time this cursor was created
-    const uint256 &GetBestBlock() const { return hashBlock; }
-private:
-    uint256 hashBlock;
-};
-
-=======
     virtual bool GetKey(uint256 &key) const = 0;
     virtual bool GetValue(CCoins &coins) const = 0;
     /* Don't care about GetKeySize here */
@@ -302,7 +286,6 @@ private:
     uint256 hashBlock;
 };
 
->>>>>>> txdb: Add Cursor() method to CCoinsView to iterate over UTXO set
 /** Abstract view on the open txout dataset. */
 class CCoinsView
 {
@@ -347,17 +330,6 @@ protected:
     CCoinsView *base;
 
 public:
-<<<<<<< HEAD
-    CCoinsViewBacked(CCoinsView *viewIn);
-    bool GetCoin(const COutPoint &outpoint, Coin &coin) const override;
-    bool HaveCoin(const COutPoint &outpoint) const override;
-    uint256 GetBestBlock() const override;
-    std::vector<uint256> GetHeadBlocks() const override;
-    void SetBackend(CCoinsView &viewIn);
-    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock) override;
-    CCoinsViewCursor *Cursor() const override;
-    size_t EstimateSize() const override;
-=======
     CCoinsViewBacked(CCoinsView* viewIn);
     bool GetCoins(const uint256& txid, CCoins& coins) const;
     bool HaveCoins(const uint256& txid) const;
@@ -376,7 +348,6 @@ enum {
 
     /* Use GetMedianTimePast() instead of nTime for end point timestamp. */
     LOCKTIME_MEDIAN_TIME_PAST = (1 << 1),
->>>>>>> txdb: Add Cursor() method to CCoinsView to iterate over UTXO set
 };
 
 
@@ -403,21 +374,14 @@ public:
     CCoinsViewCache(const CCoinsViewCache &) = delete;
 
     // Standard CCoinsView methods
-    bool GetCoin(const COutPoint &outpoint, Coin &coin) const override;
-    bool HaveCoin(const COutPoint &outpoint) const override;
-    uint256 GetBestBlock() const override;
-    void SetBestBlock(const uint256 &hashBlock);
-    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock) override;
-    CCoinsViewCursor* Cursor() const override {
+    bool GetCoins(const uint256& txid, CCoins& coins) const;
+    bool HaveCoins(const uint256& txid) const;
+    uint256 GetBestBlock() const;
+    void SetBestBlock(const uint256& hashBlock);
+    bool BatchWrite(CCoinsMap& mapCoins, const uint256& hashBlock);
+    CCoinsViewCursor* Cursor() const {
         throw std::logic_error("CCoinsViewCache cursor iteration not supported.");
     }
-
-    /**
-     * Check if we have the given utxo already loaded in this cache.
-     * The semantics are the same as HaveCoin(), but no calls to
-     * the backing CCoinsView are made.
-     */
-    bool HaveCoinInCache(const COutPoint &outpoint) const;
 
     /**
      * Return a reference to Coin in the cache, or a pruned one if not found. This is
