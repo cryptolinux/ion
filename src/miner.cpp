@@ -165,7 +165,7 @@ void BlockAssembler::resetBlock()
 
         CBlockIndex* pindexPrev = chainActive.Tip();
         const int nHeight = pindexPrev->nHeight + 1;
-        CCoinsViewCache view(pcoinsTip);
+        CCoinsViewCache view(pcoinsTip.get());
 
         // Priority order to process transactions
         list<COrphan> vOrphan; // list memory doesn't move

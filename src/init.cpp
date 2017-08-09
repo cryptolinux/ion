@@ -195,7 +195,7 @@ public:
     // Writes do not need similar protection, as failure to write is handled by the caller.
 };
 
-static CCoinsViewErrorCatcher* pcoinscatcher = NULL;
+static std::unique_ptr<CCoinsViewErrorCatcher> pcoinscatcher;
 static boost::scoped_ptr<ECCVerifyHandle> globalVerifyHandle;
 
 static boost::thread_group threadGroup;
@@ -274,11 +274,6 @@ void PrepareShutdown()
         pcoinscatcher.reset();
         pcoinsdbview.reset();
         pblocktree.reset();
-        llmq::DestroyLLMQSystem();
-        delete deterministicMNManager;
-        deterministicMNManager = nullptr;
-        delete evoDb;
-        evoDb = nullptr;
         delete zerocoinDB;
         zerocoinDB = nullptr;
         delete pTokenDB;
@@ -1797,13 +1792,11 @@ bool AppInitMain()
                 pcoinsTip.reset();
                 pcoinsdbview.reset();
                 pcoinscatcher.reset();
-                // new CBlockTreeDB tries to delete the existing file, which
-                // fails if it's still open from the previous loop. Close it first:
                 pblocktree.reset();
-                pblocktree.reset(new CBlockTreeDB(nBlockTreeDBCache, false, fReset));
-                llmq::DestroyLLMQSystem();
-                delete deterministicMNManager;
-                delete evoDb;
+                pblocktree.reset(new CBlockTreeDB(nBlockTreeDBCache, false, fReindex));
+                pcoinsdbview.reset(new CCoinsViewDB(nCoinDBCache, false, fReindex));
+                pcoinscatcher.reset(new CCoinsViewErrorCatcher(pcoinsdbview.get()));
+                pcoinsTip.reset(new CCoinsViewCache(pcoinscatcher.get()));
                 delete zerocoinDB;
                 delete pTokenDB;
 
@@ -1814,10 +1807,6 @@ bool AppInitMain()
                 zerocoinDB = new CZerocoinDB(0, false, fReset || fReindexChainState);
                 pTokenDB = new CTokenDB(0, false, fReset || fReindexChainState);
 
-                pblocktree = new CBlockTreeDB(nBlockTreeDBCache, false, fReindex);
-                pcoinsdbview = new CCoinsViewDB(nCoinDBCache, false, fReindex);
-                pcoinscatcher = new CCoinsViewErrorCatcher(pcoinsdbview);
-                pcoinsTip = new CCoinsViewCache(pcoinscatcher);
 
                 if (fReindex)
                     pblocktree->WriteReindexing(true);
@@ -1958,7 +1947,7 @@ bool AppInitMain()
                     }
 
                     // Zerocoin must check at level 4
-                    if (!CVerifyDB().VerifyDB(pcoinsdbview, 4, GetArg("-checkblocks", 100))) {
+                    if (!CVerifyDB().VerifyDB(pcoinsdbview.get(), 4, GetArg("-checkblocks", 100))) {
                         strLoadError = _("Corrupted block database detected");
                         fVerifyingBlocks = false;
                         break;

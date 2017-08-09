@@ -50,10 +50,12 @@ FastRandomContext insecure_rand_ctx(insecure_rand_seed);
 extern bool fPrintToConsole;
 extern void noui_connect();
 
-BasicTestingSetup::BasicTestingSetup(const std::string& chainName)
-{
-        SHA256AutoDetect();
-        RandomInit();
+struct TestingSetup {
+    boost::filesystem::path pathTemp;
+    boost::thread_group threadGroup;
+    ECCVerifyHandle globalVerifyHandle;
+
+    TestingSetup() {
         ECC_Start();
         BLSInit();
         SetupEnvironment();
@@ -66,47 +68,22 @@ BasicTestingSetup::BasicTestingSetup(const std::string& chainName)
         evoDb = new CEvoDB(1 << 20, true, true);
         deterministicMNManager = new CDeterministicMNManager(*evoDb);
         noui_connect();
-}
-
-BasicTestingSetup::~BasicTestingSetup()
-{
-        delete deterministicMNManager;
-        delete evoDb;
-
-        ECC_Stop();
-}
-
-TestingSetup::TestingSetup(const std::string& chainName) : BasicTestingSetup(chainName)
-{
-    const CChainParams& chainparams = Params();
-        // Ideally we'd move all the RPC tests to the functional testing framework
-        // instead of unit tests, but for now we need these here.
-        RegisterAllCoreRPCCommands(tableRPC);
-        ClearDatadirCache();
-        pathTemp = fs::temp_directory_path() / strprintf("test_ion_%lu_%i", (unsigned long)GetTime(), (int)(InsecureRandRange(100000)));
-        fs::create_directories(pathTemp);
-        gArgs.ForceSetArg("-datadir", pathTemp.string());
-
-        // Note that because we don't bother running a scheduler thread here,
-        // callbacks via CValidationInterface are unreliable, but that's OK,
-        // our unit tests aren't testing multiple parts of the code at once.
-        GetMainSignals().RegisterBackgroundSignalScheduler(scheduler);
-        mempool.setSanityCheck(1.0);
-        g_connman = std::unique_ptr<CConnman>(new CConnman(0x1337, 0x1337)); // Deterministic randomness for tests.
-        connman = g_connman.get();
-        pblocktree = new CBlockTreeDB(1 << 20, true);
-        pcoinsdbview = new CCoinsViewDB(1 << 23, true);
-        llmq::InitLLMQSystem(*evoDb, nullptr, true);
-        pcoinsTip = new CCoinsViewCache(pcoinsdbview);
-        if (!LoadGenesisBlock(chainparams)) {
-            throw std::runtime_error("LoadGenesisBlock failed.");
-        }
-        {
-            CValidationState state;
-            if (!ActivateBestChain(state, chainparams)) {
-                throw std::runtime_error("ActivateBestChain failed.");
-            }
-        }
+#ifdef ENABLE_WALLET
+        bitdb.MakeMock();
+#endif
+        pathTemp = GetTempPath() / strprintf("test_ion_%lu_%i", (unsigned long)GetTime(), (int)(GetRand(100000)));
+        boost::filesystem::create_directories(pathTemp);
+        mapArgs["-datadir"] = pathTemp.string();
+        pblocktree.reset(new CBlockTreeDB(1 << 20, true));
+        pcoinsdbview.reset(new CCoinsViewDB(1 << 23, true));
+        pcoinsTip.reset(new CCoinsViewCache(pcoinsdbview.get()));
+        InitBlockIndex();
+#ifdef ENABLE_WALLET
+        bool fFirstRun;
+        pwalletMain = new CWallet("wallet.dat");
+        pwalletMain->LoadWallet(fFirstRun);
+        RegisterValidationInterface(pwalletMain);
+#endif
         nScriptCheckThreads = 3;
         for (int i=0; i < nScriptCheckThreads-1; i++)
             threadGroup.create_thread(&ThreadScriptCheck);
@@ -118,28 +95,19 @@ TestingSetup::~TestingSetup()
         llmq::InterruptLLMQSystem();
         threadGroup.interrupt_all();
         threadGroup.join_all();
-        GetMainSignals().FlushBackgroundCallbacks();
-        GetMainSignals().UnregisterBackgroundSignalScheduler();
-        g_connman.reset();
-        peerLogic.reset();
-        UnloadBlockIndex();
-        delete pcoinsTip;
-        llmq::DestroyLLMQSystem();
-        delete pcoinsdbview;
-        delete pblocktree;
-        fs::remove_all(pathTemp);
-}
-
-TestChainSetup::TestChainSetup(int blockCount) : TestingSetup(CBaseChainParams::REGTEST)
-{
-    // Generate a 100-block chain:
-    coinbaseKey.MakeNewKey(true);
-    CScript scriptPubKey = CScript() << ToByteVector(coinbaseKey.GetPubKey()) << OP_CHECKSIG;
-    for (int i = 0; i < blockCount; i++)
-    {
-        std::vector<CMutableTransaction> noTxns;
-        CBlock b = CreateAndProcessBlock(noTxns, scriptPubKey);
-        coinbaseTxns.push_back(*b.vtx[0]);
+        UnregisterNodeSignals(GetNodeSignals());
+#ifdef ENABLE_WALLET
+        delete pwalletMain;
+        pwalletMain = NULL;
+#endif
+        pcoinsTip.reset();
+        pcoinsdbview.reset();
+        pblocktree.reset();
+#ifdef ENABLE_WALLET
+        bitdb.Flush(true);
+#endif
+        boost::filesystem::remove_all(pathTemp);
+        ECC_Stop();
     }
 }
 
