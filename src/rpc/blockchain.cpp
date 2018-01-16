@@ -4,36 +4,37 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <rpc/blockchain.h>
+#include "rpc/blockchain.h"
 
-#include <amount.h>
-#include <chain.h>
-#include <chainparams.h>
-#include <checkpoints.h>
-#include <coins.h>
-#include <core_io.h>
-#include <consensus/validation.h>
-#include <validation.h>
-#include <core_io.h>
-// #include <rpc/index/txindex.h>
-#include <policy/feerate.h>
-#include <policy/policy.h>
-#include <primitives/transaction.h>
-#include <rpc/server.h>
-#include <streams.h>
-#include <sync.h>
-#include <txdb.h>
-#include <txmempool.h>
-#include <util.h>
-#include <utilstrencodings.h>
-#include <hash.h>
-#include <warnings.h>
+#include "amount.h"
+#include "base58.h"
+#include "chain.h"
+#include "chainparams.h"
+#include "checkpoints.h"
+#include "coins.h"
+#include "core_io.h"
+#include "consensus/validation.h"
+#include "validation.h"
+#include "core_io.h"
+#include "dstencode.h"
+// #include "index/txindex.h"
+#include "policy/feerate.h"
+#include "policy/policy.h"
+#include "primitives/transaction.h"
+#include "rpc/server.h"
+#include "streams.h"
+#include "sync.h"
+#include "txdb.h"
+#include "txmempool.h"
+#include "util.h"
+#include "utilstrencodings.h"
+#include "hash.h"
 
-#include <evo/specialtx.h>
-#include <evo/cbtx.h>
+#include "evo/specialtx.h"
+#include "evo/cbtx.h"
 
-#include <llmq/quorums_chainlocks.h>
-#include <llmq/quorums_instantsend.h>
+#include "llmq/quorums_chainlocks.h"
+#include "llmq/quorums_instantsend.h"
 
 #include <stdint.h>
 
@@ -2264,7 +2265,233 @@ bool FindScriptPubKey(std::atomic<int>& scan_progress, const std::atomic<bool>& 
     return true;
 }
 
+/** RAII object to prevent concurrency issue when scanning the txout set */
+static std::mutex g_utxosetscan;
+static std::atomic<int> g_scan_progress;
+static std::atomic<bool> g_scan_in_progress;
+static std::atomic<bool> g_should_abort_scan;
+class CoinsViewScanReserver
+{
+private:
+    bool m_could_reserve;
+public:
+    explicit CoinsViewScanReserver() : m_could_reserve(false) {}
+
+    bool reserve() {
+        assert (!m_could_reserve);
+        std::lock_guard<std::mutex> lock(g_utxosetscan);
+        if (g_scan_in_progress) {
+            return false;
+        }
+        g_scan_in_progress = true;
+        m_could_reserve = true;
+        return true;
+    }
+
+    ~CoinsViewScanReserver() {
+        if (m_could_reserve) {
+            std::lock_guard<std::mutex> lock(g_utxosetscan);
+            g_scan_in_progress = false;
+        }
+    }
+};
+
+static const char *g_default_scantxoutset_script_types[] = { "P2PKH" };
+
+enum class OutputScriptType {
+    UNKNOWN,
+    P2PK,
+    P2PKH,
+};
+
+static inline OutputScriptType GetOutputScriptTypeFromString(const std::string& outputtype)
+{
+    if (outputtype == "P2PK") return OutputScriptType::P2PK;
+    else if (outputtype == "P2PKH") return OutputScriptType::P2PKH;
+    else return OutputScriptType::UNKNOWN;
+}
+
+CTxDestination GetDestinationForKey(const CPubKey& key, OutputScriptType type)
+{
+    switch (type) {
+    case OutputScriptType::P2PKH: return key.GetID();
+    default: assert(false);
+    }
+}
+
+UniValue scantxoutset(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() < 1 || request.params.size() > 2)
+        throw std::runtime_error(
+            "scantxoutset <action> ( <scanobjects> )\n"
+            "\nScans the unspent transaction output set for possible entries that matches common scripts of given public keys.\n"
+            "\nArguments:\n"
+            "1. \"action\"                       (string, required) The action to execute\n"
+            "                                      \"start\" for starting a scan\n"
+            "                                      \"abort\" for aborting the current scan (returns true when abort was successful)\n"
+            "                                      \"status\" for progress report (in %) of the current scan\n"
+            "2. \"scanobjects\"                  (array, optional) Array of scan objects (only one object type per scan object allowed)\n"
+            "      [\n"
+            "        { \"address\" : \"<address>\" },       (string, optional) Bitcoin address\n"
+            "        { \"pubkey\"  :                      (object, optional) Public key\n"
+            "          {\n"
+            "            \"pubkey\" : \"<pubkey\">,         (string, required) HEX encoded public key\n"
+            "            \"script_types\" : [ ... ],      (array, optional) Array of script-types to derive from the pubkey (possible values: \"P2PKH\", \"P2SH-P2WPKH\", \"P2WPKH\")\n"
+            "          }\n"
+            "        },\n"
+            "      ]\n"
+            "\nResult:\n"
+            "{\n"
+            "  \"unspents\": [\n"
+            "    {\n"
+            "    \"txid\" : \"transactionid\",     (string) The transaction id\n"
+            "    \"vout\": n,                    (numeric) the vout value\n"
+            "    \"scriptPubKey\" : \"script\",    (string) the script key\n"
+            "    \"amount\" : x.xxx,             (numeric) The total amount in " + CURRENCY_UNIT + " of the unspent output\n"
+            "    \"height\" : n,                 (numeric) Height of the unspent transaction output\n"
+            "   }\n"
+            "   ,...], \n"
+            " \"total_amount\" : x.xxx,          (numeric) The total amount of all found unspent outputs in " + CURRENCY_UNIT + "\n"
+            "]\n"
+        );
+
+    RPCTypeCheck(request.params, {UniValue::VSTR, UniValue::VARR});
+
+    UniValue result(UniValue::VOBJ);
+    if (request.params[0].get_str() == "status") {
+        CoinsViewScanReserver reserver;
+        if (reserver.reserve()) {
+            // no scan in progress
+            return NullUniValue;
+        }
+        result.pushKV("progress", g_scan_progress);
+        return result;
+    } else if (request.params[0].get_str() == "abort") {
+        CoinsViewScanReserver reserver;
+        if (reserver.reserve()) {
+            // reserve was possible which means no scan was running
+            return false;
+        }
+        // set the abort flag
+        g_should_abort_scan = true;
+        return true;
+    } else if (request.params[0].get_str() == "start") {
+        CoinsViewScanReserver reserver;
+        if (!reserver.reserve()) {
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "Scan already in progress, use action \"abort\" or \"status\"");
+        }
+        std::set<CScript> needles;
+        CAmount total_in = 0;
+
+        // loop through the scan objects
+        for (const UniValue& scanobject : request.params[1].get_array().getValues()) {
+            if (!scanobject.isObject()) {
+                throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid scan object");
+            }
+            UniValue address_uni = find_value(scanobject, "address");
+            UniValue pubkey_uni  = find_value(scanobject, "pubkey");
+
+            // make sure only one object type is present
+            if (1 != !address_uni.isNull() + !pubkey_uni.isNull()) {
+                throw JSONRPCError(RPC_INVALID_PARAMETER, "Only one object type is allowed per scan object");
+            } else if (!address_uni.isNull() && !address_uni.isStr()) {
+                throw JSONRPCError(RPC_INVALID_PARAMETER, "Scanobject \"address\" must contain a single string as value");
+            } else if (!pubkey_uni.isNull() && !pubkey_uni.isObject()) {
+                throw JSONRPCError(RPC_INVALID_PARAMETER, "Scanobject \"pubkey\" must contain an object as value");
+            } else if (address_uni.isStr()) {
+                // type: address
+                // decode destination and derive the scriptPubKey
+                // add the script to the scan containers
+                CTxDestination dest = DecodeDestination(address_uni.get_str());
+                if (!IsValidDestination(dest)) {
+                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid address");
+                }
+                CScript script = GetScriptForDestination(dest);
+                assert(!script.empty());
+                needles.insert(script);
+            } else if (pubkey_uni.isObject()) {
+                // type: pubkey
+                // derive script(s) according to the script_type parameter
+                UniValue script_types_uni = find_value(pubkey_uni, "script_types");
+                UniValue pubkeydata_uni = find_value(pubkey_uni, "pubkey");
+
+                // check the script types and use the default if not provided
+                if (!script_types_uni.isNull() && !script_types_uni.isArray()) {
+                    throw JSONRPCError(RPC_INVALID_PARAMETER, "script_types must be an array");
+                }
+                else if (script_types_uni.isNull()) {
+                    // use the default script types
+                    script_types_uni = UniValue(UniValue::VARR);
+                    for (const char *t : g_default_scantxoutset_script_types) {
+                        script_types_uni.push_back(t);
+                    }
+                }
+
+                // check the acctual pubkey
+                if (!pubkeydata_uni.isStr() || !IsHex(pubkeydata_uni.get_str())) {
+                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Public key must be hex encoded");
+                }
+                CPubKey pubkey(ParseHexV(pubkeydata_uni, "pubkey"));
+                if (!pubkey.IsFullyValid()) {
+                    throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid public key");
+                }
+
+                // loop through the script types and derive the script
+                for (const UniValue& script_type_uni : script_types_uni.get_array().getValues()) {
+                    OutputScriptType script_type = GetOutputScriptTypeFromString(script_type_uni.get_str());
+                    if (script_type == OutputScriptType::UNKNOWN) throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid script type");
+
+                    CScript script = GetScriptForDestination(GetDestinationForKey(pubkey, script_type));
+                    assert(!script.empty());
+                    needles.insert(script);
+                }
+            }
+        }
+
+        // Scan the unspent transaction output set for inputs
+        UniValue unspents(UniValue::VARR);
+        std::vector<CTxOut> input_txos;
+        std::map<COutPoint, Coin> coins;
+        g_should_abort_scan = false;
+        g_scan_progress = 0;
+        int64_t count = 0;
+        std::unique_ptr<CCoinsViewCursor> pcursor;
+        {
+            LOCK(cs_main);
+            FlushStateToDisk();
+            pcursor = std::unique_ptr<CCoinsViewCursor>(pcoinsdbview->Cursor());
+            assert(pcursor);
+        }
+        bool res = FindScriptPubKey(g_scan_progress, g_should_abort_scan, count, pcursor.get(), needles, coins);
+        result.pushKV("success", res);
+        result.pushKV("searched_items", count);
+
+        for (const auto& it : coins) {
+            const COutPoint& outpoint = it.first;
+            const Coin& coin = it.second;
+            const CTxOut& txo = coin.out;
+            input_txos.push_back(txo);
+            total_in += txo.nValue;
+
+            UniValue unspent(UniValue::VOBJ);
+            unspent.pushKV("txid", outpoint.hash.GetHex());
+            unspent.pushKV("vout", (int32_t)outpoint.n);
+            unspent.pushKV("scriptPubKey", HexStr(txo.scriptPubKey.begin(), txo.scriptPubKey.end()));
+            unspent.pushKV("amount", ValueFromAmount(txo.nValue));
+            unspent.pushKV("height", (int32_t)coin.nHeight);
+
+            unspents.push_back(unspent);
+        }
+        result.pushKV("unspents", unspents);
+        result.pushKV("total_amount", ValueFromAmount(total_in));
+    } else {
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid command");
+    }
+    return result;
+}
+
 static const CRPCCommand commands[] =
+<<<<<<< HEAD
 { //  category              name                      actor (function)         argNames
   //  --------------------- ------------------------  -----------------------  ----------
     { "blockchain",         "getblockchaininfo",      &getblockchaininfo,      {} },
@@ -2294,6 +2521,37 @@ static const CRPCCommand commands[] =
     { "blockchain",         "verifychain",            &verifychain,            {"checklevel","nblocks"} },
 
     { "blockchain",         "preciousblock",          &preciousblock,          {"blockhash"} },
+=======
+{ //  category              name                      actor (function)         okSafe argNames
+  //  --------------------- ------------------------  -----------------------  ------ ----------
+    { "blockchain",         "getblockchaininfo",      &getblockchaininfo,      true,  {} },
+    { "blockchain",         "getchaintxstats",        &getchaintxstats,        true,  {"nblocks", "blockhash"} },
+    { "blockchain",         "getblockstats",          &getblockstats,          true,  {"hash_or_height", "stats"} },
+    { "blockchain",         "getbestblockhash",       &getbestblockhash,       true,  {} },
+    { "blockchain",         "getbestchainlock",       &getbestchainlock,       true,  {} },
+    { "blockchain",         "getblockcount",          &getblockcount,          true,  {} },
+    { "blockchain",         "getblock",               &getblock,               true,  {"blockhash","verbosity|verbose"} },
+    { "blockchain",         "getblockhashes",         &getblockhashes,         true,  {"high","low"} },
+    { "blockchain",         "getblockhash",           &getblockhash,           true,  {"height"} },
+    { "blockchain",         "getblockheader",         &getblockheader,         true,  {"blockhash","verbose"} },
+    { "blockchain",         "getblockheaders",        &getblockheaders,        true,  {"blockhash","count","verbose"} },
+    { "blockchain",         "getmerkleblocks",        &getmerkleblocks,        true,  {"filter","blockhash","count"} },
+    { "blockchain",         "getchaintips",           &getchaintips,           true,  {"count","branchlen"} },
+    { "blockchain",         "getdifficulty",          &getdifficulty,          true,  {} },
+    { "blockchain",         "getmempoolancestors",    &getmempoolancestors,    true,  {"txid","verbose"} },
+    { "blockchain",         "getmempooldescendants",  &getmempooldescendants,  true,  {"txid","verbose"} },
+    { "blockchain",         "getmempoolentry",        &getmempoolentry,        true,  {"txid"} },
+    { "blockchain",         "getmempoolinfo",         &getmempoolinfo,         true,  {} },
+    { "blockchain",         "getrawmempool",          &getrawmempool,          true,  {"verbose"} },
+    { "blockchain",         "getspecialtxes",         &getspecialtxes,         true,  {"blockhash", "type", "count", "skip", "verbosity"} },
+    { "blockchain",         "gettxout",               &gettxout,               true,  {"txid","n","include_mempool"} },
+    { "blockchain",         "gettxoutsetinfo",        &gettxoutsetinfo,        true,  {} },
+    { "blockchain",         "pruneblockchain",        &pruneblockchain,        true,  {"height"} },
+    { "blockchain",         "verifychain",            &verifychain,            true,  {"checklevel","nblocks"} },
+
+    { "blockchain",         "preciousblock",          &preciousblock,          true,  {"blockhash"} },
+    { "blockchain",         "scantxoutset",           &scantxoutset,           true,  {"action", "scanobjects"} },
+>>>>>>> Blockchain/RPC: Add scantxoutset method to scan UTXO set
 
     /* Not shown in help */
     { "hidden",             "invalidateblock",        &invalidateblock,        {"blockhash"} },
