@@ -2,552 +2,271 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #include <algorithm>
+#include "base58.h"
 #include "coins.h"
 #include "consensus/tokengroups.h"
-#include "dstencode.h"
-#include "init.h"
+#include "main.h"
+#include "coincontrol.h"
 #include "primitives/transaction.h"
-#include "rpc/protocol.h"
 #include "script/script.h"
 #include "script/standard.h"
 #include "pubkey.h"
-#include "ionaddrenc.h"
+//#include "ionaddrenc.h"
+//#include "dstencode.h"
 #include "random.h"
-#include "rpc/server.h"
-#include "tokens/tokengroupmanager.h"
-#include "util.h"
 #include "utilmoneystr.h"
-#include "wallet/coincontrol.h"
 #include "wallet/wallet.h"
-#include "tokens/tokengroupwallet.h"
 
 #include <unordered_map>
-#include <univalue.h>
 
-CTokenGroupID NoGroup; // No group specified.
+/* Grouped transactions look like this:
 
-std::shared_ptr<CTokenGroupManager> tokenGroupManager;
+GP2PKH:
 
-std::string EncodeGroupAuthority(const GroupAuthorityFlags flags) {
-    std::string sflags = "none";
-    if (hasCapability(flags, GroupAuthorityFlags::CTRL)) {
-        sflags = "";
-        if (hasCapability(flags, GroupAuthorityFlags::MINT)) {
-            sflags += "mint";
-        }
-        if (hasCapability(flags, GroupAuthorityFlags::MELT)) {
-            if (sflags != "") sflags += " ";
-            sflags += "melt";
-        }
-        if (hasCapability(flags, GroupAuthorityFlags::CCHILD)) {
-            if (sflags != "") sflags += " ";
-            sflags += "child";
-        } else {
-            if (sflags != "") sflags += " ";
-            sflags += "nochild";
-        }
-        if (hasCapability(flags, GroupAuthorityFlags::RESCRIPT)) {
-            if (sflags != "") sflags += " ";
-            sflags += "rescript";
-        }
-        if (hasCapability(flags, GroupAuthorityFlags::SUBGROUP)) {
-            if (sflags != "") sflags += " ";
-            sflags += "subgroup";
-        }
-        if (hasCapability(flags, GroupAuthorityFlags::CONFIGURE)) {
-            if (sflags != "") sflags += " ";
-            sflags += "configure";
-        }
-    }
-    return sflags;
-}
+OP_DATA(group address)
+OP_GROUP
+OP_DROP
+OP_DUP
+OP_HASH160
+OP_DATA(pubkeyhash)
+OP_EQUALVERIFY
+OP_CHECKSIG
 
-bool IsOutputGrouped(const CTxOut &txout) {
-    CTokenGroupInfo grp(txout.scriptPubKey);
-    if (grp.invalid)
-        return true; // Its still grouped even if invalid
-    if (grp.associatedGroup != NoGroup)
-        return true;
+GP2SH:
 
-    return false;
-}
+OP_DATA(group address)
+OP_GROUP
+OP_DROP
+OP_HASH160 [20-byte-hash-value] OP_EQUAL
 
-bool IsOutputGroupedAuthority(const CTxOut &txout) {
-    CTokenGroupInfo grp(txout.scriptPubKey);
-    if (grp.invalid)
-        return true;
-    if (grp.associatedGroup != NoGroup && grp.isAuthority())
-        return true;
+FUTURE: GP2SH version 2:
 
-    return false;
-}
+OP_DATA(group address)
+OP_GROUP
+OP_DROP
+OP_HASH256 [32-byte-hash-value] OP_EQUAL
+*/
 
-bool IsAnyOutputGrouped(const CTransaction &tx)
+CTokenGroupID BitcoinGroup(0);  // the "native" bitcoin cash group id is one byte 0.  This is only used internally
+
+bool IsAnyTxOutputGrouped(const CTransaction &tx)
 {
     for (const CTxOut &txout : tx.vout)
     {
-        if (IsOutputGrouped(txout)) {
-            return true;
-        }
+        CTokenGroupPair grp = GetTokenGroup(txout.scriptPubKey);
+        if (grp.associatedGroup != BitcoinGroup) return true;
     }
 
-    return false;
+return false;
 }
 
-bool IsAnyOutputGroupedAuthority(const CTransaction &tx) {
-    for (const CTxOut &txout : tx.vout)
-    {
-        if (IsOutputGroupedAuthority(txout)) {
-            return true;
-        }
-    }
 
-    return false;
-}
-
-bool IsAnyOutputGroupedCreation(const CTransaction &tx, const TokenGroupIdFlags tokenGroupIdFlags)
+CTokenGroupPair GetTokenGroup(const CScript& script)
 {
-    for (const CTxOut& txout : tx.vout) {
-        CTokenGroupInfo grp(txout.scriptPubKey);
-        if (grp.invalid)
-            return false;
-        if (grp.isGroupCreation(tokenGroupIdFlags))
-            return true;
-    }
-    return false;
-}
+    CTokenGroupPair ret;
+    CScript::const_iterator pc = script.begin();
+    std::vector<unsigned char> data;
+    std::vector<unsigned char> data2;
+    opcodetype opcode;
 
-bool GetGroupedCreationOutput(const CTransaction &tx, CTxOut &creationOutput, const TokenGroupIdFlags tokenGroupIdFlags) {
-    creationOutput = CTxOut();
-    for (const CTxOut& txout : tx.vout) {
-        CTokenGroupInfo grp(txout.scriptPubKey);
-        if (grp.invalid)
-            return false;
-        if (grp.isGroupCreation(tokenGroupIdFlags)) {
-            creationOutput = txout;
-            return true;
-        }
-    }
-    return false;
-}
-
-bool AnyInputsGrouped(const CTransaction &transaction, const int nHeight, const CCoinsViewCache& view, const CTokenGroupID tgID) {
-    bool anyInputsGrouped = false;
-    if (!transaction.IsCoinBase() && !transaction.IsCoinStake() && !transaction.HasZerocoinSpendInputs()) {
-
-        if (!view.HaveInputs(transaction))
-            return false;
-
-        if (nHeight >= Params().GetConsensus().ATPStartHeight) {
-            // Now iterate through the inputs to match to DarkMatter inputs
-            for (const auto &inp : transaction.vin)
-            {
-                const COutPoint &prevout = inp.prevout;
-                const Coin &coin = view.AccessCoin(prevout);
-                if (coin.IsSpent()) {
-                    LogPrint(BCLog::TOKEN, "%s - Checking token group for spent coin\n", __func__);
-                    return false;
-                }
-                // no prior coins can be grouped.
-                if (coin.nHeight < Params().GetConsensus().ATPStartHeight)
-                    continue;
-                const CScript &script = coin.out.scriptPubKey;
-
-                CTokenGroupInfo tokenGrp(script);
-                // The prevout should never be invalid because that would mean that this node accepted a block with an
-                // invalid OP_GROUP tx in it.
-                if (tokenGrp.invalid)
-                    continue;
-                if (tokenGrp.associatedGroup == tgID) {
-                    LogPrint(BCLog::TOKEN, "%s - Matched a TokenGroup input: [%s] at height [%d]\n", __func__, coin.out.ToString(), coin.nHeight);
-                    anyInputsGrouped = true;
-                }
-            }
-        }
-    }
-
-    return anyInputsGrouped;
-}
-
-std::vector<unsigned char> SerializeAmount(CAmount num)
-{
-    CDataStream strm(SER_NETWORK, CLIENT_VERSION);
-    if (num < 0) // negative numbers are serialized at full length
+    // The destination address could also be the group so I need to get it
+    CTxDestination address;
+    txnouttype whichType;
+    if (!ExtractDestinationAndType(script, address, whichType))
     {
-        ser_writedata64(strm, num);
-    }
-    /* Disallow amounts to be encoded as a single byte because these may need to have special encodings if
-       the SCRIPT_VERIFY_MINIMALDATA flag is set
-    else if (num < 256)
-    {
-        ser_writedata8(strm, num);
-    }
-    */
-    else if (num <= std::numeric_limits<unsigned short>::max())
-    {
-        ser_writedata16(strm, num);
-    }
-    else if (num <= std::numeric_limits<unsigned int>::max())
-    {
-        ser_writedata32(strm, num);
+        ret.mintMeltGroup.NoGroup();
     }
     else
     {
-        ser_writedata64(strm, num);
-    }
-    return std::vector<unsigned char>(strm.begin(), strm.end());
-}
-
-CAmount DeserializeAmount(opcodetype opcodeQty, std::vector<unsigned char> &vec)
-{
-    /* Disallow raw opcodes or single byte sizes, because having them is an unnecessary decode complication
-    if ((opcodeQty >= OP_1) && (opcodeQty <= OP_16))
-    {
-        return opcodeQty-OP_1+1;
-    }
-    if (opcodeQty == OP_1NEGATE)
-    {
-        return 0x81;
-    }
-
-    int sz = vec.size();
-    if (sz == 1)
-    {
-        return vec[0];
-    }
-    */
-    int sz = vec.size();
-    CDataStream strm(vec, SER_NETWORK, CLIENT_VERSION);
-    if (sz == 2)
-    {
-        return ser_readdata16(strm);
-    }
-    if (sz == 4)
-    {
-        return ser_readdata32(strm);
-    }
-    if (sz == 8)
-    {
-        uint64_t v = ser_readdata64(strm);
-        return (CAmount)v;
-    }
-    throw std::ios_base::failure("DeserializeAmount(): invalid format");
-}
-
-#if 0
-CTokenGroupID ExtractControllingGroup(const CScript &scriptPubKey)
-{
-    txnouttype whichType;
-    typedef std::vector<unsigned char> valtype;
-    std::vector<valtype> vSolutions;
-    if (!Solver(scriptPubKey, whichType, vSolutions))
-        return CTokenGroupID();
-
-    // only certain well known script types are allowed to mint or melt
-    if ((whichType == TX_PUBKEYHASH) || (whichType == TX_GRP_PUBKEYHASH) || (whichType == TX_SCRIPTHASH) ||
-        (whichType == TX_GRP_SCRIPTHASH))
-    {
-        return CTokenGroupID(uint160(vSolutions[0]));
-    }
-    return CTokenGroupID();
-}
-#endif
-
-CTokenGroupInfo::CTokenGroupInfo(const CScript &script)
-    : associatedGroup(), quantity(0), invalid(false)
-{
-    CScript::const_iterator pc = script.begin();
-    std::vector<unsigned char> groupId;
-    std::vector<unsigned char> tokenQty;
-    std::vector<unsigned char> data;
-    opcodetype opcode;
-    opcodetype opcodeGrp;
-    opcodetype opcodeQty;
-
-    // mintMeltGroup = ExtractControllingGroup(script);
-
-    if (!script.GetOp(pc, opcodeGrp, groupId))
-    {
-        associatedGroup = NoGroup;
-        return;
-    }
-
-    if (!script.GetOp(pc, opcodeQty, tokenQty))
-    {
-        associatedGroup = NoGroup;
-        return;
+        // only certain well known script types are allowed to mint or melt
+        if ((whichType == TX_PUBKEYHASH) || (whichType == TX_SCRIPTHASH) || (whichType == TX_GRP_PUBKEYHASH) ||
+            (whichType == TX_GRP_SCRIPTHASH))
+            ret.mintMeltGroup = address;
     }
 
     if (!script.GetOp(pc, opcode, data))
     {
-        associatedGroup = NoGroup;
-        return;
+        // empty script is the bitcoin group
+        ret.associatedGroup = BitcoinGroup;
+        return ret;
+    }
+    opcodetype opcode2;
+    if (!script.GetOp(pc, opcode2, data2))
+    {
+        LogPrint("tokens", "%s - empty script\n", __func__); // this should be impossible since that means script with 1 byte
+        ret.associatedGroup = BitcoinGroup;
+        return ret;
+    }
+    // The script does not begin with the OP_GROUP prefix so its the bitcoin group
+    if ((opcode == 0) || (opcode >= OP_PUSHDATA1) || (opcode2 != OP_GROUP))
+    {
+        ret.associatedGroup = BitcoinGroup;
+        return ret;
     }
 
-    if (opcode != OP_GROUP)
-    {
-        associatedGroup = NoGroup;
-        return;
-    }
-    else // If OP_GROUP is used, enforce rules on the other fields
-    {
-        // group must be 32 bytes or more
-        if (opcodeGrp < 0x20)
-        {
-            invalid = true;
-            return;
-        }
-        /* Disallow amounts to be encoded as a single byte because these may need to have special encodings if
-           the SCRIPT_VERIFY_MINIMALDATA flag is set
-        // quantity must be 1, 2, 4, or 8 bytes
-        if (((opcodeQty < OP_1)||(opcodeQty > OP_16)) && (opcodeQty != OP_1NEGATE) && (opcodeQty != 1) && (opcodeQty != 2)
-           && (opcodeQty != 4) && (opcodeQty != 8))
-        {
-            invalid = true;
-            return;
-        }
-        */
-
-        // Quantity must be a 2, 4, or 8 byte number
-        if ((opcodeQty != 2) && (opcodeQty != 4) && (opcodeQty != 8))
-        {
-            invalid = true;
-            return;
-        }
-    }
-
-    try
-    {
-        quantity = DeserializeAmount(opcodeQty, tokenQty);
-    }
-    catch (std::ios_base::failure &f)
-    {
-        invalid = true;
-    }
-    associatedGroup = groupId;
+    ret.associatedGroup = data;
+    return ret;
 }
 
-bool IsTokenManagementKey(CScript script) {
-    // Initially, the TokenManagementKey enables management token operations
-    // When the MagicToken is created, the MagicToken enables management token operations
-    if (!tokenGroupManager->MagicTokensCreated()) {
-        CTxDestination payeeDest;
-        ExtractDestination(script, payeeDest);
-        return EncodeDestination(payeeDest) == Params().GetConsensus().strTokenManagementKey;
-    }
-    return false;
-}
 
-bool IsMagicInput(CScript script) {
-    // Initially, the TokenManagementKey enables management token operations
-    // When the MagicToken is created, the MagicToken enables management token operations
-    if (tokenGroupManager->MagicTokensCreated()) {
-        CTokenGroupInfo grp(script);
-        return grp.associatedGroup == tokenGroupManager->GetMagicID();
-    }
-    return false;
-}
-
-bool CheckTokenGroups(const CTransaction &tx, CValidationState &state, const CCoinsViewCache &view, std::unordered_map<CTokenGroupID, CTokenGroupBalance>& gBalance)
+// local class that just keeps track of the amounts of each group coming into and going out of a transaction
+class CBalance
 {
-    gBalance.clear();
+public:
+    CBalance():mintable(0), meltable(0), input(0),output(0) {}
+    CTokenGroupPair groups; // possible groups
+    CAmount mintable;
+    CAmount meltable;
+    CAmount input;
+    CAmount output;
+};
 
-    // Tokens minted from the tokenGroupManagement address can create management tokens
-    bool anyInputsGroupManagement = false;
-
-    CScript firstOpReturn;
+bool CheckTokenGroups(const CTransaction &tx, CValidationState &state, const CCoinsViewCache &view)
+{
+    std::unordered_map<CTokenGroupID,CBalance> gBalance;
 
     // Iterate through all the outputs constructing the final balances of every group.
-    for (const auto &outp : tx.vout)
+    for (const auto& outp: tx.vout)
     {
         const CScript &scriptPubKey = outp.scriptPubKey;
-        CTokenGroupInfo tokenGrp(scriptPubKey);
-        if ((outp.nValue == 0) && (firstOpReturn.size() == 0) && (outp.scriptPubKey[0] == OP_RETURN))
-        {
-            firstOpReturn = outp.scriptPubKey; // Used later if this is a group creation transaction
-        }
-        if (tokenGrp.invalid)
-            return state.Invalid(false, REJECT_INVALID, "bad OP_GROUP");
-        if (tokenGrp.associatedGroup != NoGroup)
-        {
-            gBalance[tokenGrp.associatedGroup].numOutputs += 1;
-
-            if (tokenGrp.quantity > 0)
-            {
-                if (std::numeric_limits<CAmount>::max() - gBalance[tokenGrp.associatedGroup].output < tokenGrp.quantity)
-                    return state.Invalid(false, REJECT_INVALID, "token overflow");
-                gBalance[tokenGrp.associatedGroup].output += tokenGrp.quantity;
-            }
-            else if (tokenGrp.quantity == 0)
-            {
-                return state.Invalid(false, REJECT_INVALID, "OP_GROUP quantity is zero");
-            }
-            else // this is an authority output
-            {
-                gBalance[tokenGrp.associatedGroup].ctrlOutputPerms |= (GroupAuthorityFlags)tokenGrp.quantity;
-            }
-        }
+        const CAmount amount = outp.nValue;
+        CTokenGroupPair tokenGrp = GetTokenGroup(scriptPubKey);
+        gBalance[tokenGrp.associatedGroup].output += amount;
     }
 
     // Now iterate through the inputs applying them to match outputs.
     // If any input utxo address matches a non-bitcoin group address, defer since this could be a mint or burn
-    for (const auto &inp : tx.vin)
+    for (const auto& inp: tx.vin)
     {
         const COutPoint &prevout = inp.prevout;
         const Coin &coin = view.AccessCoin(prevout);
-        if (coin.IsSpent()) // should never happen because you've already CheckInputs(tx,...)
+        if (coin.IsSpent())  // should never happen because you've already CheckInputs(tx,...)
         {
-            LogPrint(BCLog::TOKEN, "%s - Checking token group for spent coin\n", __func__);
+            LogPrint("tokens", "%s - Checking token group for spent coin", __func__);
             return state.Invalid(false, REJECT_INVALID, "already-spent");
         }
-
         const CScript &script = coin.out.scriptPubKey;
-        anyInputsGroupManagement = anyInputsGroupManagement || IsTokenManagementKey(script);
-
-        // no prior coins can be grouped.
-        if (coin.nHeight < Params().GetConsensus().ATPStartHeight)
-            continue;
-
-        anyInputsGroupManagement = anyInputsGroupManagement || IsMagicInput(script);
-
-        CTokenGroupInfo tokenGrp(script);
-        // The prevout should never be invalid because that would mean that this node accepted a block with an
-        // invalid OP_GROUP tx in it.
-        if (tokenGrp.invalid)
-            continue;
-        CAmount amount = tokenGrp.quantity;
-        if (tokenGrp.controllingGroupFlags() != GroupAuthorityFlags::NONE)
+        CAmount amount = coin.out.nValue;
+        CTokenGroupPair tokenGrp = GetTokenGroup(script);
+        bool possibleBurn = false;
+        if (tokenGrp.associatedGroup == BitcoinGroup) // Minting can only happen from raw bitcoin tokens
         {
-            auto temp = tokenGrp.controllingGroupFlags();
-            // outputs can have all the permissions of inputs, except for 1 special case
-            // If CCHILD is not set, no outputs can be authorities (so unset the CTRL flag)
-            if (hasCapability(temp, GroupAuthorityFlags::CCHILD))
+            auto item = gBalance.find(tokenGrp.mintMeltGroup);
+            if (item != gBalance.end()) // this address exists as a group output, so this input could be mint
             {
-                gBalance[tokenGrp.associatedGroup].allowedCtrlOutputPerms |= temp;
-                if (hasCapability(temp, GroupAuthorityFlags::SUBGROUP))
-                    gBalance[tokenGrp.associatedGroup].allowedSubgroupCtrlOutputPerms |= temp;
+                gBalance[tokenGrp.mintMeltGroup].mintable += amount;
+                amount = 0;
             }
-            // Track what permissions this transaction has
-            gBalance[tokenGrp.associatedGroup].ctrlPerms |= temp;
+            else  // the address does not exist as a group output so this must be a normal bitcoin xfer
+            {
+                gBalance[BitcoinGroup].input += amount;
+                amount = 0;
+            }
         }
-        if ((tokenGrp.associatedGroup != NoGroup) && !tokenGrp.isAuthority())
+        else
         {
-            if (std::numeric_limits<CAmount>::max() - gBalance[tokenGrp.associatedGroup].input < amount)
-                return state.Invalid(false, REJECT_INVALID, "token overflow");
-            gBalance[tokenGrp.associatedGroup].input += amount;
+            if (tokenGrp.associatedGroup == tokenGrp.mintMeltGroup)
+                possibleBurn = true;
+
+            auto item = gBalance.find(tokenGrp.associatedGroup);  // get this input's group
+            if (item == gBalance.end())  // no output group matches the input, so this must be a burn
+            {
+                if (!possibleBurn) // but the tx isn't signed by the group id so burn is illegal
+                {
+                    return state.Invalid(false, REJECT_GROUP_IMBALANCE, "grp-invalid-burn", "Group: Token burn is not signed by group id");
+                }
+                else
+                {
+                    gBalance[BitcoinGroup].input += amount;
+                    amount = 0;
+                }
+            }
+            else // this is either a burn or a normal group input
+            {
+                if (possibleBurn)
+                {
+                    item->second.meltable += amount;
+                    amount = 0;
+                }
+                else
+                {
+                    item->second.input += amount;
+                    amount = 0;
+                }
+            }
         }
+        if (!(amount == 0)){
+            LogPrint("tokens", "%s - Debug Assertion failed", __func__);
+        };
     }
 
-    // Now pass thru the outputs applying parent group capabilities to any subgroups
-    for (auto &txo : gBalance)
+    // Now pass thru the outputs deciding what to do with the mintable and meltable coins
+    for (auto& txo: gBalance)
     {
-        CTokenGroupID group = txo.first;
-        CTokenGroupBalance &bal = txo.second;
-        if (group.isSubgroup())
+        if (txo.first == BitcoinGroup) continue;
+        CBalance& bal = txo.second;
+        if (bal.input < bal.output)  // coins must be minted or melted
         {
-            CTokenGroupID parentgrp = group.parentGroup();
-            auto parentSearch = gBalance.find(parentgrp);
-            if (parentSearch != gBalance.end()) // The parent group is part of the inputs
-            {
-                CTokenGroupBalance &parentData = parentSearch->second;
-                if (hasCapability(parentData.ctrlPerms, GroupAuthorityFlags::SUBGROUP))
-                {
-                    // Give the subgroup has all the capabilities the parent group had,
-                    // except no recursive subgroups so remove the subgrp authority bit.
-                    bal.ctrlPerms |= parentData.ctrlPerms & ~(GroupAuthorityFlags::SUBGROUP);
-                }
+            CAmount diff = bal.output - bal.input;
+            CAmount mint = std::min(diff, bal.mintable);
+            bal.mintable -= mint;  // mint what we need into the group
+            bal.input += mint;
+            diff -= mint;
+            CAmount noburn = std::min(diff, bal.meltable);  // If we need more, don't burn some of the meltable
+            bal.meltable -= noburn;
+            bal.input += noburn;
+            diff -= noburn;
 
-                // Give the subgroup authority printing permissions as specified by the parent group
-                bal.allowedCtrlOutputPerms |=
-                    parentData.allowedSubgroupCtrlOutputPerms & ~(GroupAuthorityFlags::SUBGROUP);
+            if (bal.input != bal.output)
+            {
+                return state.Invalid(false, REJECT_GROUP_IMBALANCE, "grp-invalid-mint", "Group output exceeds input, including all mintable");
             }
         }
+        else if (bal.input > bal.output)
+        {
+           return state.Invalid(false, REJECT_GROUP_IMBALANCE, "grp-invalid-mint", "Group input exceeds output, including all meltable");
+        }
+
+        // Assign what we didn't use to the bitcoin group
+        gBalance[BitcoinGroup].input += bal.mintable;
+        bal.mintable = 0;
+        gBalance[BitcoinGroup].input += bal.meltable;
+        bal.mintable = 0;
     }
 
-    // Now pass thru the outputs ensuring balance or mint/melt permission
-    for (auto &txo : gBalance)
+    if (gBalance[BitcoinGroup].input < gBalance[BitcoinGroup].output)
     {
-        CTokenGroupBalance &bal = txo.second;
-        // If it has an authority, with no input authority, check mint
-        if (hasCapability(bal.ctrlOutputPerms, GroupAuthorityFlags::CTRL) &&
-            (bal.ctrlPerms == GroupAuthorityFlags::NONE))
-        {
-            CHashWriter mintGrp(SER_GETHASH, PROTOCOL_VERSION);
-            mintGrp << tx.vin[0].prevout;
-            if (firstOpReturn.size())
-            {
-                std::vector<unsigned char> data(firstOpReturn.begin(), firstOpReturn.end());
-                mintGrp << data;
-            }
-            mintGrp << (((uint64_t)bal.ctrlOutputPerms) & ~((uint64_t)GroupAuthorityFlags::ALL_BITS));
-            CTokenGroupID newGrpId(mintGrp.GetHash());
-
-            if (newGrpId == txo.first) // This IS new group because id matches hash, so allow all authority.
-            {
-                if (bal.numOutputs != 1) // only allow the single authority tx during a create
-                    return state.Invalid(false, REJECT_GROUP_IMBALANCE, "grp-invalid-create",
-                         "Multiple grouped outputs created during group creation transaction");
-
-                if (newGrpId.hasFlag(TokenGroupIdFlags::MGT_TOKEN))
-                {
-                    if (anyInputsGroupManagement) {
-                        LogPrint(BCLog::TOKEN, "%s - Group management creation transaction. newGrpId=[%s]\n", __func__, EncodeTokenGroup(newGrpId));
-                    } else {
-                        return state.Invalid(false, REJECT_INVALID, "grp-invalid-tx",
-                            "No group management capability at any input address");
-                    }
-                }
-
-                bal.allowedCtrlOutputPerms = bal.ctrlPerms = GroupAuthorityFlags::ALL;
-            }
-            else
-            {
-                if (((uint64_t)bal.ctrlOutputPerms & (uint64_t)~GroupAuthorityFlags::ALL_BITS) != 0)
-                {
-                    return state.Invalid(false, REJECT_INVALID, "grp-invalid-tx",
-                         "Only mint transactions can have a nonce");
-                }
-            }
-        }
-
-        if ((bal.input > bal.output) && !hasCapability(bal.ctrlPerms, GroupAuthorityFlags::MELT))
-        {
-            return state.Invalid(false, REJECT_GROUP_IMBALANCE, "grp-invalid-melt",
-                "Group input exceeds output, but no melt permission");
-        }
-        if ((bal.input < bal.output) && !hasCapability(bal.ctrlPerms, GroupAuthorityFlags::MINT))
-        {
-            return state.Invalid(false, REJECT_GROUP_IMBALANCE, "grp-invalid-mint",
-                "Group output exceeds input, but no mint permission");
-        }
-        // Some output permissions are set that are not in the inputs
-        if (((uint64_t)(bal.ctrlOutputPerms & GroupAuthorityFlags::ALL)) &
-            ~((uint64_t)(bal.allowedCtrlOutputPerms & GroupAuthorityFlags::ALL)))
-        {
-                return state.Invalid(false, REJECT_GROUP_IMBALANCE, "grp-invalid-perm",
-                "Group output permissions exceeds input permissions");
-        }
+        return state.Invalid(false, REJECT_GROUP_IMBALANCE, "grp-invalid-tx", "Group transaction imbalance");
     }
 
     return true;
 }
 
 
-bool CTokenGroupID::isUserGroup(void) const { return (!data.empty()); }bool CTokenGroupID::isSubgroup(void) const { return (data.size() > PARENT_GROUP_ID_SIZE); }
-CTokenGroupID CTokenGroupID::parentGroup(void) const
+class CTxDestinationTokenGroupExtractor: public boost::static_visitor<CTokenGroupID>
 {
-    if (data.size() <= PARENT_GROUP_ID_SIZE)
-        return CTokenGroupID(data);
-    return CTokenGroupID(std::vector<unsigned char>(data.begin(), data.begin() + PARENT_GROUP_ID_SIZE));
-}
-const std::vector<unsigned char> CTokenGroupID::GetSubGroupData() const {
-    std::vector<unsigned char> subgroupData;
-    if (data.size() > PARENT_GROUP_ID_SIZE) {
-        subgroupData = std::vector<unsigned char>(data.begin() + PARENT_GROUP_ID_SIZE, data.end());
+public:
+    CTokenGroupID operator()(const CKeyID &id) const
+    {
+        return CTokenGroupID(id);
     }
-    return subgroupData;
+
+    CTokenGroupID operator()(const CScriptID &id) const
+    {
+        return CTokenGroupID(id);
+    }
+
+    CTokenGroupID operator()(const CNoDestination &) const
+    { return CTokenGroupID();
+    }
+};
+
+CTokenGroupID::CTokenGroupID(const CTxDestination& id)
+{
+    *this = boost::apply_visitor(CTxDestinationTokenGroupExtractor(), id);
 }
 
-bool CTokenGroupID::hasFlag(TokenGroupIdFlags flag) const {
-    return data.size() >= PARENT_GROUP_ID_SIZE ? hasTokenGroupIdFlag((TokenGroupIdFlags)data[31], flag) : false;
+bool CTokenGroupID::isUserGroup(void) const
+{
+    return !((data.size()==0) || (*this == BitcoinGroup));
 }

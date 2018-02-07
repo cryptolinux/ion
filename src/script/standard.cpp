@@ -29,6 +29,7 @@ const char* GetTxnOutputType(txnouttype t)
     case TX_SCRIPTHASH: return "scripthash";
     case TX_MULTISIG: return "multisig";
     case TX_NULL_DATA: return "nulldata";
+    case TX_ZEROCOINMINT: return "zerocoinmint";
     case TX_GRP_PUBKEYHASH: return "grouppubkeyhash";
     case TX_GRP_SCRIPTHASH: return "groupscripthash";
     }
@@ -43,9 +44,9 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
     {
         // GP2PKH (group pay to public key hash): Bitcoin address tx, sender provides hash of pubkey, receiver provides
         // signature and pubkey
-        mTemplates.insert(std::make_pair(TX_GRP_PUBKEYHASH, CScript() << OP_GRP_DATA << OP_GRP_DATA << OP_GROUP << OP_DROP
-                                                                 << OP_DROP << OP_DUP << OP_HASH160 << OP_PUBKEYHASH
-                                                                 << OP_EQUALVERIFY << OP_CHECKSIG));
+        mTemplates.insert(
+            make_pair(TX_GRP_PUBKEYHASH, CScript() << OP_GRP_DATA << OP_GROUP << OP_DROP << OP_DUP << OP_HASH160
+                                                   << OP_PUBKEYHASH << OP_EQUALVERIFY << OP_CHECKSIG));
 
         // Standard tx, sender provides pubkey, receiver adds signature
         mTemplates.insert(std::make_pair(TX_PUBKEY, CScript() << OP_PUBKEY << OP_CHECKSIG));
@@ -61,10 +62,11 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
 
     // Shortcut for pay-to-script-hash, which are more constrained than the other types:
     // it is always OP_HASH160 20 [20 byte hash] OP_EQUAL
-    if (scriptPubKey.IsPayToScriptHash())
+    // or [data] OP_GROUP OP_DROP OP_HASH160 20 [20 byte hash] OP_EQUAL
+    vector<unsigned char> hashBytes;
+    if (scriptPubKey.IsPayToScriptHash(&hashBytes))
     {
         typeRet = TX_SCRIPTHASH;
-        vector<unsigned char> hashBytes(scriptPubKey.begin()+2, scriptPubKey.begin()+22);
         vSolutionsRet.push_back(hashBytes);
         return true;
     }
@@ -96,9 +98,8 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
         vSolutionsRet.clear();
 
         opcodetype opcode1, opcode2;
-        std::vector<unsigned char> vch1, vch2;
-        std::vector<unsigned char> group;
-        std::vector<unsigned char> groupQty;
+        vector<unsigned char> vch1, vch2;
+        vector<unsigned char> group;
 
         // Compare
         CScript::const_iterator pc1 = script1.begin();
@@ -118,12 +119,8 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
                         return false;
                 }
                 // group will always be the last entity in vSolutionsRet
-                // group quantity will be the second to last
                 if (!group.empty())
-                {
-                    vSolutionsRet.push_back(groupQty);
                     vSolutionsRet.push_back(group);
-                }
                 return true;
             }
             if (!script1.GetOp(pc1, opcode1, vch1))
@@ -174,10 +171,7 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
                 // Expect that there is some data in the script at this point
                 if (vch1.size() == 0)
                     break;
-                if (group.empty())
-                    group = vch1; // group id is first
-                else
-                    groupQty = vch1; // quantity is second
+                group = vch1;
             }
             else if (opcode1 != opcode2 || vch1 != vch2)
             {
@@ -194,7 +188,54 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
 
 bool ExtractDestinationAndType(const CScript &scriptPubKey, CTxDestination &addressRet, txnouttype &whichType)
 {
-    std::vector<valtype> vSolutions;
+    switch (t)
+    {
+    case TX_NONSTANDARD:
+    case TX_NULL_DATA:
+    case TX_ZEROCOINMINT:
+        return -1;
+    case TX_PUBKEY:
+        return 1;
+    case TX_PUBKEYHASH:
+        return 2;
+    case TX_MULTISIG:
+        if (vSolutions.size() < 1 || vSolutions[0].size() < 1)
+            return -1;
+        return vSolutions[0][0] + 1;
+    case TX_GRP_SCRIPTHASH:
+    case TX_SCRIPTHASH:
+        return 1; // doesn't include args needed by the script
+    case TX_GRP_PUBKEYHASH:
+        return 1;
+    }
+    return -1;
+}
+
+bool IsStandard(const CScript& scriptPubKey, txnouttype& whichType)
+{
+    vector<valtype> vSolutions;
+    if (!Solver(scriptPubKey, whichType, vSolutions))
+        return false;
+
+    if (whichType == TX_MULTISIG)
+    {
+        unsigned char m = vSolutions.front()[0];
+        unsigned char n = vSolutions.back()[0];
+        // Support up to x-of-3 multisig txns as standard
+        if (n < 1 || n > 3)
+            return false;
+        if (m < 1 || m > n)
+            return false;
+    } else if (whichType == TX_NULL_DATA &&
+                (!GetBoolArg("-datacarrier", true) || scriptPubKey.size() > nMaxDatacarrierBytes))
+        return false;
+
+    return whichType != TX_NONSTANDARD;
+}
+
+bool ExtractDestinationAndType(const CScript &scriptPubKey, CTxDestination &addressRet, txnouttype &whichType)
+{
+    vector<valtype> vSolutions;
     if (!Solver(scriptPubKey, whichType, vSolutions))
         return false;
 
@@ -226,7 +267,8 @@ bool ExtractDestination(const CScript &scriptPubKey, CTxDestination &addressRet)
     txnouttype whichType;
     return ExtractDestinationAndType(scriptPubKey, addressRet, whichType);
 }
-bool ExtractDestinations(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<CTxDestination>& addressRet, int& nRequiredRet)
+
+bool ExtractDestinations(const CScript& scriptPubKey, txnouttype& typeRet, vector<CTxDestination>& addressRet, int& nRequiredRet)
 {
     addressRet.clear();
     typeRet = TX_NONSTANDARD;

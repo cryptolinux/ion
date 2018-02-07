@@ -92,6 +92,7 @@ static bool SignStep(const BaseSignatureCreator& creator, const CScript& scriptP
             ret.push_back(ToByteVector(vch));
         }
         return true;
+    case TX_GRP_SCRIPTHASH:
     case TX_SCRIPTHASH:
     case TX_GRP_SCRIPTHASH:
         if (creator.KeyStore().GetCScript(uint160(vSolutions[0]), scriptRet)) {
@@ -262,9 +263,10 @@ static Stacks CombineSignatures(const CScript& scriptPubKey, const BaseSignature
     case TX_PUBKEYHASH:
     case TX_GRP_PUBKEYHASH:
         // Signatures are bigger than placeholders or empty scripts:
-        if (sigs1.script.empty() || sigs1.script[0].empty())
-            return sigs2;
-        return sigs1;
+        if (sigs1.empty() || sigs1[0].empty())
+            return PushAll(sigs2);
+        return PushAll(sigs1);
+    case TX_GRP_SCRIPTHASH:
     case TX_SCRIPTHASH:
     case TX_GRP_SCRIPTHASH:
         if (sigs1.script.empty() || sigs1.script.back().empty())
