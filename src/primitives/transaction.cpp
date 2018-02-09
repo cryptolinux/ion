@@ -291,3 +291,17 @@ bool CTxIn::IsZerocoinPublicSpend() const
         str += "    " + vout[i].ToString() + "\n";
     return str;
 }
+
+std::string CMutableTransaction::HexStr(void) const
+{
+    CDataStream ssTx(SER_NETWORK, PROTOCOL_VERSION);
+    ssTx << *this;
+    return ::HexStr(ssTx.begin(), ssTx.end());
+}
+
+std::string CTransaction::HexStr(void) const
+{
+    CDataStream ssTx(SER_NETWORK, PROTOCOL_VERSION);
+    ssTx << *this;
+    return ::HexStr(ssTx.begin(), ssTx.end());
+}

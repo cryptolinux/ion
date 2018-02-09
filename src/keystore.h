@@ -8,12 +8,10 @@
 #ifndef BITCOIN_KEYSTORE_H
 #define BITCOIN_KEYSTORE_H
 
-#include <hdchain.h>
-#include <key.h>
-#include <pubkey.h>
-#include <script/script.h>
-#include <script/standard.h>
-#include <sync.h>
+#include "key.h"
+#include "pubkey.h"
+#include "script/standard.h"
+#include "sync.h"
 
 #include <boost/signals2/signal.hpp>
 
@@ -46,10 +44,32 @@ public:
     virtual bool GetCScript(const CScriptID &hash, CScript& redeemScriptOut) const =0;
 
     //! Support for Watch-only addresses
-    virtual bool AddWatchOnly(const CScript &dest) =0;
-    virtual bool RemoveWatchOnly(const CScript &dest) =0;
-    virtual bool HaveWatchOnly(const CScript &dest) const =0;
-    virtual bool HaveWatchOnly() const =0;
+    virtual bool AddWatchOnly(const CScript& dest) = 0;
+    virtual bool RemoveWatchOnly(const CScript& dest) = 0;
+    virtual bool HaveWatchOnly(const CScript& dest) const = 0;
+    virtual bool HaveWatchOnly() const = 0;
+
+    //! Support for MultiSig addresses
+    virtual bool AddMultiSig(const CScript& dest) = 0;
+    virtual bool RemoveMultiSig(const CScript& dest) = 0;
+    virtual bool HaveMultiSig(const CScript& dest) const = 0;
+    virtual bool HaveMultiSig() const = 0;
+
+    class CheckTxDestination : public boost::static_visitor<bool>
+    {
+        const CKeyStore *keystore;
+
+    public:
+        CheckTxDestination(const CKeyStore *keystore) : keystore(keystore) {}
+        bool operator()(const CKeyID &id) const { return keystore->HaveKey(id); }
+        bool operator()(const CScriptID &id) const { return keystore->HaveCScript(id); }
+        bool operator()(const CNoDestination &) const { return false; }
+    };
+
+    virtual bool HaveTxDestination(const CTxDestination &addr)
+    {
+        return boost::apply_visitor(CheckTxDestination(this), addr);
+    }
 };
 
 typedef std::map<CKeyID, CKey> KeyMap;

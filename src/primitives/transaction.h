@@ -232,7 +232,7 @@ public:
 
     bool IsDust(const CFeeRate &minRelayTxFee) const
     {
-        return (nValue < GetDustThreshold(minRelayTxFee));
+        return false; //(nValue < GetDustThreshold(minRelayTxFee));
     }
 
     bool IsZerocoinMint() const;
@@ -366,6 +366,9 @@ public:
     }
 
     std::string ToString() const;
+
+    /** return this transaction as a hex string.  Useful for debugging and display */
+    std::string HexStr() const;
 };
 
 /** A mutable version of CTransaction. */
@@ -418,6 +421,8 @@ struct CMutableTransaction
         return !(a == b);
     }
 
+    /** return this transaction as a hex string.  Useful for debugging and display */
+    std::string HexStr() const;
 };
 
 typedef std::shared_ptr<const CTransaction> CTransactionRef;
