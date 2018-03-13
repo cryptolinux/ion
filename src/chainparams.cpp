@@ -416,6 +416,9 @@ public:
         // Public coin spend enforcement
         nPublicZCSpends = 9999999;
 
+        // Token groups
+        nOpGroupStartHeight = 99999999;
+
         // Fake Serial Attack
         nFakeSerialBlockheightEnd = 1073534;
         nSupplyBeforeFakeSerial = 1308446 * COIN;   // zerocoin supply at block nFakeSerialBlockheightEnd
@@ -662,6 +665,9 @@ public:
 
         // Public coin spend enforcement
         nPublicZCSpends = 9999999;
+
+        // Token groups
+        nOpGroupStartHeight = 1;
 
         // Fake Serial Attack
         nFakeSerialBlockheightEnd = -1;

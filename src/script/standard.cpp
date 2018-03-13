@@ -44,9 +44,9 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
     {
         // GP2PKH (group pay to public key hash): Bitcoin address tx, sender provides hash of pubkey, receiver provides
         // signature and pubkey
-        mTemplates.insert(
-            make_pair(TX_GRP_PUBKEYHASH, CScript() << OP_GRP_DATA << OP_GROUP << OP_DROP << OP_DUP << OP_HASH160
-                                                   << OP_PUBKEYHASH << OP_EQUALVERIFY << OP_CHECKSIG));
+        mTemplates.insert(make_pair(TX_GRP_PUBKEYHASH, CScript() << OP_GRP_DATA << OP_GRP_DATA << OP_GROUP << OP_DROP
+                                                                 << OP_DROP << OP_DUP << OP_HASH160 << OP_PUBKEYHASH
+                                                                 << OP_EQUALVERIFY << OP_CHECKSIG));
 
         // Standard tx, sender provides pubkey, receiver adds signature
         mTemplates.insert(std::make_pair(TX_PUBKEY, CScript() << OP_PUBKEY << OP_CHECKSIG));
@@ -100,6 +100,7 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
         opcodetype opcode1, opcode2;
         vector<unsigned char> vch1, vch2;
         vector<unsigned char> group;
+        vector<unsigned char> groupQty;
 
         // Compare
         CScript::const_iterator pc1 = script1.begin();
@@ -119,8 +120,12 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
                         return false;
                 }
                 // group will always be the last entity in vSolutionsRet
+                // group quantity will be the second to last
                 if (!group.empty())
+                {
+                    vSolutionsRet.push_back(groupQty);
                     vSolutionsRet.push_back(group);
+                }
                 return true;
             }
             if (!script1.GetOp(pc1, opcode1, vch1))
@@ -171,7 +176,10 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
                 // Expect that there is some data in the script at this point
                 if (vch1.size() == 0)
                     break;
-                group = vch1;
+                if (group.empty())
+                    group = vch1; // group id is first
+                else
+                    groupQty = vch1; // quantity is second
             }
             else if (opcode1 != opcode2 || vch1 != vch2)
             {
