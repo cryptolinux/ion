@@ -23,19 +23,6 @@ This is a new major version release, including various bug fixes, performance im
 
 Please report bugs using the issue tracker at github: https://github.com/ioncoincore/ion/issues
 
-<<<<<<< HEAD
-Downgrading to a version older than 0.14.0.3 is no longer supported due to
-changes in the "evodb" database format. If you need to use an older version,
-you must either reindex or re-sync the whole chain.
-
-### Downgrade of masternodes to < 0.16
-
-Starting with this release, masternodes will verify the protocol version of other
-masternodes. This will result in PoSe punishment/banning for outdated masternodes,
-so downgrading is not recommended.
-
-Notable changes
-===============
 
 
 See detailed [set of changes](https://github.com/dashpay/dash/compare/v0.16.1.0...dashpay:v0.16.1.1).
@@ -166,7 +153,6 @@ These release are considered obsolete. Old release notes can be found here:
 ___  
 
 ION Core v5.0.99 is a mandatory update for all users. This release contains new consensus rules and improvements that are not backwards compatible with older versions. Users will have a grace period of up to two week to update their clients before enforcement of this update is enabled - a grace period that will end at block 1320000 the latest.
->>>>>>> docs - update release notes and cleanup folder
 
 ### How to Upgrade
 ___

@@ -21,23 +21,6 @@ color: #130fa2;
 
 # Used colors in light.css for commit 44de8a93f2
 
-<<<<<<< HEAD
-#00000000
-#555
-#008de4
-#0f75b5
-#a7a7a7
-#c7c7c7
-#d2d2d2
-#dcdcdc
-#e0e0e0
-#eaeaec
-#f2f2f4
-#ccfafafa
-
-</colors>
-*/
-=======
 QMenu::item {
 color:#333;
 }
@@ -70,7 +53,6 @@ QToolBar > QToolButton:checked {
 border: 0;
 font-weight: bold;
 }
->>>>>>> add ion colors
 
 /******************************************************
 Common stuff
@@ -127,26 +109,6 @@ QLineEdit:hover:!focus {
 }
 
 
-<<<<<<< HEAD
-BitcoinAmountField:focus,
-QAbstractSpinBox:focus,
-QComboBox:checked,
-QComboBox:focus,
-QPlainTextEdit:focus,
-QLineEdit:focus {
-    background-color: #d2d2d2;
-    border-color: #0f75b5;
-}
-
-BitcoinAmountField:disabled,
-QAbstractSpinBox:disabled,
-QComboBox:disabled,
-QPlainTextEdit:disabled,
-QLineEdit:disabled {
-    background-color: #eaeaec;
-    border-color: #d2d2d2;
-    color: #c7c7c7;
-=======
 QPushButton { /* Global Button Style */
 background-color: #130fa2;
 border:0;
@@ -168,38 +130,27 @@ QPushButton:hover {
 QPushButton:focus {
 border:none;
 outline:none;
->>>>>>> add ion colors
 }
 
 /******************************************************
 QAbstractSpinBox
 ******************************************************/
 
-<<<<<<< HEAD
-QAbstractSpinBox::up-arrow {
-    border-image: url(':/images/arrow_up_light');
-=======
 QComboBox { /* Dropdown Menus */
 border:1px solid #130fa2;
 padding: 3px 5px 3px 5px;
 background:#fcfcfc;
 min-height:25px;
 color:#818181;
->>>>>>> add ion colors
 }
 QAbstractSpinBox::up-arrow:hover {
     border-image: url(':/images/arrow_down_dark');
 }
-<<<<<<< HEAD
-QAbstractSpinBox::up-arrow:pressed {
-    border-image: url(':/images/arrow_up_light');
-=======
 
 QComboBox:editable {
 background: #110a44;
 color:#616161;
 border:0px solid transparent;
->>>>>>> add ion colors
 }
 QAbstractSpinBox::up-arrow:disabled {
     border-image: url(':/images/arrow_light_up_normal');
@@ -291,10 +242,6 @@ QCheckBox::indicator:indeterminate:pressed {
 QCheckBox::indicator:hover:!pressed:unchecked {
     border-image: url(':/images/checkbox_normal_hover_light');
 }
-<<<<<<< HEAD
-QCheckBox::indicator:unchecked:disabled {
-    border-image: url(':/images/checkbox_normal_disabled_light');
-=======
 
 QHeaderView::section { /* Table Header Sections */
 qproperty-alignment:center;
@@ -310,7 +257,6 @@ padding-left:5px;
 padding-right:5px;
 padding-top:2px;
 padding-bottom:2px;
->>>>>>> add ion colors
 }
 QCheckBox::indicator:checked:!pressed:hover {
     border-image: url(':/images/checkbox_checked_hover_light');
@@ -665,15 +611,9 @@ QScrollBar
 * end of the file.
 */
 
-<<<<<<< HEAD
-/******************************************************
-QSlider
-******************************************************/
-=======
 QDialog#RPCConsole QWidget#tab_peers  QLabel#peerHeading { /* Peers Info Header */
 color:#110a44;
 }
->>>>>>> add ion colors
 
 QSlider::handle:horizontal {
 	background-color: #008de4;
@@ -741,11 +681,6 @@ QTextEdit {
 }
 
 
-<<<<<<< HEAD
-/******************************************************
-QToolBar / QToolButton
-******************************************************/
-=======
 QWidget .QFrame#frame .QLabel#label_5 { /* Wallet Label */
 min-width:180px;
 color:#130fa2;
@@ -756,7 +691,6 @@ font-weight:bold;
 font-size:18px;
 min-height:30px;
 }
->>>>>>> add ion colors
 
 QToolBar {
     background-color: #008de4;
@@ -777,11 +711,6 @@ QToolBar > QToolButton:checked {
     color: #555;
 }
 
-<<<<<<< HEAD
-/******************************************************
-QToolTip
-******************************************************/
-=======
 QWidget .QFrame#frame .QLabel#labelBalance { /* Available Balance */
 qproperty-alignment: 'AlignVCenter | AlignLeft';
 color:#110a44;
@@ -789,7 +718,6 @@ font-size:16px;
 font-weight: bold;
 margin-left:0px;
 }
->>>>>>> add ion colors
 
 QToolTip {
     background-color: #eaeaec;
@@ -836,10 +764,6 @@ QTreeWidget::indicator:hover:unchecked {
 QTreeWidget::indicator:unchecked:disabled {
     border-image: url(':/images/checkbox_normal_disabled_light');
 }
-<<<<<<< HEAD
-QTreeWidget::indicator:checked:hover {
-    border-image: url(':/images/checkbox_checked_hover_light');
-=======
 
 QWidget .QFrame#framePrivateSend .QLabel#labelPrivateSendHeader { /* PrivateSend Header */
 qproperty-alignment: 'AlignVCenter | AlignLeft';
@@ -851,7 +775,6 @@ padding-right:5px;
 font-weight: bold;
 font-size:18px;
 min-height:30px;
->>>>>>> add ion colors
 }
 QTreeWidget::indicator:checked:disabled {
     border-image: url(':/images/checkbox_checked_disabled_light');
@@ -874,17 +797,10 @@ QWidget
 *******************************************************
 STYLING OF SPECIFIC CUSTOM UI PARTS
 
-<<<<<<< HEAD
-Below each section should be for a specific UI class/file
-not only Qt standard elements
-*******************************************************
-******************************************************/
-=======
 QWidget .QFrame#framePrivateSend #privateSendFormLayoutWidget .QProgressBar#privateSendProgress::chunk {
 background-color: #130fa2;
 width:1px;
 }
->>>>>>> add ion colors
 
 /******************************************************
 AboutDialog
@@ -951,11 +867,6 @@ HelpMessageDialog QWidget#scrollAreaWidgetContents {
     border-color: #dcdcdc;
 }
 
-<<<<<<< HEAD
-/******************************************************
-MasternodeList
-******************************************************/
-=======
 QWidget .QFrame#frame_2 .QLabel#label_4 { /* Recent Transactions Label */
 min-width:180px;
 color: #130fa2;
@@ -967,7 +878,6 @@ font-weight:bold;
 font-size:18px;
 min-height:30px;
 }
->>>>>>> add ion colors
 
 /***** No light.css specific coloring here yet *****/
 
