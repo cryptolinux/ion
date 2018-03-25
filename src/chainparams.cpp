@@ -418,50 +418,40 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xc4;
-        pchMessageStart[1] = 0xe1;
-        pchMessageStart[2] = 0xd8;
-        pchMessageStart[3] = 0xec;
-        nDefaultPort = 12700;
-        nPruneAfterHeight = 100000;
+        pchMessageStart[0] = 0xc4;              
+        pchMessageStart[1] = 0xe1;              
+        pchMessageStart[2] = 0xd8;              
+        pchMessageStart[3] = 0xec;              
+        vAlertPubKey = ParseHex("04ab1a302b40c65c08281974e4ccbe6df987d8a87cbc490ace9a261d8a57b809a5dad39f53bdc85e392c61c3c5a3f990d53430bb40a731ff28fa2255fecef70da3");
+        nDefaultPort = 12700;                   
+        bnProofOfWorkLimit  = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        bnProofOfStakeLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        nSubsidyHalvingInterval = 210000;       // Halving interval
+        nMaxReorganizationDepth = 100;          
+        nEnforceBlockUpgradeMajority = 750;     
+        nRejectBlockOutdatedMajority = 950;     
+        nToCheckBlockUpgradeMajority = 1000;    
+        nMinerThreads = 0;                          // Obsolete (**TODO**)
+        nTargetTimespanMidas = 7 * 24 * 60 * 60;    // 1 week
+        nTargetTimespanDGW = 1 * 60;                // 1 day
+        nTargetSpacing = 1 * 60;                    // 1 minute
+        nMaturity = 60;                             // Block maturity   
+        nMasternodeCountDrift = 20;
+        nMaxMoneyOut = 38600000 * COIN;
 
-        genesis = CreateGenesisBlock(1486045800, 1486045800, 28884498, 0x1e00ffff, 1, 1 * COIN);
-        consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000004cf5ffbf2e31a9aa07c86298efb01a30b8911b80af7473d1114715084b"));
-        assert(genesis.hashMerkleRoot == uint256S("0x7af2e961c5262cb0411edcb7414ab7178133fc06257ceb47d349e4e5e35e2d40"));
-
-        // Note that of those which support the service bits prefix, most only support a subset of
-        // possible options.
-        // This is fine at runtime as we'll fall back to using them as a oneshot if they dont support the
-        // service bits we want, but we should get them updated to support all service bits wanted by any
-        // release ASAP to avoid it where possible.
-        vSeeds.emplace_back("main.seeder.baseserv.com", true);
-        vSeeds.emplace_back("main.seeder.uksafedns.net", true);
-
-        // Ion addresses start with 'i'
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,103);
-        // Ion script addresses start with '?'
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,88);
-        // Ion private keys start with '?' or '?'
-        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,153);
-        // Ion BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
-        base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E};
-        // Ion BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
-        base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4};
-
-        bech32_hrp = "ion";
-
-        // Ion BIP44 coin type is '5'
-        nExtCoinType = 7567736;
-
-        vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
-
-        // long living quorum params
-        consensus.llmqs[Consensus::LLMQ_50_60] = llmq50_60;
-        consensus.llmqs[Consensus::LLMQ_400_60] = llmq400_60;
-        consensus.llmqs[Consensus::LLMQ_400_85] = llmq400_85;
-        consensus.llmqTypeChainLocks = Consensus::LLMQ_400_60;
-        consensus.llmqTypeInstantSend = Consensus::LLMQ_50_60;
+        /** Height or Time Based Activations **/
+        nLastPOWBlock = 1000;                         // PoW Phase 3 End
+        nMidasStartHeight = 176500;                   // MIDAS startheight, first big attack
+        nMidasStartTime = 1497541280;                 // Time when MIDAS started and old algorithm stopped
+        nDGWStartHeight = 550000;                     // Startheight of DGW
+        nDGWStartTime = 1521851265;                   // GMT: Saturday, March 24, 2018 12:27:45 AM - Exact time when DGW algorithm starts and old MIDAS stops
+        nZerocoinStartHeight = 550001;                // Zerocoin start height, starts together with DGW
+        nZerocoinStartTime = 1521851265;              // GMT: Saturday, March 24, 2018 12:27:45 AM, 
+        nBlockEnforceSerialRange = 550137;            // Enforce serial range starting this block
+        nBlockRecalculateAccumulators = 550137;       // Trigger a recalculation of accumulators
+        nBlockFirstFraudulent = 99999999;             // 1110; //First block that bad serials emerged (currently we do not have any) *** TODO ***
+        nBlockLastGoodCheckpoint = 550137;            // Last valid accumulator checkpoint (currently we do not have any) *** TODO ***
+        nBlockEnforceInvalidUTXO = 550137;            // Start enforcing the invalid UTXO's's
 
         fDefaultConsistencyChecks = false;
         fRequireStandard = true;
