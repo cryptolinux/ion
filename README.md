@@ -8,8 +8,17 @@ Ion Core integration/staging repository
  :-: | :-: | :-: |
 [![Latest release](https://img.shields.io/github/release/ioncoincore/ion.svg)](https://github.com/ioncoincore/ion/releases/latest) ![Release date](https://img.shields.io/github/release-date/ioncoincore/ion.svg) | [![Twitter](https://img.shields.io/twitter/url/https/github.com/ioncoincore/ion.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fioncoincore%2Fion) [![Chat on Discord](https://img.shields.io/discord/308323056592486420.svg?logo=discord)](https://discord.gg/vuZn7gC) ![Official Encrypted Support (Matrix)](https://img.shields.io/matrix/ionsupportgeneral:matrix.provenstack.com.svg?server_fqdn=matrix.provenstack.com) | [![](https://img.shields.io/website/https/ionomy.com.svg?down_color=darkred&down_message=ionomy.com%20is%20offline&style=for-the-badge&up_color=green&up_message=ionomy.com%20is%20online)](https://ionomy.com)
 
-_If you want to encrypt your email/files, please use public pgp key provided below._
-![Keybase PGP](https://img.shields.io/keybase/pgp/ioncoincore.svg?style=flat)
+### Important information
+
+Majority of ion contributors decided to move on from CEVAP's branch to a new one which is believed to fit better to marketing and maybe some other purposes. There will be no further CEVAP releases for ion, project is moved to new community runned repository: https://github.com/ioncoincore/ . Version [v3.0.4](https://github.com/cevap/ion/releases/tag/3.0.4) is the last one which is hosted/published on CEVAP. New repository will be updated in following days and next version will be published only there: 
+
+  https://github.com/ioncoincore/ion/releases
+  
+For now this new repository is empty and we will move our content in following days. 
+
+[Ioncoincore](https://github.com/ioncoincore/ion/releases).
+
+### Client: Sagittarius
 
 ## Installation methods
 
