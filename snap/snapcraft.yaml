@@ -86,51 +86,74 @@ apps:
     plugs: [network, network-bind, network-status, home, removable-media]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+    aliases: [iond]
+  daemon:
+    command: iond --reindex
+    plugs: [network, network-bind]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+    aliases: [iond-reindex]
+  daemon:
+    command: iond --resync
+    plugs: [network, network-bind]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+    aliases: [iond-resync]
+  daemon:
+    command: iond --testnet
+    plugs: [network, network-bind]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+    aliases: [iond-testnet]
+  daemon:
+    command: iond --testnet --reindex
+    plugs: [network, network-bind]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+    aliases: [iond-reindex-testnet]
+  daemon:
+    command: iond --testnet --resync
+    plugs: [network, network-bind]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+    aliases: [iond-resync-testnet]
   qt:
-    command: ion-qt
-    plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
-    desktop: ion-qt.desktop
-    environment:
-      QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
-  qt-testnet:
-    command: ion-qt --testnet
-    plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
-    desktop: ion-qt_testnet.desktop
-    environment:
-      QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
-  qt-regtest:
-    command: ion-qt --regtest
-    plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
-    desktop: ion-qt_regtest.desktop
-    environment:
-      QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+    command: desktop-launch ion-qt
+    plugs: [network, network-bind, unity7]
+    aliases: [ion-qt]
+    desktop: ion.desktop.desktop
+  qt:
+    command: desktop-launch ion-qt
+    plugs: [network, network-bind, unity7]
+    aliases: [ion-qt-reindex]
+    desktop: ion-reindex.desktop.desktop
+  qt:
+    command: desktop-launch ion-qt
+    plugs: [network, network-bind, unity7]
+    aliases: [ion-qt-resync]
+    desktop: ion-resync.desktop.desktop
+  qt:
+    command: desktop-launch ion-qt
+    plugs: [network, network-bind, unity7]
+    aliases: [ion-qt-testnet]
+    desktop: ion-testnet.desktop.desktop
+  qt:
+    command: desktop-launch ion-qt
+    plugs: [network, network-bind, unity7]
+    aliases: [ion-qt-reindex-testnet]
+    desktop: ion-testnet-reindex.desktop.desktop
+  qt:
+    command: desktop-launch ion-qt
+    plugs: [network, network-bind, unity7]
+    aliases: [ion-qt-resync-testnet]
+    desktop: ion-testnet-resync.desktop.desktop
   cli:
     command: ion-cli
-    plugs: [network, network-bind, network-status, home]
-    environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
-  cli-testnet:
+    aliases: [ion-cli]
+  cli:
     command: ion-cli --testnet
-    plugs: [network, network-bind, home]
-    environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
-  cli-regtest:
-    command: ion-cli --regtest
-    plugs: [network, network-bind, home]
-    environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
-  tx:
-    command: ion-tx
-    plugs: [home]
-  test:
-    command: test_ion
-    plugs: [home]
-  testqt:
-    command: test_ion-qt
-    plugs: [home]
+    aliases: [ion-cli-testnet]
+
 parts:
   ion:
     source: https://bitbucket.org/ioncoin/ion
