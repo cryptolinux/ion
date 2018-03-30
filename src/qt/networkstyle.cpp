@@ -21,6 +21,7 @@ static const struct {
     const int iconColorSaturationReduction;
     const std::string titleAddText;
 } network_styles[] = {
+<<<<<<< HEAD
     {"main", QAPP_APP_NAME_DEFAULT, 0, 0, ""},
     {"test", QAPP_APP_NAME_TESTNET, 190, 20, QT_TRANSLATE_NOOP("SplashScreen", "[testnet]")},
     {"devnet", QAPP_APP_NAME_DEVNET, 190, 20, "[devnet: %s]"},
@@ -60,6 +61,13 @@ void NetworkStyle::rotateColors(QImage& img, const int iconColorHueShift, const 
         }
     }
 }
+=======
+    {"main", QAPP_APP_NAME_DEFAULT, ":/icons/bitcoin", "", ":/images/splash"},
+    {"test", QAPP_APP_NAME_TESTNET, ":/icons/ion_testnet", QT_TRANSLATE_NOOP("SplashScreen", "[testnet]"), ":/images/splash_testnet"},
+    {"regtest", QAPP_APP_NAME_TESTNET, ":/icons/ion_regtest", "[regtest]", ":/images/splash_regtest"},
+    {"unittest", QAPP_APP_NAME_TESTNET, ":/icons/ion_unittest", "[unittest]", ":/images/splash_unittest"}};
+static const unsigned network_styles_count = sizeof(network_styles) / sizeof(*network_styles);
+>>>>>>> Add splashscreens, fixed #10
 
 // titleAddText needs to be const char* for tr()
 NetworkStyle::NetworkStyle(const QString &_appName, const int iconColorHueShift, const int iconColorSaturationReduction, const char *_titleAddText):
