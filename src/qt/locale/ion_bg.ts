@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Това са вашите Ion адреси за изпращане на плащания. Преди изпращане винаги проверявайте количеството и адреса за получаване на монетите.</translation>
+        <translation>Това са вашите Ion адреси за изпращане на плащания. Винаги проверявайте количеството и адреса на получателя, преди да изпратите монети.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Това са вашите Ion адреси за получаване на плащания. Препоръчително е да използвате нов адрес за всяка нова транзакция. </translation>
+        <translation>Това са вашите Ion адреси за получаване на плащания. Препоръчително е да използвате нови адреси за получаване за всяка транзакция.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -188,8 +188,8 @@
         <translation>Потвърдете на шифрирането на портфейла</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ION&lt;/b&gt;!</source>
-        <translation>Внимание: Ако шифрирате вашия портфейл и загубите паролата си,  &lt;b&gt;ЩЕ ЗАГУБИТЕ ВСИЧКИ ION МОНЕТИ!&lt;/b&gt;!</translation>
+        <source>ION will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your IONs from being stolen by malware infecting your computer.</source>
+        <translation>ION сега ще се затвори, за да довърши процеса на криптиране. Запомнете, че криптирането на вашия портфейл не може напълно да защити вашия Ion от това, да бъде откраднат от злонамерен софутуер, инфектирал вашия компютър.</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -258,16 +258,16 @@
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <source>A fatal error occurred. Ion Core can no longer continue safely and will quit.</source>
-        <translation>Възникна фатална грешка. Ion Core не може да продължи безопасно и ще се изключи.</translation>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Въведете Ion адрес, който искате да криптиране с BIP 38. Въведете парола в средното поле. Натиснете 'криптирай', за да се изчисли криптирания частен ключ.</translation>
     </message>
     <message>
         <source>Ion Core</source>
         <translation>Ion Ядро</translation>
     </message>
     <message>
-        <source>Wallet</source>
-        <translation>Портфейл</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>ION адреса, с който да подпишете съобщението</translation>
     </message>
     <message>
         <source>Node</source>
@@ -298,8 +298,8 @@
         <translation>Заявка за плащане (генерира QR кодове и Ion: URI)</translation>
     </message>
     <message>
-        <source>&amp;Transactions</source>
-        <translation>&amp;Транзакции</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Подпишете съобщението, за да докажете, че притежавате този Ion адрес</translation>
     </message>
     <message>
         <source>Browse transaction history</source>
@@ -454,8 +454,8 @@
         <translation>Отвори конфигурационния файл</translation>
     </message>
     <message>
-        <source>Show Automatic &amp;Backups</source>
-        <translation>Покажи автоматичните &amp;Резервни копия</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>ION адреса, с който да подпишете съобщението</translation>
     </message>
     <message>
         <source>Show automatically created wallet backups</source>
@@ -478,8 +478,8 @@
         <translation>Покажи списъкът от използвани адреси за получаване и наименования</translation>
     </message>
     <message>
-        <source>Open &amp;URI...</source>
-        <translation>Отвори &amp;URI...</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Подпишете съобщението, за да докажете, че притежавате този Ion адрес</translation>
     </message>
     <message>
         <source>Open a ion: URI or payment request</source>

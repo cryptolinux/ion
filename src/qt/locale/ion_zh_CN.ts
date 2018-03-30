@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>这些是你要付款过去的达世币地址。在付款之前，务必要检查金额和收款地址是否正确。</translation>
+        <translation>这是用于发送ION的地址。在发送ION之前，请认真核查发送金额和接收地址。</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>这些是你用来收款的达世币地址。建议在每次交易时，都使用一个新的收款地址。</translation>
+        <translation>这是用于接收ION的钱包地址。建议每一笔交易都使用一个新的钱包地址。</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -288,7 +288,115 @@
     </message>
 </context>
 <context>
-    <name>BanTableModel</name>
+    <name>Bip38ToolDialog</name>
+    <message>
+        <source>BIP 38 Tool</source>
+        <translation>BIP 38 工具</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Encrypt</source>
+        <translation>&amp;BIP 38 加密</translation>
+    </message>
+    <message>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>输入您要使用BIP 38加密的ION地址。在中间框中输入密码。按加密计算加密私钥。</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>地址：</translation>
+    </message>
+    <message>
+        <source>The Ion address to sign the message with</source>
+        <translation>该ION地址签名的消息</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>选以前使用的地址</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>从剪贴板复制地址</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Passphrase: </source>
+        <translation>密码：</translation>
+    </message>
+    <message>
+        <source>Encrypted Key:</source>
+        <translation>加密密钥：</translation>
+    </message>
+    <message>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>将当前签名复制到系统剪贴板</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>签署消息以证明您拥有此ION地址</translation>
+    </message>
+    <message>
+        <source>Encrypt &amp;Key</source>
+        <translation>加密&amp;秘钥</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>重置所有签名信息</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>清除&amp;全部</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>&amp;BIP 38 解密</translation>
+    </message>
+    <message>
+        <source>Enter the BIP 38 encrypted private key. Enter the passphrase in the middle box. Click Decrypt Key to compute the private key. After the key is decrypted, clicking 'Import Address' will add this private key to the wallet.</source>
+        <translation>输入BIP 38加密私钥。 在中间框中输入密码。 单击解密密钥计算私钥。 密钥解密后，单击“导入地址”将将该私钥添加到钱包中。</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>由ION地址签名的消息</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>验证消息确保它已使用指定的ION地址进行签名</translation>
+    </message>
+    <message>
+        <source>Decrypt &amp;Key</source>
+        <translation>解密&amp;秘钥</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>重置所有验证消息</translation>
+    </message>
+    <message>
+        <source>Decrypted Key:</source>
+        <translation>解密秘钥：</translation>
+    </message>
+    <message>
+        <source>Import Address</source>
+        <translation>导入地址</translation>
+    </message>
+    <message>
+        <source>Click "Decrypt Key" to compute key</source>
+        <translation>点击“解密密钥”完成密钥计算</translation>
+    </message>
+    <message>
+        <source>The entered passphrase is invalid. </source>
+        <translation>输入的密码无效。</translation>
+    </message>
+    <message>
+        <source>Allowed: 0-9,a-z,A-Z,</source>
+        <translation>允许： 0-9,a-z,A-Z,</translation>
+    </message>
     <message>
         <source>IP/Netmask</source>
         <translation>IP/子网掩码</translation>
@@ -572,8 +680,8 @@
         <translation>设置(&amp;S)</translation>
     </message>
     <message>
-        <source>&amp;Tools</source>
-        <translation>工具(&amp;T)</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>发送数字货币到ION地址</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -604,12 +712,12 @@
         <translation>正在为硬盘中的区块建立索引...</translation>
     </message>
     <message>
-        <source>Processing blocks on disk...</source>
-        <translation>正在处理硬盘中的区块...</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>使用您的ION地址验证消息，以证明您拥有他们</translation>
     </message>
     <message>
-        <source>Reindexing blocks on disk...</source>
-        <translation>正在为硬盘中的区块重建索引...</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>验证消息确保它已使用指定的ION地址进行签名</translation>
     </message>
     <message>
         <source>Connecting to peers...</source>
@@ -656,8 +764,8 @@
         <translation>信息</translation>
     </message>
     <message>
-        <source>Received and sent multiple transactions</source>
-        <translation>已接收和发送的多重交易</translation>
+        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <translation>显示Ion Core帮助信息以获取可能的ION命令行选项的列表</translation>
     </message>
     <message>
         <source>Sent multiple transactions</source>
@@ -849,16 +957,16 @@
         <translation>复制交易费</translation>
     </message>
     <message>
-        <source>Copy after fee</source>
-        <translation>复制含交易费的金额</translation>
+        <source>Automatically open the Ion client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>自动打开路由器上的ION钱包使用的端口。 这只有当您的路由器支持UPnP并且该享生效时才有用。</translation>
     </message>
     <message>
         <source>Copy bytes</source>
         <translation>复制字节</translation>
     </message>
     <message>
-        <source>Copy dust</source>
-        <translation>复制零钱金额</translation>
+        <source>&amp;Start Ion on system login</source>
+        <translation>&amp;开机启动ION</translation>
     </message>
     <message>
         <source>Copy change</source>
@@ -999,8 +1107,8 @@
         <translation>目录已存在。如果您打算在这里创建一个新目录，添加 %1。</translation>
     </message>
     <message>
-        <source>Path already exists, and is not a directory.</source>
-        <translation>路径已存在，并且不是一个目录。</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation>显示的信息可能已过期。建立连接后，您的钱包会自动与ION网络同步，但此过程尚未完成。</translation>
     </message>
     <message>
         <source>Cannot create data directory here.</source>
@@ -1014,8 +1122,8 @@
         <translation>版本</translation>
     </message>
     <message>
-        <source>(%1-bit)</source>
-        <translation>(%1 位)</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation>显示的信息可能已过期。建立连接后，您的钱包会自动与ION网络同步，但此过程尚未完成。</translation>
     </message>
     <message>
         <source>About %1</source>
@@ -1097,12 +1205,12 @@
         <translation>欢迎使用 %1</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation>由于这是第一次启动此程序，您可以选择%1的数据所存储的位置</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</source>
+        <translation>附加到付款请求的可选消息，将在请求打开时显示。 注意：消息不会在付款时通过ION网络发送。</translation>
     </message>
     <message>
-        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
-        <translation>当你点击确认后，%1 将会在 %4 启动时从  %3 中最早的交易开始，下载并处理完整的 %4 区块链 (%2GB)。</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Ion network.</source>
+        <translation>附加到付款请求的可选消息，将在请求打开时显示。&lt;br&gt; 注意：消息不会在付款时通过ION网络发送。</translation>
     </message>
     <message>
         <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
@@ -1232,8 +1340,8 @@
         <translation>复制 ProTx Hash</translation>
     </message>
     <message>
-        <source>Copy Collateral Outpoint</source>
-        <translation>复制保证金输出点</translation>
+        <source>A message that was attached to the ION: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</source>
+        <translation>附加到ION：URI的消息，该消息将与转账信息一起存储以供参考。 注意：此消息不会通过ION网络发送。</translation>
     </message>
     <message>
         <source>Updating...</source>
@@ -1252,8 +1360,8 @@
         <translation>UNKNOWN</translation>
     </message>
     <message>
-        <source>to %1</source>
-        <translation>至 %1</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>该ION地址签名的消息</translation>
     </message>
     <message>
         <source>to UNKNOWN</source>
@@ -1283,16 +1391,16 @@
 <context>
     <name>ModalOverlay</name>
     <message>
-        <source>Form</source>
-        <translation>表单</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>签署消息以证明您拥有此ION地址</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the Ion network, as detailed below.</source>
-        <translation>最近的交易可能尚未显示，因此您的钱包的余额可能不正确。一旦您的钱包完成与达世币网络的同步，这个信息将会修正，如下所述。</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>由ION地址签名的消息</translation>
     </message>
     <message>
-        <source>Attempting to spend Ion that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation>假如您正在尝试花费尚未显示出来的达世币，这个交易将不会被网络所接受。</translation>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>验证消息确保它已使用指定的ION地址进行签名</translation>
     </message>
     <message>
         <source>Number of blocks left</source>

@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Questi sono i tuoi indirizzi Ion per inviare i pagamenti. Controlla sempre l'ammontare e l'indirizzo di destinazione prima di inviare i ion.</translation>
+        <translation>Questi sono gli indirizzi Ion per l'invio di pagamenti. Controlla sempre l'importo e l'indirizzo di ricexione prima di inviare valuta.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Questi sono i tuoi indirizzi di Ion per ricevere i pagamenti. Si raccomanda di usare un nuovo indirizzo di ricezione per ogni operazione.</translation>
+        <translation>Questi sono gli indirizzi Ion per la ricexione di pagamenti. Si raccomanda di utilizzare un indirizzo diverso per ogni transaxione.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -231,8 +231,8 @@
         <translation>Conferma la cifratura del portafoglio</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ION&lt;/b&gt;!</source>
-        <translation>Attenzione: se crittografi il tuo portafoglio e perdi la tua passphrase, &lt;b&gt;PERDERAI TUTTI I TUOI ION&lt;/b&gt;!</translation>
+        <source>ION will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your IONs from being stolen by malware infecting your computer.</source>
+        <translation>ION verrà ora chiuso per completare il processo di cifratura. Ricorda che crittografare il tuo portafoglio non protegge completamente i tuoi Ion dal furto da parte di software malevoli che potrebbero infettare il tuo computer.</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -288,7 +288,135 @@
     </message>
 </context>
 <context>
-    <name>BanTableModel</name>
+    <name>Bip38ToolDialog</name>
+    <message>
+        <source>BIP 38 Tool</source>
+        <translation>BIP 38 Strumento</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Encrypt</source>
+        <translation>&amp;BIP 38 Criptato</translation>
+    </message>
+    <message>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Inserisci un indirizzo Ion che desideri crittografare utilizzando BIP 38. Inserisci una passphrase nella casella centrale. Premi Cripta per calcolare la chiave privata crittografata.</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>Indirizzo:</translation>
+    </message>
+    <message>
+        <source>The Ion address to sign the message with</source>
+        <translation>L'indirizzo Ion per firmare il messaggio con</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>Scegli l'indirizzo utilizzato in precedenza</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>Incolla l'indirizzo dagli appunti</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Passphrase: </source>
+        <translation>Passphrase:</translation>
+    </message>
+    <message>
+        <source>Encrypted Key:</source>
+        <translation>Chiave crittografata:</translation>
+    </message>
+    <message>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>Copiare la firma corrente negli Appunti di sistema</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Firmare il messaggio per dimostrare di possedere questo indirizzo ION</translation>
+    </message>
+    <message>
+        <source>Encrypt &amp;Key</source>
+        <translation>Cripta &amp;Key</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>Reimposta tutti i campi del messaggio segno</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>Cancella &amp;All</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>&amp;BIP 38 Decripta</translation>
+    </message>
+    <message>
+        <source>Enter the BIP 38 encrypted private key. Enter the passphrase in the middle box. Click Decrypt Key to compute the private key. After the key is decrypted, clicking 'Import Address' will add this private key to the wallet.</source>
+        <translation>Immettere la chiave privata codificata BIP 38. Inserire la passphrase nella casella centrale. Fare clic su Decripta Chiave per calcolare la chiave privata. Dopo che la chiave viene decrittata, cliccando su "Importa indirizzo" verrà aggiunta questa chiave privata al portafoglio.</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>L'indirizzo Ion con cui è stato firmato il messaggio</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Verificare il messaggio per assicurarsi che sia stato firmato con l'indirizzo Ion specificato </translation>
+    </message>
+    <message>
+        <source>Decrypt &amp;Key</source>
+        <translation>Decripta &amp;Key</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>Ripristinare tutti i campi del messaggio verificati</translation>
+    </message>
+    <message>
+        <source>Decrypted Key:</source>
+        <translation>Chiave decifrata:</translation>
+    </message>
+    <message>
+        <source>Import Address</source>
+        <translation>Importa indirizzo</translation>
+    </message>
+    <message>
+        <source>Click "Decrypt Key" to compute key</source>
+        <translation>Fai clic su "Decripta Chiave" per calcolare la chiave</translation>
+    </message>
+    <message>
+        <source>The entered passphrase is invalid. </source>
+        <translation>La frase inserita non è valida.</translation>
+    </message>
+    <message>
+        <source>Allowed: 0-9,a-z,A-Z,</source>
+        <translation>Sono ammessi: 0-9, a-z, A-Z,</translation>
+    </message>
+    <message>
+        <source>The entered address is invalid.</source>
+        <translation>L'indirizzo inserito non è valido.</translation>
+    </message>
+    <message>
+        <source>Please check the address and try again.</source>
+        <translation>Per favore controlla l'indirizzo e riprova.</translation>
+    </message>
+    <message>
+        <source>The entered address does not refer to a key.</source>
+        <translation>L'indirizzo inserito non corrisponde a una chiave.</translation>
+    </message>
+    <message>
+        <source>Wallet unlock was cancelled.</source>
+        <translation>Lo sblocco portafoglio è stato annullato.</translation>
+    </message>
+    <message>
+        <source>Private key for the entered address is not available.</source>
+        <translation>La chiave privata per l'indirizzo inserito non è disponibile.</translation>
+    </message>
     <message>
         <source>IP/Netmask</source>
         <translation>IP/Netmask</translation>
@@ -560,8 +688,8 @@
         <translation>Informazioni su &amp;PrivateSend</translation>
     </message>
     <message>
-        <source>Show the PrivateSend basic information</source>
-        <translation>Mostra le informazioni basiche del PrivateSend</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>Invia monete all' indirizzo ION</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -588,12 +716,12 @@
         <translation><numerusform>%n connessione attiva alla rete Ion</numerusform><numerusform>%n connessioni attive alla rete Ion</numerusform></translation>
     </message>
     <message>
-        <source>Network activity disabled</source>
-        <translation>Attività di rete disabilitata</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>Firma i messaggi con i tuoi indirizzi Ion per dimostrare di essere il proprietario </translation>
     </message>
     <message>
-        <source>Syncing Headers (%1%)...</source>
-        <translation>Sincronizzazione Headers (%1%)...</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>Verifica i messaggi per assicurarsi che siano stati firmati con indirizzi Ion specifici</translation>
     </message>
     <message>
         <source>Synchronizing with network...</source>
@@ -612,12 +740,8 @@
         <translation>Re-indicizzazione blocchi su disco...</translation>
     </message>
     <message>
-        <source>Connecting to peers...</source>
-        <translation>Connessione ai peers</translation>
-    </message>
-    <message numerus="yes">
-        <source>Processed %n block(s) of transaction history.</source>
-        <translation><numerusform>Elaborati %n blocchi della cronologia delle transazioni.</numerusform><numerusform>Elaborati %n blocchi della cronologia delle transazioni.</numerusform></translation>
+        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <translation>Mostra il messaggio di aiuto Ion Core per ottenere un elenco con le possibili opxioni di riga di comando ION</translation>
     </message>
     <message>
         <source>%1 behind</source>
@@ -5176,8 +5300,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Crea  fino a  N inputs per ciascun importo denominato (%u-%u, default: %u)</translation>
     </message>
     <message>
-        <source>Error loading %s</source>
-        <translation>Errore caricamento %s</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>L'indirizzo Ion per firmare il messaggio con</translation>
     </message>
     <message>
         <source>Error loading %s: Wallet corrupted</source>
@@ -5200,16 +5324,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Errore durante l'aggiornamento del database chainstate</translation>
     </message>
     <message>
-        <source>Failed to find mixing queue to join</source>
-        <translation>Impossibile trovare la coda di mixaggio a cui unirsi</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Firmare il messaggio per dimostrare di possedere questo indirizzo ION</translation>
     </message>
     <message>
-        <source>Failed to start a new mixing queue</source>
-        <translation>Impossibile avviare una nuova coda di mixaggio</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>L'indirizzo Ion con cui è stato firmato il messaggio</translation>
     </message>
     <message>
-        <source>Initialization sanity check failed. %s is shutting down.</source>
-        <translation>Test di integrità iniziale fallito. %s si arresterà.</translation>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Verificare il messaggio per assicurarsi che sia stato firmato con l'indirizzo Ion specificato </translation>
     </message>
     <message>
         <source>Inputs vs outputs size mismatch.</source>

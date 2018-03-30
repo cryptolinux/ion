@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>這些是你要付款過去的達世幣位址。在付錢之前，務必要檢查金額和收款位址是否正確。</translation>
+        <translation>這是你用來付款的 Ion 位址, 送出前, 請務必確認金額及接收位址是否正確.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>這些是你用來收款的達世幣位址。建議在每次交易時，都使用一個新的收款位址。</translation>
+        <translation>這是你用來接收款項的 Ion 位址, 建議你每次付款都使用新的位址.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -231,8 +231,8 @@
         <translation>確認錢包加密</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ION&lt;/b&gt;!</source>
-        <translation>警告: 如果把錢包加密後又忘記密碼，你就會從此&lt;b&gt;失去其中所有的達世幣了&lt;/b&gt;！</translation>
+        <source>ION will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your IONs from being stolen by malware infecting your computer.</source>
+        <translation>ION 現在會關閉程式來處理加密流程, 請注意, 僅僅是加密你的錢包並不能完全保護你的 Ion 幣被可疑軟體或病毒偷走的風險.</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -301,8 +301,8 @@
 <context>
     <name>BitcoinAmountField</name>
     <message>
-        <source>Amount in %1</source>
-        <translation>金額 %1</translation>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>輸入你想 BIP 38 加密的 Ion 位址, 輸入密碼在中間欄, 按下加密按鈕來產生加密私鑰.</translation>
     </message>
 </context>
 <context>
@@ -312,8 +312,8 @@
         <translation>發生致命錯誤。達世幣核心軟體不再能安全地繼續運行下去，程式將會關閉。</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>達世幣核心</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>對訊息簽名的 Ion 位址</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -344,8 +344,8 @@
         <translation>接收(&amp;R)</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and ion: URIs)</source>
-        <translation>要求付款(產生 QR Code 和達世幣付款協議的 URI)</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>使用簽章來證明你是該  Ion 位址的擁有者,</translation>
     </message>
     <message>
         <source>&amp;Transactions</source>
@@ -364,12 +364,12 @@
         <translation>瀏覽主節點</translation>
     </message>
     <message>
-        <source>E&amp;xit</source>
-        <translation>結束(&amp;E)</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>此訊息之 Ion 位址已簽章於</translation>
     </message>
     <message>
-        <source>Quit application</source>
-        <translation>結束應用程式</translation>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>驗證訊息以確保該  Ion 位址已被簽章</translation>
     </message>
     <message>
         <source>Show information about Ion Core</source>
@@ -668,10 +668,8 @@
         <translation>收到多筆交易</translation>
     </message>
     <message>
-        <source>Sent Amount: %1
-</source>
-        <translation>發送金額: %1
-</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>送出錢幣到 Ion 地址</translation>
     </message>
     <message>
         <source>Received Amount: %1
@@ -704,18 +702,16 @@
 </translation>
     </message>
     <message>
-        <source>Address: %1
-</source>
-        <translation>位址: %1
-</translation>
+        <source>Modify configuration options for ION</source>
+        <translation>修改 Ion 設定</translation>
     </message>
     <message>
-        <source>Sent transaction</source>
-        <translation>付款交易</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>使用你的 Ion 位址對訊息簽章, 來證明你是擁有者</translation>
     </message>
     <message>
-        <source>Incoming transaction</source>
-        <translation>收款交易</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>驗證訊息簽章與 Ion 位址吻合</translation>
     </message>
     <message>
         <source>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</source>
@@ -761,8 +757,8 @@
         <translation>零散錢:</translation>
     </message>
     <message>
-        <source>After Fee:</source>
-        <translation>計費後金額:</translation>
+        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <translation>顯示 Ion Core 幫助訊息以取得 Ion 命令列表選項</translation>
     </message>
     <message>
         <source>Change:</source>
@@ -986,8 +982,8 @@
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>version</source>
-        <translation>版本</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>對訊息簽名的 Ion 位址</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
@@ -1010,16 +1006,16 @@
         <translation>命令列選項</translation>
     </message>
     <message>
-        <source>UI Options:</source>
-        <translation>使用界面選項:</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>使用簽章來證明你是該  Ion 位址的擁有者,</translation>
     </message>
     <message>
-        <source>Choose data directory on startup (default: %u)</source>
-        <translation>啓動時選擇資料目錄(預設值: %u)</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>此訊息之 Ion 位址已簽章於</translation>
     </message>
     <message>
-        <source>Set the font family. Possible values: %1. (default: %2)</source>
-        <translation>設置字體系列。 可能的值: %1. (預設值: %2)</translation>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>驗證訊息以確保該  Ion 位址已被簽章</translation>
     </message>
     <message>
         <source>Set a scale factor which gets applied to the base font size. Possible range %1 (smallest fonts) to %2 (largest fonts). (default: %3)</source>

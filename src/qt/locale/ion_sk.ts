@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Toto sú vaše Ion adresy pre posielanie platieb. Pred poslaním mincí vždy overte sumu a doručovaciu adresu.</translation>
+        <translation>Toto sú vaše Ion adresy na odosielanie platieb. Pred odoslaním vždy skontrolujte výšku a adresu prijemcu.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Toto sú vaše Ion adresy pre posielanie platieb. Pre každú transakciu sa doporučuje použiť novú doručovaciu adresu.</translation>
+        <translation>Toto sú vaše Ion adresy na prijímanie platieb. Pre každú transakciu sa odporúča použiť novú prijímaciu adresu.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -191,12 +191,16 @@
         <translation>Potvrďte zašifrovanie peňaženky</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ION&lt;/b&gt;!</source>
-        <translation>Upozornenie: Ak zašifrujete vašu peňaženku a stratíte prístupové heslo, potom &lt;b&gt;prídete o všetky svoje ION-y&lt;/b&gt;!</translation>
+        <source>ION will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your IONs from being stolen by malware infecting your computer.</source>
+        <translation>ION sa teraz ukončí, aby dokončil proces šifrovania. Nezabudnite, že šifrovanie peňaženky nemôže úplne ochrániť vaše Ion pred odcudzením škodlivým softvérom, ktorý infikuje váš počítač.</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
-        <translation>Ste si istí, že si želáte zašifrovať peňaženku?</translation>
+        <translation>Naozaj chcete zašifrovať svoju peňaženku?</translation>
+    </message>
+    <message>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ION&lt;/b&gt;!</source>
+        <translation>Upozornenie: Ak zašifrujete svoju peňaženku a stratíte svoju prístupovú frázu, &lt;b&gt; PRÍDETE O VŠETKY Ion &lt;/ b&gt;!</translation>
     </message>
     <message>
         <source>Wallet encrypted</source>
@@ -248,7 +252,151 @@
     </message>
 </context>
 <context>
-    <name>BanTableModel</name>
+    <name>Bip38ToolDialog</name>
+    <message>
+        <source>BIP 38 Tool</source>
+        <translation>BIP 38 Utilita</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Encrypt</source>
+        <translation>BIP 38 Šifrovanie</translation>
+    </message>
+    <message>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Zadajte adresu ION, ktorú chcete zašifrovať pomocou BIP 38. Zadajte prístupovú frázu do stredného poľa. Stlačte šifrovanie na výpočet šifrovaného privátneho kľúča.</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>Adresa:</translation>
+    </message>
+    <message>
+        <source>The Ion address to sign the message with</source>
+        <translation>Adresa ION, ktorou chcete správu podpísať</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>Vyberte predtým použitú adresu</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>Vložte adresu zo schránky</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Passphrase: </source>
+        <translation>Prístupová fráza:</translation>
+    </message>
+    <message>
+        <source>Encrypted Key:</source>
+        <translation>Šifrovaný kľúč:</translation>
+    </message>
+    <message>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>Skopírujte aktuálny podpis do schránky</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Podpíšte správu, aby ste preukázali, že ste vlastníkom tejto Ion adresy</translation>
+    </message>
+    <message>
+        <source>Encrypt &amp;Key</source>
+        <translation>Zašifrovať kľúč</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>Zmazať všetky polia správy</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>Všetko zmazať</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>BIP 38 dešifrovanie</translation>
+    </message>
+    <message>
+        <source>Enter the BIP 38 encrypted private key. Enter the passphrase in the middle box. Click Decrypt Key to compute the private key. After the key is decrypted, clicking 'Import Address' will add this private key to the wallet.</source>
+        <translation>Zadajte súkromný kľúč zašifrovaný BIP 38. Zadajte prístupovú frázu do stredného poľa. Kliknite na Dešifrovať kľúč, ak chcete vypočítať privátny kľúč. Po dešifrovaní kľúča pridáte do peňaženky tento súkromný kľúč kliknutím na položku 'Importovať adresu'.</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>ION adresa, ktorou bola správa podpísaná</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Skontrolujte správu, aby ste sa uistili, že bola podpísaná zadanou Ion adresou</translation>
+    </message>
+    <message>
+        <source>Decrypt &amp;Key</source>
+        <translation>Dešifrovať kľúč</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>Zmazať všetky polia verifikácie správy</translation>
+    </message>
+    <message>
+        <source>Decrypted Key:</source>
+        <translation>Dešifrovaný kľúč:</translation>
+    </message>
+    <message>
+        <source>Import Address</source>
+        <translation>Importovať adresu:</translation>
+    </message>
+    <message>
+        <source>Click "Decrypt Key" to compute key</source>
+        <translation>Kliknite na tlačidlo "Dešifrovať kľúč" pre výpočet kľúča</translation>
+    </message>
+    <message>
+        <source>The entered passphrase is invalid. </source>
+        <translation>Zadaná prístupová fráza je neplatná.</translation>
+    </message>
+    <message>
+        <source>Allowed: 0-9,a-z,A-Z,</source>
+        <translation>Povolené: 0-9, a-z, A-Z,</translation>
+    </message>
+    <message>
+        <source>The entered address is invalid.</source>
+        <translation>Zadaná adresa je neplatná.</translation>
+    </message>
+    <message>
+        <source>Please check the address and try again.</source>
+        <translation>Skontrolujte adresu a skúste to znova.</translation>
+    </message>
+    <message>
+        <source>The entered address does not refer to a key.</source>
+        <translation>Zadaná adresa neodkazuje na kľúč.</translation>
+    </message>
+    <message>
+        <source>Wallet unlock was cancelled.</source>
+        <translation>Odomknutie peňaženky bolo zrušené.</translation>
+    </message>
+    <message>
+        <source>Private key for the entered address is not available.</source>
+        <translation>Súkromný kľúč pre zadanú adresu nie je k dispozícii.</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt.</source>
+        <translation>Dešifrovanie zlyhalo.</translation>
+    </message>
+    <message>
+        <source>Please check the key and passphrase and try again.</source>
+        <translation>Skontrolujte, prosím, kľúč a prístupovú frázu a skúste to znova.</translation>
+    </message>
+    <message>
+        <source>Data Not Valid.</source>
+        <translation>Neplatné dáta.</translation>
+    </message>
+    <message>
+        <source>Please try again.</source>
+        <translation>Prosím skúste znova.</translation>
+    </message>
     <message>
         <source>IP/Netmask</source>
         <translation>IP/Sieťová maska</translation>
@@ -536,8 +684,8 @@
         <translation><numerusform>%n aktívne spojenie so sieťou Ion</numerusform><numerusform>%n aktívne spojenia so sieťou Ion</numerusform><numerusform>%n aktívnych spojení so sieťou Ion</numerusform><numerusform>%n aktívnych spojení so sieťou Ion</numerusform></translation>
     </message>
     <message>
-        <source>Network activity disabled</source>
-        <translation>Sieťová aktivita zakázaná</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>Odoslať mince na adresu ION</translation>
     </message>
     <message>
         <source>Syncing Headers (%1%)...</source>
@@ -568,12 +716,12 @@
         <translation><numerusform>Spracovaný jeden blok transakčnej histórie.</numerusform><numerusform>Spracované %n bloky transakčnej histórie.</numerusform><numerusform>Spracovaných %n blokov transakčnej histórie.</numerusform><numerusform>Spracovaných %n blokov transakčnej histórie.</numerusform></translation>
     </message>
     <message>
-        <source>%1 behind</source>
-        <translation>%1 pozadu</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>Podpíšte správy pomocou adresy ION, aby ste preukázali, že ich vlastníte</translation>
     </message>
     <message>
-        <source>Catching up...</source>
-        <translation>Sťahujem...</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>Overte správy, aby sa zabezpečilo, že boli podpísané zadanými Ion adresami</translation>
     </message>
     <message>
         <source>Last received block was generated %1 ago.</source>
@@ -616,10 +764,8 @@
         <translation>Prijaté hromadné transakcie</translation>
     </message>
     <message>
-        <source>Sent Amount: %1
-</source>
-        <translation>Poslaná suma: %1
-</translation>
+        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <translation>Zobraziť pomocnú správu programu Ion Core a získajte zoznam možností príkazového riadka ION</translation>
     </message>
     <message>
         <source>Received Amount: %1
@@ -1021,8 +1167,8 @@
         <translation>Použiť vlastný dátový adresár:</translation>
     </message>
     <message>
-        <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation>V tomto adresári bude uložené minimálne %1 GB dát, časom sa využité dáta zvýšia.</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>Adresa ION, ktorou chcete správu podpísať</translation>
     </message>
     <message>
         <source>Approximately %1 GB of data will be stored in this directory.</source>
@@ -1045,19 +1191,19 @@
         <translation>Chyba</translation>
     </message>
     <message>
-        <source>%1 GB of free space available</source>
-        <translation>%1 GB dostupného voľného miesta</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Podpíšte správu, aby ste preukázali, že ste vlastníkom tejto Ion adresy</translation>
     </message>
     <message>
-        <source>(of %1 GB needed)</source>
-        <translation>(z potrebných %1GB)</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>ION adresa, ktorou bola správa podpísaná</translation>
     </message>
 </context>
 <context>
     <name>MasternodeList</name>
     <message>
-        <source>Form</source>
-        <translation>Od</translation>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Skontrolujte správu, aby ste sa uistili, že bola podpísaná zadanou Ion adresou</translation>
     </message>
     <message>
         <source>Status</source>

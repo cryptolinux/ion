@@ -54,8 +54,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 sub.idx = i; // vout index
                 sub.credit = txout.nValue;
                 sub.involvesWatchAddress = mine & ISMINE_WATCH_ONLY;
-                if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*wallet, address))
-                {
+                if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*wallet, address)) {
                     // Received by Ion Address
                     sub.type = TransactionRecord::RecvWithAddress;
                     sub.strAddress = EncodeDestination(address);
@@ -127,13 +126,10 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
             {
                 sub.type = TransactionRecord::PrivateSend;
                 CTxDestination address;
-                if (ExtractDestination(wtx.tx->vout[0].scriptPubKey, address))
-                {
+                if (ExtractDestination(wtx.vout[0].scriptPubKey, address)) {
                     // Sent to Ion Address
-                    sub.strAddress = CBitcoinAddress(address).ToString();
-                }
-                else
-                {
+                    sub.address = CBitcoinAddress(address).ToString();
+                } else {
                     // Sent to IP, or other non-address transaction like OP_EVAL
                     sub.strAddress = mapValue["to"];
                     sub.txDest = DecodeDestination(sub.strAddress);
@@ -218,8 +214,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 }
 
                 CTxDestination address;
-                if (ExtractDestination(txout.scriptPubKey, address))
-                {
+                if (ExtractDestination(txout.scriptPubKey, address)) {
                     // Sent to Ion Address
                     sub.type = TransactionRecord::SendToAddress;
                     sub.strAddress = EncodeDestination(address);

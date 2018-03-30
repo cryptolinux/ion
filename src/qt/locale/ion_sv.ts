@@ -59,11 +59,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>De här är dina Ion-adresser för att skicka betalningar. Kontrollera alltid mängden och mottagaradressen innan du skickar mynt.</translation>
+        <translation>Det här är dina Ion adresser för att sända betalningar. Kontrollera alltid summan och mottagaradressen före du sänder mynt.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>De här är dina Ion-adresser för betalningsmottagningar. Det rekommenderas att använda en ny mottagaradress för varje transaktion.</translation>
+        <translation>Det här är dina Ion adresser för att ta emot betalningar. Det är rekomenderat att använda en ny mottagaradress för varje transaktion.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -217,7 +217,164 @@
     </message>
 </context>
 <context>
-    <name>BitcoinGUI</name>
+    <name>Bip38ToolDialog</name>
+    <message>
+        <source>BIP 38 Tool</source>
+        <translation>BIP 38 Verktyg</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Encrypt</source>
+        <translation>BIP 38 Kryptering</translation>
+    </message>
+    <message>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Ange en Ion adress som du vill kryptera med BIP 38.
+Ange en lösenfras i den mellersta boxen. Tryck kryptera för att beräkna den krypterade privata nyckeln.</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>Adress:</translation>
+    </message>
+    <message>
+        <source>The Ion address to sign the message with</source>
+        <translation>ION adressen för signera meddelandet med</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>Använd den föregående använda adressen</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>Limma in adress från urklipp</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Passphrase: </source>
+        <translation>Lösenfras:</translation>
+    </message>
+    <message>
+        <source>Encrypted Key:</source>
+        <translation>Krypterad Nyckel:</translation>
+    </message>
+    <message>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>Kopiera den nuvarande signaturen till systemets urklipp</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Signera meddelandet för att bevisa att du äger denna Ion adress</translation>
+    </message>
+    <message>
+        <source>Encrypt &amp;Key</source>
+        <translation>Kryptera &amp;Nyckel</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>Återställ alla signatur meddelande fält</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>Rensa &amp;allt</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>&amp;BIP 38 Avkryptera</translation>
+    </message>
+    <message>
+        <source>Enter the BIP 38 encrypted private key. Enter the passphrase in the middle box. Click Decrypt Key to compute the private key. After the key is decrypted, clicking 'Import Address' will add this private key to the wallet.</source>
+        <translation>Ange BIP 38 krypterade privata nyckeln. Ange lösenfrasen i med mittersta boxen. Tryck på krypetra nyckel för att beräkna den privata nyckeln. Efter att nyckeln är avkrypterad, Tryck på 'Importera Adress' kommer att lägga till denna privata nyckel till plånboken.</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>ION adressen meddelandet blev signerat med</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Verifiera meddelandet för att säkerställa att de blev signerat med den specifika Ion adressen.</translation>
+    </message>
+    <message>
+        <source>Decrypt &amp;Key</source>
+        <translation>Avkryptera &amp;Nyckel</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>Återställ alla verifierande fält</translation>
+    </message>
+    <message>
+        <source>Decrypted Key:</source>
+        <translation>Avkrypterad Nyckel:</translation>
+    </message>
+    <message>
+        <source>Import Address</source>
+        <translation>Importera Adress</translation>
+    </message>
+    <message>
+        <source>Click "Decrypt Key" to compute key</source>
+        <translation>Tryck "Avkryptera Nyckel" för att beräkna nyckel</translation>
+    </message>
+    <message>
+        <source>The entered passphrase is invalid. </source>
+        <translation>Den angivna lösenfrasen är felaktig</translation>
+    </message>
+    <message>
+        <source>Allowed: 0-9,a-z,A-Z,</source>
+        <translation>Tillåtna: 0-9,a-z.A-Z.</translation>
+    </message>
+    <message>
+        <source>The entered address is invalid.</source>
+        <translation>Den angivna adressen är felaktig</translation>
+    </message>
+    <message>
+        <source>Please check the address and try again.</source>
+        <translation>Var vänlig kontrollera adressen och försök igen.</translation>
+    </message>
+    <message>
+        <source>The entered address does not refer to a key.</source>
+        <translation>Den angivna adressen refererar inte till en nyckel.</translation>
+    </message>
+    <message>
+        <source>Wallet unlock was cancelled.</source>
+        <translation>Upplåsningen av plånboken var avbruten.</translation>
+    </message>
+    <message>
+        <source>Private key for the entered address is not available.</source>
+        <translation>Den privata nyckel som angivits flr adressen är inte tillgänglig.</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt.</source>
+        <translation>Avkryptering misslyckades</translation>
+    </message>
+    <message>
+        <source>Please check the key and passphrase and try again.</source>
+        <translation>Var vänlig och kontrollera nyckeln och lösenfrasen och pröva igen.</translation>
+    </message>
+    <message>
+        <source>Data Not Valid.</source>
+        <translation>Data ogiltig.</translation>
+    </message>
+    <message>
+        <source>Please try again.</source>
+        <translation>Var vänlig försök igen.</translation>
+    </message>
+    <message>
+        <source>Please wait while key is imported</source>
+        <translation>Var god vänta medans nyckeln importeras</translation>
+    </message>
+    <message>
+        <source>Key Already Held By Wallet</source>
+        <translation>Nyckeln är redan bunden till plånboken</translation>
+    </message>
+    <message>
+        <source>Error Adding Key To Wallet</source>
+        <translation>Fel när nyckel skulle läggas till plånbok</translation>
+    </message>
     <message>
         <source>Ion Core</source>
         <translation>Ion Core
@@ -433,27 +590,47 @@
     </message>
     <message>
         <source>Tabs toolbar</source>
-        <translation>Verktygsfält för tabbar</translation>
+        <translation>flik vertygsrad</translation>
     </message>
     <message>
-        <source>Synchronizing with network...</source>
-        <translation>Synkroniserar med nätverk...</translation>
+        <source>Ion Core</source>
+        <translation>ION Kärna</translation>
     </message>
     <message>
-        <source>Importing blocks from disk...</source>
-        <translation>Importerar block från disk...</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>Skicka mynt till en Ion adress</translation>
+    </message>
+    <message>
+        <source>Request payments (generates QR codes and ion: URIs)</source>
+        <translation>Begär betalning (genererar QR kod och ion: URls)</translation>
+    </message>
+    <message>
+        <source>&amp;Masternodes</source>
+        <translation>Masternoder</translation>
+    </message>
+    <message>
+        <source>Browse masternodes</source>
+        <translation>Utforska masternoder</translation>
+    </message>
+    <message>
+        <source>&amp;About Ion Core</source>
+        <translation>Om Ion Kärnan</translation>
+    </message>
+    <message>
+        <source>Show information about Ion Core</source>
+        <translation>Visa information om Ion Kärnan</translation>
     </message>
     <message>
         <source>Reindexing blocks on disk...</source>
         <translation>Återindexerar block på disk...</translation>
     </message>
     <message>
-        <source>No block source available...</source>
-        <translation>Ingen tillgänglig blockkälla...</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>Signera meddelanden med din Ion adress för att visa att du äger dem</translation>
     </message>
     <message>
-        <source>Up to date</source>
-        <translation>Aktuell</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>Verifiera meddelandet för att säkerställa att de blev signerat med den specifika Ion adressen.</translation>
     </message>
     <message>
         <source>%1 and %2</source>
@@ -2818,8 +2995,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Anslut endast till specifik(a) nod(er)</translation>
     </message>
     <message>
-        <source>Connect to a node to retrieve peer addresses, and disconnect</source>
-        <translation>Anslut till en nod för att återfå peer-adresser och koppla från</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>ION adressen för signera meddelandet med</translation>
     </message>
     <message>
         <source>Connection options:</source>
@@ -2842,16 +3019,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Upptäck din egen IP-adress (standardvärde: 1 vid avlyssning och no -externalip)</translation>
     </message>
     <message>
-        <source>Do not load the wallet and disable wallet RPC calls</source>
-        <translation>Ladda inte plånboken och inaktivera plånboks-RPC-anrop</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Signera meddelandet för att bevisa att du äger denna Ion adress</translation>
     </message>
     <message>
-        <source>Do you want to rebuild the block database now?</source>
-        <translation>Vill du återuppbygga blockdatabasen nu?</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>ION adressen meddelandet blev signerat med</translation>
     </message>
     <message>
-        <source>Done loading</source>
-        <translation>Laddning färdig</translation>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Verifiera meddelandet för att säkerställa att de blev signerat med den specifika Ion adressen.</translation>
     </message>
     <message>
         <source>Entries are full.</source>

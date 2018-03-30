@@ -486,10 +486,10 @@
          </property>
         </widget>
        </item>
-       <item row="17" column="1">
-        <widget class="QLabel" name="instantSendLockCount">
-         <property name="cursor">
-          <cursorShape>IBeamCursor</cursorShape>
+       <item row="16" column="0">
+        <widget class="QPushButton" name="openDebugLogfileButton">
+         <property name="toolTip">
+          <string>Open the Ion debug log file from the current data directory. This can take a few seconds for large log files.</string>
          </property>
          <property name="text">
           <string>N/A</string>

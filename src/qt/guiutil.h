@@ -36,89 +36,30 @@ QT_END_NAMESPACE
  */
 namespace GUIUtil
 {
-    /* Enumeration of possible "colors" */
-    enum class ThemedColor {
-        /* Transaction list -- TX status decoration - default color */
-        DEFAULT,
-        /* Transaction list -- unconfirmed transaction */
-        UNCONFIRMED,
-        /* Theme related blue color */
-        BLUE,
-        /* Eye-friendly orange color */
-        ORANGE,
-        /* Eye-friendly red color, e.g. Transaction list -- negative amount */
-        RED,
-        /* Eye-friendly green color */
-        GREEN,
-        /* Transaction list -- bare address (without label) */
-        BAREADDRESS,
-        /* Transaction list -- TX status decoration - open until date */
-        TX_STATUS_OPENUNTILDATE,
-        /* Background used for some widgets. Its slightly darker than the wallets frame background. */
-        BACKGROUND_WIDGET,
-        /* Border color used for some widgets. Its slightly brighter than BACKGROUND_WIDGET. */
-        BORDER_WIDGET,
-        /* Border color of network statistics overlay in debug window. */
-        BORDER_NETSTATS,
-        /* Background color of network statistics overlay in debug window. */
-        BACKGROUND_NETSTATS,
-        /* Pixel color of generated QR codes. */
-        QR_PIXEL,
-        /* Alternative color for black/white icons. White part will be filled with this color by default. */
-        ICON_ALTERNATIVE_COLOR,
-    };
+// Create human-readable string from date
+QString dateTimeStr(const QDateTime& datetime);
+QString dateTimeStr(qint64 nTime);
 
-    /* Enumeration of possible "styles" */
-    enum class ThemedStyle {
-        /* Invalid field background style */
-        TS_INVALID,
-        /* Failed operation text style */
-        TS_ERROR,
-        /* Failed operation text style */
-        TS_SUCCESS,
-        /* Comand text style */
-        TS_COMMAND,
-        /* General text styles */
-        TS_PRIMARY,
-        TS_SECONDARY,
-    };
+// Render Ion addresses in monospace font
+QFont bitcoinAddressFont();
 
-    /** Helper to get colors for various themes which can't be applied via css for some reason */
-    QColor getThemedQColor(ThemedColor color);
+// Set up widgets for address and amounts
+void setupAddressWidget(QValidatedLineEdit* widget, QWidget* parent);
+void setupAmountWidget(QLineEdit* widget, QWidget* parent);
 
-    /** Helper to get css style strings which are injected into rich text through qt */
-    QString getThemedStyleQString(ThemedStyle style);
+// Parse "ion:" URI into recipient object, return true on successful parsing
+bool parseBitcoinURI(const QUrl& uri, SendCoinsRecipient* out);
+bool parseBitcoinURI(QString uri, SendCoinsRecipient* out);
+QString formatBitcoinURI(const SendCoinsRecipient& info);
 
-    /** Helper to get an icon colorized with the given color (replaces black) and colorAlternative (replaces white)  */
-    QIcon getIcon(const QString& strIcon, ThemedColor color, ThemedColor colorAlternative, const QString& strIconPath = ICONS_PATH);
-    QIcon getIcon(const QString& strIcon, ThemedColor color = ThemedColor::BLUE, const QString& strIconPath = ICONS_PATH);
+// Returns true if given address+amount meets "dust" definition
+bool isDust(const QString& address, const CAmount& amount);
 
-    /** Helper to set an icon for a button with the given color (replaces black) and colorAlternative (replaces white). */
-    void setIcon(QAbstractButton* button, const QString& strIcon, ThemedColor color, ThemedColor colorAlternative, const QSize& size);
-    void setIcon(QAbstractButton* button, const QString& strIcon, ThemedColor color = ThemedColor::BLUE, const QSize& size = QSize(BUTTON_ICONSIZE, BUTTON_ICONSIZE));
+// HTML escaping for rich text controls
+QString HtmlEscape(const QString& str, bool fMultiLine = false);
+QString HtmlEscape(const std::string& str, bool fMultiLine = false);
 
-    // Create human-readable string from date
-    QString dateTimeStr(const QDateTime &datetime);
-    QString dateTimeStr(qint64 nTime);
-
-    // Set up widgets for address and amounts
-    void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent, bool fAllowURI = false);
-    void setupAmountWidget(QLineEdit *widget, QWidget *parent);
-
-    // Parse "ion:" URI into recipient object, return true on successful parsing
-    bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out);
-    bool parseBitcoinURI(QString uri, SendCoinsRecipient *out);
-    bool validateBitcoinURI(const QString& uri);
-    QString formatBitcoinURI(const SendCoinsRecipient &info);
-
-    // Returns true if given address+amount meets "dust" definition
-    bool isDust(const QString& address, const CAmount& amount);
-
-    // HTML escaping for rich text controls
-    QString HtmlEscape(const QString& str, bool fMultiLine=false);
-    QString HtmlEscape(const std::string& str, bool fMultiLine=false);
-
-    /** Copy a field of the currently selected entry of a view to the clipboard. Does nothing if nothing
+/** Copy a field of the currently selected entry of a view to the clipboard. Does nothing if nothing
         is selected.
        @param[in] column  Data column to extract from the model
        @param[in] role    Data role to extract from the model

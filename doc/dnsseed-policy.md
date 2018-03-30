@@ -7,8 +7,9 @@ As such, DNS seeds must be run by entities which have some minimum
 level of trust within the Ion community.
 
 Other implementations of Ion software may also use the same
-seeds and may be more exposed. In light of this exposure, this
-document establishes some basic expectations for operating dnsseeds.
+seeds and may be more exposed. In light of this exposure this
+document establishes some basic expectations for the expectations
+for the operation of dnsseeds.
 
 0. A DNS seed operating organization or person is expected to follow good
 host security practices, maintain control of applicable infrastructure,
@@ -17,7 +18,7 @@ contracted by the operator are equally expected to uphold these expectations.
 
 1. The DNS seed results must consist exclusively of fairly selected and
 functioning Ion nodes from the public network to the best of the
-operator's understanding and capability.
+operators understanding and capability.
 
 2. For the avoidance of doubt, the results may be randomized but must not
 single-out any group of hosts to receive different results unless due to an

@@ -203,7 +203,7 @@ private:
 };
 
 /** Main Ion application object */
-class BitcoinApplication: public QApplication
+class BitcoinApplication : public QApplication
 {
     Q_OBJECT
 public:
@@ -553,8 +553,8 @@ void BitcoinApplication::shutdownResult()
 
 void BitcoinApplication::handleRunawayException(const QString &message)
 {
-    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occurred. Ion Core can no longer continue safely and will quit.") + QString("\n\n") + message);
-    ::exit(EXIT_FAILURE);
+    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occurred. Ion can no longer continue safely and will quit.") + QString("\n\n") + message);
+    ::exit(1);
 }
 
 WId BitcoinApplication::getMainWinId() const

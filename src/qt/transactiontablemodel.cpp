@@ -411,17 +411,26 @@ QString TransactionTableModel::formatTxType(const TransactionRecord *wtx) const
         return tr("Payment to yourself");
     case TransactionRecord::Generated:
         return tr("Mined");
-
-    case TransactionRecord::PrivateSendDenominate:
-        return tr("PrivateSend Denominate");
-    case TransactionRecord::PrivateSendCollateralPayment:
-        return tr("PrivateSend Collateral Payment");
-    case TransactionRecord::PrivateSendMakeCollaterals:
-        return tr("PrivateSend Make Collateral Inputs");
-    case TransactionRecord::PrivateSendCreateDenominations:
-        return tr("PrivateSend Create Denominations");
-    case TransactionRecord::PrivateSend:
-        return "PrivateSend";
+    case TransactionRecord::ObfuscationDenominate:
+        return tr("Obfuscation Denominate");
+    case TransactionRecord::ObfuscationCollateralPayment:
+        return tr("Obfuscation Collateral Payment");
+    case TransactionRecord::ObfuscationMakeCollaterals:
+        return tr("Obfuscation Make Collateral Inputs");
+    case TransactionRecord::ObfuscationCreateDenominations:
+        return tr("Obfuscation Create Denominations");
+    case TransactionRecord::Obfuscated:
+        return tr("Obfuscated");
+    case TransactionRecord::ZerocoinMint:
+        return tr("Converted Ion to xION");
+    case TransactionRecord::ZerocoinSpend:
+        return tr("Spent xION");
+    case TransactionRecord::RecvFromZerocoinSpend:
+        return tr("Received Ion from xION");
+    case TransactionRecord::ZerocoinSpend_Change_xION:
+        return tr("Minted Change as xION from xION Spend");
+    case TransactionRecord::ZerocoinSpend_FromMe:
+        return tr("Converted xION to ION");
 
     default:
         return QString();

@@ -61,7 +61,7 @@ We reached several goals. Instead of pursuing these goals using the old code bas
 ### Our sources: 
 We forked from [PIVX](https://github.com/PIVX-Project/PIVX) and integrated ION's specific features into the PivX codebase.
 
-By doing so, we connect to an enthusiastic and active community - leaving behind old ION code that inherits from less actively developed and maintaned code. Our main sources are now derived from:
+By doing so, we connect to an enthusiastic and active community - leaving behind old Ion code that inherits from less actively developed and maintaned code. Our main sources are now derived from:
 
 By doing so, we connect to an enthusiastic and active community - leaving behind old Ion code that inherits from less actively developed and maintaned code. Our main sources are now derived from:
 
@@ -81,15 +81,7 @@ More information at [ionomy.com](https://www.ionomy.com) Visit our ANN thread at
 <tr><td>Premine</td><td>16,400,000 ION*</td></tr>
 </table>
 
-Coin specifications ||
-:------------ | :---:
-Algorithm | Quark |
-Retargeting Algorithm | DGW |
-Difficulty Retargeting | Every Block
-Max Coin Supply | 48,035,935.4 ION
-Premine | 16,400,000 ION*
-
-_*16,629,951 Ion Premine was burned in block [1](https://chainz.cryptoid.info/ion/block.dws?000000ed2f68cd6c7935831cc1d473da7c6decdb87e8b5dba0afff0b00002690.htm)_
+*16,629,951 Ion Premine was burned in block [1](https://chainz.cryptoid.info/ion/block.dws?000000ed2f68cd6c7935831cc1d473da7c6decdb87e8b5dba0afff0b00002690.htm)
 
 ### Reward Distribution
 

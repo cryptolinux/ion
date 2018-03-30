@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Estas son sus direcciones Ion para enviar pagos. Compruebe siempre la cantidad y la dirección receptora antes de enviar monedas.</translation>
+        <translation>Estas son sus direcciones Ion para realizar pagos. Verifique siempre la cantidad y la dirección de recepción antes de enviar monedas.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Estas son sus direcciones de Ion para recibir pagos. Se recomienda utilizar una nueva dirección de recepción para cada transacción.</translation>
+        <translation>Estas son sus direcciones Ion para recibir pagos. Es recomendable usar una nueva dirección de recepción para cada transacción.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -288,7 +288,135 @@
     </message>
 </context>
 <context>
-    <name>BanTableModel</name>
+    <name>Bip38ToolDialog</name>
+    <message>
+        <source>BIP 38 Tool</source>
+        <translation>Herramienta BIP 38</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Encrypt</source>
+        <translation>&amp;Cifrado BIP 38</translation>
+    </message>
+    <message>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Introduzca la dirección Ion que querría cifrar usando BIP 38. Introduzca una contraseña en el campo central. Haga clic en cifrar para generar la clave privada cifrada.</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>Dirección:</translation>
+    </message>
+    <message>
+        <source>The Ion address to sign the message with</source>
+        <translation>La dirección Ion con la que desee firmar el mensaje</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>Escoja una dirección usada previamente</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt + A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>Pegar dirección desde el portapapeles</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt + P</translation>
+    </message>
+    <message>
+        <source>Passphrase: </source>
+        <translation>Contraseña:</translation>
+    </message>
+    <message>
+        <source>Encrypted Key:</source>
+        <translation>Clave cifrada:</translation>
+    </message>
+    <message>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>Copiar la firma actual al portapapeles del sistema</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Firme el mensaje para demostrar que eres el propietario de esta dirección ION</translation>
+    </message>
+    <message>
+        <source>Encrypt &amp;Key</source>
+        <translation>Cifrar &amp;Clave</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>Limpiar todos los campos de firma de mensaje</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>Limpiar &amp;Todo</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>&amp;Descifrado BIP 38</translation>
+    </message>
+    <message>
+        <source>Enter the BIP 38 encrypted private key. Enter the passphrase in the middle box. Click Decrypt Key to compute the private key. After the key is decrypted, clicking 'Import Address' will add this private key to the wallet.</source>
+        <translation>Introduzca la clave cifrada privada BIP 38. Introduzca la contraseña en el campo central. Haga clic en descifrar clave para generar la clave privada. Después de que la clave sea descifrada, pulsando en 'Importar dirección' añadirá esta clave privada al monedero.</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>La dirección Ion con la que se firmó el mensaje</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Verifica el mensaje para asegurar que fue firmado con la dirección Ion especificada</translation>
+    </message>
+    <message>
+        <source>Decrypt &amp;Key</source>
+        <translation>Descifrar &amp;Clave</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>Limpiar todos los campos de verificación de mensaje</translation>
+    </message>
+    <message>
+        <source>Decrypted Key:</source>
+        <translation>Clave descifrada:</translation>
+    </message>
+    <message>
+        <source>Import Address</source>
+        <translation>Importar dirección</translation>
+    </message>
+    <message>
+        <source>Click "Decrypt Key" to compute key</source>
+        <translation>Haga clic en "Descifrar clave" para generar la clave</translation>
+    </message>
+    <message>
+        <source>The entered passphrase is invalid. </source>
+        <translation>La contraseña introducida es inválida</translation>
+    </message>
+    <message>
+        <source>Allowed: 0-9,a-z,A-Z,</source>
+        <translation>Permitido: 0-9,a.z,A-Z,</translation>
+    </message>
+    <message>
+        <source>The entered address is invalid.</source>
+        <translation>La dirección introducida es inválida</translation>
+    </message>
+    <message>
+        <source>Please check the address and try again.</source>
+        <translation>Por favor compruebe la dirección e inténtelo de nuevo.</translation>
+    </message>
+    <message>
+        <source>The entered address does not refer to a key.</source>
+        <translation>La dirección introducida no se refiere a ninguna clave.</translation>
+    </message>
+    <message>
+        <source>Wallet unlock was cancelled.</source>
+        <translation>El desbloqueo del monedero fue cancelado.</translation>
+    </message>
+    <message>
+        <source>Private key for the entered address is not available.</source>
+        <translation>La clave privada para la dirección introducida no está disponible.</translation>
+    </message>
     <message>
         <source>IP/Netmask</source>
         <translation>IP/Máscara de Red</translation>
@@ -592,8 +720,8 @@
         <translation>Actividad de red deshabilitada</translation>
     </message>
     <message>
-        <source>Syncing Headers (%1%)...</source>
-        <translation>Sincronizando encabezados (%1)...</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>Enviar coins a una dirección ION</translation>
     </message>
     <message>
         <source>Synchronizing with network...</source>
@@ -632,12 +760,12 @@
         <translation>El último bloque recibido fue generado hace %1.</translation>
     </message>
     <message>
-        <source>Transactions after this will not yet be visible.</source>
-        <translation>Las transacciones posteriores aún no están visibles.</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>Firmar mensajes con sus direcciones Ion para demostrar que le pertenecen</translation>
     </message>
     <message>
-        <source>Up to date</source>
-        <translation>Actualizado a la fecha</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>Verificar mensajes para asegurar que están firmados con la dirección Ion especificada</translation>
     </message>
     <message>
         <source>Synchronizing additional data: %p%</source>
@@ -686,10 +814,8 @@
 </translation>
     </message>
     <message>
-        <source>Amount: %1
-</source>
-        <translation>Cantidad: %1
-</translation>
+        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <translation>Mostrar la ayuda de Ion Core para obtener una lista de posibles opciones en línea de comandos</translation>
     </message>
     <message>
         <source>Type: %1
@@ -1030,8 +1156,8 @@
         <translation>Establece el peso de la fuente para textos en negrita. Rango posible %1 to %2 (default: %3)</translation>
     </message>
     <message>
-        <source>Set the font weight for normal texts. Possible range %1 to %2 (default: %3)</source>
-        <translation>Establece el peso de la fuente para textos normales. Rango posible %1 to %2 (default: %3)</translation>
+        <source>Ion Core will download and store a copy of the Ion block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>Ion Core descargará y guardará una copia de la cadena de bloques ION. Por lo menos %1GB de datos serán guardados en esta carpeta, y crecerá con el tiempo. El monedero también se guardará en esta carpeta.</translation>
     </message>
     <message>
         <source>Set language, for example "de_DE" (default: system locale)</source>
@@ -1136,8 +1262,14 @@
         <translation>Formulario</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation>Estado</translation>
+        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other Ion addresses after it matures.
+To Add: enter percentage to give and Ion address to add to the MultiSend vector.
+To Delete: Enter address to delete and press delete.
+MultiSend will not be activated unless you have clicked Activate</source>
+        <translation>MultiEnvío le permite enviar automáticamente hasta el 100% de recompensa de participación o de nodo maestro a una lista de otras direcciones Ion después de su maduración.
+Para Añadir: introduzca porcentaje a enviar y las direcciones Ion a añadir al vector MultiEnvío.
+Para Eliminar: Introduzca la dirección a eliminar y pulse la tecla delete.
+MultiEnvío no se activará a menos que haga usted click en Activar</translation>
     </message>
     <message>
         <source>0</source>
@@ -1275,20 +1407,20 @@
         <translation>Número de bloque restantes</translation>
     </message>
     <message>
-        <source>Unknown...</source>
-        <translation>Desconocido...</translation>
+        <source>This option is the quickest and will cost about ~0.025 Ion to anonymize 10000 ION</source>
+        <translation>Esta opción es la más rápida y costará alrededor de ~0.025 Ion para anonimizar 10000 ION</translation>
     </message>
     <message>
-        <source>Last block time</source>
-        <translation>Hora del último bloque</translation>
+        <source>This option is moderately fast and will cost about 0.05 Ion to anonymize 10000 ION</source>
+        <translation>Esta opción es moderadamente rápida y costará cerca de 0.05 Ion para anonimizar 10000 ION.</translation>
     </message>
     <message>
         <source>Progress</source>
         <translation>Progreso</translation>
     </message>
     <message>
-        <source>Progress increase per hour</source>
-        <translation>Aumento de progreso por hora</translation>
+        <source>0.1 Ion per 10000 Ion you anonymize.</source>
+        <translation>0.1 Ion por 10000 Ion que anonimizas.</translation>
     </message>
     <message>
         <source>calculating...</source>
@@ -1365,8 +1497,8 @@
         <translation>B&amp;illetera</translation>
     </message>
     <message>
-        <source>&amp;Appearance</source>
-        <translation>&amp;Apariencia</translation>
+        <source>Automatically open the Ion client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Abrir automáticamente el puerto del cliente Ion en el enrutador. Ésto sólo funciona si su enrutador soporta UPnP y esta función está activada.</translation>
     </message>
     <message>
         <source>Show additional tab listing all your masternodes in first sub-tab&lt;br/&gt;and all masternodes on the network in second sub-tab.</source>
@@ -1385,12 +1517,12 @@
         <translation>Habilitar interfaz avanzada de PrivateSend</translation>
     </message>
     <message>
-        <source>Show warning dialog when PrivateSend detects that wallet has very low number of keys left.</source>
-        <translation>Muestra el cuadro de diálogo de advertencia cuando PrivateSend detecta que la billetera tiene muy pocas llaves restantes.</translation>
+        <source>Automatically start Ion after logging in to the system.</source>
+        <translation>Arrancar Ion automáticamente después de identificarse en Windows.</translation>
     </message>
     <message>
-        <source>Warn if PrivateSend is running out of keys</source>
-        <translation>Advertir si PrivateSend se está quedando sin llaves</translation>
+        <source>&amp;Start Ion on system login</source>
+        <translation>&amp;Arrancar Ion al inicio del sistema</translation>
     </message>
     <message>
         <source>Whether to use experimental PrivateSend mode with multiple mixing sessions per block.&lt;br/&gt;Note: You must use this feature carefully.&lt;br/&gt;Make sure you always have recent wallet (auto)backup in a safe place!</source>
@@ -1429,20 +1561,20 @@
         <translation>Conectarse a la red Ion a través de un proxy SOCKS5.</translation>
     </message>
     <message>
-        <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>
-        <translation>&amp;Conectarse a través de proxy SOCKS5 (proxy predeterminado):</translation>
+        <source>Percentage of incoming Ion which get automatically converted to xION via Zerocoin Protocol (min: 10%)</source>
+        <translation>Porcentaje de IONs entrantes que serán automáticamente convertidos a xION a través del Protocolo Zerocoin (mín: 10%)</translation>
     </message>
     <message>
         <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
         <translation>Mostrar si el proxy SOCKS5 predeterminado suministrado se utiliza para llegar a los pares a través de este tipo de red.</translation>
     </message>
     <message>
-        <source>Use separate SOCKS&amp;5 proxy to reach peers via Tor hidden services:</source>
-        <translation>Usar por separado SOCKS&amp;5 proxy para llegar a pares a través de los servicios ocultos de Tor:</translation>
+        <source>Wait with automatic conversion to Zerocoin until enough Ion for this denomination is available</source>
+        <translation>Retrasar la conversión automática a Zerocoin hasta que hayan suficientes Ion disponibles para esta denominación</translation>
     </message>
     <message>
-        <source>Hide the icon from the system tray.</source>
-        <translation>Ocultar el icono de la bandeja del sistema.</translation>
+        <source>Connect to the Ion network through a SOCKS5 proxy.</source>
+        <translation>Conectar a la red Ion mediante un proxy SOCKS5.</translation>
     </message>
     <message>
         <source>&amp;Hide tray icon</source>
@@ -1658,8 +1790,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Saldo recién minado que aún no está disponible.</translation>
     </message>
     <message>
-        <source>Balances</source>
-        <translation>Saldos</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation>La información mostrada puede estar desactualizada. Su monedero se sincroniza automáticamente con la red Ion después de establecer una conexión, pero este proceso aún no se ha completado.</translation>
     </message>
     <message>
         <source>Unconfirmed transactions to watch-only addresses</source>
@@ -1770,8 +1902,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Suficientes entradas compatibles encontradas para mezclar %1 </translation>
     </message>
     <message>
-        <source>Not enough compatible inputs to mix &lt;span style='%1'&gt;%2&lt;/span&gt;,&lt;br&gt;will mix &lt;span style='%1'&gt;%3&lt;/span&gt; instead</source>
-        <translation>No hay suficientes entradas compatibles para mezclar &lt;span style='%1'&gt;%2&lt;/span&gt;,&lt;br&gt;mezclará &lt;span style='%1'&gt;%3&lt;/span&gt; </translation>
+        <source>URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters.</source>
+        <translation>¡El identificador de la dirección no puede ser analizado! Esto puede ser causado por una dirección Ion inválida o parámetros del identificador malformados.</translation>
     </message>
     <message>
         <source>Overall progress</source>
@@ -1853,8 +1985,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
 <context>
     <name>PaymentServer</name>
     <message>
-        <source>Payment request error</source>
-        <translation>Error en solicitud de pago</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation>La información mostrada puede estar desactualizada. Su monedero se sincroniza automáticamente con la red Ion después de establecer una conexión, pero este proceso aún no se ha completado.</translation>
     </message>
     <message>
         <source>Cannot start ion: click-to-pay handler</source>
@@ -1980,15 +2112,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Enter a Ion address (e.g. %1)</source>
-        <translation>Introduzca una dirección Ion (ej. %1)</translation>
-    </message>
-    <message>
-        <source>Appearance Setup</source>
-        <translation>Configuración de apariencia</translation>
-    </message>
-    <message>
-        <source>This can also be adjusted later in the "Appearance" tab of the preferences.</source>
-        <translation>Esto también se puede ajustar más adelante en la pestaña "Apariencia" de las preferencias.</translation>
+        <translation>Introduzca una dirección Ion (p.e. %1)</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -2117,8 +2241,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Titulo del Codigo QR</translation>
     </message>
     <message>
-        <source>QR Code</source>
-        <translation>Código QR</translation>
+        <source>Open the Ion debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Abrir el fichero de depuración Ion en el directorio actual de datos. Esto puede llevar unos segundos para ficheros de depuración grandes.</translation>
     </message>
     <message>
         <source>&amp;Save Image...</source>
@@ -2442,8 +2566,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>&amp;Desconectar</translation>
     </message>
     <message>
-        <source>Ban for</source>
-        <translation>Prohibido por</translation>
+        <source>Welcome to the Ion RPC console.</source>
+        <translation>Bienvenido a la consola RPC de ION.</translation>
     </message>
     <message>
         <source>1 &amp;hour</source>
@@ -2554,11 +2678,15 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>An optional label to associate with the new receiving address.</source>
-        <translation>Etiqueta opcional para asociar con la nueva dirección de recepción.</translation>
+        <translation>Una etiqueta opcional a asociar con la nueva dirección de recepción.</translation>
+    </message>
+    <message>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</source>
+        <translation>Un mensaje opcional a adjuntar a la solicitud de pago, que será mostrado cuando se abra la solicitud. Nota: El mensaje no se envía junto al pago por la red ION.</translation>
     </message>
     <message>
         <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Ion network.</source>
-        <translation>Un mensaje opcional para adjuntar con la solicitud de pago, el cual aparecerá cuando ésta sea abierta.&lt;br&gt;Nota: El mensaje no se enviará con el pago a la red Ion.</translation>
+        <translation>Un mensaje opcional a adjuntar a la solicitud de pago, que será mostrado cuando se abra la solicitud. &lt;br&gt;Nota: El mensaje no se envía junto al pago por la red ION.</translation>
     </message>
     <message>
         <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
@@ -2814,8 +2942,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Usando el fallbackfee puede resultar en enviar una transacción que tome varias horas o días (o nunca) para confirmar. Considere elegir su comisión manualmente o espere hasta que haya validado la cadena completa.</translation>
     </message>
     <message>
-        <source>Note: Not enough data for fee estimation, using the fallback fee instead.</source>
-        <translation>Nota: No hay suficientes datos para la estimación de tarifas, en su lugar se utiliza la tarifa de reserva.</translation>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for Ion transactions than the network can process.</source>
+        <translation>Pagar sólo la comisión mínima está bien mientras haya menos volumen de transacciones que espacio en los bloques.&lt;br/&gt;Pero tenga en cuenta que esto podría acabar en una transacción que nunca se confirme si hay más demanda de transacciones Ion de las que la red puede procesar.</translation>
     </message>
     <message>
         <source>Hide</source>
@@ -2906,8 +3034,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%1 a %2</translation>
     </message>
     <message>
-        <source>Are you sure you want to send?</source>
-        <translation>¿Está seguro que desea enviar?</translation>
+        <source>Warning: Invalid Ion address</source>
+        <translation>Advertencia: Direcciones Ion inválidas</translation>
     </message>
     <message>
         <source>are added as transaction fee</source>
@@ -3085,8 +3213,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Mensaje:</translation>
     </message>
     <message>
-        <source>A message that was attached to the ion: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</source>
-        <translation>Un mensaje que se adjuntó al Ion: URI que será almacenada con la transacción para su referencia. Nota: Este mensaje no se enviará a través de la red Ion.</translation>
+        <source>A message that was attached to the ION: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</source>
+        <translation>Un mensaje adjunto al ION: En recurso web especificado será guardado junto a la transacción para su referencia. Nota: Este mensaje no se enviará por la red ION.</translation>
     </message>
     <message>
         <source>This is an unauthenticated payment request.</source>
@@ -3119,8 +3247,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>%1 is shutting down...</source>
-        <translation>%1 se esta cerrando...</translation>
+        <source>Ion Core is shutting down...</source>
+        <translation>El programa Ion se está cerrando...</translation>
     </message>
     <message>
         <source>Do not shut down the computer until this window disappears.</source>
@@ -3143,7 +3271,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>The Ion address to sign the message with</source>
-        <translation>La dirección Ion con la cual se firma el mensaje</translation>
+        <translation>La dirección Ion con la que desee firmar el mensaje</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -3175,7 +3303,15 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Sign the message to prove you own this Ion address</source>
-        <translation>Firmar el mensaje para demostrar que posee esta dirección Ion</translation>
+        <translation>Firme el mensaje para demostrar que eres el propietario de esta dirección ION</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>La dirección Ion con la que se firmó el mensaje</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Verifica el mensaje para asegurar que fue firmado con la dirección Ion especificada</translation>
     </message>
     <message>
         <source>Sign &amp;Message</source>
@@ -4235,8 +4371,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Número mínimo inválido de firmantes de spork especificados con -minsporkkeys</translation>
     </message>
     <message>
-        <source>Keypool ran out, please call keypoolrefill first</source>
-        <translation>Keypool se ha agotado, llame a keypoolrefill primero</translation>
+        <source>Disable all Ion specific functionality (Masternodes, Obfuscation, SwiftTX, Budgeting) (0-1, default: %u)</source>
+        <translation>Desabilitar toda la funcionalidad especifica Ion (Masternodes, Obfuscation, SwiftTX, Budgeting) (0-1, predeterminado: %u)</translation>
     </message>
     <message>
         <source>Listen for JSON-RPC connections on &lt;port&gt; (default: %u or testnet: %u)</source>

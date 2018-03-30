@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Nämä ovat Ion osoitteesi maksujen lähetykseen. Tarkista aina lähetettävä määrä ja vastaanottajan osoite ennen kuin lähetät varoja.</translation>
+        <translation>Nämä ovat sinun Ion osoitteesi maksujen lähetystä varten. Tarkista aina määrä ja vastaanottava osoite ennen kolikoiden lähettämistä.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Nämä ovat Ion osoitteesi suoritusten vastaanottamiseen. Suositellaan että käytät uutta osoitetta kullekin siirtotapahtumalle.</translation>
+        <translation>Nämä ovat sinun Ion osoitteesi maksujen vastaanottamista varten. On suositeltavaa käyttää uutta vastaanottavaa osoitetta jokaiselle uudelle rahansiirrolle.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -288,7 +288,140 @@
     </message>
 </context>
 <context>
-    <name>BanTableModel</name>
+    <name>Bip38ToolDialog</name>
+    <message>
+        <source>BIP 38 Tool</source>
+        <translation>BIP 38 työkalu</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Encrypt</source>
+        <translation>&amp;BIP 38 Salaus</translation>
+    </message>
+    <message>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Syötä Ion osoite, jonnka tahtoisit salata käyttäen BIP 38.
+Syötä salausavain laatikon keskelle. Paina salaa tuottaaksesi salatun yksityisavaimen.</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>Osoite:</translation>
+    </message>
+    <message>
+        <source>The Ion address to sign the message with</source>
+        <translation>ION osoite, jolla viesti allekirjoitetaan</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>Valitse aikaisemmin käytetty osoite</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>Liitä osoite leikepöydältä</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Passphrase: </source>
+        <translation>Salausavain:</translation>
+    </message>
+    <message>
+        <source>Encrypted Key:</source>
+        <translation>Salattu avain:</translation>
+    </message>
+    <message>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>Kopioi nykyinen allekirjoitus järjestelmän leikepöydälle</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Allekirjoita viesti todistaaksesi, että omistat tämän Ion osoitteen</translation>
+    </message>
+    <message>
+        <source>Encrypt &amp;Key</source>
+        <translation>Salaus &amp;Avain</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>Tyhjennä kaikki allekirjoita viesti kentät</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>Tyhjennä &amp;Kaikki</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>&amp;BIP 38 salauksen avaus</translation>
+    </message>
+    <message>
+        <source>Enter the BIP 38 encrypted private key. Enter the passphrase in the middle box. Click Decrypt Key to compute the private key. After the key is decrypted, clicking 'Import Address' will add this private key to the wallet.</source>
+        <translation>Syötä BIP 38 salattu yksityisavain. Syötä salausavain laatikkoon. Paina Avaa Salaus tuottaaksesi yksityisavaimen. Kun avain on dekryptattu, painamalla "Import osoite" lisää tämän yksityisavaimen lompakkoon.</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>ION osoite, jolla viesti allekirjoitettiin</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Vahvista että viesti on allekirjoitettu kyseessä olevalla Ion osoitteella.</translation>
+    </message>
+    <message>
+        <source>Decrypt &amp;Key</source>
+        <translation>Salauksen avaus &amp;Avain</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>Tyhjennä kaikki vahvista viesti kentät</translation>
+    </message>
+    <message>
+        <source>Decrypted Key:</source>
+        <translation>Salauksesta avattu avain:</translation>
+    </message>
+    <message>
+        <source>Import Address</source>
+        <translation>Tuo osoite</translation>
+    </message>
+    <message>
+        <source>Click "Decrypt Key" to compute key</source>
+        <translation>Paina "Salausavaimen avaus" generoidaksesi avain</translation>
+    </message>
+    <message>
+        <source>The entered passphrase is invalid. </source>
+        <translation>Syötetty salausavain ei ole toimiva.</translation>
+    </message>
+    <message>
+        <source>Allowed: 0-9,a-z,A-Z,</source>
+        <translation>Sallittu: 0-9,a-z,A-Z,</translation>
+    </message>
+    <message>
+        <source>The entered address is invalid.</source>
+        <translation>Syötetty osoite ei ole toimiva.</translation>
+    </message>
+    <message>
+        <source>Please check the address and try again.</source>
+        <translation>Ole hyvä ja tarkista osoite ja yritä uudelleen.</translation>
+    </message>
+    <message>
+        <source>The entered address does not refer to a key.</source>
+        <translation>Syötetty osoite ei viittaa avaimeen.</translation>
+    </message>
+    <message>
+        <source>Wallet unlock was cancelled.</source>
+        <translation>Lompakon avaus peruutettiin.</translation>
+    </message>
+    <message>
+        <source>Private key for the entered address is not available.</source>
+        <translation>Yksityisavain syötetylle osoitteelle ei ole saatavilla.</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt.</source>
+        <translation>Salauksen avaus ei onnistunut.</translation>
+    </message>
     <message>
         <source>IP/Netmask</source>
         <translation>IP/Netmask</translation>
@@ -588,8 +721,8 @@
         <translation><numerusform>%n aktiivinen yhteys Ion verkkoon</numerusform><numerusform>%n aktiivista yhteyttä Ion verkkoon</numerusform></translation>
     </message>
     <message>
-        <source>Network activity disabled</source>
-        <translation>Verkkotoiminnot ei käytössä</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>Lähetä kolikkoja Ion osoitteeseen</translation>
     </message>
     <message>
         <source>Syncing Headers (%1%)...</source>
@@ -608,8 +741,8 @@
         <translation>Käsitellään lohkoja levyllä...</translation>
     </message>
     <message>
-        <source>Reindexing blocks on disk...</source>
-        <translation>Uudelleen indeksoidaan lohkoja...</translation>
+        <source>Show information about Ion Core</source>
+        <translation>Näytä tietoja Ion Ytimestä</translation>
     </message>
     <message>
         <source>Connecting to peers...</source>
@@ -620,12 +753,12 @@
         <translation><numerusform>Käsitelty %n lohko(a) tapahtumahistoriasta.</numerusform><numerusform>Käsitelty %n lohko(a) tapahtumahistoriasta.</numerusform></translation>
     </message>
     <message>
-        <source>%1 behind</source>
-        <translation>%1 jäljessä</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>Allekirjoita viestejä todistaaksesi, että omistat ne.</translation>
     </message>
     <message>
-        <source>Catching up...</source>
-        <translation>Saavutetaan verkkoa...</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>Vahvista viestit varmistaaksesi, että ne allekirjoitettiin tietyllä Ion osoiteella.</translation>
     </message>
     <message>
         <source>Last received block was generated %1 ago.</source>
@@ -668,10 +801,8 @@
         <translation>Vastaanotettu useita siirtotapahtumia</translation>
     </message>
     <message>
-        <source>Sent Amount: %1
-</source>
-        <translation>Lähetetty määrä: %1
-</translation>
+        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <translation>Näytä Ion Ydin apuviesti saadaksesi lista mahdollisista Ion komentolinja komennoista.</translation>
     </message>
     <message>
         <source>Received Amount: %1
@@ -1093,8 +1224,8 @@
         <translation>Tervetuloa</translation>
     </message>
     <message>
-        <source>Welcome to %1.</source>
-        <translation>%1 - Tervetuloa.</translation>
+        <source>Welcome to Ion Core.</source>
+        <translation>Tervetuloa Ion Ytimeen.</translation>
     </message>
     <message>
         <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
@@ -1311,20 +1442,20 @@
         <translation>Edistyminen</translation>
     </message>
     <message>
-        <source>Progress increase per hour</source>
-        <translation>Edistymisen kasvu per tunti</translation>
+        <source>This option is the quickest and will cost about ~0.025 Ion to anonymize 10000 ION</source>
+        <translation>Tämä vaihtoehto on nopein ja maksaa noin ~0.025 ION anonymoidaksesi 10000 ION</translation>
     </message>
     <message>
-        <source>calculating...</source>
-        <translation>lasketaan...</translation>
+        <source>This option is moderately fast and will cost about 0.05 Ion to anonymize 10000 ION</source>
+        <translation>Tämä vaihtoehto on suhteellisen nopea ja maksaa 0.05 Ion anonymoidaksesi 10000 ION</translation>
     </message>
     <message>
         <source>Estimated time left until synced</source>
         <translation>Synkronoinnin jäljellä oleva aika</translation>
     </message>
     <message>
-        <source>Hide</source>
-        <translation>Piilota</translation>
+        <source>0.1 Ion per 10000 Ion you anonymize.</source>
+        <translation>0.1 per 10000 ION, jotka anonymisoit.</translation>
     </message>
     <message>
         <source>Unknown. Syncing Headers (%1)...</source>
@@ -1477,24 +1608,12 @@
         <translation>Ikkunaa suljettaessa pienennä ohjelman ikkuna lopettamatta itse ohjelmaa. Kun tämä asetus on valittuna, ohjelman voi sulkea vain valitsemalla Lopeta ohjelman valikosta.</translation>
     </message>
     <message>
-        <source>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items.&lt;br/&gt;%s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</source>
-        <translation>Ulkopuoliset URL-osoitteet (esim. lohkoselain) jotka esiintyvät tapahtumat-välilehdellä valikossa.&lt;br/&gt;%s URL osoitteessa korvataan siirtotunnuksen tarkisteella. Useampi URL osoite on eroteltu pystyviivalla |.</translation>
+        <source>Automatically start Ion after logging in to the system.</source>
+        <translation>Automaattisesti käynnistä Ion kun kirjaudut sisään.</translation>
     </message>
     <message>
-        <source>&amp;Third party transaction URLs</source>
-        <translation>&amp;Kolmannen osapuolen siirtotapahtuma URL:t</translation>
-    </message>
-    <message>
-        <source>Whether to show coin control features or not.</source>
-        <translation>Näytetäänkö kolikkokontrollin ominaisuuksia vai ei</translation>
-    </message>
-    <message>
-        <source>Automatically start %1 after logging in to the system.</source>
-        <translation>Käynnistä %1 automaattisesti järjestelmään kirjautumisen jälkeen.</translation>
-    </message>
-    <message>
-        <source>&amp;Start %1 on system login</source>
-        <translation>&amp;Käynnistä %1 järjestelmään kirjautuessa</translation>
+        <source>&amp;Start Ion on system login</source>
+        <translation>&amp;Aloita Ion järjestelmän kirjautumisessa</translation>
     </message>
     <message>
         <source>Enable coin &amp;control features</source>
@@ -1521,8 +1640,8 @@
         <translation>&amp;Verkko</translation>
     </message>
     <message>
-        <source>Map port using &amp;UPnP</source>
-        <translation>Kartoita portti käyttäen &amp;UPnP:tä</translation>
+        <source>Connect to the Ion network through a SOCKS5 proxy.</source>
+        <translation>Yhdistä Ion verkkoon SOCKS5 proxyn kautta</translation>
     </message>
     <message>
         <source>Proxy &amp;IP:</source>
@@ -1834,8 +1953,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Olemme tekemässä uutta automaattista varmistusta, mutta&lt;span style='%1'&gt; varmista aina että olet tallentanut varmistuksen turvalliseen paikkaan&lt;/span&gt;!</translation>
     </message>
     <message>
-        <source>Note: You can turn this message off in options.</source>
-        <translation>Huom: Voit kytkeä tämän viestin pois päältä asetuksissa.</translation>
+        <source>Open the Ion debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Avaa Ion debug loki nykyisestä sijainnista. Tämä voi kestää muutaman sekunnin suurille lokeille</translation>
     </message>
     <message>
         <source>WARNING! Something went wrong on automatic backup</source>
@@ -1949,8 +2068,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Virhe kommunikoidessa %1: %2</translation>
     </message>
     <message>
-        <source>Payment request cannot be parsed!</source>
-        <translation>Maksupyyntöä ei voida jäsentää!</translation>
+        <source>Welcome to the Ion RPC console.</source>
+        <translation>Tervetuloa Ion RPC konsoliin.</translation>
     </message>
     <message>
         <source>Bad response from server %1</source>
@@ -1995,12 +2114,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
 <context>
     <name>QObject</name>
     <message>
-        <source>%1 didn't yet exit safely...</source>
-        <translation>%1 ei vielä sulkeutunut turvallisesti...</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</source>
+        <translation>Vaihtoehtoinen viesti joka liitetään maksupyyntöön, joka näytetään kun pyyntö avataan. Huomio: Viestiä ei lähetetä maksun mukana Ion verkolle.</translation>
     </message>
     <message>
-        <source>Amount</source>
-        <translation>Määrä</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Ion network.</source>
+        <translation>Vaihtoehtoinen viesti, joka liitetään maksupyyntöö, joka näytetään kun pyyntö avataan. &lt;br&gt; Huomio: Tätä viestiä ei lähetetä maksun mukana Ion  verkolle.</translation>
     </message>
     <message>
         <source>Enter a Ion address (e.g. %1)</source>
@@ -4676,8 +4795,8 @@ Vähennä uakommenttien määrää tai kokoa.</translation>
         <translation>Luo automaattisesti Tor piilopalvelu (oletus: %d)</translation>
     </message>
     <message>
-        <source>Disable governance validation (0-1, default: %u)</source>
-        <translation>Kytke hallinnon vahvistus pois käytöstä (0-1, oletus: %u)</translation>
+        <source>Warning: Invalid Ion address</source>
+        <translation>Varoitus: Virheellinen Ion osoite</translation>
     </message>
     <message>
         <source>ERROR! Failed to create automatic backup</source>
@@ -4720,8 +4839,8 @@ Vähennä uakommenttien määrää tai kokoa.</translation>
         <translation>Virhe evo tietokannan päivityksessä</translation>
     </message>
     <message>
-        <source>Error: A fatal internal error occurred, see debug.log for details</source>
-        <translation>Virhe: Vakava sisäinen virhe, katso debug.log lisätietoja</translation>
+        <source>The Ion address to send the payment to</source>
+        <translation>ION osoite johon maksu lähetetään</translation>
     </message>
     <message>
         <source>Error: failed to add socket to epollfd (epoll_ctl returned error %s)</source>
@@ -4776,8 +4895,8 @@ Vähennä uakommenttien määrää tai kokoa.</translation>
         <translation>Tuodaan lohkoja ulkoisesta blk000??.dat tiedostosta käynnistyksessä</translation>
     </message>
     <message>
-        <source>InstantSend options:</source>
-        <translation>InstantSend valinnat:</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>ION osoite, jolla viesti allekirjoitetaan</translation>
     </message>
     <message>
         <source>Invalid amount for -fallbackfee=&lt;amount&gt;: '%s'</source>
@@ -4808,16 +4927,16 @@ Vähennä uakommenttien määrää tai kokoa.</translation>
         <translation>Viimeisin onnistunut PrivateSend tapahtuma oli liian äskettäin.</translation>
     </message>
     <message>
-        <source>Loading block index...</source>
-        <translation>Ladataan lohkoindeksiä...</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Allekirjoita viesti todistaaksesi, että omistat tämän Ion osoitteen</translation>
     </message>
     <message>
-        <source>Loading governance cache...</source>
-        <translation>Ladataan hallinnon välimuistia...</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>ION osoite, jolla viesti allekirjoitettiin</translation>
     </message>
     <message>
-        <source>Loading sporks cache...</source>
-        <translation>Ladataan spork välimuistia...</translation>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Vahvista että viesti on allekirjoitettu kyseessä olevalla Ion osoitteella.</translation>
     </message>
     <message>
         <source>Loading wallet... (%3.2f %%)</source>

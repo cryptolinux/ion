@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "test_ion.h"
+#define BOOST_TEST_MODULE Ion Test Suite
 
 #include "chainparams.h"
 #include "consensus/consensus.h"

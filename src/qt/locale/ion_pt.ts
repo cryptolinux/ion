@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Esses são os seus endereços para enviar pagamentos. Sempre cheque a quantia e o endereço de recebimento antes de enviar moedas,</translation>
+        <translation>Esses são seus endereços Ion para enviar pagamentos. Sempre confira a quantidade e os endereços de destino antes de enviar moedas.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Estes são os seus endereços para receber pagamentos. É recomendado usar um novo para cada transação.</translation>
+        <translation>Esses são seus endereços Ion para receber pagamentos. É recomendado usar um novo endereço para cada transação.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -301,8 +301,8 @@
 <context>
     <name>BitcoinAmountField</name>
     <message>
-        <source>Amount in %1</source>
-        <translation>Quantidade em %1</translation>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Digite um endereço Ion que você gostaria de criptografar usando BIP 38. Digite uma frase secreta na caixa do meio. Pressione criptografar para calcular a chave privada criptografada.</translation>
     </message>
 </context>
 <context>
@@ -312,8 +312,8 @@
         <translation>Ocorreu um erro fatal. A Ion não pode mais continuar de forma segura, e irá fechar</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>Um endereço Ion para assinar a mensagem</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -344,8 +344,8 @@
         <translation>&amp;Receber</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and ion: URIs)</source>
-        <translation>Solicitações de pagamentos (gera códigos QR e Ion: URIs)</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Assinar a Mensagem para provar que você e dono desse endereço ION.</translation>
     </message>
     <message>
         <source>&amp;Transactions</source>
@@ -364,8 +364,8 @@
         <translation>Exibir masternodes</translation>
     </message>
     <message>
-        <source>E&amp;xit</source>
-        <translation>S&amp;air</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>O endereço Ion que foi assinado com</translation>
     </message>
     <message>
         <source>Quit application</source>
@@ -660,8 +660,8 @@
         <translation>Receber e enviar múltiplas transações</translation>
     </message>
     <message>
-        <source>Sent multiple transactions</source>
-        <translation>Múltiplas transações enviadas</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>Um endereço Ion para assinar a mensagem</translation>
     </message>
     <message>
         <source>Received multiple transactions</source>
@@ -704,14 +704,12 @@
 </translation>
     </message>
     <message>
-        <source>Address: %1
-</source>
-        <translation>Endereço: %1
-</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Assinar a Mensagem para provar que você e dono desse endereço ION.</translation>
     </message>
     <message>
-        <source>Sent transaction</source>
-        <translation>Transação enviada</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>O endereço Ion que foi assinado com</translation>
     </message>
     <message>
         <source>Incoming transaction</source>
@@ -1014,8 +1012,8 @@
         <translation>versão</translation>
     </message>
     <message>
-        <source>(%1-bit)</source>
-        <translation>(%1-bit)</translation>
+        <source>Disable all Ion specific functionality (Masternodes, Obfuscation, SwiftTX, Budgeting) (0-1, default: %u)</source>
+        <translation>Desabilitar todas as funcionacilidades específicas da Ion (Masternodes, Ofuscação, SwiftTX, Budgeting) (0-1, default %u)</translation>
     </message>
     <message>
         <source>About %1</source>

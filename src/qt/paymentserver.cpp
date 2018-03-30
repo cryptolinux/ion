@@ -443,12 +443,10 @@ void PaymentServer::handleURIOrFile(const QString& s)
                 if (!IsValidDestinationString(recipient.address.toStdString())) {
                     Q_EMIT message(tr("URI handling"), tr("Invalid payment address %1").arg(recipient.address),
                         CClientUIInterface::MSG_ERROR);
-                }
-                else
-                    Q_EMIT receivedPaymentRequest(recipient);
-            }
-            else
-                Q_EMIT message(tr("URI handling"),
+                } else
+                    emit receivedPaymentRequest(recipient);
+            } else
+                emit message(tr("URI handling"),
                     tr("URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters."),
                     CClientUIInterface::ICON_WARNING);
 

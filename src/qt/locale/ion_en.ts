@@ -91,12 +91,12 @@
     <message>
         <location line="+7"/>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
@@ -387,9 +387,9 @@
 <context>
     <name>BitcoinAmountField</name>
     <message>
-        <location filename="../bitcoinamountfield.cpp" line="+249"/>
-        <source>Amount in %1</source>
-        <translation>Amount in %1</translation>
+        <location line="+6"/>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -400,9 +400,9 @@
         <translation>A fatal error occurred. Ion Core can no longer continue safely and will quit.</translation>
     </message>
     <message>
-        <location filename="../bitcoingui.cpp" line="+1119"/>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <location line="-355"/>
+        <source>The Ion address to sign the message with</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-1210"/>
@@ -440,9 +440,9 @@
         <translation>&amp;Receive</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Request payments (generates QR codes and ion: URIs)</source>
-        <translation>Request payments (generates QR codes and ion: URIs)</translation>
+        <location line="+21"/>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
@@ -470,14 +470,14 @@
         <translation>E&amp;xit</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Quit application</source>
-        <translation>Quit application</translation>
+        <location line="+25"/>
+        <source>The Ion address the message was signed with</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Show information about Ion Core</source>
-        <translation>Show information about Ion Core</translation>
+        <location line="+29"/>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -739,13 +739,16 @@
         <source>Tabs toolbar</source>
         <translation>Tabs toolbar</translation>
     </message>
-    <message numerus="yes">
-        <location line="+366"/>
-        <source>%n active connection(s) to Ion network</source>
-        <translation>
-            <numerusform>%n active connection to Ion network</numerusform>
-            <numerusform>%n active connections to Ion network</numerusform>
-        </translation>
+    <message>
+        <location line="-427"/>
+        <location line="+890"/>
+        <source>Ion Core</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-707"/>
+        <source>Send coins to a Ion address</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -782,18 +785,15 @@
         <source>Connecting to peers...</source>
         <translation>Connecting to peers...</translation>
     </message>
-    <message numerus="yes">
-        <location line="+9"/>
-        <source>Processed %n block(s) of transaction history.</source>
-        <translation>
-            <numerusform>Processed %n block of transaction history.</numerusform>
-            <numerusform>Processed %n blocks of transaction history.</numerusform>
-        </translation>
+    <message>
+        <location line="+16"/>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
-        <source>%1 behind</source>
-        <translation>%1 behind</translation>
+        <location line="+2"/>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
@@ -846,16 +846,32 @@
         <translation>Sent multiple transactions</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Received multiple transactions</source>
-        <translation>Received multiple transactions</translation>
+        <location line="+4"/>
+        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Sent Amount: %1
-</source>
-        <translation>Sent Amount: %1
-</translation>
+        <location line="+214"/>
+        <source>Ion Core client</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location line="+212"/>
+        <source>%n active connection(s) to Ion network</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Synchronizing with network...</source>
+        <translation>Synchronizing with network...</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Importing blocks from disk...</source>
+        <translation>Importing blocks from disk...</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1223,9 +1239,9 @@
         <translation>Edit sending address</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+67"/>
         <source>The entered address &quot;%1&quot; is not a valid Ion address.</source>
-        <translation>The entered address &quot;%1&quot; is not a valid Ion address.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1394,8 +1410,8 @@
     </message>
     <message>
         <location line="+10"/>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</translation>
+        <source>Ion Core will download and store a copy of the Ion block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1599,9 +1615,12 @@
         <translation>NONE</translation>
     </message>
     <message>
-        <location line="-152"/>
-        <source>Filter by any property (e.g. address or protx hash)</source>
-        <translation>Filter by any property (e.g. address or protx hash)</translation>
+        <location line="+16"/>
+        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other Ion addresses after it matures.
+To Add: enter percentage to give and Ion address to add to the MultiSend vector.
+To Delete: Enter address to delete and press delete.
+MultiSend will not be activated unless you have clicked Activate</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+62"/>
@@ -1839,9 +1858,8 @@
     <message>
         <location line="+103"/>
         <location line="+13"/>
-        <location line="+13"/>
-        <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
-        <translation>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</translation>
+        <source>Add destinations to send Ion to</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+28"/>
@@ -1974,14 +1992,14 @@
         <translation>Connect to the Ion network through a separate SOCKS5 proxy for Tor hidden services.</translation>
     </message>
     <message>
-        <location line="-450"/>
-        <source>Show only a tray icon after minimizing the window.</source>
-        <translation>Show only a tray icon after minimizing the window.</translation>
+        <location line="+13"/>
+        <source>This option is the quickest and will cost about ~0.025 Ion to anonymize 10000 ION</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>&amp;Minimize to the tray instead of the taskbar</source>
-        <translation>&amp;Minimize to the tray instead of the taskbar</translation>
+        <location line="+13"/>
+        <source>This option is moderately fast and will cost about 0.05 Ion to anonymize 10000 ION</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1989,9 +2007,9 @@
         <translation>M&amp;inimize on close</translation>
     </message>
     <message>
-        <location line="-68"/>
-        <source>&amp;Display</source>
-        <translation>&amp;Display</translation>
+        <location line="+13"/>
+        <source>0.1 Ion per 10000 Ion you anonymize.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+615"/>
@@ -2085,9 +2103,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
 <context>
     <name>OverviewPage</name>
     <message>
-        <location filename="../forms/overviewpage.ui" line="+20"/>
-        <source>Form</source>
-        <translation>Form</translation>
+        <location line="+33"/>
+        <source>Automatically open the Ion client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+53"/>
@@ -2112,14 +2130,14 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Pending:</translation>
     </message>
     <message>
-        <location line="-200"/>
-        <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</translation>
+        <location line="-176"/>
+        <source>Automatically start Ion after logging in to the system.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+100"/>
-        <source>Immature:</source>
-        <translation>Immature:</translation>
+        <location line="+3"/>
+        <source>&amp;Start Ion on system login</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-29"/>
@@ -2167,9 +2185,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Your current balance in watch-only addresses</translation>
     </message>
     <message>
-        <location line="+23"/>
-        <source>Spendable:</source>
-        <translation>Spendable:</translation>
+        <location line="-133"/>
+        <source>Percentage of incoming Ion which get automatically converted to xION via Zerocoin Protocol (min: 10%)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+29"/>
@@ -2177,9 +2195,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>PrivateSend</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <source>Status:</source>
-        <translation>Status:</translation>
+        <location line="+30"/>
+        <location line="+16"/>
+        <source>Wait with automatic conversion to Zerocoin until enough Ion for this denomination is available</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
@@ -2187,9 +2206,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Enabled/Disabled</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Completion:</source>
-        <translation>Completion:</translation>
+        <location line="+114"/>
+        <source>Connect to the Ion network through a SOCKS5 proxy.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+34"/>
@@ -2262,15 +2281,662 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>No inputs detected</source>
         <translation>No inputs detected</translation>
     </message>
-    <message numerus="yes">
-        <location line="-2"/>
-        <location line="+20"/>
+    <message>
+        <location line="+13"/>
+        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <translation>Choose the default subdivision unit to show in the interface and when sending coins.</translation>
+    </message>
+    <message>
         <location line="+11"/>
-        <source>%n Rounds</source>
-        <translation>
-            <numerusform>%n Round</numerusform>
-            <numerusform>%n Rounds</numerusform>
-        </translation>
+        <source>Decimal digits</source>
+        <translation>Decimal digits</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location line="+13"/>
+        <source>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</source>
+        <translation>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <source>Third party transaction URLs</source>
+        <translation>Third party transaction URLs</translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Active command-line options that override above options:</source>
+        <translation>Active command-line options that override above options:</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>Reset all client options to default.</source>
+        <translation>Reset all client options to default.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Reset Options</source>
+        <translation>&amp;Reset Options</translation>
+    </message>
+    <message>
+        <location line="+61"/>
+        <source>&amp;OK</source>
+        <translation>&amp;OK</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>&amp;Cancel</source>
+        <translation>&amp;Cancel</translation>
+    </message>
+    <message>
+        <location filename="../optionsdialog.cpp" line="+87"/>
+        <source>I don&apos;t care</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>default</source>
+        <translation>default</translation>
+    </message>
+    <message>
+        <location line="+55"/>
+        <source>none</source>
+        <translation>none</translation>
+    </message>
+    <message>
+        <location line="+88"/>
+        <source>Confirm options reset</source>
+        <translation>Confirm options reset</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+30"/>
+        <source>Client restart required to activate changes.</source>
+        <translation>Client restart required to activate changes.</translation>
+    </message>
+    <message>
+        <location line="-30"/>
+        <source>Client will be shutdown, do you want to proceed?</source>
+        <translation>Client will be shutdown, do you want to proceed?</translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>This change would require a client restart.</source>
+        <translation>This change would require a client restart.</translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>The supplied proxy address is invalid.</source>
+        <translation>The supplied proxy address is invalid.</translation>
+    </message>
+</context>
+<context>
+    <name>OverviewPage</name>
+    <message>
+        <location filename="../forms/overviewpage.ui" line="+20"/>
+        <source>Form</source>
+        <translation>Form</translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>ION Balances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+259"/>
+        <source>Available:</source>
+        <translation>Available:</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location line="+702"/>
+        <source>Your current spendable balance</source>
+        <translation>Your current spendable balance</translation>
+    </message>
+    <message>
+        <location line="-661"/>
+        <source>Pending:</source>
+        <translation>Pending:</translation>
+    </message>
+    <message>
+        <location line="-236"/>
+        <location line="+820"/>
+        <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
+        <translation>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</translation>
+    </message>
+    <message>
+        <location line="-708"/>
+        <location line="+1118"/>
+        <source>Immature:</source>
+        <translation>Immature:</translation>
+    </message>
+    <message>
+        <location line="-1147"/>
+        <source>Staked or masternode rewards that has not yet matured</source>
+        <translation>Staked or masternode rewards that has not yet matured</translation>
+    </message>
+    <message>
+        <location line="-153"/>
+        <location line="+1393"/>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1348"/>
+        <source>Unconfirmed transactions to watch-only addresses</source>
+        <translation>Unconfirmed transactions to watch-only addresses</translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <source>Staked or masternode rewards in watch-only addresses that has not yet matured</source>
+        <translation>Staked or masternode rewards in watch-only addresses that has not yet matured</translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <location line="+807"/>
+        <location line="+255"/>
+        <source>Total:</source>
+        <translation>Total:</translation>
+    </message>
+    <message>
+        <location line="-1001"/>
+        <source>Your current total balance</source>
+        <translation>Your current total balance</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Current total balance in watch-only addresses</source>
+        <translation>Current total balance in watch-only addresses</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Watch-only:</source>
+        <translation>Watch-only:</translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Your current balance in watch-only addresses</source>
+        <translation>Your current balance in watch-only addresses</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Spendable:</source>
+        <translation>Spendable:</translation>
+    </message>
+    <message>
+        <location line="+525"/>
+        <source>Combined Balances (including unconfirmed and immature coins)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Combined Balances&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+74"/>
+        <source>Total Balance, including unconfirmed and immature coins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>ION:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>xION:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Current percentage of xION.
+If AutoMint is enabled this percentage will settle around the configured AutoMint percentage (default = 10%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+66"/>
+        <source>0 %</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-46"/>
+        <location line="+13"/>
+        <source>Locked Ion or Masternode collaterals. These are excluded from xION minting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <location line="+33"/>
+        <location line="+189"/>
+        <location line="+31"/>
+        <location line="+44"/>
+        <source>0.000 000 00 ION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-284"/>
+        <source>Locked:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+10"/>
+        <source>Unlocked IONs. These can be used for xION minting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-7"/>
+        <source>Unlocked:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+77"/>
+        <source>Zerocoin Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location line="+104"/>
+        <source>Mature: more than 20 confirmation and more than 3 mints of the same denomination after it was minted.
+These xION are spendable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-100"/>
+        <source>Mature:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location line="+35"/>
+        <source>All available xION, unconfirmed and immature xION included.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+56"/>
+        <location line="+17"/>
+        <location line="+27"/>
+        <location line="+17"/>
+        <source>Unconfirmed: less than 20 confirmations
+Immature: confirmed, but less than 3 mints of the same denomination after it was minted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-57"/>
+        <source>Unconfirmed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+127"/>
+        <source>Recent transactions</source>
+        <translation>Recent transactions</translation>
+    </message>
+    <message>
+        <location filename="../overviewpage.cpp" line="+135"/>
+        <location line="+1"/>
+        <source>out of sync</source>
+        <translation>out of sync</translation>
+    </message>
+    <message>
+        <location line="+93"/>
+        <source>Current percentage of xION.
+If AutoMint is enabled this percentage will settle around the configured AutoMint percentage (default = 10%).
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>AutoMint is currently enabled and set to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>To disable AutoMint add &apos;enablezeromint=0&apos; in ioncoin.conf.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>AutoMint is currently disabled.
+To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1&apos; in ioncoin.conf</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PaymentServer</name>
+    <message>
+        <location filename="../paymentserver.cpp" line="+297"/>
+        <location line="+209"/>
+        <location line="+33"/>
+        <location line="+104"/>
+        <location line="+12"/>
+        <location line="+14"/>
+        <source>Payment request error</source>
+        <translation>Payment request error</translation>
+    </message>
+    <message>
+        <location line="-275"/>
+        <location line="+12"/>
+        <location line="+5"/>
+        <source>URI handling</source>
+        <translation>URI handling</translation>
+    </message>
+    <message>
+        <location line="-16"/>
+        <source>Payment request fetch URL is invalid: %1</source>
+        <translation>Payment request fetch URL is invalid: %1</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Payment request file handling</source>
+        <translation>Payment request file handling</translation>
+    </message>
+    <message>
+        <location line="-18"/>
+        <source>Invalid payment address %1</source>
+        <translation>Invalid payment address %1</translation>
+    </message>
+    <message>
+        <location line="-108"/>
+        <source>Cannot start ion: click-to-pay handler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+114"/>
+        <source>URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Payment request file cannot be read! This can be caused by an invalid payment request file.</source>
+        <translation>Payment request file cannot be read! This can be caused by an invalid payment request file.</translation>
+    </message>
+    <message>
+        <location line="+67"/>
+        <location line="+8"/>
+        <location line="+30"/>
+        <source>Payment request rejected</source>
+        <translation>Payment request rejected</translation>
+    </message>
+    <message>
+        <location line="-38"/>
+        <source>Payment request network doesn&apos;t match client network.</source>
+        <translation>Payment request network doesn&apos;t match client network.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Payment request has expired.</source>
+        <translation>Payment request has expired.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Payment request is not initialized.</source>
+        <translation>Payment request is not initialized.</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Unverified payment requests to custom payment scripts are unsupported.</source>
+        <translation>Unverified payment requests to custom payment scripts are unsupported.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Requested payment amount of %1 is too small (considered dust).</source>
+        <translation>Requested payment amount of %1 is too small (considered dust).</translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <source>Refund from %1</source>
+        <translation>Refund from %1</translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <source>Payment request %1 is too large (%2 bytes, allowed %3 bytes).</source>
+        <translation>Payment request %1 is too large (%2 bytes, allowed %3 bytes).</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Payment request DoS protection</source>
+        <translation>Payment request DoS protection</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Error communicating with %1: %2</source>
+        <translation>Error communicating with %1: %2</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Payment request cannot be parsed!</source>
+        <translation>Payment request cannot be parsed!</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Bad response from server %1</source>
+        <translation>Bad response from server %1</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Network request error</source>
+        <translation>Network request error</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Payment acknowledged</source>
+        <translation>Payment acknowledged</translation>
+    </message>
+</context>
+<context>
+    <name>PeerTableModel</name>
+    <message>
+        <location filename="../peertablemodel.cpp" line="+113"/>
+        <source>Address/Hostname</source>
+        <translation>Address/Hostname</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Version</source>
+        <translation>Version</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Ping Time</source>
+        <translation>Ping Time</translation>
+    </message>
+</context>
+<context>
+    <name>PrivacyDialog</name>
+    <message>
+        <location filename="../forms/privacydialog.ui" line="+55"/>
+        <source>ION which were anonymized via Zerocin Protocol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Zerocoin Ion (xION)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Zerocoin Actions:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <location line="+46"/>
+        <source>Enter an amount of Ion to convert to xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-43"/>
+        <location filename="../privacydialog.cpp" line="+150"/>
+        <location line="+113"/>
+        <source>Mint Zerocoin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location line="+329"/>
+        <location line="+30"/>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-349"/>
+        <location line="+629"/>
+        <source>xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-622"/>
+        <source>Available for minting are coins which are confirmed and not locked or Masternode collaterals.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Available for Minting:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>0.000 000 00 ION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Reset Zerocoin Wallet DB. Deletes transactions that did not make it into the blockchain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Reset</source>
+        <translation type="unfinished">Reset</translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Coin Control...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>Quantity:</source>
+        <translation type="unfinished">Quantity:</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Amount:</source>
+        <translation type="unfinished">Amount:</translation>
+    </message>
+    <message>
+        <location line="+91"/>
+        <source>Rescan the complete blockchain for  Zerocoin mints and their meta-data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>ReScan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Status and/or Mesages from the last Mint Action.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <source>xION Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>xION Selected:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Quantity Selected:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Spend Zerocoin. Without &apos;Pay To:&apos; address creates payments to yourself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location filename="../privacydialog.cpp" line="+46"/>
+        <location line="+4"/>
+        <location line="+12"/>
+        <location line="+100"/>
+        <location line="+4"/>
+        <source>Spend Zerocoin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Available (mature and spendable) xION for spending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Available Balance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Available (mature and spendable) xION for spending
+
+xION are mature when they have more than 20 confirmations AND more than 2 mints of the same denomination after them were minted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+417"/>
+        <source>0 xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-394"/>
+        <source>Security Level for Zerocoin Transactions. More is better, but needs more time and resources.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Security Level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Security Level 1 - 100 (default: 42)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Pay &amp;To:</source>
+        <translation type="unfinished">Pay &amp;To:</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>The Ion address to send the payment to. Creates local payment to yourself when empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Choose previously used address</source>
+        <translation type="unfinished">Choose previously used address</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Alt+A</source>
+        <translation type="unfinished">Alt+A</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Paste address from clipboard</source>
+        <translation type="unfinished">Paste address from clipboard</translation>
     </message>
     <message>
         <location line="-14"/>
@@ -2593,10 +3259,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%1 m</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <location line="+47"/>
-        <source>%1 s</source>
-        <translation>%1 s</translation>
+        <location line="+4"/>
+        <source>Invalid Ion Address</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-10"/>
@@ -2736,9 +3401,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Error: Specified font-scale invalid. Valid range %1 to %2.</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Error: Invalid -custom-css-dir path.</source>
-        <translation>Error: Invalid -custom-css-dir path.</translation>
+        <location filename="../guiutil.cpp" line="+113"/>
+        <source>Enter a Ion address (e.g. %1)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
@@ -2924,7 +3589,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Block chain</translation>
     </message>
     <message>
-        <location line="-23"/>
+        <location line="+79"/>
+        <source>Open the Ion debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-108"/>
         <source>Number of Masternodes</source>
         <translation>Number of Masternodes</translation>
     </message>
@@ -3220,9 +3890,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>1 &amp;year</translation>
     </message>
     <message>
-        <location line="+48"/>
-        <source>&amp;Unban</source>
-        <translation>&amp;Unban</translation>
+        <location line="-36"/>
+        <source>Welcome to the Ion RPC console.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+185"/>
@@ -3341,9 +4011,14 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>An optional label to associate with the new receiving address.</translation>
     </message>
     <message>
-        <location line="-14"/>
+        <location line="-37"/>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Ion network.</source>
-        <translation>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Ion network.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
@@ -3679,8 +4354,29 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <location line="+33"/>
-        <source>Custom:</source>
-        <translation>Custom:</translation>
+        <location line="+13"/>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for Ion transactions than the network can process.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+163"/>
+        <source>normal</source>
+        <translation>normal</translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>fast</source>
+        <translation>fast</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Recommended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <source>Send as zero-fee transaction if possible</source>
+        <translation>Send as zero-fee transaction if possible</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -3784,9 +4480,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Are you sure you want to send?</translation>
     </message>
     <message>
-        <location line="+27"/>
-        <source>are added as transaction fee</source>
-        <translation>are added as transaction fee</translation>
+        <location line="+622"/>
+        <source>Warning: Invalid Ion address</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+41"/>
@@ -3945,7 +4641,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <location line="+18"/>
         <source>The Ion address to send the payment to</source>
-        <translation>The Ion address to send the payment to</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
@@ -4013,8 +4709,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>A message that was attached to the ion: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</source>
-        <translation>A message that was attached to the ion: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</translation>
+        <source>A message that was attached to the ION: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+433"/>
@@ -4086,7 +4782,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <location line="+18"/>
         <source>The Ion address to sign the message with</source>
-        <translation>The Ion address to sign the message with</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
@@ -4126,9 +4822,19 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Copy the current signature to the system clipboard</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+21"/>
         <source>Sign the message to prove you own this Ion address</source>
-        <translation>Sign the message to prove you own this Ion address</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+106"/>
+        <source>The Ion address the message was signed with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4646,14 +5352,24 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Mined</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>PrivateSend Denominate</source>
-        <translation>PrivateSend Denominate</translation>
+        <location line="+10"/>
+        <source>Obfuscated</source>
+        <translation>Obfuscated</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>PrivateSend Collateral Payment</source>
-        <translation>PrivateSend Collateral Payment</translation>
+        <source>Converted Ion to xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Spent xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Received Ion from xION</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -4793,6 +5509,41 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <location line="+1"/>
         <source>Mined</source>
         <translation>Mined</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Minted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Masternode Reward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Received Ion from xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Zerocoin Mint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Zerocoin Spend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Zerocoin Spend, Change in xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Zerocoin Spend to Self</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6126,9 +6877,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Imports blocks from external blk000??.dat file on startup</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>InstantSend options:</source>
-        <translation>InstantSend options:</translation>
+        <location line="+38"/>
+        <source>Disable all Ion specific functionality (Masternodes, Zerocoin, SwiftX, Budgeting) (0-1, default: %u)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>

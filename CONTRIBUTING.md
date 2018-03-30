@@ -161,9 +161,8 @@ where possible keep them short, uncomplex and easy to verify.
 "Decision Making" Process
 -------------------------
 
-The following applies to code changes to the Ion Core project (and related
-projects such as libsecp256k1), and is not to be confused with overall Ion
-Network Protocol consensus changes.
+The following applies to code changes to the Ion Core project, and is not to be
+confused with overall Ion Network Protocol consensus changes.
 
 Whether a pull request is merged into Ion Core rests with the project merge
 maintainers and ultimately the project lead.
@@ -176,12 +175,8 @@ In general, all pull requests must:
 
   - Have a clear use case, fix a demonstrable bug or serve the greater good of
     the project (for example refactoring for modularisation);
-  - Be well peer reviewed;
-  - Have unit tests and functional tests where appropriate;
-  - Follow code style guidelines ([C++](doc/developer-notes.md), [functional tests](test/functional/README.md));
-  - Not break the existing test suite;
-  - Where bugs are fixed, where possible, there should be unit tests
-    demonstrating the bug and also proving the fix. This helps prevent regression.
+  - be well peer reviewed;
+  - follow code style guidelines;
 
 Patches that change Ion consensus rules are considerably more involved than
 normal because they affect the entire ecosystem and so must be preceded by
@@ -225,8 +220,8 @@ mistakes could be very costly to the wider community. This includes refactoring
 of consensus critical code.
 
 Where a patch set proposes to change the Ion consensus, it must have been
-discussed extensively on the mailing list and IRC, be accompanied by a widely
-discussed BIP and have a generally widely perceived technical consensus of being
+discussed extensively on the forums and Slack, be accompanied by a widely
+discussed Proposal and have a generally widely perceived technical consensus of being
 a worthwhile change based on the judgement of the maintainers.
 
 #### Verifying a Rebase

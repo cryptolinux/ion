@@ -1,7 +1,7 @@
 TOR SUPPORT IN ION CORE
 =======================
 
-It is possible to run Ion Core as a Tor hidden service, and connect to such services.
+It is possible to run Ion as a Tor hidden service, and connect to such services.
 
 The following directions assume you have a Tor proxy running on port 9050. Many
 distributions default to having a SOCKS proxy listening on port 9050, but others
@@ -10,10 +10,10 @@ See [Tor Project FAQ:TBBSocksPort](https://www.torproject.org/docs/faq.html.en#T
 for how to properly configure Tor.
 
 
-1. Run Ion Core behind a Tor proxy
+Run Ion behind a Tor proxy
 ----------------------------------
 
-The first step is running Ion Core behind a Tor proxy. This will already make all
+The first step is running Ion behind a Tor proxy. This will already make all
 outgoing connections be anonymized, but more is possible.
 
 	-proxy=ip:port  Set the proxy server. If SOCKS5 is selected (default), this proxy
@@ -41,10 +41,7 @@ port 9050 and only allows .onion nodes to connect:
 
 In a typical situation, this suffices to run behind a Tor proxy:
 
-	./iond -proxy=127.0.0.1:9050
-
-
-2. Run a Ion Core hidden server
+Run a Ion hidden server
 -------------------------------
 
 If you configure your Tor system accordingly, it is possible to make your node also
@@ -97,10 +94,7 @@ and open port 9999 on your firewall (or use -upnp).
 If you only want to use Tor to reach onion addresses, but not use it as a proxy
 for normal IPv4/IPv6 communication, use:
 
-	./iond -onion=127.0.0.1:9050 -externalip=ssapp53tmftyjmjb.onion -discover
-
-
-3. List of known Ion Core Tor relays
+List of known Ion Tor relays
 ------------------------------------
 
 Note: All these nodes are hosted by masternodehosting.com

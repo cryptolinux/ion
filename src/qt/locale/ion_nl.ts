@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Dit zijn uw Ion adressen om betalingen mee uit te voeren. Controleer altijd het bedrag en ontvangstadres voordat u uw Ion verzendt.</translation>
+        <translation>Dit zijn uw IONadressen om betalingen mee te verzenden. Controleer altijd zowel het bedrag als het ontvangstadres voor het verzenden.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Dit zijn uw Ion adressen om betalingen me te ontvangen. Het wordt aangeraden om voor elke transactie een niew ontvangstadres te gebruiken.</translation>
+        <translation>Dit zijn uw IONadressen waarop betalingen kunnen worden ontvangen. Het wordt aangeraden om een nieuw ontvangstadres voor elke transactie te gebruiken.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -239,8 +239,8 @@
         <translation>Weet u zeker dat u uw portemonnee wilt versleutelen?</translation>
     </message>
     <message>
-        <source>Wallet encrypted</source>
-        <translation>Portemonnee is versleuteld</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ION&lt;/b&gt;!</source>
+        <translation>Waarschuwing: Als u uw portemonnee versleutelt en uw wachtwoord vergeet, zult u &lt;b&gt;AL UW Ion VERLIEZEN&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your funds from being stolen by malware infecting your computer.</source>
@@ -288,7 +288,147 @@
     </message>
 </context>
 <context>
-    <name>BanTableModel</name>
+    <name>Bip38ToolDialog</name>
+    <message>
+        <source>BIP 38 Tool</source>
+        <translation>BIP 38 Tool</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Encrypt</source>
+        <translation>&amp;BIP 38 Versleuteling</translation>
+    </message>
+    <message>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Voer een Ion adres in dat u wilt versleutelen met BIP 38. Voer een wachtwoord in, in het middelste veld. Druk op versleutelen om de versleutelde geheime sleutel te berekenen.</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>Adres:</translation>
+    </message>
+    <message>
+        <source>The Ion address to sign the message with</source>
+        <translation>Het Ion adres om het bericht met te ondertekenen</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>Kies een eerder gebruikt adres</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>Plak adres vanaf klembord</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Passphrase: </source>
+        <translation>Wachtwoord:</translation>
+    </message>
+    <message>
+        <source>Encrypted Key:</source>
+        <translation>Versleutelde sleutel:</translation>
+    </message>
+    <message>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>Kopieer de huidige handtekening naar het systeemklembord</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Onderteken het bericht om te bewijzen dat u het Ion adres bezit</translation>
+    </message>
+    <message>
+        <source>Encrypt &amp;Key</source>
+        <translation>Versleutel &amp;Sleutel</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>Maak alle ondertekenvelden leeg</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>Verwijder &amp;Alles</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>&amp;BIP 38 ontsleuteling</translation>
+    </message>
+    <message>
+        <source>Enter the BIP 38 encrypted private key. Enter the passphrase in the middle box. Click Decrypt Key to compute the private key. After the key is decrypted, clicking 'Import Address' will add this private key to the wallet.</source>
+        <translation>Voer de BIP 38 versleutelde geheime sleutel in. Voer het wachtwoord in, in het middelste veld. Druk op Ontsleutelen Sleutel om de geheime sleutel te berekenen.  Nadat de geheime sleutel is ontsleuteld, zal het klikken op 'Adres Importeren' de geheime sleutel toevoegen aan de portemonnee.</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>Het Ion adres waarmee het bericht was ondertekend</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Controleer een bericht om te verifiëren dat het ondertekend is door het gespecificeerde Ion adres</translation>
+    </message>
+    <message>
+        <source>Decrypt &amp;Key</source>
+        <translation>Ontsleutelen Sleutel</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>Maak alle verifiëren van het bericht velden leeg</translation>
+    </message>
+    <message>
+        <source>Decrypted Key:</source>
+        <translation>Ontsleutelde sleutel:</translation>
+    </message>
+    <message>
+        <source>Import Address</source>
+        <translation>Adres Importeren</translation>
+    </message>
+    <message>
+        <source>Click "Decrypt Key" to compute key</source>
+        <translation>Klik "Ontsleutelen Sleutel" om de sleutel te berekenen</translation>
+    </message>
+    <message>
+        <source>The entered passphrase is invalid. </source>
+        <translation>Het ingevoerde wachtwoord is ongeldig.</translation>
+    </message>
+    <message>
+        <source>Allowed: 0-9,a-z,A-Z,</source>
+        <translation>Toegestaan: 0-9,a-z,A-Z</translation>
+    </message>
+    <message>
+        <source>The entered address is invalid.</source>
+        <translation>Het ingevoerde adres is ongeldig.</translation>
+    </message>
+    <message>
+        <source>Please check the address and try again.</source>
+        <translation>Controleer het adres en probeer het opnieuw.</translation>
+    </message>
+    <message>
+        <source>The entered address does not refer to a key.</source>
+        <translation>Het opgegeven adres verwijst niet naar een sleutel.</translation>
+    </message>
+    <message>
+        <source>Wallet unlock was cancelled.</source>
+        <translation>Portemonnee-ontsleuteling is geannuleerd.</translation>
+    </message>
+    <message>
+        <source>Private key for the entered address is not available.</source>
+        <translation>Geheime sleutel voor het ingevoerde adres is niet beschikbaar.</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt.</source>
+        <translation>Ontsleutelen mislukt.</translation>
+    </message>
+    <message>
+        <source>Please check the key and passphrase and try again.</source>
+        <translation>Controleer de sleutel en het wachtwoord en probeer het opnieuw.</translation>
+    </message>
+    <message>
+        <source>Data Not Valid.</source>
+        <translation>Gegevens ongeldig.</translation>
+    </message>
     <message>
         <source>IP/Netmask</source>
         <translation>IP/Netmask</translation>
@@ -588,8 +728,8 @@
         <translation><numerusform>%n actieve verbinding met het Ion netwerk</numerusform><numerusform>%n actieve verbindingen met het Ion netwerk</numerusform></translation>
     </message>
     <message>
-        <source>Network activity disabled</source>
-        <translation>Netwerk activiteit uitgeschakeld</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>Verstuur munten naar een Ion adres</translation>
     </message>
     <message>
         <source>Syncing Headers (%1%)...</source>
@@ -604,24 +744,24 @@
         <translation>Bezig met indexeren van blocks op harde schijf...</translation>
     </message>
     <message>
-        <source>Processing blocks on disk...</source>
-        <translation>Bezig met verwerken van blocks op harde schijf...</translation>
+        <source>&amp;About Ion Core</source>
+        <translation>&amp;Over Ion Kern</translation>
     </message>
     <message>
-        <source>Reindexing blocks on disk...</source>
-        <translation>Bezig met herindexeren van blocks op harde schijf...</translation>
+        <source>Show information about Ion Core</source>
+        <translation>Toon informatie over Ion Kern</translation>
     </message>
     <message>
-        <source>Connecting to peers...</source>
-        <translation>Verbinden met peers...</translation>
-    </message>
-    <message numerus="yes">
-        <source>Processed %n block(s) of transaction history.</source>
-        <translation><numerusform>%n blok van transactiehistorie verwerkt.</numerusform><numerusform>%n blocks van transactiehistorie verwerkt.</numerusform></translation>
+        <source>Modify configuration options for ION</source>
+        <translation>Wijzig Ion configuratie opties</translation>
     </message>
     <message>
-        <source>%1 behind</source>
-        <translation>%1 achter</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>Onderteken berichten met uw Ion adressen om te bewijzen dat u deze adressen bezit</translation>
+    </message>
+    <message>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>Controleer berichten om te verifiëren dat deze ondertekend zijn met de gespecificeerde Ion adressen</translation>
     </message>
     <message>
         <source>Catching up...</source>
@@ -664,8 +804,12 @@
         <translation>Meerdere transacties verstuurd</translation>
     </message>
     <message>
-        <source>Received multiple transactions</source>
-        <translation>Meerdere transacties ontvangen</translation>
+        <source>Ion Core client</source>
+        <translation>Ion Core client</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n active connection(s) to Ion network</source>
+        <translation><numerusform>%n actieve verbinding(en) naar het Ion netwerk</numerusform><numerusform>%n actieve verbinding(en) naar het Ion netwerk</numerusform></translation>
     </message>
     <message>
         <source>Sent Amount: %1
@@ -945,7 +1089,7 @@
     </message>
     <message>
         <source>The entered address "%1" is not a valid Ion address.</source>
-        <translation>Het ingevoerde adres "%1" is geen geldig Ion adres.</translation>
+        <translation>Het ingevoerde adres: "%1" is geen geldig Ion adres.</translation>
     </message>
     <message>
         <source>The entered address "%1" is already in the address book.</source>
@@ -1365,12 +1509,12 @@
         <translation>W&amp;allet</translation>
     </message>
     <message>
-        <source>&amp;Appearance</source>
-        <translation>&amp;Uiterlijk</translation>
+        <source>Automatically start Ion after logging in to the system.</source>
+        <translation>ION automatisch opstarten na inloggen op het systeem.</translation>
     </message>
     <message>
-        <source>Show additional tab listing all your masternodes in first sub-tab&lt;br/&gt;and all masternodes on the network in second sub-tab.</source>
-        <translation>Toon extra tabblad waarin je al jouw masternodes toont in de eerste sub-tab&lt;br/&gt; en alle masternodes op het netwerk in het tweede sub-tabblad.</translation>
+        <source>&amp;Start Ion on system login</source>
+        <translation>&amp;ION starten bij systeemlogin</translation>
     </message>
     <message>
         <source>Show Masternodes Tab</source>
@@ -3784,8 +3928,8 @@ Nota: Het bericht zal niet verzonden worden met de betaling over het Ion netwerk
 <context>
     <name>UnitDisplayStatusBarControl</name>
     <message>
-        <source>Unit to show amounts in. Click to select another unit.</source>
-        <translation>Eenheid om bedragen uit te drukken. Klik om een andere eenheid te selecteren.</translation>
+        <source>Enter an amount of Ion to convert to xION</source>
+        <translation>Vul de hoeveleheid in om Ion te converteren naar xION</translation>
     </message>
 </context>
 <context>
@@ -4084,8 +4228,8 @@ Nota: Het bericht zal niet verzonden worden met de betaling over het Ion netwerk
         <translation>Output extra debugginginformatie (standaard: %u, het leveren van &lt;categorie&gt; is optioneel)</translation>
     </message>
     <message>
-        <source>Overrides minimum spork signers to change spork value. Only useful for regtest and devnet. Using this on mainnet or testnet will ban you.</source>
-        <translation>Overschrijf minimum spork ondertekenaars om de spork waarde te veranderen. Alleen bruikbaar bij regtest en devnet. Door dit te gebruiken op mainnet of testnet zal een ban opleveren.</translation>
+        <source>Enter a Ion address (e.g. %1)</source>
+        <translation>Voer een Ion adres in (b.v. %1)</translation>
     </message>
     <message>
         <source>PrivateSend uses exact denominated amounts to send funds, you might simply need to mix some more coins.</source>
@@ -4280,8 +4424,8 @@ Nota: Het bericht zal niet verzonden worden met de betaling over het Ion netwerk
         <translation>Bezig met mixen...</translation>
     </message>
     <message>
-        <source>Mnemonic passphrase is too long, must be at most 256 characters</source>
-        <translation>Mnemonisch wachtwoordzin is te lang: mag maximaal 256 tekens bevatten</translation>
+        <source>Welcome to the Ion RPC console.</source>
+        <translation>Welkom bij de Ion RPC console.</translation>
     </message>
     <message>
         <source>Need to specify a port with -whitebind: '%s'</source>
@@ -4568,8 +4712,8 @@ Nota: Het bericht zal niet verzonden worden met de betaling over het Ion netwerk
         <translation>Kan onvoldoende met PrivateSend gedenomineerd geld vinden voor deze transactie.</translation>
     </message>
     <message>
-        <source>Unsupported argument -socks found. Setting SOCKS version isn't possible anymore, only SOCKS5 proxies are supported.</source>
-        <translation>Niet-ondersteund argument -socks gevonden. Instellen van SOCKS-versie is niet meer mogelijk, alleen SOCKS5-proxies worden ondersteund.</translation>
+        <source>Warning: Invalid Ion address</source>
+        <translation>Waarschuwing: Ongeldig Ion adres</translation>
     </message>
     <message>
         <source>Unsupported argument -whitelistalwaysrelay ignored, use -whitelistrelay and/or -whitelistforcerelay.</source>
@@ -4620,8 +4764,8 @@ Nota: Het bericht zal niet verzonden worden met de betaling over het Ion netwerk
         <translation>&lt;categorie&gt; kan zijn:</translation>
     </message>
     <message>
-        <source>Append comment to the user agent string</source>
-        <translation>Voeg commentaar toe aan de user agent string</translation>
+        <source>The Ion address to send the payment to</source>
+        <translation>Het Ion adres om de betaling naar te verzenden</translation>
     </message>
     <message>
         <source>Automatic backups disabled</source>
@@ -4688,8 +4832,8 @@ Nota: Het bericht zal niet verzonden worden met de betaling over het Ion netwerk
         <translation>Maximum aantal pogingen overschreden.</translation>
     </message>
     <message>
-        <source>Failed to clear fulfilled requests cache at</source>
-        <translation>Fout bij het wissen van de fulfilled requests cache uit</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>Het Ion adres om het bericht met te ondertekenen</translation>
     </message>
     <message>
         <source>Failed to clear governance cache at</source>
@@ -4720,16 +4864,16 @@ Nota: Het bericht zal niet verzonden worden met de betaling over het Ion netwerk
         <translation>Fout bij het inladen van de sporks cache uit</translation>
     </message>
     <message>
-        <source>Failed to rescan the wallet during initialization</source>
-        <translation>Het herscannen van de portemonnee is mislukt tijdens het initialiseren</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Onderteken het bericht om te bewijzen dat u het Ion adres bezit</translation>
     </message>
     <message>
-        <source>Fee (in %s/kB) to add to transactions you send (default: %s)</source>
-        <translation>Transactievergoeding (in %s/kB) toevoegen aan transacties die u doet (standaard: %s)</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>Het Ion adres waarmee het bericht was ondertekend</translation>
     </message>
     <message>
-        <source>Imports blocks from external blk000??.dat file on startup</source>
-        <translation>Importeer blocks van externe blk000??.dat-bestand bij opstarten</translation>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Controleer een bericht om te verifiëren dat het ondertekend is door het gespecificeerde Ion adres</translation>
     </message>
     <message>
         <source>InstantSend options:</source>

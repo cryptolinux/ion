@@ -125,35 +125,25 @@ After you get enough votes, execute ```mngovernance projection``` to see if you 
     },
 ```
 
-6. Get paid
---
+Get paid
+------------------------
 
-When block ```1000000``` is reached you'll receive a payment for ```1200``` ION to ```y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7```.
+When block `1000000` is reached you'll receive a payment for `1200` ION.
 
-7. Command list
---
 
-The following RPC commands are supported:
+RPC Commands
+------------------------
 
- - mngovernance "command"... ( "passphrase" )
-  - check              - Scan proposals and remove invalid from proposals list
-  - prepare            - Prepare proposal by signing and creating tx
-  - submit             - Submit proposal to network
-  - getproposalhash    - Get proposal hash(es) by proposal name
-  - getproposal        - Show proposal
-  - getvotes           - Show detailed votes list for proposal
-  - list               - List all proposals
-  - nextblock          - Get info about next superblock for budget system
-  - nextsuperblocksize - Get superblock size for a given blockheight
-  - projection         - Show the projection of which proposals will be paid the next cycle
-  - vote               - Vote on a proposal by single masternode (using ioncoin.conf setup)
-  - vote-many          - Vote on a proposal by all masternodes for which the voting key is in the wallet
-  - vote-alias         - Vote on a proposal by alias
- - mnfinalbudget "command"... ( "passphrase" )
-  - vote-many   - Vote on a finalized budget
-  - vote        - Vote on a finalized budget
-  - show        - Show existing finalized budgets
-  - getvotes    - Get vote information for each finalized budget
-  - prepare     - Manually prepare a finalized budget
-  - submit      - Manually submit a finalized budget
+The following new RPC commands are supported:
+- mnbudget "command"... ( "passphrase" )
+ * prepare            - Prepare proposal for network by signing and creating tx
+ * submit             - Submit proposal for network
+ * vote-many          - Vote on a Ion initiative
+ * vote-alias         - Vote on a Ion initiative
+ * vote               - Vote on a Ion initiative/budget
+ * getvotes           - Show current masternode budgets
+ * getinfo            - Show current masternode budgets
+ * show               - Show all budgets
+ * projection         - Show the projection of which proposals will be paid the next cycle
+ * check              - Scan proposals and remove invalid
 

@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Dies sind ihre Ion-Adressen zum Tätigen von Überweisungen. Bitte prüfen Sie den Betrag und die Empfangsadresse, bevor Sie Ion überweisen.</translation>
+        <translation>Dies sind ihre ION-Adressen zum Tätigen von Überweisungen. Bitte prüfen Sie den Betrag und die Empfangsadresse, bevor Sie Ion überweisen.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Dies sind ihre Ion-Adressen zum Empfangen von Zahlungen. Es wird empfohlen für jede Transaktion eine neue Empfangsadresse zu verwenden.</translation>
+        <translation>Dies sind ihre ION-Adressen zum Empfangen von Zahlungen. Es wird empfohlen für jede Transaktion eine neue Empfangsadresse zu verwenden.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -288,7 +288,147 @@
     </message>
 </context>
 <context>
-    <name>BanTableModel</name>
+    <name>Bip38ToolDialog</name>
+    <message>
+        <source>BIP 38 Tool</source>
+        <translation>BIP 38 Tool</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Encrypt</source>
+        <translation>&amp;BIP 38 Verschlüsselung</translation>
+    </message>
+    <message>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Gib eine Ion Adresse ein welche mit BIP 38 verschlüsselt werden soll. Gib ein Passwort in die mittleren Box ein. Drücke auf verschlüsseln, um den privaten schlüssel zu errechenen.</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>Adresse:</translation>
+    </message>
+    <message>
+        <source>The Ion address to sign the message with</source>
+        <translation>ION Adresse mit welcher die Nachricht signiert werden soll</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>Bereits verwendete Adresse auswählen</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>Adresse aus der Zwischenablage einfügen</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Passphrase: </source>
+        <translation>Passphrase: </translation>
+    </message>
+    <message>
+        <source>Encrypted Key:</source>
+        <translation>Geschützer Schlüssel:</translation>
+    </message>
+    <message>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>Kopiert die aktuelle Signatur in den Zwischenspeicher</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Signiere die Nachricht um zu Beweisen, dass du diese Ion Adresse besitzt</translation>
+    </message>
+    <message>
+        <source>Encrypt &amp;Key</source>
+        <translation>Verschlüsselt &amp;Schlüssel</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>Setze alle signierten Nachrichten Felder zurück</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>&amp;Alles zurücksetzen</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>&amp;BIP 38 Entschlüsseln</translation>
+    </message>
+    <message>
+        <source>Enter the BIP 38 encrypted private key. Enter the passphrase in the middle box. Click Decrypt Key to compute the private key. After the key is decrypted, clicking 'Import Address' will add this private key to the wallet.</source>
+        <translation>Geben Sie den BIP 38 verschlüsselten privaten Schlüssel ein. Geben Sie die Passphrase im mittleren Feld ein. Klicken Sie auf Entschlüsselung, um den privaten Schlüssel zu berechnen. Nachdem der Schlüssel entschlüsselt wurde, klicken Sie auf 'Adresse importieren', fügen Sie diesen privaten Schlüssel der Wallet hinzu.</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>Die Ion Adresse mit welcher die Nachricht signiert wurde.</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Überprüfen Sie die Nachricht, um sicherzustellen, dass sie mit der angegebenen ION-Adresse signiert wurde.</translation>
+    </message>
+    <message>
+        <source>Decrypt &amp;Key</source>
+        <translation>Entschlüsseln &amp;Schlüssel</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>Zurücksetzen aller überprüften Felder.</translation>
+    </message>
+    <message>
+        <source>Decrypted Key:</source>
+        <translation>Entschlüsselter Schlüssel:</translation>
+    </message>
+    <message>
+        <source>Import Address</source>
+        <translation>Adresse importieren</translation>
+    </message>
+    <message>
+        <source>Click "Decrypt Key" to compute key</source>
+        <translation>Klicke "Schlüssel entschlüsseln" um den Schlüssel zu berechnen</translation>
+    </message>
+    <message>
+        <source>The entered passphrase is invalid. </source>
+        <translation>Die eingegebene Passphrase ist ungültig. </translation>
+    </message>
+    <message>
+        <source>Allowed: 0-9,a-z,A-Z,</source>
+        <translation>Zulässig: 0-9,a-z,A-Z</translation>
+    </message>
+    <message>
+        <source>The entered address is invalid.</source>
+        <translation>Die eingegebene Adresse ist falsch</translation>
+    </message>
+    <message>
+        <source>Please check the address and try again.</source>
+        <translation>Bitte die Adresse prüfen und erneut eingeben</translation>
+    </message>
+    <message>
+        <source>The entered address does not refer to a key.</source>
+        <translation>Die eingegebene Adresse passt nicht zu einem Schlüssel</translation>
+    </message>
+    <message>
+        <source>Wallet unlock was cancelled.</source>
+        <translation>Wallet-Entsperrung wurde abgebrochen.</translation>
+    </message>
+    <message>
+        <source>Private key for the entered address is not available.</source>
+        <translation>Privater Schlüssel für die eingegebene Adresse ist nicht verfügbar</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt.</source>
+        <translation>Entschlüsselung fehlgeschlagen.</translation>
+    </message>
+    <message>
+        <source>Please check the key and passphrase and try again.</source>
+        <translation>Bitte überprüfe den Schlüssel und die Passphrase und versuche es erneut.</translation>
+    </message>
+    <message>
+        <source>Data Not Valid.</source>
+        <translation>Daten fehlerhaft</translation>
+    </message>
     <message>
         <source>IP/Netmask</source>
         <translation>IP/Netmask</translation>
@@ -588,8 +728,8 @@
         <translation><numerusform>%n aktive Verbindung zum Ion-Netzwerk</numerusform><numerusform>%n aktive Verbindungen zum Ion-Netzwerk</numerusform></translation>
     </message>
     <message>
-        <source>Network activity disabled</source>
-        <translation>Netzwerk-Aktivität deaktiviert</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>An eine ION-Adresse überweisen</translation>
     </message>
     <message>
         <source>Syncing Headers (%1%)...</source>
@@ -620,16 +760,16 @@
         <translation><numerusform>%n Block des Transaktionsverlaufs verarbeitet.</numerusform><numerusform>%n Blöcke des Transaktionsverlaufs verarbeitet.</numerusform></translation>
     </message>
     <message>
-        <source>%1 behind</source>
-        <translation>%1 im Rückstand</translation>
+        <source>Modify configuration options for ION</source>
+        <translation>Konfiguration von Ion verändern</translation>
     </message>
     <message>
-        <source>Catching up...</source>
-        <translation>Hole auf...</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>Unterschreibt eine Nachricht mit Ihrer ION-Adresse und beweist, dass sie Ihnen gehört</translation>
     </message>
     <message>
-        <source>Last received block was generated %1 ago.</source>
-        <translation>Der letzte empfangene Block ist %1 alt.</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>Überprüft eine Nachricht um zu prüfen ob diese mit einer bestimmten ION-Adresse signiert wurde</translation>
     </message>
     <message>
         <source>Transactions after this will not yet be visible.</source>
@@ -668,10 +808,8 @@
         <translation>Mehrere Transaktionen empfangen</translation>
     </message>
     <message>
-        <source>Sent Amount: %1
-</source>
-        <translation>Betrag gesendet: %1
-</translation>
+        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <translation>Zeige die ION-Core Hilfe, um mögliche Ion Kommando-Zeilen-Optionen anzuzeigen</translation>
     </message>
     <message>
         <source>Received Amount: %1
@@ -679,11 +817,9 @@
         <translation>Betrag empfangen: %1
 </translation>
     </message>
-    <message>
-        <source>Date: %1
-</source>
-        <translation>Datum %1
-</translation>
+    <message numerus="yes">
+        <source>%n active connection(s) to Ion network</source>
+        <translation><numerusform>%n aktive Verbindung zum Ion Netzwerk</numerusform><numerusform>%n aktive Verbindungen zum Ion Netzwerk</numerusform></translation>
     </message>
     <message>
         <source>Amount: %1
@@ -945,7 +1081,7 @@
     </message>
     <message>
         <source>The entered address "%1" is not a valid Ion address.</source>
-        <translation>Die eingegebene Adresse "%1" ist keine gültige Ion-Adresse.</translation>
+        <translation>Die eingegebene Adresse "%1" ist keine gültige ION-Adresse.</translation>
     </message>
     <message>
         <source>The entered address "%1" is already in the address book.</source>
@@ -1086,8 +1222,8 @@ Der Mixing-Prozeß läuft nach dem Start vollständig im Hintergrund, d.h. es is
         <translation>Diese initiale Synchronisation führt zur hohen Last und kann Hardwareprobleme, die bisher nicht aufgetreten sind, mit ihrem Computer verursachen. Jedes Mal, wenn Sie %1 ausführen, wird der Download zum letzten Synchronisationspunkt fortgesetzt.</translation>
     </message>
     <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation>Wenn Sie bewusst den Blockchainspeicher begrenzen (pruning), müssen die historischen Daten dennoch heruntergeladen und verarbeitet werden. Diese Daten werden aber zum späteren Zeitpunkt gelöscht, um die Festplattennutzung niedrig zu halten.</translation>
+        <source>Ion Core will download and store a copy of the Ion block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>Ion Core wird die Blockchain laden und lokal speichern. Dafür sind mindestens %1GB freier Speicherplatz erforderlich. Der Speicherbedarf wird mit der Zeit anwachsen. Die Wallet wird ebenfalls in diesem Verzeichnis gespeichert.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1161,8 +1297,14 @@ Der Mixing-Prozeß läuft nach dem Start vollständig im Hintergrund, d.h. es is
         <translation>Nur Masternodes anzeigen für welche diese Wallet die Schlüssel hat.</translation>
     </message>
     <message>
-        <source>My masternodes only</source>
-        <translation>Nur meine Masternodes</translation>
+        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other Ion addresses after it matures.
+To Add: enter percentage to give and Ion address to add to the MultiSend vector.
+To Delete: Enter address to delete and press delete.
+MultiSend will not be activated unless you have clicked Activate</source>
+        <translation>MultiSend ermöglicht es automatisch bis zu 100% Ihrer Stake- oder Masternode-Belohnung zu einer Liste von anderen ION-Adressen zu senden.
+Zum hinzufügen: Gebe den Prozentsätze ein, um die ION-Adressen des MultiSend-Vektor hinzuzufügen.
+Zum entfernen: Gebe die zu löschende Adresse ein und drücke löschen.
+MultiSend wird nicht aktiviert bis Sie auf Aktivieren geklickt haben.</translation>
     </message>
     <message>
         <source>Service</source>
@@ -1264,32 +1406,32 @@ Der Mixing-Prozeß läuft nach dem Start vollständig im Hintergrund, d.h. es is
         <translation>Formular</translation>
     </message>
     <message>
-        <source>Recent transactions may not yet be visible, and therefore your wallet's balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the Ion network, as detailed below.</source>
-        <translation>Kontostand möglicherweise falsch, da die neuesten Transaktionen ggf. noch nicht sichtbar sind. Der Kontostand wird automatisch aktualisiert, sobald Ihre Wallet die Synchronisation mit dem Ion Netzwerk abgeschlossen hat.</translation>
+        <source>Use 2 separate masternodes to mix funds up to 10000 ION</source>
+        <translation>2 separate Masternodes verwenden um bis zu 10000 Ion zu mixen</translation>
     </message>
     <message>
-        <source>Attempting to spend Ion that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation>Der Versuch Ion aus Transaktionen auszugeben, die noch nicht angezeigt werden, wird vom Netzwerk nicht akzeptiert.</translation>
+        <source>Use 8 separate masternodes to mix funds up to 10000 ION</source>
+        <translation>8 separate Masternodes verwenden um bis zu 10000 Ion zu mixen</translation>
     </message>
     <message>
         <source>Number of blocks left</source>
         <translation>Anzahl verbleibender Blöcke</translation>
     </message>
     <message>
-        <source>Unknown...</source>
-        <translation>Unbekannt...</translation>
+        <source>This option is the quickest and will cost about ~0.025 Ion to anonymize 10000 ION</source>
+        <translation>Diese Option ist die schnellst und kostet ungefähr ~0.025 Ion um 10000 Ion zu anonymisieren </translation>
     </message>
     <message>
-        <source>Last block time</source>
-        <translation>Letzte Blockzeit</translation>
+        <source>This option is moderately fast and will cost about 0.05 Ion to anonymize 10000 ION</source>
+        <translation>Diese Option ist angemessen schnell und kostet ungefähr  0.05 Ion um 10000 Ion zu anonymisieren</translation>
     </message>
     <message>
         <source>Progress</source>
         <translation>Fortschritt</translation>
     </message>
     <message>
-        <source>Progress increase per hour</source>
-        <translation>Fortschritt pro Stunde</translation>
+        <source>0.1 Ion per 10000 Ion you anonymize.</source>
+        <translation>0.1 Ion per 10000 Ion die anonymisiert werden.</translation>
     </message>
     <message>
         <source>calculating...</source>
@@ -1370,8 +1512,8 @@ Der Mixing-Prozeß läuft nach dem Start vollständig im Hintergrund, d.h. es is
         <translation>&amp;Darstellung</translation>
     </message>
     <message>
-        <source>Show additional tab listing all your masternodes in first sub-tab&lt;br/&gt;and all masternodes on the network in second sub-tab.</source>
-        <translation>Tabulator mit der Lister aller/Ihrer Masternodes anzeigen.</translation>
+        <source>Automatically open the Ion client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automatisches öffnen des ION-Client-Port im Router. Dies funktioniert nur, wenn ihr Router UPnP unterstützt und es eingeschaltet ist.</translation>
     </message>
     <message>
         <source>Show Masternodes Tab</source>
@@ -1390,12 +1532,12 @@ Der Mixing-Prozeß läuft nach dem Start vollständig im Hintergrund, d.h. es is
         <translation>Warndialog anzeigen, wenn die Anzahl verbliebener Schlüssel sehr klein ist.</translation>
     </message>
     <message>
-        <source>Warn if PrivateSend is running out of keys</source>
-        <translation>Warnung anzeigen, wenn alle Schlüssel aufgebraucht sind</translation>
+        <source>Automatically start Ion after logging in to the system.</source>
+        <translation>ION automatisch nach dem Login starten.</translation>
     </message>
     <message>
-        <source>Whether to use experimental PrivateSend mode with multiple mixing sessions per block.&lt;br/&gt;Note: You must use this feature carefully.&lt;br/&gt;Make sure you always have recent wallet (auto)backup in a safe place!</source>
-        <translation>Experimentell: benutze mehrere Mixing-Prozesse (Sessions) pro Block.&lt;br /&gt; Achtung: benutzen Sie diese Option mit großer Sorgfalt.&lt;br /&gt; Vergewissern Sie sich, daß Sie ein aktuelles Backup des Wallet an einem sicheren Ort haben!</translation>
+        <source>&amp;Start Ion on system login</source>
+        <translation>ION automatisch beim System Login &amp;starten.</translation>
     </message>
     <message>
         <source>Enable PrivateSend &amp;multi-session</source>
@@ -1434,24 +1576,24 @@ Der Mixing-Prozeß läuft nach dem Start vollständig im Hintergrund, d.h. es is
         <translation>Über einen SOCKS5-Proxy &amp;verbinden (Standardproxy):</translation>
     </message>
     <message>
-        <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
-        <translation>Zeigt an, ob der mitgelieferte Standard SOCKS5 Proxy benutzt wird.</translation>
+        <source>Percentage of incoming Ion which get automatically converted to xION via Zerocoin Protocol (min: 10%)</source>
+        <translation>Anteil des einkommenden ION, welcher automatisch zu xION via Zerocoin Protokoll konvertiert wird (min: 10%)</translation>
     </message>
     <message>
         <source>Use separate SOCKS&amp;5 proxy to reach peers via Tor hidden services:</source>
         <translation>Separaten SOCKS&amp;5-Proxy verwenden, um Gegenstellen über versteckte Tor-Dienste zu erreichen:</translation>
     </message>
     <message>
-        <source>Hide the icon from the system tray.</source>
-        <translation>Verberge Symbol im Infobereich.</translation>
+        <source>Wait with automatic conversion to Zerocoin until enough Ion for this denomination is available</source>
+        <translation>Warte mit automatischer Konvertierung zu Zerocoin, bis genügend Ion für diese Stückelung verfügbar ist</translation>
     </message>
     <message>
         <source>&amp;Hide tray icon</source>
         <translation>&amp;Infosymbol verbergen</translation>
     </message>
     <message>
-        <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
-        <translation>Minimiert die Anwendung anstatt sie zu beenden wenn das Fenster geschlossen wird. Wenn dies aktiviert ist, müssen Sie das Programm über "Beenden" im Menü schließen.</translation>
+        <source>Connect to the Ion network through a SOCKS5 proxy.</source>
+        <translation>Durch einen SOCKS5 Proxy mit dem Ion Netzwerk verbinden.</translation>
     </message>
     <message>
         <source>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items.&lt;br/&gt;%s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</source>
@@ -1659,8 +1801,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Erarbeiteter Betrag der noch nicht gereift ist</translation>
     </message>
     <message>
-        <source>Balances</source>
-        <translation>Kontostände</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation>Die angezeigte Information ist möglicherweise nicht mehr aktuell. Ihre Wallet synchronisiert sich automatisch mit dem ION-Netzwerk, nachdem eine Verbindung hergestellt wurde. Aber dieser Vorgang ist noch nicht abgeschlossen.</translation>
     </message>
     <message>
         <source>Unconfirmed transactions to watch-only addresses</source>
@@ -1743,12 +1885,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Die gestückelten Beträge, die Sie zu dem Masternode gesendet haben.&lt;br&gt; Zum Erfolgreichen Mixen müssen andere Benutzer exakt gleich gestückelte Beträge senden.</translation>
     </message>
     <message>
-        <source>out of sync</source>
-        <translation>nicht synchron</translation>
+        <source>Cannot start ion: click-to-pay handler</source>
+        <translation>Kann Ion nicht starten: click-to-pay Handler</translation>
     </message>
     <message>
-        <source>Automatic backups are disabled, no mixing available!</source>
-        <translation>Automatische Datensicherungen sind deaktiviert, mixen nicht möglich!</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters.</source>
+        <translation>URI kann nicht analysiert werden! Dies kann durch eine ungültige ION-Adresse oder fehlerhafte URI-Parameter verursacht sein.</translation>
     </message>
     <message>
         <source>Start Mixing</source>
@@ -1827,20 +1969,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Mixing ist deaktiviert, bitten schließen Sie Ihre Wallet und beheben den Fehler!</translation>
     </message>
     <message>
-        <source>Enabled</source>
-        <translation>Aktiviert</translation>
+        <source>Zerocoin Ion (xION)</source>
+        <translation>Zerocoin Ion (xION)</translation>
     </message>
     <message>
         <source>see debug.log for details.</source>
         <translation>Details finden Sie in debug.log</translation>
     </message>
     <message>
-        <source>WARNING! Failed to replenish keypool, please unlock your wallet to do so.</source>
-        <translation>WARNUNG! Erzeugen neuer Schlüssel ist fehlgeschlagen, bitte entsperren Sie Ihre Wallet  um dies zu ermöglichen.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation>Die angezeigte Information ist möglicherweise nicht mehr aktuell. Ihre Wallet synchronisiert sich automatisch mit dem ION-Netzwerk, nachdem eine Verbindung hergestellt wurde. Aber dieser Vorgang ist noch nicht abgeschlossen.</translation>
     </message>
     <message>
-        <source>If you don't want to see internal PrivateSend fees/transactions select "Most Common" as Type on the "Transactions" tab.</source>
-        <translation>Wenn Sie keine internen PrivateSend-Gebühren oder -Transaktionen sehen wollen wählen Sie "Gängigste" als Typ auf der "Transaktionen" Karteikarte.</translation>
+        <source>Enter an amount of Ion to convert to xION</source>
+        <translation>Eingabe des ION-Betrags, um in xION umzuwandeln</translation>
     </message>
     <message>
         <source>PrivateSend requires at least %1 to use.</source>
@@ -1945,8 +2087,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
 <context>
     <name>PeerTableModel</name>
     <message>
-        <source>NodeId</source>
-        <translation>KnotenId</translation>
+        <source>The Ion address to send the payment to. Creates local payment to yourself when empty.</source>
+        <translation>Die ION-Adresse, an die die Zahlung gesenden wird. Erstelle Sie eine lokale Zahlung an sich selbst, wenn sie leer ist.</translation>
     </message>
     <message>
         <source>Node/Service</source>
@@ -2187,16 +2329,142 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Name</translation>
     </message>
     <message>
-        <source>N/A</source>
-        <translation>k.A.</translation>
+        <source> sec. Used denominations:
+</source>
+        <translation> ausg. Verwendete Stückelungen:
+</translation>
+    </message>
+    <message>
+        <source>Starting ResetMintZerocoin: rescanning the complete blockchain, this will need up to 30 minutes depending on your hardware.&lt;br /&gt;&lt;br /&gt;</source>
+        <translation>Starten von ResetMintZerocoin: Nachscannung der kompletten Blockchain. Das benötigt bis zu 30 Minuten je nach Hardware.&lt;br /&gt;&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>You won't be able to do anything else during that time!&lt;br /&gt;</source>
+        <translation>Sie können während dieser Zeit nichts anderes machen!&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>Confirm Rescan</source>
+        <translation>Nachscannen bestätigen</translation>
+    </message>
+    <message>
+        <source>ResetMintZerocoin: action canceled by user</source>
+        <translation>ResetMintZerocoin: Aktion vom Benutzer abgebrochen</translation>
+    </message>
+    <message>
+        <source>Starting ResetMintZerocoin: rescanning complete blockchain, this will need up to 30 minutes depending on your hardware. 
+Please be patient...</source>
+        <translation>Starten von ResetMintZerocoin: Nachscannen der kompletten Blockchain. Das benötigt bis zu 30 Minuten je nach Hardware.
+Bitte haben Sie Geduld...</translation>
+    </message>
+    <message>
+        <source>Duration: </source>
+        <translation>Dauer:</translation>
+    </message>
+    <message>
+        <source> sec.
+</source>
+        <translation>ausg.
+</translation>
+    </message>
+    <message>
+        <source>Starting ResetSpentZerocoin: </source>
+        <translation>Starte ResetSpentZerocoin: </translation>
+    </message>
+    <message>
+        <source>No 'Pay To' address provided, creating local payment</source>
+        <translation>Keine "Pay To"-Adresse zur Verfügung. Erstelle lokale Zahlung</translation>
+    </message>
+    <message>
+        <source>Invalid Ion Address</source>
+        <translation>Ungültige ION-Adresse </translation>
+    </message>
+    <message>
+        <source>Invalid Send Amount</source>
+        <translation>Ungültiger Sendebetrag.</translation>
+    </message>
+    <message>
+        <source>Confirm additional Fees</source>
+        <translation>Zusätzliche Gebühren bestätigen</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to send?&lt;br /&gt;&lt;br /&gt;</source>
+        <translation>Sind Sie sicher, dass Sie senden möchten?&lt;br /&gt;&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source> to address </source>
+        <translation>an Adresse</translation>
+    </message>
+    <message>
+        <source> to a newly generated (unused and therefor anonymous) local address &lt;br /&gt;</source>
+        <translation>zu einer neu erzeugten (unbenutzten und damit anonymen) lokalen Adresse &lt;br /&gt;</translation>
+    </message>
+    <message>
+        <source>with Security Level </source>
+        <translation>mit Sicherheitsstufe</translation>
+    </message>
+    <message>
+        <source>Confirm send coins</source>
+        <translation>Sende Coins bestätigen</translation>
+    </message>
+    <message>
+        <source>Spending Zerocoin.
+Computationally expensive, might need several minutes depending on the selected Security Level and your hardware. 
+Please be patient...</source>
+        <translation>Zerocoin ausgeben.
+Rechnerisch aufwändig. Kann je nach ausgewähltem Sicherheitsstufe und Ihrer Hardware mehrere Minuten benötigen
+Bitte haben Sie Geduld...</translation>
+    </message>
+    <message>
+        <source>Spend Zerocoin failed with status = </source>
+        <translation>Ausgeben Zerocoin fehlgeschlagen mit Status =</translation>
+    </message>
+    <message>
+        <source>xION Spend #: </source>
+        <translation>xION Ausgeben #:</translation>
+    </message>
+    <message>
+        <source>denomination: </source>
+        <translation>Stückelung:</translation>
+    </message>
+    <message>
+        <source>serial: </source>
+        <translation>seriell:</translation>
+    </message>
+    <message>
+        <source>Spend is 1 of : </source>
+        <translation>Spend ist 1 von :</translation>
+    </message>
+    <message>
+        <source>value out: </source>
+        <translation>Betrag out:</translation>
+    </message>
+    <message>
+        <source>address: </source>
+        <translation>Adresse:</translation>
+    </message>
+    <message>
+        <source>xION Mint</source>
+        <translation>xION Prägen</translation>
+    </message>
+    <message>
+        <source>Sending successful, return code: </source>
+        <translation>Senden erfolgreich, Rückgabecode:</translation>
+    </message>
+    <message>
+        <source>txid: </source>
+        <translation>txid: </translation>
+    </message>
+    <message>
+        <source>fee: </source>
+        <translation>Gebühr:</translation>
     </message>
     <message>
         <source>Number of connections</source>
         <translation>Anzahl Verbindungen</translation>
     </message>
     <message>
-        <source>&amp;Open</source>
-        <translation>&amp;Öffnen</translation>
+        <source>Enter a Ion address (e.g. %1)</source>
+        <translation>ION-Adresse eingeben (z.B. %1)</translation>
     </message>
     <message>
         <source>Startup time</source>
@@ -2327,8 +2595,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>InstantSend Locks</translation>
     </message>
     <message>
-        <source>Decrease font size</source>
-        <translation>Fontgröße verringern</translation>
+        <source>Open the Ion debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Öffne ION-Debug-Protokolldatei aus dem aktuellen Datenverzeichnis. Dies kann für einige Protokolldateien einige Sekunden dauern.</translation>
     </message>
     <message>
         <source>Increase font size</source>
@@ -2492,7 +2760,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Out:</source>
-        <translation>ausgehend:</translation>
+        <translation>Out:</translation>
+    </message>
+    <message>
+        <source>Welcome to the Ion RPC console.</source>
+        <translation>Willkommen in der Ion RPC Konsole.</translation>
     </message>
     <message>
         <source>Network activity disabled</source>
@@ -2554,12 +2826,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>&amp;Nachricht:</translation>
     </message>
     <message>
-        <source>An optional label to associate with the new receiving address.</source>
-        <translation>Eine optionale Bezeichnung, die der neuen Empfangsadresse zugeordnet wird.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</source>
+        <translation>Eine optionale Nachricht anhängen an die Zahlungsaufforderung, die bei der Eröffnung der Anforderung angezeigt wird. Hinweis: Die Nachricht wird nicht mit der Zahlung über das ION-Netzwerk gesendet.</translation>
     </message>
     <message>
         <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Ion network.</source>
-        <translation>Eine optionale Nachricht, die an die Zahlungsanforderung angehängt wird. Sie wird angezeigt, wenn die Anforderung geöffnet wird.&lt;br&gt; Hinweis: Diese Nachricht wird nicht mit der Zahlung über das Ion-Netzwerk gesendet.</translation>
+        <translation>Eine optionale Nachricht anhängen an die Zahlungsaufforderung, die bei der Eröffnung der Anforderung angezeigt wird.&lt;br&gt;Hinweis: Die Nachricht wird nicht mit der Zahlung über das ION-Netzwerk gesendet.</translation>
     </message>
     <message>
         <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
@@ -2823,8 +3095,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Verbergen</translation>
     </message>
     <message>
-        <source>(read the tooltip)</source>
-        <translation>(Kurzinfo lesen)</translation>
+        <source>If the custom fee is set to 1000 uIONs and the transaction is only 250 bytes, then "per kilobyte" only pays 250 uIONs in fee,&lt;br /&gt;while "total at least" pays 1000 uIONs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Wenn die kundenspezifische Gebühr auf 1000 uIONs eingestellt ist und die Transaktion nur 250 Bytes beträgt, dann zahlt man "pro Kilobyte" nur 250 uIONs an Gebühr,&lt;br /&gt;während man "insgesamt mindestens" 1000 uIONs bezahlt. Für Transaktionen, die größer sind als ein Kilobyte, bezahlen sie mit Kilobyte.</translation>
+    </message>
+    <message>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for Ion transactions than the network can process.</source>
+        <translation>Nur die minimale Gebühr zu zahlen ist nur gut, solange es weniger Transaktionsvolumen als Platz in den Blocken ist.&lt;br /&gt;Aber sein Sie sich bewusst, dass dies am Ende in einer niemals bestätigende Transaktion endet, sobald es mehr Nachfrage nach ION-Transaktionen gibt, als das Netzwerk verarbeiten kann.</translation>
+    </message>
+    <message>
+        <source>normal</source>
+        <translation>normal</translation>
+    </message>
+    <message>
+        <source>fast</source>
+        <translation>schnell</translation>
     </message>
     <message>
         <source>Recommended:</source>
@@ -2911,8 +3195,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Wollen Sie die Überweisung ausführen?</translation>
     </message>
     <message>
-        <source>are added as transaction fee</source>
-        <translation>werden als Transaktionsgebühr hinzugefügt</translation>
+        <source>Warning: Invalid Ion address</source>
+        <translation>Warnung: Ungültige ION-Adresse</translation>
     </message>
     <message>
         <source>Total Amount = &lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;= %2</source>
@@ -3035,7 +3319,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>The Ion address to send the payment to</source>
-        <translation>Ion-Adresse, an die überwiesen werden soll</translation>
+        <translation>ION-Adresse, an die überwiesen werden soll</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -3086,12 +3370,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Nachricht:</translation>
     </message>
     <message>
-        <source>A message that was attached to the ion: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</source>
-        <translation>Eine an die "ion:"-URI angefügte Nachricht, die zusammen mit der Transaktion gespeichert wird. Hinweis: Diese Nachricht wird nicht über das Ion-Netzwerk gesendet.</translation>
-    </message>
-    <message>
-        <source>This is an unauthenticated payment request.</source>
-        <translation>Dies ist eine unverifizierte Zahlungsanforderung.</translation>
+        <source>A message that was attached to the ION: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</source>
+        <translation>Eine an die ION-URI angefügte Nachricht, die zusammen mit der Transaktion gespeichert wird. Hinweis: Diese Nachricht wird nicht über das ION-Netzwerk gesendet.</translation>
     </message>
     <message>
         <source>This is an authenticated payment request.</source>
@@ -3144,7 +3424,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>The Ion address to sign the message with</source>
-        <translation>Ion-Adresse, mit der die Nachricht signiert werden soll</translation>
+        <translation>ION Adresse mit welcher die Nachricht signiert werden soll</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -3176,7 +3456,15 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Sign the message to prove you own this Ion address</source>
-        <translation>Die Nachricht signieren, um den Besitz dieser Ion-Adresse zu belegen</translation>
+        <translation>Signiere die Nachricht um zu Beweisen, dass du diese Ion Adresse besitzt</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>Die Ion Adresse mit welcher die Nachricht signiert wurde.</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Überprüfen Sie die Nachricht, um sicherzustellen, dass sie mit der angegebenen ION-Adresse signiert wurde.</translation>
     </message>
     <message>
         <source>Sign &amp;Message</source>
@@ -4624,16 +4912,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Automatisch versteckte Tor-Dienste erzeugen (Standard: %d)</translation>
     </message>
     <message>
-        <source>Disable governance validation (0-1, default: %u)</source>
-        <translation>Deaktiviere Governance-Validierung (0-1, Standard: %u)</translation>
+        <source>Converted Ion to xION</source>
+        <translation>Umgewandeltes Ion zu xION</translation>
     </message>
     <message>
         <source>ERROR! Failed to create automatic backup</source>
         <translation>FEHLER! Die automatische Datensicherung ist fehlgeschlagen</translation>
     </message>
     <message>
-        <source>Enable publish hash block in &lt;address&gt;</source>
-        <translation>Veröffentlichung des Blockhash in &lt;Adresse&gt; ermöglichen </translation>
+        <source>Received Ion from xION</source>
+        <translation>Empfangene Ion von xION</translation>
     </message>
     <message>
         <source>Enable publish hash of governance objects (like proposals) in &lt;address&gt;</source>
@@ -4756,8 +5044,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Die letzte erfolgreiche PrivateSend-Transaktion ist noch zu neu.</translation>
     </message>
     <message>
-        <source>Loading block index...</source>
-        <translation>Lade Blockindex...</translation>
+        <source>Received Ion from xION</source>
+        <translation>Empfangen Ion von xION</translation>
     </message>
     <message>
         <source>Loading governance cache...</source>
@@ -4884,8 +5172,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Spezifizierte -walletdir "%s" ist ein relativer Pfad</translation>
     </message>
     <message>
-        <source>Specified -walletdir "%s" is not a directory</source>
-        <translation>Spezifizierte -walletdir "%s" ist kein Verzeichnis</translation>
+        <source>SwiftTX doesn't support sending values that high yet. Transactions are currently limited to %1 ION.</source>
+        <translation>SwiftTX unterstützt das Versenden von Beträgen dieser Höhe noch nicht. Transaktionen sind zur Zeit auf maximal %1 Ion begrenzt.</translation>
     </message>
     <message>
         <source>Sync mempool from other nodes on start (default: %u)</source>
@@ -4976,8 +5264,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Arbeite im Block-Only-Modus (Standard: %u)</translation>
     </message>
     <message>
-        <source>You can not start a masternode with wallet enabled.</source>
-        <translation>Eine Masternode kann nicht mit aktivierter Wallet gestartet werden.</translation>
+        <source>Disable all Ion specific functionality (Masternodes, Obfuscation, SwiftTX, Budgeting) (0-1, default: %u)</source>
+        <translation>Deaktiviere alle ION-spezifischen Funktionen (Masternodes, Verschleierung, SwiftTX, Budgetplanung) (0-1, default: %u)</translation>
     </message>
     <message>
         <source>You need to rebuild the database using -reindex to change -addressindex</source>

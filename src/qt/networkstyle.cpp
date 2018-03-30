@@ -21,53 +21,11 @@ static const struct {
     const int iconColorSaturationReduction;
     const std::string titleAddText;
 } network_styles[] = {
-<<<<<<< HEAD
-    {"main", QAPP_APP_NAME_DEFAULT, 0, 0, ""},
-    {"test", QAPP_APP_NAME_TESTNET, 190, 20, QT_TRANSLATE_NOOP("SplashScreen", "[testnet]")},
-    {"devnet", QAPP_APP_NAME_DEVNET, 190, 20, "[devnet: %s]"},
-    {"regtest", QAPP_APP_NAME_REGTEST, 160, 30, "[regtest]"}
-};
-static const unsigned network_styles_count = sizeof(network_styles)/sizeof(*network_styles);
-
-void NetworkStyle::rotateColor(QColor& col, const int iconColorHueShift, const int iconColorSaturationReduction)
-{
-    int h, s, l, a;
-    col.getHsl(&h, &s, &l, &a);
-
-    // rotate color on RGB color circle
-    h += iconColorHueShift;
-    // change saturation value
-    s -= iconColorSaturationReduction;
-    s = std::max(s, 0);
-
-    col.setHsl(h,s,l,a);
-}
-
-void NetworkStyle::rotateColors(QImage& img, const int iconColorHueShift, const int iconColorSaturationReduction) {
-    int h,s,l,a;
-
-    // traverse though lines
-    for(int y=0;y<img.height();y++)
-    {
-        QRgb *scL = reinterpret_cast< QRgb *>( img.scanLine( y ) );
-
-        // loop through pixels
-        for(int x=0;x<img.width();x++)
-        {
-            QColor col;
-            col.setRgba(scL[x]);
-            rotateColor(col, iconColorHueShift, iconColorSaturationReduction);
-            scL[x] = col.rgba();
-        }
-    }
-}
-=======
     {"main", QAPP_APP_NAME_DEFAULT, ":/icons/bitcoin", "", ":/images/splash"},
     {"test", QAPP_APP_NAME_TESTNET, ":/icons/ion_testnet", QT_TRANSLATE_NOOP("SplashScreen", "[testnet]"), ":/images/splash_testnet"},
     {"regtest", QAPP_APP_NAME_TESTNET, ":/icons/ion_regtest", "[regtest]", ":/images/splash_regtest"},
     {"unittest", QAPP_APP_NAME_TESTNET, ":/icons/ion_unittest", "[unittest]", ":/images/splash_unittest"}};
 static const unsigned network_styles_count = sizeof(network_styles) / sizeof(*network_styles);
->>>>>>> Add splashscreens, fixed #10
 
 // titleAddText needs to be const char* for tr()
 NetworkStyle::NetworkStyle(const QString &_appName, const int iconColorHueShift, const int iconColorSaturationReduction, const char *_titleAddText):

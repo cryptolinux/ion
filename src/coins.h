@@ -19,8 +19,10 @@
 
 #include <unordered_map>
 
-/**
- * A UTXO entry.
+/** 
+
+    ****Note - for Ion we added fCoinStake to the 2nd bit. Keep in mind when reading the following and adjust as needed.
+ * Pruned version of CTransaction: only retains metadata and unspent transaction outputs
  *
  * Serialized format:
  * - VARINT((coinbase ? 1 : 0) | (height << 1))

@@ -92,22 +92,48 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-//Ion only features
-bool fMasternodeMode = false;
-bool fDisableGovernance = false;
-/**
-    nWalletBackups:
-        1..10   - number of automatic backups to keep
-        0       - disabled by command-line
-        -1      - disabled because of some error during run-time
-        -2      - disabled because wallet was locked and we were not able to replenish keypool
-*/
-int nWalletBackups = 10;
+// Work around clang compilation problem in Boost 1.46:
+// /usr/include/boost/program_options/detail/config_file.hpp:163:17: error: call to function 'to_internal' that is neither visible in the template definition nor found by argument-dependent lookup
+// See also: http://stackoverflow.com/questions/10020179/compilation-fail-in-boost-librairies-program-options
+//           http://clang.debian.net/status.php?version=3.0&key=CANNOT_FIND_FUNCTION
+namespace boost
+{
+namespace program_options
+{
+std::string to_internal(const std::string&);
+}
 
-const char * const BITCOIN_CONF_FILENAME = "ioncoin.conf";
-const char * const BITCOIN_PID_FILENAME = "iond.pid";
+} // namespace boost
 
-ArgsManager gArgs;
+using namespace std;
+
+// Ion only features
+// Masternode
+bool fMasterNode = false;
+string strMasterNodePrivKey = "";
+string strMasterNodeAddr = "";
+bool fLiteMode = false;
+// SwiftX
+bool fEnableSwiftTX = true;
+int nSwiftTXDepth = 5;
+// Automatic Zerocoin minting
+bool fEnableZeromint = true;
+int nZeromintPercentage = 10;
+int nPreferredDenom = 0;
+const int64_t AUTOMINT_DELAY = (60 * 5); // Wait at least 5 minutes until Automint starts
+
+int nAnonymizeIONAmount = 1000;
+int nLiquidityProvider = 0;
+/** Spork enforcement enabled time */
+int64_t enforceMasternodePaymentsTime = 4085657524;
+bool fSucessfullyLoaded = false;
+/** All denominations used by obfuscation */
+std::vector<int64_t> obfuScationDenominations;
+string strBudgetMode = "";
+
+map<string, string> mapArgs;
+map<string, vector<string> > mapMultiArgs;
+bool fDebug = false;
 bool fPrintToConsole = false;
 bool fPrintToDebugLog = true;
 

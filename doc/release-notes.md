@@ -128,6 +128,9 @@ This is a new major version release, including various bug fixes, performance im
 Please report bugs using the issue tracker at github: https://github.com/ioncoincore/ion/issues
 
 
+RPC Changes
+---------------------
+The `bip38decrypt` command has had it's parameter order changed to be more consistent with it's counterpart. The command now expects the Ion address as it's first parameter and the passphrase as it's second parameter.
 
 See detailed [set of changes](https://github.com/dashpay/dash/compare/v0.16.1.0...dashpay:v0.16.1.1).
 

@@ -219,8 +219,8 @@
         <translation>Odszyfruj portfel</translation>
     </message>
     <message>
-        <source>Change passphrase</source>
-        <translation>Zmień hasło</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Zatwierdź wiadomość, aby udowodnić, że podany adres Ion jest w twoim posiadaniu</translation>
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase to the wallet.</source>
@@ -556,8 +556,8 @@
         <translation>Portfel jest &lt;b&gt;odszyfrowany&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>&amp;PrivateSend information</source>
-        <translation>Informacje &amp;PrivateSend</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>Wyślij monety do adresu ION</translation>
     </message>
     <message>
         <source>Show the PrivateSend basic information</source>
@@ -583,13 +583,13 @@
         <source>Tabs toolbar</source>
         <translation>Pasek zakładek</translation>
     </message>
-    <message numerus="yes">
-        <source>%n active connection(s) to Ion network</source>
-        <translation><numerusform>%n aktywne połączenie z siecią Ion</numerusform><numerusform>%n aktywne połączenia z siecią Ion</numerusform><numerusform>%n aktywnych połączeń z siecią Ion</numerusform><numerusform>%n aktywne połączenia z siecią Ion</numerusform></translation>
+    <message>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>Zatwierdź wiadomość z twoimi adresami ION, by udowodnić, że jesteś w ich posiadaniu</translation>
     </message>
     <message>
-        <source>Network activity disabled</source>
-        <translation>Aktywność sieci jest wyłączona</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>Zweryfikuj wiadomości by upewnić się, że zostały zatwierdzone z podanego adresu ION</translation>
     </message>
     <message>
         <source>Syncing Headers (%1%)...</source>
@@ -628,12 +628,12 @@
         <translation>Pobieranie bloków ...</translation>
     </message>
     <message>
-        <source>Last received block was generated %1 ago.</source>
-        <translation>Ostatni otrzymany blok został wygenerowany %1 temu.</translation>
+        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <translation>Pokaż wiadomość pomocy rdzenia ION, aby dostać listę możliwych opcji Ion command-line</translation>
     </message>
     <message>
-        <source>Transactions after this will not yet be visible.</source>
-        <translation>Transakcje po tym momencie nie będą jeszcze widoczne.</translation>
+        <source>Ion Core client</source>
+        <translation>Rdzeń Ion klient</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -1196,12 +1196,12 @@
         <translation>Adres Właściciela</translation>
     </message>
     <message>
-        <source>Voting Address</source>
-        <translation>Adres Głosowania</translation>
+        <source>Automatically start Ion after logging in to the system.</source>
+        <translation>Automatycznie uruchom Ion po zalogowaniu do systemu</translation>
     </message>
     <message>
-        <source>Copy ProTx Hash</source>
-        <translation>Skopiuj ProTx Hash</translation>
+        <source>&amp;Start Ion on system login</source>
+        <translation>&amp;Uruchom Ion podczas logowania do systemu</translation>
     </message>
     <message>
         <source>Copy Collateral Outpoint</source>
@@ -1228,8 +1228,8 @@
         <translation>do %1</translation>
     </message>
     <message>
-        <source>to UNKNOWN</source>
-        <translation>do NIEZNANEGO</translation>
+        <source>Connect to the Ion network through a SOCKS5 proxy.</source>
+        <translation>Połącz z siecią Ion poprzez SOCKS5 proxy.</translation>
     </message>
     <message>
         <source>but not claimed</source>
@@ -1461,8 +1461,8 @@
         <translation>Czy pokazać funkcje kontroli monet czy nie.</translation>
     </message>
     <message>
-        <source>Automatically start %1 after logging in to the system.</source>
-        <translation>Automatycznie uruchom %1 po zalogowaniu do systemu.</translation>
+        <source>Enter a Ion address (e.g. %1)</source>
+        <translation>Wprowadź adres Ion (np. %1)</translation>
     </message>
     <message>
         <source>&amp;Start %1 on system login</source>
@@ -1881,8 +1881,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Nie można odczytać pliku z żądaniem płatności! Może to być spowodowane przez niewłaściwy plik z żądaniem płatności.</translation>
     </message>
     <message>
-        <source>Payment request rejected</source>
-        <translation>Żądanie płatności zostało odrzucone</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Zatwierdź wiadomość, aby udowodnić, że podany adres Ion jest w twoim posiadaniu</translation>
     </message>
     <message>
         <source>Payment request network doesn't match client network.</source>

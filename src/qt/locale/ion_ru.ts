@@ -71,11 +71,11 @@
     </message>
     <message>
         <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Это ваши адреса Ion для отправки платежей. Всегда проверяйте количество и адрес получателя перед отправкой перевода.</translation>
+        <translation>Это ваши ION-адреса для отправки платежей. Перед отправкой монет всегда проверяйте сумму и адрес получателя.</translation>
     </message>
     <message>
         <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Это ваши адреса Ion для приёма платежей. Рекомендуется использовать новый адрес получения для каждой транзакции.</translation>
+        <translation>Это ваши ION-адреса для получения платежей. Для каждой транзакции рекомендуется использовать новый адрес получения.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -231,8 +231,8 @@
         <translation>Подтвердите шифрование кошелька</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ION&lt;/b&gt;!</source>
-        <translation>Внимание: если Вы зашифруете кошелёк и потеряете пароль, вы &lt;b&gt;ПОТЕРЯЕТЕ ВСЕ ВАШИ ION&lt;/b&gt;!</translation>
+        <source>ION will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your IONs from being stolen by malware infecting your computer.</source>
+        <translation>ION сейчас закроется, чтобы завершить процесс шифрования. Помните, что шифрование вашего кошелька не может полностью защитить ваши Ion от кражи с использованием вредоносного ПО.</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -288,14 +288,154 @@
     </message>
 </context>
 <context>
-    <name>BanTableModel</name>
+    <name>Bip38ToolDialog</name>
+    <message>
+        <source>BIP 38 Tool</source>
+        <translation>BIP 38 Утилита</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Encrypt</source>
+        <translation>&amp;BIP 38 Шифрование</translation>
+    </message>
+    <message>
+        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Введите Ion адрес, которым вы хотите зашифровать, используя BIP 38. Введите пароль в среднем поле. Нажмите "Зашифровать", чтобы создать зашиврованный секретный ключ.</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation>Адрес:</translation>
+    </message>
+    <message>
+        <source>The Ion address to sign the message with</source>
+        <translation>Адрес Ion для подписи сообщения с помощью</translation>
+    </message>
+    <message>
+        <source>Choose previously used address</source>
+        <translation>Выбрать ранее использованный адрес</translation>
+    </message>
+    <message>
+        <source>Alt+A</source>
+        <translation>Alt+A</translation>
+    </message>
+    <message>
+        <source>Paste address from clipboard</source>
+        <translation>Вставить адрес из буфера обмена</translation>
+    </message>
+    <message>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
+    </message>
+    <message>
+        <source>Passphrase: </source>
+        <translation>Кодовая фраза:</translation>
+    </message>
     <message>
         <source>IP/Netmask</source>
         <translation>IP/Netmask</translation>
     </message>
     <message>
-        <source>Banned Until</source>
-        <translation>Заблокирован до</translation>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation>Копировать текущую подпись в системный буфер обмена</translation>
+    </message>
+    <message>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Подпишите сообщение, чтобы подтвердить свой адрес ION</translation>
+    </message>
+    <message>
+        <source>Encrypt &amp;Key</source>
+        <translation>Зашифровать &amp;Ключ</translation>
+    </message>
+    <message>
+        <source>Reset all sign message fields</source>
+        <translation>Сбросить все поля сообщений</translation>
+    </message>
+    <message>
+        <source>Clear &amp;All</source>
+        <translation>Очистить &amp;Все</translation>
+    </message>
+    <message>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>&amp;BIP 38 Дешифрование</translation>
+    </message>
+    <message>
+        <source>Enter the BIP 38 encrypted private key. Enter the passphrase in the middle box. Click Decrypt Key to compute the private key. After the key is decrypted, clicking 'Import Address' will add this private key to the wallet.</source>
+        <translation>Введите зашифрованный с помощью BIP 38 секретный ключ. Введите секретную фразу в среднем окне. Нажмите Дешифровать Ключ чтобы создать секретный ключ. Нажав на Импортировать Адрес после дешифровки, вы добавите секретный ключ к кошельку.</translation>
+    </message>
+    <message>
+        <source>The Ion address the message was signed with</source>
+        <translation>Адрес ION, которым подписано сообщение</translation>
+    </message>
+    <message>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Проверте сообщение, чтобы убедиться, что оно было подписано указанным Ion адресом </translation>
+    </message>
+    <message>
+        <source>Decrypt &amp;Key</source>
+        <translation>Дешифровать &amp;Ключ</translation>
+    </message>
+    <message>
+        <source>Reset all verify message fields</source>
+        <translation>Сбросить все поля подтверждения</translation>
+    </message>
+    <message>
+        <source>Decrypted Key:</source>
+        <translation>Дешифрованный Ключ</translation>
+    </message>
+    <message>
+        <source>Import Address</source>
+        <translation>Импортировать Адрес</translation>
+    </message>
+    <message>
+        <source>Click "Decrypt Key" to compute key</source>
+        <translation>Нажмите "Дешифровать Ключ" для генерации ключа</translation>
+    </message>
+    <message>
+        <source>The entered passphrase is invalid. </source>
+        <translation>Неправильно введена кодовая фраза.</translation>
+    </message>
+    <message>
+        <source>Allowed: 0-9,a-z,A-Z,</source>
+        <translation>Допускается: 0-9,a-z,A-Z,</translation>
+    </message>
+    <message>
+        <source>The entered address is invalid.</source>
+        <translation>Неправильно введен адрес.</translation>
+    </message>
+    <message>
+        <source>Please check the address and try again.</source>
+        <translation>Пожалуйста, проверьте адрес и попробуйте снова.</translation>
+    </message>
+    <message>
+        <source>The entered address does not refer to a key.</source>
+        <translation>Введенный адрес не связан с ключом.</translation>
+    </message>
+    <message>
+        <source>Wallet unlock was cancelled.</source>
+        <translation>Снятие блокировки кошелька было отменено.</translation>
+    </message>
+    <message>
+        <source>Private key for the entered address is not available.</source>
+        <translation>Персональный ключ для введенного адреса недоступен.</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt.</source>
+        <translation>Не удалось дешифровать.</translation>
+    </message>
+    <message>
+        <source>Please check the key and passphrase and try again.</source>
+        <translation>Пожалуйста, проверьте ключ и кодовую фразу и попробуйте снова.</translation>
+    </message>
+    <message>
+        <source>Data Not Valid.</source>
+        <translation>Данные недействительны.</translation>
+    </message>
+    <message>
+        <source>Please try again.</source>
+        <translation>Пожалуйста, попробуйте снова.</translation>
+    </message>
+    <message>
+        <source>Please wait while key is imported</source>
+        <translation>Пожалуйста, дождитесь импортирования ключа</translation>
     </message>
 </context>
 <context>
@@ -588,8 +728,8 @@
         <translation><numerusform>%n активное соединение с сетью Ion</numerusform><numerusform>%n активных соединения с сетью Ion</numerusform><numerusform>%n активных соединений с сетью Ion</numerusform><numerusform>%n активных соединений с сетью Ion</numerusform></translation>
     </message>
     <message>
-        <source>Network activity disabled</source>
-        <translation>Сетевая активность отключена</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>Отправить монеты на Ion адрес</translation>
     </message>
     <message>
         <source>Syncing Headers (%1%)...</source>
@@ -620,12 +760,12 @@
         <translation><numerusform>Обработан 1 блок из истории транзакций.</numerusform><numerusform>Обработано %n блока из истории транзакций.</numerusform><numerusform>Обработано %n блоков из истории транзакций.</numerusform><numerusform>Обработано %n блоков из истории транзакций.</numerusform></translation>
     </message>
     <message>
-        <source>%1 behind</source>
-        <translation>%1 позади</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>Подписывайте сообщения вашими Ion адресами, чтобы доказать, что вы их владелец</translation>
     </message>
     <message>
-        <source>Catching up...</source>
-        <translation>Синхронизируется...</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>Проверте сообщения, чтобы убедиться, что они были подписаны указанным Ion адресом </translation>
     </message>
     <message>
         <source>Last received block was generated %1 ago.</source>
@@ -668,10 +808,8 @@
         <translation>Получено несколько транзакций</translation>
     </message>
     <message>
-        <source>Sent Amount: %1
-</source>
-        <translation>Отправлено: %1
-</translation>
+        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <translation>Смотрите помощь к программе, чтобы получить документацию ко всем возможным опциям комманды ION</translation>
     </message>
     <message>
         <source>Received Amount: %1
@@ -969,7 +1107,7 @@
     </message>
     <message>
         <source>The entered address "%1" is not a valid Ion address.</source>
-        <translation>Введённый адрес "%1" не является правильным адресом Ion.</translation>
+        <translation>Введенный адрес "%1" не является Ion адресом.</translation>
     </message>
     <message>
         <source>The entered address "%1" is already in the address book.</source>
@@ -1109,8 +1247,8 @@
         <translation>Начальная синхронизация требует много ресурсов и, возможно, обнаружит проблемы с Вашим компьютером, которых Вы ранее не замечали. Каждый раз, когда Вы запускаете %1, скачивание будет продолжено с того места, где оно было остановлено в прошлый раз.</translation>
     </message>
     <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation>Если Вы выбрали ограниченное хранение цепочки блоков (удаление старых блоков), исторические данные все равно будут скачаны и проверены, после чего они будут удалены для уменьшения размера хранимых данных.</translation>
+        <source>Ion Core will download and store a copy of the Ion block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>Ion Core загрузит и сохранит копию цепочки блоков ION. Каталог будет занимать около %1GB и со временем размер будет увеличиваться. Кроме того, в этом каталоге будет храниться кошелек.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1244,8 +1382,14 @@
         <translation>ENABLED</translation>
     </message>
     <message>
-        <source>POSE_BANNED</source>
-        <translation>POSE_BANNED</translation>
+        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other Ion addresses after it matures.
+To Add: enter percentage to give and Ion address to add to the MultiSend vector.
+To Delete: Enter address to delete and press delete.
+MultiSend will not be activated unless you have clicked Activate</source>
+        <translation>MultiSend позволяет вам автоматически отправлять до 100% вознаграждения за мастерноды и хранение, после их созревания, на другие Ion адреса.
+Для добавления: введите передаваемый процент и Ion адрес для добавления к вектору MultiSend.
+Для удаления: введите удаляемый адрес и нажмите удалить.
+MultiSend будет неактивен до тех пор, пока вы не нажмете Включить</translation>
     </message>
     <message>
         <source>UNKNOWN</source>
@@ -1381,20 +1525,20 @@
         <translation>(0 = автоматически, &lt;0 = оставить столько незагруженных ядер)</translation>
     </message>
     <message>
-        <source>Amount of Ion to keep anonymized</source>
-        <translation>Сумма постоянно анонимизированных Ion</translation>
+        <source>This option is the quickest and will cost about ~0.025 Ion to anonymize 10000 ION</source>
+        <translation>Этот вариант является самым быстрым и будет стоить порядка ~0.025 Ion для анонимизации 10000 ION</translation>
     </message>
     <message>
-        <source>W&amp;allet</source>
-        <translation>К&amp;ошелёк</translation>
+        <source>This option is moderately fast and will cost about 0.05 Ion to anonymize 10000 ION</source>
+        <translation>Это средний по скорости вариант и он будет стоить около 0.05 Ion для анонимизации 10000 ION</translation>
     </message>
     <message>
         <source>&amp;Appearance</source>
         <translation>&amp;Внешний вид</translation>
     </message>
     <message>
-        <source>Show additional tab listing all your masternodes in first sub-tab&lt;br/&gt;and all masternodes on the network in second sub-tab.</source>
-        <translation>Показывать дополнительную вкладку со списком своих мастернод&lt;br/&gt;в одной таблице и списком всех мастернод в другой.</translation>
+        <source>0.1 Ion per 10000 Ion you anonymize.</source>
+        <translation>0.1 Ion за 10000 Ion которые вы собираетесь анонимизировать.</translation>
     </message>
     <message>
         <source>Show Masternodes Tab</source>
@@ -1465,8 +1609,8 @@
         <translation>Использовать отдельный SOCKS&amp;5 прокси для подключения через Tor:</translation>
     </message>
     <message>
-        <source>Hide the icon from the system tray.</source>
-        <translation>Скрыть иконку в системном лотке.</translation>
+        <source>Automatically open the Ion client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Автоматически открыть клиентский порт Ion через роутер. Ваш роутер должен поддерживать UPnP, а сам сервис должен быть включен.</translation>
     </message>
     <message>
         <source>&amp;Hide tray icon</source>
@@ -1485,12 +1629,12 @@
         <translation>&amp;Сторонние URL для транзакций</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
-        <translation>Показывать ли функции контроля монет или нет.</translation>
+        <source>Automatically start Ion after logging in to the system.</source>
+        <translation>Автоматически запускать Ion после входа в систему.</translation>
     </message>
     <message>
-        <source>Automatically start %1 after logging in to the system.</source>
-        <translation>Автоматически запускать %1 после входа в систему.</translation>
+        <source>&amp;Start Ion on system login</source>
+        <translation>&amp;Запускать Ion при входе в систему</translation>
     </message>
     <message>
         <source>&amp;Start %1 on system login</source>
@@ -1533,8 +1677,8 @@
         <translation>IP-адрес прокси (например, IPv4: 127.0.0.1 / IPv6: ::1)</translation>
     </message>
     <message>
-        <source>&amp;Port:</source>
-        <translation>По&amp;рт: </translation>
+        <source>Connect to the Ion network through a SOCKS5 proxy.</source>
+        <translation>Подключиться к сети Ion через SOCKS5 прокси.</translation>
     </message>
     <message>
         <source>Port of the proxy (e.g. 9050)</source>
@@ -1682,8 +1826,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Баланс добытых монет, который ещё не созрел</translation>
     </message>
     <message>
-        <source>Balances</source>
-        <translation>Балансы</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation>Возможно отображаемая информация устарела. Ваш кошелек автоматически синхронизируется с сетью Ion после установки соединения, но этот процесс еще не завершен. </translation>
     </message>
     <message>
         <source>Unconfirmed transactions to watch-only addresses</source>
@@ -4011,8 +4155,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Не удалось открыть базу данных блоков</translation>
     </message>
     <message>
-        <source>Error reading from database, shutting down.</source>
-        <translation>Ошибка чтения базы данных, завершение работы.</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters.</source>
+        <translation>URI не интерпретируется! Причиной этому может быть неверный Ion адрес или неверные параметеры URI.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -4087,8 +4231,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Включить публикацию хэша транзакции при попытке двойной траты другой транзакции, заблокированной через InstantSend, на &lt;address&gt;</translation>
     </message>
     <message>
-        <source>Found unconfirmed denominated outputs, will wait till they confirm to continue.</source>
-        <translation>Найдены неподтверждённые номиналы, процесс продолжится после их подтверждения.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation>Возможно отображаемая информация устарела. Ваш кошелек автоматически синхронизируется с сетью Ion после установки соединения, но этот процесс еще не завершен. </translation>
     </message>
     <message>
         <source>How thorough the block verification of -checkblocks is (0-4, default: %u)</source>
@@ -4167,8 +4311,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Указать pid файл. Относительные пути будут развернуты относительно местонахождения папки с данными для конкретной сети. (по умолчанию: %s)</translation>
     </message>
     <message>
-        <source>Specify wallet database path. Can be specified multiple times to load multiple wallets. Path is interpreted relative to &lt;walletdir&gt; if it is not absolute, and will be created if it does not exist (as a directory containing a wallet.dat file and log files). For backwards compatibility this will also accept names of existing data files in &lt;walletdir&gt;.)</source>
-        <translation>Указать путь к базе данных кошелька. Опция может быть использована несколько раз для загрузки нескольких кошельков. Путь развертывается относительно &lt;walletdir&gt;, если он не абсолютный, а в случае отсутствия базы данных по данному пути, будет создана новая (папка с wallet.dat и файлами логов). С целью сохранения обратной совместимости также принимаются имена существующих names файлов в &lt;walletdir&gt;.)</translation>
+        <source>Enter a Ion address (e.g. %1)</source>
+        <translation>Введите адрес Ion (например %1)</translation>
     </message>
     <message>
         <source>Transaction index can't be disabled with governance validation enabled. Either start with -disablegovernance command line switch or enable transaction index.</source>
@@ -4295,8 +4439,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Не осталось ключей, пожалуйста, выполните команду keypoolrefill</translation>
     </message>
     <message>
-        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: %u or testnet: %u)</source>
-        <translation>Слушать JSON-RPC соединения на порту &lt;port&gt; (по умолчанию: %u или testnet: %u)</translation>
+        <source>Open the Ion debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Открыть протокол отладки ION. Это может занять некоторе время, если файл протокола очень большой.</translation>
     </message>
     <message>
         <source>Listen for connections on &lt;port&gt; (default: %u or testnet: %u)</source>
@@ -4455,8 +4599,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Попробуем еще раз...</translation>
     </message>
     <message>
-        <source>Can't find random Masternode.</source>
-        <translation>Не получилось выбрать случайную Мастерноду.</translation>
+        <source>Welcome to the Ion RPC console.</source>
+        <translation>Добро пожаловать в окружение Ion RPC.</translation>
     </message>
     <message>
         <source>Can't mix while sync in progress.</source>
@@ -4743,8 +4887,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Ошибка очистки кэша выполненных запросов в</translation>
     </message>
     <message>
-        <source>Failed to clear governance cache at</source>
-        <translation>Ошибка очистки кэша управления в</translation>
+        <source>Warning: Invalid Ion address</source>
+        <translation>Предупреждение: неправильный Ion адрес</translation>
     </message>
     <message>
         <source>Failed to clear masternode cache at</source>
@@ -4799,8 +4943,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Опция заменена на -disablegovernance.</translation>
     </message>
     <message>
-        <source>Its replacement -disablegovernance has been forced instead.</source>
-        <translation>Взамен активирована опция -disablegovernance.</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>Адрес Ion для подписи сообщения с помощью</translation>
     </message>
     <message>
         <source>Keep the transaction memory pool below &lt;n&gt; megabytes (default: %u)</source>
@@ -4823,16 +4967,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Загрузка кэша управления...</translation>
     </message>
     <message>
-        <source>Loading sporks cache...</source>
-        <translation>Загрузка кэша спорков...</translation>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Подпишите сообщение, чтобы подтвердить свой адрес ION</translation>
     </message>
     <message>
-        <source>Loading wallet... (%3.2f %%)</source>
-        <translation>Загрузка кошелька... (%3.2f %%)</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>Адрес ION, которым подписано сообщение</translation>
     </message>
     <message>
-        <source>Loading wallet...</source>
-        <translation>Загрузка кошелька...</translation>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Проверте сообщение, чтобы убедиться, что оно было подписано указанным Ion адресом </translation>
     </message>
     <message>
         <source>Make the wallet broadcast transactions</source>

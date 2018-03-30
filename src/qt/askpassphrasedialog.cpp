@@ -48,42 +48,50 @@ AskPassphraseDialog::AskPassphraseDialog(Mode _mode, QWidget *parent) :
     ui->passEdit2->installEventFilter(this);
     ui->passEdit3->installEventFilter(this);
 
-    switch(mode)
-    {
-        case Encrypt: // Ask passphrase x2
-            ui->warningLabel->setText(tr("Enter the new passphrase to the wallet.<br/>Please use a passphrase of <b>ten or more random characters</b>, or <b>eight or more words</b>."));
-            ui->passLabel1->hide();
-            ui->passEdit1->hide();
-            setWindowTitle(tr("Encrypt wallet"));
-            break;
-        case UnlockMixing:
-            ui->warningLabel->setText(tr("This operation needs your wallet passphrase to unlock the wallet."));
-            ui->passLabel2->hide();
-            ui->passEdit2->hide();
-            ui->passLabel3->hide();
-            ui->passEdit3->hide();
-            setWindowTitle(tr("Unlock wallet for mixing only"));
-            break;
-        case Unlock: // Ask passphrase
-            ui->warningLabel->setText(tr("This operation needs your wallet passphrase to unlock the wallet."));
-            ui->passLabel2->hide();
-            ui->passEdit2->hide();
-            ui->passLabel3->hide();
-            ui->passEdit3->hide();
-            setWindowTitle(tr("Unlock wallet"));
-            break;
-        case Decrypt:   // Ask passphrase
-            ui->warningLabel->setText(tr("This operation needs your wallet passphrase to decrypt the wallet."));
-            ui->passLabel2->hide();
-            ui->passEdit2->hide();
-            ui->passLabel3->hide();
-            ui->passEdit3->hide();
-            setWindowTitle(tr("Decrypt wallet"));
-            break;
-        case ChangePass: // Ask old passphrase + new passphrase x2
-            setWindowTitle(tr("Change passphrase"));
-            ui->warningLabel->setText(tr("Enter the old passphrase and new passphrase to the wallet."));
-            break;
+    this->model = model;
+
+    switch (mode) {
+    case Mode::Encrypt: // Ask passphrase x2
+        ui->warningLabel->setText(tr("Enter the new passphrase to the wallet.<br/>Please use a passphrase of <b>ten or more random characters</b>, or <b>eight or more words</b>."));
+        ui->passLabel1->hide();
+        ui->passEdit1->hide();
+        setWindowTitle(tr("Encrypt wallet"));
+        break;
+    case Mode::UnlockAnonymize:
+        ui->anonymizationCheckBox->show();
+    case Mode::Unlock: // Ask passphrase
+        ui->warningLabel->setText(tr("This operation needs your wallet passphrase to unlock the wallet."));
+        ui->passLabel2->hide();
+        ui->passEdit2->hide();
+        ui->passLabel3->hide();
+        ui->passEdit3->hide();
+        setWindowTitle(tr("Unlock wallet"));
+        break;
+    case Mode::Decrypt: // Ask passphrase
+        ui->warningLabel->setText(tr("This operation needs your wallet passphrase to decrypt the wallet."));
+        ui->passLabel2->hide();
+        ui->passEdit2->hide();
+        ui->passLabel3->hide();
+        ui->passEdit3->hide();
+        setWindowTitle(tr("Decrypt wallet"));
+        break;
+    case Mode::ChangePass: // Ask old passphrase + new passphrase x2
+        setWindowTitle(tr("Change passphrase"));
+        ui->warningLabel->setText(tr("Enter the old and new passphrase to the wallet."));
+        break;
+    }
+
+    // Set checkbox "For anonymization, automint, and staking only" depending on from where we were called
+    if (context == Context::Unlock_Menu || context == Context::Mint_xION || context == Context::BIP_38) {
+        ui->anonymizationCheckBox->setChecked(true);
+    }
+    else {
+        ui->anonymizationCheckBox->setChecked(false);
+    }
+
+    // It doesn't make sense to show the checkbox for sending Ion because you wouldn't check it anyway.
+    if (context == Context::Send_ION || context == Context::Send_xION) {
+        ui->anonymizationCheckBox->hide();
     }
     textChanged();
     connect(ui->toggleShowPasswordButton, SIGNAL(toggled(bool)), this, SLOT(toggleShowPassword(bool)));

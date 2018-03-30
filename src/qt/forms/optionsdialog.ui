@@ -109,40 +109,10 @@
        <item>
         <widget class="QCheckBox" name="bitcoinAtStartup">
          <property name="toolTip">
-          <string>Automatically start %1 after logging in to the system.</string>
+          <string>Automatically start Ion after logging in to the system.</string>
          </property>
          <property name="text">
-          <string>&amp;Start %1 on system login</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="hideTrayIcon">
-         <property name="toolTip">
-          <string>Hide the icon from the system tray.</string>
-         </property>
-         <property name="text">
-          <string>&amp;Hide tray icon</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="minimizeToTray">
-         <property name="toolTip">
-          <string>Show only a tray icon after minimizing the window.</string>
-         </property>
-         <property name="text">
-          <string>&amp;Minimize to the tray instead of the taskbar</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="minimizeOnClose">
-         <property name="toolTip">
-          <string>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</string>
-         </property>
-         <property name="text">
-          <string>M&amp;inimize on close</string>
+          <string>&amp;Start Ion on system login</string>
          </property>
         </widget>
        </item>
@@ -307,7 +277,7 @@
        <item>
         <widget class="QCheckBox" name="showAdvancedPSUI">
          <property name="toolTip">
-          <string>Show additional information and buttons for PrivateSend on overview screen.</string>
+          <string>Enable automatic minting of Ion units to xION</string>
          </property>
          <property name="text">
           <string>Enable advanced PrivateSend interface</string>
@@ -349,7 +319,7 @@
          <item>
           <widget class="QLabel" name="lblPrivateSendRoundsText">
            <property name="toolTip">
-            <string>This setting determines the amount of individual masternodes that an input will be mixed through.&lt;br/&gt;More rounds of mixing gives a higher degree of privacy, but also costs more in fees.</string>
+            <string>Percentage of incoming Ion which get automatically converted to xION via Zerocoin Protocol (min: 10%)</string>
            </property>
            <property name="text">
             <string>PrivateSend rounds to use</string>
@@ -376,13 +346,16 @@
          <item>
           <widget class="QLabel" name="lblPrivateSendAmountText">
            <property name="toolTip">
-            <string>This amount acts as a threshold to turn off PrivateSend once it's reached.</string>
+            <string>Wait with automatic conversion to Zerocoin until enough Ion for this denomination is available</string>
+           </property>
+           <property name="text">
+            <string>Preferred Automint xION Denomination</string>
            </property>
            <property name="statusTip">
             <string notr="true"/>
            </property>
-           <property name="whatsThis">
-            <string notr="true"/>
+           <property name="toolTip">
+            <string>Wait with automatic conversion to Zerocoin until enough Ion for this denomination is available</string>
            </property>
            <property name="accessibleName">
             <string notr="true"/>
@@ -433,7 +406,7 @@
        <item>
         <widget class="QCheckBox" name="mapPortUpnp">
          <property name="toolTip">
-          <string>Automatically open the Ion Core client port on the router. This only works when your router supports UPnP and it is enabled.</string>
+          <string>Automatically open the Ion client port on the router. This only works when your router supports UPnP and it is enabled.</string>
          </property>
          <property name="text">
           <string>Map port using &amp;UPnP</string>
