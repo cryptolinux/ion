@@ -27,7 +27,7 @@
 
   <key>CFBundleExecutable</key>
   <string>Ion-Qt</string>
-
+  
   <key>CFBundleName</key>
   <string>Ion-Qt</string>
 

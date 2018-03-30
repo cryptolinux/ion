@@ -2,7 +2,111 @@
 
 
 How to Upgrade
---------------
+==============
+
+If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/Ion-Qt (on Mac) or iond/ion-qt (on Linux).
+
+Compatibility
+==============
+
+🗺️Ion Core 👛 is extensively tested on multiple operating systems using
+the Linux kernel, macOS 10.8+, and Windows Vista and later.
+
+Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBusiness/end-of-xp-support),
+No attempt is made to prevent installing or running the software on Windows XP, you
+can still do so at your own risk but be aware that there are known instabilities and issues.
+Please do not report issues about Windows XP to the issue tracker.
+
+🗺️Ion Core 👛 should also work on most other Unix-like systems but is not
+frequently tested on them.
+
+### :exclamation::exclamation::exclamation: MacOS 10.13 High Sierra :exclamation::exclamation::exclamation:
+
+**Currently there are issues with the 3.0.x gitian releases on MacOS version 10.13 (High Sierra), no reports of issues on older versions of MacOS.**
+
+
+Notable Changes
+===============
+
+xION (_zerocoin for ion_)
+-------------------------
+We have now zerocoin into ion. More info about what it is and how to use it will follow in announcements and further release infos.
+
+Snap/Snapcraft builds
+----------------------------
+Snapcraft is enabled and it can be simply installed by
+
+`sudo snap install --edge ion`
+
+([Don’t have snapd installed?](https://docs.snapcraft.io/core/install))
+
+Supported architectures: `i386, armhf, amd64`
+
+Snap supported OS and installation instructions:
+
+  - [Arch Linux](https://docs.snapcraft.io/core/install-arch-linux)
+  - [Debian](https://docs.snapcraft.io/core/install-debian)
+  - [Fedora](https://docs.snapcraft.io/core/install-fedora)
+  - [Gentoo](https://docs.snapcraft.io/core/install-gentoo)
+  - [Linux Mint](https://docs.snapcraft.io/core/install-linux-mint)
+  - [Manjaro](https://docs.snapcraft.io/core/install-manjaro)
+  - [OpenEmbedded/Yocto](https://docs.snapcraft.io/core/install-oe-yocto)
+  - [openSUSE](https://docs.snapcraft.io/core/install-opensuse)
+  - [OpenWrt](https://docs.snapcraft.io/core/install-openwrt)
+  - [Solus](https://docs.snapcraft.io/core/install-solus)
+  - [Ubuntu](https://docs.snapcraft.io/core/install-ubuntu)
+
+
+Functions renamed
+-----------------
+Stashedsend is now Swift-X
+
+New algorithm
+-------------
+We dropped MIDAS and will use DGW. More info will follow.
+
+Automint
+--------
+Autominiting with zerocoin. More info will follow.
+
+New look and design
+-------------------
+We have new look and desing, currently it is a dirty version. It includes new GUI layout, new colors.
+
+Performance
+-----------
+Current source base is much faster and cleaner than ion's previous one. It uses all cpu's and there are 
+no performance issues which we could observe, it is just much faster then previous source base.
+
+BIP38
+-----
+We have BIP38 including a tool with password encryption and decrpytion features
+
+Blockexplorer
+-------------
+We finaly have built in blockexplorer which works on all ion's networks.
+
+User friendly
+-------------
+There are some new features which improve usability as well as user experience in general. More info to follow.
+
+Auto Wallet Backup
+---------------------
+In addition to the automatic wallet backup that is done at each start of the client, a new automatic backup function has been added that will, by default, create a backup of the wallet file during each xION mint operation (xION spends which re-mint their change are also included in this). This functionality is controlled by the `-backupxion` command-line option, which defaults to `1` (enabled, auto-backup).
+
+Users that wish to prevent this behavior (not recommended) can pass `-backupxion=0` at the command-line when starting the client, or add `backupxion=0` to their `ioncoin.conf` file.
+
+xION Automint Calculations
+---------------------
+A bug in the automint calculations was made apparent on mainnet when block times exceeded expectations, resulting in xION mint transactions that were in an unconfirmed state to still be treated as if they had never been minted. This caused automint to effectively mint more than what was intended.
+
+xION Spending Fix
+---------------------
+The size of xION spend transactions is knowingly larger than normal transactions, and while this was expected, a much stricter check against the scriptsig size is used for mainnet, causing the transactions to be rejected by the mempool, and thus not being packaged into any blocks.
+
+xION Transaction Recovery
+---------------------
+Due to the aforementioned issue with xION spending, users may find that their attempted spends are now conflicted and xION balances are not represented as expected. "Recovery" of these transactions can be done using the following methods:
 
 If you are running an older version, shut it down. Wait until it has completely
 shut down (which might take a few minutes for older versions), then run the
