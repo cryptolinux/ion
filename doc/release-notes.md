@@ -214,48 +214,6 @@ As well as everyone that submitted issues and reviewed pull requests.
 Older releases
 ==============
 
-Ion was previously known as Darkcoin.
-
-Darkcoin tree 0.8.x was a fork of Litecoin tree 0.8, original name was XCoin
-which was first released on Jan/18/2014.
-
-Darkcoin tree 0.9.x was the open source implementation of masternodes based on
-the 0.8.x tree and was first released on Mar/13/2014.
-
-Darkcoin tree 0.10.x used to be the closed source implementation of Darksend
-which was released open source on Sep/25/2014.
-
-Ion Core tree 0.11.x was a fork of Bitcoin Core tree 0.9,
-Darkcoin was rebranded to Ion.
-
-Ion Core tree 0.12.0.x was a fork of Bitcoin Core tree 0.10.
-
-Ion Core tree 0.12.1.x was a fork of Bitcoin Core tree 0.12.
-
-These release are considered obsolete. Old release notes can be found here:
-
-- [v0.14.0.2](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.14.0.2.md) released July/4/2019
-- [v0.14.0.1](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.14.0.1.md) released May/31/2019
-- [v0.14.0](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.14.0.md) released May/22/2019
-- [v0.13.3](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.13.3.md) released Apr/04/2019
-- [v0.13.2](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.13.2.md) released Mar/15/2019
-- [v0.13.1](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.13.1.md) released Feb/9/2019
-- [v0.13.0](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.13.0.md) released Jan/14/2019
-- [v0.12.3.4](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.12.3.4.md) released Dec/14/2018
-- [v0.12.3.3](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.12.3.3.md) released Sep/19/2018
-- [v0.12.3.2](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.12.3.2.md) released Jul/09/2018
-- [v0.12.3.1](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.12.3.1.md) released Jul/03/2018
-- [v0.12.2.3](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.12.2.3.md) released Jan/12/2018
-- [v0.12.2.2](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.12.2.2.md) released Dec/17/2017
-- [v0.12.2](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.12.2.md) released Nov/08/2017
-- [v0.12.1](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.12.1.md) released Feb/06/2017
-- [v0.12.0](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.12.0.md) released Aug/15/2015
-- [v0.11.2](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.11.2.md) released Mar/04/2015
-- [v0.11.1](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.11.1.md) released Feb/10/2015
-- [v0.11.0](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.11.0.md) released Jan/15/2015
-- [v0.10.x](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.10.0.md) released Sep/25/2014
-- [v0.9.x](https://bitbucket.org/ioncoin/ion/blob/master/doc/release-notes/ion/release-notes-0.9.0.md) released Mar/13/2014
-=======
 ### Mandatory Update
 ___  
 
@@ -372,3 +330,143 @@ ___
 
 
 ### 5.0.99 Change log
+=======
+Gist gitian build scripts
+----------------------------
+**Note**: Please change SIGNER to your key and version to desired version, in current release it is version 3.0.2, in future releases gist will be updated.
+
+If you use scripts, after wget has downloaded the script, run `sed -i 's/49464B32BA6683BA/YOURGPGKEY/g''  and replace `YOURGPGKEY` with your LONG Key ID. The same can be done with version.
+ - Linux only: [build offline](https://gist.github.com/cevap/9d7ef39be185cc07c3d0a9b33da2fba5)
+ - Windows only: [build offline](https://gist.github.com/cevap/5d6ac38f6e8530d45ab31499bc3a62ff)
+ - MacOS only (without HighSierra)[build offline](https://gist.github.com/cevap/a5a90607da3a9b058b8c0aea20fdd75a)
+
+Setup **signer** and **version**/branch
+-------------------------------------------------
+
+```
+cd ./ion
+export SIGNER="49464B32BA6683BA" # Replace with your Key
+export VERSION=3.0.2 # github branch
+git fetch
+git checkout v${VERSION}
+cd ..
+
+# update signature
+cd ./gitian.sigs
+git pull
+cd ..
+
+# update gitian builder
+cd ./gitian-builder
+git pull
+cd ..
+
+# Fetch and create inputs: (first time, or when dependency versions change)
+cd ./gitian-builder
+mkdir -p inputs
+wget -P inputs https://github.com/cevap/osslsigncode/releases/download/v1.7.1/osslsigncode-Backports-to-1.7.1.patch
+wget -P inputs -O inputs/v1.7.1.tar.gz https://github.com/cevap/osslsigncode/archive/v1.7.1.tar.gz
+wget -P inputs https://github.com/cevap/MacOSX-SDKs/releases/download/MacOSX10.11.sdk-trusty/MacOSX10.11.sdk.tar.gz
+cd ..
+
+# prebuild ion dependencies
+cd ./gitian-builder
+make -C ../ion/depends download SOURCES_PATH=`pwd`/cache/common
+cd ..
+```
+
+Building offline
+------------------
+
+```
+cd ./gitian-builder
+
+# Build offline for linux
+./bin/gbuild --url ion=/home/gitianuser/ion,signature=/home/gitianuser/gitian.sigs --num-make 2 --memory 3000 --commit ion=v${VERSION} ../ion/contrib/gitian-descriptors/gitian-linux.yml
+
+# Sign for linux
+./bin/gsign --signer "$SIGNER" --release ${VERSION}-linux --destination ../gitian.sigs/ ../ion/contrib/gitian-descriptors/gitian-linux.yml
+mv build/out/ion-*.tar.gz build/out/src/ion-*.tar.gz ../
+
+# Build offline for windows
+./bin/gbuild --url ion=/home/gitianuser/ion,signature=/home/gitianuser/gitian.sigs --num-make 2 --memory 3000 --commit ion=v${VERSION} ../ion/contrib/gitian-descriptors/gitian-win.yml
+
+# Sign for windows
+./bin/gsign --signer "$SIGNER" --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../ion/contrib/gitian-descriptors/gitian-win.yml
+mv build/out/ion-*-win-unsigned.tar.gz inputs/ion-win-unsigned.tar.gz
+mv build/out/ion-*.zip build/out/ion-*.exe ../
+
+# Build offline for mac os
+./bin/gbuild --url ion=/home/gitianuser/ion,signature=/home/gitianuser/gitian.sigs --num-make 2 --memory 3000 --commit ion=v${VERSION} ../ion/contrib/gitian-descriptors/gitian-osx.yml
+
+# Sign for macos
+./bin/gsign --signer "$SIGNER" --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../ion/contrib/gitian-descriptors/gitian-osx.yml
+mv build/out/ion-*-osx-unsigned.tar.gz inputs/ion-osx-unsigned.tar.gz
+mv build/out/ion-*.tar.gz build/out/ion-*.dmg ../
+cd ..
+```
+
+
+Building online
+---------------
+
+```
+# Build online for linux
+./bin/gbuild --num-make 2 --memory 3000 --commit ion=v${VERSION} ../ion/contrib/gitian-descriptors/gitian-linux.yml
+
+# Sign for linux
+./bin/gsign --signer "$SIGNER" --release ${VERSION}-linux --destination ../gitian.sigs/ ../ion/contrib/gitian-descriptors/gitian-linux.yml
+mv build/out/ion-*.tar.gz build/out/src/ion-*.tar.gz ../
+
+# Build online for windows
+./bin/gbuild --num-make 2 --memory 3000 --commit ion=v${VERSION} ../ion/contrib/gitian-descriptors/gitian-win.yml
+
+# Sign for windows
+./bin/gsign --signer "$SIGNER" --release ${VERSION}-win-unsigned --destination ../gitian.sigs/ ../ion/contrib/gitian-descriptors/gitian-win.yml
+mv build/out/ion-*-win-unsigned.tar.gz inputs/ion-win-unsigned.tar.gz
+mv build/out/ion-*.zip build/out/ion-*.exe ../
+
+# Build online for mac os
+./bin/gbuild --num-make 2 --memory 3000 --commit ion=v${VERSION} ../ion/contrib/gitian-descriptors/gitian-osx.yml
+
+# Sign for macos
+./bin/gsign --signer "$SIGNER" --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../ion/contrib/gitian-descriptors/gitian-osx.yml
+mv build/out/ion-*-osx-unsigned.tar.gz inputs/ion-osx-unsigned.tar.gz
+mv build/out/ion-*.tar.gz build/out/ion-*.dmg ../
+cd ..
+```
+
+Build reports
+=============
+#### Linux
+```
+81c6c81ea4cf67f11d40b6215fdf3b7914577368b238eb4da2f7ff887f3d7b3b  ion-3.0.2-arm-linux-gnueabihf-debug.tar.gz
+f3bf55bc9282a882410dabe793772501e85124322f8f30a1b0ae4f4684be0837  ion-3.0.2-arm-linux-gnueabihf.tar.gz
+3b780fd5ba985847251a93a97c3aedad282e8cecb641c8873aa1591e3d84b420  ion-3.0.2-i686-pc-linux-gnu-debug.tar.gz
+9483e8af1af7175efaf92c3efc99ec6ddee868e629be5269a9985abdbeade91c  ion-3.0.2-i686-pc-linux-gnu.tar.gz
+a57d962fd75f97a4b73d9fb65f43611acf15c7d9139e840d455c421bf7253170  ion-3.0.2-x86_64-linux-gnu-debug.tar.gz
+13ea2506bdf620d77d8316672adab68a0a5107ae9b1590a6ed5486f3b0509f63  ion-3.0.2-x86_64-linux-gnu.tar.gz
+30e0390dc5d5f3bfbd91f340884ab75ca30056ff49c5831edc49fcae8c9413af  src/ion-3.0.2.tar.gz
+76fa4b28ae291521be3ee12d22fa7d9b6085cafa0cc14c1c60b6b69f498d5a57  ion-linux-3.1-res.yml
+```
+#### windows
+```
+Generating report
+e7e3a92a32a8dc924e64d19a276af11cfe74193cc5aad26bc7335e2e2e835a57  ion-3.0.2-win-unsigned.tar.gz
+2a9b1199f03068c6ea18e5e25cd6736c15c7ddf9247ede67079bcd544c1426ad  ion-3.0.2-win32-debug.zip
+624c4d36d9145efcaac2a9ed00368f2aac61631a9b75ebfc546926009e395db0  ion-3.0.2-win32-setup-unsigned.exe
+49659943ab915444ab926bd392a34d9fb3397cf997f34e3deaa31f43bab185a7  ion-3.0.2-win32.zip
+1a2ba3aac86fb44355b7b879f6c269d5556b1e302f3a54602c51101eedc3efe6  ion-3.0.2-win64-debug.zip
+073f490607616680a5a5def73a1231885860aa047e526e7bf4694a4b88b11a56  ion-3.0.2-win64-setup-unsigned.exe
+6f88c1bb4eec9b077c2e1ee60e9371b184d460a920e6170610f67dbc786e9faf  ion-3.0.2-win64.zip
+679ac050e5555e097785b835f666de3d2e6b0e8af0dcefc7430ef3bfec386180  src/ion-3.0.2.tar.gz
+eec21196d7d4abab4fb8c32882fed5157271161ecba4693a67d6ca407503e030  ion-win-3.1-res.yml
+```
+#### macos
+```
+7bc9149778661d03f5b26a97ff7dbbf8c9113d5198fe433e4e9b69cbb02f80f4  ion-3.0.2-osx-unsigned.dmg
+2ae951d05b053790e0916db1e519fbf3f37258741ae67ffa15a8ddf455881b9b  ion-3.0.2-osx-unsigned.tar.gz
+1b2f4dbcc02c423924a2dbbf2b813eca094fd796e1424a7478a14651d82524ae  ion-3.0.2-osx64.tar.gz
+679ac050e5555e097785b835f666de3d2e6b0e8af0dcefc7430ef3bfec386180  src/ion-3.0.2.tar.gz
+0be4184f68aaf67653b704e0bed30a83ede84fcea9c53ca39aa50c804acff614  ion-osx-3.1-res.yml
+```
