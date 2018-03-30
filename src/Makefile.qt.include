@@ -286,12 +286,11 @@ BITCOIN_QT_CPP += $(BITCOIN_QT_WALLET_CPP)
 endif
 
 RES_IMAGES = \
-  qt/res/images/arrow_down.png \
-  qt/res/images/arrow_down_small.png \
-  qt/res/images/arrow_left_small.png \
-  qt/res/images/arrow_right_small.png \
-  qt/res/images/arrow_up_small.png \
-  qt/res/images/checked.png \
+  qt/res/images/about.png \
+  qt/res/images/splash.png \
+  qt/res/images/splash_testnet.png \
+  qt/res/images/splash_regtest.png \
+  qt/res/images/splash_unittest.png \
   qt/res/images/ion_logo_horizontal.png \
   qt/res/images/ion_logo_toolbar.png \
   qt/res/images/qtreeview_selected.png \
