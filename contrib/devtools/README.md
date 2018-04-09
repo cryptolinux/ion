@@ -8,8 +8,6 @@ check-doc.py
 Check if all command line args are documented. The return value indicates the
 number of undocumented args.
 
-clang-format-diff.py
-===================
 
 A script to format unified git diffs according to [.clang-format](../../src/.clang-format).
 
@@ -79,14 +77,13 @@ year rather than two hyphenated years.
 If the file already has a copyright for `The Ion Core developers`, the
 script will exit.
 
+=======
 gen-manpages.sh
 ===============
 
 A small script to automatically create manpages in ../../doc/man by running the release binaries with the -help option.
 This requires help2man which can be found at: https://www.gnu.org/software/help2man/
 
-git-subtree-check.sh
-====================
 
 Run this script from the root of the repository to verify that a subtree matches the contents of
 the commit it claims to have been updated to.
@@ -101,6 +98,14 @@ maintained:
 Usage: `git-subtree-check.sh DIR (COMMIT)`
 
 `COMMIT` may be omitted, in which case `HEAD` is used.
+=======
+With in-tree builds this tool can be run from any directory within the
+repostitory. To use this tool with out-of-tree builds set `BUILDDIR`. For
+example:
+
+```bash
+BUILDDIR=$PWD/build contrib/devtools/gen-manpages.sh
+```
 
 github-merge.py
 ===============
