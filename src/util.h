@@ -296,8 +296,22 @@ protected:
 
     void ReadConfigStream(std::istream& stream);
 
-public:
-    ArgsManager();
+/**
+ * Convert string into true/false
+ *
+ * @param strValue String to parse as a boolean
+ * @return true or false
+ */
+bool InterpretBool(const std::string &strValue);
+
+/**
+ * Set an argument if it doesn't already have a value
+ *
+ * @param strArg Argument to set (e.g. "-foo")
+ * @param strValue Value (e.g. "1")
+ * @return true if argument gets set, false if it already had a value
+ */
+bool SoftSetArg(const std::string& strArg, const std::string& strValue);
 
     /**
      * Select the network in use
