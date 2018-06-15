@@ -1072,68 +1072,6 @@ bool ScriptMachine::Step()
 
 bool TransactionSignatureChecker::VerifySignature(const std::vector<unsigned char>& vchSig, const CPubKey& pubkey, const uint256& sighash) const
 {
-    return pubkey.Verify(sighash, vchSig);
-}
-
-bool TransactionSignatureChecker::CheckSig(const std::vector<unsigned char>& vchSigIn, const std::vector<unsigned char>& vchPubKey, const CScript& scriptCode, SigVersion sigversion) const
-{
-    CPubKey pubkey(vchPubKey);
-    if (!pubkey.IsValid())
-        return false;
-
-    // Hash type is one byte tacked on to the end of the signature
-    std::vector<unsigned char> vchSig(vchSigIn);
-    if (vchSig.empty())
-        return false;
-    int nHashType = vchSig.back();
-    vchSig.pop_back();
-
-    uint256 sighash = SignatureHash(scriptCode, *txTo, nIn, nHashType, amount, sigversion, this->txdata);
-
-    if (!VerifySignature(vchSig, pubkey, sighash))
-        return false;
-
-    return true;
-}
-
-bool TransactionSignatureChecker::CheckLockTime(const CScriptNum& nLockTime) const
-{
-    // There are two kinds of nLockTime: lock-by-blockheight
-    // and lock-by-blocktime, distinguished by whether
-    // nLockTime < LOCKTIME_THRESHOLD.
-    //
-    // We want to compare apples to apples, so fail the script
-    // unless the type of nLockTime being tested is the same as
-    // the nLockTime in the transaction.
-    if (!(
-        (txTo->nLockTime <  LOCKTIME_THRESHOLD && nLockTime <  LOCKTIME_THRESHOLD) ||
-        (txTo->nLockTime >= LOCKTIME_THRESHOLD && nLockTime >= LOCKTIME_THRESHOLD)
-    ))
-        return false;
-
-    // Now that we know we're comparing apples-to-apples, the
-    // comparison is a simple numeric one.
-    if (nLockTime > (int64_t)txTo->nLockTime)
-        return false;
-
-    // Finally the nLockTime feature can be disabled and thus
-    // CHECKLOCKTIMEVERIFY bypassed if every txin has been
-    // finalized by setting nSequence to maxint. The
-    // transaction would be allowed into the blockchain, making
-    // the opcode ineffective.
-    //
-    // Testing if this vin is not final is sufficient to
-    // prevent this condition. Alternatively we could test all
-    // inputs, but testing just this input minimizes the data
-    // required to prove correct CHECKLOCKTIMEVERIFY execution.
-    if (CTxIn::SEQUENCE_FINAL == txTo->vin[nIn].nSequence)
-        return false;
-
-    return true;
-}
-
-bool TransactionSignatureChecker::CheckSequence(const CScriptNum& nSequence) const
-{
     // Relative lock times are supported by comparing the passed
     // in operand to the sequence number of the input.
     const int64_t txToSequence = (int64_t)txTo->vin[nIn].nSequence;

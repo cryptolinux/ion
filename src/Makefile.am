@@ -56,8 +56,8 @@ if ENABLE_ZMQ
 LIBBITCOIN_ZMQ=libion_zmq.a
 endif
 if BUILD_BITCOIN_LIBS
-LIBBITCOINCONSENSUS=libionconsensus.la
-LIBBITCOINCORE=libioncore.la
+LIBBITCOINCONSENSUS=libbitcoinconsensus.la
+LIBIONCORE=libioncore.la
 endif
 if ENABLE_WALLET
 LIBBITCOIN_WALLET=libion_wallet.a
@@ -94,7 +94,7 @@ EXTRA_LIBRARIES += \
   $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_ZMQ)
 
-lib_LTLIBRARIES = $(LIBBITCOINCORE) $(LIBBITCOINCONSENSUS)
+lib_LTLIBRARIES = $(LIBBITCOINCONSENSUS) $(LIBIONCORE)
 
 bin_PROGRAMS =
 noinst_PROGRAMS =
@@ -400,7 +400,7 @@ libioncore_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 #  base58.h
 
 libioncore_a_SOURCES = \
-  ionlib/ionlib.cpp \
+  ioncorelib/ioncorelib.cpp \
   script/sigcommon.cpp \
   hash.cpp \
   hash.h \
@@ -543,6 +543,7 @@ libbitcoin_consensus_a_SOURCES = \
   crypto/ripemd160.cpp \
   hash.cpp \
   pubkey.cpp \
+  script/sigcommon.cpp \
   script/script.cpp \
   script/interpreter.cpp \
   script/bitcoinconsensus.cpp \
@@ -702,8 +703,10 @@ ion_tx_LDADD += $(BACKTRACE_LIB) $(BOOST_LIBS) $(CRYPTO_LIBS) $(BLS_LIBS)
 if BUILD_BITCOIN_LIBS
 include_HEADERS = script/bitcoinconsensus.h
 libbitcoinconsensus_la_SOURCES = $(libbitcoin_consensus_a_SOURCES)
+libioncore_la_SOURCES = $(libioncore_a_SOURCES) $(crypto_libbitcoin_crypto_a_SOURCES)
 
 if GLIBC_BACK_COMPAT
+  libbitcoinconsensus_la_SOURCES += compat/glibc_compat.cpp
   libioncore_la_SOURCES += compat/glibc_compat.cpp
 endif
 
@@ -711,6 +714,11 @@ libbitcoinconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
 libbitcoinconsensus_la_LIBADD = $(LIBSECP256K1)
 libbitcoinconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
 libbitcoinconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+
+libioncore_la_LDFLAGS = $(AM_LDFLAGS) $(SSL_LIBS) $(CRYPTO_LIBS) $(BOOST_LIBS) -no-undefined $(RELDFLAGS)
+libioncore_la_LIBADD = $(LIBSECP256K1)
+libioncore_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(BOOST_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
+libioncore_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 endif
 #
