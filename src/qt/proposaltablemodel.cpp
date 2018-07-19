@@ -1,6 +1,4 @@
-// Copyright (c) 2018 The PIVX developers
-// Copyright (c) 2018 The PHORE developers
-// Copyright (c) 2018 The Ion developers
+// Copyright (c) 2018 The ION developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -41,7 +39,7 @@ static int column_alignments[] = {
 
 ProposalTableModel::ProposalTableModel(QObject *parent) : QAbstractTableModel(parent)
 {
-    columns << tr("Proposal") << tr("Amount") << tr("Start Block") << tr("End Block") << tr("Yes") << tr("No") << tr("Abstain") << tr("Percentage");
+    columns << tr("Proposal") << tr("Amount") << tr("Start Date") << tr("End Date") << tr("Yes") << tr("No") << tr("Abstain") << tr("Percentage");
 
     networkManager = new QNetworkAccessManager(this);
 
@@ -65,7 +63,7 @@ void budgetToST(CBudgetProposal* pbudgetProposal, UniValue& bObj)
     bObj.push_back(pbudgetProposal->GetBlockEnd());
     bObj.push_back(pbudgetProposal->GetTotalPaymentCount());
     bObj.push_back(pbudgetProposal->GetRemainingPaymentCount());
-    bObj.push_back(EncodeDestination(address));
+    bObj.push_back(CBitcoinAddress(address).ToString());
     bObj.push_back(pbudgetProposal->GetYeas());
     bObj.push_back(pbudgetProposal->GetNays());
     bObj.push_back(pbudgetProposal->GetAbstains());

@@ -137,7 +137,7 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
     proposalList = new ProposalList(this);
     vbox_2->addWidget(proposalList);
 
-    vbox_2->setStretch(1, 1);
+    vbox_2->addStretch();
 
     proposalListPage->setLayout(vbox_2);
     addWidget(proposalListPage);
@@ -303,6 +303,11 @@ void WalletView::gotoSendCoinsPage(QString addr)
     if (!addr.isEmpty()) {
         sendCoinsPage->setAddress(addr);
     }
+}
+
+void WalletView::gotoProposalPage()
+{
+    setCurrentWidget(proposalListPage);
 }
 
 void WalletView::gotoProposalPage()

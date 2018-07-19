@@ -1,6 +1,4 @@
-// Copyright (c) 2018 The PIVX developers
-// Copyright (c) 2018 The PHORE developers
-// Copyright (c) 2018 The Ion developers
+// Copyright (c) 2018 The ION developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -98,7 +96,7 @@ private Q_SLOTS:
     void voteYes();
     void voteNo();
     void voteAbstain();
-    void copyProposalUrl();
+    void openProposalUrl();
     void invalidateAlignedLayout();
 
 Q_SIGNALS:
