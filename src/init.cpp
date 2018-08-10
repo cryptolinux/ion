@@ -1812,7 +1812,19 @@ bool AppInitMain()
                 zerocoinDB = new CZerocoinDB(0, false, fReset || fReindexChainState);
                 pTokenDB = new CTokenDB(0, false, fReset || fReindexChainState);
 
-                if (fReset) {
+                pblocktree = new CBlockTreeDB(nBlockTreeDBCache, false, fReindex);
+                pcoinsdbview = new CCoinsViewDB(nCoinDBCache, false, fReindex);
+                pcoinscatcher = new CCoinsViewErrorCatcher(pcoinsdbview);
+                pcoinsTip = new CCoinsViewCache(pcoinscatcher);
+
+                bool fIsActiveCLTV;
+                if (!pblocktree->ReadFlag("CLTVHasMajority", fIsActiveCLTV))
+                    fCLTVHasMajority = false;
+                else
+                    fCLTVHasMajority = fIsActiveCLTV;
+                LogPrintf("CHECKLOCKTIMEVERIFY Active: %s\n", fCLTVHasMajority.load());
+
+                if (fReindex)
                     pblocktree->WriteReindexing(true);
                     //If we're reindexing in prune mode, wipe away unusable block files and all undo data files
                     if (fPruneMode)
