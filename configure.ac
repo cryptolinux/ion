@@ -123,6 +123,11 @@ AC_ARG_ENABLE(tests,
     [use_tests=$enableval],
     [use_tests=yes])
 
+AC_ARG_ENABLE(gui-tests,
+    AS_HELP_STRING([--disable-gui-tests],[do not compile GUI tests (default is to compile if GUI and tests enabled)]),
+    [use_gui_tests=$enableval],
+    [use_gui_tests=$use_tests])
+
 AC_ARG_ENABLE(bench,
     AS_HELP_STRING([--disable-bench],[do not compile benchmarks (default is to compile)]),
     [use_bench=$enableval],
@@ -201,7 +206,13 @@ AC_ARG_WITH([system-univalue],
   [AS_HELP_STRING([--with-system-univalue],
   [Build with system UniValue (default is no)])],
   [system_univalue=$withval],
-  [system_univalue=no])
+  [system_univalue=no]
+)
+AC_ARG_ENABLE([zmq],
+  [AS_HELP_STRING([--disable-zmq],
+  [disable ZMQ notifications])],
+  [use_zmq=$enableval],
+  [use_zmq=yes])
 
 AC_ARG_WITH([zerocoin-bignum],
   [AS_HELP_STRING([--with-zerocoin-bignum=gmp|openssl|auto],
@@ -210,6 +221,12 @@ AC_ARG_WITH([zerocoin-bignum],
   [req_bignum=auto])
 
 AC_ARG_WITH([protoc-bindir],[AS_HELP_STRING([--with-protoc-bindir=BIN_DIR],[specify protoc bin path])], [protoc_bin_path=$withval], [])
+
+AC_ARG_ENABLE(man,
+    [AS_HELP_STRING([--disable-man],
+                    [do not install man pages (default is to install)])],,
+    enable_man=yes)
+AM_CONDITIONAL(ENABLE_MAN, test "$enable_man" != no)
 
 # Enable debug
 AC_ARG_ENABLE([debug],
@@ -285,17 +302,6 @@ if test x$use_sanitizers != x; then
     [AC_MSG_ERROR([linker did not accept requested flags, you are missing required libraries])])
 fi
 
-AM_CONDITIONAL([ENABLE_CRASH_HOOKS], [test x$enable_crashhooks = xyes])
-if test "x$enable_crashhooks" = xyes; then
-    AC_DEFINE(ENABLE_CRASH_HOOKS, 1, [Define this symbol if crash hooks should be enabled])
-fi
-AX_CHECK_LINK_FLAG([-Wl,-wrap=__cxa_allocate_exception], [LINK_WRAP_SUPPORTED=yes],,,)
-AM_CONDITIONAL([CRASH_HOOKS_WRAPPED_CXX_ABI],[test x$LINK_WRAP_SUPPORTED = xyes])
-
-if test x$LINK_WRAP_SUPPORTED = "xyes"; then
-  AC_DEFINE(CRASH_HOOKS_WRAPPED_CXX_ABI, 1, [Define this symbol to use wrapped CXX ABIs for exception stacktraces])
-fi
-
 # Needed for MinGW targets when debug symbols are enabled as compiled objects get very large
 AX_CHECK_COMPILE_FLAG([-Wa,-mbig-obj], [CXXFLAGS="$CXXFLAGS -Wa,-mbig-obj"],,,)
 
@@ -332,6 +338,9 @@ fi
 # be compiled with them, rather that specific objects/libs may use them after checking for runtime
 # compatibility.
 AX_CHECK_COMPILE_FLAG([-msse4.2],[[SSE42_CXXFLAGS="-msse4.2"]],,[[$CXXFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-msse4.1],[[SSE41_CXXFLAGS="-msse4.1"]],,[[$CXXFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-mavx -mavx2],[[AVX2_CXXFLAGS="-mavx -mavx2"]],,[[$CXXFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-msse4 -msha],[[SHANI_CXXFLAGS="-msse4 -msha"]],,[[$CXXFLAG_WERROR]])
 
 TEMP_CXXFLAGS="$CXXFLAGS"
 CXXFLAGS="$CXXFLAGS $SSE42_CXXFLAGS"
@@ -351,6 +360,53 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
     return l;
   ]])],
  [ AC_MSG_RESULT(yes); enable_hwcrc32=yes],
+ [ AC_MSG_RESULT(no)]
+)
+CXXFLAGS="$TEMP_CXXFLAGS"
+
+TEMP_CXXFLAGS="$CXXFLAGS"
+CXXFLAGS="$CXXFLAGS $SSE41_CXXFLAGS"
+AC_MSG_CHECKING(for SSE4.1 intrinsics)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+  ]],[[
+    __m128i l = _mm_set1_epi32(0);
+    return _mm_extract_epi32(l, 3);
+  ]])],
+ [ AC_MSG_RESULT(yes); enable_sse41=yes; AC_DEFINE(ENABLE_SSE41, 1, [Define this symbol to build code that uses SSE4.1 intrinsics]) ],
+ [ AC_MSG_RESULT(no)]
+)
+CXXFLAGS="$TEMP_CXXFLAGS"
+
+TEMP_CXXFLAGS="$CXXFLAGS"
+CXXFLAGS="$CXXFLAGS $AVX2_CXXFLAGS"
+AC_MSG_CHECKING(for AVX2 intrinsics)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+  ]],[[
+    __m256i l = _mm256_set1_epi32(0);
+    return _mm256_extract_epi32(l, 7);
+  ]])],
+ [ AC_MSG_RESULT(yes); enable_avx2=yes; AC_DEFINE(ENABLE_AVX2, 1, [Define this symbol to build code that uses AVX2 intrinsics]) ],
+ [ AC_MSG_RESULT(no)]
+)
+CXXFLAGS="$TEMP_CXXFLAGS"
+
+TEMP_CXXFLAGS="$CXXFLAGS"
+CXXFLAGS="$CXXFLAGS $SHANI_CXXFLAGS"
+AC_MSG_CHECKING(for SHA-NI intrinsics)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+  ]],[[
+    __m128i i = _mm_set1_epi32(0);
+    __m128i j = _mm_set1_epi32(1);
+    __m128i k = _mm_set1_epi32(2);
+    return _mm_extract_epi32(_mm_sha256rnds2_epu32(i, i, k), 0);
+  ]])],
+ [ AC_MSG_RESULT(yes); enable_shani=yes; AC_DEFINE(ENABLE_SHANI, 1, [Define this symbol to build code that uses SHA-NI intrinsics]) ],
  [ AC_MSG_RESULT(no)]
 )
 CXXFLAGS="$TEMP_CXXFLAGS"
@@ -513,16 +569,29 @@ case $host in
      TARGET_OS=linux
      LEVELDB_TARGET_FLAGS="-DOS_LINUX"
      ;;
+   *kfreebsd*)
+     LEVELDB_TARGET_FLAGS="-DOS_KFREEBSD"
+     ;;
    *freebsd*)
      LEVELDB_TARGET_FLAGS="-DOS_FREEBSD"
      ;;
    *openbsd*)
      LEVELDB_TARGET_FLAGS="-DOS_OPENBSD"
      ;;
+   *netbsd*)
+     LEVELDB_TARGET_FLAGS="-DOS_NETBSD"
+     ;;
+   *dragonfly*)
+     LEVELDB_TARGET_FLAGS="-DOS_DRAGONFLYBSD"
+     ;;
+   *solaris*)
+     LEVELDB_TARGET_FLAGS="-DOS_SOLARIS"
+     ;;
+   *hpux*)
+     LEVELDB_TARGET_FLAGS="-DOS_HPUX"
+     ;;
    *)
-     OTHER_OS=`echo ${host_os} | awk '{print toupper($0)}'`
-     AC_MSG_WARN([Guessing LevelDB OS as OS_${OTHER_OS}, please check whether this is correct, if not add an entry to configure.ac.])
-     LEVELDB_TARGET_FLAGS="-DOS_${OTHER_OS}"
+     AC_MSG_ERROR(Cannot build leveldb for $host. Please file a bug report.)
      ;;
 esac
 
@@ -1093,6 +1162,14 @@ AC_CHECK_LIB([crypto],[RAND_egd],[],[
 ])
 CXXFLAGS="${save_CXXFLAGS}"
 
+AC_CHECK_LIB([crypto],[RAND_egd],[],[
+  AC_ARG_WITH([unsupported-ssl],
+    [AS_HELP_STRING([--with-unsupported-ssl],[Build with system SSL (default is no; DANGEROUS; NOT SUPPORTED; You should use OpenSSL 1.0)])],
+    [AC_MSG_WARN([Detected unsupported SSL version: This is NOT supported, and may break consensus compatibility!])],
+    [AC_MSG_ERROR([Detected unsupported SSL version: This is NOT supported, and may break consensus compatibility!])]
+  )
+])
+
 dnl univalue check
 
 need_bundled_univalue=yes
@@ -1324,13 +1401,17 @@ AM_CONDITIONAL([TARGET_WINDOWS], [test x$TARGET_OS = xwindows])
 AM_CONDITIONAL([ENABLE_WALLET],[test x$enable_wallet = xyes])
 AM_CONDITIONAL([ENABLE_TESTS],[test x$BUILD_TEST = xyes])
 AM_CONDITIONAL([ENABLE_QT],[test x$bitcoin_enable_qt = xyes])
-AM_CONDITIONAL([ENABLE_QT_TESTS],[test x$use_tests$bitcoin_enable_qt_test = xyesyes])
+AM_CONDITIONAL([ENABLE_QT_TESTS],[test x$BUILD_TEST_QT = xyes])
+AM_CONDITIONAL([ENABLE_BENCH],[test x$use_bench = xyes])
 AM_CONDITIONAL([USE_QRCODE], [test x$use_qr = xyes])
 AM_CONDITIONAL([USE_LCOV],[test x$use_lcov = xyes])
 AM_CONDITIONAL([GLIBC_BACK_COMPAT],[test x$use_glibc_compat = xyes])
 AM_CONDITIONAL([HARDEN],[test x$use_hardening = xyes])
-AM_CONDITIONAL([USE_LIBSECP256K1],[test x$use_libsecp256k1 = xyes])
 AM_CONDITIONAL([ENABLE_HWCRC32],[test x$enable_hwcrc32 = xyes])
+AM_CONDITIONAL([ENABLE_SSE41],[test x$enable_sse41 = xyes])
+AM_CONDITIONAL([ENABLE_AVX2],[test x$enable_avx2 = xyes])
+AM_CONDITIONAL([ENABLE_SHANI],[test x$enable_shani = xyes])
+AM_CONDITIONAL([USE_ASM],[test x$use_asm = xyes])
 
 AC_DEFINE(CLIENT_VERSION_MAJOR, _CLIENT_VERSION_MAJOR, [Major version])
 AC_DEFINE(CLIENT_VERSION_MINOR, _CLIENT_VERSION_MINOR, [Minor version])
@@ -1357,6 +1438,10 @@ AC_SUBST(BITCOIN_CLI_NAME)
 AC_SUBST(BITCOIN_TX_NAME)
 
 AC_SUBST(RELDFLAGS)
+AC_SUBST(DEBUG_CPPFLAGS)
+AC_SUBST(WARN_CXXFLAGS)
+AC_SUBST(NOWARN_CXXFLAGS)
+AC_SUBST(DEBUG_CXXFLAGS)
 AC_SUBST(COMPAT_LDFLAGS)
 AC_SUBST(ERROR_CXXFLAGS)
 AC_SUBST(GPROF_CXXFLAGS)
@@ -1366,7 +1451,12 @@ AC_SUBST(HARDENED_CPPFLAGS)
 AC_SUBST(HARDENED_LDFLAGS)
 AC_SUBST(PIC_FLAGS)
 AC_SUBST(PIE_FLAGS)
+AC_SUBST(SANITIZER_CXXFLAGS)
+AC_SUBST(SANITIZER_LDFLAGS)
 AC_SUBST(SSE42_CXXFLAGS)
+AC_SUBST(SSE41_CXXFLAGS)
+AC_SUBST(AVX2_CXXFLAGS)
+AC_SUBST(SHANI_CXXFLAGS)
 AC_SUBST(LIBTOOL_APP_LDFLAGS)
 AC_SUBST(USE_UPNP)
 AC_SUBST(USE_QRCODE)
@@ -1384,7 +1474,7 @@ AC_SUBST(PROTOBUF_LIBS)
 AC_SUBST(QR_LIBS)
 AC_SUBST(USE_NUM_GMP)
 AC_SUBST(USE_NUM_OPENSSL)
-AC_CONFIG_FILES([Makefile src/Makefile share/setup.nsi share/qt/Info.plist src/test/buildenv.py])
+AC_CONFIG_FILES([Makefile src/Makefile doc/man/Makefile share/setup.nsi share/qt/Info.plist src/test/buildenv.py])
 AC_CONFIG_FILES([qa/pull-tester/run-bitcoind-for-test.sh],[chmod +x qa/pull-tester/run-bitcoind-for-test.sh])
 AC_CONFIG_FILES([qa/pull-tester/tests-config.sh],[chmod +x qa/pull-tester/tests-config.sh])
 AC_CONFIG_FILES([contrib/devtools/split-debug.sh],[chmod +x contrib/devtools/split-debug.sh])

@@ -102,12 +102,14 @@ endif
 
 test_test_ion_SOURCES = $(BITCOIN_TESTS) $(JSON_TEST_FILES) $(RAW_TEST_FILES)
 test_test_ion_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) -I$(builddir)/test/ $(TESTDEFS)
-test_test_ion_LDADD = $(LIBBITCOIN_SERVER) $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBBITCOIN_ZEROCOIN) \
-  $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) $(BOOST_LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIB) $(LIBSECP256K1) $(EVENT_LIBS) $(EVENT_PTHREADS_LIBS)
+test_test_ion_LDADD =
 if ENABLE_WALLET
 test_test_ion_LDADD += $(LIBBITCOIN_WALLET)
 endif
-test_test_ion_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+
+test_test_ion_LDADD += $(LIBBITCOIN_SERVER) $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBBITCOIN_ZEROCOIN) \
+  $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) $(BOOST_LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIB) $(LIBSECP256K1) $(EVENT_LIBS) $(EVENT_PTHREADS_LIBS)
+test_test_bitcoin_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 test_test_ion_LDADD += $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(BLS_LIBS)
 test_test_ion_LDFLAGS = $(LDFLAGS_WRAP_EXCEPTIONS) $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) -static
@@ -134,10 +136,8 @@ ion_test_clean : FORCE
 	rm -f $(CLEAN_BITCOIN_TEST) $(test_test_ion_OBJECTS) $(TEST_BINARY)
 
 check-local: $(BITCOIN_TESTS:.cpp=.cpp.test)
-	@echo "Running test/util/bitcoin-util-test.py..."
-	$(PYTHON) $(top_builddir)/test/util/bitcoin-util-test.py
-	@echo "Running test/util/rpcauth-test.py..."
-	$(PYTHON) $(top_builddir)/test/util/rpcauth-test.py
+	@echo "Running bitcoin-util-test.py..."
+	$(PYTHON) test/bitcoin-util-test.py
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C secp256k1 check
 if EMBEDDED_UNIVALUE
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C univalue check
@@ -146,7 +146,6 @@ endif
 %.cpp.test: %.cpp
 	@echo Running tests: `cat $< | grep -E "(BOOST_FIXTURE_TEST_SUITE\\(|BOOST_AUTO_TEST_SUITE\\()" | cut -d '(' -f 2 | cut -d ',' -f 1 | cut -d ')' -f 1` from $<
 	$(AM_V_at)$(TEST_BINARY) -l test_suite -t "`cat $< | grep -E "(BOOST_FIXTURE_TEST_SUITE\\(|BOOST_AUTO_TEST_SUITE\\()" | cut -d '(' -f 2 | cut -d ',' -f 1 | cut -d ')' -f 1`" > $<.log 2>&1 || (cat $<.log && false)
-
 %.json.h: %.json
 	@$(MKDIR_P) $(@D)
 	@{ \
@@ -156,8 +155,8 @@ endif
 	 echo "};};"; \
 	} > "$@.new" && mv -f "$@.new" "$@"
 	@echo "Generated $@"
-
-test/data/%.raw.h: test/data/%.raw
+	
+%.raw.h: %.raw
 	@$(MKDIR_P) $(@D)
 	@{ \
 	 echo "namespace raw_tests{" && \

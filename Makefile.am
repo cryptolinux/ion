@@ -1,6 +1,11 @@
 # Copyright (c) 2013-2016 The Bitcoin Core developers
+# Copyright (c) 2014-2018 The Dash Core developers
+# Copyright (c) 2018-2020 The Ion Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
+# Pattern rule to print variables, e.g. make print-top_srcdir
+print-%:
+	@echo $* = $($*)
 
 ACLOCAL_AMFLAGS = -I build-aux/m4
 SUBDIRS = src
@@ -19,6 +24,7 @@ endif
 BITCOIND_BIN=$(top_builddir)/src/$(BITCOIN_DAEMON_NAME)$(EXEEXT)
 BITCOIN_QT_BIN=$(top_builddir)/src/qt/$(BITCOIN_GUI_NAME)$(EXEEXT)
 BITCOIN_CLI_BIN=$(top_builddir)/src/$(BITCOIN_CLI_NAME)$(EXEEXT)
+BITCOIN_TX_BIN=$(top_builddir)/src/$(BITCOIN_TX_NAME)$(EXEEXT)
 BITCOIN_WIN_INSTALLER=$(PACKAGE)-$(PACKAGE_VERSION)-win$(WINDOWS_BITS)-setup$(EXEEXT)
 
 empty :=
@@ -37,23 +43,24 @@ OSX_INSTALLER_ICONS=$(top_srcdir)/src/qt/res/icons/ion.icns
 OSX_PLIST=$(top_builddir)/share/qt/Info.plist #not installed
 OSX_QT_TRANSLATIONS = da,de,es,hu,ru,uk,zh_CN,zh_TW
 
-DIST_DOCS = $(wildcard doc/*.md) $(wildcard doc/release-notes/*.md)
+DIST_DOCS = \
+  README.md \
+  $(wildcard doc/*.md) \
+  $(wildcard doc/release-notes/*.md)
 DIST_CONTRIB = $(top_srcdir)/contrib/ion-cli.bash-completion \
 	       $(top_srcdir)/contrib/ion-tx.bash-completion \
-<<<<<<< HEAD
 	       $(top_srcdir)/contrib/iond.bash-completion \
-           $(top_srcdir)/contrib/init \
-           $(top_srcdir)/contrib/install_db4.sh
-
+	       $(top_srcdir)/contrib/debian/copyright \
+	       $(top_srcdir)/contrib/init \
+	       $(top_srcdir)/contrib/install_db4.sh \
+	       $(top_srcdir)/contrib/linearize/linearize-data.py \
+	       $(top_srcdir)/contrib/linearize/linearize-hashes.py
 DIST_SHARE = \
-           $(top_srcdir)/share/genbuild.sh \
-           $(top_srcdir)/share/rpcauth
+  $(top_srcdir)/share/genbuild.sh \
+  $(top_srcdir)/share/rpcuser
 
 BIN_CHECKS=$(top_srcdir)/contrib/devtools/symbol-check.py \
            $(top_srcdir)/contrib/devtools/security-check.py
-=======
-	       $(top_srcdir)/contrib/iond.bash-completion
->>>>>>> Build: Add bash completion support to the build system
 
 WINDOWS_PACKAGING = $(top_srcdir)/share/pixmaps/ion.ico \
   $(top_srcdir)/share/pixmaps/ion_testnet.ico \
@@ -84,6 +91,7 @@ $(BITCOIN_WIN_INSTALLER): all-recursive
 	STRIPPROG="$(STRIP)" $(INSTALL_STRIP_PROGRAM) $(BITCOIND_BIN) $(top_builddir)/release
 	STRIPPROG="$(STRIP)" $(INSTALL_STRIP_PROGRAM) $(BITCOIN_QT_BIN) $(top_builddir)/release
 	STRIPPROG="$(STRIP)" $(INSTALL_STRIP_PROGRAM) $(BITCOIN_CLI_BIN) $(top_builddir)/release
+	STRIPPROG="$(STRIP)" $(INSTALL_STRIP_PROGRAM) $(BITCOIN_TX_BIN) $(top_builddir)/release
 	@test -f $(MAKENSIS) && $(MAKENSIS) -V2 $(top_builddir)/share/setup.nsi || \
 	  echo error: could not build $@
 	@echo built $@
@@ -177,8 +185,20 @@ $(BITCOIND_BIN): FORCE
 $(BITCOIN_CLI_BIN): FORCE
 	$(MAKE) -C src $(@F)
 
+$(BITCOIN_TX_BIN): FORCE
+	$(MAKE) -C src $(@F)
+
 if USE_LCOV
-LCOV_FILTER_PATTERN=-p "/usr/include/" -p "src/leveldb/" -p "src/univalue" -p "src/secp256k1"
+LCOV_FILTER_PATTERN = \
+	-p "/usr/include/" \
+	-p "/usr/lib/" \
+	-p "/usr/lib64/" \
+	-p "src/leveldb/" \
+	-p "src/bench/" \
+	-p "src/univalue" \
+	-p "src/crypto/ctaes" \
+	-p "src/secp256k1" \
+	-p "depends"
 
 baseline.info:
 	$(LCOV) -c -i -d $(abs_builddir)/src -o $@
@@ -225,13 +245,15 @@ endif
 
 dist_noinst_SCRIPTS = autogen.sh
 
-EXTRA_DIST = $(DIST_SHARE) qa/pull-tester/rpc-tests.sh qa/pull-tester/run-bitcoin-cli qa/rpc-tests $(DIST_CONTRIB) $(DIST_DOCS) $(WINDOWS_PACKAGING) $(OSX_PACKAGING) $(BIN_CHECKS)
+EXTRA_DIST = $(DIST_SHARE) test/functional/test_runner.py test/functional $(DIST_CONTRIB) $(DIST_DOCS) $(WINDOWS_PACKAGING) $(OSX_PACKAGING) $(BIN_CHECKS)
 
 EXTRA_DIST += \
     test/util/bitcoin-util-test.py \
     test/util/data/bitcoin-util-test.json \
     test/util/data/blanktxv1.hex \
     test/util/data/blanktxv1.json \
+    test/util/data/blanktxv2.hex \
+    test/util/data/blanktxv2.json \
     test/util/data/tt-delin1-out.hex \
     test/util/data/tt-delin1-out.json \
     test/util/data/tt-delout1-out.hex \
@@ -243,11 +265,27 @@ EXTRA_DIST += \
     test/util/data/txcreate1.json \
     test/util/data/txcreate2.hex \
     test/util/data/txcreate2.json \
+    test/util/data/txcreatedata1.hex \
+    test/util/data/txcreatedata1.json \
+    test/util/data/txcreatedata2.hex \
+    test/util/data/txcreatedata2.json \
+    test/util/data/txcreatedata_seq0.hex \
+    test/util/data/txcreatedata_seq0.json \
+    test/util/data/txcreatedata_seq1.hex \
+    test/util/data/txcreatedata_seq1.json \
+    test/util/data/txcreatemultisig1.hex \
+    test/util/data/txcreatemultisig1.json \
+    test/util/data/txcreatemultisig2.hex \
+    test/util/data/txcreatemultisig2.json \
+    test/util/data/txcreateoutpubkey1.hex \
+    test/util/data/txcreateoutpubkey1.json \
     test/util/data/txcreatescript1.hex \
     test/util/data/txcreatescript1.json \
-    test/util/data/txcreatesign.hex \
-    test/util/data/txcreatesign.json \
-    test/util/rpcauth-test.py
+    test/util/data/txcreatescript2.hex \
+    test/util/data/txcreatescript2.json \
+    test/util/data/txcreatesignv1.hex \
+    test/util/data/txcreatesignv1.json \
+    test/util/data/txcreatesignv2.hex
 
 CLEANFILES = $(OSX_DMG) $(BITCOIN_WIN_INSTALLER)
 
@@ -270,5 +308,8 @@ endif
 clean-docs:
 	rm -rf doc/doxygen
 
-clean-local: clean-docs
+clean-local:
 	rm -rf coverage_percent.txt test_ion.coverage/ total.coverage/ test/tmp/ cache/ $(OSX_APP)
+	rm -rf test/functional/__pycache__
+	rm -rf test/functional/test_framework/__pycache__ test/cache share/rpcauth/__pycache__
+	rm -rf osx_volname dist/ dpi36.background.tiff dpi72.background.tiff
