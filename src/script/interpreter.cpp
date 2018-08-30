@@ -4,8 +4,6 @@
 // Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
-#include "main.h"
 #include "interpreter.h"
 
 #include "primitives/transaction.h"
@@ -17,8 +15,6 @@
 #include "uint256.h"
 
 typedef std::vector<unsigned char> valtype;
-
-std::atomic<bool> fCLTVHasMajority;
 
 namespace {
 
@@ -421,10 +417,6 @@ bool ScriptMachine::Step()
 
                     if (stack.size() < 1)
                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);
-
-                    // Check if CLTV has supermajority consensus.
-                    if (!fCLTVHasMajority.load())
-                            break;
 
                     // CLTV will only be verified if it is a supermajority.
                     // Otherwise it will be ignored and transaction will be treated as normal.
