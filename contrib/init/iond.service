@@ -8,7 +8,7 @@
 # /etc/ioncoin/ioncoin.conf
 
 [Unit]
-Description=ION's distributed currency daemon
+Description=ION daemon
 After=network.target
 
 [Service]
@@ -17,13 +17,11 @@ ExecStart=/usr/bin/iond -daemon -conf=/etc/ioncoin/ioncoin.conf -pid=/run/iond/i
 RuntimeDirectory=iond
 User=ion
 Type=forking
-PIDFile=/var/lib/iond/iond.pid
+PIDFile=/run/iond/iond.pid
+Restart=on-failure
 
-ExecStart=/usr/bin/iond -daemon -pid=/var/lib/iond/iond.pid \
-          -conf=/etc/ioncoin/ioncoin.conf -datadir=/var/lib/iond
-
-ExecStop=-/usr/bin/ion-cli -conf=/etc/ioncoin/ioncoin.conf \
-         -datadir=/var/lib/iond stop
+# Hardening measures
+####################
 
 # Provide a private /tmp and /var/tmp.
 PrivateTmp=true
