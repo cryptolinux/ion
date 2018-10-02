@@ -1,5 +1,6 @@
 Ion Core integration/staging repository
 =======================================
+<<<<<<< HEAD
 [![GitHub license](https://img.shields.io/github/license/ioncoincore/ion.svg?style=social)](https://github.com/ioncoincore/ion) ![](https://img.shields.io/github/contributors-anon/ioncoincore/ion.svg?style=social) [![GitHub issues](https://img.shields.io/github/issues/ioncoincore/ion.svg?style=social)](https://github.com/ioncoincore/ion/issues) [![GitHub forks](https://img.shields.io/github/forks/ioncoincore/ion.svg?style=social)](https://github.com/ioncoincore/ion/network) [![GitHub stars](https://img.shields.io/github/stars/ioncoincore/ion.svg?style=social)](https://github.com/ioncoincore/ion/stargazers) 
 [![GitHub version](https://badge.fury.io/gh/ioncoincore%2Fion.svg)](https://badge.fury.io/gh/ioncoincore%2Fion) [![Build Status](https://travis-ci.org/ioncoincore/ion.svg?branch=master)](https://travis-ci.org/ioncoincore/ion) [![Snap Status](https://build.snapcraft.io/badge/ioncoincore/ion.svg)](https://build.snapcraft.io/user/ioncoincore/ion) ![Commits since latest version](https://img.shields.io/github/commits-since/ioncoincore/ion/latest.svg)
 ![Top Language](https://img.shields.io/github/languages/top/ioncoincore/ion.svg?color=blue) ![Languages amount](https://img.shields.io/github/languages/count/ioncoincore/ion.svg) ![Commit activity](https://img.shields.io/github/commit-activity/m/ioncoincore/ion.svg) ![Last commit](https://img.shields.io/github/last-commit/ioncoincore/ion/master.svg)
@@ -18,6 +19,10 @@ For now this new repository is empty and we will move our content in following d
 
   - Project where you can look up the progress of this action: [Move from CEVAP branch](https://github.com/orgs/ioncoincore/projects/1)
   - Download [ioncoincore latest release](https://github.com/ioncoincore/ion/releases)
+=======
+
+[![Build Status](https://travis-ci.com/ioncoincore/ion.svg?branch=master)](https://travis-ci.com/ioncoincore/ion) [![GitHub version](https://badge.fury.io/gh/ioncoincore%2Fion.svg)](https://badge.fury.io/gh/ioncoincore%2Fion) [![Snap Status](https://build.snapcraft.io/badge/ioncoincore/ion.svg)](https://build.snapcraft.io/user/ioncoincore/ion) [![GitHub issues](https://img.shields.io/github/issues/ioncoincore/ion.svg)](https://github.com/ioncoincore/ion/issues) [![GitHub forks](https://img.shields.io/github/forks/ioncoincore/ion.svg)](https://github.com/ioncoincore/ion/network) [![GitHub stars](https://img.shields.io/github/stars/ioncoincore/ion.svg)](https://github.com/ioncoincore/ion/stargazers) [![GitHub license](https://img.shields.io/github/license/ioncoincore/ion.svg)](https://github.com/ioncoincore/ion) [![Twitter](https://img.shields.io/twitter/url/https/github.com/ioncoincore/ion.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fioncoincore%2Fion)
+>>>>>>> Cleanup the old CEVAP references in README
 
 ### Client: Sagittarius
 
@@ -45,7 +50,21 @@ There were several considerations for selecting the current code base.
 
    ![Blockexplorer](assets/images/integrated-blockexplorer.png)
 
+<<<<<<< HEAD
 _For full information about usage and possible installation methods and Branches, please check out [Build and install ion (all OS)](../../tree/master/doc)_
+=======
+ - New Algorithm
+ - Zerocoin
+ - BIP38/BIP38 Tool
+ - Masternode core part (requires new configs for all current users)
+ - Better transactions overview
+ - New wallet design and layout
+ - New tools and scripts
+ - New artworks
+ - For more, reade release notes directly on our [repository](https://github.com/ioncoincore/ion).
+
+### Stop ongoing attack
+>>>>>>> Cleanup the old CEVAP references in README
 
 There were several issues which enabled several methods of attack. The current release deals with the attack properly.
 
@@ -63,7 +82,13 @@ We forked from [PIVX](https://github.com/PIVX-Project/PIVX) and integrated ION's
 
 By doing so, we connect to an enthusiastic and active community - leaving behind old Ion code that inherits from less actively developed and maintaned code. Our main sources are now derived from:
 
+<<<<<<< HEAD
 By doing so, we connect to an enthusiastic and active community - leaving behind old Ion code that inherits from less actively developed and maintaned code. Our main sources are now derived from:
+=======
+  1. [PIVX](https://github.com/PIVX-Project/PIVX)
+  2. [DASH](https://github.com/dashpay/dash)
+  3. [Bitcoin](https://github.com/bitcoin/bitcoin)
+>>>>>>> Cleanup the old CEVAP references in README
 
 pivx | dash | bitcoin
 :-: | :--: | :-: |
