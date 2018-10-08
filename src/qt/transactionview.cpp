@@ -259,7 +259,8 @@ void TransactionView::setModel(WalletModel *_model)
                     mapperThirdPartyTxUrls->setMapping(thirdPartyTxUrlAction, listUrls[i].trimmed());
                 }
             }
-            connect(model->getOptionsModel(), SIGNAL(hideOrphansChanged(bool)), this, SLOT(hideOrphans(bool)));
+
+            connect(model->getOptionsModel(), SIGNAL(hideOrphansChanged(bool)), this, SLOT(updateHideOrphans(bool)));
         }
 
         // show/hide column Watch-only
@@ -350,6 +351,22 @@ void TransactionView::hideOrphans(bool fHide)
         return;
     transactionProxyModel->setHideOrphans(fHide);
 }
+
+void TransactionView::updateHideOrphans(bool fHide)
+{
+    QSettings settings;
+    if (settings.value("fHideOrphans", false).toBool() != fHide) {
+        settings.setValue("fHideOrphans", fHide);
+        if (model && model->getOptionsModel())
+            emit model->getOptionsModel()->hideOrphansChanged(fHide);
+    }
+    hideOrphans(fHide);
+    // retain consistency with other checkboxes
+    if (hideOrphansAction->isChecked() != fHide)
+        hideOrphansAction->setChecked(fHide);
+
+}
+
 
 void TransactionView::chooseWatchonly(int idx)
 {

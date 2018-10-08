@@ -60,6 +60,8 @@ private Q_SLOTS:
 
     void updateHideOrphans(bool fHide);
 
+    void updateHideOrphans(bool fHide);
+
     void showRestartWarning(bool fPersistent = false);
     void clearStatusLabel();
     void updateProxyValidationState();

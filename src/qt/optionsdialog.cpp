@@ -424,6 +424,12 @@ void OptionsDialog::updateHideOrphans(bool fHide)
         ui->checkBoxHideOrphans->setChecked(fHide);
 }
 
+void OptionsDialog::updateHideOrphans(bool fHide)
+{
+    if(ui->checkBoxHideOrphans->isChecked() != fHide)
+        ui->checkBoxHideOrphans->setChecked(fHide);
+}
+
 void OptionsDialog::doProxyIpChecks(QValidatedLineEdit* pUiProxyIp, QLineEdit* pUiProxyPort)
 {
     QValidatedLineEdit *pUiProxyIp = ui->proxyIp;

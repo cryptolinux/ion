@@ -119,6 +119,7 @@ public Q_SLOTS:
     void chooseDate(int idx);
     void chooseType(int idx);
     void hideOrphans(bool fHide);
+    void updateHideOrphans(bool fHide);
     void chooseWatchonly(int idx);
     void changedAmount();
     void changedSearch();
