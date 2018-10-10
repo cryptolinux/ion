@@ -220,8 +220,6 @@ elif cmd == "listtransactions":
         print "\n---An error occurred---\n"
 
 elif cmd == "listtransactionrecords":
-<<<<<<< HEAD
-=======
     try:
         acct = raw_input("Account (optional): ")
         count = raw_input("Number of transactions (optional): ")
@@ -234,7 +232,6 @@ elif cmd == "listtransactionrecords":
         print "\n---An error occurred---\n"
 
 elif cmd == "move":
->>>>>>> Add rpc call to view transactions as mutations to balance
     try:
         acct = raw_input("Account (optional): ")
         count = raw_input("Number of transactions (optional): ")
