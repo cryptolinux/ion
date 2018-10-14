@@ -9,10 +9,14 @@
 #include <memory>
 #include <set>
 
+#include <set>
+
 #include "util.h"
 #include "utilstrencodings.h"
 
 #include <stdio.h>
+
+#include <boost/foreach.hpp>
 
 #ifdef DEBUG_LOCKCONTENTION
 #if !defined(HAVE_THREAD_LOCAL)
@@ -52,7 +56,6 @@ struct CLockLocation {
 
     std::string MutexName() const { return mutexName; }
 
-    bool fTry;
 private:
     bool fTry;
     std::string mutexName;
@@ -75,10 +78,10 @@ struct LockData {
 
     LockOrders lockorders;
     InvLockOrders invlockorders;
-    boost::mutex dd_mutex;
+    std::mutex dd_mutex;
 } static lockdata;
 
-boost::thread_specific_ptr<LockStack> lockstack;
+static thread_local std::unique_ptr<LockStack> lockstack;
 
 static void potential_deadlock_detected(const std::pair<void*, void*>& mismatch, const LockStack& s1, const LockStack& s2)
 {
@@ -112,13 +115,12 @@ static void potential_deadlock_detected(const std::pair<void*, void*>& mismatch,
 
 static void push_lock(void* c, const CLockLocation& locklocation)
 {
+    if (!lockstack)
+        lockstack.reset(new LockStack);
+
     std::lock_guard<std::mutex> lock(lockdata.dd_mutex);
 
-    boost::unique_lock<boost::mutex> lock(lockdata.dd_mutex);
-
-    for (const std::pair<void*, CLockLocation>& i : g_lockstack) {
-        if (i.first == c)
-            break;
+    lockstack->push_back(std::make_pair(c, locklocation));
 
     BOOST_FOREACH (const PAIRTYPE(void*, CLockLocation) & i, (*lockstack)) {
         if (i.first == c)
@@ -174,7 +176,7 @@ void DeleteLock(void* cs)
         // We're already shutting down.
         return;
     }
-    boost::unique_lock<boost::mutex> lock(lockdata.dd_mutex);
+    std::lock_guard<std::mutex> lock(lockdata.dd_mutex);
     std::pair<void*, void*> item = std::make_pair(cs, (void*)0);
     LockOrders::iterator it = lockdata.lockorders.lower_bound(item);
     while (it != lockdata.lockorders.end() && it->first.first == cs) {
