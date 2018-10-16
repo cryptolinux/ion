@@ -1817,12 +1817,6 @@ bool AppInitMain()
                 pcoinscatcher = new CCoinsViewErrorCatcher(pcoinsdbview);
                 pcoinsTip = new CCoinsViewCache(pcoinscatcher);
 
-                bool fIsActiveCLTV;
-                if (!pblocktree->ReadFlag("CLTVHasMajority", fIsActiveCLTV))
-                    fCLTVHasMajority = false;
-                else
-                    fCLTVHasMajority = fIsActiveCLTV;
-
                 if (fReindex)
                     pblocktree->WriteReindexing(true);
                     //If we're reindexing in prune mode, wipe away unusable block files and all undo data files

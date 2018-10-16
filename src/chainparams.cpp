@@ -393,9 +393,9 @@ public:
         bnProofOfStakeLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         nSubsidyHalvingInterval = 210000;
         nMaxReorganizationDepth = 100;
-        nEnforceBlockUpgradeMajority = 1080;
-        nRejectBlockOutdatedMajority = 1368;
-        nToCheckBlockUpgradeMajority = 1440;
+        nEnforceBlockUpgradeMajority = 8100; // 75%
+        nRejectBlockOutdatedMajority = 10260; // 95%
+        nToCheckBlockUpgradeMajority = 10800; // Approximate expected amount of blocks in 7 days (1440*7.5)
         nMinerThreads = 0;
         nTargetTimespanMidas = 7 * 24 * 60 * 60;    // 1 week
         nTargetTimespanDGW = 1 * 60; // ION: 1 day
