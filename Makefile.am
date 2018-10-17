@@ -62,6 +62,9 @@ DIST_SHARE = \
 BIN_CHECKS=$(top_srcdir)/contrib/devtools/symbol-check.py \
            $(top_srcdir)/contrib/devtools/security-check.py
 
+BIN_CHECKS=$(top_srcdir)/contrib/devtools/symbol-check.py \
+           $(top_srcdir)/contrib/devtools/security-check.py
+
 WINDOWS_PACKAGING = $(top_srcdir)/share/pixmaps/ion.ico \
   $(top_srcdir)/share/pixmaps/ion_testnet.ico \
   $(top_srcdir)/share/pixmaps/ion_regtest.ico \

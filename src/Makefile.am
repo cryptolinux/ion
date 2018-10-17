@@ -110,7 +110,7 @@ if BUILD_BITCOIN_UTILS
   bin_PROGRAMS += ion-cli ion-tx
 endif
 
-.PHONY: FORCE
+.PHONY: FORCE check-symbols check-security
 # ion core #
 BITCOIN_CORE_H = \
   activemasternode.h \
