@@ -40,6 +40,7 @@ OSX_QT_TRANSLATIONS = da,de,es,hu,ru,uk,zh_CN,zh_TW
 DIST_DOCS = $(wildcard doc/*.md) $(wildcard doc/release-notes/*.md)
 DIST_CONTRIB = $(top_srcdir)/contrib/ion-cli.bash-completion \
 	       $(top_srcdir)/contrib/ion-tx.bash-completion \
+<<<<<<< HEAD
 	       $(top_srcdir)/contrib/iond.bash-completion \
            $(top_srcdir)/contrib/init \
            $(top_srcdir)/contrib/install_db4.sh
@@ -50,6 +51,9 @@ DIST_SHARE = \
 
 BIN_CHECKS=$(top_srcdir)/contrib/devtools/symbol-check.py \
            $(top_srcdir)/contrib/devtools/security-check.py
+=======
+	       $(top_srcdir)/contrib/iond.bash-completion
+>>>>>>> Build: Add bash completion support to the build system
 
 WINDOWS_PACKAGING = $(top_srcdir)/share/pixmaps/ion.ico \
   $(top_srcdir)/share/pixmaps/ion_testnet.ico \
