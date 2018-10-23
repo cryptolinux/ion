@@ -41,6 +41,7 @@ public:
     void UpdateCount();
     void Lock();
     void SeedToXION(const uint512& seed, CBigNum& bnValue, CBigNum& bnSerial, CBigNum& bnRandomness, CKey& key);
+    bool CheckSeed(const CDeterministicMint& dMint);
 
 private:
     uint512 GetZerocoinSeed(uint32_t n);
