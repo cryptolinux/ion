@@ -53,7 +53,8 @@ apps:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   qt:
     command: desktop-launch ion-qt
-    plugs: [network, network-bind, unity7, desktop, desktop-legacy, wayland, x11]
+    plugs: [network, network-bind, unity7]
+    aliases: [ion-qt]
     desktop: ion.desktop
   cli:
     command: ion-cli
