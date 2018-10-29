@@ -272,6 +272,7 @@ extern UniValue getxionseed(const UniValue& params, bool fHelp);
 extern UniValue generatemintlist(const UniValue& params, bool fHelp);
 extern UniValue searchdxion(const UniValue& params, bool fHelp);
 extern UniValue dxionstate(const UniValue& params, bool fHelp);
+extern UniValue createautomintaddress(const UniValue& params, bool fHelp);
 
 extern UniValue getrawtransaction(const UniValue& params, bool fHelp); // in rpc/rawtransaction.cpp
 extern UniValue listunspent(const UniValue& params, bool fHelp);
