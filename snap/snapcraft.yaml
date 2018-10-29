@@ -115,6 +115,7 @@ parts:
     stage-packages: [ca-certificates]
     after:
       - berkeleydb
+      - desktop-qt5
       - patches
   desktop-qt5:
     stage-packages:
