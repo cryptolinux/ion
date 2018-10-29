@@ -135,19 +135,5 @@ libbitcoinconsensus.pc
 .idea
 cmake-build-debug
 
-# exclude 5.hfs file created by the script
-*.hfs
-*.dmg
-MacOSX10.11.sdk/
-
 #Vscode
 .vscode/
-
-#SNAP
-parts/
-prime/
-snap/.snapcraft/
-stage/
-
-# datadir
-datadir/

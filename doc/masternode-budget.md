@@ -254,16 +254,16 @@ When block `1000000` is reached you'll receive a payment for `1200` ION.
 ## RPC Commands
 The following new RPC commands are supported:
 - mnbudget "command"... ( "passphrase" )
-  - prepare            - Prepare proposal for network by signing and creating tx
-  - submit             - Submit proposal for network
-  - vote-many          - Vote on a Ion initiative
-  - vote-alias         - Vote on a Ion initiative
-  - vote               - Vote on a Ion initiative/budget
-  - getvotes           - Show current masternode budgets
-  - getinfo            - Show current masternode budgets
-  - show               - Show all budgets
-  - projection         - Show the projection of which proposals will be paid the next cycle
-  - check              - Scan proposals and remove invalid
+ * prepare            - Prepare proposal for network by signing and creating tx
+ * submit             - Submit proposal for network
+ * vote-many          - Vote on a ION initiative
+ * vote-alias         - Vote on a ION initiative
+ * vote               - Vote on a ION initiative/budget
+ * getvotes           - Show current masternode budgets
+ * getinfo            - Show current masternode budgets
+ * show               - Show all budgets
+ * projection         - Show the projection of which proposals will be paid the next cycle
+ * check              - Scan proposals and remove invalid
 
 - mnfinalbudget "command"... ( "passphrase" )
   - vote-many   - Vote on a finalized budget

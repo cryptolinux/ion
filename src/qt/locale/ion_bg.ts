@@ -260,6 +260,17 @@
     </message>
 </context>
 <context>
+    <name>BanTableModel</name>
+    <message>
+        <source>IP/Netmask</source>
+        <translation>IP/Netmask</translation>
+    </message>
+    <message>
+        <source>Banned Until</source>
+        <translation>Забранен до</translation>
+    </message>
+</context>
+<context>
     <name>Bip38ToolDialog</name>
     <message>
         <source>IP/Netmask</source>
@@ -270,8 +281,8 @@
         <translation>&amp;BIP 38 Шифриране</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Ядро</translation>
+        <source>Enter a ION Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>Въведете Ion адрес, който искате да криптиране с BIP 38. Въведете парола в средното поле. Натиснете 'криптирай', за да се изчисли криптирания таен ключ. </translation>
     </message>
     <message>
         <source>Enter a ION Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
@@ -308,6 +319,10 @@
     <message>
         <source>Request payments (generates QR codes and ion: URIs)</source>
         <translation>Заявка за плащане (генерира QR кодове и Ion: URI)</translation>
+    </message>
+    <message>
+        <source>Encrypt the private key for this ION address</source>
+        <translation>Криптирай тайния ключ за този ION адрес</translation>
     </message>
     <message>
         <source>Encrypt the private key for this ION address</source>
@@ -1955,9 +1970,9 @@ Please be patient after clicking import.</source>
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/ioncoincore/ioncoin</source>
+https://www.transifex.com/ion-project/ion-project-translations</source>
         <translation>Липсващ език или непълен превод? Помогнете с преводите тук:
-https://www.transifex.com/ioncoincore/ioncoin</translation>
+https://www.transifex.com/ion-project/ion-project-translations</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>

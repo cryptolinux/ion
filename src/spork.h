@@ -45,23 +45,8 @@ class CSporkManager;
 #define SPORK_8_NEW_PROTOCOL_ENFORCEMENT_DEFAULT 1521851265       //GMT: Saturday, March 24, 2018 12:27:45 AM (OFF 4070908800)
 #define SPORK_9_ZEROCOIN_MAINTENANCE_MODE_DEFAULT 4070908800      //OFF
 
-namespace std
-{
-    template<> struct hash<SporkId>
-    {
-        std::size_t operator()(SporkId const& id) const noexcept
-        {
-            return std::hash<int>{}(id);
-        }
-    };
-}
-
-struct CSporkDef
-{
-    SporkId sporkId{SPORK_INVALID};
-    int64_t defaultValue{0};
-    std::string name;
-};
+class CSporkMessage;
+class CSporkManager;
 
 extern std::vector<CSporkDef> sporkDefs;
 extern CSporkManager sporkManager;

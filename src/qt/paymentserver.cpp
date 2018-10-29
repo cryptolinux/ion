@@ -45,6 +45,9 @@
 #include <QTextDocument>
 #include <QUrlQuery>
 
+using namespace boost;
+using namespace std;
+
 const int BITCOIN_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
 const QString BITCOIN_IPC_PREFIX("ion:");
 // BIP70 payment protocol messages

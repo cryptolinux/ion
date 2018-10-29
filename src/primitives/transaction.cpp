@@ -131,6 +131,19 @@ bool CTransaction::IsCoinStake() const
 
 CAmount CTransaction::GetValueOut() const
 {
+    if (vin.empty())
+        return false;
+
+    // ppcoin: the coin stake transaction is marked with the first output empty
+    bool fAllowNull = vin[0].scriptSig.IsZerocoinSpend();
+    if (vin[0].prevout.IsNull() && !fAllowNull)
+        return false;
+
+    return (vin.size() > 0 && vout.size() >= 2 && vout[0].IsEmpty());
+}
+
+CAmount CTransaction::GetValueOut() const
+{
     CAmount nValueOut = 0;
     for (const auto& tx_out : vout) {
         nValueOut += tx_out.nValue;

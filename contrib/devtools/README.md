@@ -9,18 +9,6 @@ Check if all command line args are documented. The return value indicates the
 number of undocumented args.
 
 
-A script to format unified git diffs according to [.clang-format](../../src/.clang-format).
-
-For instance, to format the last commit with 0 lines of context,
-the script should be called from the git root folder as follows.
-
-```
-git diff -U0 HEAD~1.. | ./contrib/devtools/clang-format-diff.py -p1 -i -v
-```
-
-copyright\_header.py
-====================
-
 Provides utilities for managing copyright headers of `The Ion Core
 developers` in repository source files. It has three subcommands:
 
@@ -107,6 +95,7 @@ example:
 BUILDDIR=$PWD/build contrib/devtools/gen-manpages.sh
 ```
 
+=======
 github-merge.py
 ===============
 
@@ -117,7 +106,7 @@ For example:
   ./github-merge.py 3077
 
 (in any git repository) will help you merge pull request #3077 for the
-ioncoincore/ion repository.
+ION-Project/ION repository.
 
 What it does:
 * Fetch master and the pull request.
@@ -135,9 +124,9 @@ couldn't mess with the sources.
 
 Setup
 ---------
-Configuring the github-merge tool for the ion repository is done in the following way:
+Configuring the github-merge tool for the ION repository is done in the following way:
 
-    git config githubmerge.repository ioncoincore/ion
+    git config githubmerge.repository ION-Project/ION
     git config githubmerge.testcmd "make -j4 check" (adapt to whatever you want to use for testing)
     git config --global user.signingkey mykeyid (if you want to GPG sign)
 
@@ -184,9 +173,6 @@ It will do the following automatically:
 
 See doc/translation-process.md for more information.
 
-png2icns
-========
-
 Run this script in a folder where your PNG's which you require for icns are.
 
 _Importan Info_: _**Only** convert the **icons that match sizes icns supports**: (16x16, 32x32, 128x128, 256x256, 512x512 and 1024x1024 pixels)_
@@ -221,3 +207,4 @@ Reading icns family from ion.icns...
   Saved 'ic09' element to ion_512x512x32.png.
 Extracted 6 images from ion.icns.
 ```
+=======

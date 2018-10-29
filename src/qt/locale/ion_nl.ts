@@ -247,10 +247,6 @@
         <translation>Waarschuwing: Als u uw portemonnee versleutelt en uw wachtwoord vergeet, zult u &lt;b&gt;AL UW ION VERLIEZEN&lt;/b&gt;!</translation>
     </message>
     <message>
-        <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your funds from being stolen by malware infecting your computer.</source>
-        <translation>%1 wordt nu afgesloten om de versleuteling te voltooien. Denk eraan dat het versleutelen van uw portemonnee niet volledig kan beschermen tegen diefstal van uw geld door malware op uw computer.</translation>
-    </message>
-    <message>
         <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. Previous backups of the unencrypted wallet file contain the same HD seed and still have full access to all your funds just like the new, encrypted wallet.</source>
         <translation>BELANGRIJK: Alle eerder gemaakte back-up van uw portemonneebestand dienen vervangen te worden door het nieuw gegenereerde, versleutelde portemonneebestand. Eerdere back-ups van de niet versleutelde portemonnee bevatten dezelfde HD seed en zullen nog steeds volledig toegang hebben tot uw geld net als de nieuwe, versleutelde portemonnee.</translation>
     </message>
@@ -289,6 +285,17 @@
     <message>
         <source>Warning: The Caps Lock key is on!</source>
         <translation>Waarschuwing: Caps-lock staat aan!</translation>
+    </message>
+</context>
+<context>
+    <name>BanTableModel</name>
+    <message>
+        <source>IP/Netmask</source>
+        <translation>IP/Netmask</translation>
+    </message>
+    <message>
+        <source>Banned Until</source>
+        <translation>Verboden tot</translation>
     </message>
 </context>
 <context>
@@ -519,6 +526,10 @@
         <translation>Privacy Acties voor xION</translation>
     </message>
     <message>
+        <source>Privacy Actions for xION</source>
+        <translation>Privacy Acties voor xION</translation>
+    </message>
+    <message>
         <source>E&amp;xit</source>
         <translation>S&amp;luiten</translation>
     </message>
@@ -726,6 +737,10 @@
         <source>Processed %n blocks of transaction history.</source>
         <translation><numerusform>%n blokken aan transactiegeschiedenis verwerkt.</numerusform><numerusform>%n blokken aan transactiegeschiedenis verwerkt.</numerusform></translation>
     </message>
+    <message numerus="yes">
+        <source>Processed %n blocks of transaction history.</source>
+        <translation><numerusform>%n blokken aan transactiegeschiedenis verwerkt.</numerusform><numerusform>%n blokken aan transactiegeschiedenis verwerkt.</numerusform></translation>
+    </message>
     <message>
         <source>Show the %1 help message to get a list with possible Ion command-line options</source>
         <translation>Toon het %1 hulpbericht om een lijst te krijgen met mogelijke Ion commandoregelopties</translation>
@@ -745,6 +760,14 @@
     <message>
         <source>Show the PrivateSend basic information</source>
         <translation>Toon de PrivateSend basis informatie</translation>
+    </message>
+    <message>
+        <source>%1 behind. Scanning block %2</source>
+        <translation>%1 achter. Scannen van block %2</translation>
+    </message>
+    <message>
+        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for anonymization and staking only</source>
+        <translation>Portemonnee is &lt;b&gt;versleuteld&lt;/b&gt; en momenteel &lt;b&gt;geopend&lt;/b&gt;enkel voor anonimisering en staking</translation>
     </message>
     <message>
         <source>%1 behind. Scanning block %2</source>
@@ -785,6 +808,10 @@
     <message>
         <source>Request payments (generates QR codes and ion: URIs)</source>
         <translation>Vraag betaling aan (genereert QR codes en ION: URI's)</translation>
+    </message>
+    <message>
+        <source>&amp;Privacy</source>
+        <translation>&amp;Privacy</translation>
     </message>
     <message>
         <source>&amp;Privacy</source>
@@ -857,6 +884,10 @@
     <message>
         <source>Sent multiple transactions</source>
         <translation>Meerdere transacties verstuurd</translation>
+    </message>
+    <message>
+        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
+        <translation>Toon het Ion Core help bericht om een ​​lijst te krijgen met mogelijke ION command line opties</translation>
     </message>
     <message>
         <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
@@ -1106,6 +1137,10 @@ MultiSend: %1</translation>
         <translation>Type</translation>
     </message>
     <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -1166,6 +1201,10 @@ MultiSend: %1</translation>
         <translation>Kopieer dust</translation>
     </message>
     <message>
+        <source>Copy dust</source>
+        <translation>Kopieer dust</translation>
+    </message>
+    <message>
         <source>Copy change</source>
         <translation>Kopieer wisselgeld</translation>
     </message>
@@ -1214,6 +1253,10 @@ MultiSend: %1</translation>
         <translation>(%1 vergrendeld)</translation>
     </message>
     <message>
+        <source>(%1 locked)</source>
+        <translation>(%1 vergrendeld)</translation>
+    </message>
+    <message>
         <source>none</source>
         <translation>geen</translation>
     </message>
@@ -1224,6 +1267,34 @@ MultiSend: %1</translation>
     <message>
         <source>Some coins were unselected because they do not have enough mixing rounds.</source>
         <translation>Sommige munten zijn niet geselecteerd omdat ze niet genoeg mengrondes hebben.</translation>
+    </message>
+    <message>
+        <source>This label turns red, if the transaction size is greater than 1000 bytes.</source>
+        <translation>Dit label wordt rood, als de transactiegrootte groter is dan 1000 bytes.</translation>
+    </message>
+    <message>
+        <source>This means a fee of at least %1 per kB is required.</source>
+        <translation>Dit betekent dat een fee van minstens %1 per kB vereist is.</translation>
+    </message>
+    <message>
+        <source>Can vary +/- 1 byte per input.</source>
+        <translation>Kan variëren van +/- 1 byte per invoer.</translation>
+    </message>
+    <message>
+        <source>Transactions with higher priority are more likely to get included into a block.</source>
+        <translation>Transacties met hogere prioriteit zullen waarschijnlijk eerder in een blok opgenomen worden.</translation>
+    </message>
+    <message>
+        <source>This label turns red, if the priority is smaller than "medium".</source>
+        <translation>Dit label wordt rood, als de prioriteit lager is dan "medium".</translation>
+    </message>
+    <message>
+        <source>This label turns red, if any recipient receives an amount smaller than %1.</source>
+        <translation>Dit label wordt rood, als een ontvanger een hoeveelheid kleiner dan %1 ontvangt.</translation>
+    </message>
+    <message>
+        <source>Can vary +/- %1 uion per input.</source>
+        <translation>Kan +/-%1 uion per invoer variëren.</translation>
     </message>
     <message>
         <source>This label turns red, if the transaction size is greater than 1000 bytes.</source>
@@ -1324,6 +1395,10 @@ MultiSend: %1</translation>
         <source>New key generation failed.</source>
         <translation>Aanmaken nieuwe key mislukt.</translation>
     </message>
+    <message>
+        <source>New key generation failed.</source>
+        <translation>Aanmaken nieuwe key mislukt.</translation>
+    </message>
 </context>
 <context>
     <name>FreespaceChecker</name>
@@ -1339,6 +1414,17 @@ MultiSend: %1</translation>
         <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
         <translation>Map bestaat reeds. Voeg %1 toe als je van plan bent om hier een nieuwe map te creëren.</translation>
     </message>
+    <message>
+        <source>Path already exists, and is not a directory.</source>
+        <translation>Pad bestaat al en is geen directory.</translation>
+    </message>
+    <message>
+        <source>Cannot create data directory here.</source>
+        <translation>Kan de data directory hier niet aanmaken.</translation>
+    </message>
+</context>
+<context>
+    <name>HelpMessageDialog</name>
     <message>
         <source>Path already exists, and is not a directory.</source>
         <translation>Pad bestaat al en is geen directory.</translation>
@@ -1395,6 +1481,18 @@ MultiSend: %1</translation>
         <translation>Stel taal in, bijvoorbeeld "de_DE" (standaard: systeem locale)</translation>
     </message>
     <message>
+        <source>Choose data directory on startup (default: %u)</source>
+        <translation>Kies data directory bij opstarten (standaard: %u)</translation>
+    </message>
+    <message>
+        <source>Show splash screen on startup (default: %u)</source>
+        <translation>Toon splash scherm bij opstarten (standaard: %u)</translation>
+    </message>
+    <message>
+        <source>Set language, for example "de_DE" (default: system locale)</source>
+        <translation>Stel taal in, bijvoorbeeld "de_DE" (standaard: systeem locale)</translation>
+    </message>
+    <message>
         <source>Start minimized</source>
         <translation>Geminimaliseerd starten</translation>
     </message>
@@ -1422,6 +1520,22 @@ MultiSend: %1</translation>
         <translation>Ion Core zal een kopie van de ION blockchain downloaden en opslaan. Tenminste %1GB aan data zal worden opgeslagen in deze map en het zal over de tijd groeien. De portemonnee zal ook in deze map worden opgeslagen.</translation>
     </message>
     <message>
+        <source>As this is the first time the program is launched, you can choose where Ion Core will store its data.</source>
+        <translation>Aangezien dit de eerste keer is dat het programma is gestart, kun je kiezen waar Ion Core zijn data opslaat.</translation>
+    </message>
+    <message>
+        <source>Use a custom data directory:</source>
+        <translation>Gebruik een aangepaste data directory:</translation>
+    </message>
+    <message>
+        <source>Ion Core</source>
+        <translation>Ion Core</translation>
+    </message>
+    <message>
+        <source>Error: Specified data directory "%1" cannot be created.</source>
+        <translation>Fout: opgegeven data directory "%1" kan niet worden gemaakt.</translation>
+    </message>
+    <message>
         <source>Set the font weight for bold texts. Possible range %1 to %2 (default: %3)</source>
         <translation>Stel het lettertype in voor vetgedrukte teksten. Mogelijk bereik %1 tot %2 (standaard: %3)</translation>
     </message>
@@ -1438,8 +1552,12 @@ MultiSend: %1</translation>
         <translation>Fout: opgegeven data directory "%1" kan niet worden gemaakt.</translation>
     </message>
     <message>
-        <source>Set language, for example "de_DE" (default: system locale)</source>
-        <translation>Stel taal in, bijvoorbeeld "nl_NL" (standaard: systeemlocale)</translation>
+        <source>MASTERNODES</source>
+        <translation>MASTERNODES</translation>
+    </message>
+    <message>
+        <source>Note: Status of your masternodes in local wallet can potentially be slightly incorrect.&lt;br /&gt;Always wait for wallet to sync additional data and then double check from another node&lt;br /&gt;if your node should be running but you still see "MISSING" in "Status" field.</source>
+        <translation>Opmerking: De status van uw masternodes in de lokale portemonnee kan mogelijk iets afwijken. &lt;br /&gt;Wacht altijd op de portemonnee om additionele data te synchroniseren en verifieer dit vanuit een andere node &lt;br /&gt;mocht de node nu aan het draaien zijn maar je ziet nog steeds 'MISSING' in het 'Status' veld.</translation>
     </message>
     <message>
         <source>Start minimized</source>
@@ -1473,109 +1591,6 @@ MultiSend: %1</translation>
         <translation>Welkom</translation>
     </message>
     <message>
-        <source>Welcome to %1.</source>
-        <translation>Welkom bij %1.</translation>
-    </message>
-    <message>
-        <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation>Omdat dit de eerste keer is dat het programma gestart is, kunt u nu kiezen waar %1 de data moet opslaan.</translation>
-    </message>
-    <message>
-        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
-        <translation>Als u op OK klikt, dan zal %1 beginnen met downloaden en verwerken van de volledige %4 blokketen (%2GB) startend met de eerste transacties in %3 toen %4 initeel werd gestart.</translation>
-    </message>
-    <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation>Deze initiële synchronisatie is heel veeleisend, en kan hardware problemen met uw computer blootleggen die voorheen onopgemerkt bleven. Elke keer dat %1 gebruikt word, zal verdergegaan worden waar gebleven is.</translation>
-    </message>
-    <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation>Als u gekozen heeft om de blokketenopslag te beperken (pruning), dan moet de historische data nog steeds gedownload en verwerkt worden, maar zal verwijderd worden naderhand om schijf gebruik zo laag mogelijk te houden.</translation>
-    </message>
-    <message>
-        <source>Use the default data directory</source>
-        <translation>Gebruik de standaard gegevensmap</translation>
-    </message>
-    <message>
-        <source>Use a custom data directory:</source>
-        <translation>Gebruik een persoonlijke gegevensmap:</translation>
-    </message>
-    <message>
-        <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation>Tenminste %1 GB aan data zal worden opgeslagen in deze map, en dit zal naarmate de tijd voortschrijdt groeien.</translation>
-    </message>
-    <message>
-        <source>Approximately %1 GB of data will be stored in this directory.</source>
-        <translation>Gemiddeld %1 GB aan data zal worden opgeslagen in deze map.</translation>
-    </message>
-    <message>
-        <source>%1 will download and store a copy of the Ion block chain.</source>
-        <translation>%1 zal een kopie van de blokketen van Ion downloaden en opslaan.</translation>
-    </message>
-    <message>
-        <source>The wallet will also be stored in this directory.</source>
-        <translation>De portemonnee wordt ook in deze map opgeslagen.</translation>
-    </message>
-    <message>
-        <source>Error: Specified data directory "%1" cannot be created.</source>
-        <translation>Fout: De gespecificeerde map "%1" kan niet worden gecreëerd.</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Fout</translation>
-    </message>
-    <message>
-        <source>%1 GB of free space available</source>
-        <translation>%1 GB aan vrije opslagruimte beschikbaar</translation>
-    </message>
-    <message>
-        <source>(of %1 GB needed)</source>
-        <translation>(van %1 GB benodigd)</translation>
-    </message>
-</context>
-<context>
-    <name>MasternodeList</name>
-    <message>
-        <source>Form</source>
-        <translation>Formulier</translation>
-    </message>
-    <message>
-        <source>MASTERNODES</source>
-        <translation>MASTERNODES</translation>
-    </message>
-    <message>
-        <source>Note: Status of your masternodes in local wallet can potentially be slightly incorrect.&lt;br /&gt;Always wait for wallet to sync additional data and then double check from another node&lt;br /&gt;if your node should be running but you still see "MISSING" in "Status" field.</source>
-        <translation>Opmerking: De status van uw masternodes in de lokale portemonnee kan mogelijk iets afwijken. &lt;br /&gt;Wacht altijd op de portemonnee om additionele data te synchroniseren en verifieer dit vanuit een andere node &lt;br /&gt;mocht de node nu aan het draaien zijn maar je ziet nog steeds 'MISSING' in het 'Status' veld.</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation>0</translation>
-    </message>
-    <message>
-        <source>Filter List:</source>
-        <translation>Filter Lijst:</translation>
-    </message>
-    <message>
-        <source>Filter masternode list</source>
-        <translation>Filter masternode lijst</translation>
-    </message>
-    <message>
-        <source>Node Count:</source>
-        <translation>Aantal Nodes:</translation>
-    </message>
-    <message>
-        <source>Show only masternodes this wallet has keys for.</source>
-        <translation>Toon alleen masternodes waar deze portemonnee sleutels voor heeft.</translation>
-    </message>
-    <message>
-        <source>My masternodes only</source>
-        <translation>Alleen mijn masternodes</translation>
-    </message>
-    <message>
-        <source>Service</source>
-        <translation>Service</translation>
-    </message>
-    <message>
         <source>S&amp;tart alias</source>
         <translation>S&amp;tart alias</translation>
     </message>
@@ -1588,8 +1603,8 @@ MultiSend: %1</translation>
         <translation>Start &amp;MISSING</translation>
     </message>
     <message>
-        <source>Last Paid</source>
-        <translation>Laatst Betaald</translation>
+        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
+        <translation>Als u op OK klikt, dan zal %1 beginnen met downloaden en verwerken van de volledige %4 blokketen (%2GB) startend met de eerste transacties in %3 toen %4 initeel werd gestart.</translation>
     </message>
     <message>
         <source>Status will be updated automatically in (sec):</source>
@@ -1600,8 +1615,8 @@ MultiSend: %1</translation>
         <translation>0</translation>
     </message>
     <message>
-        <source>Payout Address</source>
-        <translation>Betalingsadres</translation>
+        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
+        <translation>Als u gekozen heeft om de blokketenopslag te beperken (pruning), dan moet de historische data nog steeds gedownload en verwerkt worden, maar zal verwijderd worden naderhand om schijf gebruik zo laag mogelijk te houden.</translation>
     </message>
     <message>
         <source>Confirm masternode start</source>
@@ -1639,8 +1654,8 @@ MultiSend: %1</translation>
 <context>
     <name>MultiSendDialog</name>
     <message>
-        <source>Operator Reward</source>
-        <translation>Vergoeding voor Bediener</translation>
+        <source>Use the default data directory</source>
+        <translation>Gebruik de standaard gegevensmap</translation>
     </message>
     <message>
         <source>Enter whole numbers 1 - 100</source>
@@ -1665,40 +1680,39 @@ Verwijderen: Voer adres in om te verwijderen en druk op delete.
 MultiSend zal niet worden geactiveerd tenzij je op Activeer hebt geklikt</translation>
     </message>
     <message>
-        <source>Voting Address</source>
-        <translation>Stemadres</translation>
+        <source>Approximately %1 GB of data will be stored in this directory.</source>
+        <translation>Gemiddeld %1 GB aan data zal worden opgeslagen in deze map.</translation>
     </message>
     <message>
-        <source>Copy ProTx Hash</source>
-        <translation>Kopieer ProTx Hash</translation>
+        <source>%1 will download and store a copy of the Ion block chain.</source>
+        <translation>%1 zal een kopie van de blokketen van Ion downloaden en opslaan.</translation>
     </message>
     <message>
-        <source>Copy Collateral Outpoint</source>
-        <translation>Kopieer Onderpand Outpoint</translation>
+        <source>The wallet will also be stored in this directory.</source>
+        <translation>De portemonnee wordt ook in deze map opgeslagen.</translation>
     </message>
     <message>
-        <source>Updating...</source>
-        <translation>Bezig met bijwerken...</translation>
+        <source>Error: Specified data directory "%1" cannot be created.</source>
+        <translation>Fout: De gespecificeerde map "%1" kan niet worden gecreëerd.</translation>
     </message>
     <message>
         <source>Choose an address from the address book</source>
         <translation>Kies een adres uit het adresboek</translation>
     </message>
     <message>
-        <source>POSE_BANNED</source>
-        <translation>POSE_BANNED</translation>
-    </message>
-    <message>
-        <source>UNKNOWN</source>
-        <translation>ONBEKEND</translation>
+        <source>%1 GB of free space available</source>
+        <translation>%1 GB aan vrije opslagruimte beschikbaar</translation>
     </message>
     <message>
         <source>Percentage of stake to send</source>
         <translation>Staking percentage om te verzenden</translation>
     </message>
+</context>
+<context>
+    <name>MasternodeList</name>
     <message>
-        <source>to UNKNOWN</source>
-        <translation>naar ONBEKEND</translation>
+        <source>Form</source>
+        <translation>Formulier</translation>
     </message>
     <message>
         <source>Address to send portion of stake to</source>
@@ -1725,12 +1739,12 @@ MultiSend zal niet worden geactiveerd tenzij je op Activeer hebt geklikt</transl
         <translation>Wissen</translation>
     </message>
     <message>
-        <source>Filter by any property (e.g. address or protx hash)</source>
-        <translation>Filter op elke eigenschap (bv. adres of protx hash)</translation>
+        <source>0</source>
+        <translation>0</translation>
     </message>
     <message>
-        <source>Please wait...</source>
-        <translation>Wachten aub...</translation>
+        <source>Filter List:</source>
+        <translation>Filter Lijst:</translation>
     </message>
     <message>
         <source>View MultiSend Vector</source>
@@ -1740,9 +1754,6 @@ MultiSend zal niet worden geactiveerd tenzij je op Activeer hebt geklikt</transl
         <source>View MultiSend</source>
         <translation>Bekijk MultiSend</translation>
     </message>
-</context>
-<context>
-    <name>ModalOverlay</name>
     <message>
         <source>Send For Stakes</source>
         <translation>Verstuur voor stakes</translation>
@@ -1846,6 +1857,9 @@ Controleer het adres alsjeblieft en probeer het opnieuw.</translation>
         <source>Status:</source>
         <translation>Status:</translation>
     </message>
+</context>
+<context>
+    <name>MultiSendDialog</name>
     <message>
         <source>Use below to quickly import an address by its redeem. Don't forget to add a label before clicking import!
 Keep in mind, the wallet will rescan the blockchain to find transactions containing the new address.
@@ -1946,6 +1960,9 @@ Waas alsjeblieft geduldig nadat u op importeren hebt geklikt.</translation>
         <source>Sign with only private keys (Not Recommened)</source>
         <translation>Onderteken met enkel privésleutels (Niet Aanbevolen)</translation>
     </message>
+</context>
+<context>
+    <name>ModalOverlay</name>
     <message>
         <source>Invalid Tx Hash.</source>
         <translation>Ongeldige Tx Hash.</translation>
@@ -2153,9 +2170,9 @@ Waas alsjeblieft geduldig nadat u op importeren hebt geklikt.</translation>
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/ioncoincore/ioncoin</source>
+https://www.transifex.com/ion-project/ion-project-translations</source>
         <translation>Taal ontbreekt of vertaling onvolledig? Help om bij te dragen aan vertalingen:
-https://www.transifex.com/ioncoincore/ioncoin</translation>
+https://www.transifex.com/ion-project/ion-project-translations</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -2169,9 +2186,6 @@ https://www.transifex.com/ioncoincore/ioncoin</translation>
         <source>Enable xION Automint</source>
         <translation>Schakel xION Automint in</translation>
     </message>
-</context>
-<context>
-    <name>OverviewPage</name>
     <message>
         <source>Percentage of incoming ION which get automatically converted to xION via Zerocoin Protocol (min: 10%)</source>
         <translation>Percentage inkomende ION die automatisch wordt omgezet naar xION via Zerocoin Protocol (min: 10%)</translation>
@@ -2184,10 +2198,16 @@ https://www.transifex.com/ioncoincore/ioncoin</translation>
         <source>Wait with automatic conversion to Zerocoin until enough ION for this denomination is available</source>
         <translation>Wacht met automatische omzetting naar Zerocoin totdat er genoeg ION voor deze denominatie beschikbaar is</translation>
     </message>
+</context>
+<context>
+    <name>WalletFrame</name>
     <message>
         <source>Preferred Automint xION Denomination</source>
         <translation>Gewenste Automint xION denominatie</translation>
     </message>
+</context>
+<context>
+    <name>WalletModel</name>
     <message>
         <source>Stake split threshold:</source>
         <translation>Inzet splitdrempel:</translation>
@@ -2196,6 +2216,9 @@ https://www.transifex.com/ioncoincore/ioncoin</translation>
         <source>Connect to the ION network through a SOCKS5 proxy.</source>
         <translation>Maak verbinding met het ION netwerk via een SOCKS5 proxy.</translation>
     </message>
+</context>
+<context>
+    <name>WalletView</name>
     <message>
         <source>Proxy &amp;IP:</source>
         <translation>Proxy &amp;IP:</translation>
@@ -6507,8 +6530,8 @@ Ofwel het munten van hogere denominaties (dus minder invoer nodig) of het te bes
         <translation>Portemonnee %s verblijft buiten de data directory %s</translation>
     </message>
     <message>
-        <source>Unable to sign spork message, wrong key?</source>
-        <translation>Niet in staat om het sporkbericht te ondertekenen, verkeerde sleutel?</translation>
+        <source>You don't have enough Zerocoins in your wallet</source>
+        <translation>Je hebt niet genoeg Zerocoins in je portemonnee</translation>
     </message>
     <message>
         <source>Wallet needed to be rewritten: restart Ion Core to complete</source>
@@ -6519,16 +6542,16 @@ Ofwel het munten van hogere denominaties (dus minder invoer nodig) of het te bes
         <translation>Portemonnee opties:</translation>
     </message>
     <message>
-        <source>Unknown state: id = %u</source>
-        <translation>Onbekende staat: id = %u</translation>
+        <source>Your entries added successfully.</source>
+        <translation>Je gegevens zijn succesvol toegevoegd.</translation>
     </message>
     <message>
-        <source>Unsupported logging category %s=%s.</source>
-        <translation>Niet-ondersteunde logboekcategorie %s=%s.</translation>
+        <source>Your transaction was accepted into the pool!</source>
+        <translation>Je transactie is geaccepteerd in de pool!</translation>
     </message>
     <message>
-        <source>Username for JSON-RPC connections</source>
-        <translation>Gebruikersnaam voor JSON-RPC-verbindingen</translation>
+        <source>Zapping all transactions from wallet...</source>
+        <translation>Verwijderen van alle transacties uit portemonnee...</translation>
     </message>
     <message>
         <source>Warning: Unsupported argument -benchmark ignored, use -debug=bench.</source>
@@ -6567,8 +6590,8 @@ Ofwel het munten van hogere denominaties (dus minder invoer nodig) of het te bes
         <translation>ZeroMQ notificatie opties:</translation>
     </message>
     <message>
-        <source>Very low number of keys left: %d</source>
-        <translation>Het aantal resterende sleutels is heel laag: %d</translation>
+        <source>Zerocoin options:</source>
+        <translation>Zerocoin opties:</translation>
     </message>
     <message>
         <source>on startup</source>

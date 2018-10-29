@@ -368,6 +368,19 @@
 <context>
     <name>BanTableModel</name>
     <message>
+        <location filename="../bantablemodel.cpp" line="+89"/>
+        <source>IP/Netmask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Banned Until</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Bip38ToolDialog</name>
+    <message>
         <location filename="../bantablemodel.cpp" line="+87"/>
         <source>IP/Netmask</source>
         <translation type="unfinished"></translation>
@@ -381,30 +394,22 @@
 <context>
     <name>Bip38ToolDialog</name>
     <message>
-        <location filename="../bantablemodel.cpp" line="+89"/>
-        <source>IP/Netmask</source>
-        <translation>IP/Netmask</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Banned Until</source>
-        <translation>Banned Until</translation>
-    </message>
-</context>
-<context>
-    <name>BitcoinAmountField</name>
-    <message>
         <location line="+30"/>
         <location line="+400"/>
         <source>Address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-424"/>
+        <source>Enter a ION Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <location line="-424"/>
-        <source>Enter a ION Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <location line="+31"/>
+        <source>The ION address to encrypt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -416,11 +421,6 @@
         <location line="-1210"/>
         <source>Wallet</source>
         <translation>Wallet</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Node</source>
-        <translation>Node</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -509,7 +509,7 @@
         <translation>&amp;About %1</translation>
     </message>
     <message>
-        <location filename="../bip38tooldialog.cpp" line="+29"/>
+        <location filename="../bip38tooldialog.cpp" line="+30"/>
         <source>Click &quot;Decrypt Key&quot; to compute key</source>
         <translation type="unfinished"></translation>
     </message>
@@ -593,7 +593,7 @@
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <location filename="../bitcoingui.cpp" line="+122"/>
+        <location filename="../bitcoingui.cpp" line="+128"/>
         <source>Wallet</source>
         <translation>Wallet</translation>
     </message>
@@ -603,7 +603,7 @@
         <translation>Node</translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+180"/>
         <source>&amp;Overview</source>
         <translation>&amp;Overview</translation>
     </message>
@@ -866,6 +866,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+233"/>
+        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for anonymization and staking only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Tor is &lt;b&gt;enabled&lt;/b&gt;: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="-762"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
@@ -891,13 +901,13 @@
         <translation>Tabs toolbar</translation>
     </message>
     <message>
-        <location line="-436"/>
-        <location line="+918"/>
+        <location line="-446"/>
+        <location line="+928"/>
         <source>Ion Core</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-722"/>
+        <location line="-726"/>
         <source>Send coins to a ION address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1377,11 +1387,6 @@ Address: %4
         <location line="+0"/>
         <source>no</source>
         <translation>no</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>This label turns red if any recipient receives an amount smaller than the current dust threshold.</source>
-        <translation>This label turns red if any recipient receives an amount smaller than the current dust threshold.</translation>
     </message>
     <message>
         <location filename="../forms/coincontroldialog.ui" line="-334"/>
@@ -1946,6 +1951,11 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+52"/>
+        <source>Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+7"/>
         <source>Enter a label for this address to add it to your address book</source>
         <translation type="unfinished">Enter a label for this address to add it to your address book</translation>
@@ -1994,9 +2004,15 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>Select payment request file</translation>
     </message>
     <message>
-        <location filename="../multisenddialog.cpp" line="+64"/>
+        <location filename="../multisenddialog.cpp" line="+68"/>
         <source>(no label)</source>
         <translation type="unfinished">(no label)</translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>The entered address:
+</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
@@ -2017,8 +2033,15 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>MultiSend Not Active</source>
+        <location line="+33"/>
+        <source>Saved the MultiSend to memory, but failed saving properties to the database.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>MultiSend Vector
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2038,8 +2061,8 @@ Please check the address and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>MultiSend Vector</source>
+        <location line="+19"/>
+        <source>Create MultiSignature &amp;Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2083,13 +2106,17 @@ Please check the address and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>MultiSend deactivated</source>
+        <location line="+14"/>
+        <location line="+345"/>
+        <location line="+179"/>
+        <source>Status:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-97"/>
-        <source>Please Enter 1 - 100 for percent.</source>
+        <location line="-487"/>
+        <source>Use below to quickly import an address by its redeem. Don&apos;t forget to add a label before clicking import!
+Keep in mind, the wallet will rescan the blockchain to find transactions containing the new address.
+Please be patient after clicking import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2150,10 +2177,8 @@ Please check the address and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-487"/>
-        <source>Use below to quickly import an address by its redeem. Don&apos;t forget to add a label before clicking import!
-Keep in mind, the wallet will rescan the blockchain to find transactions containing the new address.
-Please be patient after clicking import.</source>
+        <location line="+13"/>
+        <source>Add destinations to send ION to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2190,27 +2215,6 @@ Please be patient after clicking import.</source>
         <location line="+3"/>
         <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>
         <translation>&amp;Connect through SOCKS5 proxy (default proxy):</translation>
-    </message>
-    <message>
-        <location line="+103"/>
-        <location line="+13"/>
-        <source>Add destinations to send ION to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Use separate SOCKS&amp;5 proxy to reach peers via Tor hidden services:</source>
-        <translation>Use separate SOCKS&amp;5 proxy to reach peers via Tor hidden services:</translation>
-    </message>
-    <message>
-        <location line="-463"/>
-        <source>Hide the icon from the system tray.</source>
-        <translation>Hide the icon from the system tray.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&amp;Hide tray icon</source>
-        <translation>&amp;Hide tray icon</translation>
     </message>
     <message>
         <location line="+76"/>
@@ -2518,7 +2522,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <location line="+21"/>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/ioncoincore/ioncoin</source>
+https://www.transifex.com/ion-project/ion-project-translations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2529,6 +2533,16 @@ https://www.transifex.com/ioncoincore/ioncoin</source>
     <message>
         <location line="-169"/>
         <source>Enable automatic minting of ION units to xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Enable xION Automint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Percentage of incoming ION which get automatically converted to xION via Zerocoin Protocol (min: 10%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2556,6 +2570,11 @@ https://www.transifex.com/ioncoincore/ioncoin</source>
         <location line="+7"/>
         <source>Enabled/Disabled</source>
         <translation>Enabled/Disabled</translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Stake split threshold:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+37"/>
@@ -2649,23 +2668,13 @@ https://www.transifex.com/ioncoincore/ioncoin</source>
         <translation>Decimal digits</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+12"/>
         <location line="+6"/>
         <source>Hide empty balances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Hide orphan stakes in transaction lists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Hide orphan stakes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
+        <location line="+9"/>
         <location line="+13"/>
         <source>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</source>
         <translation>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</translation>
@@ -2716,7 +2725,7 @@ https://www.transifex.com/ioncoincore/ioncoin</source>
         <translation>none</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+92"/>
         <source>Confirm options reset</source>
         <translation>Confirm options reset</translation>
     </message>
@@ -2737,7 +2746,7 @@ https://www.transifex.com/ioncoincore/ioncoin</source>
         <translation>This change would require a client restart.</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+22"/>
         <source>The supplied proxy address is invalid.</source>
         <translation>The supplied proxy address is invalid.</translation>
     </message>
@@ -2921,13 +2930,13 @@ Immature: confirmed, but less than 1 mint of the same denomination after it was 
         <translation>Recent transactions</translation>
     </message>
     <message>
-        <location filename="../overviewpage.cpp" line="+132"/>
+        <location filename="../overviewpage.cpp" line="+149"/>
         <location line="+1"/>
         <source>out of sync</source>
         <translation>out of sync</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+106"/>
         <source>Current percentage of xION.
 If AutoMint is enabled this percentage will settle around the configured AutoMint percentage (default = 10%).
 </source>
@@ -2990,7 +2999,7 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+114"/>
         <source>URI cannot be parsed! This can be caused by an invalid ION address or malformed URI parameters.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3075,7 +3084,7 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
 <context>
     <name>PeerTableModel</name>
     <message>
-        <location filename="../peertablemodel.cpp" line="+114"/>
+        <location filename="../peertablemodel.cpp" line="+115"/>
         <source>Address/Hostname</source>
         <translation>Address/Hostname</translation>
     </message>
@@ -3103,9 +3112,9 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+190"/>
-        <location filename="../privacydialog.cpp" line="+172"/>
-        <location line="+112"/>
+        <location line="+64"/>
+        <location filename="../privacydialog.cpp" line="+163"/>
+        <location line="+111"/>
         <source>Mint Zerocoin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3178,12 +3187,12 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-600"/>
+        <location line="-474"/>
         <source>PRIVACY</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+182"/>
         <location line="+52"/>
         <source>Enter an amount of Ion to convert to xION</source>
         <translation type="unfinished"></translation>
@@ -3205,13 +3214,13 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
     </message>
     <message>
         <location line="+37"/>
-        <location filename="../privacydialog.cpp" line="+563"/>
+        <location filename="../privacydialog.cpp" line="+537"/>
         <source>Spend Zerocoin. Without &apos;Pay To:&apos; address creates payments to yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../privacydialog.cpp" line="-514"/>
+        <location filename="../privacydialog.cpp" line="-488"/>
         <location line="+4"/>
         <location line="+12"/>
         <location line="+84"/>
@@ -3239,9 +3248,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-548"/>
-        <location line="+49"/>
-        <location line="+504"/>
+        <location line="+5"/>
         <location line="+421"/>
         <location line="+544"/>
         <location line="+31"/>
@@ -3347,9 +3354,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Disabled</translation>
     </message>
     <message>
-        <location line="-893"/>
-        <location line="+25"/>
-        <location line="+936"/>
+        <location line="+68"/>
         <location line="+38"/>
         <source>Total Balance including unconfirmed and immature xION</source>
         <translation type="unfinished"></translation>
@@ -3395,6 +3400,68 @@ To change the percentage (no restart required):
 - menu Settings-&gt;Options-&gt;Percentage of autominted xION
 
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>AutoMint Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Global Supply:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Denom. 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 5:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 10:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 50:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 100:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 500:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 1000:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 5000:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-722"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <source>0 x</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3476,88 +3543,7 @@ To change the percentage (no restart required):
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-15"/>
-        <location line="+17"/>
-        <source>Mixing is disabled, please close your wallet and fix the issue!</source>
-        <translation>Mixing is disabled, please close your wallet and fix the issue!</translation>
-    </message>
-    <message>
-        <location line="-11"/>
-        <source>Enabled</source>
-        <translation>Enabled</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>see debug.log for details.</source>
-        <translation>see debug.log for details.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>WARNING! Failed to replenish keypool, please unlock your wallet to do so.</source>
-        <translation>WARNING! Failed to replenish keypool, please unlock your wallet to do so.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>If you don&apos;t want to see internal PrivateSend fees/transactions select &quot;Most Common&quot; as Type on the &quot;Transactions&quot; tab.</source>
-        <translation>If you don&apos;t want to see internal PrivateSend fees/transactions select &quot;Most Common&quot; as Type on the &quot;Transactions&quot; tab.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>PrivateSend requires at least %1 to use.</source>
-        <translation>PrivateSend requires at least %1 to use.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Wallet is locked and user declined to unlock. Disabling PrivateSend.</source>
-        <translation>Wallet is locked and user declined to unlock. Disabling PrivateSend.</translation>
-    </message>
-</context>
-<context>
-    <name>PaymentServer</name>
-    <message>
-        <location filename="../paymentserver.cpp" line="+328"/>
-        <location line="+214"/>
-        <location line="+42"/>
-        <location line="+113"/>
-        <location line="+14"/>
-        <location line="+18"/>
-        <source>Payment request error</source>
-        <translation>Payment request error</translation>
-    </message>
-    <message>
-        <location line="-402"/>
-        <source>Cannot start ion: click-to-pay handler</source>
-        <translation>Cannot start ion: click-to-pay handler</translation>
-    </message>
-    <message>
-        <location line="+102"/>
-        <location line="+13"/>
-        <location line="+7"/>
-        <source>URI handling</source>
-        <translation>URI handling</translation>
-    </message>
-    <message>
-        <location line="-19"/>
-        <source>Payment request fetch URL is invalid: %1</source>
-        <translation>Payment request fetch URL is invalid: %1</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Invalid payment address %1</source>
-        <translation>Invalid payment address %1</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters.</source>
-        <translation>URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters.</translation>
-    </message>
-    <message>
-        <location line="+443"/>
-        <source>Hide Denominations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+147"/>
+        <location line="+553"/>
         <source>Priority:</source>
         <translation type="unfinished">Priority:</translation>
     </message>
@@ -3593,9 +3579,9 @@ To change the percentage (no restart required):
     </message>
     <message>
         <location line="+75"/>
-        <location filename="../privacydialog.cpp" line="-438"/>
+        <location filename="../privacydialog.cpp" line="-429"/>
         <location line="+1"/>
-        <location line="+545"/>
+        <location line="+536"/>
         <location line="+1"/>
         <source>Coins automatically selected</source>
         <translation type="unfinished"></translation>
@@ -3631,18 +3617,18 @@ To change the percentage (no restart required):
         <translation>Bad response from server %1</translation>
     </message>
     <message>
-        <location filename="../privacydialog.cpp" line="-545"/>
+        <location filename="../privacydialog.cpp" line="-536"/>
         <source>out of sync</source>
         <translation type="unfinished">out of sync</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+129"/>
+        <location line="+121"/>
         <source>Mint Status: Okay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-123"/>
+        <location line="-115"/>
         <source>Copy quantity</source>
         <translation type="unfinished">Copy quantity</translation>
     </message>
@@ -3652,13 +3638,13 @@ To change the percentage (no restart required):
         <translation type="unfinished">Copy amount</translation>
     </message>
     <message>
-        <location line="+192"/>
+        <location line="+184"/>
         <source>Starting ResetMintZerocoin: rescanning complete blockchain, this will need up to 30 minutes depending on your hardware.
 Please be patient...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+171"/>
+        <location line="+170"/>
         <source>Spending Zerocoin.
 Computationally expensive, might need several minutes depending on the selected Security Level and your hardware.
 Please be patient...</source>
@@ -3681,7 +3667,7 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+293"/>
+        <location line="+267"/>
         <source> &lt;b&gt;enabled&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3702,13 +3688,13 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-666"/>
-        <location line="+112"/>
+        <location line="-639"/>
+        <location line="+111"/>
         <source>xION is currently undergoing maintenance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-221"/>
+        <location line="-212"/>
         <source>Denom. with value &lt;b&gt;1&lt;/b&gt;:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3749,18 +3735,103 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+740"/>
+        <location line="+705"/>
         <source>AutoMint Status:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-737"/>
+        <location line="-702"/>
         <source>Denom. &lt;b&gt;1&lt;/b&gt;:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Denom. &lt;b&gt;5&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;10&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;50&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;100&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;500&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;1000&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;5000&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+95"/>
+        <source>Error: Your wallet is locked. Please enter the wallet passphrase first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;5&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;10&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;50&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;100&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;500&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <location line="+14"/>
+        <location line="+260"/>
+        <source>Duration: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-274"/>
+        <location line="+14"/>
+        <location line="+260"/>
+        <source> sec.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-265"/>
+        <source>Starting ResetSpentZerocoin: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>No &apos;Pay To&apos; address provided, creating local payment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3815,98 +3886,6 @@ Maximum allowed: </source>
         <translation>%1 didn&apos;t yet exit safely...</translation>
     </message>
     <message>
-        <location filename="../bitcoinunits.cpp" line="+233"/>
-        <source>Amount</source>
-        <translation>Amount</translation>
-    </message>
-    <message>
-        <location filename="../guiutil.cpp" line="+133"/>
-        <source>Enter a Ion address (e.g. %1)</source>
-        <translation>Enter a Ion address (e.g. %1)</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>Appearance Setup</source>
-        <translation>Appearance Setup</translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <location line="+15"/>
-        <location line="+260"/>
-        <source>Duration: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-275"/>
-        <location line="+15"/>
-        <location line="+260"/>
-        <source> sec.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-265"/>
-        <source>Starting ResetSpentZerocoin: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+68"/>
-        <source>No &apos;Pay To&apos; address provided, creating local payment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Invalid Ion Address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-10"/>
-        <source>None</source>
-        <translation>None</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>N/A</source>
-        <translation>N/A</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>%1 ms</source>
-        <translation>%1 ms</translation>
-    </message>
-    <message numerus="yes">
-        <location line="+18"/>
-        <source>%n second(s)</source>
-        <translation>
-            <numerusform>%n second</numerusform>
-            <numerusform>%n seconds</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location line="+4"/>
-        <source>%n minute(s)</source>
-        <translation>
-            <numerusform>%n minute</numerusform>
-            <numerusform>%n minutes</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location line="+4"/>
-        <source>%n hour(s)</source>
-        <translation>
-            <numerusform>%n hour</numerusform>
-            <numerusform>%n hours</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location line="+4"/>
-        <source>%n day(s)</source>
-        <translation>
-            <numerusform>%n day</numerusform>
-            <numerusform>%n days</numerusform>
-        </translation>
-    </message>
-    <message>
         <location line="+24"/>
         <location line="+32"/>
         <source>Version 1 xION require a security level of 100 to successfully spend.</source>
@@ -3926,6 +3905,46 @@ Maximum allowed: </source>
     <message>
         <location line="+33"/>
         <source>Too much inputs (</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>No &apos;Pay To&apos; address provided, creating local payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Invalid Ion Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location line="+336"/>
+        <source>PrivacyDialog</source>
+        <comment>Enter an amount of ION to convert to xION</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="-308"/>
+        <source>denomination: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-31"/>
+        <location line="+32"/>
+        <source>Failed to spend xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-25"/>
+        <source>Failed to fetch mint associated with serial hash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>value out: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3953,29 +3972,6 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modaloverlay.cpp" line="-29"/>
-        <source>unknown</source>
-        <translation>unknown</translation>
-    </message>
-</context>
-<context>
-    <name>QObject::QObject</name>
-    <message>
-        <location filename="../ion.cpp" line="-81"/>
-        <source>Error: Specified data directory &quot;%1&quot; does not exist.</source>
-        <translation>Error: Specified data directory &quot;%1&quot; does not exist.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>value out: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Error: %1</source>
-        <translation>Error: %1</translation>
-    </message>
-    <message>
         <location line="+10"/>
         <source>Sending successful, return code: </source>
         <translation type="unfinished"></translation>
@@ -3996,12 +3992,12 @@ Maximum allowed: </source>
         <translation>Error: Specified font-scale invalid. Valid range %1 to %2.</translation>
     </message>
     <message>
-        <location filename="../guiutil.cpp" line="+105"/>
+        <location filename="../guiutil.cpp" line="+113"/>
         <source>Enter a ION address (e.g. %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+773"/>
+        <location line="+789"/>
         <source>%1 d</source>
         <translation>%1 d</translation>
     </message>
@@ -4056,7 +4052,7 @@ Maximum allowed: </source>
 <context>
     <name>QRImageWidget</name>
     <message>
-        <location filename="../receiverequestdialog.cpp" line="+33"/>
+        <location filename="../receiverequestdialog.cpp" line="+36"/>
         <source>&amp;Save Image...</source>
         <translation>&amp;Save Image...</translation>
     </message>
@@ -4110,13 +4106,9 @@ Maximum allowed: </source>
         <location line="+30"/>
         <location line="+23"/>
         <location line="+23"/>
-        <location line="+30"/>
-        <location line="+23"/>
-        <location line="+76"/>
-        <location line="+333"/>
-        <location line="+23"/>
         <location line="+522"/>
         <location line="+23"/>
+        <location line="+522"/>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+23"/>
@@ -4251,8 +4243,8 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+59"/>
-        <location filename="../rpcconsole.cpp" line="+329"/>
-        <location line="+727"/>
+        <location filename="../rpcconsole.cpp" line="+331"/>
+        <location line="+717"/>
         <source>Select a peer to view detailed information.</source>
         <translation>Select a peer to view detailed information.</translation>
     </message>
@@ -4268,18 +4260,18 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+23"/>
+        <source>Protocol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>Direction</source>
         <translation>Direction</translation>
     </message>
     <message>
         <location line="+23"/>
-        <source>Version</source>
-        <translation>Version</translation>
-    </message>
-    <message>
-        <location line="+69"/>
-        <source>Starting Block</source>
-        <translation>Starting Block</translation>
+        <source>Direction</source>
+        <translation>Direction</translation>
     </message>
     <message>
         <location line="+92"/>
@@ -4392,6 +4384,51 @@ Maximum allowed: </source>
         <translation>Salvage wallet</translation>
     </message>
     <message>
+        <location line="+23"/>
+        <source>Synced Headers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Synced Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+184"/>
+        <source>The duration of a currently outstanding ping.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Ping Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Time Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+101"/>
+        <source>Custom Backup Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Custom xION Backup Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Custom Backups Threshold:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <source>Salvage wallet</source>
+        <translation>Salvage wallet</translation>
+    </message>
+    <message>
         <location line="+19"/>
         <source>Recover transactions 2</source>
         <translation>Recover transactions 2</translation>
@@ -4402,7 +4439,7 @@ Maximum allowed: </source>
         <translation>Upgrade wallet format</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="-333"/>
         <source>The buttons below will restart the wallet with command-line options to repair the wallet, fix issues with corrupt blockhain files or missing/obsolete transactions.</source>
         <translation>The buttons below will restart the wallet with command-line options to repair the wallet, fix issues with corrupt blockhain files or missing/obsolete transactions.</translation>
     </message>
@@ -4437,29 +4474,6 @@ Maximum allowed: </source>
         <translation>Wallet repair options.</translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>Rebuild index</source>
-        <translation>Rebuild index</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>-reindex: Rebuild block chain index from current blk000??.dat files.</source>
-        <translation>-reindex: Rebuild block chain index from current blk000??.dat files.</translation>
-    </message>
-    <message>
-        <location line="-333"/>
-        <source>The buttons below will restart the wallet with command-line options to repair the wallet, fix issues with corrupt blockhain files or missing/obsolete transactions.</source>
-        <translation>The buttons below will restart the wallet with command-line options to repair the wallet, fix issues with corrupt blockhain files or missing/obsolete transactions.</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <location line="+1"/>
-        <source>Ban for</source>
-        <translation>Ban for</translation>
-    </message>
-    <message>
         <location line="+286"/>
         <source>Upgrade wallet to latest format on startup. (Note: this is NOT an update of the wallet itself!)</source>
         <translation type="unfinished"></translation>
@@ -4486,6 +4500,44 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="-218"/>
+        <source>&amp;Disconnect Node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <source>Ban Node for</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>1 &amp;hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>1 &amp;day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>1 &amp;week</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>1 &amp;year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-36"/>
+        <source>Welcome to the ION RPC console.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-211"/>
         <source>&amp;Disconnect Node</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4558,12 +4610,7 @@ Maximum allowed: </source>
         <translation>Out:</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+141"/>
+        <location line="+140"/>
         <source>%1 B</source>
         <translation>%1 B</translation>
     </message>
@@ -4628,7 +4675,7 @@ Maximum allowed: </source>
 <context>
     <name>ReceiveCoinsDialog</name>
     <message>
-        <location filename="../forms/receivecoinsdialog.ui" line="+263"/>
+        <location filename="../forms/receivecoinsdialog.ui" line="+142"/>
         <source>Reuse one of the previously used receiving addresses.&lt;br&gt;Reusing addresses has security and privacy issues.&lt;br&gt;Do not use this unless re-generating a payment request made before.</source>
         <translation>Reuse one of the previously used receiving addresses.&lt;br&gt;Reusing addresses has security and privacy issues.&lt;br&gt;Do not use this unless re-generating a payment request made before.</translation>
     </message>
@@ -4649,14 +4696,18 @@ Maximum allowed: </source>
         <translation>An optional label to associate with the new receiving address.</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+25"/>
-        <source>Your receiving address. You can copy and use it to receive coins on this wallet. A new one will be generated once it is used.</source>
+        <location line="-37"/>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the ION network.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-22"/>
-        <source>&amp;Address:</source>
+        <location line="-101"/>
+        <source>RECEIVE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+124"/>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the ION network.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4696,7 +4747,12 @@ Maximum allowed: </source>
         <translation>An optional amount to request. Leave this empty or zero to not request a specific amount.</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="-19"/>
+        <source>&amp;Amount:</source>
+        <translation>&amp;Amount:</translation>
+    </message>
+    <message>
+        <location line="+41"/>
         <source>&amp;Request payment</source>
         <translation>&amp;Request payment</translation>
     </message>
@@ -4711,12 +4767,7 @@ Maximum allowed: </source>
         <translation>Clear</translation>
     </message>
     <message>
-        <location line="+27"/>
-        <source>Receiving Addresses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+55"/>
+        <location line="+68"/>
         <source>Requested payments history</source>
         <translation>Requested payments history</translation>
     </message>
@@ -4741,7 +4792,7 @@ Maximum allowed: </source>
         <translation>Remove</translation>
     </message>
     <message>
-        <location filename="../receivecoinsdialog.cpp" line="+41"/>
+        <location filename="../receivecoinsdialog.cpp" line="+39"/>
         <source>Copy label</source>
         <translation>Copy label</translation>
     </message>
@@ -4881,9 +4932,9 @@ Maximum allowed: </source>
     <name>SendCoinsDialog</name>
     <message>
         <location filename="../forms/sendcoinsdialog.ui" line="+17"/>
-        <location filename="../sendcoinsdialog.cpp" line="+234"/>
+        <location filename="../sendcoinsdialog.cpp" line="+231"/>
         <location line="+25"/>
-        <location line="+413"/>
+        <location line="+396"/>
         <source>Send Coins</source>
         <translation>Send Coins</translation>
     </message>
@@ -4968,12 +5019,7 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+167"/>
-        <source>SwiftX technology allows for near instant transactions - A flat fee of 0.01 ION applies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+176"/>
+        <location line="+188"/>
         <source>Transaction Fee:</source>
         <translation>Transaction Fee:</translation>
     </message>
@@ -5013,22 +5059,22 @@ Maximum allowed: </source>
         <translation>Custom:</translation>
     </message>
     <message>
-        <location line="-211"/>
+        <location line="+220"/>
         <source>(Smart fee not initialized yet. This usually takes a few blocks...)</source>
         <translation>(Smart fee not initialized yet. This usually takes a few blocks...)</translation>
     </message>
     <message>
-        <location line="-101"/>
+        <location line="+306"/>
         <source>SwiftX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-397"/>
         <source>Confirmation time:</source>
         <translation>Confirmation time:</translation>
     </message>
     <message>
-        <location line="-750"/>
+        <location line="-1029"/>
         <source>Open Coin Control...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5038,7 +5084,7 @@ Maximum allowed: </source>
         <translation>Hide</translation>
     </message>
     <message>
-        <location line="+1062"/>
+        <location line="+907"/>
         <source>If the custom fee is set to 1000 uIONs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 uIONs in fee,&lt;br /&gt;while &quot;at least&quot; pays 1000 uIONs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5054,7 +5100,7 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-374"/>
+        <location line="+60"/>
         <source>normal</source>
         <translation>normal</translation>
     </message>
@@ -5064,12 +5110,12 @@ Maximum allowed: </source>
         <translation>fast</translation>
     </message>
     <message>
-        <location line="+360"/>
+        <location line="-74"/>
         <source>Recommended</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+242"/>
         <source>Send as zero-fee transaction if possible</source>
         <translation>Send as zero-fee transaction if possible</translation>
     </message>
@@ -5120,7 +5166,7 @@ Maximum allowed: </source>
         <translation>Balance:</translation>
     </message>
     <message>
-        <location filename="../sendcoinsdialog.cpp" line="-590"/>
+        <location filename="../sendcoinsdialog.cpp" line="-570"/>
         <source>Copy quantity</source>
         <translation>Copy quantity</translation>
     </message>
@@ -5165,12 +5211,12 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+653"/>
+        <location line="+629"/>
         <source>Warning: Invalid ION address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-615"/>
+        <location line="-591"/>
         <location line="+4"/>
         <location line="+4"/>
         <location line="+3"/>
@@ -5221,7 +5267,7 @@ Maximum allowed: </source>
         <translation>The recipient address is not valid, please recheck.</translation>
     </message>
     <message>
-        <location line="-346"/>
+        <location line="-329"/>
         <source>using SwiftX</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5558,12 +5604,7 @@ Maximum allowed: </source>
         <translation>Reset all verify message fields</translation>
     </message>
     <message>
-        <location filename="../signverifymessagedialog.cpp" line="+33"/>
-        <source>Enter a message to be signed</source>
-        <translation>Enter a message to be signed</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location filename="../signverifymessagedialog.cpp" line="+31"/>
         <source>Click &quot;Sign Message&quot; to generate signature</source>
         <translation>Click &quot;Sign Message&quot; to generate signature</translation>
     </message>
@@ -6047,6 +6088,46 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+7"/>
+        <source>ION Stake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>xION Stake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Obfuscation Denominate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Minted Change as xION from xION Spend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Converted xION to ION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+56"/>
+        <source>Anonymous (xION Transaction)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Anonymous (xION Stake)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Converted ION to xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+2"/>
         <source>Spent xION</source>
         <translation type="unfinished"></translation>
@@ -6112,7 +6193,7 @@ Maximum allowed: </source>
         <translation>(n/a)</translation>
     </message>
     <message>
-        <location line="+211"/>
+        <location line="+204"/>
         <source>Transaction status. Hover over this field to show number of confirmations.</source>
         <translation>Transaction status. Hover over this field to show number of confirmations.</translation>
     </message>
@@ -6351,7 +6432,7 @@ Maximum allowed: </source>
         <translation>Exporting Successful</translation>
     </message>
     <message>
-        <location line="-310"/>
+        <location line="-280"/>
         <source>Received ION from xION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6361,7 +6442,7 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+307"/>
+        <location line="+277"/>
         <source>The transaction history was successfully saved to %1.</source>
         <translation>The transaction history was successfully saved to %1.</translation>
     </message>
@@ -6400,7 +6481,7 @@ Maximum allowed: </source>
 <context>
     <name>WalletModel</name>
     <message>
-        <location filename="../walletmodel.cpp" line="+334"/>
+        <location filename="../walletmodel.cpp" line="+331"/>
         <location line="+9"/>
         <location line="+9"/>
         <source>Send Coins</source>
@@ -6454,33 +6535,13 @@ Maximum allowed: </source>
 <context>
     <name>XIonControlDialog</name>
     <message>
-        <location filename="../ionstrings.cpp" line="+36"/>
-        <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
-        <translation>Bind to given address and always listen on it. Use [host]:port notation for IPv6</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Execute command when a relevant alert is received or we see a really long fork (%s in cmd is replaced by message)</source>
-        <translation>Execute command when a relevant alert is received or we see a really long fork (%s in cmd is replaced by message)</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Execute command when a wallet transaction changes (%s in cmd is replaced by TxID)</source>
-        <translation>Execute command when a wallet transaction changes (%s in cmd is replaced by TxID)</translation>
-    </message>
-    <message>
         <location line="+39"/>
         <source>Select/Deselect All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+74"/>
-        <source>Is Spendable</source>
+        <location line="+28"/>
+        <source>Quantity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6494,14 +6555,14 @@ Maximum allowed: </source>
         <translation>This is a pre-release test build - use at your own risk - do not use for mining or merchant applications</translation>
     </message>
     <message>
-        <location line="+75"/>
-        <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
-        <translation>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</translation>
+        <location line="+39"/>
+        <source>Select/Deselect All</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Warning: We do not appear to fully agree with our peers! You may need to upgrade, or other nodes may need to upgrade.</source>
-        <translation>Warning: We do not appear to fully agree with our peers! You may need to upgrade, or other nodes may need to upgrade.</translation>
+        <location line="+74"/>
+        <source>Is Spendable</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
@@ -6522,11 +6583,6 @@ Maximum allowed: </source>
         <location line="+6"/>
         <source>Block creation options:</source>
         <translation>Block creation options:</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Cannot downgrade wallet</source>
-        <translation>Cannot downgrade wallet</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6612,6 +6668,11 @@ Maximum allowed: </source>
         <location line="+3"/>
         <source>Delete all wallet transactions and only recover those parts of the blockchain through -rescan on startup</source>
         <translation>Delete all wallet transactions and only recover those parts of the blockchain through -rescan on startup</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Delete all zerocoin spends and mints that have been recorded to the blockchain database and reindex them (0-1, default: %u)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6714,9 +6775,14 @@ Maximum allowed: </source>
         <translation>Overrides minimum spork signers to change spork value. Only useful for regtest and devnet. Using this on mainnet or testnet will ban you.</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>PrivateSend uses exact denominated amounts to send funds, you might simply need to mix some more coins.</source>
-        <translation>PrivateSend uses exact denominated amounts to send funds, you might simply need to mix some more coins.</translation>
+        <location line="+2"/>
+        <source>Error: The transaction is larger than the maximum allowed transaction size!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Error: Unsupported argument -socks found. Setting SOCKS version isn&apos;t possible anymore, only SOCKS5 proxies are supported.</source>
+        <translation type="unfinished">Error: Unsupported argument -socks found. Setting SOCKS version isn&apos;t possible anymore, only SOCKS5 proxies are supported.</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6732,11 +6798,6 @@ Maximum allowed: </source>
         <location line="+12"/>
         <source>Specify configuration file. Relative paths will be prefixed by datadir location. (default: %s)</source>
         <translation>Specify configuration file. Relative paths will be prefixed by datadir location. (default: %s)</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Specify directory to hold wallets (default: &lt;datadir&gt;/wallets if it exists, otherwise &lt;datadir&gt;)</source>
-        <translation>Specify directory to hold wallets (default: &lt;datadir&gt;/wallets if it exists, otherwise &lt;datadir&gt;)</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -6870,11 +6931,6 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+4"/>
-        <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
         <source>Unable to bind to %s on this computer. Ion Core is probably already running.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6984,14 +7040,9 @@ Maximum allowed: </source>
         <translation type="unfinished">Accept public REST requests (default: %u)</translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Rebuild chain state and block index from the blk*.dat files on disk</source>
-        <translation>Rebuild chain state and block index from the blk*.dat files on disk</translation>
-    </message>
-    <message>
         <location line="+1"/>
-        <source>Rebuild chain state from the currently indexed blocks</source>
-        <translation>Rebuild chain state from the currently indexed blocks</translation>
+        <source>Add a node to connect to and attempt to keep the connection open</source>
+        <translation type="unfinished">Add a node to connect to and attempt to keep the connection open</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -7119,24 +7170,14 @@ Maximum allowed: </source>
         <translation type="unfinished">Could not parse masternode.conf</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>KeePassHttp id for the established association</source>
-        <translation>KeePassHttp id for the established association</translation>
-    </message>
-    <message>
         <location line="+1"/>
         <source>KeePassHttp key for AES encrypted communication with KeePass</source>
         <translation>KeePassHttp key for AES encrypted communication with KeePass</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Keep at most &lt;n&gt; unconnectable transactions in memory (default: %u)</source>
-        <translation>Keep at most &lt;n&gt; unconnectable transactions in memory (default: %u)</translation>
-    </message>
-    <message>
-        <location line="-385"/>
-        <source>Disable all Ion specific functionality (Masternodes, PrivateSend, InstantSend, Governance) (0-1, default: %u)</source>
-        <translation>Disable all Ion specific functionality (Masternodes, PrivateSend, InstantSend, Governance) (0-1, default: %u)</translation>
+        <location line="+1"/>
+        <source>Could not parse masternode.conf</source>
+        <translation type="unfinished">Could not parse masternode.conf</translation>
     </message>
     <message>
         <location line="-45"/>
@@ -7265,6 +7306,11 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
+        <source>Error writing zerocoinDB to disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Error</source>
         <translation type="unfinished">Error</translation>
     </message>
@@ -7322,11 +7368,6 @@ Maximum allowed: </source>
         <location line="+4"/>
         <source>Fee (in ION/kB) to add to transactions you send (default: %s)</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>WARNING! Failed to replenish keypool, please unlock your wallet to do so.</source>
-        <translation>WARNING! Failed to replenish keypool, please unlock your wallet to do so.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7425,13 +7466,8 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Enable publish raw transaction in &lt;address&gt;</source>
-        <translation>Enable publish raw transaction in &lt;address&gt;</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Error upgrading evo database</source>
-        <translation>Error upgrading evo database</translation>
+        <source>Invalid amount for -maxtxfee=&lt;amount&gt;: &apos;%s&apos;</source>
+        <translation type="unfinished">Invalid amount for -maxtxfee=&lt;amount&gt;: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7499,6 +7535,26 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+49"/>
+        <source>Percentage of automatically minted Zerocoin  (1-100, default: %u)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Reindex the ION and xION money supply statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Reindexing zerocoin database...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Reindexing zerocoin failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+9"/>
         <source>Selected coins value is less than payment target</source>
         <translation type="unfinished"></translation>
@@ -7509,7 +7565,7 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-274"/>
+        <location line="-270"/>
         <source>This is a pre-release test build - use at your own risk - do not use for staking or merchant applications!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7545,14 +7601,19 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Its replacement -disablegovernance has been forced instead.</source>
-        <translation>Its replacement -disablegovernance has been forced instead.</translation>
-    </message>
-    <message>
         <location line="+3"/>
         <source>Keep the transaction memory pool below &lt;n&gt; megabytes (default: %u)</source>
         <translation>Keep the transaction memory pool below &lt;n&gt; megabytes (default: %u)</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Execute command when the best block changes and its size is over (%s in cmd is replaced by block hash, %d with the block size)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Failed to find coin set amongst held coins with less than maxNumber of Spends</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+14"/>
@@ -7590,14 +7651,14 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+58"/>
         <source>&lt;category&gt; can be:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Loading governance cache...</source>
-        <translation>Loading governance cache...</translation>
+        <location line="+8"/>
+        <source>Attempt to force blockchain corruption recovery</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
@@ -7633,6 +7694,41 @@ Maximum allowed: </source>
         <location line="+1"/>
         <source>Masternode queue is full.</source>
         <translation>Masternode queue is full.</translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Error: A fatal internal error occurred, see debug.log for details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Error: No valid utxo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Failed to create mint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Failed to deserialize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Failed to find Zerocoins in wallet.dat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Failed to select a zerocoin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Failed to wipe zerocoinDB</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
@@ -7746,8 +7842,13 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
-        <source>PrivateSend request incomplete:</source>
-        <translation>PrivateSend request incomplete:</translation>
+        <source>Loading wallet... (%3.1f %%)</source>
+        <translation type="unfinished">Loading wallet... (%3.1f %%)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Location of the auth cookie (default: data dir)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7763,6 +7864,11 @@ Maximum allowed: </source>
         <location line="+1"/>
         <source>Prune mode is incompatible with -disablegovernance=false.</source>
         <translation>Prune mode is incompatible with -disablegovernance=false.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Lookup(): Invalid -proxy address or hostname: &apos;%s&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7806,6 +7912,11 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
+        <source>Mint did not make it into blockchain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Missing input transaction information.</source>
         <translation type="unfinished">Missing input transaction information.</translation>
     </message>
@@ -7813,6 +7924,11 @@ Maximum allowed: </source>
         <location line="+1"/>
         <source>Specified -walletdir &quot;%s&quot; is not a directory</source>
         <translation>Specified -walletdir &quot;%s&quot; is not a directory</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Need address because change is not exact</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7885,6 +8001,11 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Obfuscation is idle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+2"/>
         <source>Unable to bind to %s on this computer. %s is probably already running.</source>
         <translation>Unable to bind to %s on this computer. %s is probably already running.</translation>
@@ -7915,12 +8036,12 @@ Maximum allowed: </source>
         <translation>Wallet debugging/testing options:</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+121"/>
         <source>isValid(): Invalid -proxy address or hostname: &apos;%s&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-120"/>
+        <location line="-119"/>
         <source>Preparing for resync...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7928,11 +8049,6 @@ Maximum allowed: </source>
         <location line="+1"/>
         <source>Wasn&apos;t able to create wallet backup folder %s!</source>
         <translation>Wasn&apos;t able to create wallet backup folder %s!</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Whether to operate in a blocks only mode (default: %u)</source>
-        <translation>Whether to operate in a blocks only mode (default: %u)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7945,14 +8061,14 @@ Maximum allowed: </source>
         <translation type="unfinished">Randomly drop 1 of every &lt;n&gt; network messages</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>ZeroMQ notification options:</source>
-        <translation>ZeroMQ notification options:</translation>
+        <location line="+1"/>
+        <source>Randomly fuzz 1 of every &lt;n&gt; network messages</source>
+        <translation type="unfinished">Randomly fuzz 1 of every &lt;n&gt; network messages</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>no mixing available.</source>
-        <translation>no mixing available.</translation>
+        <source>Rebuild block chain index from current blk000??.dat files</source>
+        <translation type="unfinished">Rebuild block chain index from current blk000??.dat files</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8131,6 +8247,11 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
+        <source>Spend Valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Spend unconfirmed change when sending transactions (default: %u)</source>
         <translation type="unfinished">Spend unconfirmed change when sending transactions (default: %u)</translation>
     </message>
@@ -8221,6 +8342,31 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
+        <source>Syncing xION wallet...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The coin spend has been used</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The new spend coin transaction did not verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The selected mint coin is an invalid coin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The transaction did not verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>This help message</source>
         <translation type="unfinished">This help message</translation>
     </message>
@@ -8258,6 +8404,21 @@ Maximum allowed: </source>
         <location line="+1"/>
         <source>Invalid amount for -%s=&lt;amount&gt;: &apos;%s&apos;</source>
         <translation>Invalid amount for -%s=&lt;amount&gt;: &apos;%s&apos;</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Too many spends needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tor control port password (default: empty)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Transaction Mint Started</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8321,6 +8482,16 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
+        <source>Try to spend with a higher security level to include more coins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Trying to spend an already spent serial #, try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Unable to bind to %s on this computer (bind returned error %s)</source>
         <translation type="unfinished">Unable to bind to %s on this computer (bind returned error %s)</translation>
     </message>
@@ -8346,13 +8517,13 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Session timed out.</source>
-        <translation>Session timed out.</translation>
+        <source>Unknown network specified in -onlynet: &apos;%s&apos;</source>
+        <translation type="unfinished">Unknown network specified in -onlynet: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Set database cache size in megabytes (%d to %d, default: %d)</source>
-        <translation>Set database cache size in megabytes (%d to %d, default: %d)</translation>
+        <source>Session timed out.</source>
+        <translation>Session timed out.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8403,6 +8574,11 @@ Maximum allowed: </source>
         <location line="+5"/>
         <source>Synchronizing governance objects...</source>
         <translation>Synchronizing governance objects...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Version 1 xION require a security level of 100 to successfully spend.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8466,6 +8642,11 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
+        <source>You don&apos;t have enough Zerocoins in your wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>You need to rebuild the database using -reindex to change -txindex</source>
         <translation type="unfinished">You need to rebuild the database using -reindex to change -txindex</translation>
     </message>
@@ -8493,16 +8674,6 @@ Maximum allowed: </source>
         <location line="+2"/>
         <source>Very low number of keys left: %d</source>
         <translation>Very low number of keys left: %d</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Wallet is locked.</source>
-        <translation>Wallet is locked.</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Wallet options:</source>
-        <translation>Wallet options:</translation>
     </message>
     <message>
         <location line="+2"/>

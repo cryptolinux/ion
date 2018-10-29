@@ -99,6 +99,8 @@ public:
 
     bool getTorInfo(std::string& ip_port) const;
 
+    bool getTorInfo(std::string& ip_port) const;
+
 private:
     OptionsModel *optionsModel;
     PeerTableModel *peerTableModel;

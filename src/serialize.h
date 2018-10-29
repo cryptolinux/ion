@@ -8,11 +8,6 @@
 #ifndef ION_SERIALIZE_H
 #define ION_SERIALIZE_H
 
-#include <compat/endian.h>
-
-#include "libzerocoin/Denominations.h"
-#include "libzerocoin/SpendType.h"
-
 #include <algorithm>
 #include <assert.h>
 #include <ios>
@@ -255,6 +250,24 @@ template<typename Stream> inline void Unserialize(Stream& s, libzerocoin::SpendT
     uint8_t f = ser_readdata8(s);
     a = static_cast<libzerocoin::SpendType>(f);
 }
+
+// Serialization for libzerocoin::SpendType
+inline unsigned int GetSerializedSize(libzerocoin::SpendType a, int, int = 0) { return sizeof(libzerocoin::SpendType); }
+template <typename Stream>
+inline void Serialize(Stream& s, libzerocoin::SpendType a, int, int = 0)
+{
+    uint8_t f = static_cast<uint8_t>(a);
+    WRITEDATA(s, f);
+}
+
+template <typename Stream>
+inline void Unserialize(Stream& s, libzerocoin::SpendType & a, int, int = 0)
+{
+    uint8_t f=0;
+    READDATA(s, f);
+    a = static_cast<libzerocoin::SpendType>(f);
+}
+
 
 /**
  * Compact Size
@@ -1248,6 +1261,12 @@ public:
     CSizeComputer(int nTypeIn, int nVersionIn) : nSize(0), nType(nTypeIn), nVersion(nVersionIn) {}
 
     void write(const char *psz, size_t _nSize)
+    {
+        this->nSize += _nSize;
+    }
+
+    /** Pretend _nSize bytes are written, without specifying them. */
+    void seek(size_t _nSize)
     {
         this->nSize += _nSize;
     }

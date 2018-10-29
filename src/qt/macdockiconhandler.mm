@@ -9,7 +9,9 @@
 
 static MacDockIconHandler *s_instance = nullptr;
 
-bool dockClickHandler(id self, SEL _cmd, ...) {
+static MacDockIconHandler *s_instance = nullptr;
+
+bool dockClickHandler(id self,SEL _cmd,...) {
     Q_UNUSED(self)
     Q_UNUSED(_cmd)
 

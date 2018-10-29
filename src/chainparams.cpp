@@ -177,24 +177,17 @@ static CBlock FindDevNetGenesisBlock(const CBlock &prevBlock, const CAmount& rew
 static Checkpoints::MapCheckpoints mapCheckpoints =
     boost::assign::map_list_of
         (       0,	uint256("0000004cf5ffbf2e31a9aa07c86298efb01a30b8911b80af7473d1114715084b") ) // Genesis block
-        (    1000,  uint256("0000000144b22b0af9bced65256d5eccc4e3f112a89bdb0f08ab8dc2a6145b56") ) // Last PoW block
-        (    1001,  uint256("a66b31f9841cc86f85a89142641b4c02f43065dda1818002595d2cef6b0b7cc2") ) // First PoS startheight block
-        (  100000,  uint256("a5a4e8f2554cda59955e0117fd71245e1f6d73a30ab420a3d3731384dcbcfffc") )
-        (  200000,  uint256("e6f984e3fe6bf992d640f30ad3c28777b303b4b3b59bd7bf3f696566abe08c13") )
-        (  300000,  uint256("d6b6250ec6bedf74663a10babf5774562736fa99f7dd0a53841a4c95b1b8ec11") )
-        (  400000,  uint256("507851828598daf03711e6eaed1709f17837a105dd62209ff68d2cf1dc6ddf7a") )
-        (  550001,  uint256("aa063547717c4e9f1f1593a580143491896cde85a0b369442d629cd364a1b78d") ) // Zerocoin Start (v8)            1521903907   1464462
-        (  550142,  uint256("4a9e4ee53bc441e0aadf788b5daa9b8d01a3a6debed01b5c599d6f7e22f4f7d0") ) //                                1521912217   1464746
-        (  552317,  uint256("654cf4e6d0e9d8249075c674a54859849b2648cfe35ea71e25bd6394f24331b2") ) // Last block                     1522095098   1469475
-        (  853104,  uint256("9623e2c68f6eab9f91ac9ca4b65a2049a05f223f970ca2d3cf8280ad1ead5efc") ) // v3.1.0                         1540360964   2232434
-        (  860817,  uint256("b78531efc5d878f8afc5aa9fd349d0181e8cc213853251aad63839d59781a716") ) //                                1540827763   2251929
-        (  886654,  uint256("c816d0e907ab44f43ec6bef321ac2c9b4e4a578c9ee4e7946e4a74c3073edf66") ) //                                1542390128   2316854
-        (  908698,  uint256("aa44b1eebd7ad5d4bc7b428dcdacd527677fa639557b58666a68dc2fdba3f133") ) // Last active zerocoin v1 block  1543722397   2371470 (zerocoin v1 disabled: 1543722400)
-        (  936756,  uint256("873aa1d52ca79dc77d67f8162a2a60b9c936f50449b58b5464b91e412d351c29") );//                                1543729708   2371718
+        (    1000,  uint256("0000000144b22b0af9bced65256d5eccc4e3f112a89bdb0f08ab8dc2a6145b56"))  // Last PoW block
+        (    1001,  uint256("a66b31f9841cc86f85a89142641b4c02f43065dda1818002595d2cef6b0b7cc2"))  // First PoS startheight block
+        (  550001,  uint256("aa063547717c4e9f1f1593a580143491896cde85a0b369442d629cd364a1b78d") ) // Zerocoin Start (v8)    1521903907   1464462)
+        (  550142,  uint256("4a9e4ee53bc441e0aadf788b5daa9b8d01a3a6debed01b5c599d6f7e22f4f7d0") ) //                        1521912217   1464746
+        (  552317,  uint256("654cf4e6d0e9d8249075c674a54859849b2648cfe35ea71e25bd6394f24331b2") ) // Last block             1522095098   1469475
+        (  853104,  uint256("9623e2c68f6eab9f91ac9ca4b65a2049a05f223f970ca2d3cf8280ad1ead5efc") );// v3.1.0                 1540360964   2232434
+        (  860817,  uint256("b78531efc5d878f8afc5aa9fd349d0181e8cc213853251aad63839d59781a716") );// v3.1.1                 1540827763   2251929
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1545427538, // * UNIX timestamp of last checkpoint block
-    2442295,    // * total number of transactions between genesis and last checkpoint
+    1540827763, // * UNIX timestamp of last checkpoint block
+    2251929,    // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     2000 	// * estimated number of transactions per day after checkp
 };
@@ -214,11 +207,12 @@ static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
 	(  331100,      uint256("ffa0eaa61e9b2291dd497338235d071b0e9eb71d4fda723ce778f52b38e349fe") ) // Testnet Fork June 2018
 	(  443601,      uint256("c5e9467f24b1d149a9716776be2fdc806af2db54d11330df33bb931f8ebf6254") ) // Testnet Fork June 2018
 	(  472999,      uint256("5d55f229074b930f4dd42a0f4e0e2f1d855dcd1d87cb86553ea21c797825482c") ) // Testnet Fork June 2018
-	(  473000,      uint256("237bc8d1e7cb02af8cd3e6affe1fa134c1a29a4852f3fa177ebcd50014463152") ); // Testnet Fork December 2018; timestamp=1545338100  txcount=947151
+	(  600000,      uint256("455927dbe2d398ed8bf6263d1b315956de6026fe3bdb2e4441d9aa108dd20ae2") ) // Testnet Fork June 2018
+	(  608820,      uint256("ce21974d1202fa9a7865fc20861fafcf1e4f4a4dc29656d4f6a49483ecb0f4ed") ); // Testnet Fork June 2018
 static const Checkpoints::CCheckpointData dataTestnet = {
     &mapCheckpointsTestnet,
-    1545338100,
-    947151,
+    1540032455,
+    1219039,
     2000};
 
 static Checkpoints::MapCheckpoints mapCheckpointsRegtest =
@@ -392,9 +386,9 @@ public:
         bnProofOfStakeLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         nSubsidyHalvingInterval = 210000;
         nMaxReorganizationDepth = 100;
-        nEnforceBlockUpgradeMajority = 8100; // 75%
-        nRejectBlockOutdatedMajority = 10260; // 95%
-        nToCheckBlockUpgradeMajority = 10800; // Approximate expected amount of blocks in 7 days (1440*7.5)
+        nEnforceBlockUpgradeMajority = 750;
+        nRejectBlockOutdatedMajority = 950;
+        nToCheckBlockUpgradeMajority = 1000;
         nMinerThreads = 0;
         nTargetTimespanMidas = 7 * 24 * 60 * 60;    // 1 week
         nTargetTimespanDGW = 1 * 60; // ION: 1 day
@@ -414,9 +408,9 @@ public:
         nBlockLastGoodCheckpoint = 550137;          //Last valid accumulator checkpoint
         nBlockEnforceInvalidUTXO = 550137;          //Start enforcing the invalid UTXO's
         nInvalidAmountFiltered = 0*COIN;            //Amount of invalid coins filtered through exchanges, that should be considered valid
-        nBlockZerocoinV2 = 966630;                  //!> The block that zerocoin v2 becomes active - roughly Tuesday, Janury 8, 2019 10:24:00 AM GMT
-        nEnforceNewSporkKey = 1546214401;           //!> Sporks signed after Thursday, GMT: Monday, 31. December 2018 00:00:01 must use the new spork key
-        nRejectOldSporkKey = 1546732801;            //!> Reject old spork key after Wednesday, GMT: Sunday, January 6, 2019 12:00:01 AM
+        nBlockZerocoinV2 = 900000;                  //!> The block that zerocoin v2 becomes active - roughly Tuesday, May 8, 2018 4:00:00 AM GMT
+        nEnforceNewSporkKey = 1541030400;           //!> Sporks signed after Thursday, 01-Nov-18 00:00:00 UTC must use the new spork key
+        nRejectOldSporkKey = 1541548800;            //!> Reject old spork key after Wednesday, 07-Nov-18 00:00:00 UTC
 
         nMidasStartHeight = 176500;                 // MIDAS startheight, first big attack
         nMidasStartTime = 1497541280;               // Time when MIDAS started and old algorithm stopped
@@ -462,9 +456,7 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
         // 	BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
-        base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x73)(0x79)(0x78).convert_to_container<std::vector<unsigned char> >();
-
-        bech32_hrp = "ion";
+        base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0x77).convert_to_container<std::vector<unsigned char> >();
 
         convertSeed6(vFixedSeeds, pnSeed6_main, ARRAYLEN(pnSeed6_main));
 
@@ -651,9 +643,9 @@ public:
         nBlockLastGoodCheckpoint = 10000000; //Last valid accumulator checkpoint
         nBlockEnforceInvalidUTXO = 10000000; //Start enforcing the invalid UTXO's
         nInvalidAmountFiltered = 0; //Amount of invalid coins filtered through exchanges, that should be considered valid
-        nBlockZerocoinV2 = 474100; //!> The block that zerocoin v2 becomes active
-        nEnforceNewSporkKey = 1545361200; //!> Sporks signed after 12/21/2018 @ 3:00am (UTC) must use the new spork key
-        nRejectOldSporkKey = 1545620400; //!> Reject old spork key after 12/24/2018 @ 3:00am (UTC)
+        nBlockZerocoinV2 = 612180; //!> The block that zerocoin v2 becomes active
+        nEnforceNewSporkKey = 1541030400; //!> Sporks signed after Thursday, 01-Nov-18 00:00:00 UTC must use the new spork key
+        nRejectOldSporkKey = 1541548800; //!> Reject old spork key after Wednesday, 07-Nov-18 00:00:00 UTC
 
         nMidasStartHeight = 75000;
         nMidasStartTime = 1497209344;
@@ -797,8 +789,6 @@ public:
         nStartMasternodePayments = 1558696183; // GMT: Thursday, 15. February 2018 12:03:03
         nBudget_Fee_Confirmations = 3; // Number of confirmations for the finalization fee. We have to make this very short
                                        // here because we only have a 8 block finalization window on testnet
-        bech32_hrp = "ionrt";
-
     }
     const Checkpoints::CCheckpointData& Checkpoints() const
     {

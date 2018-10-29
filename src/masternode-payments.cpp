@@ -592,9 +592,9 @@ std::string CMasternodeBlockPayees::GetRequiredPaymentsString()
         ExtractDestination(payee.scriptPubKey, address1);
 
         if (ret != "Unknown") {
-            ret += ", " + EncodeDestination(address1) + ":" + std::to_string(payee.nVotes);
+            ret += ", " + address2.ToString() + ":" + std::to_string(payee.nVotes);
         } else {
-            ret = EncodeDestination(address1) + ":" + std::to_string(payee.nVotes);
+            ret = address2.ToString() + ":" + std::to_string(payee.nVotes);
         }
     }
 

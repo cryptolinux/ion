@@ -86,6 +86,10 @@
         <translation>Kommaseparerad fil (*.csv)</translation>
     </message>
     <message>
+        <source>Comma separated file (*.csv)</source>
+        <translation>Kommaseparerad fil (*.csv)</translation>
+    </message>
+    <message>
         <source>Exporting Failed</source>
         <translation>Exportering Misslyckades</translation>
     </message>
@@ -126,6 +130,14 @@
     <message>
         <source>Repeat new passphrase</source>
         <translation>Upprepa ny lösenfras</translation>
+    </message>
+    <message>
+        <source>Serves to disable the trivial sendmoney when OS account compromised. Provides no real security.</source>
+        <translation>Ser till att inaktivera obetydliga skickade pengar när OS kontot är i risk. Förser ingen riktig säkerhet.</translation>
+    </message>
+    <message>
+        <source>For anonymization, automint, and staking only</source>
+        <translation>Endast för anonymisering, automint, och staking</translation>
     </message>
     <message>
         <source>Serves to disable the trivial sendmoney when OS account compromised. Provides no real security.</source>
@@ -222,6 +234,17 @@
     <message>
         <source>Warning: The Caps Lock key is on!</source>
         <translation>Varning: Caps Lock är aktiverat!</translation>
+    </message>
+</context>
+<context>
+    <name>BanTableModel</name>
+    <message>
+        <source>IP/Netmask</source>
+        <translation>IP/Nätmask</translation>
+    </message>
+    <message>
+        <source>Banned Until</source>
+        <translation>Portad fram tills</translation>
     </message>
 </context>
 <context>
@@ -423,16 +446,16 @@
         <translation>&amp;Mottaga</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and ion: URIs)</source>
-        <translation>Begär betalningar (genererar QR-koder och Ion:-URI:s)</translation>
-    </message>
-    <message>
         <source>&amp;Transactions</source>
         <translation>&amp;Transaktioner</translation>
     </message>
     <message>
         <source>Browse transaction history</source>
         <translation>Bläddra i transaktionshistoriken</translation>
+    </message>
+    <message>
+        <source>Privacy Actions for xION</source>
+        <translation>Integritets funktioner för xION</translation>
     </message>
     <message>
         <source>Privacy Actions for xION</source>
@@ -591,6 +614,30 @@
         <translation>Signera med en multisignaturadress</translation>
     </message>
     <message>
+        <source>&amp;Multisignature creation...</source>
+        <translation>&amp;Multisignaturskapande...</translation>
+    </message>
+    <message>
+        <source>Create a new multisignature address and add it to this wallet</source>
+        <translation>Skapa en ny multisignaturadress och lägg till den till denna plånbok</translation>
+    </message>
+    <message>
+        <source>&amp;Multisignature spending...</source>
+        <translation>&amp;Multisignatur spendering...</translation>
+    </message>
+    <message>
+        <source>Spend from a multisignature address</source>
+        <translation>Spendera från en multisignaturadress</translation>
+    </message>
+    <message>
+        <source>&amp;Multisignature signing...</source>
+        <translation>&amp;Multisignatur signerar...</translation>
+    </message>
+    <message>
+        <source>Sign with a multisignature address</source>
+        <translation>Signera med en multisignaturadress</translation>
+    </message>
+    <message>
         <source>Open &amp;URI...</source>
         <translation>Öppna &amp;URI...</translation>
     </message>
@@ -609,6 +656,18 @@
     <message>
         <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
         <translation>Visa Ion Core-hjälpmeddelandet för att få en lista med möjliga Ion-kommandoradalternativ</translation>
+    </message>
+    <message>
+        <source>%1 behind. Scanning block %2</source>
+        <translation>%1 efter. Skannar block %2</translation>
+    </message>
+    <message numerus="yes">
+        <source>Processed %n blocks of transaction history.</source>
+        <translation><numerusform>Bearbetar %n block av transaktionshistoriken.</numerusform><numerusform>Bearbetar %n block av transaktionshistoriken.</numerusform></translation>
+    </message>
+    <message>
+        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for anonymization and staking only</source>
+        <translation>Plånboken är &lt;b&gt;krypterad&lt;/b&gt; och för tillfället &lt;b&gt;olåst&lt;/b&gt; för anonymisering och staking enbart</translation>
     </message>
     <message>
         <source>%1 behind. Scanning block %2</source>
@@ -727,6 +786,78 @@
         <translation>Visa Ion Core hjälp meddelande för att få en lista med möjliga ION kommandorad alternativ</translation>
     </message>
     <message>
+        <source>&amp;MultiSend</source>
+        <translation>&amp;MultiSend</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n active connection(s) to ION network</source>
+        <translation><numerusform>%n aktiv(a) annslutning(ar) till ION nätverket</numerusform><numerusform>%n aktiv(a) annslutning(ar) till ION nätverket</numerusform></translation>
+    </message>
+    <message>
+        <source>Synchronizing with network...</source>
+        <translation>Synkroniserar med nätverket...</translation>
+    </message>
+    <message>
+        <source>Importing blocks from disk...</source>
+        <translation>Importerar block från disk...</translation>
+    </message>
+    <message>
+        <source>Reindexing blocks on disk...</source>
+        <translation>Omindexering av block på disk...</translation>
+    </message>
+    <message>
+        <source>No block source available...</source>
+        <translation>Ingen block källa tillgänglig...</translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translation>Aktuell</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n timme</numerusform><numerusform>%n timmar</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day(s)</source>
+        <translation><numerusform>%n dag</numerusform><numerusform>%n dagar</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n week(s)</source>
+        <translation><numerusform>%n vecka</numerusform><numerusform>%n veckor</numerusform></translation>
+    </message>
+    <message>
+        <source>MultiSend Settings</source>
+        <translation>MultiSend Inställningar</translation>
+    </message>
+    <message>
+        <source>Open Wallet &amp;Configuration File</source>
+        <translation>Öppna Plånbok &amp;Konfigurations Fil</translation>
+    </message>
+    <message>
+        <source>Open &amp;Masternode Configuration File</source>
+        <translation>Öppna &amp;Huvudnod Konfigurations Fil</translation>
+    </message>
+    <message>
+        <source>Open Masternode configuration file</source>
+        <translation>Öppna Huvudnodens konfigurations fil </translation>
+    </message>
+    <message>
+        <source>Open a ION: URI or payment request</source>
+        <translation>Öppna en ION: URI eller betalningsförfrågan</translation>
+    </message>
+    <message>
+        <source>&amp;Blockchain explorer</source>
+        <translation>&amp;Blockchain Utforskare</translation>
+    </message>
+    <message>
+        <source>Block explorer window</source>
+        <translation>Blockera utforskarfönstret</translation>
+    </message>
+    <message>
+        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
+        <translation>Visa Ion Core hjälp meddelande för att få en lista med möjliga ION kommandorad alternativ</translation>
+    </message>
+    <message>
         <source>Catching up...</source>
         <translation>Knappar in...</translation>
     </message>
@@ -769,6 +900,18 @@
     <message>
         <source>Last received block was generated %1 ago.</source>
         <translation>Senast mottagna block genererades för %1 sedan.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n year(s)</source>
+        <translation><numerusform>%n år</numerusform><numerusform>%n år</numerusform></translation>
+    </message>
+    <message>
+        <source>Catching up...</source>
+        <translation>Inhämtar...</translation>
+    </message>
+    <message>
+        <source>Last received block was generated %1 ago.</source>
+        <translation>Senaste block som togs emot genererades för %1 sen.</translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
@@ -956,6 +1099,18 @@ MultiSend: %1</translation>
         <translation>toggla låst läge</translation>
     </message>
     <message>
+        <source>Change:</source>
+        <translation>Växel:</translation>
+    </message>
+    <message>
+        <source>(un)select all</source>
+        <translation>(av)markera alla</translation>
+    </message>
+    <message>
+        <source>toggle lock state</source>
+        <translation>toggla låst läge</translation>
+    </message>
+    <message>
         <source>Tree mode</source>
         <translation>träd mode</translation>
     </message>
@@ -1037,6 +1192,18 @@ MultiSend: %1</translation>
         <translation>Lås upp ospenderat</translation>
     </message>
     <message>
+        <source>Copy transaction ID</source>
+        <translation>Kopiera transaktions ID</translation>
+    </message>
+    <message>
+        <source>Lock unspent</source>
+        <translation>Lås ospenderat</translation>
+    </message>
+    <message>
+        <source>Unlock unspent</source>
+        <translation>Lås upp ospenderat</translation>
+    </message>
+    <message>
         <source>Copy quantity</source>
         <translation>Kopiera antal</translation>
     </message>
@@ -1063,6 +1230,10 @@ MultiSend: %1</translation>
     <message>
         <source>Copy change</source>
         <translation>Kopiera växel</translation>
+    </message>
+    <message>
+        <source>Please switch to "List mode" to use this function.</source>
+        <translation>Var vänlig byt till "Lista läge" för att använda denna funktion.</translation>
     </message>
     <message>
         <source>Please switch to "List mode" to use this function.</source>
@@ -1387,9 +1558,6 @@ MultiSend: %1</translation>
         <source>Pubkey</source>
         <translation>Pubkey</translation>
     </message>
-</context>
-<context>
-    <name>Intro</name>
     <message>
         <source>S&amp;tart alias</source>
         <translation>Start &amp;alias</translation>
@@ -1500,8 +1668,8 @@ MultiSend kommer inte aktiveras om du inte tryckt på Aktivera</translation>
         <translation>Välj en adress från adressboken</translation>
     </message>
     <message>
-        <source>Set the number of script verification threads (%u to %d, 0 = auto, &lt;0 = leave that many cores free, default: %d)</source>
-        <translation>Ställ in antalet skriptbekräftelsetrådar till (%u till %d, 0 = auto, &lt;0 = lämna så många kärnor fria, standard: %d)</translation>
+        <source>Send transactions as zero-fee transactions if possible (default: %u)</source>
+        <translation>Skicka transaktioner som avgiftsfria transaktioner om möjligt (standard: %u)</translation>
     </message>
     <message>
         <source>Percentage of stake to send</source>
@@ -1948,9 +2116,9 @@ Var god vänta efter att du trycker på importera.</translation>
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/ioncoincore/ioncoin</source>
+https://www.transifex.com/ion-project/ion-project-translations</source>
         <translation>Fattas språk eller är översättningen ofullständig? Hjälp till att bidra med översättning här:
-https://www.transifex.com/ioncoincore/ioncoin</translation>
+https://www.transifex.com/ion-project/ion-project-translations</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -6028,8 +6196,8 @@ Minta antingen högre valörer (så att färre inputs behövs) eller spendera mi
         <translation>Inskickat till huvudnod, väntar i kö %s</translation>
     </message>
     <message>
-        <source>Shrink debug.log file on client startup (default: 1 when no -debug)</source>
-        <translation>Förminska debug.log-filen vid klientuppstart (standardvärde 1 vid ingen -debug)</translation>
+        <source>Value is below the smallest available denomination (= 1) of xION</source>
+        <translation>Värde är under den minsta tillgängliga valören (=1) av xION</translation>
     </message>
     <message>
         <source>Synchronization finished</source>
@@ -6040,8 +6208,8 @@ Minta antingen högre valörer (så att färre inputs behövs) eller spendera mi
         <translation>Synchronisering väntar</translation>
     </message>
     <message>
-        <source>Signing transaction failed</source>
-        <translation>Transaktionssigneringen misslyckades</translation>
+        <source>Verifying wallet...</source>
+        <translation>Bekräftar plånbok...</translation>
     </message>
     <message>
         <source>Synchronizing masternode winners...</source>
@@ -6080,8 +6248,8 @@ Minta antingen högre valörer (så att färre inputs behövs) eller spendera mi
         <translation>Detta hjälpmedelande</translation>
     </message>
     <message>
-        <source>This help message</source>
-        <translation>Detta hjälpmeddelande</translation>
+        <source>Wallet %s resides outside data directory %s</source>
+        <translation>Plånbok %s finns utanför data katalog %s</translation>
     </message>
     <message>
         <source>This is intended for regression testing tools and app development.</source>
@@ -6117,51 +6285,31 @@ Minta antingen högre valörer (så att färre inputs behövs) eller spendera mi
     </message>
     <message>
         <source>Transaction amount too small</source>
-        <translation>Transaktionsmängden är för liten</translation>
+        <translation>Transaktionens antal för litet</translation>
     </message>
     <message>
-        <source>Transaction amounts must be positive</source>
-        <translation>Transaktionsmängder måste vara positiva</translation>
+        <source>Wallet options:</source>
+        <translation>Plånboksalternativ:</translation>
     </message>
     <message>
-        <source>Transaction created successfully.</source>
-        <translation>Transaktionen skapades utan problem.</translation>
+        <source>Warning</source>
+        <translation>Varning</translation>
     </message>
     <message>
-        <source>Transaction fees are too high.</source>
-        <translation>Transaktionsavgifter är för höga.</translation>
+        <source>Warning: This version is obsolete, upgrade required!</source>
+        <translation>Varning: Denna version är föråldrad, upgradering krävs!</translation>
     </message>
     <message>
-        <source>Transaction not valid.</source>
-        <translation>Transaktionen är inte giltig.</translation>
+        <source>Warning: Unsupported argument -benchmark ignored, use -debug=bench.</source>
+        <translation>Varning: Argument -benchmark stödjes ej, ignoreras. Använd -debug=bench.</translation>
     </message>
     <message>
-        <source>Transaction too large</source>
-        <translation>Transaktionen är för stor</translation>
+        <source>Warning: Unsupported argument -debugnet ignored, use -debug=net.</source>
+        <translation>Varning: Argument -debugnet stödjes ej, ignoreras. Använd -debug=net.</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer (bind returned error %s)</source>
-        <translation>Kan inte binda %s till denna dator (bindande återgav ett fel %s)</translation>
-    </message>
-    <message>
-        <source>Unable to sign spork message, wrong key?</source>
-        <translation>Kan inte sporka meddelandet, fel nyckel?</translation>
-    </message>
-    <message>
-        <source>Unknown network specified in -onlynet: '%s'</source>
-        <translation>Okänt specificerat nätverk i -onlynet: '%s'</translation>
-    </message>
-    <message>
-        <source>Upgrade wallet to latest format</source>
-        <translation>Uppgradera plånboken till det senaste formatet</translation>
-    </message>
-    <message>
-        <source>Use OpenSSL (https) for JSON-RPC connections</source>
-        <translation>Använd OpenSSL (https) för JSON-RPC-anslutningar</translation>
-    </message>
-    <message>
-        <source>Use UPnP to map the listening port (default: 1 when listening)</source>
-        <translation>Använd UPnP för att kartlägga avlyssningsporten (standardvärde: 1 vid avlyssning)</translation>
+        <source>Will retry...</source>
+        <translation>Kommer försöka igen...</translation>
     </message>
     <message>
         <source>Transmitting final transaction.</source>
@@ -6217,15 +6365,7 @@ Minta antingen högre valörer (så att färre inputs behövs) eller spendera mi
     </message>
     <message>
         <source>Use the test network</source>
-        <translation>Använd testnätverket</translation>
-    </message>
-    <message>
-        <source>Username for JSON-RPC connections</source>
-        <translation>Användarnamn för JSON-RPC-anslutningar</translation>
-    </message>
-    <message>
-        <source>Value more than Darksend pool maximum allows.</source>
-        <translation>Värdera mer än vad Darksends poolmaximum tillåter.</translation>
+        <translation>Använd test nätverket</translation>
     </message>
     <message>
         <source>Username for JSON-RPC connections</source>
@@ -6241,15 +6381,11 @@ Minta antingen högre valörer (så att färre inputs behövs) eller spendera mi
     </message>
     <message>
         <source>Verifying blocks...</source>
-        <translation>Bekräftar block...</translation>
+        <translation>Verifierar block</translation>
     </message>
     <message>
-        <source>Verifying wallet...</source>
-        <translation>Bekräftar plånbok...</translation>
-    </message>
-    <message>
-        <source>Wallet %s resides outside data directory %s</source>
-        <translation>Plånboken %s återfinns utanför datakatalogen %s</translation>
+        <source>Your entries added successfully.</source>
+        <translation>Dina poster lyckades läggas till.</translation>
     </message>
     <message>
         <source>Version 1 xION require a security level of 100 to successfully spend.</source>
@@ -6269,11 +6405,15 @@ Minta antingen högre valörer (så att färre inputs behövs) eller spendera mi
     </message>
     <message>
         <source>Wallet options:</source>
-        <translation>Plånboksalternativ:</translation>
+        <translation>Plånboks val:</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation>Varning</translation>
+        <source>ZeroMQ notification options:</source>
+        <translation>ZeroMQ-anmälningsalternativ:</translation>
+    </message>
+    <message>
+        <source>Zerocoin options:</source>
+        <translation>Zerocoin alternativ:</translation>
     </message>
     <message>
         <source>Warning: This version is obsolete, upgrade required!</source>

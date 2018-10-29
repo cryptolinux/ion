@@ -46,6 +46,8 @@ bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex &
         return false;
     if (fHideOrphans && isOrphan(status, type))
         return false;
+    if (fHideOrphans && isOrphan(status, type))
+        return false;
     if (!(TYPE(type) & typeFilter))
         return false;
     if (involvesWatchAddress && watchOnlyFilter == WatchOnlyFilter_No)
@@ -107,6 +109,12 @@ void TransactionFilterProxy::setLimit(int limit)
 void TransactionFilterProxy::setShowInactive(bool _showInactive)
 {
     this->showInactive = _showInactive;
+    invalidateFilter();
+}
+
+void TransactionFilterProxy::setHideOrphans(bool fHide)
+{
+    this->fHideOrphans = fHide;
     invalidateFilter();
 }
 

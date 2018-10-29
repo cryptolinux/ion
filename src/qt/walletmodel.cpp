@@ -169,6 +169,11 @@ void WalletModel::pollBalanceChanged()
     }
 }
 
+        // Address in receive tab may have been used
+        emit notifyReceiveAddressChanged();
+    }
+}
+
 void WalletModel::checkBalanceChanged()
 {
     CAmount newBalance = getBalance();
@@ -633,6 +638,30 @@ static void NotifyWalletBacked(WalletModel* model, const bool& fSuccess, const s
                               Q_ARG(unsigned int, (unsigned int)method));
 }
 
+static void NotifyWalletBacked(WalletModel* model, const bool& fSuccess, const string& filename)
+{
+    string message;
+    string title = "Backup ";
+    CClientUIInterface::MessageBoxFlags method;
+
+    if (fSuccess) {
+        message = "The wallet data was successfully saved to ";
+        title += "Successful: ";
+        method = CClientUIInterface::MessageBoxFlags::MSG_INFORMATION;
+    } else {
+        message = "There was an error trying to save the wallet data to ";
+        title += "Failed: ";
+        method = CClientUIInterface::MessageBoxFlags::MSG_ERROR;
+    }
+
+    message += _(filename.data());
+
+    QMetaObject::invokeMethod(model, "message", Qt::QueuedConnection,
+                              Q_ARG(QString, QString::fromStdString(title)),
+                              Q_ARG(QString, QString::fromStdString(message)),
+                              Q_ARG(unsigned int, (unsigned int)method));
+}
+
 void WalletModel::subscribeToCoreSignals()
 {
     // Connect signals to wallet
@@ -836,4 +865,9 @@ bool WalletModel::isMine(CTxDestination dest)
 bool WalletModel::isUsed(CTxDestination dest)
 {
     return wallet->IsUsed(dest);
+}
+
+bool WalletModel::isUsed(CBitcoinAddress address)
+{
+    return wallet->IsUsed(address);
 }

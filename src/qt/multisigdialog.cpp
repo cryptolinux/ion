@@ -782,10 +782,10 @@ bool MultisigDialog::createRedeemScript(int m, vector<string> vKeys, CScript& re
             string keyString = *it;
 #ifdef ENABLE_WALLET
             // Case 1: ION address and we have full public key:
-            if (pwalletMain && IsValidDestinationString(keyString)) {
-                CTxDestination address = DecodeDestination(keyString);
-                const CKeyID *keyID = boost::get<CKeyID>(&address);
-                if (!keyID) {
+            CBitcoinAddress address(keyString);
+            if (pwalletMain && address.IsValid()) {
+                CKeyID keyID;
+                if (!address.GetKeyID(keyID)) {
                     throw runtime_error(
                         strprintf("%s does not refer to a key", keyString));
                 }

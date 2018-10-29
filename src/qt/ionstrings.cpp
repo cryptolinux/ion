@@ -85,6 +85,8 @@ QT_TRANSLATE_NOOP("ion-core", ""
 QT_TRANSLATE_NOOP("ion-core", ""
 "Error: The transaction is larger than the maximum allowed transaction size!"),
 QT_TRANSLATE_NOOP("ion-core", ""
+"Error: The transaction is larger than the maximum allowed transaction size!"),
+QT_TRANSLATE_NOOP("ion-core", ""
 "Error: The transaction was rejected! This might happen if some of the coins "
 "in your wallet were already spent, such as if you used a copy of wallet.dat "
 "and coins were spent in the copy but not marked as spent here."),
@@ -242,6 +244,15 @@ QT_TRANSLATE_NOOP("ion-core", ""
 "dir, every backup generates a timestamped file. If set as file, will rewrite "
 "to that file every backup."),
 QT_TRANSLATE_NOOP("ion-core", ""
+"Specify custom backup path to add a copy of any automatic xION backup. If "
+"set as dir, every backup generates a timestamped file. If set as file, will "
+"rewrite to that file every backup. If backuppath is set as well, 4 backups "
+"will happen"),
+QT_TRANSLATE_NOOP("ion-core", ""
+"Specify custom backup path to add a copy of any wallet backup. If set as "
+"dir, every backup generates a timestamped file. If set as file, will rewrite "
+"to that file every backup."),
+QT_TRANSLATE_NOOP("ion-core", ""
 "Support filtering of blocks and transaction with bloom filters (default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", ""
 "The block database contains a block which appears to be from the future. "
@@ -257,31 +268,15 @@ QT_TRANSLATE_NOOP("ion-core", ""
 "This is the transaction fee you may pay when fee estimates are not available."),
 QT_TRANSLATE_NOOP("ion-core", ""
 "This product includes software developed by the OpenSSL Project for use in "
-"the OpenSSL Toolkit %s and cryptographic software written by Eric Young and "
-"UPnP software written by Thomas Bernard."),
+"the OpenSSL Toolkit <https://www.openssl.org/> and cryptographic software "
+"written by Eric Young and UPnP software written by Thomas Bernard."),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Total length of network version string (%i) exceeds maximum length (%i). "
-"Reduce the number or size of uacomments."),
+"Unable to bind to %s on this computer. Ion Core is probably already running."),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Transaction index can't be disabled in full mode. Either start with -"
-"litemode command line switch or enable transaction index."),
+"Unable to locate enough Obfuscation denominated funds for this transaction."),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Total length of network version string (%i) exceeds maximum length (%i). "
-"Reduce the number or size of uacomments."),
-QT_TRANSLATE_NOOP("ion-core", ""
-"Unable to locate enough PrivateSend denominated funds for this transaction."),
-QT_TRANSLATE_NOOP("ion-core", ""
-"Unable to locate enough PrivateSend non-denominated funds for this "
-"transaction."),
-QT_TRANSLATE_NOOP("ion-core", ""
-"Unsupported argument -socks found. Setting SOCKS version isn't possible "
-"anymore, only SOCKS5 proxies are supported."),
-QT_TRANSLATE_NOOP("ion-core", ""
-"Unsupported argument -whitelistalwaysrelay ignored, use -whitelistrelay and/"
-"or -whitelistforcerelay."),
-QT_TRANSLATE_NOOP("ion-core", ""
-"Use N separate masternodes for each denominated input to mix funds (%u-%u, "
-"default: %u)"),
+"Unable to locate enough Obfuscation non-denominated funds for this "
+"transaction that are not equal 20000 ION."),
 QT_TRANSLATE_NOOP("ion-core", ""
 "Unable to locate enough funds for this transaction that are not equal 10000 "
 "ION."),

@@ -284,21 +284,6 @@
     </message>
     <message>
         <source>Wallet passphrase was successfully changed.</source>
-        <translation>Cüzdan parolası başarılı bir şekilde değiştirildi.</translation>
-    </message>
-    <message>
-        <source>Warning: The Caps Lock key is on!</source>
-        <translation>Uyarı: Caps Lock tuşu etkin durumda!</translation>
-    </message>
-</context>
-<context>
-    <name>BanTableModel</name>
-    <message>
-        <source>IP/Netmask</source>
-        <translation>IP/Ağ Maskesi</translation>
-    </message>
-    <message>
-        <source>Wallet passphrase was successfully changed.</source>
         <translation>Cüzdan parolası başarıyla değiştirildi.</translation>
     </message>
     <message>
@@ -1980,9 +1965,9 @@ Unutmayın, cüzdan, yeni adresi içeren işlemleri bulmak için blok zinciri ye
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/ioncoincore/ioncoin</source>
+https://www.transifex.com/ion-project/ion-project-translations</source>
         <translation>Dil eksik veya çeviri tamamlanmamış mı? Katkıda bulunan çevirilere yardımcı olun:
-https://www.transifex.com/ioncoincore/ioncoin</translation>
+https://www.transifex.com/ion-project/ion-project-translations</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -4206,8 +4191,8 @@ Ya daha yüksek mezhepleri daraltın (daha az girdi gereklidir) veya harcama mik
         <translation>yaz</translation>
     </message>
     <message>
-        <source>Sign &amp;message...</source>
-        <translation>&amp;İleti imzala...</translation>
+        <source>IP/Netmask</source>
+        <translation>IP/Ağ Maskesi</translation>
     </message>
     <message>
         <source>Open until %1</source>
@@ -4437,8 +4422,8 @@ Ya daha yüksek mezhepleri daraltın (daha az girdi gereklidir) veya harcama mik
         <translation>İhracat İşlem Geçmişi</translation>
     </message>
     <message>
-        <source>Open debugging console</source>
-        <translation>Debug konsolunu aç</translation>
+        <source>Enter a ION Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation>BIP 38 ile şifrelemek isteğiniz ION Adresini giriniz. Ortadaki kutucuğa bir parola giriniz. Şifrelenmiş özel anahtarı hesaplamak için şifrele tuşuna basınız. </translation>
     </message>
     <message>
         <source>Confirmed</source>
@@ -4461,8 +4446,8 @@ Ya daha yüksek mezhepleri daraltın (daha az girdi gereklidir) veya harcama mik
         <translation>Etiket</translation>
     </message>
     <message>
-        <source>Show network monitor</source>
-        <translation>Ağ monitörünü göster</translation>
+        <source>Choose previously used address</source>
+        <translation>Daha önce kullanılan adresi seçin</translation>
     </message>
     <message>
         <source>ID</source>
@@ -4521,12 +4506,12 @@ Ya daha yüksek mezhepleri daraltın (daha az girdi gereklidir) veya harcama mik
 <context>
     <name>WalletView</name>
     <message>
-        <source>Show peers info</source>
-        <translation>Eş bilgisini göster</translation>
+        <source>Paste address from clipboard</source>
+        <translation>Adresini panodan yapıştırın</translation>
     </message>
     <message>
-        <source>Wallet &amp;Repair</source>
-        <translation>Cüzdan &amp;Tamir</translation>
+        <source>Alt+P</source>
+        <translation>Alt+P</translation>
     </message>
     <message>
         <source>Selected amount:</source>

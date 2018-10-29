@@ -246,6 +246,11 @@ bool CScript::IsPayToPublicKey() const
     if (this->empty())
         return false;
 
+bool CScript::IsZerocoinSpend() const
+{
+    if (this->empty())
+        return false;
+
     return (this->at(0) == OP_ZEROCOINSPEND);
 }
 

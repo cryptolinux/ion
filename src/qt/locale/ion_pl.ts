@@ -130,7 +130,19 @@
     </message>
 </context>
 <context>
-    <name>AppearanceWidget</name>
+    <name>AskPassphraseDialog</name>
+    <message>
+        <source>Enter passphrase</source>
+        <translation>Wpisz hasło</translation>
+    </message>
+    <message>
+        <source>New passphrase</source>
+        <translation>Nowe hasło</translation>
+    </message>
+    <message>
+        <source>Repeat new passphrase</source>
+        <translation>Powtórz nowe hasło</translation>
+    </message>
     <message>
         <source>Encrypt wallet</source>
         <translation>Zakoduj portfel</translation>
@@ -237,20 +249,12 @@
         <translation>Ta operacja wymaga hasła do odszyfrowania portfela.</translation>
     </message>
     <message>
-        <source>Decrypt wallet</source>
-        <translation>Odszyfruj portfel</translation>
-    </message>
-    <message>
         <source>Encrypt &amp;Key</source>
         <translation>Kodowanie &amp;klucz</translation>
     </message>
     <message>
         <source>Confirm wallet encryption</source>
         <translation>Potwierdź zaszyfrowanie portfela</translation>
-    </message>
-    <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ION&lt;/b&gt;!</source>
-        <translation>Ostrzeżenie: Jeśli zaszyfrujesz swój portfel i zgubisz hasło, &lt;b&gt;STRACISZ WSZYSTKIE ŚRODKI&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Decrypted Key:</source>
@@ -650,6 +654,22 @@
         <translation>Rdzeń ION klient</translation>
     </message>
     <message>
+        <source>Synchronizing with network...</source>
+        <translation>Synchronizuję z siecią</translation>
+    </message>
+    <message>
+        <source>Importing blocks from disk...</source>
+        <translation>Importowanie bloków z dysku</translation>
+    </message>
+    <message>
+        <source>Reindexing blocks on disk...</source>
+        <translation>Reindeksowanie bloków na dysku</translation>
+    </message>
+    <message>
+        <source>No block source available...</source>
+        <translation>Brak źródła bloków</translation>
+    </message>
+    <message>
         <source>Up to date</source>
         <translation>Aktualny</translation>
     </message>
@@ -718,14 +738,8 @@
 </translation>
     </message>
     <message>
-        <source>Address: %1
-</source>
-        <translation>Adres: %1
-</translation>
-    </message>
-    <message>
-        <source>Sent transaction</source>
-        <translation>Transakcja wysłana</translation>
+        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
+        <translation>Portfel jest 1Zakodowany1 i obecnie 2Zablokowany2</translation>
     </message>
     <message>
         <source>Incoming transaction</source>
@@ -973,10 +987,6 @@
 <context>
     <name>FreespaceChecker</name>
     <message>
-        <source>A new data directory will be created.</source>
-        <translation>Utworzono nowy folder danych.</translation>
-    </message>
-    <message>
         <source>Address</source>
         <translation>Adres</translation>
     </message>
@@ -1131,6 +1141,10 @@
         <translation>(brak zakładki)</translation>
     </message>
     <message>
+        <source>(no label)</source>
+        <translation>(brak zakładki)</translation>
+    </message>
+    <message>
         <source>The entered address:
 </source>
         <translation>Wprowadzony adres:
@@ -1255,9 +1269,9 @@
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/ioncoincore/ioncoin</source>
+https://www.transifex.com/ion-project/ion-project-translations</source>
         <translation>Brakuje języka bądź nieukończona pełnego tłumaczenia? Pomóż w tłumaczeniu tutaj:
-https://www.transifex.com/ioncoincore/ioncoin </translation>
+https://www.transifex.com/ion-project/ion-project-translations </translation>
     </message>
     <message>
         <source>Connect to the ION network through a SOCKS5 proxy.</source>
@@ -1381,10 +1395,6 @@ https://www.transifex.com/ioncoincore/ioncoin </translation>
         <translation>Liczba wątków &amp;weryfikacji skryptu</translation>
     </message>
     <message>
-        <source>(0 = auto, &lt;0 = leave that many cores free)</source>
-        <translation>(0=auto, &lt;0 = zostaw tyle wolnych rdzeni)</translation>
-    </message>
-    <message>
         <source>Current total balance in watch-only addresses</source>
         <translation>Obecny całkowity bilans w adresach tylko do obejrzenia</translation>
     </message>
@@ -1458,6 +1468,10 @@ https://www.transifex.com/ioncoincore/ioncoin </translation>
     <message>
         <source>Connect to the Ion network through a SOCKS5 proxy.</source>
         <translation>Połącz się z siecią Ion przez proxy SOCKS5.</translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation>TekstZakładka</translation>
     </message>
     <message>
         <source>TextLabel</source>
@@ -1671,14 +1685,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Your current spendable balance</source>
         <translation>Twoje obecne dostępne saldo</translation>
-    </message>
-    <message>
-        <source>Pending:</source>
-        <translation>Oczekiwanie:</translation>
-    </message>
-    <message>
-        <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation>Suma transakcji, które nie zostały jeszcze potwierdzone, a które nie zostały wliczone do twojego obecnego salda</translation>
     </message>
     <message>
         <source>Connection Time</source>

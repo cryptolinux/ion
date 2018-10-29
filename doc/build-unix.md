@@ -1,4 +1,6 @@
-Some notes on how to build Ion in Unix.
+UNIX BUILD NOTES
+====================
+Some notes on how to build ION in Unix.
 
 (for OpenBSD specific instructions, see [build-openbsd.md](build-openbsd.md))
 =======
@@ -160,7 +162,8 @@ Building
 
 Follow the instructions in [build-generic](build-generic.md)
 
-## Security
+Security
+--------
 To help make your ION installation more secure by making certain attacks impossible to
 exploit even if a vulnerability is found, binaries are hardened by default.
 This can be disabled with:

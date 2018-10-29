@@ -15,9 +15,6 @@ class CScheduler;
 class CWallet;
 class CxIONWallet;
 
-class WalletInitInterface;
-extern WalletInitInterface* const g_wallet_init_interface;
-
 namespace boost
 {
 class thread_group;

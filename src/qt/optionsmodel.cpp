@@ -100,6 +100,10 @@ void OptionsModel::Init(bool resetSettings)
         settings.setValue("fHideOrphans", false);
     fHideOrphans = settings.value("fHideOrphans").toBool();
 
+    if (!settings.contains("fHideOrphans"))
+        settings.setValue("fHideOrphans", false);
+    fHideOrphans = settings.value("fHideOrphans").toBool();
+
     if (!settings.contains("fCoinControlFeatures"))
         settings.setValue("fCoinControlFeatures", false);
     fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();

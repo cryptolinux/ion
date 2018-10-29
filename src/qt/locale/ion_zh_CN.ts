@@ -184,7 +184,11 @@
     </message>
     <message>
         <source>Repeat new passphrase</source>
-        <translation>重复新密码</translation>
+        <translation>再次输入新密码</translation>
+    </message>
+    <message>
+        <source>Serves to disable the trivial sendmoney when OS account compromised. Provides no real security.</source>
+        <translation>用于在操作系统帐户遭到破坏时禁用琐碎的sendmoney。没有真正的安全性。</translation>
     </message>
     <message>
         <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
@@ -655,6 +659,10 @@
         <translation>&amp;P隐私</translation>
     </message>
     <message>
+        <source>&amp;Privacy</source>
+        <translation>&amp;P隐私</translation>
+    </message>
+    <message>
         <source>&amp;Masternodes</source>
         <translation>&amp;M主节点</translation>
     </message>
@@ -735,6 +743,10 @@
         <translation>Ion Core 客户端</translation>
     </message>
     <message>
+        <source>Synchronizing with network...</source>
+        <translation>与网络同步</translation>
+    </message>
+    <message>
         <source>Received multiple transactions</source>
         <translation>已接收的多重交易</translation>
     </message>
@@ -754,12 +766,6 @@
         <source>Date: %1
 </source>
         <translation>日期：%1
-</translation>
-    </message>
-    <message>
-        <source>Amount: %1
-</source>
-        <translation>金额：%1
 </translation>
     </message>
     <message>
@@ -787,6 +793,18 @@
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
         <translation>钱包已被&lt;b&gt;加密&lt;/b&gt;，当前为&lt;b&gt;解锁&lt;/b&gt;状态</translation>
+    </message>
+    <message>
+        <source>Sent transaction</source>
+        <translation>发送交易</translation>
+    </message>
+    <message>
+        <source>Incoming transaction</source>
+        <translation>接收交易</translation>
+    </message>
+    <message>
+        <source>Sent MultiSend transaction</source>
+        <translation>发送MultiSend交易</translation>
     </message>
     <message>
         <source>Sent transaction</source>
@@ -919,6 +937,10 @@ Address: %4
         <translation>激活</translation>
     </message>
     <message>
+        <source>Active</source>
+        <translation>激活</translation>
+    </message>
+    <message>
         <source>S&amp;tart alias</source>
         <translation>S&amp;开始别名</translation>
     </message>
@@ -950,6 +972,17 @@ Address: %4
         <source>(no label)</source>
         <translation>未设置标签</translation>
     </message>
+    <message>
+        <source>Enter a label for this address to add it to your address book</source>
+        <translation>输入此地址的标签，将其添加到您的地址列表中</translation>
+    </message>
+    <message>
+        <source>(no label)</source>
+        <translation>未设置标签</translation>
+    </message>
+    </context>
+<context>
+    <name>MultisigDialog</name>
     </context>
 <context>
     <name>MultisigDialog</name>

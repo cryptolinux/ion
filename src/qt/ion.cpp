@@ -32,6 +32,7 @@
 #include "init.h"
 #include "main.h"
 #include "rpc/server.h"
+#include "scheduler.h"
 #include "ui_interface.h"
 #include "util.h"
 

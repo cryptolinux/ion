@@ -3779,6 +3779,13 @@ void CConnman::PushMessage(CNode* pnode, CSerializedNetMsg&& msg)
 	    LEAVE_CRITICAL_SECTION(cs_vSend);
         return;
     }
+    if (mapArgs.count("-fuzzmessagestest"))
+        Fuzz(GetArg("-fuzzmessagestest", 10));
+
+    if (ssSend.size() == 0) {
+	    LEAVE_CRITICAL_SECTION(cs_vSend);
+        return;
+    }
 
         //log total amount of bytes per command
         pnode->mapSendBytesPerMsgCmd[msg.command] += nTotalSize;

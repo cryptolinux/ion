@@ -30,11 +30,6 @@ SignVerifyMessageDialog::SignVerifyMessageDialog(QWidget* parent) : QDialog(pare
 
     ui->signatureOut_SM->setPlaceholderText(tr("Click \"Sign Message\" to generate signature"));
 
-    GUIUtil::setIcon(ui->addressBookButton_SM, "address-book");
-    GUIUtil::setIcon(ui->pasteButton_SM, "editpaste");
-    GUIUtil::setIcon(ui->copySignatureButton_SM, "editcopy");
-    GUIUtil::setIcon(ui->addressBookButton_VM, "address-book");
-
     GUIUtil::setupAddressWidget(ui->addressIn_SM, this);
     GUIUtil::setupAddressWidget(ui->addressIn_VM, this);
 

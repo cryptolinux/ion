@@ -297,12 +297,9 @@
         <translation>IP /掩碼</translation>
     </message>
     <message>
-        <source>Banned Until</source>
-        <translation>禁止直到</translation>
+        <source>&amp;BIP 38 Encrypt</source>
+        <translation>&amp;BIP 38 加密</translation>
     </message>
-</context>
-<context>
-    <name>BitcoinAmountField</name>
     <message>
         <source>Address:</source>
         <translation>位址:</translation>
@@ -332,10 +329,6 @@
         <translation>付錢給一個達世幣位址</translation>
     </message>
     <message>
-        <source>&amp;Receive</source>
-        <translation>接收(&amp;R)</translation>
-    </message>
-    <message>
         <source>Encrypt &amp;Key</source>
         <translation>加密 &amp;鑰匙</translation>
     </message>
@@ -344,8 +337,8 @@
         <translation>清除 &amp;全部</translation>
     </message>
     <message>
-        <source>Browse masternodes</source>
-        <translation>瀏覽主節點</translation>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>&amp;BIP 38 解密</translation>
     </message>
     <message>
         <source>Decrypt &amp;Key</source>
@@ -768,6 +761,13 @@
         <source>(no label)</source>
         <translation>(沒有標記)</translation>
     </message>
+    <message>
+        <source>(no label)</source>
+        <translation>(沒有標記)</translation>
+    </message>
+    </context>
+<context>
+    <name>MultisigDialog</name>
     </context>
 <context>
     <name>MultisigDialog</name>
@@ -807,6 +807,10 @@
     <message>
         <source>Confirmed</source>
         <translation>已確認</translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation>文字標籤</translation>
     </message>
     <message>
         <source>TextLabel</source>
@@ -1193,28 +1197,8 @@
     </message>
 </context>
 <context>
-    <name>OpenURIDialog</name>
-    <message>
-        <source>Open URI</source>
-        <translation>開啓 URI</translation>
-    </message>
-    <message>
-        <source>Open payment request from URI or file</source>
-        <translation>從 URI 或檔案開啟付款要求</translation>
-    </message>
-    <message>
-        <source>URI:</source>
-        <translation>URI:</translation>
-    </message>
-    <message>
-        <source>Select payment request file</source>
-        <translation>選擇付款要求資料檔</translation>
-    </message>
-    <message>
-        <source>Select payment request file to open</source>
-        <translation>選擇要開啟的付款要求資料檔</translation>
-    </message>
-</context>
+    <name>XIonControlDialog</name>
+    </context>
 <context>
     <name>OptionsDialog</name>
     <message>

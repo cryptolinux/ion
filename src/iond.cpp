@@ -11,6 +11,7 @@
 #include "main.h"
 #include "masternodeconfig.h"
 #include "noui.h"
+#include "scheduler.h"
 #include "rpc/server.h"
 #include "ui_interface.h"
 #include "util.h"
@@ -29,7 +30,7 @@
  *
  * \section intro_sec Introduction
  *
- * This is the developer documentation of the reference client for an experimental new digital currency called ION (http://www.ioncoin.org),
+ * This is the developer documentation of the reference client for an experimental new digital currency called ION (http://www.ioncore.xyz),
  * which enables instant payments to anyone, anywhere in the world. ION uses peer-to-peer technology to operate
  * with no central authority: managing transactions and issuing money are carried out collectively by the network.
  *

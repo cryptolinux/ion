@@ -29,7 +29,7 @@ their serving infrastructure and not sell or transfer control of their
 DNS seed. Any hosting services contracted by the operator are
 equally expected to uphold these expectations.
 
-### 2. The DNS seed results must consist exclusively of fairly selected and
+1. The DNS seed results must consist exclusively of fairly selected and
 functioning ION nodes from the public network to the best of the
 operators understanding and capability.
 
@@ -58,7 +58,7 @@ related to the DNS seed operation.
 If these expectations cannot be satisfied the operator should
 discontinue providing services and contact the active ION
 Core development team as well as posting on the
-[ION Forum](https://forum.ioncoin.org).
+[ION Forum](https://forum.ioncore.xyz).
 
 Behavior outside of these expectations may be reasonable in some
 situations but should be discussed in public in advance.

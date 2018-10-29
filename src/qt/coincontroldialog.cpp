@@ -453,6 +453,34 @@ void CoinControlDialog::viewItemChanged(QTreeWidgetItem* item, int column)
     }
 }
 
+// return human readable label for priority number
+QString CoinControlDialog::getPriorityLabel(double dPriority, double mempoolEstimatePriority)
+{
+    double dPriorityMedium = mempoolEstimatePriority;
+
+    if (dPriorityMedium <= 0)
+        dPriorityMedium = AllowFreeThreshold(); // not enough data, back to hard-coded
+
+    if (dPriority / 1000000 > dPriorityMedium)
+        return tr("highest");
+    else if (dPriority / 100000 > dPriorityMedium)
+        return tr("higher");
+    else if (dPriority / 10000 > dPriorityMedium)
+        return tr("high");
+    else if (dPriority / 1000 > dPriorityMedium)
+        return tr("medium-high");
+    else if (dPriority > dPriorityMedium)
+        return tr("medium");
+    else if (dPriority * 10 > dPriorityMedium)
+        return tr("low-medium");
+    else if (dPriority * 100 > dPriorityMedium)
+        return tr("low");
+    else if (dPriority * 1000 > dPriorityMedium)
+        return tr("lower");
+    else
+        return tr("lowest");
+}
+
 // shows count of locked unspent outputs
 void CoinControlDialog::updateLabelLocked()
 {
@@ -648,7 +676,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     if (payTxFee.GetFeePerK() > 0)
         dFeeVary = (double)std::max(CWallet::GetRequiredFee(1000), payTxFee.GetFeePerK()) / 1000;
     else
-        dFeeVary = (double)std::max(CWallet::GetRequiredFee(1000), mempool.estimateFee(nTxConfirmTarget).GetFeePerK()) / 1000;
+        dFeeVary = (double)std::max(CWallet::minTxFee.GetFeePerK(), mempool.estimateFee(nTxConfirmTarget).GetFeePerK()) / 1000;
     QString toolTip4 = tr("Can vary +/- %1 uion per input.").arg(dFeeVary);
 
     l3->setToolTip(toolTip4);

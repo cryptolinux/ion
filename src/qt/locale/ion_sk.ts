@@ -783,10 +783,6 @@
 </translation>
     </message>
     <message>
-        <source>Sent transaction</source>
-        <translation>Odoslané transakcie</translation>
-    </message>
-    <message>
         <source>Catching up...</source>
         <translation>Dobieham...</translation>
     </message>
@@ -846,10 +842,6 @@
         <translation>prepnúť stav zámku</translation>
     </message>
     <message>
-        <source>Tree mode</source>
-        <translation>Stromový režim</translation>
-    </message>
-    <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Peňaženka je &lt;b&gt;zašifrovaná&lt;/ b&gt; a momentálne je &lt;b&gt;zamknutá&lt;/ b&gt;</translation>
     </message>
@@ -868,10 +860,6 @@
     <message>
         <source>Date</source>
         <translation>Dátum</translation>
-    </message>
-    <message>
-        <source>Confirmations</source>
-        <translation>Potvrdenia</translation>
     </message>
     <message>
         <source>Network Alert</source>
@@ -991,6 +979,17 @@
         <source>Amount:</source>
         <translation>Suma:</translation>
     </message>
+    <message>
+        <source>(no label)</source>
+        <translation>(žiaden štítok)</translation>
+    </message>
+    </context>
+<context>
+    <name>MultisigDialog</name>
+    <message>
+        <source>Amount:</source>
+        <translation>Suma:</translation>
+    </message>
     </context>
 <context>
     <name>ObfuscationConfig</name>
@@ -1039,6 +1038,10 @@
     <message>
         <source>Could not unlock wallet.</source>
         <translation>Nepodarilo sa odomknúť peňaženku.</translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <source>TextLabel</source>
@@ -1221,8 +1224,8 @@
         <translation>Zoznam filtrov:</translation>
     </message>
     <message>
-        <source>Filter masternode list</source>
-        <translation>Filtrovať zoznam masternódov</translation>
+        <source>The ION address to sign the message with</source>
+        <translation>Adresa ION, ktorou chcete správu podpísať</translation>
     </message>
     <message>
         <source>Node Count:</source>
@@ -1245,16 +1248,16 @@
         <translation>PoSe skóre</translation>
     </message>
     <message>
-        <source>Registered</source>
-        <translation>Zaregistrované</translation>
+        <source>Sign the message to prove you own this ION address</source>
+        <translation>Podpíšte správu, aby ste preukázali, že ste vlastníkom tejto ION adresy</translation>
     </message>
     <message>
-        <source>Last Paid</source>
-        <translation>Posledná platba</translation>
+        <source>The ION address the message was signed with</source>
+        <translation>ION adresa, ktorou bola správa podpísaná</translation>
     </message>
     <message>
-        <source>Next Payment</source>
-        <translation>Ďalšia platba</translation>
+        <source>Verify the message to ensure it was signed with the specified ION address</source>
+        <translation>Skontrolujte správu, aby ste sa uistili, že bola podpísaná zadanou ION adresou</translation>
     </message>
     <message>
         <source>Payout Address</source>

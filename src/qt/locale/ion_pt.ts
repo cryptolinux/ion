@@ -297,13 +297,6 @@
         <translation>IP/Máscara de rede</translation>
     </message>
     <message>
-        <source>Banned Until</source>
-        <translation>Banido até</translation>
-    </message>
-</context>
-<context>
-    <name>BitcoinAmountField</name>
-    <message>
         <source>Address:</source>
         <translation>Endereço:</translation>
     </message>
@@ -332,10 +325,6 @@
         <translation>Envie moedas para um endereço Ion</translation>
     </message>
     <message>
-        <source>&amp;Receive</source>
-        <translation>&amp;Receber</translation>
-    </message>
-    <message>
         <source>Encrypt &amp;Key</source>
         <translation>Criptografar Chave</translation>
     </message>
@@ -344,8 +333,8 @@
         <translation>Limpar todos</translation>
     </message>
     <message>
-        <source>Browse masternodes</source>
-        <translation>Exibir masternodes</translation>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation>Criptografia BIP 38</translation>
     </message>
     <message>
         <source>Decrypted Key:</source>
@@ -443,6 +432,14 @@
         <source>&amp;Address</source>
         <translation>&amp;Endereço</translation>
     </message>
+    <message>
+        <source>&amp;Label</source>
+        <translation>&amp;Descrição</translation>
+    </message>
+    <message>
+        <source>&amp;Address</source>
+        <translation>&amp;Endereço</translation>
+    </message>
     </context>
 <context>
     <name>FreespaceChecker</name>
@@ -466,6 +463,17 @@
     <message>
         <source>Show diagnostic information</source>
         <translation>Mostrar informação de diagnóstico</translation>
+    </message>
+    <message>
+        <source>(no label)</source>
+        <translation>(Sem descrição)</translation>
+    </message>
+    </context>
+<context>
+    <name>MultisigDialog</name>
+    <message>
+        <source>Amount:</source>
+        <translation>Quantidade:</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -914,51 +922,10 @@
         <source>This label turns red if any recipient receives an amount smaller than the current dust threshold.</source>
         <translation>Este texto fica vermelho se qualquer destinatário receber uma quantidade menor que que o dust.</translation>
     </message>
-    <message>
-        <source>Can vary +/- %1 duff(s) per input.</source>
-        <translation>Pode variar +/- %1 duff(s) por entrada.</translation>
-    </message>
-    <message>
-        <source>Some coins were unselected because they were spent.</source>
-        <translation>Algumas moedas não foram selecionadas porque foram gastas.</translation>
-    </message>
-    <message>
-        <source>Some coins were unselected because they do not have enough mixing rounds.</source>
-        <translation>Algumas moedas não foram selecionadas porque não têm rodadas de anonimização suficientes.</translation>
-    </message>
-    <message>
-        <source>Show all coins</source>
-        <translation>Mostrar todas as moedas</translation>
-    </message>
-    <message>
-        <source>Hide PrivateSend coins</source>
-        <translation>Ocultar moedas de EnvioPrivado</translation>
-    </message>
-    <message>
-        <source>Show all PrivateSend coins</source>
-        <translation>Mostrar todas as moedas de EnvioPrivado</translation>
-    </message>
-    <message>
-        <source>Show spendable coins only</source>
-        <translation>Mostrar apenas moedas gastáveis</translation>
-    </message>
-    <message>
-        <source>(no label)</source>
-        <translation>(sem rótulo)</translation>
-    </message>
-    <message>
-        <source>change from %1 (%2)</source>
-        <translation>troco de %1 (%2)</translation>
-    </message>
-    <message>
-        <source>(change)</source>
-        <translation>(troco)</translation>
-    </message>
-    <message>
-        <source>n/a</source>
-        <translation>n/d</translation>
-    </message>
-</context>
+    </context>
+<context>
+    <name>XIonControlDialog</name>
+    </context>
 <context>
     <name>EditAddressDialog</name>
     <message>
@@ -966,12 +933,8 @@
         <translation>Editar Endereço</translation>
     </message>
     <message>
-        <source>&amp;Label</source>
-        <translation>&amp;Rótulo</translation>
-    </message>
-    <message>
-        <source>The label associated with this address list entry</source>
-        <translation>O rótulo associado a esta entrada na lista de endereços</translation>
+        <source>Connect through SOCKS5 proxy</source>
+        <translation>Conectar usando proxy SOCKS5</translation>
     </message>
     <message>
         <source>&amp;Address</source>
@@ -1072,16 +1035,8 @@
         <translation>Iniciar minimizado</translation>
     </message>
     <message>
-        <source>Set SSL root certificates for payment request (default: -system-)</source>
-        <translation>Definir certificados de root SSL para requisições de pagamento (padrão: -sistema-)</translation>
-    </message>
-    <message>
-        <source>Show splash screen on startup (default: %u)</source>
-        <translation>Exibir tela de abertura na inicialização (padrão: %u)</translation>
-    </message>
-    <message>
-        <source>Reset all settings changed in the GUI</source>
-        <translation>Resetar todas as configuraçãoes do GUI</translation>
+        <source>Session not complete!</source>
+        <translation>Sessão não concluída!</translation>
     </message>
     <message>
         <source>PrivateSend information</source>
@@ -1230,10 +1185,6 @@
         <translation>Copiar ProTx Hash</translation>
     </message>
     <message>
-        <source>Copy Collateral Outpoint</source>
-        <translation>Copiar Outpoint Collateral</translation>
-    </message>
-    <message>
         <source>Synchronization failed</source>
         <translation>Sincronização falhou</translation>
     </message>
@@ -1338,10 +1289,6 @@
     <message>
         <source>URI:</source>
         <translation>URI:</translation>
-    </message>
-    <message>
-        <source>Select payment request file</source>
-        <translation>Selecione o arquivo de cobrança</translation>
     </message>
     <message>
         <source>Use UPnP to map the listening port (default: %u)</source>

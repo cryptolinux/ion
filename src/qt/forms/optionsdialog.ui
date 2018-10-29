@@ -28,76 +28,6 @@
      <property name="currentIndex">
       <number>4</number>
      </property>
-     <item>
-      <widget class="QPushButton" name="btnMain">
-       <property name="text">
-        <string>&amp;Main</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnWallet">
-       <property name="text">
-        <string>W&amp;allet</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnPrivateSend">
-       <property name="text">
-        <string>PrivateSend</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnNetwork">
-       <property name="text">
-        <string>&amp;Network</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnDisplay">
-       <property name="text">
-        <string>&amp;Display</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnAppearance">
-       <property name="text">
-        <string>&amp;Appearance</string>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QStackedWidget" name="stackedWidgetOptions">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
      <property name="currentIndex">
       <number>5</number>
      </property>
@@ -294,10 +224,7 @@
        <item>
         <widget class="QCheckBox" name="lowKeysWarning">
          <property name="toolTip">
-          <string>Show warning dialog when PrivateSend detects that wallet has very low number of keys left.</string>
-         </property>
-         <property name="text">
-          <string>Warn if PrivateSend is running out of keys</string>
+          <string>Enable automatic minting of ION units to xION</string>
          </property>
         </widget>
        </item>
@@ -725,7 +652,7 @@
          </property>
          <property name="text">
           <string>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/ioncoincore/ioncoin</string>
+https://www.transifex.com/ion-project/ion-project-translations</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>

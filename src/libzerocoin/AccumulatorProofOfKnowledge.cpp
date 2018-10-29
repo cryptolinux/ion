@@ -117,8 +117,6 @@ bool AccumulatorProofOfKnowledge:: Verify(const Accumulator& a, const CBigNum& v
     CHashWriter hasher(0,0);
     hasher << *params << sg << sh << g_n << h_n << valueOfCommitmentToCoin << C_e << C_u << C_r << st_1 << st_2 << st_3 << t_1 << t_2 << t_3 << t_4;
 
-    CBigNum c = CBigNum(hasher.GetHash()); //this hash should be of length k_prime bits
-
 	bool result_st1 = (st_1 == st_1_prime);
 	bool result_st2 = (st_2 == st_2_prime);
 	bool result_st3 = (st_3 == st_3_prime);
@@ -126,11 +124,6 @@ bool AccumulatorProofOfKnowledge:: Verify(const Accumulator& a, const CBigNum& v
     bool result_st1 = (st_1 == st_1_prime);
     bool result_st2 = (st_2 == st_2_prime);
     bool result_st3 = (st_3 == st_3_prime);
-
-    bool result_t1 = (t_1 == t_1_prime);
-    bool result_t2 = (t_2 == t_2_prime);
-    bool result_t3 = (t_3 == t_3_prime);
-    bool result_t4 = (t_4 == t_4_prime);
 
     return result_st1 && result_st2 && result_st3 && result_t1 && result_t2 && result_t3 && result_t4 && result_range;
 }
