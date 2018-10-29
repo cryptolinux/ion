@@ -1,6 +1,6 @@
 name: ioncoin
-version: 3.1.99
-summary:   gaming related peer-to-peer network based digital currency
+version: v3.1.01
+summary:   peer-to-peer network based digital currency
 description: |
   ION is an MIT licensed,
   open source, blockchain-based cryptocurrency with 
@@ -65,23 +65,23 @@ apps:
 
 parts:
   ion:
-    source: https://github.com/ioncoincore/ion
+    source: https://bitbucket.org/ioncoin/ion
     source-type: git
-    source-tag: master
+    source-tag: v3.1.01
     plugin: autotools
     # We don't want to copy the full blockchain every time that the snap is   
-    # updated, but there's no way to define a default data dir in ion-qt.
+    # updated, but there's no way to define a default data dir in bitcoin-qt.
     # Also, it would be better if we could split the wallet from the blockchain
-    prepare: git apply $SNAPCRAFT_STAGE/default_data_dir.patch
+    override-build: git apply $SNAPCRAFT_STAGE/default_data_dir.patch
     build-packages:
       - curl
       - wget
       - g++
-      - gcc
       - autoconf
       - automake
       - pkg-config
-      - libtool
+      - libssl1.0-dev
+      - libevent-dev
       - bsdmainutils
       - libgmp-dev
       # Boost.
@@ -113,6 +113,7 @@ parts:
       - libqrencode-dev
     stage-packages: [ca-certificates]
     after:
+      - berkeleydb
       - patches
   desktop-qt5:
     stage-packages:
