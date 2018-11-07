@@ -274,69 +274,6 @@ static void MutateTxAddOutAddr(CMutableTransaction& tx, const std::string& strIn
     tx.vout.push_back(txout);
 }
 
-static void MutateTxAddOutMultiSig(CMutableTransaction& tx, const std::string& strInput)
-{
-    // Separate into VALUE:REQUIRED:NUMKEYS:PUBKEY1:PUBKEY2:....[:FLAGS]
-    std::vector<std::string> vStrInputParts;
-    boost::split(vStrInputParts, strInput, boost::is_any_of(":"));
-
-    // Check that there are enough parameters
-    if (vStrInputParts.size()<3)
-        throw std::runtime_error("Not enough multisig parameters");
-
-    // Extract and validate VALUE
-    CAmount value = ExtractAndValidateValue(vStrInputParts[0]);
-
-    // Extract REQUIRED
-    uint32_t required = stoul(vStrInputParts[1]);
-
-    // Extract NUMKEYS
-    uint32_t numkeys = stoul(vStrInputParts[2]);
-
-    // Validate there are the correct number of pubkeys
-    if (vStrInputParts.size() < numkeys + 3)
-        throw std::runtime_error("incorrect number of multisig pubkeys");
-
-    if (required < 1 || required > 20 || numkeys < 1 || numkeys > 20 || numkeys < required)
-        throw std::runtime_error("multisig parameter mismatch. Required " \
-                            + std::to_string(required) + " of " + std::to_string(numkeys) + "signatures.");
-
-    // extract and validate PUBKEYs
-    std::vector<CPubKey> pubkeys;
-    for(int pos = 1; pos <= int(numkeys); pos++) {
-        CPubKey pubkey(ParseHex(vStrInputParts[pos + 2]));
-        if (!pubkey.IsFullyValid())
-            throw std::runtime_error("invalid TX output pubkey");
-        pubkeys.push_back(pubkey);
-    }
-
-    // Extract FLAGS
-    bool bScriptHash = false;
-    if (vStrInputParts.size() == numkeys + 4) {
-        std::string flags = vStrInputParts.back();
-        bScriptHash = (flags.find('S') != std::string::npos);
-    }
-    else if (vStrInputParts.size() > numkeys + 4) {
-        // Validate that there were no more parameters passed
-        throw std::runtime_error("Too many parameters");
-    }
-
-    CScript scriptPubKey = GetScriptForMultisig(required, pubkeys);
-
-    if (bScriptHash) {
-        if (scriptPubKey.size() > MAX_SCRIPT_ELEMENT_SIZE) {
-            throw std::runtime_error(strprintf(
-                        "redeemScript exceeds size limit: %d > %d", scriptPubKey.size(), MAX_SCRIPT_ELEMENT_SIZE));
-        }
-        // Get the ID for the script, and then construct a P2SH destination for it.
-        scriptPubKey = GetScriptForDestination(CScriptID(scriptPubKey));
-    }
-
-    // construct TxOut, append to transaction output list
-    CTxOut txout(value, scriptPubKey);
-    tx.vout.push_back(txout);
-}
-
 static void MutateTxAddOutData(CMutableTransaction& tx, const std::string& strInput)
 {
     CAmount value = 0;

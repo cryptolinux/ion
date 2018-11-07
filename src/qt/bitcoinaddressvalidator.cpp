@@ -97,8 +97,7 @@ QValidator::State BitcoinAddressCheckValidator::validate(QString &input, int &po
 {
     Q_UNUSED(pos);
     // Validate the passed ION address
-    CBitcoinAddress addr(input.toStdString());
-    if (addr.IsValid())
+    if (IsValidDestinationString(input.toStdString())) {
         return QValidator::Acceptable;
     }
 

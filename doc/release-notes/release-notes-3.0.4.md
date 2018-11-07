@@ -1,20 +1,12 @@
 🗺️Ion Core 👛 3.0.4 CE ©️ - 👒 RELEASE 👒  is now available from:
 
-<<<<<<< HEAD
-  <https://github.com/ioncoincore/ion/releases>
-=======
   <https://github.com/cevap/ion/releases>
->>>>>>> Add release notes
 
 This is a new minor-revision version release, including various bug fixes and updated documentation.
 
 Please report bugs using the issue tracker at github:
 
-<<<<<<< HEAD
-  <https://github.com/ioncoincore/ion/issues>
-=======
   <https://github.com/cevap/ion/issues>
->>>>>>> Add release notes
 
 Recommended Update
 ==============
@@ -114,15 +106,9 @@ There will be a lot of warnings printed during the build of the image. These can
 
 Getting and building the inputs
 --------------------------------------
-<<<<<<< HEAD
-At this point you have two options, you can either use the automated script (found in https://github.com/ioncoincore/ion/blob/master/contrib/gitian-build.sh, only works in Debian/Ubuntu) or you could manually do everything by following this guide. If you are using the automated script, then run it with the --setup command. Afterwards, run it with the --build command (example: contrib/gitian-build.sh -b signer 3.0.2). Otherwise ignore this.
-
-Follow the instructions in https://github.com/ioncoincore/ion/blob/master/doc/release-process.md in the bitcoin repository under 'Fetch and create inputs' to install sources which require manual intervention. Also optionally follow the next step: 'Seed the Gitian sources cache and offline git repositories' which will fetch the remaining files required for building offline.
-=======
 At this point you have two options, you can either use the automated script (found in https://github.com/cevap/ion/blob/master/contrib/gitian-build.sh, only works in Debian/Ubuntu) or you could manually do everything by following this guide. If you are using the automated script, then run it with the --setup command. Afterwards, run it with the --build command (example: contrib/gitian-build.sh -b signer 3.0.2). Otherwise ignore this.
 
 Follow the instructions in https://github.com/cevap/ion/blob/master/doc/release-process.md in the bitcoin repository under 'Fetch and create inputs' to install sources which require manual intervention. Also optionally follow the next step: 'Seed the Gitian sources cache and offline git repositories' which will fetch the remaining files required for building offline.
->>>>>>> Add release notes
 
 _**Note**: please use our links here, I left cevap as I do not want to remove it later_
 
@@ -200,11 +186,7 @@ cd ./gitian-builder
 mkdir -p inputs
 wget -P inputs https://github.com/cevap/osslsigncode/releases/download/v1.7.1/osslsigncode-Backports-to-1.7.1.patch
 wget -P inputs -O inputs/v1.7.1.tar.gz https://github.com/cevap/osslsigncode/archive/v1.7.1.tar.gz
-<<<<<<< HEAD
-wget -P inputs https://github.com/gitianuser/MacOSX-SDKs/releases/download/MacOSX10.11.sdk/MacOSX10.11.sdk.tar.xz
-=======
 wget -P inputs https://github.com/cevap/MacOSX-SDKs/releases/download/MacOSX10.11.sdk-trusty/MacOSX10.11.sdk.tar.gz
->>>>>>> Add release notes
 cd ..
 
 # prebuild ion dependencies
