@@ -324,12 +324,24 @@ bool CBitcoinSecret::SetString(const std::string& strSecret)
     return SetString(strSecret.c_str());
 }
 
-std::string EncodeLegacyAddr(const CTxDestination &dest, const CChainParams &params)
+std::string EncodeDestination(const CTxDestination& dest)
 {
-    return boost::apply_visitor(DestinationEncoder(params), dest);
+    CBitcoinAddress addr(dest);
+    if (!addr.IsValid()) return "";
+    return addr.ToString();
 }
 
-CTxDestination DecodeLegacyAddr(const std::string &str, const CChainParams &params)
+CTxDestination DecodeDestination(const std::string& str)
 {
-    return DecodeDestination(str, params);
+    return CBitcoinAddress(str).Get();
+}
+
+bool IsValidDestinationString(const std::string& str, const CChainParams& params)
+{
+    return CBitcoinAddress(str).IsValid(params);
+}
+
+bool IsValidDestinationString(const std::string& str)
+{
+    return CBitcoinAddress(str).IsValid();
 }
