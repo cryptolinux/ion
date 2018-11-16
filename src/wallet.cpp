@@ -761,10 +761,10 @@ isminetype CWallet::IsMine(const CTxIn& txin) const
     return ISMINE_NO;
 }
 
-bool CWallet::IsUsed(const CBitcoinAddress address) const
+bool CWallet::IsUsed(const CTxDestination dest) const
 {
     LOCK(cs_wallet);
-    CScript scriptPubKey = GetScriptForDestination(address.Get());
+    CScript scriptPubKey = GetScriptForDestination(dest);
     if (!::IsMine(*this, scriptPubKey)) {
         return false;
     }
@@ -4293,12 +4293,9 @@ void CWallet::AutoCombineDust()
         if (vRewardCoins.size() <= 1)
             continue;
 
-        std::vector<CRecipient> vecSend;
-        int nChangePosRet = -1;
+        vector<pair<CScript, CAmount> > vecSend;
         CScript scriptPubKey = GetScriptForDestination(it->first);
-        // 10% safety margin to avoid "Insufficient funds" errors
-        CRecipient recipient = {scriptPubKey, nTotalRewardsValue - (nTotalRewardsValue / 10), false};
-        vecSend.push_back(recipient);
+        vecSend.push_back(make_pair(scriptPubKey, nTotalRewardsValue));
 
         //Send change to same address
         CTxDestination destMyAddress;
@@ -4401,8 +4398,7 @@ bool CWallet::MultiSend()
             CTxDestination strAddSend = DecodeDestination(vMultiSend[i].first);
             CScript scriptPubKey;
             scriptPubKey = GetScriptForDestination(strAddSend);
-            CRecipient recipient = {scriptPubKey, nAmount, false};
-            vecSend.push_back(recipient);
+            vecSend.push_back(make_pair(scriptPubKey, nAmount));
         }
 
         //get the fee amount
