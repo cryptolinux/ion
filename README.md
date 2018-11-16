@@ -143,7 +143,7 @@ Please use **only stable release** for production/commercial purpose.
 
     sudo snap install --candidate ioncoin
 
-#### Install latest beta release from terminal
+### Client: Helium
 
 ![](assets/images/Helium.jpg)
 
