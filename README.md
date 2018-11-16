@@ -145,7 +145,7 @@ Please use **only stable release** for production/commercial purpose.
 
 #### Install latest beta release from terminal
 
-    sudo snap install --beta ioncoin
+![](assets/images/Helium.jpg)
 
 #### Install latest edge release from terminal
 
