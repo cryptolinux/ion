@@ -1,5 +1,5 @@
 name: ioncoin
-version: v3.1.01
+version: latest
 summary:   peer-to-peer network based digital currency
 description: |
   ION is an MIT licensed,
@@ -28,7 +28,7 @@ description: |
     Reddit:    https://www.reddit.com/r/ionomy/
     Facebook:  https://facebook.com/ionomy
 
-grade: stable
+grade: devel
 confinement: strict
 icon: src/qt/res/src/ion.svg
 apps:
@@ -57,12 +57,15 @@ apps:
     desktop: ion.desktop
   cli:
     command: ion-cli
+    plugs: [network, network-bind]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
 
 parts:
   ion:
     source: https://github.com/cevap/ion
     source-type: git
-    source-tag: v3.1.01
+    source-tag: master
     plugin: autotools
     # We don't want to copy the full blockchain every time that the snap is   
     # updated, but there's no way to define a default data dir in bitcoin-qt.
@@ -106,12 +109,6 @@ parts:
       - libgtk2.0-dev
       # Optional.
       - libqrencode-dev
-      # Snap specific
-      - libatk-adaptor
-      - libgail-common
-      - libcanberra-gtk-dev
-      - libcanberra-gtk3-dev
-      - xserver-xorg-dev
     stage-packages: [ca-certificates]
     after:
       - berkeleydb
