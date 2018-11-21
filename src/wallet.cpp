@@ -2747,6 +2747,61 @@ bool CWallet::ConvertList(std::vector<CTxIn> vCoins, std::vector<CAmount>& vecAm
     return true;
 }
 
+//bool CWallet::FundTransaction(CMutableTransaction& tx, CAmount &nFeeRet, int& nChangePosRet, std::string& strFailReason)
+bool CWallet::FundTransaction(CMutableTransaction& tx, CAmount& nFeeRet, int& nChangePosInOut, std::string& strFailReason, bool lockUnspents, const std::set<int>& setSubtractFeeFromOutputs, CCoinControl* coinControl)
+{
+    std::vector<CRecipient> vecSend;
+
+    // Turn the txout set into a CRecipient vector.
+    for (size_t idx = 0; idx < tx.vout.size(); idx++) {
+        const CTxOut& txOut = tx.vout[idx];
+        CRecipient recipient = {txOut.scriptPubKey, txOut.nValue, setSubtractFeeFromOutputs.count(idx) == 1};
+        vecSend.push_back(recipient);
+    }
+
+    coinControl->fAllowOtherInputs = true;
+
+    for (const CTxIn& txin : tx.vin) {
+        coinControl->Select(txin.prevout);
+    }
+
+    // Acquire the locks to prevent races to the new locked unspents between the
+    // CreateTransaction call and LockCoin calls (when lockUnspents is true).
+    LOCK2(cs_main, cs_wallet);
+
+    CReserveKey reservekey(this);
+    CWalletTx wtx;
+    if (!CreateTransaction(vecSend, wtx, reservekey, nFeeRet, nChangePosInOut, strFailReason, coinControl, ALL_COINS, false, (CAmount)0, false)) {
+        return false;
+    }
+
+    if (nChangePosInOut != -1) {
+        tx.vout.insert(tx.vout.begin() + nChangePosInOut, wtx.vout[nChangePosInOut]);
+        // We don't have the normal Create/Commit cycle, and don't want to risk
+        // reusing change, so just remove the key from the keypool here.
+        reservekey.KeepKey();
+    }
+
+    // Copy output sizes from new transaction; they may have had the fee
+    // subtracted from them.
+    for (unsigned int idx = 0; idx < tx.vout.size(); idx++) {
+        tx.vout[idx].nValue = wtx.vout[idx].nValue;
+    }
+
+    // Add new txins while keeping original txin scriptSig/order.
+    for (const CTxIn& txin : wtx.vin) {
+        if (!coinControl->IsSelected(txin.prevout.hash, txin.prevout.n)) {
+            tx.vin.push_back(txin);
+
+            if (lockUnspents) {
+                LockCoin(txin.prevout);
+            }
+        }
+    }
+
+    return true;
+}
+
 bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend,
     CWalletTx& wtxNew,
     CReserveKey& reservekey,
