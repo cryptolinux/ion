@@ -376,6 +376,7 @@ UniValue sendtoaddress(const UniValue& params, bool fHelp)
             "4. \"comment-to\"  (string, optional) A comment to store the name of the person or organization \n"
             "                             to which you're sending the transaction. This is not part of the \n"
             "                             transaction, just kept in your wallet.\n"
+            "5. subtractfeefromamount  (boolean, optional, default=false) The fee will be deducted from the amount being sent.\n"
 
             "\nResult:\n"
             "\"transactionid\"  (string) The transaction id.\n"
@@ -383,6 +384,7 @@ UniValue sendtoaddress(const UniValue& params, bool fHelp)
             "\nExamples:\n" +
             HelpExampleCli("sendtoaddress", "\"iVpPG131hKv1t6iSnbu9HRrhTC7oM2UEaj\" 0.1") +
             HelpExampleCli("sendtoaddress", "\"iVpPG131hKv1t6iSnbu9HRrhTC7oM2UEaj\" 0.1 \"donation\" \"seans outpost\"") +
+            HelpExampleCli("sendtoaddress", "\"iVpPG131hKv1t6iSnbu9HRrhTC7oM2UEaj\" 0.1 \"\" \"\" true") +
             HelpExampleRpc("sendtoaddress", "\"iVpPG131hKv1t6iSnbu9HRrhTC7oM2UEaj\", 0.1, \"donation\", \"seans outpost\""));
 
     LOCK2(cs_main, pwalletMain->cs_wallet);
@@ -408,7 +410,7 @@ UniValue sendtoaddress(const UniValue& params, bool fHelp)
 
     EnsureWalletIsUnlocked();
 
-    SendMoney(dest, nAmount, wtx);
+    SendMoney(dest, nAmount, fSubtractFeeFromAmount, wtx);
 
     return wtx.GetHash().GetHex();
 }
@@ -457,7 +459,7 @@ UniValue sendtoaddressix(const UniValue& params, bool fHelp)
 
     EnsureWalletIsUnlocked();
 
-    SendMoney(dest, nAmount, wtx, true);
+    SendMoney(dest, nAmount, false, wtx, true);
 
     return wtx.GetHash().GetHex();
 }
@@ -965,7 +967,7 @@ UniValue sendfrom(const UniValue& params, bool fHelp)
     if (nAmount > nBalance)
         throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Account has insufficient funds");
 
-    SendMoney(dest, nAmount, wtx);
+    SendMoney(dest, nAmount, false, wtx);
 
     return wtx.GetHash().GetHex();
 }
@@ -988,6 +990,15 @@ UniValue sendmany(const UniValue& params, bool fHelp)
             "    }\n"
             "3. minconf                 (numeric, optional, default=1) Only use the balance confirmed at least this many times.\n"
             "4. \"comment\"             (string, optional) A comment\n"
+            "5. subtractfeefromamount   (string, optional) A json array with addresses.\n"
+            "                           The fee will be equally deducted from the amount of each selected address.\n"
+            "                           Those recipients will receive less bitcoins than you enter in their "
+            "corresponding amount field.\n"
+            "                           If no addresses are specified here, the sender pays the fee.\n"
+            "    [\n"
+            "      \"address\"            (string) Subtract fee from this address\n"
+            "      ,...\n"
+            "    ]\n"
 
             "\nResult:\n"
             "\"transactionid\"          (string) The transaction id for the send. Only 1 transaction is created regardless of \n"
@@ -998,6 +1009,9 @@ UniValue sendmany(const UniValue& params, bool fHelp)
             HelpExampleCli("sendmany", "\"tabby\" \"{\\\"iVpPG131hKv1t6iSnbu9HRrhTC7oM2UEaj\\\":0.01,\\\"iq1qeW9EcY6Rj4LWSkYAfbEUH3X7xLQhAe\\\":0.02}\"") +
             "\nSend two amounts to two different addresses setting the confirmation and comment:\n" +
             HelpExampleCli("sendmany", "\"tabby\" \"{\\\"iVpPG131hKv1t6iSnbu9HRrhTC7oM2UEaj\\\":0.01,\\\"iq1qeW9EcY6Rj4LWSkYAfbEUH3X7xLQhAe\\\":0.02}\" 6 \"testing\"") +
+            "\nSend two amounts to two different addresses, subtract fee from amount:\n" +
+            HelpExampleCli("sendmany", "\"\" \"{\\\"iVpPG131hKv1t6iSnbu9HRrhTC7oM2UEaj\\\":0.01,\\\"iq1qeW9EcY6Rj4LWSkYAfbEUH3X7xLQhAe\\\":0.02}\" "
+                "1 \"\" \"[\\\"iVpPG131hKv1t6iSnbu9HRrhTC7oM2UEaj\\\",\\\"iq1qeW9EcY6Rj4LWSkYAfbEUH3X7xLQhAe\\\"]\"") +
             "\nAs a json rpc call\n" +
             HelpExampleRpc("sendmany", "\"tabby\", \"{\\\"iVpPG131hKv1t6iSnbu9HRrhTC7oM2UEaj\\\":0.01,\\\"iq1qeW9EcY6Rj4LWSkYAfbEUH3X7xLQhAe\\\":0.02}\", 6, \"testing\""));
 
@@ -1014,8 +1028,12 @@ UniValue sendmany(const UniValue& params, bool fHelp)
     if (params.size() > 3 && !params[3].isNull() && !params[3].get_str().empty())
         wtx.mapValue["comment"] = params[3].get_str();
 
+    UniValue subtractFeeFromAmount(UniValue::VARR);
+    if (params.size() > 4)
+        subtractFeeFromAmount = params[4].get_array();
+
     std::set<CTxDestination> destinations;
-    vector<pair<CScript, CAmount> > vecSend;
+    std::vector<CRecipient> vecSend;
 
     CAmount totalAmount = 0;
     vector<string> keys = sendTo.getKeys();

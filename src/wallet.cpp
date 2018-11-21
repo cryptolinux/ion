@@ -2690,11 +2690,14 @@ bool CWallet::GetBudgetSystemCollateralTX(CWalletTx& tx, uint256 hash, bool useI
 
     CAmount nFeeRet = 0;
     std::string strFail = "";
-    vector<pair<CScript, CAmount> > vecSend;
-    vecSend.push_back(make_pair(scriptChange, BUDGET_FEE_TX_OLD)); // Old 50 ION collateral
+    std::vector<CRecipient> vecSend;
+    int nChangePosRet = -1;
+
+    CRecipient recipient = {scriptChange, BUDGET_FEE_TX_OLD, false}; // Old 50 ION collateral
+    vecSend.push_back(recipient);
 
     CCoinControl* coinControl = NULL;
-    bool success = CreateTransaction(vecSend, tx, reservekey, nFeeRet, strFail, coinControl, ALL_COINS, useIX, (CAmount)0);
+    bool success = CreateTransaction(vecSend, tx, reservekey, nFeeRet, nChangePosRet, strFail, coinControl, ALL_COINS, useIX, (CAmount)0);
     if (!success) {
         LogPrintf("GetBudgetSystemCollateralTX: Error - %s\n", strFail);
         return false;
@@ -2713,8 +2716,11 @@ bool CWallet::GetBudgetFinalizationCollateralTX(CWalletTx& tx, uint256 hash, boo
 
     CAmount nFeeRet = 0;
     std::string strFail = "";
-    vector<pair<CScript, CAmount> > vecSend;
-    vecSend.push_back(make_pair(scriptChange, BUDGET_FEE_TX)); // New 5 ION collateral
+    std::vector<CRecipient> vecSend;
+    int nChangePosRet = -1;
+
+    CRecipient recipient = {scriptChange, BUDGET_FEE_TX, false}; // New 5 ION collateral
+    vecSend.push_back(recipient);
 
     CCoinControl* coinControl = NULL;
     bool success = CreateTransaction(vecSend, tx, reservekey, nFeeRet, nChangePosRet, strFail, coinControl, ALL_COINS, useIX, (CAmount)0);
@@ -2738,61 +2744,6 @@ bool CWallet::ConvertList(std::vector<CTxIn> vCoins, std::vector<CAmount>& vecAm
             LogPrintf("ConvertList -- Couldn't find transaction\n");
         }
     }
-    return true;
-}
-
-//bool CWallet::FundTransaction(CMutableTransaction& tx, CAmount &nFeeRet, int& nChangePosRet, std::string& strFailReason)
-bool CWallet::FundTransaction(CMutableTransaction& tx, CAmount& nFeeRet, int& nChangePosInOut, std::string& strFailReason, bool lockUnspents, const std::set<int>& setSubtractFeeFromOutputs, CCoinControl* coinControl)
-{
-    std::vector<CRecipient> vecSend;
-
-    // Turn the txout set into a CRecipient vector.
-    for (size_t idx = 0; idx < tx.vout.size(); idx++) {
-        const CTxOut& txOut = tx.vout[idx];
-        CRecipient recipient = {txOut.scriptPubKey, txOut.nValue, setSubtractFeeFromOutputs.count(idx) == 1};
-        vecSend.push_back(recipient);
-    }
-
-    coinControl->fAllowOtherInputs = true;
-
-    for (const CTxIn& txin : tx.vin) {
-        coinControl->Select(txin.prevout);
-    }
-
-    // Acquire the locks to prevent races to the new locked unspents between the
-    // CreateTransaction call and LockCoin calls (when lockUnspents is true).
-    LOCK2(cs_main, cs_wallet);
-
-    CReserveKey reservekey(this);
-    CWalletTx wtx;
-    if (!CreateTransaction(vecSend, wtx, reservekey, nFeeRet, nChangePosInOut, strFailReason, coinControl, ALL_COINS, false, (CAmount)0, false)) {
-        return false;
-    }
-
-    if (nChangePosInOut != -1) {
-        tx.vout.insert(tx.vout.begin() + nChangePosInOut, wtx.vout[nChangePosInOut]);
-        // We don't have the normal Create/Commit cycle, and don't want to risk
-        // reusing change, so just remove the key from the keypool here.
-        reservekey.KeepKey();
-    }
-
-    // Copy output sizes from new transaction; they may have had the fee
-    // subtracted from them.
-    for (unsigned int idx = 0; idx < tx.vout.size(); idx++) {
-        tx.vout[idx].nValue = wtx.vout[idx].nValue;
-    }
-
-    // Add new txins while keeping original txin scriptSig/order.
-    for (const CTxIn& txin : wtx.vin) {
-        if (!coinControl->IsSelected(txin.prevout.hash, txin.prevout.n)) {
-            tx.vin.push_back(txin);
-
-            if (lockUnspents) {
-                LockCoin(txin.prevout);
-            }
-        }
-    }
-
     return true;
 }
 
@@ -4293,9 +4244,12 @@ void CWallet::AutoCombineDust()
         if (vRewardCoins.size() <= 1)
             continue;
 
-        vector<pair<CScript, CAmount> > vecSend;
+        std::vector<CRecipient> vecSend;
+        int nChangePosRet = -1;
         CScript scriptPubKey = GetScriptForDestination(it->first);
-        vecSend.push_back(make_pair(scriptPubKey, nTotalRewardsValue));
+        // 10% safety margin to avoid "Insufficient funds" errors
+        CRecipient recipient = {scriptPubKey, nTotalRewardsValue - (nTotalRewardsValue / 10), false};
+        vecSend.push_back(recipient);
 
         //Send change to same address
         CTxDestination destMyAddress;
@@ -4398,7 +4352,8 @@ bool CWallet::MultiSend()
             CTxDestination strAddSend = DecodeDestination(vMultiSend[i].first);
             CScript scriptPubKey;
             scriptPubKey = GetScriptForDestination(strAddSend);
-            vecSend.push_back(make_pair(scriptPubKey, nAmount));
+            CRecipient recipient = {scriptPubKey, nAmount, false};
+            vecSend.push_back(recipient);
         }
 
         //get the fee amount

@@ -588,6 +588,11 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
             if (nAmount - nPayAmount == 0)
                 nBytes -= 34;
 
+        // in the subtract fee from amount case, we can tell if zero change already and subtract the bytes, so that fee calculation afterwards is accurate
+        if (CoinControlDialog::fSubtractFeeFromAmount)
+            if (nAmount - nPayAmount == 0)
+                nBytes -= 34;
+
         // Fee
         nPayFee = GetMinimumFee(nBytes, *coinControl(), ::mempool, ::feeEstimator, nullptr /* FeeCalculation */);
 
