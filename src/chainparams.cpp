@@ -465,6 +465,8 @@ public:
         // 	BIP44 coin type is from https://github.com/satoshilabs/slips/blob/master/slip-0044.md
         base58Prefixes[EXT_COIN_TYPE] = boost::assign::list_of(0x80)(0x00)(0x00)(0x77).convert_to_container<std::vector<unsigned char> >();
 
+        bech32_hrp = "ion";
+
         convertSeed6(vFixedSeeds, pnSeed6_main, ARRAYLEN(pnSeed6_main));
 
         fMiningRequiresPeers = true;
@@ -796,6 +798,8 @@ public:
         nStartMasternodePayments = 1558696183; // GMT: Thursday, 15. February 2018 12:03:03
         nBudget_Fee_Confirmations = 3; // Number of confirmations for the finalization fee. We have to make this very short
                                        // here because we only have a 8 block finalization window on testnet
+        bech32_hrp = "ionrt";
+
     }
     const Checkpoints::CCheckpointData& Checkpoints() const
     {
@@ -821,6 +825,9 @@ public:
         fDefaultConsistencyChecks = true;
         fAllowMinDifficultyBlocks = false;
         fMineBlocksOnDemand = true;
+
+        bech32_hrp = "ionut";
+    }
 
         bech32_hrp = "ionut";
     }
