@@ -192,12 +192,8 @@ _For full information about usage and possible installation methods and Branches
 ##### Windows XP/Vista/7/10 Installer downloads
 
  - New Algorithm
- - Zerocoin
+ - Zerocoin v2
  - BIP38/BIP38 Tool
- - Masternode core part (requires new configs for all current users)
- - Better transactions overview
- - New wallet design and layout
- - New tools and scripts
  - New artworks
  - For more, reade release notes directly on our [repository](https://github.com/ioncoincore/ion).
 
@@ -239,47 +235,50 @@ pivx | dash | bitcoin
 
 More information at [ionomy.com](https://www.ionomy.com) Visit our ANN thread at [BitcoinTalk](https://bitcointalk.org/index.php?topic=1443633.7200)
 
-## Coin Specs
+### Coin Specs
+<table>
+<tr><td>Algorithm</td><td>Quark</td></tr>
+<tr><td>Retargeting Algorithm</td><td>DGW</td></tr>
+<tr><td>Block Time</td><td>60 Seconds</td></tr>
+<tr><td>Difficulty Retargeting</td><td>Every Block</td></tr>
+<tr><td>Max Coin Supply</td><td>48,035,935.4 ION</td></tr>
+<tr><td>Premine</td><td>16,400,000 ION*</td></tr>
+</table>
 
-Coin specifications ||
-:------------ | :---:
-Algorithm | Quark |
-Retargeting Algorithm | DGW |
-Difficulty Retargeting | Every Block
-Max Coin Supply | 48,035,935.4 ION
-Premine | 16,400,000 ION*
+*16,629,951 Ion Premine was burned in block [1](https://chainz.cryptoid.info/ion/block.dws?000000ed2f68cd6c7935831cc1d473da7c6decdb87e8b5dba0afff0b00002690.htm)
 
-_*16,629,951 Ion Premine was burned in block [1](https://chainz.cryptoid.info/ion/block.dws?000000ed2f68cd6c7935831cc1d473da7c6decdb87e8b5dba0afff0b00002690.htm)_
+### Reward Distribution
 
-## Reward Distribution
+<table>
+<th colspan=4>Genesis Block</th>
+<tr><th>Block Height</th><th>Reward Amount</th><th>Notes</th></tr>
+<tr><td>1</td><td>16,400,000 ION</td><td>Initial Pre-mine</td></tr>
+</table>
 
-### Genesis block
+### PoW Rewards Breakdown
 
-| Block Height | Reward Amount | Notes |
- ------------: | ------------: | :---: |
-1 | 16,400,000 ION | Initial Pre-mine |
+<table>
+<th>Block Height</th><th>Masternodes</th><th>Miner</th><th>Total</th>
+<tr><td>2-454</td><td>50% (11.5 ION)</td><td>50% (11.5 ION)</td><td>10,419 ION</td></tr>
+</table>
 
-## PoW Rewards Breakdown
+### PoS/PoW Rewards Breakdown
 
-Block Height | Masternodes | Miner | Total |
- ----------: | ----------: | ----: | ----: |
-2-454 | 50% (11.5 ION) | 50% (11.5 ION) | 10,419 ION |
+<table>
+<th>Block Height</th><th>Masternodes</th><th>Miner</th><th>Budget</th>
+<tr><td>455-1000</td><td>50% (11.5 ION)</td><td>50% (11.5 ION)</td><td>12,558 ION</td></tr>
+</table>
 
-## PoS/PoW Rewards Breakdown
+### PoS Rewards Breakdown
 
-Block Height | Masternodes | Miner | Budget |
- ----------: | ----------: | ----: | -----: |
-455-1000 | 50% (11.5 ION) | 50% (11.5 ION)| 12,558 ION |
-
-## PoS Rewards Breakdown
-
-Block Height | Masternodes | Miner | Budget |
- ----------: | ----------: | ----: | -----: |
-1001-125147 | 50% (11.5 ION) | 50% (11.5 ION) | 2,855,381 ION |
-125148-550001 | 50% (8.5 ION) | 50% (8.5 ION) | 7,222,518 ION |
-550002-551441 | 50% (0.01 ION) | 50% (0.01 ION) | 28.8 ION |
-551442-570063 | 50% (8.5 ION) | 50% (8.5 ION) | 316,574 ION |
-570064-1013539 | 50% (5.75 ION) | 50% (5.75 ION) | 5,099,974 ION |
-1013540-1457015 | 50% (2.875 ION) | 50% (2.875 ION) | 2,549,987 ION |
-1457016-3677391 | 50% (0.925 ION) | 50% (0.925 ION) | 4,107,695.6 ION |
-3677392-50981391 | 50% (0.1 ION) | 50% (0.1 ION) | 9,460,800 ION |
+<table>
+<th>Block Height</th><th>Masternodes</th><th>Miner</th><th>Budget</th>
+<tr><td>1001-125147</td><td>50% (11.5 ION)</td><td>50% (11.5 ION)</td><td>2,855,381 ION</td></tr>
+<tr><td>125148-550001</td><td>50% (8.5 ION)</td><td>50% (8.5 ION)</td><td>7,222,518 ION</td></tr>
+<tr><td>550002-551441</td><td>50% (0.01 ION)</td><td>50% (0.01 ION)</td><td>28.8 ION</td></tr>
+<tr><td>551442-570063</td><td>50% (8.5 ION)</td><td>50% (8.5 ION)</td><td>316,574 ION</td></tr>
+<tr><td>570064-1013539</td><td>50% (5.75 ION)</td><td>50% (5.75 ION)</td><td>5,099,974 ION</td></tr>
+<tr><td>1013540-1457015</td><td>50% (2.875 ION)</td><td>50% (2.875 ION)</td><td>2,549,987 ION</td></tr>
+<tr><td>1457016-3677391</td><td>50% (0.925 ION)</td><td>50% (0.925 ION)</td><td>4,107,695.6 ION</td></tr>
+<tr><td>3677392-50981391</td><td>50% (0.1 ION)</td><td>50% (0.1 ION)</td><td>9,460,800 ION</td></tr>
+</table>
