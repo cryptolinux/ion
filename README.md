@@ -11,18 +11,12 @@ Ion Core integration/staging repository
 
 ### Important information
 
-Majority of ion contributors decided to move on from CEVAP's branch to a new one which is believed to fit better to marketing and maybe some other purposes. There will be no further CEVAP releases for ion, project is moved to new community runned repository: https://github.com/ioncoincore/ . Version [v3.0.4](https://github.com/cevap/ion/releases/tag/3.0.4) is the last one which is hosted/published on CEVAP. New repository will be updated in following days and next version will be published only there: 
+**This repository is no longer official release repository** for several reasons. There was internal contributor voting on this matter and this is the decision we all have taken for ability to improve future of ion.
 
-  https://github.com/ioncoincore/ion/releases
-  
-For now this new repository is empty and we will move our content in following days. 
+CEVAP remains as ŕepository from which SNAP builds (Ubuntu Software Center) are delivered and this is the reason why CEVAP will keep contributing and updating the code. All official releases will be available on ioncoincore as binary releases and on CEVAP over SNAP builds. In future we will rename ioncoin.* to ioncoinCE and reserve ioncoin as official name for official branch https://github.com/ioncoincore/ion.git
 
-  - Project where you can look up the progress of this action: [Move from CEVAP branch](https://github.com/orgs/ioncoincore/projects/1)
-  - Download [ioncoincore latest release](https://github.com/ioncoincore/ion/releases)
-=======
 
 [![Build Status](https://travis-ci.com/ioncoincore/ion.svg?branch=master)](https://travis-ci.com/ioncoincore/ion) [![GitHub version](https://badge.fury.io/gh/ioncoincore%2Fion.svg)](https://badge.fury.io/gh/ioncoincore%2Fion) [![Snap Status](https://build.snapcraft.io/badge/ioncoincore/ion.svg)](https://build.snapcraft.io/user/ioncoincore/ion) [![GitHub issues](https://img.shields.io/github/issues/ioncoincore/ion.svg)](https://github.com/ioncoincore/ion/issues) [![GitHub forks](https://img.shields.io/github/forks/ioncoincore/ion.svg)](https://github.com/ioncoincore/ion/network) [![GitHub stars](https://img.shields.io/github/stars/ioncoincore/ion.svg)](https://github.com/ioncoincore/ion/stargazers) [![GitHub license](https://img.shields.io/github/license/ioncoincore/ion.svg)](https://github.com/ioncoincore/ion) [![Twitter](https://img.shields.io/twitter/url/https/github.com/ioncoincore/ion.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fioncoincore%2Fion)
->>>>>>> Cleanup the old CEVAP references in README
 =======
 
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/ioncoincore/ion.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fioncoincore%2Fion) [![Chat on Discord](https://img.shields.io/discord/308323056592486420.svg?logo=discord)](https://discord.gg/vuZn7gC) [![Latest Release](https://img.shields.io/github/downloads/ioncoincore/ion/latest/total.svg)](https://github.com/ioncoincore/ion/releases/latest)
@@ -142,6 +136,10 @@ Please use **only stable release** for production/commercial purpose.
 #### Install latest release candidate from terminal
 
     sudo snap install --candidate ioncoin
+=======
+ - **Official releases**: https://github.com/ioncoincore/
+ - **Development**/__non public__: https://bitbucket.org/ioncoin/ion.git 
+>>>>>>> Update README.md
 
 ### Client: Helium
 
@@ -177,6 +175,7 @@ _For full information about usage and possible installation methods and Branches
 
 ### Method 3. Download and install latest release
 
+<<<<<<< HEAD
 #### Latest stable Release
 - [![Latest stable Release](https://img.shields.io/github/downloads/ioncoincore/ion/latest/total.svg)](https://github.com/ioncoincore/ion/releases/latest)
 
@@ -220,6 +219,9 @@ _For full information about usage and possible installation methods and Branches
 
 
 ## Our sources:
+=======
+We released version based on ION 3.1.0 which is refactored old wallet based on new source with several fixes from bitcoin as well as all commits from our main source PIVX (up to commit [4b1be145](https://github.com/PIVX-Project/PIVX/commit/4b1be14505ded427378f267d9c31a3a0f72bda75)). Please check release notes for more info.
+>>>>>>> Update README.md
 
 We forked from [PIVX](https://github.com/PIVX-Project/PIVX) and integrated ION's specific features into the PivX codebase.
 
