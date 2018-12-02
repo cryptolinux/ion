@@ -1,26 +1,20 @@
-🗺️Ion Core 👛 3.0.4 CE ©️ - 👒 RELEASE 👒  is now available from:
+🗺️Ion Core 👛 3.0.2 CE ©️ - 👒 RELEASE 👒  is now available from:
 
-<<<<<<< HEAD
-  <https://github.com/ioncoincore/ion/releases>
-=======
   <https://github.com/cevap/ion/releases>
->>>>>>> Add release notes
 
-This is a new minor-revision version release, including various bug fixes and updated documentation.
+This is a new minor-revision version release, including various bug fixes and
+performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at github:
 
-<<<<<<< HEAD
-  <https://github.com/ioncoincore/ion/issues>
-=======
   <https://github.com/cevap/ion/issues>
->>>>>>> Add release notes
 
 Recommended Update
 ==============
 
-🗺️Ion Core 👛 3.0.4 CE ©️ - 👒 RELEASE 👒 is a recommended update for all users. This release contains This release contains a coin supply calculation fix,
- version numbering correction and updated documentation.
+🗺️Ion Core 👛 3.0.2 CE ©️ - 👒 RELEASE 👒 is a recommended, semi-mandatory update for all users. This release contains transaction creation bug fixes for xION spends, automint calculation adjustments, and other various updates/fixes.
+
+xION spending requires this update.
 
 How to Upgrade
 ==============
@@ -46,23 +40,150 @@ frequently tested on them.
 **Currently there are issues with the 3.0.x gitian releases on MacOS version 10.13 (High Sierra), no reports of issues on older versions of MacOS.**
 
 
-3.0.4 Change log
+Notable Changes
+===============
+
+xION (_zerocoin for ion_)
+-------------------------
+We have now zerocoin into ion. More info about what it is and how to use it will follow in announcements and further release infos.
+
+Snap/Snapcraft builds
+----------------------------
+Snapcraft is enabled and it can be simply installed by
+
+`sudo snap install --edge ion`
+
+([Don’t have snapd installed?](https://docs.snapcraft.io/core/install))
+
+Supported architectures: `i386, armhf, amd64`
+
+Snap supported OS and installation instructions:
+
+  - [Arch Linux](https://docs.snapcraft.io/core/install-arch-linux)
+  - [Debian](https://docs.snapcraft.io/core/install-debian)
+  - [Fedora](https://docs.snapcraft.io/core/install-fedora)
+  - [Gentoo](https://docs.snapcraft.io/core/install-gentoo)
+  - [Linux Mint](https://docs.snapcraft.io/core/install-linux-mint)
+  - [Manjaro](https://docs.snapcraft.io/core/install-manjaro)
+  - [OpenEmbedded/Yocto](https://docs.snapcraft.io/core/install-oe-yocto)
+  - [openSUSE](https://docs.snapcraft.io/core/install-opensuse)
+  - [OpenWrt](https://docs.snapcraft.io/core/install-openwrt)
+  - [Solus](https://docs.snapcraft.io/core/install-solus)
+  - [Ubuntu](https://docs.snapcraft.io/core/install-ubuntu)
+
+
+Functions renamed
+-----------------
+Stashedsend is now Swift-X
+
+New algorithm
+-------------
+We dropped MIDAS and will use DGW. More info will follow.
+
+Automint
+--------
+Autominiting with zerocoin. More info will follow.
+
+New look and design
+-------------------
+We have new look and desing, currently it is a dirty version. It includes new GUI layout, new colors.
+
+Performance
+-----------
+Current source base is much faster and cleaner than ion's previous one. It uses all cpu's and there are 
+no performance issues which we could observe, it is just much faster then previous source base.
+
+BIP38
+-----
+We have BIP38 including a tool with password encryption and decrpytion features
+
+Blockexplorer
+-------------
+We finaly have built in blockexplorer which works on all ion's networks.
+
+User friendly
+-------------
+There are some new features which improve usability as well as user experience in general. More info to follow.
+
+Auto Wallet Backup
+---------------------
+In addition to the automatic wallet backup that is done at each start of the client, a new automatic backup function has been added that will, by default, create a backup of the wallet file during each xION mint operation (xION spends which re-mint their change are also included in this). This functionality is controlled by the `-backupxion` command-line option, which defaults to `1` (enabled, auto-backup).
+
+Users that wish to prevent this behavior (not recommended) can pass `-backupxion=0` at the command-line when starting the client, or add `backupxion=0` to their `ioncoin.conf` file.
+
+xION Automint Calculations
+---------------------
+A bug in the automint calculations was made apparent on mainnet when block times exceeded expectations, resulting in xION mint transactions that were in an unconfirmed state to still be treated as if they had never been minted. This caused automint to effectively mint more than what was intended.
+
+xION Spending Fix
+---------------------
+The size of xION spend transactions is knowingly larger than normal transactions, and while this was expected, a much stricter check against the scriptsig size is used for mainnet, causing the transactions to be rejected by the mempool, and thus not being packaged into any blocks.
+
+xION Transaction Recovery
+---------------------
+Due to the aforementioned issue with xION spending, users may find that their attempted spends are now conflicted and xION balances are not represented as expected. "Recovery" of these transactions can be done using the following methods:
+
+1. GUI:
+
+   The Privacy tab has the `Reset` and `Rescan` buttons that can be used to restore these mints/spends from a state of being marked as unavailable.
+
+2. RPC:
+
+   The RPC commands `resetspentzerocoin` and `resetmintzerocoin` are the command-line counterparts to the above, and can be used by users that do not use the GUI wallet.
+
+RPC Changes
+---------------------
+The `bip38decrypt` command has had it's parameter order changed to be more consistent with it's counterpart. The command now expects the Ion address as it's first parameter and the passphrase as it's second parameter.
+
+Bip38 Compatibility With 3rd Party Tools
+---------------------
+The in-wallet bip38 encryption method was leaving the final 4 bytes of the encrypted key blank. This caused an incompatibility issue with 3rd party tools like the paper wallet generators that could decrypt bip38 encrypted keys. Cross-tool compatibility has now been restored.
+
+3.0.2 Change log
 =================
 
-Coin supply calculation correction
--------------------------
-The coin supply was calculated at the fork point, and the base line number for the recalculation was off.
+This release is a fork to the old chain. Detailed release notes follow.
+We dropped MIDAS and use DGW as well as some other changes. Previous old version
+was based on old projects which were not updated. One of our main goals for v3 release
+was to get closer to bitcoin's source and update in general sources to some newer
+and cleaner codebase then it was previously. We forked from PIVX which is better
+maintenanced then previous releases of 🗺️Ion Core 👛 which are based on obsolete code.
+In this version everything is new, one big feature iz xION which iz zerocoin for
+ion. Port and other settings remain same. Please foolow our wiki for more information
+about how to backup your wallet/keys and upgrade to new wallet as well as recovery paths
+and detailed explanations of how to use new code. One big difference is finally restricting
+in better was single mode masternode, as multi mode is not usefull within larger networks.
 
-3.0.3 Change log
-=================
 
-Windows masternode.conf port parsing fix
--------------------------
-Fixed an issue on Windows wallet with opening masternode ports based on Dash commit 56971f8
+Notable changes of source for the fork
+======================================
+### RPC and other APIs
+- #275 `059aaa9` [RPC] Change Parameter Order of bip38decrypt (presstab)
 
-Updated DGW start time
--------------------------
-Adjusted the DGW start time
+### P2P Protocol and Network Code
+- #286 `85c0f53` [Main] Change sporkDB from smart ptr to ptr. (presstab)
+- #292 `feadab4` Additional checks for double spending of zPiv serials. (presstab)
+
+### Wallet
+- #271 `5e9a086` [Wallet] Remove unused member wallet in UnlockContext inner class (Jon Spock)
+- #279 `e734010` Add -backupzpiv startup flag. (presstab)
+- #280 `fdc182d` [Wallet] Fix zPiv spending errors. (presstab)
+- #282 `310f216` [Wallet] Count pending zPiv balance for automint. (presstab)
+- #290 `004d7b6` Include both pending and mature zerocoins for automint calculations (presstab)
+
+### GUI
+- #268 `bc63f24` [GUI/RPC] Changed bubblehelp text + RPC startmasternode help text fixed (Mrs-X)
+- #269 `5466a9b` Check if model is valid before using in transactionView (Jon Spock)
+- #270 `bd2328e` [Qt] Make lock icon clickable to toggle wallet lock state (Fuzzbawls)
+- #273 `f31136e` [Qt] Fix UI tab order and shortcuts (Mrs-X)
+- #287 `74a1c3c` [Qt] Don't allow the Esc key to close the privacy tab (Fuzzbawls)
+- #291 `cb314e6` [Qt] zPiv control quantity/amount fixes (rejectedpromise)
+
+### Miscellaneous
+- #266 `2d97b54` [Scripts] Fix location for aarch64 outputs in gitian-build.sh (Fuzzbawls)
+- #272 `958f51e` [Minting] Replace deprecated auto_ptr. (presstab)
+- #276 `03f14ba` Append BIP38 encrypted key with an 4 byte Base58 Checksum (presstab)
+- #288 `2522aa1` Bad CBlockHeader copy. (furszy)
 
 Credits
 =======
@@ -70,9 +191,17 @@ Credits
 Thanks to everyone who directly contributed to this release:
 - Formax
 - CEVAP
-- Ceforce
-- Atomsmasher
-- Coinkiller
+
+And to source contributors which provided base for this release with their project:
+- Fuzzbawls
+- Jon Spock
+- Mrs-X
+- furszy
+- presstab
+- rejectedpromise
+- Warrows
+
+As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/ion/).
 
 Setting up the Gitian image
 ======================
@@ -114,15 +243,9 @@ There will be a lot of warnings printed during the build of the image. These can
 
 Getting and building the inputs
 --------------------------------------
-<<<<<<< HEAD
-At this point you have two options, you can either use the automated script (found in https://github.com/ioncoincore/ion/blob/master/contrib/gitian-build.sh, only works in Debian/Ubuntu) or you could manually do everything by following this guide. If you are using the automated script, then run it with the --setup command. Afterwards, run it with the --build command (example: contrib/gitian-build.sh -b signer 3.0.2). Otherwise ignore this.
-
-Follow the instructions in https://github.com/ioncoincore/ion/blob/master/doc/release-process.md in the bitcoin repository under 'Fetch and create inputs' to install sources which require manual intervention. Also optionally follow the next step: 'Seed the Gitian sources cache and offline git repositories' which will fetch the remaining files required for building offline.
-=======
 At this point you have two options, you can either use the automated script (found in https://github.com/cevap/ion/blob/master/contrib/gitian-build.sh, only works in Debian/Ubuntu) or you could manually do everything by following this guide. If you are using the automated script, then run it with the --setup command. Afterwards, run it with the --build command (example: contrib/gitian-build.sh -b signer 3.0.2). Otherwise ignore this.
 
 Follow the instructions in https://github.com/cevap/ion/blob/master/doc/release-process.md in the bitcoin repository under 'Fetch and create inputs' to install sources which require manual intervention. Also optionally follow the next step: 'Seed the Gitian sources cache and offline git repositories' which will fetch the remaining files required for building offline.
->>>>>>> Add release notes
 
 _**Note**: please use our links here, I left cevap as I do not want to remove it later_
 
@@ -200,11 +323,7 @@ cd ./gitian-builder
 mkdir -p inputs
 wget -P inputs https://github.com/cevap/osslsigncode/releases/download/v1.7.1/osslsigncode-Backports-to-1.7.1.patch
 wget -P inputs -O inputs/v1.7.1.tar.gz https://github.com/cevap/osslsigncode/archive/v1.7.1.tar.gz
-<<<<<<< HEAD
-wget -P inputs https://github.com/gitianuser/MacOSX-SDKs/releases/download/MacOSX10.11.sdk/MacOSX10.11.sdk.tar.xz
-=======
 wget -P inputs https://github.com/cevap/MacOSX-SDKs/releases/download/MacOSX10.11.sdk-trusty/MacOSX10.11.sdk.tar.gz
->>>>>>> Add release notes
 cd ..
 
 # prebuild ion dependencies
