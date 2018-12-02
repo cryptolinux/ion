@@ -1,5 +1,5 @@
 name: ioncoin
-version: latest
+version: v3.1.00
 summary:   peer-to-peer network based digital currency
 description: |
   ION is an MIT licensed,
@@ -28,7 +28,7 @@ description: |
     Reddit:    https://www.reddit.com/r/ionomy/
     Facebook:  https://facebook.com/ionomy
 
-grade: devel
+grade: stable
 confinement: strict
 icon: src/qt/res/src/ion.svg
 apps:
