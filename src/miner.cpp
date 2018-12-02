@@ -89,7 +89,7 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
     bool fZerocoinActive = GetAdjustedTime() >= Params().Zerocoin_StartTime();
     pblock->nVersion = 9;   // Supports CLTV activation
 
-    pblock->nVersion = 5;   // Supports CLTV activation
+    pblock->nVersion = 9;   // Supports CLTV activation
 
     // Create coinbase tx
     CMutableTransaction txNew;
