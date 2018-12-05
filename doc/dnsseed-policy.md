@@ -29,7 +29,7 @@ their serving infrastructure and not sell or transfer control of their
 DNS seed. Any hosting services contracted by the operator are
 equally expected to uphold these expectations.
 
-1. The DNS seed results must consist exclusively of fairly selected and
+### 2. The DNS seed results must consist exclusively of fairly selected and
 functioning ION nodes from the public network to the best of the
 operators understanding and capability.
 

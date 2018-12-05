@@ -1,12 +1,10 @@
-UNIX BUILD NOTES
-====================
-Some notes on how to build ION in Unix.
-
-(for OpenBSD specific instructions, see [build-openbsd.md](build-openbsd.md))
-=======
 # UNIX BUILD NOTES
 Some notes on how to build ION in Unix.
 
+# UNIX BUILD NOTES
+Some notes on how to build ION in Unix.
+
+=======
 Table of Contents
 ------------------
 - [UNIX BUILD NOTES](#unix-build-notes)
@@ -141,6 +139,7 @@ To build:
 
 
 ## Berkeley DB
+It is recommended to use Berkeley DB 4.8. If you have to build it yourself:
 
 It is recommended to use Berkeley DB 4.8. If you have to build it yourself,
 you can use [the installation script included in contrib/](/contrib/install_db4.sh)
@@ -162,8 +161,7 @@ Building
 
 Follow the instructions in [build-generic](build-generic.md)
 
-Security
---------
+## Security
 To help make your ION installation more secure by making certain attacks impossible to
 exploit even if a vulnerability is found, binaries are hardened by default.
 This can be disabled with:

@@ -1,9 +1,3 @@
-The commands in this guide should be executed in a Terminal application.
-The built-in one is located in `/Applications/Utilities/Terminal.app`.
-
-Preparation
------------
-Install the OS X command line tools:
 =======
 # Mac OS X Build Instructions and Notes
 This guide will show you how to build iond (headless client) for OSX.
@@ -53,7 +47,7 @@ Follow the instructions in [build-generic](build-generic.md)
 Running
 -------
 
-       git clone https://github.com/ioncoincore/ion.git
+       git clone https://github.com/cevap/ion.git
        cd ION
 
 Before running, it's recommended you create an RPC configuration file.
