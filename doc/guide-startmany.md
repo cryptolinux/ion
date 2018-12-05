@@ -27,8 +27,8 @@ Table of Contents
 ## Two Options for Setting up your Wallet
 There are many ways to setup a wallet to support start-many. This guide will walk through two of them.
 
-1. [Importing an existing wallet (recommended if you are consolidating wallets).](#option1)
-2. [Sending 10,000 ION to new wallet addresses.](#option2)
+1. [Importing an existing wallet (recommended if you are consolidating wallets).](#option-1-importing-an-existing-wallet)
+2. [Sending 20,000 ION to new wallet addresses.](#option-2-starting-with-a-new-wallet)
 
 ## Option 1. Importing an existing wallet
 
@@ -69,7 +69,7 @@ The wallet will re-scan and you will see your available balance increase by the 
 
 1. Open the QT Wallet.
 2. Click the Receive tab. 
-   ![](https://raw.githubusercontent.com/wiki/ioncoincore/ion/assets/images/sources/receive-3.1.0.png)
+   ![](../assets/images/sources/receive-3.1.0.png)
 3. Fill in the form to request a payment.
     * Label: `mn01`
     * Amount (optional): `20000`
@@ -79,14 +79,14 @@ The wallet will re-scan and you will see your available balance increase by the 
 
 Create a new wallet address for each MasterNode.
 
-![](https://raw.githubusercontent.com/wiki/ioncoincore/ion/assets/images/sources/request-payment-mn1.png)
-![](https://raw.githubusercontent.com/wiki/ioncoincore/ion/assets/images/sources/request-payment-mn1-paymentinfo.png)
+![](../assets/images/sources/request-payment-mn1.png)
+![](../assets/images/sources/request-payment-mn1-paymentinfo.png)
 
 Close your QT Wallet.
 
-### Send 10,000 ION to New Addresses
+### Send 20,000 ION to New Addresses
 
-Just like setting up a standard MN. Send exactly 10,000 ION to each new address created above.
+Just like setting up a standard MN. Send exactly 20,000 ION to each new address created above.
 
 ### Create New Masternode Private Keys
 
@@ -110,7 +110,7 @@ Copy the masternode private key and correspondig collateral output transaction t
 
 The masternode private key may be an existing key from [Option 1](#option-1-importing-an-existing-wallet), or a newly generated key from [Option 2](#option-2-starting-with-a-new-wallet). 
 
-*Please note, the masternode priviate key is not the same as a wallet private key. Never put your wallet private key in the masternode.conf file. That is equivalent to putting your 10,000 ION on the remote server and defeats the purpose of a hot/cold setup.*
+*Please note, the masternode priviate key is not the same as a wallet private key. Never put your wallet private key in the masternode.conf file. That is equivalent to putting your 20,000 ION on the remote server and defeats the purpose of a hot/cold setup.*
 
 ### Get the collateral output
 
@@ -165,7 +165,7 @@ I usually confirm that remote is on the correct block by issuing:
 
 ```iond getinfo```
 
-And compare with the block explorer at http://ioncoin.org/explorer/ (Chainz)
+And compare with the block explorer at http://ioncore.xyz/explorer/ (Chainz)
 
 ### Local
 

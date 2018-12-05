@@ -1,5 +1,13 @@
+# TOR SUPPORT IN ION
 =======
 # TOR SUPPORT IN ION
+
+Table of Contents
+-----------------
+- [TOR SUPPORT IN ION](#tor-support-in-ion)
+    - [Run ION behind a Tor proxy](#run-ion-behind-a-tor-proxy)
+    - [Run a ION hidden server](#run-a-ion-hidden-server)
+    - [List of known ION Tor relays](#list-of-known-ion-tor-relays)
 
 It is possible to run ION as a Tor hidden service, and connect to such services.
 
@@ -10,9 +18,7 @@ See [Tor Project FAQ:TBBSocksPort](https://www.torproject.org/docs/faq.html.en#T
 for how to properly configure Tor.
 
 
-Run ION behind a Tor proxy
-----------------------------------
-
+## Run ION behind a Tor proxy
 The first step is running ION behind a Tor proxy. This will already make all
 outgoing connections be anonymized, but more is possible.
 
@@ -38,9 +44,6 @@ An example how to start the client if the Tor proxy is running on local host on
 port 9050 and only allows .onion nodes to connect:
 
 	./iond -onion=127.0.0.1:9050 -onlynet=tor -listen=0 -addnode=ssapp53tmftyjmjb.onion
-
-Run a ION hidden server
--------------------------------
 
 ## Run a ION hidden server
 If you configure your Tor system accordingly, it is possible to make your node also
@@ -93,8 +96,7 @@ and open port 9999 on your firewall (or use -upnp).
 If you only want to use Tor to reach onion addresses, but not use it as a proxy
 for normal IPv4/IPv6 communication, use:
 
-List of known ION Tor relays
-------------------------------------
+## List of known ION Tor relays
 ```
 COMMING SOON
 ```

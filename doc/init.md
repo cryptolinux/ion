@@ -50,7 +50,7 @@ with the option '-rpccookiefile'.
 Once you have a password in hand, set rpcpassword= in /etc/ioncoin/ioncoin.conf
 
 For an example configuration file that describes the configuration settings,
-see `contrib/debian/examples/ioncoin.conf`.
+see contrib/debian/examples/ioncoin.conf.
 
 ## 3. Paths
 All three configurations assume several paths that might need to be adjusted.

@@ -3,19 +3,18 @@
 Table of Contents
 -----------------
 - [Translations](#translations)
-  - [Table of Contents](#table-of-contents)
-    - [Helping to translate (using Transifex)](#helping-to-translate-using-transifex)
-    - [Writing code with translations](#writing-code-with-translations)
-      - [Example Qt translation](#example-qt-translation)
-    - [Creating a pull-request](#creating-a-pull-request)
-    - [Creating a Transifex account](#creating-a-transifex-account)
-    - [Installing the Transifex client command-line tool](#installing-the-transifex-client-command-line-tool)
-      - [For Linux and Mac](#for-linux-and-mac)
-      - [For Windows](#for-windows)
-    - [Synchronising translations](#synchronising-translations)
-    - [Handling Plurals (in source files)](#handling-plurals-in-source-files)
-    - [Translating a new language](#translating-a-new-language)
-    - [Questions and general assistance](#questions-and-general-assistance)
+        - [Helping to translate (using Transifex)](#helping-to-translate-using-transifex)
+        - [Writing code with translations](#writing-code-with-translations)
+            - [Example Qt translation](#example-qt-translation)
+        - [Creating a pull-request](#creating-a-pull-request)
+        - [Creating a Transifex account](#creating-a-transifex-account)
+        - [Installing the Transifex client command-line tool](#installing-the-transifex-client-command-line-tool)
+            - [For Linux and Mac](#for-linux-and-mac)
+            - [For Windows](#for-windows)
+        - [Synchronising translations](#synchronising-translations)
+        - [Handling Plurals (in source files)](#handling-plurals-in-source-files)
+        - [Translating a new language](#translating-a-new-language)
+        - [Questions and general assistance](#questions-and-general-assistance)
 
 The Ion Core project has been designed to support multiple localisations. This makes adding new phrases, and completely new languages easily achievable. For managing all application translations, Ion Core makes use of the Transifex online translation management tool.
 

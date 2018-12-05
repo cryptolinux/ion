@@ -1,41 +1,3 @@
-
-Ion now supports full decentralized budgets that are paid directly from the blockchain via superblocks once per month.
-
-Budgets go through a series of stages before being paid:
- * prepare - create a special transaction that destroys coins in order to make a proposal
- * submit - propagate transaction to peers on network
- * voting - lobby for votes on your proposal
- * get enough votes - make it into the budget
- * finalization - at the end of each payment period, proposals are sorted then compiled into a finalized budget
- * finalized budget voting - masternodes that agree with the finalization will vote on that budget
- * payment - the winning finalized budget is paid
-
-
-1. Prepare collateral transaction
---
-
-In this transaction we prepare collateral for "_cool-project_". This proposal will pay _1200_ ION, _12_ times over the course of a year totaling _24000_ ION.
-
-**Warning: if you change any fields within this command, the collateral transaction will become invalid.**
-
-Format: ```mngovernance prepare proposal-name url payment-count block-start ion-address monthly-payment-ion```
-
-Example: ```mngovernance prepare cool-project http://www.cool-project/one.json 12 100000 y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7 1200 true```
-
-Output: ```464a0eb70ea91c94295214df48c47baa72b3876cfb658744aaf863c7b5bf1ff0```
-
-This is the collateral hash, copy this output for the next step.
-
-2 Submit proposal to network
---
-
-Now we can submit our proposal to the network.
-
-Format: ```mngovernance submit proposal-name url payment-count block-start ion-address monthly-payment-ion fee-tx```
-
-Example: ```mngovernance submit cool-project http://www.cool-project/one.json 12 100000 y6R9oN12KnB9zydzTLc3LikD9cCjjQzYG7 1200 464a0eb70ea91c94295214df48c47baa72b3876cfb658744aaf863c7b5bf1ff0```
-
-Output : ```a2b29778ae82e45a973a94309ffa6aa2e2388b8f95b39ab3739f0078835f0491```
 =======
 # Masternode Budget API
 Ion now supports full decentralized budgets that are paid directly from the blockchain via superblocks once per month.
@@ -254,16 +216,16 @@ When block `1000000` is reached you'll receive a payment for `1200` ION.
 ## RPC Commands
 The following new RPC commands are supported:
 - mnbudget "command"... ( "passphrase" )
- * prepare            - Prepare proposal for network by signing and creating tx
- * submit             - Submit proposal for network
- * vote-many          - Vote on a ION initiative
- * vote-alias         - Vote on a ION initiative
- * vote               - Vote on a ION initiative/budget
- * getvotes           - Show current masternode budgets
- * getinfo            - Show current masternode budgets
- * show               - Show all budgets
- * projection         - Show the projection of which proposals will be paid the next cycle
- * check              - Scan proposals and remove invalid
+  - prepare            - Prepare proposal for network by signing and creating tx
+  - submit             - Submit proposal for network
+  - vote-many          - Vote on a Ion initiative
+  - vote-alias         - Vote on a Ion initiative
+  - vote               - Vote on a Ion initiative/budget
+  - getvotes           - Show current masternode budgets
+  - getinfo            - Show current masternode budgets
+  - show               - Show all budgets
+  - projection         - Show the projection of which proposals will be paid the next cycle
+  - check              - Scan proposals and remove invalid
 
 - mnfinalbudget "command"... ( "passphrase" )
   - vote-many   - Vote on a finalized budget
