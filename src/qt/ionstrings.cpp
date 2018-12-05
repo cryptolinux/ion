@@ -271,6 +271,9 @@ QT_TRANSLATE_NOOP("ion-core", ""
 "the OpenSSL Toolkit <https://www.openssl.org/> and cryptographic software "
 "written by Eric Young and UPnP software written by Thomas Bernard."),
 QT_TRANSLATE_NOOP("ion-core", ""
+"Total length of network version string (%i) exceeds maximum length (%i). "
+"Reduce the number or size of uacomments."),
+QT_TRANSLATE_NOOP("ion-core", ""
 "Unable to bind to %s on this computer. Ion Core is probably already running."),
 QT_TRANSLATE_NOOP("ion-core", ""
 "Unable to locate enough Obfuscation denominated funds for this transaction."),
