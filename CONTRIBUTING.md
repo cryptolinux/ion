@@ -257,10 +257,11 @@ function gfd() {
 
 ### Finding Reviewers
 
-The review process is normally fairly responsive on the Ion Core repository, however
-this might not always be the case. If you find that you've been waiting
-for a pull request to be given attention for several months, there may be a number
-of reasons for this, some of which you can do something about:
+As most reviewers are themselves developers with their own projects, the review
+process can be quite lengthy, and some amount of patience is required. If you find
+that you've been waiting for a pull request to be given attention for several
+months, there may be a number of reasons for this, some of which you can do something
+about:
 
 - It may be because of a feature freeze due to an upcoming release. During this time,
   only bug fixes are taken into consideration. If your pull request is a new feature,
