@@ -1,7 +1,7 @@
 PACKAGE=qt
-$(package)_version=5.7.1
-$(package)_download_path=https://download.qt.io/archive/qt/5.7/$($(package)_version)/submodules
-$(package)_suffix=opensource-src-$($(package)_version).tar.gz
+$(package)_version=5.9.7
+$(package)_download_path=https://download.qt.io/official_releases/qt/5.9/$($(package)_version)/submodules
+$(package)_suffix=opensource-src-$($(package)_version).tar.xz
 $(package)_file_name=qtbase-$($(package)_suffix)
 $(package)_sha256_hash=36dd9574f006eaa1e5af780e4b33d11fe39d09fd7c12f3b9d83294174bd28f00
 $(package)_dependencies=openssl zlib
@@ -27,7 +27,6 @@ $(package)_config_opts += -c++std c++11
 $(package)_config_opts += -confirm-license
 $(package)_config_opts += -dbus-runtime
 $(package)_config_opts += -hostprefix $(build_prefix)
-$(package)_config_opts += -no-compile-examples
 $(package)_config_opts += -no-cups
 $(package)_config_opts += -no-egl
 $(package)_config_opts += -no-eglfs
@@ -77,13 +76,6 @@ $(package)_config_opts += -no-feature-pdf
 $(package)_config_opts += -no-feature-printer
 $(package)_config_opts += -no-feature-printdialog
 $(package)_config_opts += -no-feature-concurrent
-$(package)_config_opts += -no-feature-sql
-$(package)_config_opts += -no-feature-statemachine
-$(package)_config_opts += -no-feature-syntaxhighlighter
-$(package)_config_opts += -no-feature-textbrowser
-$(package)_config_opts += -no-feature-textodfwriter
-$(package)_config_opts += -no-feature-udpsocket
-$(package)_config_opts += -no-feature-wizard
 $(package)_config_opts += -no-feature-xml
 
 ifneq ($(build_os),darwin)
