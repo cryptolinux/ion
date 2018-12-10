@@ -2,7 +2,7 @@
 name: "ion-win-signer"
 distro: "ubuntu"
 suites:
-- "trusty"
+- "bionic"
 architectures:
 - "amd64"
 packages:
