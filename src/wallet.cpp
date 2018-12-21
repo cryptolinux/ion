@@ -2130,6 +2130,9 @@ bool CWallet::SelectStakeCoins(std::list<std::unique_ptr<CStakeInput> >& listInp
 
     //xION
     if (GetBoolArg("-xionstake", true) && chainActive.Height() > Params().Zerocoin_Block_V2_Start() && !IsSporkActive(SPORK_9_ZEROCOIN_MAINTENANCE_MODE)) {
+
+        return true;
+
         //Only update xION set once per update interval
         bool fUpdate = false;
         static int64_t nTimeLastUpdate = 0;
