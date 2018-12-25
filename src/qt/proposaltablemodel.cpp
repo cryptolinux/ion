@@ -65,7 +65,7 @@ void budgetToST(CBudgetProposal* pbudgetProposal, UniValue& bObj)
     bObj.push_back(pbudgetProposal->GetBlockEnd());
     bObj.push_back(pbudgetProposal->GetTotalPaymentCount());
     bObj.push_back(pbudgetProposal->GetRemainingPaymentCount());
-    bObj.push_back(CBitcoinAddress(address).ToString());
+    bObj.push_back(EncodeDestination(address));
     bObj.push_back(pbudgetProposal->GetYeas());
     bObj.push_back(pbudgetProposal->GetNays());
     bObj.push_back(pbudgetProposal->GetAbstains());
