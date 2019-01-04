@@ -107,19 +107,19 @@ One ion core build for all Linux and IoT
 
 Please use **only stable release** for production/commercial purpose.
 
-    sudo snap install ioncoin
+    sudo snap install ion-full
 
 #### Install latest release candidate from terminal
 
-    sudo snap install --candidate ioncoin
+    sudo snap install --candidate ion-full
 
 #### Install latest beta release from terminal
 
-    sudo snap install --beta ioncoin
+    sudo snap install --beta ion-full
 
 #### Install latest edge release from terminal
 
-    sudo snap install --edge ioncoin
+    sudo snap install --edge ion-full
 
 #### Upgrade to latest version from terminal
 
