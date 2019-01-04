@@ -1,6 +1,8 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2020 The Dash Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2014-2015 The Dash developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <qt/signverifymessagedialog.h>
@@ -20,22 +22,13 @@
 
 #include <QClipboard>
 
-SignVerifyMessageDialog::SignVerifyMessageDialog(QWidget* parent) :
-    QDialog(parent),
-    ui(new Ui::SignVerifyMessageDialog),
-    model(0)
+SignVerifyMessageDialog::SignVerifyMessageDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
+                                                                    ui(new Ui::SignVerifyMessageDialog),
+                                                                    model(0)
 {
     ui->setupUi(this);
-    pageButtons.addButton(ui->btnSignMessage, pageButtons.buttons().size());
-    pageButtons.addButton(ui->btnVerifyMessage, pageButtons.buttons().size());
-    connect(&pageButtons, SIGNAL(buttonClicked(int)), this, SLOT(showPage(int)));
-#if QT_VERSION >= 0x040700
-    ui->messageIn_SM->setPlaceholderText(tr("Enter a message to be signed"));
-    ui->signatureOut_SM->setPlaceholderText(tr("Click \"Sign Message\" to generate signature"));
 
-    ui->messageIn_VM->setPlaceholderText(tr("Enter a message to be verified"));
-    ui->signatureIn_VM->setPlaceholderText(tr("Enter a signature for the message to be verified"));
-#endif
+    ui->signatureOut_SM->setPlaceholderText(tr("Click \"Sign Message\" to generate signature"));
 
     GUIUtil::setIcon(ui->addressBookButton_SM, "address-book");
     GUIUtil::setIcon(ui->pasteButton_SM, "editpaste");
@@ -143,7 +136,7 @@ void SignVerifyMessageDialog::on_signMessageButton_SM_clicked()
 
     CTxDestination destination = DecodeDestination(ui->addressIn_SM->text().toStdString());
     if (!IsValidDestination(destination)) {
-        ui->statusLabel_SM->setStyleSheet(GUIUtil::getThemedStyleQString(GUIUtil::ThemedStyle::TS_ERROR));
+        ui->statusLabel_SM->setStyleSheet("QLabel { color: red; }");
         ui->statusLabel_SM->setText(tr("The entered address is invalid.") + QString(" ") + tr("Please check the address and try again."));
         return;
     }
@@ -164,9 +157,8 @@ void SignVerifyMessageDialog::on_signMessageButton_SM_clicked()
     }
 
     CKey key;
-    if (!model->getPrivKey(*keyID, key))
-    {
-        ui->statusLabel_SM->setStyleSheet(GUIUtil::getThemedStyleQString(GUIUtil::ThemedStyle::TS_ERROR));
+    if (!pwalletMain->GetKey(*keyID, key)) {
+        ui->statusLabel_SM->setStyleSheet("QLabel { color: red; }");
         ui->statusLabel_SM->setText(tr("Private key for the entered address is not available."));
         return;
     }
@@ -219,13 +211,14 @@ void SignVerifyMessageDialog::on_addressBookButton_VM_clicked()
 
 void SignVerifyMessageDialog::on_verifyMessageButton_VM_clicked()
 {
-    CTxDestination destination = DecodeDestination(ui->addressIn_VM->text().toStdString());
+    CTxDestination destination = DecodeDestination(ui->addressIn_SM->text().toStdString());
     if (!IsValidDestination(destination)) {
-        ui->statusLabel_VM->setStyleSheet(GUIUtil::getThemedStyleQString(GUIUtil::ThemedStyle::TS_ERROR));
+        ui->statusLabel_VM->setStyleSheet("QLabel { color: red; }");
         ui->statusLabel_VM->setText(tr("The entered address is invalid.") + QString(" ") + tr("Please check the address and try again."));
         return;
     }
-    if (!boost::get<CKeyID>(&destination)) {
+    const CKeyID* keyID = boost::get<CKeyID>(&destination);
+    if (!keyID) {
         ui->addressIn_VM->setValid(false);
         ui->statusLabel_VM->setStyleSheet(GUIUtil::getThemedStyleQString(GUIUtil::ThemedStyle::TS_ERROR));
         ui->statusLabel_VM->setText(tr("The entered address does not refer to a key.") + QString(" ") + tr("Please check the address and try again."));
@@ -257,7 +250,7 @@ void SignVerifyMessageDialog::on_verifyMessageButton_VM_clicked()
     }
 
     if (!(CTxDestination(pubkey.GetID()) == destination)) {
-        ui->statusLabel_VM->setStyleSheet(GUIUtil::getThemedStyleQString(GUIUtil::ThemedStyle::TS_ERROR));
+        ui->statusLabel_VM->setStyleSheet("QLabel { color: red; }");
         ui->statusLabel_VM->setText(QString("<nobr>") + tr("Message verification failed.") + QString("</nobr>"));
         return;
     }

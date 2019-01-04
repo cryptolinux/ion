@@ -1,5 +1,8 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2018 The PHORE developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_BITCOINGUI_H
@@ -32,8 +35,10 @@ class SendCoinsRecipient;
 class UnitDisplayStatusBarControl;
 class WalletFrame;
 class WalletModel;
-class HelpMessageDialog;
-class ModalOverlay;
+class MasternodeList;
+class ProposalList;
+
+class CWallet;
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -85,90 +90,67 @@ protected:
     bool eventFilter(QObject *object, QEvent *event);
 
 private:
-    ClientModel *clientModel;
-    WalletFrame *walletFrame;
+    ClientModel* clientModel;
+    WalletFrame* walletFrame;
 
-    UnitDisplayStatusBarControl *unitDisplayControl;
-    QLabel *labelWalletEncryptionIcon;
-    QLabel *labelWalletHDStatusIcon;
-    QLabel *labelConnectionsIcon;
-    QLabel *labelBlocksIcon;
-    QLabel *progressBarLabel;
-    QProgressBar *progressBar;
-    QProgressDialog *progressDialog;
+    UnitDisplayStatusBarControl* unitDisplayControl;
+    QLabel* labelStakingIcon;
+    QPushButton* labelAutoMintIcon;
+    QPushButton* labelEncryptionIcon;
+    QLabel* labelTorIcon;
+    QPushButton* labelConnectionsIcon;
+    QLabel* labelBlocksIcon;
+    QLabel* progressBarLabel;
+    QProgressBar* progressBar;
+    QProgressDialog* progressDialog;
 
-    QMenuBar *appMenuBar;
-    QToolButton *overviewAction;
-    QToolButton *historyAction;
-    QToolButton *masternodeAction;
-    QAction *quitAction;
-    QToolButton *sendCoinsAction;
-    QAction *sendCoinsMenuAction;
-    QToolButton *privateSendCoinsAction;
-    QAction *privateSendCoinsMenuAction;
-    QAction *usedSendingAddressesAction;
-    QAction *usedReceivingAddressesAction;
-    QAction *signMessageAction;
-    QAction *verifyMessageAction;
-    QAction *aboutAction;
-    QToolButton *receiveCoinsAction;
-    QAction *receiveCoinsMenuAction;
-    QAction *optionsAction;
-    QAction *toggleHideAction;
-    QAction *encryptWalletAction;
-    QAction *backupWalletAction;
-    QAction *changePassphraseAction;
-    QAction *unlockWalletAction;
-    QAction *lockWalletAction;
-    QAction *aboutQtAction;
-    QAction *openInfoAction;
-    QAction *openRPCConsoleAction;
-    QAction *openGraphAction;
-    QAction *openPeersAction;
-    QAction *openRepairAction;
-    QAction *openConfEditorAction;
-    QAction *showBackupsAction;
-    QAction *openAction;
-    QAction *showHelpMessageAction;
-    QAction *showPrivateSendHelpAction;
+    QMenuBar* appMenuBar;
+    QAction* overviewAction;
+    QAction* historyAction;
+    QAction* masternodeAction;
+    QAction* quitAction;
+    QAction* sendCoinsAction;
+    QAction* usedSendingAddressesAction;
+    QAction* usedReceivingAddressesAction;
+    QAction* signMessageAction;
+    QAction* verifyMessageAction;
+    QAction* bip38ToolAction;
+    QAction* multisigCreateAction;
+    QAction* multisigSpendAction;
+    QAction* multisigSignAction;
+    QAction* aboutAction;
+    QAction* receiveCoinsAction;
+    QAction* privacyAction;
+    QAction* optionsAction;
+    QAction* toggleHideAction;
+    QAction* encryptWalletAction;
+    QAction* backupWalletAction;
+    QAction* changePassphraseAction;
+    QAction* unlockWalletAction;
+    QAction* lockWalletAction;
+    QAction* aboutQtAction;
+    QAction* openInfoAction;
+    QAction* openRPCConsoleAction;
+    QAction* openNetworkAction;
+    QAction* openPeersAction;
+    QAction* openRepairAction;
+    QAction* openConfEditorAction;
+    QAction* openMNConfEditorAction;
+    QAction* showBackupsAction;
+    QAction* openAction;
+    QAction* openBlockExplorerAction;
+    QAction* showHelpMessageAction;
+    QAction* multiSendAction;
+    QAction *proposalAction;
+    QSystemTrayIcon* trayIcon;
+    QMenu* trayIconMenu;
+    Notificator* notificator;
+    RPCConsole* rpcConsole;
+    BlockExplorer* explorerWindow;
 
-    QSystemTrayIcon *trayIcon;
-    QMenu *trayIconMenu;
-    QMenu *dockIconMenu;
-    Notificator *notificator;
-    RPCConsole *rpcConsole;
-    HelpMessageDialog *helpMessageDialog;
-    ModalOverlay *modalOverlay;
-    QButtonGroup *tabGroup;
-
-#ifdef Q_OS_MAC
-    CAppNapInhibitor* m_app_nap_inhibitor = nullptr;
-#endif
-
-    /** Timer to update the spinner animation in the status bar periodically */
-    QTimer* timerSpinner;
-    /** Start the spinner animation in the status bar if it's not running and if labelBlocksIcon is visible. */
-    void startSpinner();
-    /** Stop the spinner animation in the status bar */
-    void stopSpinner();
-
-    /** Timer to update the connection icon during connecting phase */
-    QTimer* timerConnecting;
-    /** Start the connecting animation */
-    void startConnectingAnimation();
-    /** Stop the connecting animation */
-    void stopConnectingAnimation();
-
-    struct IncomingTransactionMessage {
-        QString date;
-        int unit;
-        CAmount amount;
-        QString type;
-        QString address;
-        QString label;
-    };
-    std::list<IncomingTransactionMessage> incomingTransactions;
-    QTimer* incomingTransactionsTimer;
+    /** Keep track of previous number of blocks, to detect progress */
+    int prevBlocks;
+    int spinnerFrame;
 
     /** Create the main UI actions. */
     void createActions();
@@ -245,7 +227,11 @@ public Q_SLOTS:
     void showIncomingTransactions();
 #endif // ENABLE_WALLET
 
-private Q_SLOTS:
+private:
+    /** Set the Tor-enabled icon as shown in the UI. */
+    void updateTorIcon();
+
+private slots:
 #ifdef ENABLE_WALLET
     /** Switch to overview (home) page */
     void gotoOverviewPage();
@@ -257,8 +243,8 @@ private Q_SLOTS:
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage(QString addr = "");
-    /** Switch to PrivateSend coins page */
-    void gotoPrivateSendCoinsPage(QString addr = "");
+    /** Switch to proposal page */
+    void gotoProposalPage();
 
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");

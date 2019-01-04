@@ -1,13 +1,20 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <primitives/transaction.h>
 
-#include <hash.h>
-#include <tinyformat.h>
-#include <utilstrencodings.h>
+#include "chain.h"
+#include "hash.h"
+#include "main.h"
+#include "tinyformat.h"
+#include "utilstrencodings.h"
+#include "transaction.h"
+
+#include <boost/foreach.hpp>
 
 std::string COutPoint::ToString() const
 {
@@ -39,7 +46,10 @@ std::string CTxIn::ToString() const
     str += "CTxIn(";
     str += prevout.ToString();
     if (prevout.IsNull())
-        str += strprintf(", coinbase %s", HexStr(scriptSig));
+        if(scriptSig.IsZerocoinSpend())
+            str += strprintf(", zerocoinspend %s...", HexStr(scriptSig).substr(0, 25));
+        else
+            str += strprintf(", coinbase %s", HexStr(scriptSig));
     else
         str += strprintf(", scriptSig=%s", HexStr(scriptSig).substr(0, 24));
     if (nSequence != SEQUENCE_FINAL)
@@ -76,11 +86,11 @@ uint256 CMutableTransaction::GetHash() const
 std::string CMutableTransaction::ToString() const
 {
     std::string str;
-    str += strprintf("CMutableTransaction(hash=%s, ver=%d, type=%d, vin.size=%u, vout.size=%u, nTime=%u, nLockTime=%u, vExtraPayload.size=%d)\n",
-        GetHash().ToString().substr(0,10),
-        nVersion,
-        nType,
-        nTime,
+    str += strprintf("CMutableTransaction(ver=%d, ",
+        nVersion);
+        if (nVersion == 1)
+            str += strprintf("nTime=%d, ", nTime);
+        str += strprintf("vin.size=%u, vout.size=%u, nLockTime=%u)\n",
         vin.size(),
         vout.size(),
         nLockTime,
@@ -97,10 +107,27 @@ uint256 CTransaction::ComputeHash() const
     return SerializeHash(*this);
 }
 
-/* For backward compatibility, the hash is initialized to 0. TODO: remove the need for this default constructor entirely. */
-CTransaction::CTransaction() : nVersion(CTransaction::CURRENT_VERSION), nType(TRANSACTION_NORMAL), nTime(0), vin(), vout(), nLockTime(0), hash() {}
-CTransaction::CTransaction(const CMutableTransaction &tx) : nVersion(tx.nVersion), nType(tx.nType), nTime(tx.nTime), vin(tx.vin), vout(tx.vout), nLockTime(tx.nLockTime), vExtraPayload(tx.vExtraPayload), hash(ComputeHash()) {}
-CTransaction::CTransaction(CMutableTransaction &&tx) : nVersion(tx.nVersion), nType(tx.nType), nTime(tx.nTime), vin(std::move(tx.vin)), vout(std::move(tx.vout)), nLockTime(tx.nLockTime), vExtraPayload(tx.vExtraPayload), hash(ComputeHash()) {}
+CTransaction& CTransaction::operator=(const CTransaction &tx) {
+    *const_cast<int*>(&nVersion) = tx.nVersion;
+    *const_cast<std::vector<CTxIn>*>(&vin) = tx.vin;
+    *const_cast<std::vector<CTxOut>*>(&vout) = tx.vout;
+    *const_cast<unsigned int*>(&nLockTime) = tx.nLockTime;
+    *const_cast<uint256*>(&hash) = tx.hash;
+    return *this;
+}
+
+bool CTransaction::IsCoinStake() const
+{
+    if (vin.empty())
+        return false;
+
+    // ppcoin: the coin stake transaction is marked with the first output empty
+    bool fAllowNull = vin[0].scriptSig.IsZerocoinSpend();
+    if (vin[0].prevout.IsNull() && !fAllowNull)
+        return false;
+
+    return (vin.size() > 0 && vout.size() >= 2 && vout[0].IsEmpty());
+}
 
 CAmount CTransaction::GetValueOut() const
 {
@@ -115,8 +142,12 @@ CAmount CTransaction::GetValueOut() const
 
 unsigned int CTransaction::GetTotalSize() const
 {
-    return ::GetSerializeSize(*this, SER_NETWORK, PROTOCOL_VERSION);
-}
+    for (const CTxOut& txOut : vout) {
+        if(!txOut.scriptPubKey.IsZerocoinMint())
+            continue;
+
+        return txOut.nValue;
+    }
 
 std::string CTransaction::ToString() const
 {
@@ -139,8 +170,8 @@ std::string CTransaction::ToString() const
 
 bool CTransaction::HasZerocoinSpendInputs() const
 {
-    for (const CTxIn& txin: vin) {
-        if (txin.IsZerocoinSpend() || txin.IsZerocoinPublicSpend())
+    for (const CTxIn& in : vin) {
+        if (in.prevout == out)
             return true;
     }
     return false;
@@ -148,19 +179,25 @@ bool CTransaction::HasZerocoinSpendInputs() const
 
 bool CTransaction::HasZerocoinMintOutputs() const
 {
-    for(const CTxOut& txout : vout) {
-        if (txout.IsZerocoinMint())
-            return true;
+    if(!IsZerocoinSpend())
+        return 0;
+
+    CAmount nValueOut = 0;
+    for (const CTxIn& txin : vin) {
+        if(!txin.scriptSig.IsZerocoinSpend())
+            continue;
+
+        nValueOut += txin.nSequence * COIN;
     }
     return false;
 }
 
 bool CTransaction::HasZerocoinPublicSpendInputs() const
 {
-    // The wallet only allows publicSpend inputs in the same tx and not a combination between ion and xion
-    for(const CTxIn& txin : vin) {
-        if (txin.IsZerocoinPublicSpend())
-            return true;
+    int nCount = 0;
+    for (const CTxOut& out : vout) {
+        if (out.scriptPubKey.IsZerocoinMint())
+            nCount++;
     }
     return false;
 }
@@ -185,5 +222,16 @@ bool CTxIn::IsZerocoinSpend() const
 
 bool CTxIn::IsZerocoinPublicSpend() const
 {
-    return scriptSig.IsZerocoinPublicSpend();
+    std::string str;
+    str += strprintf("CTransaction(hash=%s, ver=%d, vin.size=%u, vout.size=%u, nLockTime=%u)\n",
+        GetHash().ToString().substr(0,10),
+        nVersion,
+        vin.size(),
+        vout.size(),
+        nLockTime);
+    for (unsigned int i = 0; i < vin.size(); i++)
+        str += "    " + vin[i].ToString() + "\n";
+    for (unsigned int i = 0; i < vout.size(); i++)
+        str += "    " + vout[i].ToString() + "\n";
+    return str;
 }

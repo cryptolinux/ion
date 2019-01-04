@@ -1,4 +1,6 @@
-// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2014-2016 The Dash developers
+// Copyright (c) 2016-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,8 +12,8 @@
 #include <utilstrencodings.h>
 #include <key.h>
 
-#include <unordered_map>
-#include <unordered_set>
+#include "obfuscation.h"
+#include "protocol.h"
 
 class CSporkMessage;
 class CSporkManager;
@@ -20,30 +22,28 @@ class CSporkManager;
     Don't ever reuse these IDs for other sporks
     - This would result in old clients getting confused about which spork is for what
 */
-enum SporkId : int32_t {
-    SPORK_1_SWIFTTX                                        = 10001,
-    SPORK_2_SWIFTTX_BLOCK_FILTERING                        = 10002,
-    SPORK_5_MAX_VALUE                                      = 10003,
-    SPORK_4_MASTERNODE_PAYMENT_ENFORCEMENT                 = 10004,
-    SPORK_5_MASTERNODE_BUDGET_ENFORCEMENT                  = 10005,
-    SPORK_6_MASTERNODE_ENABLE_SUPERBLOCKS                  = 10006,
-    SPORK_7_MASTERNODE_PAY_UPDATED_NODES                   = 10007,
-    SPORK_8_NEW_PROTOCOL_ENFORCEMENT                       = 10008,
-    SPORK_9_ZEROCOIN_MAINTENANCE_MODE                      = 10009,
-    SPORK_10_TOKENGROUP_MAINTENANCE_MODE                   = 10010,
-    SPORK_11_NEW_PROTOCOL_ENFORCEMENT_2                    = 10011,
-    SPORK_12_INSTANTSEND_ENABLED                           = 10012,
-    SPORK_13_INSTANTSEND_BLOCK_FILTERING                   = 10013,
-    SPORK_14_NEW_SIGS                                      = 10014,
-    SPORK_15_SUPERBLOCKS_ENABLED                           = 10015,
-    SPORK_16_DETERMINISTIC_MNS_ENABLED                     = 10016,
-    SPORK_17_INSTANTSEND_AUTOLOCKS                         = 10017,
-    SPORK_18_QUORUM_DKG_ENABLED                            = 10018,
-    SPORK_19_CHAINLOCKS_ENABLED                            = 10019,
-    SPORK_20_INSTANTSEND_LLMQ_BASED                        = 10020,
-    SPORK_INVALID                                          = -1,
-};
-template<> struct is_serializable_enum<SporkId> : std::true_type {};
+#define SPORK_START 10001
+#define SPORK_END 10009
+
+#define SPORK_1_SWIFTTX 10001
+#define SPORK_2_SWIFTTX_BLOCK_FILTERING 10002
+#define SPORK_3_SWIFTTX_MAX_VALUE 10003
+#define SPORK_4_MASTERNODE_PAYMENT_ENFORCEMENT 10004
+#define SPORK_5_MASTERNODE_BUDGET_ENFORCEMENT 10005
+#define SPORK_6_MASTERNODE_ENABLE_SUPERBLOCKS 10006
+#define SPORK_7_MASTERNODE_PAY_UPDATED_NODES 10007
+#define SPORK_8_NEW_PROTOCOL_ENFORCEMENT 10008
+#define SPORK_9_ZEROCOIN_MAINTENANCE_MODE 10009
+
+#define SPORK_1_SWIFTTX_DEFAULT 978307200                         //2001-1-1
+#define SPORK_2_SWIFTTX_BLOCK_FILTERING_DEFAULT 1424217600        //2015-2-18
+#define SPORK_3_SWIFTTX_MAX_VALUE_DEFAULT 1000                            //1000 ION
+#define SPORK_4_MASTERNODE_PAYMENT_ENFORCEMENT_DEFAULT 1521851265 //OFF
+#define SPORK_5_MASTERNODE_BUDGET_ENFORCEMENT_DEFAULT 4070908800  //OFF
+#define SPORK_6_MASTERNODE_ENABLE_SUPERBLOCKS_DEFAULT 4070908800  //OFF
+#define SPORK_7_MASTERNODE_PAY_UPDATED_NODES_DEFAULT 1521851265   //GMT: Saturday, March 24, 2018 12:27:45 AM (OFF 4070908800)
+#define SPORK_8_NEW_PROTOCOL_ENFORCEMENT_DEFAULT 1521851265       //GMT: Saturday, March 24, 2018 12:27:45 AM (OFF 4070908800)
+#define SPORK_9_ZEROCOIN_MAINTENANCE_MODE_DEFAULT 4070908800      //OFF
 
 namespace std
 {
@@ -208,107 +208,13 @@ public:
         // we don't serialize private key to prevent its leakage
     }
 
-    /**
-     * Clear is used to clear all in-memory active spork messages. Since spork
-     * public and private keys are set in init.cpp, we do not clear them here.
-     *
-     * This method was introduced along with the spork cache.
-     */
-    void Clear();
-
-    /**
-     * CheckAndRemove is defined to fulfill an interface as part of the on-disk
-     * cache used to cache sporks between runs. If sporks that are restored
-     * from cache do not have valid signatures when compared against the
-     * current spork private keys, they are removed from in-memory storage.
-     *
-     * This method was introduced along with the spork cache.
-     */
-    void CheckAndRemove();
-
-    /**
-     * ProcessSpork is used to handle the 'getsporks' and 'spork' p2p messages.
-     *
-     * For 'getsporks', it sends active sporks to the requesting peer. For 'spork',
-     * it validates the spork and adds it to the internal spork storage and
-     * performs any necessary processing.
-     */
-    void ProcessSpork(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman);
-
-    /**
-     * UpdateSpork is used by the spork RPC command to set a new spork value, sign
-     * and broadcast the spork message.
-     */
-    bool UpdateSpork(SporkId nSporkID, int64_t nValue, CConnman& connman);
-
-    /**
-     * IsSporkActive returns a bool for time-based sporks, and should be used
-     * to determine whether the spork can be considered active or not.
-     *
-     * For value-based sporks such as SPORK_5_INSTANTSEND_MAX_VALUE, the spork
-     * value should not be considered a timestamp, but an integer value
-     * instead, and therefore this method doesn't make sense and should not be
-     * used.
-     */
-    bool IsSporkActive(SporkId nSporkID);
-
-    /**
-     * GetSporkValue returns the spork value given a Spork ID. If no active spork
-     * message has yet been received by the node, it returns the default value.
-     */
-    int64_t GetSporkValue(SporkId nSporkID);
-
-    /**
-     * GetSporkIDByName returns the internal Spork ID given the spork name.
-     */
-    SporkId GetSporkIDByName(const std::string& strName);
-
-    /**
-     * GetSporkNameByID returns the spork name as a string, given a Spork ID.
-     */
-    std::string GetSporkNameByID(SporkId nSporkID);
-
-    /**
-     * GetSporkByHash returns a spork message given a hash of the spork message.
-     *
-     * This is used when a requesting peer sends a MSG_SPORK inventory message with
-     * the hash, to quickly lookup and return the full spork message. We maintain a
-     * hash-based index of sporks for this reason, and this function is the access
-     * point into that index.
-     */
-    bool GetSporkByHash(const uint256& hash, CSporkMessage &sporkRet);
-
-    /**
-     * SetSporkAddress is used to set a public key ID which will be used to
-     * verify spork signatures.
-     *
-     * This can be called multiple times to add multiple keys to the set of
-     * valid spork signers.
-     */
-    bool SetSporkAddress(const std::string& strAddress);
-
-    /**
-     * SetMinSporkKeys is used to set the required spork signer threshold, for
-     * a spork to be considered active.
-     *
-     * This value must be at least a majority of the total number of spork
-     * keys, and for obvious resons cannot be larger than that number.
-     */
-    bool SetMinSporkKeys(int minSporkKeys);
-
-    /**
-     * SetPrivKey is used to set a spork key to enable setting / signing of
-     * spork values.
-     *
-     * This will return false if the private key does not match any spork
-     * address in the set of valid spork signers (see SetSporkAddress).
-     */
-    bool SetPrivKey(const std::string& strPrivKey);
-
-    /**
-     * ToString returns the string representation of the SporkManager.
-     */
-    std::string ToString() const;
+    std::string GetSporkNameByID(int id);
+    int GetSporkIDByName(std::string strName);
+    bool UpdateSpork(int nSporkID, int64_t nValue);
+    bool SetPrivKey(std::string strPrivKey);
+    bool CheckSignature(CSporkMessage& spork, bool fCheckSigner = false);
+    bool Sign(CSporkMessage& spork);
+    void Relay(CSporkMessage& msg);
 };
 
 #endif

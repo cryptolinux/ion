@@ -1,6 +1,9 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2014-2015 The Dash developers
+// Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <protocol.h>
@@ -273,11 +276,12 @@ const char* CInv::GetCommandInternal() const
 
 std::string CInv::GetCommand() const
 {
-    auto cmd = GetCommandInternal();
-    if (cmd == nullptr) {
-        throw std::out_of_range(strprintf("CInv::GetCommand(): type=%d unknown type", type));
+    if (!IsKnownType()) {
+        LogPrint("net", "CInv::GetCommand() : type=%d unknown type", type);
+        return "UNKNOWN";
     }
-    return cmd;
+
+    return ppszTypeName[type];
 }
 
 std::string CInv::ToString() const

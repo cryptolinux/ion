@@ -1,10 +1,12 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_SERIALIZE_H
-#define BITCOIN_SERIALIZE_H
+#ifndef ION_SERIALIZE_H
+#define ION_SERIALIZE_H
 
 #include <compat/endian.h>
 
@@ -26,6 +28,8 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+#include "libzerocoin/Denominations.h"
+#include "libzerocoin/SpendType.h"
 
 #include <prevector.h>
 
@@ -229,13 +233,21 @@ template<typename Stream> inline void Unserialize(Stream& s, libzerocoin::CoinDe
     a = libzerocoin::IntToZerocoinDenomination(f);
 }
 
-/**
- * libzerocoin::SpendType
- */
-template<typename Stream> inline void Serialize(Stream& s, libzerocoin::SpendType a)
+// Serialization for libzerocoin::SpendType
+inline unsigned int GetSerializedSize(libzerocoin::SpendType a, int, int = 0) { return sizeof(libzerocoin::SpendType); }
+template <typename Stream>
+inline void Serialize(Stream& s, libzerocoin::SpendType a, int, int = 0)
 {
     uint8_t f = static_cast<uint8_t>(a);
-    ser_writedata8(s, f);
+    WRITEDATA(s, f);
+}
+
+template <typename Stream>
+inline void Unserialize(Stream& s, libzerocoin::SpendType & a, int, int = 0)
+{
+    uint8_t f=0;
+    READDATA(s, f);
+    a = static_cast<libzerocoin::SpendType>(f);
 }
 
 template<typename Stream> inline void Unserialize(Stream& s, libzerocoin::SpendType& a)
@@ -1246,7 +1258,13 @@ public:
         this->nSize += _nSize;
     }
 
-    template<typename T>
+    /** Pretend _nSize bytes are written, without specifying them. */
+    void seek(size_t _nSize)
+    {
+        this->nSize += _nSize;
+    }
+
+    template <typename T>
     CSizeComputer& operator<<(const T& obj)
     {
         ::Serialize(*this, obj);
@@ -1261,75 +1279,4 @@ public:
     int GetType() const { return nType; }
 };
 
-template<typename Stream>
-void SerializeMany(Stream& s)
-{
-}
-
-template<typename Stream, typename Arg>
-void SerializeMany(Stream& s, Arg&& arg)
-{
-    ::Serialize(s, std::forward<Arg>(arg));
-}
-
-template<typename Stream, typename Arg, typename... Args>
-void SerializeMany(Stream& s, Arg&& arg, Args&&... args)
-{
-    ::Serialize(s, std::forward<Arg>(arg));
-    ::SerializeMany(s, std::forward<Args>(args)...);
-}
-
-template<typename Stream>
-inline void UnserializeMany(Stream& s)
-{
-}
-
-template<typename Stream, typename Arg>
-inline void UnserializeMany(Stream& s, Arg& arg)
-{
-    ::Unserialize(s, arg);
-}
-
-template<typename Stream, typename Arg, typename... Args>
-inline void UnserializeMany(Stream& s, Arg& arg, Args&... args)
-{
-    ::Unserialize(s, arg);
-    ::UnserializeMany(s, args...);
-}
-
-template<typename Stream, typename... Args>
-inline void SerReadWriteMany(Stream& s, CSerActionSerialize ser_action, Args&&... args)
-{
-    ::SerializeMany(s, std::forward<Args>(args)...);
-}
-
-template<typename Stream, typename... Args>
-inline void SerReadWriteMany(Stream& s, CSerActionUnserialize ser_action, Args&... args)
-{
-    ::UnserializeMany(s, args...);
-}
-
-template<typename I>
-inline void WriteVarInt(CSizeComputer &s, I n)
-{
-    s.seek(GetSizeOfVarInt<I>(n));
-}
-
-inline void WriteCompactSize(CSizeComputer &s, uint64_t nSize)
-{
-    s.seek(GetSizeOfCompactSize(nSize));
-}
-
-template <typename T>
-size_t GetSerializeSize(const T& t, int nType, int nVersion)
-{
-    return (CSizeComputer(nType, nVersion) << t).size();
-}
-
-template <typename S, typename T>
-size_t GetSerializeSize(const S& s, const T& t)
-{
-    return (CSizeComputer(s.GetType(), s.GetVersion()) << t).size();
-}
-
-#endif // BITCOIN_SERIALIZE_H
+#endif // ION_SERIALIZE_H

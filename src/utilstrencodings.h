@@ -1,5 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,6 +20,14 @@
 #define UBEGIN(a)           ((unsigned char*)&(a))
 #define UEND(a)             ((unsigned char*)&((&(a))[1]))
 #define ARRAYLEN(array)     (sizeof(array)/sizeof((array)[0]))
+
+/** Used by SanitizeString() */
+enum SafeChars
+{
+    SAFE_CHARS_DEFAULT, //!< The full set of allowed chars
+    SAFE_CHARS_UA_COMMENT, //!< BIP-0014 subset
+    SAFE_CHARS_FILENAME, //!< Chars allowed in filenames
+};
 
 /** Used by SanitizeString() */
 enum SafeChars
@@ -149,43 +159,27 @@ bool TimingResistantEqual(const T& a, const T& b)
  */
 bool ParseFixedPoint(const std::string &val, int decimals, int64_t *amount_out);
 
-/**
- * Convert from one power-of-2 number base to another.
- *
- * If padding is enabled, this always return true. If not, then it returns true
- * of all the bits of the input are encoded in the output.
- */
-template <int frombits, int tobits, bool pad, typename O, typename I>
-bool ConvertBits(O &out, I it, I end)
-{
+/** Convert from one power-of-2 number base to another. */
+template<int frombits, int tobits, bool pad, typename O, typename I>
+bool ConvertBits(O& out, I it, I end) {
     size_t acc = 0;
     size_t bits = 0;
     constexpr size_t maxv = (1 << tobits) - 1;
     constexpr size_t max_acc = (1 << (frombits + tobits - 1)) - 1;
-    while (it != end)
-    {
+    while (it != end) {
         acc = ((acc << frombits) | *it) & max_acc;
         bits += frombits;
-        while (bits >= tobits)
-        {
+        while (bits >= tobits) {
             bits -= tobits;
             out.push_back((acc >> bits) & maxv);
         }
         ++it;
     }
-
-    // We have remaining bits to encode but do not pad.
-    if (!pad && bits)
-    {
+    if (pad) {
+        if (bits) out.push_back((acc << (tobits - bits)) & maxv);
+    } else if (bits >= frombits || ((acc << (tobits - bits)) & maxv)) {
         return false;
     }
-
-    // We have remaining bits to encode so we do pad.
-    if (pad && bits)
-    {
-        out.push_back((acc << (tobits - bits)) & maxv);
-    }
-
     return true;
 }
 

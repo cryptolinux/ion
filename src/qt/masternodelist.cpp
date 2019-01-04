@@ -1,20 +1,23 @@
-#include <qt/masternodelist.h>
-#include <qt/forms/ui_masternodelist.h>
+// Copyright (c) 2014-2016 The Dash Developers
+// Copyright (c) 2016-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <masternode/activemasternode.h>
-#include <qt/clientmodel.h>
-#include <clientversion.h>
-#include <coins.h>
-#include <qt/guiutil.h>
-#include <init.h>
-#include <masternode/masternode-sync.h>
-#include <netbase.h>
-#include <sync.h>
-#include <validation.h>
-#include <wallet/wallet.h>
-#include <qt/walletmodel.h>
+#include "masternodelist.h"
+#include "ui_masternodelist.h"
 
-#include <univalue.h>
+#include "activemasternode.h"
+#include "clientmodel.h"
+#include "guiutil.h"
+#include "init.h"
+#include "masternode-sync.h"
+#include "masternodeconfig.h"
+#include "masternodeman.h"
+#include "sync.h"
+#include "wallet.h"
+#include "walletmodel.h"
+#include "askpassphrasedialog.h"
 
 #include <QMessageBox>
 #include <QTimer>
@@ -183,7 +186,31 @@ void MasternodeList::updateDIP3List()
         });
     }
 
-    LOCK(cs_dip3list);
+    QTableWidgetItem* aliasItem = new QTableWidgetItem(strAlias);
+    QTableWidgetItem* addrItem = new QTableWidgetItem(pmn ? QString::fromStdString(pmn->addr.ToString()) : strAddr);
+    QTableWidgetItem* protocolItem = new QTableWidgetItem(QString::number(pmn ? pmn->protocolVersion : -1));
+    QTableWidgetItem* statusItem = new QTableWidgetItem(QString::fromStdString(pmn ? pmn->GetStatus() : "MISSING"));
+    GUIUtil::DHMSTableWidgetItem* activeSecondsItem = new GUIUtil::DHMSTableWidgetItem(pmn ? (pmn->lastPing.sigTime - pmn->sigTime) : 0);
+    QTableWidgetItem* lastSeenItem = new QTableWidgetItem(QString::fromStdString(DateTimeStrFormat("%Y-%m-%d %H:%M", pmn ? pmn->lastPing.sigTime : 0)));
+    QTableWidgetItem* pubkeyItem = new QTableWidgetItem(QString::fromStdString(pmn ? EncodeDestination(CTxDestination(pmn->pubKeyCollateralAddress.GetID())) : ""));
+
+    ui->tableWidgetMyMasternodes->setItem(nNewRow, 0, aliasItem);
+    ui->tableWidgetMyMasternodes->setItem(nNewRow, 1, addrItem);
+    ui->tableWidgetMyMasternodes->setItem(nNewRow, 2, protocolItem);
+    ui->tableWidgetMyMasternodes->setItem(nNewRow, 3, statusItem);
+    ui->tableWidgetMyMasternodes->setItem(nNewRow, 4, activeSecondsItem);
+    ui->tableWidgetMyMasternodes->setItem(nNewRow, 5, lastSeenItem);
+    ui->tableWidgetMyMasternodes->setItem(nNewRow, 6, pubkeyItem);
+}
+
+void MasternodeList::updateMyNodeList(bool fForce)
+{
+    static int64_t nTimeMyListUpdated = 0;
+
+    // automatically update my masternode list only once in MY_MASTERNODELIST_UPDATE_SECONDS seconds,
+    // this update still can be triggered manually at any time via button click
+    int64_t nSecondsTillUpdate = nTimeMyListUpdated + MY_MASTERNODELIST_UPDATE_SECONDS - GetTime();
+    ui->secondsLabel->setText(QString::number(nSecondsTillUpdate));
 
     QString strToFilter;
     ui->countLabelDIP3->setText(tr("Updating..."));

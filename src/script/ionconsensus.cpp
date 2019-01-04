@@ -68,7 +68,8 @@ struct ECCryptoClosure
 };
 
 ECCryptoClosure instance_of_eccryptoclosure;
-} // namespace
+
+} // anon namespace
 
 /** Check that all specified flags are part of the libconsensus interface. */
 static bool verify_flags(unsigned int flags)

@@ -1,14 +1,37 @@
-UNIX BUILD NOTES
-====================
 Some notes on how to build Ion in Unix.
 
 (for OpenBSD specific instructions, see [build-openbsd.md](build-openbsd.md))
+=======
+# UNIX BUILD NOTES
+Some notes on how to build ION in Unix.
+
+Table of Contents
+------------------
+- [UNIX BUILD NOTES](#unix-build-notes)
+    - [Note](#note)
+    - [To Build](#to-build)
+    - [Dependencies](#dependencies)
+    - [System requirements](#system-requirements)
+    - [Dependency Build Instructions: Ubuntu & Debian](#dependency-build-instructions-ubuntu--debian)
+        - [Build requirements](#build-requirements)
+    - [Dependencies for the GUI: Ubuntu & Debian](#dependencies-for-the-gui-ubuntu--debian)
+    - [Notes](#notes)
+    - [miniupnpc](#miniupnpc)
+    - [Berkeley DB](#berkeley-db)
+    - [Boost](#boost)
+    - [Security](#security)
+
+## Note
+Always use absolute paths to configure and compile ion and the dependencies,
+for example, when specifying the path of the dependency:
+
+	../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$BDB_PREFIX
 
 Base build dependencies
 -----------------------
 Building the dependencies and Ion Core requires some essential build tools and libraries to be installed before.
 
-Run the following commands to install required packages:
+## To Build
 
 ##### Debian/Ubuntu:
 ```bash
@@ -17,8 +40,7 @@ $ sudo apt-get install curl build-essential libtool autotools-dev automake pkg-c
 
 This will build ion-qt as well if the dependencies are met.
 
-Dependencies
----------------------
+## Dependencies
 
 These dependencies are required:
 
@@ -41,18 +63,17 @@ Optional dependencies:
 
 For the versions used in the release, see [release-process.md](release-process.md) under *Fetch and build inputs*.
 
-System requirements
---------------------
+## System requirements
 
 C++ compilers are memory-hungry. It is recommended to have at least 1 GB of
 memory available when compiling Ion Core. With 512MB of memory or less
 compilation will take much longer due to swap thrashing.
 
-Dependency Build Instructions: Ubuntu & Debian
-----------------------------------------------
-Build requirements:
+## Dependency Build Instructions: Ubuntu & Debian
 
-	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev
+### Build requirements
+
+	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev automake
 
 For Ubuntu 12.04 and later or Debian 7 and later libboost-all-dev has to be installed:
 
@@ -75,8 +96,7 @@ Optional:
 
 	sudo apt-get install libminiupnpc-dev (see --with-miniupnpc and --enable-upnp-default)
 
-Dependencies for the GUI: Ubuntu & Debian
------------------------------------------
+## Dependencies for the GUI: Ubuntu & Debian
 
 If you want to build Ion-Qt, make sure that the required packages for Qt development
 are installed. Qt 5 is necessary to build the GUI.
@@ -94,14 +114,12 @@ libqrencode (optional) can be installed with:
 Once these are installed, they will be found by configure and a ion-qt executable will be
 built by default.
 
-Notes
------
+## Notes
 The release is built with GCC and then "strip iond" to strip the debug
 symbols, which reduces the executable size by about 90%.
 
 
-miniupnpc
----------
+## miniupnpc
 
 [miniupnpc](http://miniupnp.free.fr/) may be used for UPnP port mapping.  It can be downloaded from [here](
 http://miniupnp.tuxfamily.org/files/).  UPnP support is compiled in and
@@ -120,36 +138,30 @@ To build:
 	make install
 
 
-Berkeley DB
------------
-It is recommended to use Berkeley DB 4.8. If you have to build it yourself:
+## Berkeley DB
 
-##### Arch Linux:
-```bash
-$ pacman -S base-devel python3 cmake
+It is recommended to use Berkeley DB 4.8. If you have to build it yourself,
+you can use [the installation script included in contrib/](/contrib/install_db4.sh)
+like so:
+
+```shell
+./contrib/install_db4.sh `pwd`
 ```
 
-##### Alpine Linux:
-```sh
-$ sudo apk --update --no-cache add autoconf automake cmake curl g++ gcc libexecinfo-dev libexecinfo-static libtool make perl pkgconfig python3 patch linux-headers
-```
+from the root of the repository.
 
-##### FreeBSD/OpenBSD:
-```bash
-pkg_add gmake cmake libtool
-pkg_add autoconf # (select highest version, e.g. 2.69)
-pkg_add automake # (select highest version, e.g. 1.15)
-pkg_add python # (select highest version, e.g. 3.5)
-```
+**Note**: You only need Berkeley DB if the wallet is enabled (see [*Disable-wallet mode*](/doc/build-unix.md#disable-wallet-mode)).
+
+## Boost
+If you need to build Boost yourself:
 
 Building
 --------
 
 Follow the instructions in [build-generic](build-generic.md)
 
-Security
---------
-To help make your Ion installation more secure by making certain attacks impossible to
+## Security
+To help make your ION installation more secure by making certain attacks impossible to
 exploit even if a vulnerability is found, binaries are hardened by default.
 This can be disabled with:
 
@@ -161,7 +173,7 @@ Hardening Flags:
 
 Hardening enables the following features:
 
-* Position Independent Executable
+- Position Independent Executable
     Build position independent code to take advantage of Address Space Layout Randomization
     offered by some kernels. Attackers who can cause execution of code at an arbitrary memory
     location are thwarted if they don't know where anything useful is located.
@@ -180,7 +192,7 @@ Hardening enables the following features:
      TYPE
     ET_DYN
 
-* Non-executable Stack
+- Non-executable Stack
     If the stack is executable then trivial stack based buffer overflow exploits are possible if
     vulnerable buffers are found. By default, Ion Core should be built with a non-executable stack
     but if one of the libraries it uses asks for an executable stack or someone makes a mistake

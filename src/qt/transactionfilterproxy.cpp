@@ -1,4 +1,6 @@
-// Copyright (c) 2011-2014 The Bitcoin Core developers
+// Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,16 +16,16 @@ const QDateTime TransactionFilterProxy::MIN_DATE = QDateTime::fromTime_t(0);
 // Last date that can be represented (far in the future)
 const QDateTime TransactionFilterProxy::MAX_DATE = QDateTime::fromTime_t(0xFFFFFFFF);
 
-TransactionFilterProxy::TransactionFilterProxy(QObject *parent) :
-    QSortFilterProxyModel(parent),
-    dateFrom(MIN_DATE.toTime_t()),
-    dateTo(MAX_DATE.toTime_t()),
-    m_search_string(),
-    typeFilter(COMMON_TYPES),
-    watchOnlyFilter(WatchOnlyFilter_All),
-    minAmount(0),
-    limitRows(-1),
-    showInactive(true)
+TransactionFilterProxy::TransactionFilterProxy(QObject* parent) : QSortFilterProxyModel(parent),
+                                                                  dateFrom(MIN_DATE),
+                                                                  dateTo(MAX_DATE),
+                                                                  addrPrefix(),
+                                                                  typeFilter(COMMON_TYPES),
+                                                                  watchOnlyFilter(WatchOnlyFilter_All),
+                                                                  minAmount(0),
+                                                                  limitRows(-1),
+                                                                  showInactive(true),
+                                                                  fHideOrphans(false)
 {
 }
 
@@ -42,7 +44,9 @@ bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex &
 
     if(!showInactive && status == TransactionStatus::Conflicted)
         return false;
-    if(!(TYPE(type) & typeFilter))
+    if (fHideOrphans && isOrphan(status, type))
+        return false;
+    if (!(TYPE(type) & typeFilter))
         return false;
     if (involvesWatchAddress && watchOnlyFilter == WatchOnlyFilter_No)
         return false;
@@ -106,7 +110,13 @@ void TransactionFilterProxy::setShowInactive(bool _showInactive)
     invalidateFilter();
 }
 
-int TransactionFilterProxy::rowCount(const QModelIndex &parent) const
+void TransactionFilterProxy::setHideOrphans(bool fHide)
+{
+    this->fHideOrphans = fHide;
+    invalidateFilter();
+}
+
+int TransactionFilterProxy::rowCount(const QModelIndex& parent) const
 {
     if(limitRows != -1)
     {
@@ -116,4 +126,11 @@ int TransactionFilterProxy::rowCount(const QModelIndex &parent) const
     {
         return QSortFilterProxyModel::rowCount(parent);
     }
+}
+
+bool TransactionFilterProxy::isOrphan(const int status, const int type)
+{
+    return ( (type == TransactionRecord::Generated || type == TransactionRecord::StakeMint ||
+            type == TransactionRecord::StakeXION || type == TransactionRecord::MNReward)
+            && (status == TransactionStatus::Conflicted || status == TransactionStatus::NotAccepted) );
 }

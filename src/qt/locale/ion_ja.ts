@@ -202,6 +202,12 @@
         <source>Wallet encrypted</source>
         <translation>ウォレットは暗号化されました</translation>
     </message>
+    </context>
+<context>
+    <name>BanTableModel</name>
+    </context>
+<context>
+    <name>Bip38ToolDialog</name>
     <message>
         <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your funds from being stolen by malware infecting your computer.</source>
         <translation>%1 は暗号化プロセスを終了するために閉じます。ウォレットの暗号化だけでは充分ではなく、使用しているコンピューターがマルウェアに感染して盗難される可能性があります。 </translation>
@@ -222,6 +228,45 @@
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
         <translation>内部エラーによりウォレットの暗号化が失敗しました。ウォレットは暗号化されていません。</translation>
     </message>
+    </context>
+<context>
+    <name>MultisigDialog</name>
+    </context>
+<context>
+    <name>ObfuscationConfig</name>
+    </context>
+<context>
+    <name>OpenURIDialog</name>
+    </context>
+<context>
+    <name>OptionsDialog</name>
+    </context>
+<context>
+    <name>OverviewPage</name>
+    </context>
+<context>
+    <name>PaymentServer</name>
+    </context>
+<context>
+    <name>PeerTableModel</name>
+    </context>
+<context>
+    <name>PrivacyDialog</name>
+    </context>
+<context>
+    <name>QObject</name>
+    </context>
+<context>
+    <name>QRImageWidget</name>
+    </context>
+<context>
+    <name>RPCConsole</name>
+    </context>
+<context>
+    <name>ReceiveCoinsDialog</name>
+    </context>
+<context>
+    <name>ReceiveRequestDialog</name>
     <message>
         <source>The supplied passphrases do not match.</source>
         <translation>入力したパスフレーズが正しくありません。</translation>
@@ -259,7 +304,7 @@
     </message>
 </context>
 <context>
-    <name>BitcoinAmountField</name>
+    <name>XIonControlDialog</name>
     </context>
 <context>
     <name>BitcoinGUI</name>

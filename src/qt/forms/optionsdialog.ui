@@ -24,12 +24,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_Buttons_2">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>4</number>
      </property>
      <item>
       <widget class="QPushButton" name="btnMain">
@@ -109,10 +106,10 @@
        <item>
         <widget class="QCheckBox" name="bitcoinAtStartup">
          <property name="toolTip">
-          <string>Automatically start Ion after logging in to the system.</string>
+          <string>Automatically start ION after logging in to the system.</string>
          </property>
          <property name="text">
-          <string>&amp;Start Ion on system login</string>
+          <string>&amp;Start ION on system login</string>
          </property>
         </widget>
        </item>
@@ -277,7 +274,7 @@
        <item>
         <widget class="QCheckBox" name="showAdvancedPSUI">
          <property name="toolTip">
-          <string>Enable automatic minting of Ion units to xION</string>
+          <string>Enable automatic minting of ION units to xION</string>
          </property>
          <property name="text">
           <string>Enable advanced PrivateSend interface</string>
@@ -319,7 +316,7 @@
          <item>
           <widget class="QLabel" name="lblPrivateSendRoundsText">
            <property name="toolTip">
-            <string>Percentage of incoming Ion which get automatically converted to xION via Zerocoin Protocol (min: 10%)</string>
+            <string>Percentage of incoming ION which get automatically converted to xION via Zerocoin Protocol (min: 10%)</string>
            </property>
            <property name="text">
             <string>PrivateSend rounds to use</string>
@@ -346,7 +343,7 @@
          <item>
           <widget class="QLabel" name="lblPrivateSendAmountText">
            <property name="toolTip">
-            <string>Wait with automatic conversion to Zerocoin until enough Ion for this denomination is available</string>
+            <string>Wait with automatic conversion to Zerocoin until enough ION for this denomination is available</string>
            </property>
            <property name="text">
             <string>Preferred Automint xION Denomination</string>
@@ -355,7 +352,7 @@
             <string notr="true"/>
            </property>
            <property name="toolTip">
-            <string>Wait with automatic conversion to Zerocoin until enough Ion for this denomination is available</string>
+            <string>Wait with automatic conversion to Zerocoin until enough ION for this denomination is available</string>
            </property>
            <property name="accessibleName">
             <string notr="true"/>
@@ -406,7 +403,7 @@
        <item>
         <widget class="QCheckBox" name="mapPortUpnp">
          <property name="toolTip">
-          <string>Automatically open the Ion client port on the router. This only works when your router supports UPnP and it is enabled.</string>
+          <string>Automatically open the ION client port on the router. This only works when your router supports UPnP and it is enabled.</string>
          </property>
          <property name="text">
           <string>Map port using &amp;UPnP</string>
@@ -426,7 +423,7 @@
        <item>
         <widget class="QCheckBox" name="connectSocks">
          <property name="toolTip">
-          <string>Connect to the Ion network through a SOCKS5 proxy.</string>
+          <string>Connect to the ION network through a SOCKS5 proxy.</string>
          </property>
          <property name="text">
           <string>&amp;Connect through SOCKS5 proxy (default proxy):</string>
@@ -728,7 +725,7 @@
          </property>
          <property name="text">
           <string>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/ioncoincore/ioncore/</string>
+https://www.transifex.com/ioncoincore/ioncoin</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -742,6 +739,20 @@ https://www.transifex.com/ioncoincore/ioncore/</string>
         </widget>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2_Display" stretch="0,0">
+         <item>
+          <widget class="QLabel" name="themeLabel">
+           <property name="text">
+            <string>User Interface Theme:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QValueComboBox" name="theme"/>
+         </item>
+        </layout>
+       </item>
+       <item>
         <widget class="Line" name="line">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -749,7 +760,7 @@ https://www.transifex.com/ioncoincore/ioncore/</string>
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2_Display">
+        <layout class="QHBoxLayout" name="horizontalLayout_3_Display">
          <item>
           <widget class="QLabel" name="unitLabel">
            <property name="text">
@@ -773,7 +784,7 @@ https://www.transifex.com/ioncoincore/ioncore/</string>
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5_Display">
+        <layout class="QHBoxLayout" name="horizontalLayout_4_Display">
          <item>
           <widget class="QLabel" name="digitsLabel">
            <property name="text">
@@ -787,7 +798,47 @@ https://www.transifex.com/ioncoincore/ioncore/</string>
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3_Display">
+        <layout class="QHBoxLayout" name="horizontalLayout_5_Display">
+         <item>
+          <widget class="QCheckBox" name="checkBoxHideZeroBalances">
+           <property name="toolTip">
+            <string>Hide empty balances</string>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="text">
+            <string>Hide empty balances</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxHideOrphans">
+           <property name="toolTip">
+            <string>Hide orphan stakes in transaction lists</string>
+           </property>
+           <property name="text">
+            <string>Hide orphan stakes</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6_Display">
          <item>
           <widget class="QLabel" name="thirdPartyTxUrlsLabel">
            <property name="toolTip">

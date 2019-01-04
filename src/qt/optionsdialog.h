@@ -1,5 +1,7 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_OPTIONSDIALOG_H
@@ -55,6 +57,8 @@ private Q_SLOTS:
     void on_cancelButton_clicked();
     
     void on_hideTrayIcon_stateChanged(int fState);
+
+    void updateHideOrphans(bool fHide);
 
     void showRestartWarning(bool fPersistent = false);
     void clearStatusLabel();

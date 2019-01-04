@@ -1,10 +1,13 @@
-// Copyright (c) 2012-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2012-2013 The Bitcoin Core developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <key.h>
 
 #include "base58.h"
+#include "dstencode.h"
 #include "script/script.h"
 #include "uint256.h"
 #include "util.h"
@@ -25,10 +28,48 @@ static const std::string addr2 = "XpmouUj9KKJ99ZuU331ZS1KqsboeFnLGgK";
 static const std::string addr1C = "XxV9h4Xmv6Pup8tVAQmH97K6grzvDwMG9F";
 static const std::string addr2C = "Xn7ZrYdExuk79Dm7CJCw7sfUWi2qWJSbRy";
 
-static const std::string strAddressBad = "Xta1praZQjyELweyMByXyiREw1ZRsjXzVP";
+static const std::string strSecret1 = "69ehTAwK6mhKRJRNDwXHqFkM4mkgPbFt7Rj1MWu7ks7cBnHPkFq";
+static const std::string strSecret2 = "69Whty8G6vwCQh96KDmK16LUNrPVwqzcB8MVHH97qLuWTSg96kW";
+static const std::string strSecret1C = "PmpkHSZJvhqDNzY8rJSkB2WyDH4nxxZW216rg3ZKcaDiRNCWhPJX";
+static const std::string strSecret2C = "PnHVJQjdAXfNMEME5uPyaw2MyamntTKSKfZeNGL6PceQMdzk9a7m";
+static const std::string addr1 = "ii8C94e6fkcFmxvq3FvXzV2RWT7q114jBe";
+static const std::string addr2 = "ifp4Ljirwj11kxBhm5jwG45cLxwKyLazyG";
+static const std::string addr1C = "ihuxqbtFnyXngSMBkfTTxiouzWcJbeeAyf";
+static const std::string addr2C = "ickagwMApzUbAbh53871Uuj7QisRAov2u6";
 
 
-BOOST_FIXTURE_TEST_SUITE(key_tests, BasicTestingSetup)
+static const string strAddressBad = "XhGzCmTo4aXEiuU7fmYjKdh6KBSpmWy3Cz";
+
+
+#ifdef KEY_TESTS_DUMPINFO
+void dumpKeyInfo(uint256 privkey)
+{
+    CKey key;
+    key.resize(32);
+    memcpy(&secret[0], &privkey, 32);
+    vector<unsigned char> sec;
+    sec.resize(32);
+    memcpy(&sec[0], &secret[0], 32);
+    printf("  * secret (hex): %s\n", HexStr(sec).c_str());
+
+    for (int nCompressed=0; nCompressed<2; nCompressed++)
+    {
+        bool fCompressed = nCompressed == 1;
+        printf("  * %s:\n", fCompressed ? "compressed" : "uncompressed");
+        CBitcoinSecret bsecret;
+        bsecret.SetSecret(secret, fCompressed);
+        printf("    * secret (base58): %s\n", bsecret.ToString().c_str());
+        CKey key;
+        key.SetSecret(secret, fCompressed);
+        vector<unsigned char> vchPubKey = key.GetPubKey();
+        printf("    * pubkey (hex): %s\n", HexStr(vchPubKey).c_str());
+        printf("    * address (base58): %s\n", EncodeDestination(vchPubKey).c_str());
+    }
+}
+#endif
+
+
+BOOST_AUTO_TEST_SUITE(key_tests)
 
 BOOST_AUTO_TEST_CASE(key_test1)
 {

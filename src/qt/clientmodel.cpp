@@ -1,6 +1,8 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2014-2015 The Dash developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <qt/clientmodel.h>
@@ -10,21 +12,17 @@
 #include <qt/guiutil.h>
 #include <qt/peertablemodel.h>
 
-#include <chain.h>
-#include <chainparams.h>
-#include <checkpoints.h>
-#include <clientversion.h>
-#include <validation.h>
-#include <net.h>
-#include <txmempool.h>
-#include <ui_interface.h>
-#include <util.h>
-#include <warnings.h>
-
-#include <masternode/masternode-sync.h>
-#include <privatesend/privatesend.h>
-
-#include <llmq/quorums_instantsend.h>
+#include "alert.h"
+#include "chainparams.h"
+#include "checkpoints.h"
+#include "clientversion.h"
+#include "main.h"
+#include "masternode-sync.h"
+#include "masternodeman.h"
+#include "net.h"
+#include "netbase.h"
+#include "ui_interface.h"
+#include "util.h"
 
 #include <stdint.h>
 
@@ -397,4 +395,22 @@ void ClientModel::unsubscribeFromCoreSignals()
     uiInterface.NotifyHeaderTip.disconnect(boost::bind(BlockTipChanged, this, _1, _2, true));
     uiInterface.NotifyMasternodeListChanged.disconnect(boost::bind(NotifyMasternodeListChanged, this, _1));
     uiInterface.NotifyAdditionalDataSyncProgressChanged.disconnect(boost::bind(NotifyAdditionalDataSyncProgressChanged, this, _1));
+}
+
+bool ClientModel::getTorInfo(std::string& ip_port) const
+{
+    proxyType onion;
+    if (GetProxy((Network) 3, onion) && IsReachable((Network) 3)) {
+        {
+            LOCK(cs_mapLocalHost);
+            for (const std::pair<const CNetAddr, LocalServiceInfo>& item : mapLocalHost) {
+                if (item.first.IsTor()) {
+                     CService addrOnion = CService(item.first.ToString(), item.second.nPort);
+                     ip_port = addrOnion.ToStringIPPort();
+                     return true;
+                }
+            }
+        }
+    }
+    return false;
 }

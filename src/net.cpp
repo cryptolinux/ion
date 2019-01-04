@@ -1,7 +1,9 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2020 The Dash Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2014-2015 The Dash developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
@@ -113,8 +115,14 @@ bool fDiscover = true;
 bool fListen = true;
 bool fRelayTxes = true;
 CCriticalSection cs_mapLocalHost;
-std::map<CNetAddr, LocalServiceInfo> mapLocalHost GUARDED_BY(cs_mapLocalHost);
-static bool vfLimited[NET_MAX] GUARDED_BY(cs_mapLocalHost) = {};
+map<CNetAddr, LocalServiceInfo> mapLocalHost;
+static bool vfLimited[NET_MAX] = {};
+static CNode* pnodeLocalHost = NULL;
+uint64_t nLocalHostNonce = 0;
+static std::vector<ListenSocket> vhListenSocket;
+CAddrMan addrman;
+int nMaxConnections = 125;
+bool fAddressesInitialized = false;
 std::string strSubVersion;
 
 void CConnman::AddOneShot(const std::string& strDest)
@@ -558,8 +566,17 @@ void CNode::CloseSocketDisconnect(CConnman* connman)
 
     connman->UnregisterEvents(this);
 
-    LogPrint(BCLog::NET, "disconnecting peer=%d\n", id);
-    CloseSocket(hSocket);
+    /// when NTP implemented, change to just nTime = GetAdjustedTime()
+    int64_t nTime = (fInbound ? GetAdjustedTime() : GetTime());
+    CAddress addrYou = (addr.IsRoutable() && !IsProxy(addr) ? addr : CAddress(CService("0.0.0.0", 0)));
+    CAddress addrMe = GetLocalAddress(&addr);
+    GetRandBytes((unsigned char*)&nLocalHostNonce, sizeof(nLocalHostNonce));
+    if (fLogIPs)
+        LogPrint("net", "send version message: version %d, blocks=%d, us=%s, them=%s, peer=%d\n", PROTOCOL_VERSION, nBestHeight, addrMe.ToString(), addrYou.ToString(), id);
+    else
+        LogPrint("net", "send version message: version %d, blocks=%d, us=%s, peer=%d\n", PROTOCOL_VERSION, nBestHeight, addrMe.ToString(), id);
+    PushMessage("version", PROTOCOL_VERSION, nLocalServices, nTime, addrYou, addrMe,
+        nLocalHostNonce, strSubVersion, nBestHeight, true);
 }
 
 void CConnman::ClearBanned()
@@ -3309,9 +3326,23 @@ bool CConnman::AddPendingMasternode(const uint256& proTxHash)
         return false;
     }
 
-    vPendingMasternodes.push_back(proTxHash);
-    return true;
-}
+    //try to read stored banlist
+    CBanDB bandb;
+    banmap_t banmap;
+    if (!bandb.Read(banmap))
+        LogPrintf("Invalid or missing banlist.dat; recreating\n");
+
+    CNode::SetBanned(banmap); //thread save setter
+    CNode::SetBannedSetDirty(false); //no need to write down just read or nonexistent data
+    CNode::SweepBanned(); //sweap out unused entries
+
+    // Initialize random numbers. Even when rand() is only usable for trivial use-cases most nodes should have a different
+    // seed after all the file-IO done at this point. Should be good enough even when nodes are started via scripts.
+    srand(time(NULL));
+
+    LogPrintf("Loaded %i addresses from peers.dat  %dms\n",
+        addrman.size(), GetTimeMillis() - nStart);
+    fAddressesInitialized = true;
 
 void CConnman::SetMasternodeQuorumNodes(Consensus::LLMQType llmqType, const uint256& quorumHash, const std::set<uint256>& proTxHashes)
 {
@@ -3744,10 +3775,10 @@ void CConnman::PushMessage(CNode* pnode, CSerializedNetMsg&& msg)
 
     CVectorWriter{SER_NETWORK, INIT_PROTO_VERSION, serializedHeader, 0, hdr};
 
-    size_t nBytesSent = 0;
-    {
-        LOCK(pnode->cs_vSend);
-        bool hasPendingData = !pnode->vSendMsg.empty();
+    if (ssSend.size() == 0) {
+	    LEAVE_CRITICAL_SECTION(cs_vSend);
+        return;
+    }
 
         //log total amount of bytes per command
         pnode->mapSendBytesPerMsgCmd[msg.command] += nTotalSize;

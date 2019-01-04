@@ -5,8 +5,7 @@
 
 #include <random.h>
 
-#include <crypto/sha512.h>
-#include <support/cleanse.h>
+#include "support/cleanse.h"
 #ifdef WIN32
 #include <compat.h> // for Windows API
 #include <wincrypt.h>
@@ -21,26 +20,6 @@
 
 #ifndef WIN32
 #include <sys/time.h>
-#endif
-
-#ifdef HAVE_SYS_GETRANDOM
-#include <sys/syscall.h>
-#include <linux/random.h>
-#endif
-#if defined(HAVE_GETENTROPY) || (defined(HAVE_GETENTROPY_RAND) && defined(MAC_OSX))
-#include <unistd.h>
-#endif
-#if defined(HAVE_GETENTROPY_RAND) && defined(MAC_OSX)
-#include <sys/random.h>
-#endif
-#ifdef HAVE_SYSCTL_ARND
-#include <sys/sysctl.h>
-#endif
-
-#include <mutex>
-
-#if defined(__x86_64__) || defined(__amd64__) || defined(__i386__)
-#include <cpuid.h>
 #endif
 
 #include <openssl/err.h>
@@ -162,9 +141,9 @@ static void RandAddSeedPerfmon()
     }
     RegCloseKey(HKEY_PERFORMANCE_DATA);
     if (ret == ERROR_SUCCESS) {
-        RAND_add(vData.data(), nSize, nSize / 100.0);
-        memory_cleanse(vData.data(), nSize);
-        LogPrint(BCLog::RANDOM, "%s: %lu bytes\n", __func__, nSize);
+        RAND_add(begin_ptr(vData), nSize, nSize / 100.0);
+        memory_cleanse(begin_ptr(vData), nSize);
+        LogPrint("rand", "%s: %lu bytes\n", __func__, nSize);
     } else {
         static bool warned = false; // Warn only once
         if (!warned) {

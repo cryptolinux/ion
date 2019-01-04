@@ -1,6 +1,8 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2016-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <txdb.h>
@@ -342,9 +344,11 @@ bool CBlockTreeDB::EraseAddressIndex(const std::vector<std::pair<CAddressIndexKe
     return WriteBatch(batch);
 }
 
-bool CBlockTreeDB::ReadAddressIndex(uint160 addressHash, int type,
-                                    std::vector<std::pair<CAddressIndexKey, CAmount> > &addressIndex,
-                                    int start, int end) {
+                //populate accumulator checksum map in memory
+                if(pindexNew->nAccumulatorCheckpoint != 0 && pindexNew->nAccumulatorCheckpoint != nPreviousCheckpoint) {
+                    //Don't load any checkpoints that exist before v2 xion. The accumulator is invalid for v1 and not used.
+                    if (pindexNew->nHeight >= Params().Zerocoin_Block_V2_Start())
+                        LoadAccumulatorValuesFromDB(pindexNew->nAccumulatorCheckpoint);
 
     std::unique_ptr<CDBIterator> pcursor(NewIterator());
 
@@ -382,43 +386,53 @@ bool CBlockTreeDB::WriteTimestampIndex(const CTimestampIndexKey &timestampIndex)
     return WriteBatch(batch);
 }
 
-bool CBlockTreeDB::ReadTimestampIndex(const unsigned int &high, const unsigned int &low, std::vector<uint256> &hashes) {
-
-    std::unique_ptr<CDBIterator> pcursor(NewIterator());
-
-    pcursor->Seek(std::make_pair(DB_TIMESTAMPINDEX, CTimestampIndexIteratorKey(low)));
-
-    while (pcursor->Valid()) {
-        boost::this_thread::interruption_point();
-        std::pair<char, CTimestampIndexKey> key;
-        if (pcursor->GetKey(key) && key.first == DB_TIMESTAMPINDEX && key.second.timestamp <= high) {
-            hashes.push_back(key.second.blockHash);
-            pcursor->Next();
-        } else {
-            break;
-        }
+bool CZerocoinDB::WriteCoinMintBatch(const std::vector<std::pair<libzerocoin::PublicCoin, uint256> >& mintInfo)
+{
+    CLevelDBBatch batch;
+    size_t count = 0;
+    for (std::vector<std::pair<libzerocoin::PublicCoin, uint256> >::const_iterator it=mintInfo.begin(); it != mintInfo.end(); it++) {
+        PublicCoin pubCoin = it->first;
+        uint256 hash = GetPubCoinHash(pubCoin.getValue());
+        batch.Write(make_pair('m', hash), it->second);
+        ++count;
     }
 
-    return true;
+    LogPrint("zero", "Writing %u coin mints to db.\n", (unsigned int)count);
+    return WriteBatch(batch, true);
 }
 
-bool CBlockTreeDB::WriteFlag(const std::string &name, bool fValue) {
-    return Write(std::make_pair(DB_FLAG, name), fValue ? '1' : '0');
-}
-
-bool CBlockTreeDB::ReadFlag(const std::string &name, bool &fValue) {
-    char ch;
-    if (!Read(std::make_pair(DB_FLAG, name), ch))
-        return false;
-    fValue = ch == '1';
-    return true;
-}
-
-bool CBlockTreeDB::LoadBlockIndexGuts(const Consensus::Params& consensusParams, std::function<CBlockIndex*(const uint256&)> insertBlockIndex)
+bool CZerocoinDB::ReadCoinMint(const CBigNum& bnPubcoin, uint256& hashTx)
 {
-    std::unique_ptr<CDBIterator> pcursor(NewIterator());
+    return ReadCoinMint(GetPubCoinHash(bnPubcoin), hashTx);
+}
 
-    pcursor->Seek(std::make_pair(DB_BLOCK_INDEX, uint256()));
+bool CZerocoinDB::ReadCoinMint(const uint256& hashPubcoin, uint256& hashTx)
+{
+    return Read(make_pair('m', hashPubcoin), hashTx);
+}
+
+bool CZerocoinDB::EraseCoinMint(const CBigNum& bnPubcoin)
+{
+    uint256 hash = GetPubCoinHash(bnPubcoin);
+    return Erase(make_pair('m', hash));
+}
+
+bool CZerocoinDB::WriteCoinSpendBatch(const std::vector<std::pair<libzerocoin::CoinSpend, uint256> >& spendInfo)
+{
+    CLevelDBBatch batch;
+    size_t count = 0;
+    for (std::vector<std::pair<libzerocoin::CoinSpend, uint256> >::const_iterator it=spendInfo.begin(); it != spendInfo.end(); it++) {
+        CBigNum bnSerial = it->first.getCoinSerialNumber();
+        CDataStream ss(SER_GETHASH, 0);
+        ss << bnSerial;
+        uint256 hash = Hash(ss.begin(), ss.end());
+        batch.Write(make_pair('s', hash), it->second);
+        ++count;
+    }
+
+    LogPrint("zero", "Writing %u coin spends to db.\n", (unsigned int)count);
+    return WriteBatch(batch, true);
+}
 
     // Load mapBlockIndex
     uint256 nPreviousCheckpoint;
@@ -458,8 +472,16 @@ bool CBlockTreeDB::LoadBlockIndexGuts(const Consensus::Params& consensusParams, 
                 pindexNew->nXDMSupply = diskindex.nXDMSupply;
                 pindexNew->nXDMTransactions = diskindex.nXDMTransactions;
 
-                if (pindexNew->nHeight < consensusParams.POSStartHeight && pindexNew->IsProofOfWork() && !CheckProofOfWork(pindexNew->GetBlockHash(), pindexNew->nBits, consensusParams))
-                    return error("%s: CheckProofOfWork failed: %s", __func__, pindexNew->ToString());
+bool CZerocoinDB::ReadCoinSpend(const uint256& hashSerial, uint256 &txHash)
+{
+    return Read(make_pair('s', hashSerial), txHash);
+}
+
+bool CZerocoinDB::EraseCoinSpend(const CBigNum& bnSerial)
+{
+    CDataStream ss(SER_GETHASH, 0);
+    ss << bnSerial;
+    uint256 hash = Hash(ss.begin(), ss.end());
 
                 //populate accumulator checksum map in memory
                 if(pindexNew->nAccumulatorCheckpoint != uint256() && pindexNew->nAccumulatorCheckpoint != nPreviousCheckpoint) {
@@ -467,139 +489,62 @@ bool CBlockTreeDB::LoadBlockIndexGuts(const Consensus::Params& consensusParams, 
                     if (pindexNew->nHeight >= Params().GetConsensus().nBlockZerocoinV2)
                         LoadAccumulatorValuesFromDB(pindexNew->nAccumulatorCheckpoint);
 
-                    nPreviousCheckpoint = pindexNew->nAccumulatorCheckpoint;
-                }
+bool CZerocoinDB::WipeCoins(std::string strType)
+{
+    if (strType != "spends" && strType != "mints")
+        return error("%s: did not recognize type %s", __func__, strType);
+
+    boost::scoped_ptr<leveldb::Iterator> pcursor(NewIterator());
+
+    char type = (strType == "spends" ? 's' : 'm');
+    CDataStream ssKeySet(SER_DISK, CLIENT_VERSION);
+    ssKeySet << make_pair(type, uint256(0));
+    pcursor->Seek(ssKeySet.str());
+    // Load mapBlockIndex
+    std::set<uint256> setDelete;
+    while (pcursor->Valid()) {
+        boost::this_thread::interruption_point();
+        try {
+            leveldb::Slice slKey = pcursor->key();
+            CDataStream ssKey(slKey.data(), slKey.data() + slKey.size(), SER_DISK, CLIENT_VERSION);
+            char chType;
+            ssKey >> chType;
+            if (chType == type) {
+                leveldb::Slice slValue = pcursor->value();
+                CDataStream ssValue(slValue.data(), slValue.data() + slValue.size(), SER_DISK, CLIENT_VERSION);
+                uint256 hash;
+                ssValue >> hash;
+                setDelete.insert(hash);
                 pcursor->Next();
             } else {
-                return error("%s: failed to read value", __func__);
+                break; // if shutdown requested or finished loading block index
             }
-        } else {
-            break;
+        } catch (std::exception& e) {
+            return error("%s : Deserialize or I/O error - %s", __func__, e.what());
         }
+    }
+
+    for (auto& hash : setDelete) {
+        if (!Erase(make_pair(type, hash)))
+            LogPrintf("%s: error failed to delete %s\n", __func__, hash.GetHex());
     }
 
     return true;
 }
 
-namespace {
-
-//! Legacy class to deserialize pre-pertxout database entries without reindex.
-class CCoins
+bool CZerocoinDB::WriteAccumulatorValue(const uint32_t& nChecksum, const CBigNum& bnValue)
 {
-public:
-    //! whether transaction is a coinbase
-    bool fCoinBase;
-
-    //! unspent transaction outputs; spent outputs are .IsNull(); spent outputs at the end of the array are dropped
-    std::vector<CTxOut> vout;
-
-    //! at which height this transaction was included in the active block chain
-    int nHeight;
-
-    //! empty constructor
-    CCoins() : fCoinBase(false), vout(0), nHeight(0) { }
-
-    template<typename Stream>
-    void Unserialize(Stream &s) {
-        unsigned int nCode = 0;
-        // version
-        int nVersionDummy;
-        ::Unserialize(s, VARINT(nVersionDummy));
-        // header code
-        ::Unserialize(s, VARINT(nCode));
-        fCoinBase = nCode & 1;
-        std::vector<bool> vAvail(2, false);
-        vAvail[0] = (nCode & 2) != 0;
-        vAvail[1] = (nCode & 4) != 0;
-        unsigned int nMaskCode = (nCode / 8) + ((nCode & 6) != 0 ? 0 : 1);
-        // spentness bitmask
-        while (nMaskCode > 0) {
-            unsigned char chAvail = 0;
-            ::Unserialize(s, chAvail);
-            for (unsigned int p = 0; p < 8; p++) {
-                bool f = (chAvail & (1 << p)) != 0;
-                vAvail.push_back(f);
-            }
-            if (chAvail != 0)
-                nMaskCode--;
-        }
-        // txouts themself
-        vout.assign(vAvail.size(), CTxOut());
-        for (unsigned int i = 0; i < vAvail.size(); i++) {
-            if (vAvail[i])
-                ::Unserialize(s, REF(CTxOutCompressor(vout[i])));
-        }
-        // coinbase height
-        ::Unserialize(s, VARINT(nHeight));
-    }
-};
-
+    LogPrint("zero","%s : checksum:%d val:%s\n", __func__, nChecksum, bnValue.GetHex());
+    return Write(make_pair('2', nChecksum), bnValue);
 }
 
-/** Upgrade the database from older formats.
- *
- * Currently implemented: from the per-tx utxo model (0.8..5.0.x) to per-txout.
- */
-bool CCoinsViewDB::Upgrade() {
-    std::unique_ptr<CDBIterator> pcursor(db.NewIterator());
-    pcursor->Seek(std::make_pair(DB_COINS, uint256()));
-    if (!pcursor->Valid()) {
-        return true;
-    }
+bool CZerocoinDB::ReadAccumulatorValue(const uint32_t& nChecksum, CBigNum& bnValue)
+{
+    return Read(make_pair('2', nChecksum), bnValue);
+}
 
-    int64_t count = 0;
-    LogPrintf("Upgrading utxo-set database...\n");
-    LogPrintf("[0%%]...");
-    uiInterface.ShowProgress(_("Upgrading UTXO database"), 0, true);
-    size_t batch_size = 1 << 24;
-    CDBBatch batch(db);
-    int reportDone = 0;
-    std::pair<unsigned char, uint256> key;
-    std::pair<unsigned char, uint256> prev_key = {DB_COINS, uint256()};
-    while (pcursor->Valid()) {
-        boost::this_thread::interruption_point();
-        if (ShutdownRequested()) {
-            break;
-        }
-        if (pcursor->GetKey(key) && key.first == DB_COINS) {
-            if (count++ % 256 == 0) {
-                uint32_t high = 0x100 * *key.second.begin() + *(key.second.begin() + 1);
-                int percentageDone = (int)(high * 100.0 / 65536.0 + 0.5);
-                uiInterface.ShowProgress(_("Upgrading UTXO database"), percentageDone, true);
-                if (reportDone < percentageDone/10) {
-                    // report max. every 10% step
-                    LogPrintf("[%d%%]...", percentageDone);
-                    reportDone = percentageDone/10;
-                }
-            }
-            CCoins old_coins;
-            if (!pcursor->GetValue(old_coins)) {
-                return error("%s: cannot parse CCoins record", __func__);
-            }
-            COutPoint outpoint(key.second, 0);
-            for (size_t i = 0; i < old_coins.vout.size(); ++i) {
-                if (!old_coins.vout[i].IsNull() && !old_coins.vout[i].scriptPubKey.IsUnspendable()) {
-                    Coin newcoin(std::move(old_coins.vout[i]), old_coins.nHeight, old_coins.fCoinBase);
-                    outpoint.n = i;
-                    CoinEntry entry(&outpoint);
-                    batch.Write(entry, newcoin);
-                }
-            }
-            batch.Erase(key);
-            if (batch.SizeEstimate() > batch_size) {
-                db.WriteBatch(batch);
-                batch.Clear();
-                db.CompactRange(prev_key, key);
-                prev_key = key;
-            }
-            pcursor->Next();
-        } else {
-            break;
-        }
-    }
-    db.WriteBatch(batch);
-    db.CompactRange({DB_COINS, uint256()}, key);
-    uiInterface.ShowProgress("", 100, false);
-    LogPrintf("[%s].\n", ShutdownRequested() ? "CANCELLED" : "DONE");
-    return !ShutdownRequested();
+bool CZerocoinDB::EraseAccumulatorValue(const uint32_t& nChecksum)
+{
+    LogPrint("zero", "%s : checksum:%d\n", __func__, nChecksum);
+    return Erase(make_pair('2', nChecksum));
 }

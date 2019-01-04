@@ -90,12 +90,12 @@
     </message>
     <message>
         <location line="+7"/>
-        <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <source>These are your ION addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <source>These are your ION addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -114,17 +114,7 @@
         <translation>&amp;Edit</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>&amp;Show address QR code</source>
-        <translation>&amp;Show address QR code</translation>
-    </message>
-    <message>
-        <location line="+152"/>
-        <source>QR code</source>
-        <translation>QR code</translation>
-    </message>
-    <message>
-        <location line="+66"/>
+        <location line="+182"/>
         <source>Export Address List</source>
         <translation>Export Address List</translation>
     </message>
@@ -147,7 +137,7 @@
 <context>
     <name>AddressTableModel</name>
     <message>
-        <location filename="../addresstablemodel.cpp" line="+170"/>
+        <location filename="../addresstablemodel.cpp" line="+199"/>
         <source>Label</source>
         <translation>Label</translation>
     </message>
@@ -235,12 +225,17 @@
         <translation>Repeat new passphrase</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Show password</source>
-        <translation>Show password</translation>
+        <location line="+33"/>
+        <source>Serves to disable the trivial sendmoney when OS account compromised. Provides no real security.</source>
+        <translation>Serves to disable the trivial sendmoney when OS account compromised. Provides no real security.</translation>
     </message>
     <message>
-        <location filename="../askpassphrasedialog.cpp" line="+54"/>
+        <location line="+3"/>
+        <source>For anonymization, automint, and staking only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../askpassphrasedialog.cpp" line="+48"/>
         <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
         <translation>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</translation>
     </message>
@@ -250,8 +245,7 @@
         <translation>Encrypt wallet</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location line="+8"/>
+        <location line="+5"/>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
         <translation>This operation needs your wallet passphrase to unlock the wallet.</translation>
     </message>
@@ -286,7 +280,7 @@
         <translation>Enter the old passphrase and new passphrase to the wallet.</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+52"/>
         <source>Confirm wallet encryption</source>
         <translation>Confirm wallet encryption</translation>
     </message>
@@ -374,6 +368,19 @@
 <context>
     <name>BanTableModel</name>
     <message>
+        <location filename="../bantablemodel.cpp" line="+87"/>
+        <source>IP/Netmask</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Banned Until</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Bip38ToolDialog</name>
+    <message>
         <location filename="../bantablemodel.cpp" line="+89"/>
         <source>IP/Netmask</source>
         <translation>IP/Netmask</translation>
@@ -387,21 +394,22 @@
 <context>
     <name>BitcoinAmountField</name>
     <message>
-        <location line="+6"/>
-        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <location line="+30"/>
+        <location line="+400"/>
+        <source>Address:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <location filename="../ion.cpp" line="+551"/>
-        <source>A fatal error occurred. Ion Core can no longer continue safely and will quit.</source>
-        <translation>A fatal error occurred. Ion Core can no longer continue safely and will quit.</translation>
+        <location line="-424"/>
+        <source>Enter a ION Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-355"/>
-        <source>The Ion address to sign the message with</source>
+        <location line="+31"/>
+        <source>The ION address to encrypt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -415,7 +423,187 @@
         <translation>Node</translation>
     </message>
     <message>
-        <location line="+241"/>
+        <location line="+7"/>
+        <location line="+220"/>
+        <source>Paste address from clipboard</source>
+        <translation type="unfinished">Paste address from clipboard</translation>
+    </message>
+    <message>
+        <location line="-210"/>
+        <location line="+220"/>
+        <source>Alt+P</source>
+        <translation type="unfinished">Alt+P</translation>
+    </message>
+    <message>
+        <location line="-200"/>
+        <location line="+220"/>
+        <source>Passphrase: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-193"/>
+        <location line="+149"/>
+        <source>Encrypted Key:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-127"/>
+        <source>Copy the current signature to the system clipboard</source>
+        <translation type="unfinished">Copy the current signature to the system clipboard</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Encrypt the private key for this ION address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <location line="+171"/>
+        <source>Reset all fields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-72"/>
+        <source>The encrypted private key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
+        <source>Decrypt the entered key using the passphrase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-168"/>
+        <source>Encrypt &amp;Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <location line="+171"/>
+        <source>Clear &amp;All</source>
+        <translation type="unfinished">Clear &amp;All</translation>
+    </message>
+    <message>
+        <location line="-112"/>
+        <source>&amp;BIP 38 Decrypt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Enter the BIP 38 encrypted private key. Enter the passphrase in the middle box. Click Decrypt Key to compute the private key. After the key is decrypted, clicking &apos;Import Address&apos; will add this private key to the wallet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+89"/>
+        <source>Decrypt &amp;Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+77"/>
+        <source>Decrypted Key:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-7"/>
+        <source>&amp;About %1</source>
+        <translation>&amp;About %1</translation>
+    </message>
+    <message>
+        <location filename="../bip38tooldialog.cpp" line="+29"/>
+        <source>Click &quot;Decrypt Key&quot; to compute key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+89"/>
+        <source>The entered passphrase is invalid. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Show / Hide</source>
+        <translation>&amp;Show / Hide</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show or hide the main Window</source>
+        <translation>Show or hide the main Window</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Encrypt Wallet...</source>
+        <translation>&amp;Encrypt Wallet...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Encrypt the private keys that belong to your wallet</source>
+        <translation>Encrypt the private keys that belong to your wallet</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+63"/>
+        <source>Wallet unlock was cancelled.</source>
+        <translation type="unfinished">Wallet unlock was cancelled.</translation>
+    </message>
+    <message>
+        <location line="-56"/>
+        <source>Private key for the entered address is not available.</source>
+        <translation type="unfinished">Private key for the entered address is not available.</translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Failed to decrypt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change the passphrase used for wallet encryption</source>
+        <translation>Change the passphrase used for wallet encryption</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Unlock Wallet...</source>
+        <translation>&amp;Unlock Wallet...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unlock wallet</source>
+        <translation>Unlock wallet</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Please wait while key is imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Key Already Held By Wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Error Adding Key To Wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Successfully Added Private Key To Wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BitcoinGUI</name>
+    <message>
+        <location filename="../bitcoingui.cpp" line="+122"/>
+        <source>Wallet</source>
+        <translation>Wallet</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Node</source>
+        <translation>Node</translation>
+    </message>
+    <message>
+        <location line="+174"/>
         <source>&amp;Overview</source>
         <translation>&amp;Overview</translation>
     </message>
@@ -425,27 +613,17 @@
         <translation>Show general overview of wallet</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>&amp;Send</source>
         <translation>&amp;Send</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Send coins to a Ion address</source>
-        <translation>Send coins to a Ion address</translation>
-    </message>
-    <message>
-        <location line="+21"/>
+        <location line="+11"/>
         <source>&amp;Receive</source>
         <translation>&amp;Receive</translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Sign the message to prove you own this Ion address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>&amp;Transactions</source>
         <translation>&amp;Transactions</translation>
     </message>
@@ -455,32 +633,22 @@
         <translation>Browse transaction history</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>&amp;Masternodes</source>
-        <translation>&amp;Masternodes</translation>
+        <location line="+11"/>
+        <source>Privacy Actions for xION</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Browse masternodes</source>
-        <translation>Browse masternodes</translation>
-    </message>
-    <message>
-        <location line="+34"/>
+        <location line="+42"/>
         <source>E&amp;xit</source>
         <translation>E&amp;xit</translation>
     </message>
     <message>
-        <location line="+25"/>
-        <source>The Ion address the message was signed with</source>
-        <translation type="unfinished"></translation>
+        <location line="+1"/>
+        <source>Quit application</source>
+        <translation>Quit application</translation>
     </message>
     <message>
-        <location line="+29"/>
-        <source>Verify the message to ensure it was signed with the specified Ion address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+6"/>
         <source>About &amp;Qt</source>
         <translation>About &amp;Qt</translation>
     </message>
@@ -493,21 +661,6 @@
         <location line="+2"/>
         <source>&amp;Options...</source>
         <translation>&amp;Options...</translation>
-    </message>
-    <message>
-        <location line="-7"/>
-        <source>&amp;About %1</source>
-        <translation>&amp;About %1</translation>
-    </message>
-    <message>
-        <location line="-70"/>
-        <source>PrivateSend coins to a Dash address</source>
-        <translation>PrivateSend coins to a Dash address</translation>
-    </message>
-    <message>
-        <location line="+78"/>
-        <source>Modify configuration options for %1</source>
-        <translation>Modify configuration options for %1</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -548,21 +701,6 @@
         <location line="+1"/>
         <source>Change the passphrase used for wallet encryption</source>
         <translation>Change the passphrase used for wallet encryption</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Unlock Wallet...</source>
-        <translation>&amp;Unlock Wallet...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Unlock wallet</source>
-        <translation>Unlock wallet</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Lock Wallet</source>
-        <translation>&amp;Lock Wallet</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -699,10 +837,13 @@
         <source>%1 client</source>
         <translation>%1 client</translation>
     </message>
-    <message>
-        <location line="+767"/>
-        <source>Wallet is &lt;b&gt;unencrypted&lt;/b&gt;</source>
-        <translation>Wallet is &lt;b&gt;unencrypted&lt;/b&gt;</translation>
+    <message numerus="yes">
+        <location line="+482"/>
+        <source>Processed %n blocks of transaction history.</source>
+        <translation>
+            <numerusform>Processed %n block of transaction history.</numerusform>
+            <numerusform>Processed %n blocks of transaction history.</numerusform>
+        </translation>
     </message>
     <message>
         <location line="-1083"/>
@@ -715,7 +856,17 @@
         <translation>Show the PrivateSend basic information</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+233"/>
+        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for anonymization and staking only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Tor is &lt;b&gt;enabled&lt;/b&gt;: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-762"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
@@ -740,14 +891,14 @@
         <translation>Tabs toolbar</translation>
     </message>
     <message>
-        <location line="-427"/>
-        <location line="+890"/>
+        <location line="-436"/>
+        <location line="+918"/>
         <source>Ion Core</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-707"/>
-        <source>Send coins to a Ion address</source>
+        <location line="-722"/>
+        <source>Send coins to a ION address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -782,17 +933,17 @@
     </message>
     <message>
         <location line="+6"/>
-        <source>Connecting to peers...</source>
-        <translation>Connecting to peers...</translation>
+        <source>Modify configuration options for ION</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+16"/>
-        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <source>Sign messages with your ION addresses to prove you own them</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <source>Verify messages to ensure they were signed with specified ION addresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -847,17 +998,17 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
+        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+214"/>
+        <location line="+233"/>
         <source>Ion Core client</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location line="+212"/>
-        <source>%n active connection(s) to Ion network</source>
+        <source>%n active connection(s) to ION network</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -926,24 +1077,117 @@
         <translation>Incoming transaction</translation>
     </message>
     <message>
-        <location line="+55"/>
-        <source>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</source>
-        <translation>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</translation>
+        <location line="+0"/>
+        <source>Sent MultiSend transaction</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+1"/>
+        <source>Date: %1
+Amount: %2
+Type: %3
+Address: %4
+</source>
+        <translation>Date: %1
+Amount: %2
+Type: %3
+Address: %4
+</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>Staking is active
+ MultiSend: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <location line="+4"/>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-4"/>
+        <location line="+4"/>
+        <source>Not Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Staking is not active
+ MultiSend: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>AutoMint is currently enabled and set to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>AutoMint is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
         <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for mixing only</source>
-        <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for mixing only</translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+20"/>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>BlockExplorer</name>
+    <message>
+        <location filename="../forms/blockexplorer.ui" line="+14"/>
+        <source>Blockchain Explorer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Address / Block / Transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../blockexplorer.cpp" line="+480"/>
+        <source>Not all transactions will be shown. To view all transactions you need to set txindex=1 in the configuration file (ioncoin.conf).</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ClientModel</name>
+    <message>
+        <location filename="../clientmodel.cpp" line="+81"/>
+        <source>Total: %1 (IPv4: %2 / IPv6: %3 / Tor: %4 / Unknown: %5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+101"/>
+        <source>Network Alert</source>
+        <translation>Network Alert</translation>
     </message>
 </context>
 <context>
@@ -1049,7 +1293,12 @@
         <translation>Confirmed</translation>
     </message>
     <message>
-        <location filename="../coincontroldialog.cpp" line="+67"/>
+        <location line="+5"/>
+        <source>Priority</source>
+        <translation>Priority</translation>
+    </message>
+    <message>
+        <location filename="../coincontroldialog.cpp" line="+60"/>
         <source>Copy address</source>
         <translation>Copy address</translation>
     </message>
@@ -1110,14 +1359,14 @@
         <translation>Copy change</translation>
     </message>
     <message>
-        <location line="+150"/>
+        <location line="+147"/>
         <source>Please switch to &quot;List mode&quot; to use this function.</source>
         <translation>Please switch to &quot;List mode&quot; to use this function.</translation>
     </message>
     <message>
-        <location line="+217"/>
-        <source>(%1 locked)</source>
-        <translation>(%1 locked)</translation>
+        <location line="+216"/>
+        <source>highest</source>
+        <translation>highest</translation>
     </message>
     <message>
         <location line="+159"/>
@@ -1135,14 +1384,15 @@
         <translation>This label turns red if any recipient receives an amount smaller than the current dust threshold.</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Can vary +/- %1 duff(s) per input.</source>
-        <translation>Can vary +/- %1 duff(s) per input.</translation>
+        <location filename="../forms/coincontroldialog.ui" line="-334"/>
+        <location filename="../coincontroldialog.cpp" line="+2"/>
+        <source>medium</source>
+        <translation>medium</translation>
     </message>
     <message>
-        <location line="+20"/>
-        <source>Some coins were unselected because they were spent.</source>
-        <translation>Some coins were unselected because they were spent.</translation>
+        <location filename="../coincontroldialog.cpp" line="+2"/>
+        <source>low-medium</source>
+        <translation>low-medium</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -1170,8 +1420,18 @@
         <translation>Show spendable coins only</translation>
     </message>
     <message>
-        <location line="+25"/>
-        <location line="+75"/>
+        <location line="+3"/>
+        <source>This label turns red, if any recipient receives an amount smaller than %1.</source>
+        <translation>This label turns red, if any recipient receives an amount smaller than %1.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Can vary +/- %1 uion per input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <location line="+81"/>
         <source>(no label)</source>
         <translation>(no label)</translation>
     </message>
@@ -1240,7 +1500,7 @@
     </message>
     <message>
         <location line="+67"/>
-        <source>The entered address &quot;%1&quot; is not a valid Ion address.</source>
+        <source>The entered address &quot;%1&quot; is not a valid ION address.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1410,7 +1670,7 @@
     </message>
     <message>
         <location line="+10"/>
-        <source>Ion Core will download and store a copy of the Ion block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <source>Ion Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1474,17 +1734,22 @@
     <message>
         <location filename="../forms/masternodelist.ui" line="+14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="unfinished">Form</translation>
     </message>
     <message>
-        <location line="+120"/>
-        <source>Status</source>
-        <translation>Status</translation>
+        <location line="+59"/>
+        <source>MASTERNODES</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-33"/>
-        <source>0</source>
-        <translation>0</translation>
+        <location line="+101"/>
+        <source>Note: Status of your masternodes in local wallet can potentially be slightly incorrect.&lt;br /&gt;Always wait for wallet to sync additional data and then double check from another node&lt;br /&gt;if your node should be running but you still see &quot;MISSING&quot; in &quot;Status&quot; field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+71"/>
+        <source>Alias</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-44"/>
@@ -1547,9 +1812,9 @@
         <translation>Operator Reward</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Collateral Address</source>
-        <translation>Collateral Address</translation>
+        <location filename="../masternodelist.cpp" line="+52"/>
+        <source>Start alias</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1600,9 +1865,9 @@
         <translation>to %1</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>to UNKNOWN</source>
-        <translation>to UNKNOWN</translation>
+        <location line="+96"/>
+        <source>Enter whole numbers 1 - 100</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1610,23 +1875,22 @@
         <translation>but not claimed</translation>
     </message>
     <message>
-        <location line="-12"/>
-        <source>NONE</source>
-        <translation>NONE</translation>
+        <location line="+30"/>
+        <source>Enter Address to Send to</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other Ion addresses after it matures.
-To Add: enter percentage to give and Ion address to add to the MultiSend vector.
+        <location line="-106"/>
+        <source>MultiSend allows you to automatically send up to 100% of your stake or masternode reward to a list of other ION addresses after it matures.
+To Add: enter percentage to give and ION address to add to the MultiSend vector.
 To Delete: Enter address to delete and press delete.
 MultiSend will not be activated unless you have clicked Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
-        <location line="+162"/>
-        <source>Please wait...</source>
-        <translation>Please wait...</translation>
+        <location line="+207"/>
+        <source>Add to MultiSend Vector</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+48"/>
@@ -1637,9 +1901,9 @@ MultiSend will not be activated unless you have clicked Activate</source>
 <context>
     <name>ModalOverlay</name>
     <message>
-        <location filename="../forms/modaloverlay.ui" line="+14"/>
-        <source>Form</source>
-        <translation>Form</translation>
+        <location line="+34"/>
+        <source>Deactivate MultiSend</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+117"/>
@@ -1647,9 +1911,9 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>Recent transactions may not yet be visible, and therefore your wallet&apos;s balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the Ion network, as detailed below.</translation>
     </message>
     <message>
-        <location line="+19"/>
-        <source>Attempting to spend Ion that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation>Attempting to spend Ion that are affected by not-yet-displayed transactions will not be accepted by the network.</translation>
+        <location line="-128"/>
+        <source>Choose an address from the address book</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+60"/>
@@ -1657,11 +1921,9 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>Number of blocks left</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+20"/>
-        <location filename="../modaloverlay.cpp" line="+152"/>
-        <source>Unknown...</source>
-        <translation>Unknown...</translation>
+        <location line="-66"/>
+        <source>Percentage of stake to send</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-13"/>
@@ -1669,9 +1931,9 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>Last block time</translation>
     </message>
     <message>
-        <location line="+20"/>
-        <source>Progress</source>
-        <translation>Progress</translation>
+        <location line="+27"/>
+        <source>Address to send portion of stake to</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+28"/>
@@ -1679,10 +1941,19 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>Progress increase per hour</translation>
     </message>
     <message>
+        <location line="+52"/>
+        <source>Label:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+7"/>
-        <location line="+14"/>
-        <source>calculating...</source>
-        <translation>calculating...</translation>
+        <source>Enter a label for this address to add it to your address book</source>
+        <translation type="unfinished">Enter a label for this address to add it to your address book</translation>
+    </message>
+    <message>
+        <location line="+65"/>
+        <source>Delete Address From MultiSend Vector</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-7"/>
@@ -1690,9 +1961,9 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>Estimated time left until synced</translation>
     </message>
     <message>
-        <location line="+37"/>
-        <source>Hide</source>
-        <translation>Hide</translation>
+        <location line="+11"/>
+        <source>Activate MultiSend</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../modaloverlay.cpp" line="-1"/>
@@ -1703,9 +1974,9 @@ MultiSend will not be activated unless you have clicked Activate</source>
 <context>
     <name>OpenURIDialog</name>
     <message>
-        <location filename="../forms/openuridialog.ui" line="+14"/>
-        <source>Open URI</source>
-        <translation>Open URI</translation>
+        <location line="-47"/>
+        <source>View MultiSend Vector</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1713,9 +1984,9 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>Open payment request from URI or file</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>URI:</source>
-        <translation>URI:</translation>
+        <location line="-154"/>
+        <source>Send For Stakes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1723,42 +1994,103 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>Select payment request file</translation>
     </message>
     <message>
-        <location filename="../openuridialog.cpp" line="+50"/>
-        <source>Select payment request file to open</source>
-        <translation>Select payment request file to open</translation>
+        <location filename="../multisenddialog.cpp" line="+64"/>
+        <source>(no label)</source>
+        <translation type="unfinished">(no label)</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>MultiSend Active for Stakes and Masternode Rewards</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../forms/optionsdialog.ui" line="+20"/>
-        <source>Options</source>
-        <translation>Options</translation>
+        <location line="+2"/>
+        <source>MultiSend Active for Stakes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source>&amp;Main</source>
-        <translation>&amp;Main</translation>
+        <location line="+2"/>
+        <source>MultiSend Active for Masternode Rewards</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+107"/>
-        <source>Size of &amp;database cache</source>
-        <translation>Size of &amp;database cache</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>MB</source>
-        <translation>MB</translation>
+        <location line="+2"/>
+        <source>MultiSend Not Active</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+27"/>
-        <source>Number of script &amp;verification threads</source>
-        <translation>Number of script &amp;verification threads</translation>
+        <source>The entered address: %1 is invalid.
+Please check the address and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>The total amount of your MultiSend vector is over 100% of your stake reward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <source>Saved the MultiSend to memory, but failed saving properties to the database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>MultiSend Vector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Removed %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Could not locate address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Unable to activate MultiSend, check MultiSend vector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Need to select to send on stake and/or masternode rewards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>MultiSend activated but writing settings to DB failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>MultiSend activated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>First Address Not Valid</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>(0 = auto, &lt;0 = leave that many cores free)</source>
-        <translation>(0 = auto, &lt;0 = leave that many cores free)</translation>
+        <source>MultiSend deactivated but writing settings to DB failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>MultiSend deactivated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-97"/>
+        <source>Please Enter 1 - 100 for percent.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+165"/>
@@ -1766,9 +2098,9 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>Amount of Ion to keep anonymized</translation>
     </message>
     <message>
-        <location line="-129"/>
-        <source>W&amp;allet</source>
-        <translation>W&amp;allet</translation>
+        <location line="+19"/>
+        <source>Create MultiSignature &amp;Address</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+30"/>
@@ -1811,14 +2143,18 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>Whether to use experimental PrivateSend mode with multiple mixing sessions per block.&lt;br/&gt;Note: You must use this feature carefully.&lt;br/&gt;Make sure you always have recent wallet (auto)backup in a safe place!</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Enable PrivateSend &amp;multi-session</source>
-        <translation>Enable PrivateSend &amp;multi-session</translation>
+        <location line="+14"/>
+        <location line="+345"/>
+        <location line="+179"/>
+        <source>Status:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-23"/>
-        <source>If you disable the spending of unconfirmed change, the change from a transaction&lt;br/&gt;cannot be used until that transaction has at least one confirmation.&lt;br/&gt;This also affects how your balance is computed.</source>
-        <translation>If you disable the spending of unconfirmed change, the change from a transaction&lt;br/&gt;cannot be used until that transaction has at least one confirmation.&lt;br/&gt;This also affects how your balance is computed.</translation>
+        <location line="-487"/>
+        <source>Use below to quickly import an address by its redeem. Don&apos;t forget to add a label before clicking import!
+Keep in mind, the wallet will rescan the blockchain to find transactions containing the new address.
+Please be patient after clicking import.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+45"/>
@@ -1858,7 +2194,7 @@ MultiSend will not be activated unless you have clicked Activate</source>
     <message>
         <location line="+103"/>
         <location line="+13"/>
-        <source>Add destinations to send Ion to</source>
+        <source>Add destinations to send ION to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1877,15 +2213,9 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>&amp;Hide tray icon</translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
-        <translation>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</translation>
-    </message>
-    <message>
-        <location line="+648"/>
-        <location line="+13"/>
-        <source>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items.&lt;br/&gt;%s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</source>
-        <translation>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items.&lt;br/&gt;%s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</translation>
+        <location line="+76"/>
+        <source>&amp;Sign MultiSignature Tx</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-10"/>
@@ -1919,8 +2249,18 @@ MultiSend will not be activated unless you have clicked Activate</source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Show popups for PrivateSend transactions</source>
-        <translation>Show popups for PrivateSend transactions</translation>
+        <source>Add Private &amp;Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Sign with only private keys (Not Recommened)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multisigdialog.cpp" line="+299"/>
+        <source>Invalid Tx Hash.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-30"/>
@@ -1928,25 +2268,24 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation>&amp;Spend unconfirmed change</translation>
     </message>
     <message>
-        <location line="+39"/>
-        <source>This setting determines the amount of individual masternodes that an input will be mixed through.&lt;br/&gt;More rounds of mixing gives a higher degree of privacy, but also costs more in fees.</source>
-        <translation>This setting determines the amount of individual masternodes that an input will be mixed through.&lt;br/&gt;More rounds of mixing gives a higher degree of privacy, but also costs more in fees.</translation>
+        <location line="+535"/>
+        <source>Maximum possible addresses reached. (15)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-254"/>
-        <source>&amp;Network</source>
-        <translation>&amp;Network</translation>
+        <location line="+110"/>
+        <source>Vout Position: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+341"/>
-        <source>Map port using &amp;UPnP</source>
-        <translation>Map port using &amp;UPnP</translation>
+        <location line="+57"/>
+        <source>Amount: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
-        <location line="+157"/>
-        <source>Proxy &amp;IP:</source>
-        <translation>Proxy &amp;IP:</translation>
+        <location line="+26"/>
+        <source>Maximum (15)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-132"/>
@@ -1993,12 +2332,12 @@ MultiSend will not be activated unless you have clicked Activate</source>
     </message>
     <message>
         <location line="+13"/>
-        <source>This option is the quickest and will cost about ~0.025 Ion to anonymize 10000 ION</source>
+        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 10000 ION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>This option is moderately fast and will cost about 0.05 Ion to anonymize 10000 ION</source>
+        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 10000 ION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2008,13 +2347,15 @@ MultiSend will not be activated unless you have clicked Activate</source>
     </message>
     <message>
         <location line="+13"/>
-        <source>0.1 Ion per 10000 Ion you anonymize.</source>
+        <source>0.1 ION per 10000 ION you anonymize.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+615"/>
-        <source>User Interface &amp;language:</source>
-        <translation>User Interface &amp;language:</translation>
+        <location filename="../obfuscationconfig.cpp" line="+47"/>
+        <location line="+14"/>
+        <location line="+14"/>
+        <source>Obfuscation Configuration</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
@@ -2054,9 +2395,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Reset all client options to default.</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>&amp;Reset Options</source>
-        <translation>&amp;Reset Options</translation>
+        <location filename="../openuridialog.cpp" line="+45"/>
+        <source>Select payment request file to open</source>
+        <translation>Select payment request file to open</translation>
     </message>
     <message>
         <location line="+55"/>
@@ -2090,21 +2431,21 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Client will be shut down. Do you want to proceed?</translation>
     </message>
     <message>
-        <location line="+54"/>
-        <source>This change would require a client restart.</source>
-        <translation>This change would require a client restart.</translation>
+        <location line="+115"/>
+        <source>W&amp;allet</source>
+        <translation>W&amp;allet</translation>
     </message>
     <message>
-        <location line="+28"/>
-        <source>The supplied proxy address is invalid.</source>
-        <translation>The supplied proxy address is invalid.</translation>
+        <location line="+53"/>
+        <source>If you disable the spending of unconfirmed change, the change from a transaction&lt;br/&gt;cannot be used until that transaction has at least one confirmation.&lt;br/&gt;This also affects how your balance is computed.</source>
+        <translation>If you disable the spending of unconfirmed change, the change from a transaction&lt;br/&gt;cannot be used until that transaction has at least one confirmation.&lt;br/&gt;This also affects how your balance is computed.</translation>
     </message>
 </context>
 <context>
     <name>OverviewPage</name>
     <message>
         <location line="+33"/>
-        <source>Automatically open the Ion client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <source>Automatically open the ION client port on the router. This only works when your router supports UPnP and it is enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2130,19 +2471,19 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Pending:</translation>
     </message>
     <message>
-        <location line="-176"/>
-        <source>Automatically start Ion after logging in to the system.</source>
+        <location line="-210"/>
+        <source>Automatically start ION after logging in to the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start Ion on system login</source>
+        <source>&amp;Start ION on system login</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-29"/>
-        <source>Mined balance that has not yet matured</source>
-        <translation>Mined balance that has not yet matured</translation>
+        <location line="+213"/>
+        <source>Whether to show coin control features or not.</source>
+        <translation>Whether to show coin control features or not.</translation>
     </message>
     <message>
         <location line="-133"/>
@@ -2175,9 +2516,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Current total balance in watch-only addresses</translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>Watch-only:</source>
-        <translation>Watch-only:</translation>
+        <location line="+21"/>
+        <source>Language missing or translation incomplete? Help contributing translations here:
+https://www.transifex.com/ioncoincore/ioncoin</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+39"/>
@@ -2185,8 +2527,18 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Your current balance in watch-only addresses</translation>
     </message>
     <message>
-        <location line="-133"/>
-        <source>Percentage of incoming Ion which get automatically converted to xION via Zerocoin Protocol (min: 10%)</source>
+        <location line="-169"/>
+        <source>Enable automatic minting of ION units to xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Enable xION Automint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Percentage of incoming ION which get automatically converted to xION via Zerocoin Protocol (min: 10%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2197,7 +2549,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <location line="+30"/>
         <location line="+16"/>
-        <source>Wait with automatic conversion to Zerocoin until enough Ion for this denomination is available</source>
+        <source>Wait with automatic conversion to Zerocoin until enough ION for this denomination is available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2206,8 +2558,13 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Enabled/Disabled</translation>
     </message>
     <message>
-        <location line="+114"/>
-        <source>Connect to the Ion network through a SOCKS5 proxy.</source>
+        <location line="+37"/>
+        <source>Stake split threshold:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+98"/>
+        <source>Connect to the ION network through a SOCKS5 proxy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2293,6 +2650,22 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <location line="+14"/>
+        <location line="+6"/>
+        <source>Hide empty balances</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Hide orphan stakes in transaction lists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Hide orphan stakes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
         <location line="+13"/>
         <source>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</source>
         <translation>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</translation>
@@ -2328,8 +2701,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>&amp;Cancel</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="+87"/>
-        <source>I don&apos;t care</source>
+        <location filename="../optionsdialog.cpp" line="+89"/>
+        <source>Any</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2338,12 +2711,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>default</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+46"/>
         <source>none</source>
         <translation>none</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+96"/>
         <source>Confirm options reset</source>
         <translation>Confirm options reset</translation>
     </message>
@@ -2364,9 +2737,19 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>This change would require a client restart.</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+28"/>
         <source>The supplied proxy address is invalid.</source>
         <translation>The supplied proxy address is invalid.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>The supplied proxy port is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>The supplied proxy settings are invalid.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2377,78 +2760,126 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location line="+43"/>
-        <source>ION Balances</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+259"/>
+        <location line="+297"/>
+        <location line="+192"/>
+        <location line="+403"/>
         <source>Available:</source>
         <translation>Available:</translation>
     </message>
     <message>
-        <location line="+16"/>
-        <location line="+702"/>
+        <location line="-579"/>
+        <location line="+192"/>
         <source>Your current spendable balance</source>
         <translation>Your current spendable balance</translation>
     </message>
     <message>
-        <location line="-661"/>
+        <location line="-160"/>
+        <source>Total Balance, including all unavailable coins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+71"/>
+        <source>ION Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+130"/>
         <source>Pending:</source>
         <translation>Pending:</translation>
     </message>
     <message>
-        <location line="-236"/>
-        <location line="+820"/>
+        <location line="+16"/>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
         <translation>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</translation>
     </message>
     <message>
-        <location line="-708"/>
-        <location line="+1118"/>
+        <location line="+41"/>
+        <location line="+351"/>
         <source>Immature:</source>
         <translation>Immature:</translation>
     </message>
     <message>
-        <location line="-1147"/>
+        <location line="-335"/>
         <source>Staked or masternode rewards that has not yet matured</source>
         <translation>Staked or masternode rewards that has not yet matured</translation>
     </message>
     <message>
-        <location line="-153"/>
-        <location line="+1393"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <location line="+85"/>
+        <source>Current locked balance in watch-only addresses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1348"/>
+        <location line="+16"/>
+        <location line="+19"/>
+        <source>Your current ION balance, unconfirmed and immature transactions included</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+96"/>
+        <source>xION Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <location line="+17"/>
+        <source>Mature: more than 20 confirmation and more than 1 mint of the same denomination after it was minted.
+These xION are spendable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location line="+17"/>
+        <location line="+14"/>
+        <location line="+17"/>
+        <source>Unconfirmed: less than 20 confirmations
+Immature: confirmed, but less than 1 mint of the same denomination after it was minted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-725"/>
+        <location line="+852"/>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the ION network after a connection is established, but this process has not completed yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-999"/>
+        <source>OVERVIEW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+134"/>
+        <source>Combined Balance (including unconfirmed and immature coins)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Combined Balance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+355"/>
         <source>Unconfirmed transactions to watch-only addresses</source>
         <translation>Unconfirmed transactions to watch-only addresses</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+57"/>
         <source>Staked or masternode rewards in watch-only addresses that has not yet matured</source>
         <translation>Staked or masternode rewards in watch-only addresses that has not yet matured</translation>
     </message>
     <message>
-        <location line="+42"/>
-        <location line="+807"/>
-        <location line="+255"/>
+        <location line="-315"/>
+        <location line="+394"/>
+        <location line="+261"/>
         <source>Total:</source>
         <translation>Total:</translation>
     </message>
     <message>
-        <location line="-1001"/>
-        <source>Your current total balance</source>
-        <translation>Your current total balance</translation>
-    </message>
-    <message>
-        <location line="+25"/>
+        <location line="-220"/>
         <source>Current total balance in watch-only addresses</source>
         <translation>Current total balance in watch-only addresses</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="-285"/>
         <source>Watch-only:</source>
         <translation>Watch-only:</translation>
     </message>
@@ -2458,128 +2889,45 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Your current balance in watch-only addresses</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="-61"/>
         <source>Spendable:</source>
         <translation>Spendable:</translation>
     </message>
     <message>
-        <location line="+525"/>
-        <source>Combined Balances (including unconfirmed and immature coins)</source>
+        <location line="+191"/>
+        <location line="+19"/>
+        <source>Locked ION or Masternode collaterals. These are excluded from xION minting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Combined Balances&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+74"/>
-        <source>Total Balance, including unconfirmed and immature coins.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>ION:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>xION:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Current percentage of xION.
-If AutoMint is enabled this percentage will settle around the configured AutoMint percentage (default = 10%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location line="+66"/>
-        <source>0 %</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-46"/>
-        <location line="+13"/>
-        <source>Locked Ion or Masternode collaterals. These are excluded from xION minting.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-10"/>
-        <location line="+33"/>
-        <location line="+189"/>
-        <location line="+31"/>
-        <location line="+44"/>
-        <source>0.000 000 00 ION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-284"/>
+        <location line="-16"/>
         <source>Locked:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+10"/>
-        <source>Unlocked IONs. These can be used for xION minting.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-7"/>
-        <source>Unlocked:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+77"/>
-        <source>Zerocoin Balance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <location line="+104"/>
-        <source>Mature: more than 20 confirmation and more than 3 mints of the same denomination after it was minted.
-These xION are spendable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-100"/>
-        <source>Mature:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <location line="+35"/>
-        <source>All available xION, unconfirmed and immature xION included.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+56"/>
-        <location line="+17"/>
-        <location line="+27"/>
-        <location line="+17"/>
-        <source>Unconfirmed: less than 20 confirmations
-Immature: confirmed, but less than 3 mints of the same denomination after it was minted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-57"/>
+        <location line="+260"/>
         <source>Unconfirmed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+58"/>
+        <location line="+19"/>
+        <source>Your current xION balance, unconfirmed and immature xION included.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+84"/>
         <source>Recent transactions</source>
         <translation>Recent transactions</translation>
     </message>
     <message>
-        <location filename="../overviewpage.cpp" line="+135"/>
+        <location filename="../overviewpage.cpp" line="+132"/>
         <location line="+1"/>
         <source>out of sync</source>
         <translation>out of sync</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+111"/>
         <source>Current percentage of xION.
 If AutoMint is enabled this percentage will settle around the configured AutoMint percentage (default = 10%).
 </source>
@@ -2605,8 +2953,8 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
 <context>
     <name>PaymentServer</name>
     <message>
-        <location filename="../paymentserver.cpp" line="+297"/>
-        <location line="+209"/>
+        <location filename="../paymentserver.cpp" line="+292"/>
+        <location line="+205"/>
         <location line="+33"/>
         <location line="+104"/>
         <location line="+12"/>
@@ -2637,13 +2985,13 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
         <translation>Invalid payment address %1</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-104"/>
         <source>Cannot start ion: click-to-pay handler</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+114"/>
-        <source>URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters.</source>
+        <location line="+110"/>
+        <source>URI cannot be parsed! This can be caused by an invalid ION address or malformed URI parameters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2727,7 +3075,7 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
 <context>
     <name>PeerTableModel</name>
     <message>
-        <location filename="../peertablemodel.cpp" line="+113"/>
+        <location filename="../peertablemodel.cpp" line="+114"/>
         <source>Address/Hostname</source>
         <translation>Address/Hostname</translation>
     </message>
@@ -2745,53 +3093,37 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
 <context>
     <name>PrivacyDialog</name>
     <message>
-        <location filename="../forms/privacydialog.ui" line="+55"/>
-        <source>ION which were anonymized via Zerocin Protocol</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Zerocoin Ion (xION)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+25"/>
+        <location filename="../forms/privacydialog.ui" line="+184"/>
         <source>Zerocoin Actions:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the ION network after a connection is established, but this process has not completed yet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+52"/>
-        <location line="+46"/>
-        <source>Enter an amount of Ion to convert to xION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-43"/>
-        <location filename="../privacydialog.cpp" line="+150"/>
-        <location line="+113"/>
+        <location line="+190"/>
+        <location filename="../privacydialog.cpp" line="+172"/>
+        <location line="+112"/>
         <source>Mint Zerocoin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
-        <location line="+329"/>
+        <location line="+351"/>
         <location line="+30"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-349"/>
-        <location line="+629"/>
+        <location line="-371"/>
+        <location line="+651"/>
         <source>xION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-622"/>
+        <location line="-644"/>
         <source>Available for minting are coins which are confirmed and not locked or Masternode collaterals.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2801,7 +3133,7 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+19"/>
         <source>0.000 000 00 ION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2846,7 +3178,18 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="-600"/>
+        <source>PRIVACY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+308"/>
+        <location line="+52"/>
+        <source>Enter an amount of Ion to convert to xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+301"/>
         <source>xION Control</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2862,15 +3205,18 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
     </message>
     <message>
         <location line="+37"/>
+        <location filename="../privacydialog.cpp" line="+563"/>
         <source>Spend Zerocoin. Without &apos;Pay To:&apos; address creates payments to yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../privacydialog.cpp" line="+46"/>
+        <location filename="../privacydialog.cpp" line="-514"/>
         <location line="+4"/>
         <location line="+12"/>
-        <location line="+100"/>
+        <location line="+84"/>
+        <location line="+32"/>
+        <location line="+11"/>
         <location line="+4"/>
         <source>Spend Zerocoin</source>
         <translation type="unfinished"></translation>
@@ -2893,13 +3239,24 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location line="+417"/>
+        <location line="-548"/>
+        <location line="+49"/>
+        <location line="+504"/>
+        <location line="+421"/>
+        <location line="+544"/>
+        <location line="+31"/>
+        <location line="+31"/>
+        <location line="+31"/>
+        <location line="+31"/>
+        <location line="+31"/>
+        <location line="+31"/>
+        <location line="+31"/>
+        <location line="+31"/>
         <source>0 xION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-394"/>
+        <location line="-1190"/>
         <source>Security Level for Zerocoin Transactions. More is better, but needs more time and resources.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2914,13 +3271,13 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+40"/>
         <source>Pay &amp;To:</source>
         <translation type="unfinished">Pay &amp;To:</translation>
     </message>
     <message>
         <location line="+27"/>
-        <source>The Ion address to send the payment to. Creates local payment to yourself when empty.</source>
+        <source>The ION address to send the payment to. Creates local payment to yourself when empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2944,9 +3301,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Found enough compatible inputs to mix %1</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Not enough compatible inputs to mix &lt;span style=&apos;%1&apos;&gt;%2&lt;/span&gt;,&lt;br&gt;will mix &lt;span style=&apos;%1&apos;&gt;%3&lt;/span&gt; instead</source>
-        <translation>Not enough compatible inputs to mix &lt;span style=&apos;%1&apos;&gt;%2&lt;/span&gt;,&lt;br&gt;will mix &lt;span style=&apos;%1&apos;&gt;%3&lt;/span&gt; instead</translation>
+        <location line="+15"/>
+        <source>&amp;Label:</source>
+        <translation type="unfinished">&amp;Label:</translation>
     </message>
     <message>
         <location line="+59"/>
@@ -2954,14 +3311,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Overall progress</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Denominated</source>
-        <translation>Denominated</translation>
+        <location line="+13"/>
+        <source>A&amp;mount:</source>
+        <translation type="unfinished">A&amp;mount:</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Partially mixed</source>
-        <translation>Partially mixed</translation>
+        <location line="+63"/>
+        <source>Convert Change to Zerocoin (might cost additional fees)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2977,9 +3334,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         </translation>
     </message>
     <message>
-        <location line="+63"/>
-        <source>keys left: %1</source>
-        <translation>keys left: %1</translation>
+        <location line="+47"/>
+        <source>Information about the available Zerocoin funds.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+15"/>
@@ -2990,9 +3347,18 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Disabled</translation>
     </message>
     <message>
-        <location line="-145"/>
-        <source>Very low number of keys left since last automatic backup!</source>
-        <translation>Very low number of keys left since last automatic backup!</translation>
+        <location line="-893"/>
+        <location line="+25"/>
+        <location line="+936"/>
+        <location line="+38"/>
+        <source>Total Balance including unconfirmed and immature xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-996"/>
+        <location line="+961"/>
+        <source>Total Zerocoin  Balance:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3005,15 +3371,109 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Note: You can turn this message off in options.</translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>WARNING! Something went wrong on automatic backup</source>
-        <translation>WARNING! Something went wrong on automatic backup</translation>
+        <location line="+29"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <source>Unconfirmed: less than 20 confirmations
+Immature: confirmed, but less than 1 mint of the same denomination after it was minted</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
-        <location line="+16"/>
-        <source>ERROR! Failed to create automatic backup</source>
-        <translation>ERROR! Failed to create automatic backup</translation>
+        <location line="+40"/>
+        <source>Show the current status of automatic xION minting.
+
+To change the status (restart required):
+- enable: add &apos;enablezeromint=1&apos; to ioncoin.conf
+- disable: add &apos;enablezeromint=0&apos; to ioncoin.conf
+
+To change the percentage (no restart required):
+- menu Settings-&gt;Options-&gt;Percentage of autominted xION
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>AutoMint Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1410"/>
+        <location line="+1459"/>
+        <source>Global Supply:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Denom. 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 5:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 10:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 50:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 100:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 500:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 1000:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Denom. 5000:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-722"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <location line="+53"/>
+        <source>0 x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1324"/>
+        <source>Show xION denominations list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Show Denominations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+967"/>
+        <source>Denominations with value 5:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-15"/>
@@ -3092,24 +3552,24 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters.</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Payment request file handling</source>
-        <translation>Payment request file handling</translation>
+        <location line="+443"/>
+        <source>Hide Denominations</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Payment request file cannot be read! This can be caused by an invalid payment request file.</source>
-        <translation>Payment request file cannot be read! This can be caused by an invalid payment request file.</translation>
+        <location line="+147"/>
+        <source>Priority:</source>
+        <translation type="unfinished">Priority:</translation>
     </message>
     <message>
-        <location line="+61"/>
         <location line="+9"/>
-        <location line="+31"/>
-        <location line="+10"/>
-        <location line="+17"/>
-        <location line="+88"/>
-        <source>Payment request rejected</source>
-        <translation>Payment request rejected</translation>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>Fee:</source>
+        <translation type="unfinished">Fee:</translation>
     </message>
     <message>
         <location line="-155"/>
@@ -3132,10 +3592,13 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Unverified payment requests to custom payment scripts are unsupported.</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <location line="+17"/>
-        <source>Invalid payment request.</source>
-        <translation>Invalid payment request.</translation>
+        <location line="+75"/>
+        <location filename="../privacydialog.cpp" line="-438"/>
+        <location line="+1"/>
+        <location line="+545"/>
+        <location line="+1"/>
+        <source>Coins automatically selected</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="-10"/>
@@ -3168,42 +3631,175 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Bad response from server %1</translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>Network request error</source>
-        <translation>Network request error</translation>
+        <location filename="../privacydialog.cpp" line="-545"/>
+        <source>out of sync</source>
+        <translation type="unfinished">out of sync</translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>Payment acknowledged</source>
-        <translation>Payment acknowledged</translation>
+        <location line="+6"/>
+        <location line="+129"/>
+        <source>Mint Status: Okay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-123"/>
+        <source>Copy quantity</source>
+        <translation type="unfinished">Copy quantity</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Copy amount</source>
+        <translation type="unfinished">Copy amount</translation>
+    </message>
+    <message>
+        <location line="+192"/>
+        <source>Starting ResetMintZerocoin: rescanning complete blockchain, this will need up to 30 minutes depending on your hardware.
+Please be patient...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+171"/>
+        <source>Spending Zerocoin.
+Computationally expensive, might need several minutes depending on the selected Security Level and your hardware.
+Please be patient...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>) needed.
+Maximum allowed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>xION Spend #: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>xION Mint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+293"/>
+        <source> &lt;b&gt;enabled&lt;/b&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source> &lt;b&gt;disabled&lt;/b&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source> Configured target percentage: &lt;b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location line="+4"/>
+        <source>xION is currently disabled due to maintenance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-666"/>
+        <location line="+112"/>
+        <source>xION is currently undergoing maintenance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-221"/>
+        <source>Denom. with value &lt;b&gt;1&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;5&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;10&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;50&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;100&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;500&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;1000&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. with value &lt;b&gt;5000&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+740"/>
+        <source>AutoMint Status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-737"/>
+        <source>Denom. &lt;b&gt;1&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;5&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;10&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PeerTableModel</name>
     <message>
-        <location filename="../peertablemodel.cpp" line="+121"/>
-        <source>NodeId</source>
-        <translation>NodeId</translation>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;50&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Node/Service</source>
-        <translation>Node/Service</translation>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;100&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>User Agent</source>
-        <translation>User Agent</translation>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;500&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Ping</source>
-        <translation>Ping</translation>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;1000&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Sent</source>
-        <translation>Sent</translation>
+        <location line="+1"/>
+        <source>Denom. &lt;b&gt;5000&lt;/b&gt;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+103"/>
+        <source>Error: Your wallet is locked. Please enter the wallet passphrase first.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+0"/>
@@ -3234,29 +3830,29 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Appearance Setup</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Please choose your preferred settings for the appearance of %1</source>
-        <translation>Please choose your preferred settings for the appearance of %1</translation>
+        <location line="+35"/>
+        <location line="+15"/>
+        <location line="+260"/>
+        <source>Duration: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>This can also be adjusted later in the &quot;Appearance&quot; tab of the preferences.</source>
-        <translation>This can also be adjusted later in the &quot;Appearance&quot; tab of the preferences.</translation>
+        <location line="-275"/>
+        <location line="+15"/>
+        <location line="+260"/>
+        <source> sec.
+</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1503"/>
-        <source>%1 d</source>
-        <translation>%1 d</translation>
+        <location line="-265"/>
+        <source>Starting ResetSpentZerocoin: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>%1 h</source>
-        <translation>%1 h</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>%1 m</source>
-        <translation>%1 m</translation>
+        <location line="+68"/>
+        <source>No &apos;Pay To&apos; address provided, creating local payment</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
@@ -3310,27 +3906,27 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
             <numerusform>%n days</numerusform>
         </translation>
     </message>
-    <message numerus="yes">
-        <location line="+4"/>
-        <location line="+6"/>
-        <source>%n week(s)</source>
-        <translation>
-            <numerusform>%n week</numerusform>
-            <numerusform>%n weeks</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location line="+0"/>
-        <source>%n year(s)</source>
-        <translation>
-            <numerusform>%n year</numerusform>
-            <numerusform>%n years</numerusform>
-        </translation>
+    <message>
+        <location line="+24"/>
+        <location line="+32"/>
+        <source>Version 1 xION require a security level of 100 to successfully spend.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>%1 and %2</source>
-        <translation>%1 and %2</translation>
+        <location line="-31"/>
+        <location line="+32"/>
+        <source>Failed to spend xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-25"/>
+        <source>Failed to fetch mint associated with serial hash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Too much inputs (</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+8"/>
@@ -3342,15 +3938,19 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <source>%1 KB</source>
         <translation>%1 KB</translation>
     </message>
-    <message>
-        <location line="+2"/>
-        <source>%1 MB</source>
-        <translation>%1 MB</translation>
+    <message numerus="yes">
+        <location line="+362"/>
+        <source>PrivacyDialog</source>
+        <comment>Enter an amount of ION to convert to xION</comment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>%1 GB</source>
-        <translation>%1 GB</translation>
+        <location line="-334"/>
+        <source>denomination: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../modaloverlay.cpp" line="-29"/>
@@ -3367,8 +3967,8 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+7"/>
-        <source>Error: Cannot parse configuration file: %1. Only use key=value syntax.</source>
-        <translation>Error: Cannot parse configuration file: %1. Only use key=value syntax.</translation>
+        <source>value out: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+14"/>
@@ -3376,14 +3976,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Error: %1</translation>
     </message>
     <message>
-        <location line="+51"/>
-        <source>Error: Failed to load application fonts.</source>
-        <translation>Error: Failed to load application fonts.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Error: Specified font-family invalid. Valid values: %1.</source>
-        <translation>Error: Specified font-family invalid. Valid values: %1.</translation>
+        <location line="+10"/>
+        <source>Sending successful, return code: </source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
@@ -3401,14 +3996,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Error: Specified font-scale invalid. Valid range %1 to %2.</translation>
     </message>
     <message>
-        <location filename="../guiutil.cpp" line="+113"/>
-        <source>Enter a Ion address (e.g. %1)</source>
+        <location filename="../guiutil.cpp" line="+105"/>
+        <source>Enter a ION address (e.g. %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
-        <source>Error: %1 CSS file(s) missing in -custom-css-dir path.</source>
-        <translation>Error: %1 CSS file(s) missing in -custom-css-dir path.</translation>
+        <location line="+773"/>
+        <source>%1 d</source>
+        <translation>%1 d</translation>
     </message>
 </context>
 <context>
@@ -3424,14 +4019,15 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>QR Code</translation>
     </message>
     <message>
-        <location line="+46"/>
-        <source>&amp;Save Image...</source>
-        <translation>&amp;Save Image...</translation>
+        <location line="+2"/>
+        <location line="+40"/>
+        <source>%1 s</source>
+        <translation>%1 s</translation>
     </message>
     <message>
-        <location filename="../qrdialog.cpp" line="+158"/>
-        <source>Error creating QR Code.</source>
-        <translation>Error creating QR Code.</translation>
+        <location line="-25"/>
+        <source>NETWORK</source>
+        <translation>NETWORK</translation>
     </message>
 </context>
 <context>
@@ -3460,7 +4056,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>QRImageWidget</name>
     <message>
-        <location filename="../receiverequestdialog.cpp" line="+35"/>
+        <location filename="../receiverequestdialog.cpp" line="+33"/>
         <source>&amp;Save Image...</source>
         <translation>&amp;Save Image...</translation>
     </message>
@@ -3519,6 +4115,8 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <location line="+76"/>
         <location line="+333"/>
         <location line="+23"/>
+        <location line="+522"/>
+        <location line="+23"/>
         <location line="+23"/>
         <location line="+23"/>
         <location line="+23"/>
@@ -3534,12 +4132,15 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <location line="+23"/>
         <location line="+26"/>
         <location line="+23"/>
-        <location line="+23"/>
+        <location line="+78"/>
+        <location line="+26"/>
+        <location line="+29"/>
+        <location line="+29"/>
         <source>N/A</source>
         <translation>N/A</translation>
     </message>
     <message>
-        <location line="-965"/>
+        <location line="-1147"/>
         <source>Number of connections</source>
         <translation>Number of connections</translation>
     </message>
@@ -3590,7 +4191,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+79"/>
-        <source>Open the Ion debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <source>Open the ION debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3644,21 +4245,26 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>&amp;Peers</translation>
     </message>
     <message>
-        <location line="+680"/>
+        <location line="+50"/>
         <source>Banned peers</source>
-        <translation>Banned peers</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
-        <location filename="../rpcconsole.cpp" line="+514"/>
-        <location line="+823"/>
+        <location line="+59"/>
+        <location filename="../rpcconsole.cpp" line="+329"/>
+        <location line="+727"/>
         <source>Select a peer to view detailed information.</source>
         <translation>Select a peer to view detailed information.</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Whitelisted</source>
-        <translation>Whitelisted</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Direction</source>
+        <translation>Direction</translation>
     </message>
     <message>
         <location line="+23"/>
@@ -3674,67 +4280,6 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <location line="+69"/>
         <source>Starting Block</source>
         <translation>Starting Block</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Synced Headers</source>
-        <translation>Synced Headers</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Synced Blocks</source>
-        <translation>Synced Blocks</translation>
-    </message>
-    <message>
-        <location line="+518"/>
-        <source>Wallet Path</source>
-        <translation>Wallet Path</translation>
-    </message>
-    <message>
-        <location line="-1371"/>
-        <location line="+761"/>
-        <source>User Agent</source>
-        <translation>User Agent</translation>
-    </message>
-    <message>
-        <location line="-709"/>
-        <source>Datadir</source>
-        <translation>Datadir</translation>
-    </message>
-    <message>
-        <location line="+178"/>
-        <source>Last block hash</source>
-        <translation>Last block hash</translation>
-    </message>
-    <message>
-        <location line="+101"/>
-        <source>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>InstantSend locks</source>
-        <translation>InstantSend locks</translation>
-    </message>
-    <message>
-        <location line="+51"/>
-        <source>Decrease font size</source>
-        <translation>Decrease font size</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Increase font size</source>
-        <translation>Increase font size</translation>
-    </message>
-    <message>
-        <location line="+135"/>
-        <source>&amp;Reset</source>
-        <translation>&amp;Reset</translation>
-    </message>
-    <message>
-        <location line="+232"/>
-        <source>Services</source>
-        <translation>Services</translation>
     </message>
     <message>
         <location line="+92"/>
@@ -3782,24 +4327,69 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Time Offset</translation>
     </message>
     <message>
-        <location line="-1144"/>
+        <location line="+89"/>
         <source>&amp;Wallet Repair</source>
         <translation>&amp;Wallet Repair</translation>
     </message>
     <message>
-        <location line="+1199"/>
+        <location line="+347"/>
+        <source>Delete local Blockchain Folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-309"/>
+        <source>Wallet In Use:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-334"/>
+        <source>Starting Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Synced Headers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Synced Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+184"/>
+        <source>The duration of a currently outstanding ping.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Ping Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Time Offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+101"/>
+        <source>Custom Backup Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Custom xION Backup Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Custom Backups Threshold:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+48"/>
         <source>Salvage wallet</source>
         <translation>Salvage wallet</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Rescan blockchain files</source>
-        <translation>Rescan blockchain files</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Recover transactions 1</source>
-        <translation>Recover transactions 1</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -3857,9 +4447,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>-reindex: Rebuild block chain index from current blk000??.dat files.</translation>
     </message>
     <message>
-        <location filename="../rpcconsole.cpp" line="-721"/>
-        <source>&amp;Disconnect</source>
-        <translation>&amp;Disconnect</translation>
+        <location line="-333"/>
+        <source>The buttons below will restart the wallet with command-line options to repair the wallet, fix issues with corrupt blockhain files or missing/obsolete transactions.</source>
+        <translation>The buttons below will restart the wallet with command-line options to repair the wallet, fix issues with corrupt blockhain files or missing/obsolete transactions.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3870,9 +4460,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Ban for</translation>
     </message>
     <message>
-        <location line="-3"/>
-        <source>1 &amp;hour</source>
-        <translation>1 &amp;hour</translation>
+        <location line="+286"/>
+        <source>Upgrade wallet to latest format on startup. (Note: this is NOT an update of the wallet itself!)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3880,9 +4470,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>1 &amp;day</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>1 &amp;week</source>
-        <translation>1 &amp;week</translation>
+        <location filename="../rpcconsole.cpp" line="-376"/>
+        <source>In:</source>
+        <translation>In:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3890,14 +4480,52 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>1 &amp;year</translation>
     </message>
     <message>
-        <location line="-36"/>
-        <source>Welcome to the Ion RPC console.</source>
+        <location line="-39"/>
+        <source>Welcome to the ION RPC console.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+185"/>
-        <source>Welcome to the %1 RPC console.</source>
-        <translation>Welcome to the %1 RPC console.</translation>
+        <location line="-218"/>
+        <source>&amp;Disconnect Node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <location line="+1"/>
+        <source>Ban Node for</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>1 &amp;hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>1 &amp;day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>1 &amp;week</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>1 &amp;year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>&amp;Unban Node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+95"/>
+        <source>This will delete your local blockchain folders and the wallet will synchronize the complete Blockchain from scratch.&lt;br /&gt;&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3920,9 +4548,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.</translation>
     </message>
     <message>
-        <location line="+31"/>
-        <source>In:</source>
-        <translation>In:</translation>
+        <location line="+70"/>
+        <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3930,9 +4558,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Out:</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Network activity disabled</source>
-        <translation>Network activity disabled</translation>
+        <location line="+2"/>
+        <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+141"/>
+        <source>%1 B</source>
+        <translation>%1 B</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -3946,6 +4579,16 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+2"/>
+        <source>%1 GB</source>
+        <translation>%1 GB</translation>
+    </message>
+    <message>
+        <location line="+123"/>
+        <source>(node id: %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>via %1</source>
         <translation>via %1</translation>
     </message>
@@ -3956,7 +4599,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>never</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>Inbound</source>
         <translation>Inbound</translation>
     </message>
@@ -3968,12 +4611,12 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     <message>
         <location line="+2"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+0"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
@@ -3985,7 +4628,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>ReceiveCoinsDialog</name>
     <message>
-        <location filename="../forms/receivecoinsdialog.ui" line="+34"/>
+        <location filename="../forms/receivecoinsdialog.ui" line="+263"/>
         <source>Reuse one of the previously used receiving addresses.&lt;br&gt;Reusing addresses has security and privacy issues.&lt;br&gt;Do not use this unless re-generating a payment request made before.</source>
         <translation>Reuse one of the previously used receiving addresses.&lt;br&gt;Reusing addresses has security and privacy issues.&lt;br&gt;Do not use this unless re-generating a payment request made before.</translation>
     </message>
@@ -3995,33 +4638,49 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>R&amp;euse an existing receiving address (not recommended)</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</source>
-        <translation>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="-30"/>
         <source>&amp;Message:</source>
         <translation>&amp;Message:</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location line="+21"/>
+        <location line="-87"/>
+        <location line="+16"/>
         <source>An optional label to associate with the new receiving address.</source>
         <translation>An optional label to associate with the new receiving address.</translation>
     </message>
     <message>
-        <location line="-37"/>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Ion network.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+7"/>
+        <location line="+25"/>
+        <source>Your receiving address. You can copy and use it to receive coins on this wallet. A new one will be generated once it is used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-22"/>
+        <source>&amp;Address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>A&amp;mount:</source>
+        <translation type="unfinished">A&amp;mount:</translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the ION network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-175"/>
+        <source>RECEIVE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+191"/>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the ION network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-107"/>
         <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
         <translation>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</translation>
     </message>
@@ -4031,18 +4690,13 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>&amp;Label:</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location line="+80"/>
+        <location line="+52"/>
+        <location line="+22"/>
         <source>An optional amount to request. Leave this empty or zero to not request a specific amount.</source>
         <translation>An optional amount to request. Leave this empty or zero to not request a specific amount.</translation>
     </message>
     <message>
-        <location line="-77"/>
-        <source>&amp;Amount:</source>
-        <translation>&amp;Amount:</translation>
-    </message>
-    <message>
-        <location line="+21"/>
+        <location line="+62"/>
         <source>&amp;Request payment</source>
         <translation>&amp;Request payment</translation>
     </message>
@@ -4057,7 +4711,12 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Clear</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+27"/>
+        <source>Receiving Addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
         <source>Requested payments history</source>
         <translation>Requested payments history</translation>
     </message>
@@ -4082,22 +4741,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Remove</translation>
     </message>
     <message>
-        <location filename="../receivecoinsdialog.cpp" line="+36"/>
-        <source>Enter a label to associate with the new receiving address</source>
-        <translation>Enter a label to associate with the new receiving address</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Enter a message to attach to the payment request</source>
-        <translation>Enter a message to attach to the payment request</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Copy URI</source>
-        <translation>Copy URI</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location filename="../receivecoinsdialog.cpp" line="+41"/>
         <source>Copy label</source>
         <translation>Copy label</translation>
     </message>
@@ -4110,6 +4754,11 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <location line="+1"/>
         <source>Copy amount</source>
         <translation>Copy amount</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Copy address</source>
+        <translation type="unfinished">Copy address</translation>
     </message>
 </context>
 <context>
@@ -4198,12 +4847,22 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Message</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+0"/>
+        <source>Address</source>
+        <translation type="unfinished">Address</translation>
+    </message>
+    <message>
+        <location line="+89"/>
+        <source>Amount</source>
+        <translation>Amount</translation>
+    </message>
+    <message>
+        <location line="-52"/>
         <source>(no label)</source>
         <translation>(no label)</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>(no message)</source>
         <translation>(no message)</translation>
     </message>
@@ -4221,28 +4880,25 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>SendCoinsDialog</name>
     <message>
-        <location filename="../forms/sendcoinsdialog.ui" line="+14"/>
-        <location filename="../sendcoinsdialog.cpp" line="+693"/>
+        <location filename="../forms/sendcoinsdialog.ui" line="+17"/>
+        <location filename="../sendcoinsdialog.cpp" line="+234"/>
+        <location line="+25"/>
+        <location line="+413"/>
         <source>Send Coins</source>
         <translation>Send Coins</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+65"/>
+        <source>SEND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+156"/>
         <source>Coin Control Features</source>
         <translation>Coin Control Features</translation>
     </message>
     <message>
-        <location line="+20"/>
-        <source>Inputs...</source>
-        <translation>Inputs...</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>automatically selected</source>
-        <translation>automatically selected</translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+70"/>
         <source>Insufficient funds!</source>
         <translation>Insufficient funds!</translation>
     </message>
@@ -4282,7 +4938,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Change:</translation>
     </message>
     <message>
-        <location line="+44"/>
+        <location line="+62"/>
         <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
         <translation>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</translation>
     </message>
@@ -4292,7 +4948,32 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Custom change address</translation>
     </message>
     <message>
-        <location line="+197"/>
+        <location line="+76"/>
+        <source>Split UTXO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source># of outputs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>UTXO Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>0 ION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+167"/>
+        <source>SwiftX technology allows for near instant transactions - A flat fee of 0.01 ION applies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+176"/>
         <source>Transaction Fee:</source>
         <translation>Transaction Fee:</translation>
     </message>
@@ -4307,35 +4988,49 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>collapse fee-settings</translation>
     </message>
     <message>
-        <location line="+252"/>
-        <source>Confirmation time target:</source>
-        <translation>Confirmation time target:</translation>
+        <location line="+3"/>
+        <source>Minimize</source>
+        <translation>Minimize</translation>
     </message>
     <message>
-        <location line="-198"/>
-        <source>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 duffs in fee,&lt;br /&gt;while &quot;at least&quot; pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 duffs in fee,&lt;br /&gt;while &quot;at least&quot; pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <location line="+13"/>
-        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for ion transactions than the network can process.</source>
-        <translation>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for ion transactions than the network can process.</translation>
-    </message>
-    <message>
-        <location line="-40"/>
+        <location line="+135"/>
         <source>per kilobyte</source>
         <translation>per kilobyte</translation>
     </message>
     <message>
-        <location line="-98"/>
-        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</source>
-        <translation>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</translation>
+        <location line="+16"/>
+        <source>total at least</source>
+        <translation>total at least</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Note: Not enough data for fee estimation, using the fallback fee instead.</source>
-        <translation>Note: Not enough data for fee estimation, using the fallback fee instead.</translation>
+        <location line="+46"/>
+        <source>(read the tooltip)</source>
+        <translation>(read the tooltip)</translation>
+    </message>
+    <message>
+        <location line="-82"/>
+        <source>Custom:</source>
+        <translation>Custom:</translation>
+    </message>
+    <message>
+        <location line="-211"/>
+        <source>(Smart fee not initialized yet. This usually takes a few blocks...)</source>
+        <translation>(Smart fee not initialized yet. This usually takes a few blocks...)</translation>
+    </message>
+    <message>
+        <location line="-101"/>
+        <source>SwiftX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Confirmation time:</source>
+        <translation>Confirmation time:</translation>
+    </message>
+    <message>
+        <location line="-750"/>
+        <source>Open Coin Control...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+41"/>
@@ -4343,9 +5038,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Hide</translation>
     </message>
     <message>
-        <location line="+97"/>
-        <source>(read the tooltip)</source>
-        <translation>(read the tooltip)</translation>
+        <location line="+1062"/>
+        <source>If the custom fee is set to 1000 uIONs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 uIONs in fee,&lt;br /&gt;while &quot;at least&quot; pays 1000 uIONs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+35"/>
@@ -4355,26 +5050,26 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     <message>
         <location line="+33"/>
         <location line="+13"/>
-        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for Ion transactions than the network can process.</source>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for ION transactions than the network can process.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+163"/>
+        <location line="-374"/>
         <source>normal</source>
         <translation>normal</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+44"/>
         <source>fast</source>
         <translation>fast</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+360"/>
         <source>Recommended</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+115"/>
         <source>Send as zero-fee transaction if possible</source>
         <translation>Send as zero-fee transaction if possible</translation>
     </message>
@@ -4384,8 +5079,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>(Smart fee not initialized yet. This usually takes a few blocks...)</translation>
     </message>
     <message>
-        <location line="+119"/>
-        <location filename="../sendcoinsdialog.cpp" line="-529"/>
+        <location line="+71"/>
         <source>Confirm the send action</source>
         <translation>Confirm the send action</translation>
     </message>
@@ -4416,12 +5110,17 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Add &amp;Recipient</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+35"/>
+        <source>Anonymized ION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Balance:</source>
         <translation>Balance:</translation>
     </message>
     <message>
-        <location filename="../sendcoinsdialog.cpp" line="-47"/>
+        <location filename="../sendcoinsdialog.cpp" line="-590"/>
         <source>Copy quantity</source>
         <translation>Copy quantity</translation>
     </message>
@@ -4456,43 +5155,27 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Copy change</translation>
     </message>
     <message>
-        <location line="+84"/>
-        <source>%1 (%2 blocks)</source>
-        <translation>%1 (%2 blocks)</translation>
-    </message>
-    <message>
-        <location line="+178"/>
-        <location line="+2"/>
-        <source>using</source>
-        <translation>using</translation>
-    </message>
-    <message>
-        <location line="-42"/>
-        <location line="+5"/>
-        <location line="+5"/>
-        <location line="+4"/>
-        <source>%1 to %2</source>
-        <translation>%1 to %2</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Are you sure you want to send?</source>
-        <translation>Are you sure you want to send?</translation>
-    </message>
-    <message>
-        <location line="+622"/>
-        <source>Warning: Invalid Ion address</source>
+        <location line="+146"/>
+        <source>The split block tool does not work when sending to outside addresses. Try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
-        <source>Total Amount = &lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;= %2</source>
-        <translation>Total Amount = &lt;b&gt;%1&lt;/b&gt;&lt;br /&gt;= %2</translation>
+        <location line="+25"/>
+        <source>The split block tool does not work with multiple addresses. Try again.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-53"/>
-        <source>&lt;b&gt;(%1 of %2 entries displayed)&lt;/b&gt;</source>
-        <translation>&lt;b&gt;(%1 of %2 entries displayed)&lt;/b&gt;</translation>
+        <location line="+653"/>
+        <source>Warning: Invalid ION address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-615"/>
+        <location line="+4"/>
+        <location line="+4"/>
+        <location line="+3"/>
+        <source>%1 to %2</source>
+        <translation>%1 to %2</translation>
     </message>
     <message>
         <location line="-231"/>
@@ -4520,22 +5203,27 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Transaction size: %1</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Fee rate: %1</source>
-        <translation>Fee rate: %1</translation>
+        <location line="+247"/>
+        <source>A fee %1 times higher than %2 per kB is considered an insanely high fee.</source>
+        <translation>A fee %1 times higher than %2 per kB is considered an insanely high fee.</translation>
     </message>
     <message numerus="yes">
-        <location line="+6"/>
-        <source>This transaction will consume %n input(s)</source>
+        <location line="+121"/>
+        <source>Estimated to begin confirmation within %n block(s).</source>
         <translation>
             <numerusform>This transaction will consume %n input</numerusform>
             <numerusform>This transaction will consume %n inputs</numerusform>
         </translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Warning: Using PrivateSend with %1 or more inputs can harm your privacy and is not recommended</source>
-        <translation>Warning: Using PrivateSend with %1 or more inputs can harm your privacy and is not recommended</translation>
+        <location line="-152"/>
+        <source>The recipient address is not valid, please recheck.</source>
+        <translation>The recipient address is not valid, please recheck.</translation>
+    </message>
+    <message>
+        <location line="-346"/>
+        <source>using SwiftX</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+21"/>
@@ -4548,7 +5236,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>The recipient address is not valid. Please recheck.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+222"/>
         <source>The amount to pay must be larger than 0.</source>
         <translation>The amount to pay must be larger than 0.</translation>
     </message>
@@ -4588,25 +5276,17 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Payment request expired.</translation>
     </message>
     <message>
-        <location line="+97"/>
-        <source>Pay only the required fee of %1</source>
-        <translation>Pay only the required fee of %1</translation>
-    </message>
-    <message numerus="yes">
-        <location line="+45"/>
-        <source>Estimated to begin confirmation within %n block(s).</source>
-        <translation>
-            <numerusform>Estimated to begin confirmation within %n block.</numerusform>
-            <numerusform>Estimated to begin confirmation within %n blocks.</numerusform>
-        </translation>
+        <location line="+86"/>
+        <source>Pay only the minimum fee of %1</source>
+        <translation>Pay only the minimum fee of %1</translation>
     </message>
     <message>
-        <location line="+103"/>
-        <source>Warning: Invalid Ion address</source>
-        <translation>Warning: Invalid Ion address</translation>
+        <location line="+13"/>
+        <source>Estimated to get 6 confirmations near instantly with &lt;b&gt;SwiftX&lt;/b&gt;!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+158"/>
         <source>Warning: Unknown change address</source>
         <translation>Warning: Unknown change address</translation>
     </message>
@@ -4640,7 +5320,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+18"/>
-        <source>The Ion address to send the payment to</source>
+        <source>The ION address to send the payment to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4709,7 +5389,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+10"/>
-        <source>A message that was attached to the ION: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</source>
+        <source>A message that was attached to the ION: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the ION network.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4735,7 +5415,12 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Memo:</translation>
     </message>
     <message>
-        <location filename="../sendcoinsentry.cpp" line="+29"/>
+        <location line="-56"/>
+        <source>This is a verified payment request.</source>
+        <translation>This is a verified payment request.</translation>
+    </message>
+    <message>
+        <location filename="../sendcoinsentry.cpp" line="+30"/>
         <source>Enter a label for this address to add it to your address book</source>
         <translation>Enter a label for this address to add it to your address book</translation>
     </message>
@@ -4780,24 +5465,24 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>You can sign messages/agreements with your addresses to prove you can receive Ion sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <source>The Ion address to sign the message with</source>
+        <location line="+15"/>
+        <source>The ION address to sign the message with</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <location line="+167"/>
+        <location line="+195"/>
         <source>Choose previously used address</source>
         <translation>Choose previously used address</translation>
     </message>
     <message>
-        <location line="-161"/>
-        <location line="+167"/>
+        <location line="-185"/>
+        <location line="+195"/>
         <source>Alt+A</source>
         <translation>Alt+A</translation>
     </message>
     <message>
-        <location line="-160"/>
+        <location line="-188"/>
         <source>Paste address from clipboard</source>
         <translation>Paste address from clipboard</translation>
     </message>
@@ -4817,27 +5502,27 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Signature</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+24"/>
         <source>Copy the current signature to the system clipboard</source>
         <translation>Copy the current signature to the system clipboard</translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>Sign the message to prove you own this Ion address</source>
+        <location line="+18"/>
+        <source>Sign the message to prove you own this ION address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+106"/>
-        <source>The Ion address the message was signed with</source>
+        <location line="+103"/>
+        <source>The ION address the message was signed with</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
-        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <location line="+34"/>
+        <source>Verify the message to ensure it was signed with the specified ION address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="-134"/>
         <source>Sign &amp;Message</source>
         <translation>Sign &amp;Message</translation>
     </message>
@@ -4848,12 +5533,12 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+3"/>
-        <location line="+119"/>
+        <location line="+137"/>
         <source>Clear &amp;All</source>
         <translation>Clear &amp;All</translation>
     </message>
     <message>
-        <location line="-256"/>
+        <location line="-78"/>
         <source>&amp;Verify Message</source>
         <translation>&amp;Verify Message</translation>
     </message>
@@ -4863,17 +5548,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Enter the receiver&apos;s address, message (ensure you copy line breaks, spaces, tabs, etc. exactly) and signature below to verify the message. Be careful not to read more into the signature than what is in the signed message itself, to avoid being tricked by a man-in-the-middle attack. Note that this only proves the signing party receives with the address, it cannot prove sendership of any transaction!</translation>
     </message>
     <message>
-        <location line="+21"/>
-        <source>The Ion address the message was signed with</source>
-        <translation>The Ion address the message was signed with</translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <source>Verify the message to ensure it was signed with the specified Ion address</source>
-        <translation>Verify the message to ensure it was signed with the specified Ion address</translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+55"/>
         <source>Verify &amp;Message</source>
         <translation>Verify &amp;Message</translation>
     </message>
@@ -4893,18 +5568,8 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Click &quot;Sign Message&quot; to generate signature</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Enter a message to be verified</source>
-        <translation>Enter a message to be verified</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Enter a signature for the message to be verified</source>
-        <translation>Enter a signature for the message to be verified</translation>
-    </message>
-    <message>
-        <location line="+111"/>
-        <location line="+78"/>
+        <location line="+79"/>
+        <location line="+73"/>
         <source>The entered address is invalid.</source>
         <translation>The entered address is invalid.</translation>
     </message>
@@ -4972,7 +5637,32 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>SplashScreen</name>
     <message>
-        <location filename="../networkstyle.cpp" line="+25"/>
+        <location filename="../splashscreen.cpp" line="+36"/>
+        <source>Ion Core</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Version %1</source>
+        <translation>Version %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The Bitcoin Core developers</source>
+        <translation>The Bitcoin Core developers</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The Dash Core developers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The Ion Core developers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../networkstyle.cpp" line="+20"/>
         <source>[testnet]</source>
         <translation>[testnet]</translation>
     </message>
@@ -4980,7 +5670,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>TrafficGraphWidget</name>
     <message>
-        <location filename="../trafficgraphwidget.cpp" line="+101"/>
+        <location filename="../trafficgraphwidget.cpp" line="+79"/>
         <source>KB/s</source>
         <translation>KB/s</translation>
     </message>
@@ -5061,7 +5751,12 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>verified via InstantSend</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+2"/>
+        <source>%1/confirmed (SwiftX verification failed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
@@ -5249,7 +5944,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>TransactionTableModel</name>
     <message>
-        <location filename="../transactiontablemodel.cpp" line="+259"/>
+        <location filename="../transactiontablemodel.cpp" line="+215"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
@@ -5317,9 +6012,19 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>verified via InstantSend</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>locked via ChainLocks</source>
-        <translation>locked via ChainLocks</translation>
+        <location line="+7"/>
+        <source>ION Stake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>xION Stake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Obfuscation Denominate</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+37"/>
@@ -5337,28 +6042,8 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Received via PrivateSend</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Sent to</source>
-        <translation>Sent to</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Payment to yourself</source>
-        <translation>Payment to yourself</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Mined</source>
-        <translation>Mined</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Obfuscated</source>
-        <translation>Obfuscated</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Converted Ion to xION</source>
+        <location line="+4"/>
+        <source>Converted ION to xION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5368,36 +6053,66 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+2"/>
-        <source>Received Ion from xION</source>
+        <source>Received ION from xION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>PrivateSend Make Collateral Inputs</source>
-        <translation>PrivateSend Make Collateral Inputs</translation>
+        <source>Minted Change as xION from xION Spend</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>PrivateSend Create Denominations</source>
-        <translation>PrivateSend Create Denominations</translation>
+        <source>Converted xION to ION</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+56"/>
+        <source>Anonymous (xION Transaction)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Anonymous (xION Stake)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-86"/>
+        <source>Sent to</source>
+        <translation>Sent to</translation>
+    </message>
+    <message>
+        <location line="-44"/>
+        <source>Orphan Block - Generated but not accepted. This does not impact your holdings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Payment to yourself</source>
+        <translation>Payment to yourself</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Mined</source>
+        <translation>Mined</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Obfuscated</source>
+        <translation>Obfuscated</translation>
+    </message>
+    <message>
+        <location line="+44"/>
         <source>watch-only</source>
         <translation>watch-only</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+27"/>
         <source>(n/a)</source>
         <translation>(n/a)</translation>
     </message>
     <message>
-        <location line="+233"/>
-        <source>(no label)</source>
-        <translation>(no label)</translation>
-    </message>
-    <message>
-        <location line="+39"/>
+        <location line="+211"/>
         <source>Transaction status. Hover over this field to show number of confirmations.</source>
         <translation>Transaction status. Hover over this field to show number of confirmations.</translation>
     </message>
@@ -5430,8 +6145,8 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>TransactionView</name>
     <message>
-        <location filename="../transactionview.cpp" line="+68"/>
-        <location line="+12"/>
+        <location filename="../transactionview.cpp" line="+69"/>
+        <location line="+17"/>
         <source>All</source>
         <translation>All</translation>
     </message>
@@ -5481,27 +6196,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Sent to</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>PrivateSend Make Collateral Inputs</source>
-        <translation>PrivateSend Make Collateral Inputs</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>PrivateSend Create Denominations</source>
-        <translation>PrivateSend Create Denominations</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>PrivateSend Denominate</source>
-        <translation>PrivateSend Denominate</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>PrivateSend Collateral Payment</source>
-        <translation>PrivateSend Collateral Payment</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+11"/>
         <source>To yourself</source>
         <translation>To yourself</translation>
     </message>
@@ -5521,12 +6216,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Received Ion from xION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Zerocoin Mint</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5536,12 +6226,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Zerocoin Spend, Change in xION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Zerocoin Spend to Self</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5551,22 +6236,17 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Other</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Enter address, transaction id, or label to search</source>
-        <translation>Enter address, transaction id, or label to search</translation>
+        <location line="+6"/>
+        <source>Enter address or label to search</source>
+        <translation>Enter address or label to search</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Min amount</source>
         <translation>Min amount</translation>
     </message>
     <message>
-        <location line="+42"/>
-        <source>Abandon transaction</source>
-        <translation>Abandon transaction</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+35"/>
         <source>Copy address</source>
         <translation>Copy address</translation>
     </message>
@@ -5607,11 +6287,11 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>Show address QR code</source>
-        <translation>Show address QR code</translation>
+        <source>Hide orphan stakes</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+221"/>
+        <location line="+228"/>
         <source>Export Transaction History</source>
         <translation>Export Transaction History</translation>
     </message>
@@ -5671,7 +6351,17 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Exporting Successful</translation>
     </message>
     <message>
-        <location line="+0"/>
+        <location line="-310"/>
+        <source>Received ION from xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Zerocoin Spend, Change in xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+307"/>
         <source>The transaction history was successfully saved to %1.</source>
         <translation>The transaction history was successfully saved to %1.</translation>
     </message>
@@ -5694,7 +6384,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>UnitDisplayStatusBarControl</name>
     <message>
-        <location filename="../bitcoingui.cpp" line="+139"/>
+        <location filename="../bitcoingui.cpp" line="+120"/>
         <source>Unit to show amounts in. Click to select another unit.</source>
         <translation>Unit to show amounts in. Click to select another unit.</translation>
     </message>
@@ -5702,7 +6392,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>WalletFrame</name>
     <message>
-        <location filename="../walletframe.cpp" line="+27"/>
+        <location filename="../walletframe.cpp" line="+26"/>
         <source>No wallet has been loaded.</source>
         <translation>No wallet has been loaded.</translation>
     </message>
@@ -5710,7 +6400,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>WalletModel</name>
     <message>
-        <location filename="../walletmodel.cpp" line="+370"/>
+        <location filename="../walletmodel.cpp" line="+334"/>
+        <location line="+9"/>
+        <location line="+9"/>
         <source>Send Coins</source>
         <translation>Send Coins</translation>
     </message>
@@ -5729,7 +6421,12 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
 <context>
     <name>WalletView</name>
     <message>
-        <location filename="../walletview.cpp" line="+47"/>
+        <location filename="../walletview.cpp" line="+63"/>
+        <source>HISTORY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
         <source>&amp;Export</source>
         <translation>&amp;Export</translation>
     </message>
@@ -5744,7 +6441,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Selected amount:</translation>
     </message>
     <message>
-        <location line="+261"/>
+        <location line="+257"/>
         <source>Backup Wallet</source>
         <translation>Backup Wallet</translation>
     </message>
@@ -5753,38 +6450,18 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <source>Wallet Data (*.dat)</source>
         <translation>Wallet Data (*.dat)</translation>
     </message>
-    <message>
-        <location line="+6"/>
-        <source>Backup Failed</source>
-        <translation>Backup Failed</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>There was an error trying to save the wallet data to %1.</source>
-        <translation>There was an error trying to save the wallet data to %1.</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Backup Successful</source>
-        <translation>Backup Successful</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>The wallet data was successfully saved to %1.</source>
-        <translation>The wallet data was successfully saved to %1.</translation>
-    </message>
 </context>
 <context>
-    <name>ion-core</name>
+    <name>XIonControlDialog</name>
     <message>
         <location filename="../ionstrings.cpp" line="+36"/>
         <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
         <translation>Bind to given address and always listen on it. Use [host]:port notation for IPv6</translation>
     </message>
     <message>
-        <location line="+55"/>
-        <source>Error: Listening for incoming connections failed (listen returned error %s)</source>
-        <translation>Error: Listening for incoming connections failed (listen returned error %s)</translation>
+        <location line="+28"/>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
@@ -5797,14 +6474,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Execute command when a wallet transaction changes (%s in cmd is replaced by TxID)</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Execute command when the best block changes (%s in cmd is replaced by block hash)</source>
-        <translation>Execute command when the best block changes (%s in cmd is replaced by block hash)</translation>
+        <location line="+39"/>
+        <source>Select/Deselect All</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+79"/>
-        <source>Name to construct url for KeePass entry that stores the wallet passphrase</source>
-        <translation>Name to construct url for KeePass entry that stores the wallet passphrase</translation>
+        <location line="+74"/>
+        <source>Is Spendable</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+53"/>
@@ -5853,68 +6530,8 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+4"/>
-        <source>Collateral not valid.</source>
-        <translation>Collateral not valid.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Connection options:</source>
-        <translation>Connection options:</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Corrupted block database detected</source>
-        <translation>Corrupted block database detected</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Debugging/Testing options:</source>
-        <translation>Debugging/Testing options:</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Do not load the wallet and disable wallet RPC calls</source>
-        <translation>Do not load the wallet and disable wallet RPC calls</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Do you want to rebuild the block database now?</source>
-        <translation>Do you want to rebuild the block database now?</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Done loading</source>
-        <translation>Done loading</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Entries are full.</source>
-        <translation>Entries are full.</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Error initializing block database</source>
-        <translation>Error initializing block database</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Error initializing wallet database environment %s!</source>
-        <translation>Error initializing wallet database environment %s!</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Error loading block database</source>
-        <translation>Error loading block database</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Error opening block database</source>
-        <translation>Error opening block database</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Error reading from database, shutting down.</source>
-        <translation>Error reading from database, shutting down.</translation>
+        <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
+        <translation type="unfinished">Bind to given address and always listen on it. Use [host]:port notation for IPv6</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -5997,14 +6614,34 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Delete all wallet transactions and only recover those parts of the blockchain through -rescan on startup</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Enable publish raw transactions of attempted InstantSend double spend in &lt;address&gt;</source>
-        <translation>Enable publish raw transactions of attempted InstantSend double spend in &lt;address&gt;</translation>
+        <location line="+3"/>
+        <source>Delete all zerocoin spends and mints that have been recorded to the blockchain database and reindex them (0-1, default: %u)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Distributed under the MIT software license, see the accompanying file COPYING or &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</source>
+        <translation type="unfinished">Distributed under the MIT software license, see the accompanying file COPYING or &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Enable automatic wallet backups triggered after each xION minting (0-1, default: %u)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Enable publish transaction hashes of attempted InstantSend double spend in &lt;address&gt;</source>
-        <translation>Enable publish transaction hashes of attempted InstantSend double spend in &lt;address&gt;</translation>
+        <source>Enable or disable staking functionality for ION inputs (0-1, default: %u)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Enable or disable staking functionality for xION inputs (0-1, default: %u)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Enable spork administration functionality with the appropriate private key.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+44"/>
@@ -6017,9 +6654,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>How thorough the block verification of -checkblocks is (0-4, default: %u)</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>If paytxfee is not set, include enough fee so transactions begin confirmation on average within n blocks (default: %u)</source>
-        <translation>If paytxfee is not set, include enough fee so transactions begin confirmation on average within n blocks (default: %u)</translation>
+        <location line="+2"/>
+        <source>Error: The transaction is larger than the maximum allowed transaction size!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Error: Unsupported argument -socks found. Setting SOCKS version isn&apos;t possible anymore, only SOCKS5 proxies are supported.</source>
+        <translation type="unfinished">Error: Unsupported argument -socks found. Setting SOCKS version isn&apos;t possible anymore, only SOCKS5 proxies are supported.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6097,9 +6739,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Specify directory to hold wallets (default: &lt;datadir&gt;/wallets if it exists, otherwise &lt;datadir&gt;)</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Specify location of debug log file. Relative paths will be prefixed by a net-specific datadir location. (0 to disable; default: %s)</source>
-        <translation>Specify location of debug log file. Relative paths will be prefixed by a net-specific datadir location. (0 to disable; default: %s)</translation>
+        <location line="+8"/>
+        <source>Fees (in ION/Kb) smaller than this are considered zero fee for relaying (default: %s)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6122,9 +6764,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Use N separate masternodes in parallel to mix funds (%u-%u, default: %u)</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</source>
-        <translation>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</translation>
+        <location line="+6"/>
+        <source>In this mode -genproclimit controls how many blocks are generated immediately.</source>
+        <translation type="unfinished">In this mode -genproclimit controls how many blocks are generated immediately.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6217,9 +6859,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Include IP addresses in debug output (default: %u)</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Incompatible mode.</source>
-        <translation>Incompatible mode.</translation>
+        <location line="+12"/>
+        <source>Support filtering of blocks and transaction with bloom filters (default: %u)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6227,14 +6869,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Incompatible version.</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Incorrect or no genesis block found. Wrong datadir for network?</source>
-        <translation>Incorrect or no genesis block found. Wrong datadir for network?</translation>
+        <location line="+4"/>
+        <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Information</source>
-        <translation>Information</translation>
+        <location line="+3"/>
+        <source>Unable to bind to %s on this computer. Ion Core is probably already running.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6338,13 +6980,8 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>Not in the Masternode list.</source>
-        <translation>Not in the Masternode list.</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Prepend debug output with timestamp (default: %u)</source>
-        <translation>Prepend debug output with timestamp (default: %u)</translation>
+        <source>Accept public REST requests (default: %u)</source>
+        <translation type="unfinished">Accept public REST requests (default: %u)</translation>
     </message>
     <message>
         <location line="+11"/>
@@ -6365,6 +7002,11 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <location line="+4"/>
         <source>Set key pool size to &lt;n&gt; (default: %u)</source>
         <translation>Set key pool size to &lt;n&gt; (default: %u)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Append comment to the user agent string</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6427,9 +7069,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Unsupported argument -debugnet ignored, use -debug=net.</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Unsupported argument -tor found, use -onion.</source>
-        <translation>Unsupported argument -tor found, use -onion.</translation>
+        <location line="+2"/>
+        <source>Collateral not valid.</source>
+        <translation type="unfinished">Collateral not valid.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6467,24 +7109,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Will retry...</translation>
     </message>
     <message>
-        <location line="-231"/>
-        <source>Can&apos;t find random Masternode.</source>
-        <translation>Can&apos;t find random Masternode.</translation>
-    </message>
-    <message>
         <location line="+1"/>
         <source>Can&apos;t mix while sync in progress.</source>
         <translation>Can&apos;t mix while sync in progress.</translation>
     </message>
     <message>
-        <location line="+85"/>
-        <source>Invalid netmask specified in -whitelist: &apos;%s&apos;</source>
-        <translation>Invalid netmask specified in -whitelist: &apos;%s&apos;</translation>
-    </message>
-    <message>
         <location line="+1"/>
-        <source>Invalid script detected.</source>
-        <translation>Invalid script detected.</translation>
+        <source>Could not parse masternode.conf</source>
+        <translation type="unfinished">Could not parse masternode.conf</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6627,9 +7259,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Rescans are not possible in pruned mode. You will need to use -reindex which will download the whole blockchain again.</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Set the masternode BLS private key and enable the client to act as a masternode</source>
-        <translation>Set the masternode BLS private key and enable the client to act as a masternode</translation>
+        <location line="+1"/>
+        <source>Error writing zerocoinDB to disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Error</source>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -6637,9 +7274,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Specify full path to directory for automatic wallet backups (must exist)</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Support filtering of blocks and transaction with bloom filters (default: %u)</source>
-        <translation>Support filtering of blocks and transaction with bloom filters (default: %u)</translation>
+        <location line="+2"/>
+        <source>Error: Can&apos;t select current denominated inputs</source>
+        <translation type="unfinished">Error: Can&apos;t select current denominated inputs</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6647,9 +7284,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>The block database contains a block which appears to be from the future. This may be due to your computer&apos;s date and time being set incorrectly. Only rebuild the block database if you are sure that your computer&apos;s date and time are correct</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>The transaction amount is too small to send after the fee has been deducted</source>
-        <translation>The transaction amount is too small to send after the fee has been deducted</translation>
+        <location line="+2"/>
+        <source>Error: Unsupported argument -tor found, use -onion.</source>
+        <translation type="unfinished">Error: Unsupported argument -tor found, use -onion.</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -6667,14 +7304,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Try to create at least N inputs of each denominated amount (%u-%u, default: %u)</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Unable to locate enough PrivateSend denominated funds for this transaction.</source>
-        <translation>Unable to locate enough PrivateSend denominated funds for this transaction.</translation>
+        <location line="+4"/>
+        <source>Failed to listen on any port. Use -listen=0 if you want this.</source>
+        <translation type="unfinished">Failed to listen on any port. Use -listen=0 if you want this.</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Unsupported argument -socks found. Setting SOCKS version isn&apos;t possible anymore, only SOCKS5 proxies are supported.</source>
-        <translation>Unsupported argument -socks found. Setting SOCKS version isn&apos;t possible anymore, only SOCKS5 proxies are supported.</translation>
+        <location line="+1"/>
+        <source>Failed to parse host:port string</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6682,14 +7319,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Unsupported argument -whitelistalwaysrelay ignored, use -whitelistrelay and/or -whitelistforcerelay.</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Use UPnP to map the listening port (default: 1 when listening and no -proxy)</source>
-        <translation>Use UPnP to map the listening port (default: 1 when listening and no -proxy)</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Username and hashed password for JSON-RPC connections. The field &lt;userpw&gt; comes in the format: &lt;USERNAME&gt;:&lt;SALT&gt;$&lt;HASH&gt;. A canonical python script is included in share/rpcauth. The client then connects normally using the rpcuser=&lt;USERNAME&gt;/rpcpassword=&lt;PASSWORD&gt; pair of arguments. This option can be specified multiple times</source>
-        <translation>Username and hashed password for JSON-RPC connections. The field &lt;userpw&gt; comes in the format: &lt;USERNAME&gt;:&lt;SALT&gt;$&lt;HASH&gt;. A canonical python script is included in share/rpcauth. The client then connects normally using the rpcuser=&lt;USERNAME&gt;/rpcpassword=&lt;PASSWORD&gt; pair of arguments. This option can be specified multiple times</translation>
+        <location line="+4"/>
+        <source>Fee (in ION/kB) to add to transactions you send (default: %s)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
@@ -6788,13 +7420,8 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>Enable publish raw block in &lt;address&gt;</source>
-        <translation>Enable publish raw block in &lt;address&gt;</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Enable publish raw transaction (locked via InstantSend) in &lt;address&gt;</source>
-        <translation>Enable publish raw transaction (locked via InstantSend) in &lt;address&gt;</translation>
+        <source>Invalid amount for -maxtxfee=&lt;amount&gt;: &apos;%s&apos;</source>
+        <translation type="unfinished">Invalid amount for -maxtxfee=&lt;amount&gt;: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6852,19 +7479,45 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Failed to create backup, error: %s</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Failed to delete backup, error: %s</source>
-        <translation>Failed to delete backup, error: %s</translation>
+        <location line="+49"/>
+        <source>Percentage of automatically minted Zerocoin  (1-100, default: %u)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Failed to load sporks cache from</source>
-        <translation>Failed to load sporks cache from</translation>
+        <location line="+9"/>
+        <source>Reindex the ION and xION money supply statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Reindexing zerocoin database...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Failed to rescan the wallet during initialization</source>
-        <translation>Failed to rescan the wallet during initialization</translation>
+        <source>Reindexing zerocoin failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Selected coins value is less than payment target</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>SwiftX options:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-274"/>
+        <source>This is a pre-release test build - use at your own risk - do not use for staking or merchant applications!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-175"/>
+        <source> mints deleted
+</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6878,7 +7531,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+38"/>
-        <source>Disable all Ion specific functionality (Masternodes, Zerocoin, SwiftX, Budgeting) (0-1, default: %u)</source>
+        <source>Disable all ION specific functionality (Masternodes, Zerocoin, SwiftX, Budgeting) (0-1, default: %u)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6887,14 +7540,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Invalid amount for -fallbackfee=&lt;amount&gt;: &apos;%s&apos;</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Invalid masternodeblsprivkey. Please see documentation.</source>
-        <translation>Invalid masternodeblsprivkey. Please see documentation.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>It has been replaced by -disablegovernance.</source>
-        <translation>It has been replaced by -disablegovernance.</translation>
+        <location line="+18"/>
+        <source>Error: The transaction was rejected! This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6907,19 +7555,44 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Keep the transaction memory pool below &lt;n&gt; megabytes (default: %u)</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Last PrivateSend was too recent.</source>
-        <translation>Last PrivateSend was too recent.</translation>
+        <location line="+14"/>
+        <source>Execute command when the best block changes and its size is over (%s in cmd is replaced by block hash, %d with the block size)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Last successful PrivateSend action was too recent.</source>
-        <translation>Last successful PrivateSend action was too recent.</translation>
+        <location line="+3"/>
+        <source>Failed to find coin set amongst held coins with less than maxNumber of Spends</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>In rare cases, a spend with 7 coins exceeds our maximum allowable transaction size, please retry spend using 6 or less coins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Preferred Denomination for automatically minted Zerocoin  (1/5/10/50/100/500/1000/5000), 0 for no preference. default: %u)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Specify custom backup path to add a copy of any automatic xION backup. If set as dir, every backup generates a timestamped file. If set as file, will rewrite to that file every backup. If backuppath is set as well, 4 backups will happen</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Loading block index...</source>
-        <translation>Loading block index...</translation>
+        <source>Specify custom backup path to add a copy of any wallet backup. If set as dir, every backup generates a timestamped file. If set as file, will rewrite to that file every backup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>SwiftX requires inputs with at least 6 confirmations, you might need to wait a few minutes and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+61"/>
+        <source>&lt;category&gt; can be:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6927,9 +7600,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Loading governance cache...</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Loading sporks cache...</source>
-        <translation>Loading sporks cache...</translation>
+        <location line="+13"/>
+        <source>CoinSpend: Accumulator witness does not verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Display the stake modifier calculations in the debug.log file.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6957,9 +7635,49 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Masternode queue is full.</translation>
     </message>
     <message>
+        <location line="+16"/>
+        <source>Error: A fatal internal error occurred, see debug.log for details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Error: No valid utxo!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Failed to create mint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+1"/>
-        <source>Masternode:</source>
-        <translation>Masternode:</translation>
+        <source>Failed to deserialize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Failed to find Zerocoins in wallet.dat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Failed to select a zerocoin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Failed to wipe zerocoinDB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Failed to write coin serial number into wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Keep at most &lt;n&gt; unconnectable transactions in memory (default: %u)</source>
+        <translation type="unfinished">Keep at most &lt;n&gt; unconnectable transactions in memory (default: %u)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -7023,8 +7741,8 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>PrivateSend options:</source>
-        <translation>PrivateSend options:</translation>
+        <source>Loading wallet... (%3.1f %%)</source>
+        <translation type="unfinished">Loading wallet... (%3.1f %%)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7033,8 +7751,13 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>Prune cannot be configured with a negative value.</source>
-        <translation>Prune cannot be configured with a negative value.</translation>
+        <source>Location of the auth cookie (default: data dir)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Lock is already in place.</source>
+        <translation type="unfinished">Lock is already in place.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7043,8 +7766,13 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>Prune mode is incompatible with -txindex.</source>
-        <translation>Prune mode is incompatible with -txindex.</translation>
+        <source>Lookup(): Invalid -proxy address or hostname: &apos;%s&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Maintain at most &lt;n&gt; connections to peers (default: %u)</source>
+        <translation type="unfinished">Maintain at most &lt;n&gt; connections to peers (default: %u)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7073,8 +7801,13 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>Specified -walletdir &quot;%s&quot; is a relative path</source>
-        <translation>Specified -walletdir &quot;%s&quot; is a relative path</translation>
+        <source>Mint did not make it into blockchain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Missing input transaction information.</source>
+        <translation type="unfinished">Missing input transaction information.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7082,9 +7815,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Specified -walletdir &quot;%s&quot; is not a directory</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Sync mempool from other nodes on start (default: %u)</source>
-        <translation>Sync mempool from other nodes on start (default: %u)</translation>
+        <location line="+1"/>
+        <source>Need address because change is not exact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Need to specify a port with -whitebind: &apos;%s&apos;</source>
+        <translation type="unfinished">Need to specify a port with -whitebind: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7138,8 +7876,13 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>Trying to connect...</source>
-        <translation>Trying to connect...</translation>
+        <source>Number of custom location backups to retain (default: %d)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Obfuscation is idle.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7172,14 +7915,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Wallet debugging/testing options:</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Wallet needed to be rewritten: restart %s to complete</source>
-        <translation>Wallet needed to be rewritten: restart %s to complete</translation>
+        <location line="+122"/>
+        <source>isValid(): Invalid -proxy address or hostname: &apos;%s&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Warning: unknown new rules activated (versionbit %i)</source>
-        <translation>Warning: unknown new rules activated (versionbit %i)</translation>
+        <location line="-120"/>
+        <source>Preparing for resync...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7192,24 +7935,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Whether to operate in a blocks only mode (default: %u)</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>You can not start a masternode with wallet enabled.</source>
-        <translation>You can not start a masternode with wallet enabled.</translation>
+        <location line="+1"/>
+        <source>RPC server options:</source>
+        <translation type="unfinished">RPC server options:</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>You need to rebuild the database using -reindex to change -addressindex</source>
-        <translation>You need to rebuild the database using -reindex to change -addressindex</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>You need to rebuild the database using -reindex to change -spentindex</source>
-        <translation>You need to rebuild the database using -reindex to change -spentindex</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>You need to rebuild the database using -reindex to change -txindex</source>
-        <translation>You need to rebuild the database using -reindex to change -txindex</translation>
+        <source>Randomly drop 1 of every &lt;n&gt; network messages</source>
+        <translation type="unfinished">Randomly drop 1 of every &lt;n&gt; network messages</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -7223,28 +7956,18 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>see debug.log for details.</source>
-        <translation>see debug.log for details.</translation>
+        <source>Receive and display P2P network alerts (default: %u)</source>
+        <translation type="unfinished">Receive and display P2P network alerts (default: %u)</translation>
     </message>
     <message>
-        <location line="-100"/>
-        <source>RPC server options:</source>
-        <translation>RPC server options:</translation>
+        <location line="+2"/>
+        <source>Reindex the accumulator database</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-486"/>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>The %s developers</source>
-        <translation>The %s developers</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>Cannot obtain a lock on data directory %s. %s is probably already running.</source>
-        <translation>Cannot obtain a lock on data directory %s. %s is probably already running.</translation>
+        <location line="+3"/>
+        <source>Relay and mine data carrier transactions (default: %u)</source>
+        <translation type="unfinished">Relay and mine data carrier transactions (default: %u)</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -7282,24 +8005,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Incorrect or no devnet genesis block found. Wrong datadir for devnet specified?</translation>
     </message>
     <message>
-        <location line="+33"/>
-        <source>Maximum allowed median peer time offset adjustment. Local perspective of time may be influenced by peers forward or backward by this amount. (default: %u seconds)</source>
-        <translation>Maximum allowed median peer time offset adjustment. Local perspective of time may be influenced by peers forward or backward by this amount. (default: %u seconds)</translation>
+        <location line="+2"/>
+        <source>Send transactions as zero-fee transactions if possible (default: %u)</source>
+        <translation type="unfinished">Send transactions as zero-fee transactions if possible (default: %u)</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Maximum total fees (in %s) to use in a single wallet transaction or raw transaction; setting this too low may abort large transactions (default: %s)</source>
-        <translation>Maximum total fees (in %s) to use in a single wallet transaction or raw transaction; setting this too low may abort large transactions (default: %s)</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Override spork address. Only useful for regtest and devnet. Using this on mainnet or testnet will ban you.</source>
-        <translation>Override spork address. Only useful for regtest and devnet. Using this on mainnet or testnet will ban you.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Please check that your computer&apos;s date and time are correct! If your clock is wrong, %s will not work properly.</source>
-        <translation>Please check that your computer&apos;s date and time are correct! If your clock is wrong, %s will not work properly.</translation>
+        <location line="+1"/>
+        <source>Session not complete!</source>
+        <translation type="unfinished">Session not complete!</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -7412,9 +8125,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>-rpcport must be specified when -devnet and -server are specified</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Accept connections from outside (default: 1 if no -proxy or -connect)</source>
-        <translation>Accept connections from outside (default: 1 if no -proxy or -connect)</translation>
+        <location line="+1"/>
+        <source>Spend Valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Spend unconfirmed change when sending transactions (default: %u)</source>
+        <translation type="unfinished">Spend unconfirmed change when sending transactions (default: %u)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -7477,9 +8195,34 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Error upgrading chainstate database</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Failed to find mixing queue to join</source>
-        <translation>Failed to find mixing queue to join</translation>
+        <location line="+1"/>
+        <source>Syncing xION wallet...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The coin spend has been used</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The new spend coin transaction did not verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The selected mint coin is an invalid coin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The transaction did not verify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>This help message</source>
+        <translation type="unfinished">This help message</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -7503,8 +8246,13 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>Invalid -proxy address or hostname: &apos;%s&apos;</source>
-        <translation>Invalid -proxy address or hostname: &apos;%s&apos;</translation>
+        <source>Too many spends needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tor control port password (default: empty)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7512,9 +8260,19 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Invalid amount for -%s=&lt;amount&gt;: &apos;%s&apos;</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Invalid spork address specified with -sporkaddr</source>
-        <translation>Invalid spork address specified with -sporkaddr</translation>
+        <location line="+1"/>
+        <source>Transaction Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Transaction Mint Started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Transaction amount too small</source>
+        <translation type="unfinished">Transaction amount too small</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -7552,19 +8310,39 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Replaying blocks...</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Rescanning...</source>
-        <translation>Rescanning...</translation>
+        <location line="+1"/>
+        <source>Try to spend with a higher security level to include more coins</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Run in the background as a daemon and accept commands</source>
-        <translation>Run in the background as a daemon and accept commands</translation>
+        <source>Trying to spend an already spent serial #, try again.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Session not complete!</source>
-        <translation>Session not complete!</translation>
+        <location line="+1"/>
+        <source>Unable to bind to %s on this computer (bind returned error %s)</source>
+        <translation type="unfinished">Unable to bind to %s on this computer (bind returned error %s)</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unable to find transaction containing mint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unable to sign spork message, wrong key?</source>
+        <translation type="unfinished">Unable to sign spork message, wrong key?</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unable to start HTTP server. See debug log for details.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unknown network specified in -onlynet: &apos;%s&apos;</source>
+        <translation type="unfinished">Unknown network specified in -onlynet: &apos;%s&apos;</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7577,14 +8355,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Set database cache size in megabytes (%d to %d, default: %d)</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Set maximum block size in bytes (default: %d)</source>
-        <translation>Set maximum block size in bytes (default: %d)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Show all debugging options (usage: --help -help-debug)</source>
-        <translation>Show all debugging options (usage: --help -help-debug)</translation>
+        <location line="+1"/>
+        <source>Use UPnP to map the listening port (default: %u)</source>
+        <translation type="unfinished">Use UPnP to map the listening port (default: %u)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7603,13 +8376,23 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify your own public address</source>
-        <translation>Specify your own public address</translation>
+        <source>User Agent comment (%s) contains unsafe characters.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Start PrivateSend automatically (0-1, default: %u)</source>
-        <translation>Start PrivateSend automatically (0-1, default: %u)</translation>
+        <location line="+1"/>
+        <source>Username for JSON-RPC connections</source>
+        <translation type="unfinished">Username for JSON-RPC connections</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Value is below the smallest available denomination (= 1) of xION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Value more than Obfuscation pool maximum allows.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7622,9 +8405,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Synchronizing governance objects...</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>The source code is available from %s.</source>
-        <translation>The source code is available from %s.</translation>
+        <location line="+1"/>
+        <source>Version 1 xION require a security level of 100 to successfully spend.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Wallet %s resides outside data directory %s</source>
+        <translation type="unfinished">Wallet %s resides outside data directory %s</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7672,9 +8460,14 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Unable to sign spork message, wrong key?</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Unknown network specified in -onlynet: &apos;%s&apos;</source>
-        <translation>Unknown network specified in -onlynet: &apos;%s&apos;</translation>
+        <location line="+1"/>
+        <source>You don&apos;t have enough Zerocoins in your wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>You need to rebuild the database using -reindex to change -txindex</source>
+        <translation type="unfinished">You need to rebuild the database using -reindex to change -txindex</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7712,24 +8505,9 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Wallet options:</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Warning</source>
-        <translation>Warning</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>You are starting with governance validation disabled.</source>
-        <translation>You are starting with governance validation disabled.</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>You can not disable governance validation on a masternode.</source>
-        <translation>You can not disable governance validation on a masternode.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Your entries added successfully.</source>
-        <translation>Your entries added successfully.</translation>
+        <location line="+2"/>
+        <source>on startup</source>
+        <translation type="unfinished">on startup</translation>
     </message>
     <message>
         <location line="+1"/>

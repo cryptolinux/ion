@@ -1,25 +1,33 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2011-2015 The Bitcoin developers
+// Copyright (c) 2016-2018 The PIVX developers
+// Copyright (c) 2018 The PHORE developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <qt/walletview.h>
+#include "walletview.h"
 
-#include <qt/addressbookpage.h>
-#include <qt/askpassphrasedialog.h>
-#include <qt/bitcoingui.h>
-#include <qt/clientmodel.h>
-#include <qt/guiutil.h>
-#include <qt/optionsmodel.h>
-#include <qt/overviewpage.h>
-#include <qt/receivecoinsdialog.h>
-#include <qt/sendcoinsdialog.h>
-#include <qt/signverifymessagedialog.h>
-#include <qt/transactionrecord.h>
-#include <qt/transactiontablemodel.h>
-#include <qt/transactionview.h>
-#include <qt/walletmodel.h>
+#include "addressbookpage.h"
+#include "bip38tooldialog.h"
+#include "bitcoingui.h"
+#include "blockexplorer.h"
+#include "clientmodel.h"
+#include "guiutil.h"
+#include "masternodeconfig.h"
+#include "multisenddialog.h"
+#include "multisigdialog.h"
+#include "optionsmodel.h"
+#include "overviewpage.h"
+#include "receivecoinsdialog.h"
+#include "privacydialog.h"
+#include "sendcoinsdialog.h"
+#include "signverifymessagedialog.h"
+#include "transactiontablemodel.h"
+#include "transactionview.h"
+#include "walletmodel.h"
+#include "proposallist.h"
 
-#include <ui_interface.h>
+#include "ui_interface.h"
 
 #include <QAction>
 #include <QActionGroup>
@@ -31,10 +39,9 @@
 #include <QSettings>
 #include <QVBoxLayout>
 
-WalletView::WalletView(QWidget* parent) :
-    QStackedWidget(parent),
-    clientModel(0),
-    walletModel(0)
+WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
+                                          clientModel(0),
+                                          walletModel(0)
 {
     // Create tabs
     overviewPage = new OverviewPage();
@@ -88,6 +95,53 @@ WalletView::WalletView(QWidget* parent) :
         masternodeListPage = new MasternodeList();
         addWidget(masternodeListPage);
     }
+
+    proposalListPage = new QWidget(this);
+
+    QFrame *frame_Header_2 = new QFrame(proposalListPage);
+    frame_Header_2->setObjectName(QStringLiteral("frame_Header_2"));
+
+    QVBoxLayout* verticalLayout_9 = new QVBoxLayout(frame_Header_2);
+    verticalLayout_9->setObjectName(QStringLiteral("verticalLayout_9"));
+    verticalLayout_9->setContentsMargins(0, 0, 0, 0);
+
+    QHBoxLayout* horizontalLayout_Header_2 = new QHBoxLayout();
+    horizontalLayout_Header_2->setObjectName(QStringLiteral("horizontalLayout_Header"));
+
+    QLabel* labelOverviewHeaderLeft_2 = new QLabel(frame_Header_2);
+    labelOverviewHeaderLeft_2->setObjectName(QStringLiteral("labelOverviewHeaderLeft"));
+    labelOverviewHeaderLeft_2->setMinimumSize(QSize(464, 60));
+    labelOverviewHeaderLeft_2->setMaximumSize(QSize(16777215, 60));
+    labelOverviewHeaderLeft_2->setText(tr("PROPOSAL"));
+    labelOverviewHeaderLeft_2->setFont(fontHeaderLeft);
+    horizontalLayout_Header_2->addWidget(labelOverviewHeaderLeft_2);
+    verticalLayout_9->addLayout(horizontalLayout_Header_2);
+
+    QSpacerItem* horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    horizontalLayout_Header_2->addItem(horizontalSpacer_4);
+
+    QLabel* labelOverviewHeaderRight_2 = new QLabel(frame_Header_2);
+    labelOverviewHeaderRight_2->setObjectName(QStringLiteral("labelOverviewHeaderRight"));
+    labelOverviewHeaderRight_2->setMinimumSize(QSize(464, 60));
+    labelOverviewHeaderRight_2->setMaximumSize(QSize(16777215, 60));
+    labelOverviewHeaderRight_2->setText(QString());
+    labelOverviewHeaderRight_2->setFont(fontHeaderRight);
+    labelOverviewHeaderRight_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+    horizontalLayout_Header_2->addWidget(labelOverviewHeaderRight_2);
+
+    horizontalLayout_Header_2->setStretch(0, 1);
+    horizontalLayout_Header_2->setStretch(2, 1);
+
+    QVBoxLayout* vbox_2 = new QVBoxLayout();
+    vbox_2->addWidget(frame_Header_2);
+
+    proposalList = new ProposalList(this);
+    vbox_2->addWidget(proposalList);
+
+    vbox_2->setStretch(1, 1);
+
+    proposalListPage->setLayout(vbox_2);
+    addWidget(proposalListPage);
 
     // Clicking on a transaction on the overview pre-selects the transaction on the transaction history page
     connect(overviewPage, SIGNAL(transactionClicked(QModelIndex)), transactionView, SLOT(focusTransaction(QModelIndex)));
@@ -252,7 +306,12 @@ void WalletView::gotoSendCoinsPage(QString addr)
     }
 }
 
-void WalletView::gotoPrivateSendCoinsPage(QString addr)
+void WalletView::gotoProposalPage()
+{
+    setCurrentWidget(proposalListPage);
+}
+
+void WalletView::gotoSendCoinsPage(QString addr)
 {
     setCurrentWidget(privateSendCoinsPage);
 
@@ -303,8 +362,8 @@ void WalletView::encryptWallet()
 {
     if(!walletModel)
         return;
-    AskPassphraseDialog dlg(AskPassphraseDialog::Encrypt, this);
-    dlg.setModel(walletModel);
+    AskPassphraseDialog dlg(status ? AskPassphraseDialog::Mode::Encrypt : AskPassphraseDialog::Mode::Decrypt, this,
+                            walletModel, AskPassphraseDialog::Context::Encrypt);
     dlg.exec();
 
     updateEncryptionStatus();
@@ -318,15 +377,7 @@ void WalletView::backupWallet()
 
     if (filename.isEmpty())
         return;
-
-    if (!walletModel->backupWallet(filename)) {
-        Q_EMIT message(tr("Backup Failed"), tr("There was an error trying to save the wallet data to %1.").arg(filename),
-            CClientUIInterface::MSG_ERROR);
-        }
-    else {
-        Q_EMIT message(tr("Backup Successful"), tr("The wallet data was successfully saved to %1.").arg(filename),
-            CClientUIInterface::MSG_INFORMATION);
-    }
+    walletModel->backupWallet(filename);
 }
 
 void WalletView::changePassphrase()

@@ -1,7 +1,14 @@
-TOR SUPPORT IN ION CORE
-=======================
+=======
+# TOR SUPPORT IN ION
 
-It is possible to run Ion as a Tor hidden service, and connect to such services.
+Table of Contents
+-----------------
+- [TOR SUPPORT IN ION](#tor-support-in-ion)
+    - [Run ION behind a Tor proxy](#run-ion-behind-a-tor-proxy)
+    - [Run a ION hidden server](#run-a-ion-hidden-server)
+    - [List of known ION Tor relays](#list-of-known-ion-tor-relays)
+
+It is possible to run ION as a Tor hidden service, and connect to such services.
 
 The following directions assume you have a Tor proxy running on port 9050. Many
 distributions default to having a SOCKS proxy listening on port 9050, but others
@@ -10,10 +17,8 @@ See [Tor Project FAQ:TBBSocksPort](https://www.torproject.org/docs/faq.html.en#T
 for how to properly configure Tor.
 
 
-Run Ion behind a Tor proxy
-----------------------------------
-
-The first step is running Ion behind a Tor proxy. This will already make all
+## Run ION behind a Tor proxy
+The first step is running ION behind a Tor proxy. This will already make all
 outgoing connections be anonymized, but more is possible.
 
 	-proxy=ip:port  Set the proxy server. If SOCKS5 is selected (default), this proxy
@@ -41,9 +46,7 @@ port 9050 and only allows .onion nodes to connect:
 
 In a typical situation, this suffices to run behind a Tor proxy:
 
-Run a Ion hidden server
--------------------------------
-
+## Run a ION hidden server
 If you configure your Tor system accordingly, it is possible to make your node also
 reachable from the Tor network. Add these lines to your /etc/tor/torrc (or equivalent
 config file): *Needed for Tor version 0.2.7.0 and older versions of Tor only. For newer
@@ -94,53 +97,7 @@ and open port 9999 on your firewall (or use -upnp).
 If you only want to use Tor to reach onion addresses, but not use it as a proxy
 for normal IPv4/IPv6 communication, use:
 
-List of known Ion Tor relays
-------------------------------------
-
-Note: All these nodes are hosted by masternodehosting.com
-
-* l7oq3v7ujau5tfrw.onion
-* vsmegqxisccimsir.onion
-* 4rbha5nrjso54l75.onion
-* 3473226fvgoenztx.onion
-* onn5v3aby2dioicx.onion
-* w5n7s2p3mdq5yf2d.onion
-* ec4qdvujskzasvrb.onion
-* g5e4hvsecwri3inf.onion
-* ys5upbdeotplam3y.onion
-* fijy6aikzxfea54i.onion
-
-
-## 4. Automatically listen on Tor
-
-Starting with Tor version 0.2.7.1 it is possible, through Tor's control socket
-API, to create and destroy 'ephemeral' hidden services programmatically.
-Ion Core has been updated to make use of this.
-
-This means that if Tor is running (and proper authentication has been configured),
-Ion Core automatically creates a hidden service to listen on. This will positively 
-affect the number of available .onion nodes.
-
-This new feature is enabled by default if Ion Core is listening (`-listen`), and
-requires a Tor connection to work. It can be explicitly disabled with `-listenonion=0`
-and, if not disabled, configured using the `-torcontrol` and `-torpassword` settings.
-To show verbose debugging information, pass `-debug=tor`.
-
-Connecting to Tor's control socket API requires one of two authentication methods to be 
-configured. For cookie authentication the user running iond must have write access 
-to the `CookieAuthFile` specified in Tor configuration. In some cases this is 
-preconfigured and the creation of a hidden service is automatic. If permission problems 
-are seen with `-debug=tor` they can be resolved by adding both the user running tor and 
-the user running iond to the same group and setting permissions appropriately. On 
-Debian-based systems the user running iond can be added to the debian-tor group, 
-which has the appropriate permissions. An alternative authentication method is the use 
-of the `-torpassword` flag and a `hash-password` which can be enabled and specified in 
-Tor configuration.
-
-## 5. Privacy recommendations
-
-- Do not add anything but Dash Core ports to the hidden service created in section 2.
-  If you run a web service too, create a new hidden service for that.
-  Otherwise it is trivial to link them, which may reduce privacy. Hidden
-  services created automatically (as in section 3) always have only one port
-  open.
+## List of known ION Tor relays
+```
+COMMING SOON
+```

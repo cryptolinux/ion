@@ -9,7 +9,8 @@
 * @copyright  Copyright 2013 Ian Miers, Christina Garman and Matthew Green
 * @license    This project is released under the MIT license.
 **/
-// Copyright (c) 2017-2019 The PIVX developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 
 #include <streams.h>
 #include "SerialNumberSignatureOfKnowledge.h"
@@ -23,8 +24,8 @@ CBigNum SeedTo1024(arith_uint256 hashSeed) {
     CHashWriter hasher(0,0);
     hasher << hashSeed;
 
-    std::vector<unsigned char> vResult;
-    std::vector<unsigned char> vHash = CBigNum(hasher.GetHash()).getvch();
+    vector<unsigned char> vResult;
+    vector<unsigned char> vHash = CBigNum(hasher.GetHash()).getvch();
     vResult.insert(vResult.end(), vHash.begin(), vHash.end());
     for (int i = 0; i < 3; i ++) {
         hasher << vResult;

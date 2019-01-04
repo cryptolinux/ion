@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
-# Copyright (c) 2018-2019 The Bitcoin Core developers
-# Copyright (c) 2018 The Ion Core Developers
+# Copyright (c) 2018 The Bitcoin Core developers
+# Copyright (c) 2018 The Ion Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-# how to use and guide: https://github.com/ioncoincore/docs/blob/master/gitian-building.md
-# Setup: gitian-build.py --setup --build $SIGNER $VERSION 192.168.1.37 SHA256 ion-binaries
-# usage: gitian-build.py [-h] [-c] [-p] [-u URL] [-v] [-b] [-s] [-B] [-o OS]
-#                       [-j JOBS] [-m MEMORY] [-k] [-d] [-S] [-D] [-n]
-#                       [signer] [version] upload uploadlogs uploadfolder hash
 import argparse
 import os
 import subprocess
@@ -16,29 +11,29 @@ import sys
 
 def setup():
     global args, workdir
-    programs = ['ruby', 'git', 'make', 'wget', 'curl']
+    programs = ['ruby', 'git', 'apt-cacher-ng', 'make', 'wget']
     if args.kvm:
-        programs += ['apt-cacher-ng', 'python-vm-builder', 'qemu-kvm', 'qemu-utils']
-    elif args.docker and not os.path.isfile('/lib/systemd/system/docker.service'):
+        programs += ['python-vm-builder', 'qemu-kvm', 'qemu-utils']
+    elif args.docker:
         dockers = ['docker.io', 'docker-ce']
         for i in dockers:
             return_code = subprocess.call(['sudo', 'apt-get', 'install', '-qq', i])
             if return_code == 0:
                 break
         if return_code != 0:
-            print('Cannot find any way to install Docker.', file=sys.stderr)
-            sys.exit(1)
+            print('Cannot find any way to install docker', file=sys.stderr)
+            exit(1)
     else:
-        programs += ['apt-cacher-ng', 'lxc', 'debootstrap']
+        programs += ['lxc', 'debootstrap']
     subprocess.check_call(['sudo', 'apt-get', 'install', '-qq'] + programs)
     if not os.path.isdir('gitian.sigs'):
-        subprocess.check_call(['git', 'clone', 'https://bitbucket.org/ioncoin/gitian.sigs.git', 'gitian.sigs'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/gitianuser/gitian.sigs-ion.git', 'gitian.sigs'])
     if not os.path.isdir('ion-detached-sigs'):
-        subprocess.check_call(['git', 'clone', 'https://bitbucket.org/ioncoin/ion-detached-sigs.git'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/gitianuser/ion-detached-sigs.git'])
     if not os.path.isdir('gitian-builder'):
         subprocess.check_call(['git', 'clone', 'https://github.com/devrandom/gitian-builder.git'])
     if not os.path.isdir('ion'):
-        subprocess.check_call(['git', 'clone', 'https://bitbucket.org/ioncoin/ion.git'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/ioncoincore/ion.git'])
     os.chdir('gitian-builder')
     make_image_prog = ['bin/make-base-vm', '--suite', 'bionic', '--arch', 'amd64']
     if args.docker:
@@ -50,7 +45,7 @@ def setup():
     if args.is_bionic and not args.kvm and not args.docker:
         subprocess.check_call(['sudo', 'sed', '-i', 's/lxcbr0/br0/', '/etc/default/lxc-net'])
         print('Reboot is required')
-        sys.exit(0)
+        exit(0)
 
 def build():
     global args, workdir
@@ -60,70 +55,44 @@ def build():
     os.chdir('gitian-builder')
     os.makedirs('inputs', exist_ok=True)
 
-    if args.macos and not os.path.isfile('inputs/MacOSX10.11.sdk.tar.xz'):
-    	subprocess.check_call(['wget', '-O', 'inputs/MacOSX10.11.sdk.tar.xz', '-N', '-P', 'inputs', 'https://bitbucket.org/ioncoin/macosx-sdks/downloads/MacOSX10.11.sdk.tar.xz'])
-    if args.macos and not os.path.isfile('inputs/MacOSX10.11.sdk.tar.xz'):
-    	subprocess.check_call(['wget', '-O', 'inputs/MacOSX10.11.sdk.tar.xz', '-N', '-P', 'inputs', 'https://github.com/gitianuser/MacOSX-SDKs/releases/download/MacOSX10.11.sdk/MacOSX10.11.sdk.tar.xz'])
-    if not os.path.isfile('inputs/osslsigncode-Backports-to-1.7.1.patch'):
-        subprocess.check_call(["echo 'a8c4e9cafba922f89de0df1f2152e7be286aba73f78505169bc351a7938dd911 inputs/osslsigncode-Backports-to-1.7.1.patch' | sha256sum -c"], shell=True)
-    if not os.path.isfile('inputs/osslsigncode-1.7.1.tar.xz'):
-        subprocess.check_call(["echo 'fd764f944aac5ec6beeafec67ca209ed7b11f04fd7ea748bb6825e75cb1cc4cd inputs/osslsigncode-1.7.1.tar.xz' | sha256sum -c"], shell=True)
-
+    subprocess.check_call(['wget', '-O', 'inputs/osslsigncode-1.7.1.tar.gz', '-N', '-P', 'inputs', 'https://github.com/cevap/osslsigncode/archive/v1.7.1.tar.gz'])
+    subprocess.check_call(['wget', '-O', 'inputs/osslsigncode-Backports-to-1.7.1.patch', '-N', '-P', 'inputs', 'https://github.com/cevap/osslsigncode/releases/download/v1.7.1/osslsigncode-Backports-to-1.7.1.patch'])
     subprocess.check_call(['make', '-C', '../ion/depends', 'download', 'SOURCES_PATH=' + os.getcwd() + '/cache/common'])
 
     if args.linux:
         print('\nCompiling ' + args.version + ' Linux')
         subprocess.check_call(['bin/gbuild', '-j', args.jobs, '-m', args.memory, '--commit', 'ion='+args.commit, '--url', 'ion='+args.url, '../ion/contrib/gitian-descriptors/gitian-linux.yml'])
         subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-linux', '--destination', '../gitian.sigs/', '../ion/contrib/gitian-descriptors/gitian-linux.yml'])
-        subprocess.check_call('mv build/out/ioncore-*.tar.gz build/out/src/ioncore-*.tar.gz ../ion-binaries/'+args.version, shell=True)
+        subprocess.check_call('mv build/out/ion-*.tar.gz build/out/src/ion-*.tar.gz ../ion-binaries/'+args.version, shell=True)
 
     if args.windows:
         print('\nCompiling ' + args.version + ' Windows')
         subprocess.check_call(['bin/gbuild', '-j', args.jobs, '-m', args.memory, '--commit', 'ion='+args.commit, '--url', 'ion='+args.url, '../ion/contrib/gitian-descriptors/gitian-win.yml'])
         subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-win-unsigned', '--destination', '../gitian.sigs/', '../ion/contrib/gitian-descriptors/gitian-win.yml'])
-        subprocess.check_call('mv build/out/ioncore-*-win-unsigned.tar.gz inputs/', shell=True)
-        subprocess.check_call('mv build/out/ioncore-*.zip build/out/ioncore-*.exe ../ion-binaries/'+args.version, shell=True)
+        subprocess.check_call('mv build/out/ion-*-win-unsigned.tar.gz inputs/', shell=True)
+        subprocess.check_call('mv build/out/ion-*.zip build/out/ion-*.exe ../ion-binaries/'+args.version, shell=True)
 
     if args.macos:
         print('\nCompiling ' + args.version + ' MacOS')
         subprocess.check_call(['bin/gbuild', '-j', args.jobs, '-m', args.memory, '--commit', 'ion='+args.commit, '--url', 'ion='+args.url, '../ion/contrib/gitian-descriptors/gitian-osx.yml'])
         subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-osx-unsigned', '--destination', '../gitian.sigs/', '../ion/contrib/gitian-descriptors/gitian-osx.yml'])
-        subprocess.check_call('mv build/out/ioncore-*-osx-unsigned.tar.gz inputs/', shell=True)
-        subprocess.check_call('mv build/out/ioncore-*.tar.gz build/out/ioncore-*.dmg ../ion-binaries/'+args.version, shell=True)
+        subprocess.check_call('mv build/out/ion-*-osx-unsigned.tar.gz inputs/', shell=True)
+        subprocess.check_call('mv build/out/ion-*.tar.gz build/out/ion-*.dmg ../ion-binaries/'+args.version, shell=True)
 
     os.chdir(workdir)
 
     if args.commit_files:
         print('\nCommitting '+args.version+' Unsigned Sigs\n')
         os.chdir('gitian.sigs')
-        subprocess.check_call(['git', 'add', args.version+'-linux/'+args.signer])
-        subprocess.check_call(['git', 'add', args.version+'-win-unsigned/'+args.signer])
-        subprocess.check_call(['git', 'add', args.version+'-osx-unsigned/'+args.signer])
+        subprocess.check_call(['git', 'config', 'user.signingkey', args.signer])
+        if args.linux:
+            subprocess.check_call(['git', 'add', args.version+'-linux/'+args.signer])
+        if args.windows:
+            subprocess.check_call(['git', 'add', args.version+'-win-unsigned/'+args.signer])
+        if args.macos:
+            subprocess.check_call(['git', 'add', args.version+'-osx-unsigned/'+args.signer])
         subprocess.check_call(['git', 'commit', '-m', 'Add '+args.version+' unsigned sigs for '+args.signer])
         os.chdir(workdir)
-
-    os.chdir('ion-binaries/'+args.version)
-
-    if args.hash == 'SHA1':
-        subprocess.check_call(['gpg', '--digest-algo', 'sha1', '--clearsign', args.hash+'SUMS', args.signer])
-
-    if args.hash == 'SHA256':
-        subprocess.check_call(['gpg', '--digest-algo', 'sha256', '--clearsign', args.hash+'SUMS', args.signer])
-
-    if args.hash == 'SHA512':
-        subprocess.check_call(['gpg', '--digest-algo', 'sha512', '--clearsign', args.hash+'SUMS', args.signer])
-
-    subprocess.check_call(['rm', '-f', args.hash+'SUMS', args.signer])
-
-    os.chdir(workdir)
-
-    if args.upload:
-        print('\n'+args.upload+': Start uploading all files to uploadserver.\n')
-        subprocess.check_call(['ssh', args.upload, 'mkdir', '-p', args.uploadfolder+'/'+args.version])
-        subprocess.check_call(['scp', '-r', args.uploadfolder+'/'+args.version, args.upload+'/'+args.uploadfolder+'/'+args.version])
-    
-    if args.uploadlogs:
-        subprocess.check_call(['scp', '-r', 'gitian-builder/var', args.uploadfolder+'/'+args.version+'/'+args.uploadlogs])
 
 def sign():
     global args, workdir
@@ -131,11 +100,11 @@ def sign():
 
     if args.windows:
         print('\nSigning ' + args.version + ' Windows')
-        subprocess.check_call('cp inputs/ioncore-' + args.version + '-win-unsigned.tar.gz inputs/ioncore-win-unsigned.tar.gz', shell=True)
+        subprocess.check_call('cp inputs/ion-' + args.version + '-win-unsigned.tar.gz inputs/ion-win-unsigned.tar.gz', shell=True)
         subprocess.check_call(['bin/gbuild', '-i', '--commit', 'signature='+args.commit, '../ion/contrib/gitian-descriptors/gitian-win-signer.yml'])
         subprocess.check_call(['bin/gsign', '-p', args.sign_prog, '--signer', args.signer, '--release', args.version+'-win-signed', '--destination', '../gitian.sigs/', '../ion/contrib/gitian-descriptors/gitian-win-signer.yml'])
-        subprocess.check_call('mv build/out/ioncore-*win64-setup.exe ../ion-binaries/'+args.version, shell=True)
-        subprocess.check_call('mv build/out/ioncore-*win32-setup.exe ../ion-binaries/'+args.version, shell=True)
+        subprocess.check_call('mv build/out/ion-*win64-setup.exe ../ion-binaries/'+args.version, shell=True)
+        subprocess.check_call('mv build/out/ion-*win32-setup.exe ../ion-binaries/'+args.version, shell=True)
 
     if args.macos:
         print('\nSigning ' + args.version + ' MacOS')
@@ -149,51 +118,48 @@ def sign():
     if args.commit_files:
         print('\nCommitting '+args.version+' Signed Sigs\n')
         os.chdir('gitian.sigs')
-        subprocess.check_call(['git', 'add', args.version+'-win-signed/'+args.signer])
-        subprocess.check_call(['git', 'add', args.version+'-osx-signed/'+args.signer])
-        subprocess.check_call(['git', 'commit', '-a', '-m', 'Add '+args.version+' signed binary sigs for '+args.signer])
+
+        if args.windows:
+            subprocess.check_call(['git', 'add', args.version+'-win-signed/'+args.signer])
+        if args.macos:
+            subprocess.check_call(['git', 'add', args.version+'-osx-signed/'+args.signer])
+
+        subprocess.check_call(['git', 'commit', '-S', '-m', 'Add '+args.version+' signed binary sigs for '+args.signer])
         os.chdir(workdir)
 
 def verify():
     global args, workdir
-    rc = 0
     os.chdir('gitian-builder')
 
-    print('\nVerifying v'+args.version+' Linux\n')
-    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-linux', '../ion/contrib/gitian-descriptors/gitian-linux.yml']):
-        print('Verifying v'+args.version+' Linux FAILED\n')
-        rc = 1
+    if args.linux:
+        print('\nVerifying v'+args.version+' Linux\n')
+        subprocess.check_call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-linux', '../ion/contrib/gitian-descriptors/gitian-linux.yml'])
+        print('\nVerifying v'+args.version+' Linux\n')
+        subprocess.check_call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-linux', '../ion/contrib/gitian-descriptors/gitian-linux.yml'])
 
-    print('\nVerifying v'+args.version+' Windows\n')
-    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-win-unsigned', '../ion/contrib/gitian-descriptors/gitian-win.yml']):
-        print('Verifying v'+args.version+' Windows FAILED\n')
-        rc = 1
+    if args.windows:
+        print('\nVerifying v'+args.version+' Windows\n')
+        subprocess.check_call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-win-unsigned', '../ion/contrib/gitian-descriptors/gitian-win.yml'])
+        if args.sign:
+            print('\nVerifying v'+args.version+' Signed Windows\n')
+            subprocess.check_call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-win-signed', '../ion/contrib/gitian-descriptors/gitian-win-signer.yml'])
 
-    print('\nVerifying v'+args.version+' MacOS\n')
-    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-osx-unsigned', '../ion/contrib/gitian-descriptors/gitian-osx.yml']):
-        print('Verifying v'+args.version+' MacOS FAILED\n')
-        rc = 1
-
-    print('\nVerifying v'+args.version+' Signed Windows\n')
-    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-win-signed', '../ion/contrib/gitian-descriptors/gitian-win-signer.yml']):
-        print('Verifying v'+args.version+' Signed Windows FAILED\n')
-        rc = 1
-
-    print('\nVerifying v'+args.version+' Signed MacOS\n')
-    if subprocess.call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-osx-signed', '../ion/contrib/gitian-descriptors/gitian-osx-signer.yml']):
-        print('Verifying v'+args.version+' Signed MacOS FAILED\n')
-        rc = 1
+    if args.macos:
+        print('\nVerifying v'+args.version+' MacOS\n')
+        subprocess.check_call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-osx-unsigned', '../ion/contrib/gitian-descriptors/gitian-osx.yml'])
+        if args.sign:
+            print('\nVerifying v'+args.version+' Signed MacOS\n')
+            subprocess.check_call(['bin/gverify', '-v', '-d', '../gitian.sigs/', '-r', args.version+'-osx-signed', '../ion/contrib/gitian-descriptors/gitian-osx-signer.yml'])
 
     os.chdir(workdir)
-    return rc
 
 def main():
     global args, workdir
 
-    parser = argparse.ArgumentParser(description='Script for running full Gitian builds.')
+    parser = argparse.ArgumentParser(usage='%(prog)s [options] signer version')
     parser.add_argument('-c', '--commit', action='store_true', dest='commit', help='Indicate that the version argument is for a commit or branch')
     parser.add_argument('-p', '--pull', action='store_true', dest='pull', help='Indicate that the version argument is the number of a github repository pull request')
-    parser.add_argument('-u', '--url', dest='url', default='https://bitbucket.org/ioncoin/ion', help='Specify the URL of the repository. Default is %(default)s')
+    parser.add_argument('-u', '--url', dest='url', default='https://github.com/ioncoincore/ion', help='Specify the URL of the repository. Default is %(default)s')
     parser.add_argument('-v', '--verify', action='store_true', dest='verify', help='Verify the Gitian build')
     parser.add_argument('-b', '--build', action='store_true', dest='build', help='Do a Gitian build')
     parser.add_argument('-s', '--sign', action='store_true', dest='sign', help='Make signed binaries for Windows and MacOS')
@@ -203,74 +169,65 @@ def main():
     parser.add_argument('-m', '--memory', dest='memory', default='2000', help='Memory to allocate in MiB. Default %(default)s')
     parser.add_argument('-k', '--kvm', action='store_true', dest='kvm', help='Use KVM instead of LXC')
     parser.add_argument('-d', '--docker', action='store_true', dest='docker', help='Use Docker instead of LXC')
-    parser.add_argument('-S', '--setup', action='store_true', dest='setup', help='Set up the Gitian building environment. Only works on Debian-based systems (Ubuntu, Debian)')
+    parser.add_argument('-S', '--setup', action='store_true', dest='setup', help='Set up the Gitian building environment. Uses LXC. If you want to use KVM, use the --kvm option. Only works on Debian-based systems (Ubuntu, Debian)')
     parser.add_argument('-D', '--detach-sign', action='store_true', dest='detach_sign', help='Create the assert file for detached signing. Will not commit anything.')
     parser.add_argument('-n', '--no-commit', action='store_false', dest='commit_files', help='Do not commit anything to git')
-    parser.add_argument('-z', '--upload', dest='upload', default='defaultuploadserver', help='Use scp to upload file to the server, defines in .ssh as uploadserver, pass serverIp and path to ssh private key. Default is which is configured in your ~/.ssh/config file')
-    parser.add_argument('-l', '--uploadlogs', action='store_true', dest='uploadlogs', help='Upload logs and scripts (var folder)')
-    parser.add_argument('-f', '--uploadfolder', dest='uploadfolder', default='ion-binaries', help='Upload folder on uploadserver')
-    parser.add_argument('-y', '--hash', dest='hash', default='SHA256', help='Create hashes, choose beetwen SHA1, SHA256, SHA512')
-    parser.add_argument('signer', nargs='?', help='GPG signer to sign each build assert file')
-    parser.add_argument('version', nargs='?', help='Version number, commit, or branch to build. If building a commit or branch, the -c option must be specified')
+    parser.add_argument('signer', help='GPG signer to sign each build assert file')
+    parser.add_argument('version', help='Version number, commit, or branch to build. If building a commit or branch, the -c option must be specified')
+
     args = parser.parse_args()
     workdir = os.getcwd()
-
-    args.is_bionic = b'bionic' in subprocess.check_output(['lsb_release', '-cs'])
-
-    if args.kvm and args.docker:
-        raise Exception('Error: cannot have both kvm and docker')
-
-    # Ensure no more than one environment variable for gitian-builder (USE_LXC, USE_VBOX, USE_DOCKER) is set as they
-    # can interfere (e.g., USE_LXC being set shadows USE_DOCKER; for details see gitian-builder/libexec/make-clean-vm).
-    os.environ['USE_LXC'] = ''
-    os.environ['USE_VBOX'] = ''
-    os.environ['USE_DOCKER'] = ''
-    if args.docker:
-        os.environ['USE_DOCKER'] = '1'
-    elif not args.kvm:
-        os.environ['USE_LXC'] = '1'
-        if 'GITIAN_HOST_IP' not in os.environ.keys():
-            os.environ['GITIAN_HOST_IP'] = '10.0.3.1'
-        if 'LXC_GUEST_IP' not in os.environ.keys():
-            os.environ['LXC_GUEST_IP'] = '10.0.3.5'
-
-    # Script will fail to automaticly download all resources if inputs folder does not exist
-    subprocess.check_call(['mkdir', '-p', 'gitian-builder/inputs'])
-
-    if args.setup:
-        setup()
-
-    if args.buildsign:
-        args.build = True
-        args.sign = True
-
-    if not args.build and not args.sign and not args.verify:
-        sys.exit(0)
 
     args.linux = 'l' in args.os
     args.windows = 'w' in args.os
     args.macos = 'm' in args.os
 
-    # Disable for MacOS if no SDK found
-    if args.macos and not os.path.isfile('gitian-builder/inputs/MacOSX10.11.sdk.tar.xz'):
-        print('Cannot build for MacOS, SDK does not exist. Will build for other OSes')
-        args.macos = False
+    args.is_bionic = b'bionic' in subprocess.check_output(['lsb_release', '-cs'])
+
+    if args.buildsign:
+        args.build=True
+        args.sign=True
+
+    if args.kvm and args.docker:
+        raise Exception('Error: cannot have both kvm and docker')
 
     args.sign_prog = 'true' if args.detach_sign else 'gpg --detach-sign'
 
+    # Set environment variable USE_LXC or USE_DOCKER, let gitian-builder know that we use lxc or docker
+    if args.docker:
+        os.environ['USE_DOCKER'] = '1'
+    elif not args.kvm:
+        os.environ['USE_LXC'] = '1'
+        if not 'GITIAN_HOST_IP' in os.environ.keys():
+            os.environ['GITIAN_HOST_IP'] = '10.0.3.1'
+        if not 'LXC_GUEST_IP' in os.environ.keys():
+            os.environ['LXC_GUEST_IP'] = '10.0.3.5'
+
+    # Disable for MacOS if no SDK found
+    if args.macos and not os.path.isfile('gitian-builder/inputs/MacOSX10.11.sdk.tar.xz'):
+    	subprocess.check_call(['wget', '-O', 'gitian-builder/inputs/MacOSX10.11.sdk.tar.xz', '-N', '-P', 'inputs', 'https://github.com/gitianuser/MacOSX-SDKs/releases/download/MacOSX10.11.sdk/MacOSX10.11.sdk.tar.xz'])
+    	if args.macos and not os.path.isfile('gitian-builder/inputs/MacOSX10.11.sdk.tar.xz'):
+        	print('Cannot build for MacOS, SDK does not exist. Will build for other OSes')
+        	args.macos = False
+
     script_name = os.path.basename(sys.argv[0])
-    if not args.signer:
-        print(script_name+': Missing signer')
+    # Signer and version shouldn't be empty
+    if args.signer == '':
+        print(script_name+': Missing signer.')
         print('Try '+script_name+' --help for more information')
-        sys.exit(1)
-    if not args.version:
-        print(script_name+': Missing version')
+        exit(1)
+    if args.version == '':
+        print(script_name+': Missing version.')
         print('Try '+script_name+' --help for more information')
-        sys.exit(1)
+        exit(1)
+
     # Add leading 'v' for tags
     if args.commit and args.pull:
         raise Exception('Cannot have both commit and pull')
     args.commit = ('' if args.commit else 'v') + args.version
+
+    if args.setup:
+        setup()
 
     os.chdir('ion')
     if args.pull:
@@ -284,10 +241,6 @@ def main():
     subprocess.check_call(['git', 'checkout', args.commit])
     os.chdir(workdir)
 
-    os.chdir('gitian-builder')
-    subprocess.check_call(['git', 'pull'])
-    os.chdir(workdir)
-
     if args.build:
         build()
 
@@ -295,10 +248,7 @@ def main():
         sign()
 
     if args.verify:
-        os.chdir('gitian.sigs')
-        subprocess.check_call(['git', 'pull'])
-        os.chdir(workdir)
-        sys.exit(verify())
+        verify()
 
 if __name__ == '__main__':
     main()

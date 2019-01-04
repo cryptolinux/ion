@@ -1,5 +1,7 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_OPTIONSMODEL_H
@@ -30,39 +32,31 @@ public:
     explicit OptionsModel(QObject *parent = 0, bool resetSettings = false);
 
     enum OptionID {
-        StartAtStartup,         // bool
-        HideTrayIcon,           // bool
-        MinimizeToTray,         // bool
-        MapPortUPnP,            // bool
-        MinimizeOnClose,        // bool
-        ProxyUse,               // bool
-        ProxyIP,                // QString
-        ProxyPort,              // int
-        ProxyUseTor,            // bool
-        ProxyIPTor,             // QString
-        ProxyPortTor,           // int
-        DisplayUnit,            // BitcoinUnits::Unit
-        ThirdPartyTxUrls,       // QString
-        Digits,                 // QString
-        Theme,                  // QString
-        FontFamily,             // int
-        FontScale,              // int
-        FontWeightNormal,       // int
-        FontWeightBold,         // int
-        Language,               // QString
-        CoinControlFeatures,    // bool
-        ThreadsScriptVerif,     // int
-        DatabaseCache,          // int
-        SpendZeroConfChange,    // bool
-        ShowMasternodesTab,     // bool
-        PrivateSendEnabled,     // bool
-        ShowAdvancedPSUI,       // bool
-        ShowPrivateSendPopups,  // bool
-        LowKeysWarning,         // bool
-        PrivateSendRounds,      // int
-        PrivateSendAmount,      // int
-        PrivateSendMultiSession,// bool
-        Listen,                 // bool
+        StartAtStartup,      // bool
+        MinimizeToTray,      // bool
+        MapPortUPnP,         // bool
+        MinimizeOnClose,     // bool
+        ProxyUse,            // bool
+        ProxyIP,             // QString
+        ProxyPort,           // int
+        DisplayUnit,         // BitcoinUnits::Unit
+        ThirdPartyTxUrls,    // QString
+        Digits,              // QString
+        Theme,               // QString
+        Language,            // QString
+        CoinControlFeatures, // bool
+        ThreadsScriptVerif,  // int
+        DatabaseCache,       // int
+        SpendZeroConfChange, // bool
+        ZeromintEnable,      // bool
+        ZeromintPercentage,  // int
+        ZeromintPrefDenom,   // int
+        HideZeroBalances,    // bool
+        HideOrphans,    // bool
+        AnonymizeIonAmount, //int
+        ShowMasternodesTab,  // bool
+        Listen,              // bool
+        StakeSplitThreshold, // int
         OptionIDRowCount,
     };
 
@@ -101,8 +95,9 @@ private:
     int nDisplayUnit;
     QString strThirdPartyTxUrls;
     bool fCoinControlFeatures;
-    bool fShowAdvancedPSUI;
-    /* settings that were overridden by command-line */
+    bool fHideZeroBalances;
+    bool fHideOrphans;
+    /* settings that were overriden by command-line */
     QString strOverriddenByCommandLine;
 
     // Add option to list of GUI options overridden through command line/config file
@@ -112,12 +107,13 @@ private:
     void checkAndMigrate();
 Q_SIGNALS:
     void displayUnitChanged(int unit);
-    void privateSendEnabledChanged();
-    void privateSendRoundsChanged();
-    void privateSentAmountChanged();
-    void advancedPSUIChanged(bool);
+    void zeromintEnableChanged(bool);
+    void zeromintPercentageChanged(int);
+    void preferredDenomChanged(int);
+    void anonymizeIonAmountChanged(int);
     void coinControlFeaturesChanged(bool);
-    void hideTrayIconChanged(bool);
+    void hideZeroBalancesChanged(bool);
+    void hideOrphansChanged(bool);
 };
 
 #endif // BITCOIN_QT_OPTIONSMODEL_H

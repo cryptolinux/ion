@@ -1,5 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2016-2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,6 +13,19 @@
 #include <cstring>
 #include <errno.h>
 #include <limits>
+
+#include <openssl/bio.h>
+#include <openssl/buffer.h>
+#include <openssl/evp.h>
+
+static const std::string SAFE_CHARS[] =
+{
+    CHARS_ALPHA_NUM + " .,;-_/:?@()", // SAFE_CHARS_DEFAULT
+    CHARS_ALPHA_NUM + " .,;-_?@", // SAFE_CHARS_UA_COMMENT
+    CHARS_ALPHA_NUM + ".-_", // SAFE_CHARS_FILENAME
+};
+
+using namespace std;
 
 static const std::string CHARS_ALPHA_NUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -259,8 +274,28 @@ std::vector<unsigned char> DecodeBase64(const char* p, bool* pfInvalid)
 
 std::string DecodeBase64(const std::string& str)
 {
-    std::vector<unsigned char> vchRet = DecodeBase64(str.c_str());
-    return std::string((const char*)vchRet.data(), vchRet.size());
+    // Init openssl BIO with base64 filter and memory output
+    BIO *b64, *mem;
+    b64 = BIO_new(BIO_f_base64());
+    BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL); // No newlines in output
+    mem = BIO_new(BIO_s_mem());
+    BIO_push(b64, mem);
+
+    // Decode the string
+    BIO_write(b64, &input[0], input.size());
+    (void)BIO_flush(b64);
+
+    // Create output variable from buffer mem ptr
+    BUF_MEM* bptr;
+    BIO_get_mem_ptr(b64, &bptr);
+    SecureString output(bptr->data, bptr->length);
+
+    // Cleanse secure data buffer from memory
+    memory_cleanse((void*)bptr->data, bptr->length);
+
+    // Free memory
+    BIO_free_all(b64);
+    return output;
 }
 
 std::string EncodeBase32(const unsigned char* pch, size_t len)

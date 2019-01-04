@@ -1,5 +1,7 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
@@ -19,8 +21,10 @@
 #include <txdb.h> // for -dbcache defaults
 
 #ifdef ENABLE_WALLET
-#include <privatesend/privatesend-client.h>
-#endif // ENABLE_WALLET
+#include "wallet.h" // for CWallet::GetRequiredFee()
+#endif
+
+#include <boost/thread.hpp>
 
 #include <QDataWidgetMapper>
 #include <QDir>
@@ -31,11 +35,11 @@
 #include <QShowEvent>
 #include <QTimer>
 
-OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
-    QDialog(parent),
-    ui(new Ui::OptionsDialog),
-    model(0),
-    mapper(0)
+OptionsDialog::OptionsDialog(QWidget* parent, bool enableWallet) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
+                                                                   ui(new Ui::OptionsDialog),
+                                                                   model(0),
+                                                                   mapper(0),
+                                                                   fProxyIpValid(true)
 {
     ui->setupUi(this);
 
@@ -107,6 +111,31 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
         ui->digits->addItem(digits, digits);
     }
 
+    /* Theme selector static themes */
+    ui->theme->addItem(QString("Default"), QVariant("default"));
+
+    /* Preferred Zerocoin Denominations */
+    ui->preferredDenom->addItem(QString(tr("Any")), QVariant("0"));
+    ui->preferredDenom->addItem(QString("1"), QVariant("1"));
+    ui->preferredDenom->addItem(QString("5"), QVariant("5"));
+    ui->preferredDenom->addItem(QString("10"), QVariant("10"));
+    ui->preferredDenom->addItem(QString("50"), QVariant("50"));
+    ui->preferredDenom->addItem(QString("100"), QVariant("100"));
+    ui->preferredDenom->addItem(QString("500"), QVariant("500"));
+    ui->preferredDenom->addItem(QString("1000"), QVariant("1000"));
+    ui->preferredDenom->addItem(QString("5000"), QVariant("5000"));
+
+    /* Theme selector external themes */
+    boost::filesystem::path pathAddr = GetDataDir() / "themes";
+    QDir dir(pathAddr.string().c_str());
+    dir.setFilter(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+    QFileInfoList list = dir.entryInfoList();
+
+    for (int i = 0; i < list.size(); ++i) {
+        QFileInfo fileInfo = list.at(i);
+        ui->theme->addItem(fileInfo.fileName(), QVariant(fileInfo.fileName()));
+    }
+
     /* Language selector */
     QDir translations(":translations");
 
@@ -122,28 +151,16 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
         /** check if the locale name consists of 2 parts (language_country) */
         if(langStr.contains("_"))
         {
-#if QT_VERSION >= 0x040800
             /** display language strings as "native language - native country (locale name)", e.g. "Deutsch - Deutschland (de)" */
             ui->lang->addItem(locale.nativeLanguageName() + QString(" - ") + locale.nativeCountryName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
-#else
-            /** display language strings as "language - country (locale name)", e.g. "German - Germany (de)" */
-            ui->lang->addItem(QLocale::languageToString(locale.language()) + QString(" - ") + QLocale::countryToString(locale.country()) + QString(" (") + langStr + QString(")"), QVariant(langStr));
-#endif
         }
         else
         {
-#if QT_VERSION >= 0x040800
             /** display language strings as "native language (locale name)", e.g. "Deutsch (de)" */
             ui->lang->addItem(locale.nativeLanguageName() + QString(" (") + langStr + QString(")"), QVariant(langStr));
-#else
-            /** display language strings as "language (locale name)", e.g. "German (de)" */
-            ui->lang->addItem(QLocale::languageToString(locale.language()) + QString(" (") + langStr + QString(")"), QVariant(langStr));
-#endif
         }
     }
-#if QT_VERSION >= 0x040700
     ui->thirdPartyTxUrls->setPlaceholderText("https://example.com/tx/%s");
-#endif
 
     ui->unit->setModel(new BitcoinUnits(this));
 
@@ -221,9 +238,8 @@ void OptionsDialog::setModel(OptionsModel *_model)
         setMapper();
         mapper->toFirst();
 
-        appearance->setModel(_model);
-
-        updateDefaultProxyNets();
+        /* keep consistency for action triggered elsewhere */
+        connect(model, SIGNAL(hideOrphansChanged(bool)), this, SLOT(updateHideOrphans(bool)));
     }
 
     /* warn when one of the following settings changes by user action (placed here so init via mapper doesn't trigger them) */
@@ -296,6 +312,8 @@ void OptionsDialog::setMapper()
     mapper->addMapping(ui->lang, OptionsModel::Language);
     mapper->addMapping(ui->unit, OptionsModel::DisplayUnit);
     mapper->addMapping(ui->thirdPartyTxUrls, OptionsModel::ThirdPartyTxUrls);
+    mapper->addMapping(ui->checkBoxHideZeroBalances, OptionsModel::HideZeroBalances);
+    mapper->addMapping(ui->checkBoxHideOrphans, OptionsModel::HideOrphans);
 
     /* Appearance
        See AppearanceWidget::setModel
@@ -400,7 +418,13 @@ void OptionsDialog::clearStatusLabel()
     }
 }
 
-void OptionsDialog::updateProxyValidationState()
+void OptionsDialog::updateHideOrphans(bool fHide)
+{
+    if(ui->checkBoxHideOrphans->isChecked() != fHide)
+        ui->checkBoxHideOrphans->setChecked(fHide);
+}
+
+void OptionsDialog::doProxyIpChecks(QValidatedLineEdit* pUiProxyIp, QLineEdit* pUiProxyPort)
 {
     QValidatedLineEdit *pUiProxyIp = ui->proxyIp;
     QValidatedLineEdit *otherProxyWidget = (pUiProxyIp == ui->proxyIpTor) ? ui->proxyIp : ui->proxyIpTor;

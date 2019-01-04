@@ -132,12 +132,28 @@
 <context>
     <name>AppearanceWidget</name>
     <message>
-        <source>Lighter</source>
-        <translation>Lżej</translation>
+        <source>Encrypt wallet</source>
+        <translation>Zakoduj portfel</translation>
     </message>
     <message>
-        <source>Bolder</source>
-        <translation>Grubiej</translation>
+        <source>This operation needs your wallet passphrase to unlock the wallet.</source>
+        <translation>Ta operacja wymaga twojego hasła, by odblokować portfel</translation>
+    </message>
+    <message>
+        <source>Unlock wallet</source>
+        <translation>Odblokuj portfel</translation>
+    </message>
+    <message>
+        <source>This operation needs your wallet passphrase to decrypt the wallet.</source>
+        <translation>Ta operacja wymaga twojego hasła, by zakodować portfel</translation>
+    </message>
+    <message>
+        <source>Decrypt wallet</source>
+        <translation>Zakoduj portfel</translation>
+    </message>
+    <message>
+        <source>Change passphrase</source>
+        <translation>Zmień hasło</translation>
     </message>
     <message>
         <source>Font Weight Normal:</source>
@@ -182,6 +198,12 @@
         <source>New passphrase</source>
         <translation>Nowe hasło</translation>
     </message>
+</context>
+<context>
+    <name>BanTableModel</name>
+    </context>
+<context>
+    <name>Bip38ToolDialog</name>
     <message>
         <source>Repeat new passphrase</source>
         <translation>Powtórz nowe hasło</translation>
@@ -219,12 +241,8 @@
         <translation>Odszyfruj portfel</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Ion address</source>
-        <translation>Zatwierdź wiadomość, aby udowodnić, że podany adres Ion jest w twoim posiadaniu</translation>
-    </message>
-    <message>
-        <source>Enter the old passphrase and new passphrase to the wallet.</source>
-        <translation>Wpisz stare i nowe hasło dla portfela.</translation>
+        <source>Encrypt &amp;Key</source>
+        <translation>Kodowanie &amp;klucz</translation>
     </message>
     <message>
         <source>Confirm wallet encryption</source>
@@ -235,12 +253,8 @@
         <translation>Ostrzeżenie: Jeśli zaszyfrujesz swój portfel i zgubisz hasło, &lt;b&gt;STRACISZ WSZYSTKIE ŚRODKI&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>Are you sure you wish to encrypt your wallet?</source>
-        <translation>Jesteś pewien, że chcesz zaszyfrować portfel?</translation>
-    </message>
-    <message>
-        <source>Wallet encrypted</source>
-        <translation>Portfel zaszyfrowany</translation>
+        <source>Decrypted Key:</source>
+        <translation>Zakodowany klucz:</translation>
     </message>
     <message>
         <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your funds from being stolen by malware infecting your computer.</source>
@@ -556,7 +570,7 @@
         <translation>Portfel jest &lt;b&gt;odszyfrowany&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>Send coins to a Ion address</source>
+        <source>Send coins to a ION address</source>
         <translation>Wyślij monety do adresu ION</translation>
     </message>
     <message>
@@ -584,11 +598,11 @@
         <translation>Pasek zakładek</translation>
     </message>
     <message>
-        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <source>Sign messages with your ION addresses to prove you own them</source>
         <translation>Zatwierdź wiadomość z twoimi adresami ION, by udowodnić, że jesteś w ich posiadaniu</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <source>Verify messages to ensure they were signed with specified ION addresses</source>
         <translation>Zweryfikuj wiadomości by upewnić się, że zostały zatwierdzone z podanego adresu ION</translation>
     </message>
     <message>
@@ -628,12 +642,12 @@
         <translation>Pobieranie bloków ...</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
-        <translation>Pokaż wiadomość pomocy rdzenia ION, aby dostać listę możliwych opcji Ion command-line</translation>
+        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
+        <translation>Pokaż wiadomość pomocy rdzenia ION, aby dostać listę możliwych opcji ION command-line</translation>
     </message>
     <message>
         <source>Ion Core client</source>
-        <translation>Rdzeń Ion klient</translation>
+        <translation>Rdzeń ION klient</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -724,10 +738,6 @@
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
         <translation>Portfel jest &lt;b&gt;zaszyfrowany&lt;/b&gt; i obecnie &lt;b&gt;niezablokowany&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for mixing only</source>
-        <translation>Portfel jest &lt;b&gt;zaszyfrowany&lt;/b&gt; i obecnie &lt;b&gt;odblokowany&lt;/b&gt; tylko w celu miksowania</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
@@ -967,12 +977,8 @@
         <translation>Utworzono nowy folder danych.</translation>
     </message>
     <message>
-        <source>name</source>
-        <translation>nazwa</translation>
-    </message>
-    <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
-        <translation>Katalog już istnieje. Dodaj %1, jeśli masz zamiar utworzyć tutaj nowy katalog.</translation>
+        <source>Address</source>
+        <translation>Adres</translation>
     </message>
     <message>
         <source>Path already exists, and is not a directory.</source>
@@ -1121,8 +1127,14 @@
         <translation>%1 GB wolnego miejsca na dysku</translation>
     </message>
     <message>
-        <source>(of %1 GB needed)</source>
-        <translation>(z %1GB potrzebnego)</translation>
+        <source>(no label)</source>
+        <translation>(brak zakładki)</translation>
+    </message>
+    <message>
+        <source>The entered address:
+</source>
+        <translation>Wprowadzony adres:
+</translation>
     </message>
 </context>
 <context>
@@ -1143,6 +1155,24 @@
         <source>Filter List:</source>
         <translation>Filtruj listę:</translation>
     </message>
+</context>
+<context>
+    <name>MultisigDialog</name>
+    <message>
+        <source>Status:</source>
+        <translation>Status:</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    <message>
+        <source>Amount:</source>
+        <translation>Liczba:</translation>
+    </message>
+    </context>
+<context>
+    <name>ObfuscationConfig</name>
     <message>
         <source>Filter masternode list</source>
         <translation>Filtruj listę masternodów</translation>
@@ -1196,12 +1226,12 @@
         <translation>Adres Właściciela</translation>
     </message>
     <message>
-        <source>Automatically start Ion after logging in to the system.</source>
-        <translation>Automatycznie uruchom Ion po zalogowaniu do systemu</translation>
+        <source>Automatically start ION after logging in to the system.</source>
+        <translation>Automatycznie uruchom ION po zalogowaniu do systemu</translation>
     </message>
     <message>
-        <source>&amp;Start Ion on system login</source>
-        <translation>&amp;Uruchom Ion podczas logowania do systemu</translation>
+        <source>&amp;Start ION on system login</source>
+        <translation>&amp;Uruchom ION podczas logowania do systemu</translation>
     </message>
     <message>
         <source>Copy Collateral Outpoint</source>
@@ -1224,12 +1254,14 @@
         <translation>NIEZNANY</translation>
     </message>
     <message>
-        <source>to %1</source>
-        <translation>do %1</translation>
+        <source>Language missing or translation incomplete? Help contributing translations here:
+https://www.transifex.com/ioncoincore/ioncoin</source>
+        <translation>Brakuje języka bądź nieukończona pełnego tłumaczenia? Pomóż w tłumaczeniu tutaj:
+https://www.transifex.com/ioncoincore/ioncoin </translation>
     </message>
     <message>
-        <source>Connect to the Ion network through a SOCKS5 proxy.</source>
-        <translation>Połącz z siecią Ion poprzez SOCKS5 proxy.</translation>
+        <source>Connect to the ION network through a SOCKS5 proxy.</source>
+        <translation>Połącz z siecią ION poprzez SOCKS5 proxy.</translation>
     </message>
     <message>
         <source>but not claimed</source>
@@ -1325,7 +1357,7 @@
         <source>Select payment request file to open</source>
         <translation>Wybierz plik żądania zapłaty do otwarcia</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>OptionsDialog</name>
     <message>
@@ -1353,12 +1385,8 @@
         <translation>(0=auto, &lt;0 = zostaw tyle wolnych rdzeni)</translation>
     </message>
     <message>
-        <source>Amount of Ion to keep anonymized</source>
-        <translation>Ilość Ionów, które mają pozostać anonimowe.</translation>
-    </message>
-    <message>
-        <source>W&amp;allet</source>
-        <translation>Portfel</translation>
+        <source>Current total balance in watch-only addresses</source>
+        <translation>Obecny całkowity bilans w adresach tylko do obejrzenia</translation>
     </message>
     <message>
         <source>&amp;Appearance</source>
@@ -1376,6 +1404,9 @@
         <source>Show additional information and buttons for PrivateSend on overview screen.</source>
         <translation>Pokazuj dodatkowe informacje i przyciski dla PrivateSend na ekranie przeglądu.</translation>
     </message>
+    </context>
+<context>
+    <name>PaymentServer</name>
     <message>
         <source>Enable advanced PrivateSend interface</source>
         <translation>Włącz zaawansowany interfejs PrivateSend</translation>
@@ -1429,8 +1460,12 @@
         <translation>Połącz się z siecią Ion przez proxy SOCKS5.</translation>
     </message>
     <message>
-        <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>
-        <translation>Połą&amp;cz się przez SOCKS5 proxy (opcja domyślna):</translation>
+        <source>TextLabel</source>
+        <translation>TekstZakładka</translation>
+    </message>
+    <message>
+        <source>Fee:</source>
+        <translation>Opłata:</translation>
     </message>
     <message>
         <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
@@ -1461,8 +1496,8 @@
         <translation>Czy pokazać funkcje kontroli monet czy nie.</translation>
     </message>
     <message>
-        <source>Enter a Ion address (e.g. %1)</source>
-        <translation>Wprowadź adres Ion (np. %1)</translation>
+        <source>Enter a ION address (e.g. %1)</source>
+        <translation>Wprowadź adres ION (np. %1)</translation>
     </message>
     <message>
         <source>&amp;Start %1 on system login</source>
@@ -1646,16 +1681,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Suma transakcji, które nie zostały jeszcze potwierdzone, a które nie zostały wliczone do twojego obecnego salda</translation>
     </message>
     <message>
-        <source>Immature:</source>
-        <translation>Niedojrzały: </translation>
-    </message>
-    <message>
-        <source>Mined balance that has not yet matured</source>
-        <translation>Balans wydobycia, który jeszcze nie dojrzał</translation>
-    </message>
-    <message>
-        <source>Balances</source>
-        <translation>Saldo</translation>
+        <source>Connection Time</source>
+        <translation>Czas połączenia</translation>
     </message>
     <message>
         <source>Unconfirmed transactions to watch-only addresses</source>
@@ -1741,6 +1768,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>out of sync</source>
         <translation>desynchronizacja</translation>
     </message>
+</context>
+<context>
+    <name>ReceiveCoinsDialog</name>
     <message>
         <source>Automatic backups are disabled, no mixing available!</source>
         <translation>Automatyczne kopie zapasowe wyłączone, brak możliwości miksowania</translation>
@@ -1881,8 +1911,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Nie można odczytać pliku z żądaniem płatności! Może to być spowodowane przez niewłaściwy plik z żądaniem płatności.</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Ion address</source>
-        <translation>Zatwierdź wiadomość, aby udowodnić, że podany adres Ion jest w twoim posiadaniu</translation>
+        <source>Sign the message to prove you own this ION address</source>
+        <translation>Zatwierdź wiadomość, aby udowodnić, że podany adres ION jest w twoim posiadaniu</translation>
     </message>
     <message>
         <source>Payment request network doesn't match client network.</source>
@@ -2006,6 +2036,9 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>None</source>
         <translation>Żaden</translation>
     </message>
+    </context>
+<context>
+    <name>XIonControlDialog</name>
     <message>
         <source>N/A</source>
         <translation>Nieważne</translation>

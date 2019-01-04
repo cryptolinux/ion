@@ -1,5 +1,7 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <qt/peertablemodel.h>
@@ -60,14 +62,9 @@ public:
     {
         {
             cachedNodeStats.clear();
-            std::vector<CNodeStats> vstats;
-            if(g_connman)
-                g_connman->GetNodeStats(vstats);
-#if QT_VERSION >= 0x040700
-            cachedNodeStats.reserve(vstats.size());
-#endif
-            for (const CNodeStats& nodestats : vstats)
-            {
+
+            cachedNodeStats.reserve(vNodes.size());
+            foreach (CNode* pnode, vNodes) {
                 CNodeCombinedStats stats;
                 stats.nodeStateStats.nMisbehavior = 0;
                 stats.nodeStateStats.nSyncHeight = -1;

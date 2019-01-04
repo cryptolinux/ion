@@ -7,7 +7,8 @@
 ///
 /// \copyright  Copyright 2013 Ian Miers, Christina Garman and Matthew Green
 /// \license    This project is released under the MIT license.
-// Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 
 #ifndef PARAMGENERATION_H_
 #define PARAMGENERATION_H_
@@ -48,7 +49,7 @@ CBigNum              calculateGroupGenerator(arith_uint256 seed, arith_uint256 p
         CBigNum groupOrder, uint32_t index);
 CBigNum              generateRandomPrime(uint32_t primeBitLen, arith_uint256 in_seed, arith_uint256 *out_seed,
                                         uint32_t *prime_gen_counter);
-CBigNum              generateIntegerFromSeed(uint32_t numBits, arith_uint256 seed, uint32_t *numIterations);
+CBigNum              generateIntegerFromSeed(uint32_t numBits, uint256 seed, uint32_t *numIterations);
 
 }/* namespace libzerocoin */
 

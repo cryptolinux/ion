@@ -1,6 +1,8 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2014-2015 The Dash developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
@@ -52,27 +54,15 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     float scale = qApp->devicePixelRatio();
 
     // define text to place
-    QString titleText       = tr(PACKAGE_NAME);
-    QString versionText     = QString(tr("Version %1")).arg(QString::fromStdString(FormatFullVersion()));
-    QString copyrightText   = QString::fromUtf8(CopyrightHolders("\xc2\xA9", 2018, COPYRIGHT_YEAR).c_str());
-    QString titleAddText    = networkStyle->getTitleAddText();
+    QString titleText = tr("Ion Core");
+    QString versionText = QString(tr("Version %1")).arg(QString::fromStdString(FormatFullVersion()));
+    QString copyrightTextBtc = QChar(0xA9) + QString(" 2009-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Bitcoin Core developers"));
+    QString copyrightTextDash = QChar(0xA9) + QString(" 2014-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Dash Core developers"));
+    QString copyrightTextPIVX = QChar(0xA9) + QString(" 2015-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The PIVX Core developers"));
+    QString copyrightTextION = QChar(0xA9) + QString(" %1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Ion Core developers"));
+    QString titleAddText = networkStyle->getTitleAddText();
 
-    QFont fontNormal = GUIUtil::getFontNormal();
-    QFont fontBold = GUIUtil::getFontBold();
-
-    QPixmap pixmapLogo = networkStyle->getSplashImage();
-    pixmapLogo.setDevicePixelRatio(scale);
-
-    // Adjust logo color based on the current theme
-    QImage imgLogo = pixmapLogo.toImage().convertToFormat(QImage::Format_ARGB32);
-    QColor logoColor = GUIUtil::getThemedQColor(GUIUtil::ThemedColor::BLUE);
-    for (int x = 0; x < imgLogo.width(); ++x) {
-        for (int y = 0; y < imgLogo.height(); ++y) {
-            const QRgb rgb = imgLogo.pixel(x, y);
-            imgLogo.setPixel(x, y, qRgba(logoColor.red(), logoColor.green(), logoColor.blue(), qAlpha(rgb)));
-        }
-    }
-    pixmapLogo.convertFromImage(imgLogo);
+    QString font = QApplication::font().toString();
 
     pixmap = QPixmap(width * scale, height * scale);
     pixmap.setDevicePixelRatio(scale);
@@ -102,11 +92,12 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     int titleTextHeight = fm.height();
     pixPaint.drawText((width / 2) - (titleTextWidth / 2), titleTextHeight + paddingTop, titleText);
 
-    fontNormal.setPointSize(16 * fontFactor);
-    pixPaint.setFont(fontNormal);
-    fm = pixPaint.fontMetrics();
-    int versionTextWidth = fm.width(versionText);
-    pixPaint.drawText((width / 2) - (versionTextWidth / 2), titleTextHeight + paddingTop + titleVersionVSpace, versionText);
+    // draw copyright stuff
+    pixPaint.setFont(QFont(font, 10 * fontFactor));
+    pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace, copyrightTextBtc);
+    pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace + 12, copyrightTextDash);
+    pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace + 24, copyrightTextPIVX);
+    pixPaint.drawText(paddingLeft, paddingTop + titleCopyrightVSpace + 36, copyrightTextION);
 
     // draw additional text if special network
     if(!titleAddText.isEmpty()) {

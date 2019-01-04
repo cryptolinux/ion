@@ -71,14 +71,12 @@ enum
     // discouraged NOPs fails the script. This verification flag will never be
     // a mandatory flag applied to scripts in a block. NOPs that are not
     // executed, e.g.  within an unexecuted IF ENDIF block, are *not* rejected.
-    // NOPs that have associated forks to give them new meaning (CLTV, CSV)
-    // are not subject to this rule.
     SCRIPT_VERIFY_DISCOURAGE_UPGRADABLE_NOPS  = (1U << 7),
 
     // Require that only a single stack element remains after evaluation. This changes the success criterion from
     // "At least one stack element must remain, and when interpreted as a boolean, it must be true" to
     // "Exactly one stack element must remain, and when interpreted as a boolean, it must be true".
-    // (BIP62 rule 6)
+    // (softfork safe, BIP62 rule 6)
     // Note: CLEANSTACK should never be used without P2SH.
     SCRIPT_VERIFY_CLEANSTACK = (1U << 8),
 
@@ -90,11 +88,7 @@ enum
     // support CHECKSEQUENCEVERIFY opcode
     //
     // See BIP112 for details
-    SCRIPT_VERIFY_CHECKSEQUENCEVERIFY = (1U << 10),
-
-    // Signature(s) must be empty vector if an CHECK(MULTI)SIG operation failed
-    //
-    SCRIPT_VERIFY_NULLFAIL = (1U << 14),
+    SCRIPT_VERIFY_CHECKSEQUENCEVERIFY = (1U << 10)
 };
 
 bool CheckSignatureEncoding(const std::vector<unsigned char> &vchSig, unsigned int flags, ScriptError* serror);
@@ -146,11 +140,10 @@ protected:
     virtual bool VerifySignature(const std::vector<unsigned char>& vchSig, const CPubKey& vchPubKey, const uint256& sighash) const;
 
 public:
-    TransactionSignatureChecker(const CTransaction* txToIn, unsigned int nInIn, const CAmount& amountIn) : txTo(txToIn), nIn(nInIn), amount(amountIn), txdata(nullptr) {}
-	TransactionSignatureChecker(const CTransaction* txToIn, unsigned int nInIn, const CAmount& amountIn, const PrecomputedTransactionData& txdataIn) : txTo(txToIn), nIn(nInIn), amount(amountIn), txdata(&txdataIn) {}
-    bool CheckSig(const std::vector<unsigned char>& scriptSig, const std::vector<unsigned char>& vchPubKey, const CScript& scriptCode, SigVersion sigversion) const override;
-    bool CheckLockTime(const CScriptNum& nLockTime) const override;
-    bool CheckSequence(const CScriptNum& nSequence) const override;
+    TransactionSignatureChecker(const CTransaction* txToIn, unsigned int nInIn) : txTo(txToIn), nIn(nInIn) {}
+    bool CheckSig(const std::vector<unsigned char>& scriptSig, const std::vector<unsigned char>& vchPubKey, const CScript& scriptCode) const;
+    bool CheckLockTime(const CScriptNum& nLockTime) const;
+    bool CheckSequence(const CScriptNum& nSequence) const;
 };
 
 class MutableTransactionSignatureChecker : public TransactionSignatureChecker

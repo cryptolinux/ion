@@ -1,6 +1,8 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2014-2015 The Dash developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
@@ -10,13 +12,14 @@
 #include <qt/rpcconsole.h>
 #include <qt/forms/ui_debugwindow.h>
 
-#include <qt/bantablemodel.h>
-#include <qt/clientmodel.h>
-#include <chainparams.h>
-#include <netbase.h>
-#include <rpc/server.h>
-#include <rpc/client.h>
-#include <util.h>
+#include "chainparams.h"
+#include "main.h"
+#include "rpc/client.h"
+#include "rpc/server.h"
+#include "util.h"
+#ifdef ENABLE_WALLET
+#include "wallet.h"
+#endif // ENABLE_WALLET
 
 #include <openssl/crypto.h>
 
@@ -39,10 +42,6 @@
 #include <QTimer>
 #include <QStringList>
 #include <QStyledItemDelegate>
-
-#if QT_VERSION < 0x050000
-#include <QUrl>
-#endif
 
 // TODO: add a scrollback limit, as there is currently none
 // TODO: make it possible to filter out categories (esp debug messages when implemented)
@@ -442,14 +441,13 @@ void RPCExecutor::request(const QString &command)
     }
 }
 
-RPCConsole::RPCConsole(QWidget* parent, Qt::WindowFlags flags) :
-    QWidget(parent, flags),
-    ui(new Ui::RPCConsole),
-    clientModel(0),
-    historyPtr(0),
-    peersTableContextMenu(0),
-    banTableContextMenu(0),
-    consoleFontSize(0)
+RPCConsole::RPCConsole(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
+                                          ui(new Ui::RPCConsole),
+                                          clientModel(0),
+                                          historyPtr(0),
+                                          cachedNodeid(-1),
+                                          peersTableContextMenu(0),
+                                          banTableContextMenu(0)
 {
     ui->setupUi(this);
 
@@ -497,11 +495,34 @@ RPCConsole::RPCConsole(QWidget* parent, Qt::WindowFlags flags) :
 
     // set library version labels
 #ifdef ENABLE_WALLET
+    std::string strPathCustom = GetArg("-backuppath", "");
+    std::string strxIONPathCustom = GetArg("-xionbackuppath", "");
+    int nCustomBackupThreshold = GetArg("-custombackupthreshold", DEFAULT_CUSTOMBACKUPTHRESHOLD);
+
+    if(!strPathCustom.empty()) {
+        ui->wallet_custombackuppath->setText(QString::fromStdString(strPathCustom));
+        ui->wallet_custombackuppath_label->show();
+        ui->wallet_custombackuppath->show();
+    }
+
+    if(!strxIONPathCustom.empty()) {
+        ui->wallet_customxionbackuppath->setText(QString::fromStdString(strxIONPathCustom));
+        ui->wallet_customxionbackuppath_label->setVisible(true);
+        ui->wallet_customxionbackuppath->setVisible(true);
+    }
+
+    if((!strPathCustom.empty() || !strxIONPathCustom.empty()) && nCustomBackupThreshold > 0) {
+        ui->wallet_custombackupthreshold->setText(QString::fromStdString(std::to_string(nCustomBackupThreshold)));
+        ui->wallet_custombackupthreshold_label->setVisible(true);
+        ui->wallet_custombackupthreshold->setVisible(true);
+    }
+
     ui->berkeleyDBVersion->setText(DbEnv::version(0, 0, 0));
     std::string walletPath = GetDataDir().string();
     walletPath += QDir::separator().toLatin1() + gArgs.GetArg("-wallet", "wallet.dat");
     ui->wallet_path->setText(QString::fromStdString(walletPath));
 #else
+
     ui->label_berkeleyDBVersion->hide();
     ui->berkeleyDBVersion->hide();
 #endif
@@ -531,8 +552,8 @@ RPCConsole::RPCConsole(QWidget* parent, Qt::WindowFlags flags) :
 
 RPCConsole::~RPCConsole()
 {
-    QSettings settings;
-    settings.setValue("RPCConsoleWindowGeometry", saveGeometry());
+    GUIUtil::saveWindowGeometry("nRPCConsoleWindow", this);
+    emit stopExecutor();
     RPCUnsetTimerInterface(rpcTimerInterface);
     delete rpcTimerInterface;
     delete ui;
@@ -844,12 +865,22 @@ void RPCConsole::clear(bool clearHistory)
         "td.message { font-family: Courier, Courier New, Lucida Console, monospace; font-size: 12px; } " // Todo: Remove fixed font-size
         "td.cmd-request { color: #006060; } "
         "td.cmd-error { color: red; } "
+        ".secwarning { color: red; }"
         "b { color: #006060; } ");
 
-    message(CMD_REPLY, (tr("Welcome to the Ion RPC console.") + "<br>" +
-                           tr("Use up and down arrows to navigate history, and <b>Ctrl-L</b> to clear screen.") + "<br>" +
-                           tr("Type <b>help</b> for an overview of available commands.")),
-        true);
+#ifdef Q_OS_MAC
+    QString clsKey = "(⌘)-L";
+#else
+    QString clsKey = "Ctrl-L";
+#endif
+
+    message(CMD_REPLY, (tr("Welcome to the ION RPC console.") + "<br>" +
+                        tr("Use up and down arrows to navigate history, and %1 to clear screen.").arg("<b>"+clsKey+"</b>") + "<br>" +
+                        tr("Type <b>help</b> for an overview of available commands.") +
+                        "<br><span class=\"secwarning\"><br>" +
+                        tr("WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.") +
+                        "</span>"),
+                        true);
 }
 
 void RPCConsole::keyPressEvent(QKeyEvent *event)

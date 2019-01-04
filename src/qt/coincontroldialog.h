@@ -1,5 +1,7 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_COINCONTROLDIALOG_H
@@ -24,8 +26,6 @@ namespace Ui {
     class CoinControlDialog;
 }
 
-#define ASYMP_UTF8 "\xE2\x89\x88"
-
 class CCoinControlWidgetItem : public QTreeWidgetItem
 {
 public:
@@ -35,7 +35,6 @@ public:
 
     bool operator<(const QTreeWidgetItem &other) const;
 };
-
 
 class CoinControlDialog : public QDialog
 {
@@ -51,9 +50,9 @@ public:
     static void updateLabels(WalletModel*, QDialog*);
 
     static QList<CAmount> payAmounts;
-    static CCoinControl *coinControl();
+    static CCoinControl* coinControl;
+    static int nSplitBlockDummy;
     static bool fSubtractFeeFromAmount;
-    static void usePrivateSend(bool fUsePrivateSend);
 
 private:
     Ui::CoinControlDialog *ui;
@@ -81,25 +80,14 @@ private:
         COLUMN_PRIVATESEND_ROUNDS,
         COLUMN_DATE,
         COLUMN_CONFIRMATIONS,
+        COLUMN_PRIORITY,
+        COLUMN_TXHASH,
+        COLUMN_VOUT_INDEX,
     };
-
-    enum
-    {
-        TxHashRole = Qt::UserRole,
-        VOutRole
-    };
-
     friend class CCoinControlWidgetItem;
 
-    enum class Mode {
-        NORMAL,
-        PRIVATESEND,
-    };
-
-    static CoinControlDialog::Mode mode;
-
-private Q_SLOTS:
-    void showMenu(const QPoint &);
+private slots:
+    void showMenu(const QPoint&);
     void copyAmount();
     void copyLabel();
     void copyAddress();

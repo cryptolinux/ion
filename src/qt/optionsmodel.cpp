@@ -1,6 +1,8 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2014-2015 The Dash developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
@@ -94,17 +96,10 @@ void OptionsModel::Init(bool resetSettings)
     if (!gArgs.SoftSetArg("-font-scale", settings.value("fontScale").toString().toStdString()))
         addOverriddenOption("-font-scale");
 
-    if (!settings.contains("fontWeightNormal"))
-        settings.setValue("fontWeightNormal", GUIUtil::weightToArg(GUIUtil::getFontWeightNormalDefault()));
-    if (!gArgs.SoftSetArg("-font-weight-normal", settings.value("fontWeightNormal").toString().toStdString()))
-        addOverriddenOption("-font-weight-normal");
+    if (!settings.contains("fHideOrphans"))
+        settings.setValue("fHideOrphans", false);
+    fHideOrphans = settings.value("fHideOrphans").toBool();
 
-    if (!settings.contains("fontWeightBold"))
-        settings.setValue("fontWeightBold", GUIUtil::weightToArg(GUIUtil::getFontWeightBoldDefault()));
-    if (!gArgs.SoftSetArg("-font-weight-bold", settings.value("fontWeightBold").toString().toStdString()))
-        addOverriddenOption("-font-weight-bold");
-
-#ifdef ENABLE_WALLET
     if (!settings.contains("fCoinControlFeatures"))
         settings.setValue("fCoinControlFeatures", false);
     fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
@@ -120,12 +115,10 @@ void OptionsModel::Init(bool resetSettings)
         addOverriddenOption("-enableprivatesend");
     }
 
-    if (!settings.contains("fShowAdvancedPSUI"))
-        settings.setValue("fShowAdvancedPSUI", false);
-    fShowAdvancedPSUI = settings.value("fShowAdvancedPSUI", false).toBool();
+    if (!settings.contains("nAnonymizeIonAmount"))
+        settings.setValue("nAnonymizeIonAmount", 1000);
 
-    if (!settings.contains("fShowPrivateSendPopups"))
-        settings.setValue("fShowPrivateSendPopups", true);
+    nAnonymizeIonAmount = settings.value("nAnonymizeIonAmount").toLongLong();
 
     if (!settings.contains("fLowKeysWarning"))
         settings.setValue("fLowKeysWarning", true);
@@ -218,6 +211,15 @@ void OptionsModel::Init(bool resetSettings)
         settings.setValue("language", "");
     if (!gArgs.SoftSetArg("-lang", settings.value("language").toString().toStdString()))
         addOverriddenOption("-lang");
+
+    if (settings.contains("fZeromintEnable"))
+        SoftSetBoolArg("-enablezeromint", settings.value("fZeromintEnable").toBool());
+    if (settings.contains("nZeromintPercentage"))
+        SoftSetArg("-zeromintpercentage", settings.value("nZeromintPercentage").toString().toStdString());
+    if (settings.contains("nPreferredDenom"))
+        SoftSetArg("-preferredDenom", settings.value("nPreferredDenom").toString().toStdString());
+    if (settings.contains("nAnonymizeIonAmount"))
+        SoftSetArg("-anonymizeionamount", settings.value("nAnonymizeIonAmount").toString().toStdString());
 
     language = settings.value("language").toString();
 }
@@ -387,6 +389,18 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return settings.value("nDatabaseCache");
         case ThreadsScriptVerif:
             return settings.value("nThreadsScriptVerif");
+        case HideZeroBalances:
+            return settings.value("fHideZeroBalances");
+        case HideOrphans:
+            return settings.value("fHideOrphans");
+        case ZeromintEnable:
+            return QVariant(fEnableZeromint);
+        case ZeromintPercentage:
+            return QVariant(nZeromintPercentage);
+        case ZeromintPrefDenom:
+            return QVariant(nPreferredDenom);
+        case AnonymizeIonAmount:
+            return QVariant(nAnonymizeIonAmount);
         case Listen:
             return settings.value("fListen");
         default:
@@ -586,7 +600,36 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
                 setRestartRequired(true);
             }
             break;
-#ifdef ENABLE_WALLET
+        case ZeromintEnable:
+            fEnableZeromint = value.toBool();
+            settings.setValue("fZeromintEnable", fEnableZeromint);
+            emit zeromintEnableChanged(fEnableZeromint);
+            break;
+        case ZeromintPercentage:
+            nZeromintPercentage = value.toInt();
+            settings.setValue("nZeromintPercentage", nZeromintPercentage);
+            emit zeromintPercentageChanged(nZeromintPercentage);
+            break;
+        case ZeromintPrefDenom:
+            nPreferredDenom = value.toInt();
+            settings.setValue("nPreferredDenom", nPreferredDenom);
+            emit preferredDenomChanged(nPreferredDenom);
+            break;
+        case HideZeroBalances:
+            fHideZeroBalances = value.toBool();
+            settings.setValue("fHideZeroBalances", fHideZeroBalances);
+            emit hideZeroBalancesChanged(fHideZeroBalances);
+            break;
+        case HideOrphans:
+            fHideOrphans = value.toBool();
+            settings.setValue("fHideOrphans", fHideOrphans);
+            emit hideOrphansChanged(fHideOrphans);
+            break;
+        case AnonymizeIonAmount:
+            nAnonymizeIonAmount = value.toInt();
+            settings.setValue("nAnonymizeIonAmount", nAnonymizeIonAmount);
+            emit anonymizeIonAmountChanged(nAnonymizeIonAmount);
+            break;
         case CoinControlFeatures:
             fCoinControlFeatures = value.toBool();
             settings.setValue("fCoinControlFeatures", fCoinControlFeatures);

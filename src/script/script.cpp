@@ -1,5 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -241,17 +243,10 @@ bool CScript::IsPayToScriptHash(std::vector<unsigned char> *hashBytes) const
 
 bool CScript::IsPayToPublicKey() const
 {
-    // Test for pay-to-pubkey CScript with both
-    // compressed or uncompressed pubkey
-    if (this->size() == 35) {
-        return ((*this)[1] == 0x02 || (*this)[1] == 0x03) &&
-                (*this)[34] == OP_CHECKSIG;
-    }
-    if (this->size() == 67) {
-        return (*this)[1] == 0x04 &&
-                (*this)[66] == OP_CHECKSIG;
-    }
-    return false;
+    if (this->empty())
+        return false;
+
+    return (this->at(0) == OP_ZEROCOINSPEND);
 }
 
 bool CScript::IsPushOnly(const_iterator pc) const

@@ -1,6 +1,8 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2014-2015 The Dash developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -20,10 +22,11 @@
 
 #include <stdarg.h>
 
-#if (defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__DragonFly__))
-#include <pthread.h>
-#include <pthread_np.h>
-#endif
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <openssl/bio.h>
+#include <openssl/buffer.h>
+#include <openssl/evp.h>
+
 
 #ifndef WIN32
 // for posix_fallocate
@@ -107,7 +110,7 @@ std::string to_internal(const std::string&);
 
 using namespace std;
 
-// Ion only features
+// ION only features
 // Masternode
 bool fMasterNode = false;
 string strMasterNodePrivKey = "";
@@ -122,7 +125,7 @@ int nZeromintPercentage = 10;
 int nPreferredDenom = 0;
 const int64_t AUTOMINT_DELAY = (60 * 5); // Wait at least 5 minutes until Automint starts
 
-int nAnonymizeIONAmount = 1000;
+int nAnonymizeIonAmount = 1000;
 int nLiquidityProvider = 0;
 /** Spork enforcement enabled time */
 int64_t enforceMasternodePaymentsTime = 4085657524;
@@ -148,7 +151,7 @@ CTranslationInterface translationInterface;
 std::atomic<uint64_t> logCategories(0);
 
 /** Init OpenSSL library multithreading support */
-static std::unique_ptr<CCriticalSection[]> ppmutexOpenSSL;
+static CCriticalSection** ppmutexOpenSSL;
 void locking_callback(int mode, int i, const char* file, int line) NO_THREAD_SAFETY_ANALYSIS
 {
     if (mode & CRYPTO_LOCK) {
@@ -352,17 +355,10 @@ bool GetLogCategory(uint64_t *f, const std::string *str)
     return false;
 }
 
-std::string ListLogCategories()
-{
-    std::string ret;
-    int outcount = 0;
-    for (unsigned int i = 0; i < ARRAYLEN(LogCategories); i++) {
-        // Omit the special cases.
-        if (LogCategories[i].flag != BCLog::NONE && LogCategories[i].flag != BCLog::ALL) {
-            if (outcount != 0) ret += ", ";
-            ret += LogCategories[i].category;
-            outcount++;
-        }
+        // if not debugging everything and not debugging specific category, LogPrint does nothing.
+        if (setCategories.count(string("")) == 0 &&
+            setCategories.count(string(category)) == 0)
+            return false;
     }
     return ret;
 }
@@ -870,10 +866,11 @@ void PrintExceptionContinue(const std::exception_ptr pex, const char* pszExcepti
 
 fs::path GetDefaultDataDir()
 {
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\ioncoin
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\ioncoin
-    // Mac: ~/Library/Application Support/ioncoin
-    // Unix: ~/.ioncoin
+    namespace fs = boost::filesystem;
+// Windows < Vista: C:\Documents and Settings\Username\Application Data\ION
+// Windows >= Vista: C:\Users\Username\AppData\Roaming\ioncoin
+// Mac: ~/Library/Application Support/ioncoin
+// Unix: ~/.ion
 #ifdef WIN32
     // Windows
     return GetSpecialFolderPath(CSIDL_APPDATA) / "ioncoin";
@@ -886,7 +883,9 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/ioncoin";
+    pathRet /= "Library/Application Support";
+    TryCreateDirectory(pathRet);
+    return pathRet / "Ioncoin";
 #else
     // Unix
     return pathRet / ".ioncoin";

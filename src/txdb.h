@@ -1,5 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2016-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -88,8 +90,8 @@ public:
     size_t EstimateSize() const override;
 };
 
-/** Specialization of CCoinsViewCursor to iterate over a CCoinsViewDB */
-class CCoinsViewDBCursor: public CCoinsViewCursor
+/** Zerocoin database (zerocoin/) */
+class CZerocoinDB : public CLevelDBWrapper
 {
 public:
     ~CCoinsViewDBCursor() {}
@@ -118,34 +120,20 @@ private:
     unordered_limitedmap<uint256, bool> mapHasTxIndexCache;
 
 public:
-    explicit CBlockTreeDB(size_t nCacheSize, bool fMemory = false, bool fWipe = false);
-
-    CBlockTreeDB(const CBlockTreeDB&) = delete;
-    CBlockTreeDB& operator=(const CBlockTreeDB&) = delete;
-
-    bool WriteBatchSync(const std::vector<std::pair<int, const CBlockFileInfo*> >& fileInfo, int nLastFile, const std::vector<const CBlockIndex*>& blockinfo);
-    bool ReadBlockFileInfo(int nFile, CBlockFileInfo &info);
-    bool ReadLastBlockFile(int &nFile);
-    bool WriteReindexing(bool fReindexing);
-    bool ReadReindexing(bool &fReindexing);
-    bool HasTxIndex(const uint256 &txid);
-    bool ReadTxIndex(const uint256 &txid, CDiskTxPos &pos);
-    bool WriteTxIndex(const std::vector<std::pair<uint256, CDiskTxPos> > &vect);
-    bool ReadSpentIndex(CSpentIndexKey &key, CSpentIndexValue &value);
-    bool UpdateSpentIndex(const std::vector<std::pair<CSpentIndexKey, CSpentIndexValue> >&vect);
-    bool UpdateAddressUnspentIndex(const std::vector<std::pair<CAddressUnspentKey, CAddressUnspentValue > >&vect);
-    bool ReadAddressUnspentIndex(uint160 addressHash, int type,
-                                 std::vector<std::pair<CAddressUnspentKey, CAddressUnspentValue> > &vect);
-    bool WriteAddressIndex(const std::vector<std::pair<CAddressIndexKey, CAmount> > &vect);
-    bool EraseAddressIndex(const std::vector<std::pair<CAddressIndexKey, CAmount> > &vect);
-    bool ReadAddressIndex(uint160 addressHash, int type,
-                          std::vector<std::pair<CAddressIndexKey, CAmount> > &addressIndex,
-                          int start = 0, int end = 0);
-    bool WriteTimestampIndex(const CTimestampIndexKey &timestampIndex);
-    bool ReadTimestampIndex(const unsigned int &high, const unsigned int &low, std::vector<uint256> &vect);
-    bool WriteFlag(const std::string &name, bool fValue);
-    bool ReadFlag(const std::string &name, bool &fValue);
-    bool LoadBlockIndexGuts(const Consensus::Params& consensusParams, std::function<CBlockIndex*(const uint256&)> insertBlockIndex);
+    /** Write xION mints to the zerocoinDB in a batch */
+    bool WriteCoinMintBatch(const std::vector<std::pair<libzerocoin::PublicCoin, uint256> >& mintInfo);
+    bool ReadCoinMint(const CBigNum& bnPubcoin, uint256& txHash);
+    bool ReadCoinMint(const uint256& hashPubcoin, uint256& hashTx);
+    /** Write xION spends to the zerocoinDB in a batch */
+    bool WriteCoinSpendBatch(const std::vector<std::pair<libzerocoin::CoinSpend, uint256> >& spendInfo);
+    bool ReadCoinSpend(const CBigNum& bnSerial, uint256& txHash);
+    bool ReadCoinSpend(const uint256& hashSerial, uint256 &txHash);
+    bool EraseCoinMint(const CBigNum& bnPubcoin);
+    bool EraseCoinSpend(const CBigNum& bnSerial);
+    bool WipeCoins(std::string strType);
+    bool WriteAccumulatorValue(const uint32_t& nChecksum, const CBigNum& bnValue);
+    bool ReadAccumulatorValue(const uint32_t& nChecksum, CBigNum& bnValue);
+    bool EraseAccumulatorValue(const uint32_t& nChecksum);
 };
 
 #endif // BITCOIN_TXDB_H

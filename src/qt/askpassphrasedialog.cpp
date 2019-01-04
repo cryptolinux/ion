@@ -1,6 +1,8 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2014-2015 The Dash developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
@@ -19,13 +21,14 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QWidget>
 
-AskPassphraseDialog::AskPassphraseDialog(Mode _mode, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::AskPassphraseDialog),
-    mode(_mode),
-    model(0),
-    fCapsLock(false)
+AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget* parent, WalletModel* model, Context context) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
+                                                                                                            ui(new Ui::AskPassphraseDialog),
+                                                                                                            mode(mode),
+                                                                                                            model(model),
+                                                                                                            context(context),
+                                                                                                            fCapsLock(false)
 {
     ui->setupUi(this);
 
@@ -89,7 +92,7 @@ AskPassphraseDialog::AskPassphraseDialog(Mode _mode, QWidget *parent) :
         ui->anonymizationCheckBox->setChecked(false);
     }
 
-    // It doesn't make sense to show the checkbox for sending Ion because you wouldn't check it anyway.
+    // It doesn't make sense to show the checkbox for sending ION because you wouldn't check it anyway.
     if (context == Context::Send_ION || context == Context::Send_xION) {
         ui->anonymizationCheckBox->hide();
     }

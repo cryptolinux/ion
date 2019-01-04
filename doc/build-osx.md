@@ -1,11 +1,34 @@
-Mac OS X Build Instructions and Notes
-====================================
 The commands in this guide should be executed in a Terminal application.
 The built-in one is located in `/Applications/Utilities/Terminal.app`.
 
 Preparation
 -----------
 Install the OS X command line tools:
+=======
+# Mac OS X Build Instructions and Notes
+This guide will show you how to build iond (headless client) for OSX.
+
+Table of Contents
+------------------
+- [Mac OS X Build Instructions and Notes](#mac-os-x-build-instructions-and-notes)
+        - [Notes](#notes)
+        - [Preparation](#preparation)
+        - [Instructions: Homebrew](#instructions-homebrew)
+                        - [Install dependencies using Homebrew](#install-dependencies-using-homebrew)
+                - [Building `iond`](#building-iond)
+        - [Use Qt Creator as IDE](#use-qt-creator-as-ide)
+        - [Creating a release build](#creating-a-release-build)
+        - [Running](#running)
+        - [Other commands:](#other-commands)
+
+## Notes
+
+- Tested on OS X 10.7 through 10.10 on 64-bit Intel processors only.
+
+- All of the commands should be executed in a Terminal application. The
+built-in one is located in `/Applications/Utilities`.
+
+## Preparation
 
 `xcode-select --install`
 
@@ -16,24 +39,22 @@ Then install [Homebrew](https://brew.sh).
 Base build dependencies
 -----------------------
 
-```bash
-brew install automake libtool pkg-config
-```
+## Instructions: Homebrew
 
 If you want to build the disk image with `make deploy` (.dmg / optional), you need RSVG
 ```bash
 brew install librsvg
 ```
 
-Building
---------
+    brew install autoconf automake berkeley-db4 libtool boost miniupnpc openssl pkg-config protobuf qt5 zmq libevent
 
 Follow the instructions in [build-generic](build-generic.md)
 
 Running
 -------
 
-Ion Core is now available at `./src/iond`
+       git clone https://github.com/ioncoincore/ion.git
+       cd ION
 
 Before running, it's recommended you create an RPC configuration file.
 
@@ -54,11 +75,9 @@ Other commands:
     ./src/ion-cli --help # Outputs a list of command-line options.
     ./src/ion-cli help # Outputs a list of RPC commands when the daemon is running.
 
-Using Qt Creator as IDE
-------------------------
-You can use Qt Creator as an IDE, for ion development.
-Download and install the community edition of [Qt Creator](https://www.qt.io/download/).
-Uncheck everything except Qt Creator during the installation process.
+## Use Qt Creator as IDE
+You can use Qt Creator as IDE, for debugging and for manipulating forms, etc.
+Download Qt Creator from http://www.qt.io/download/. Download the "community edition" and only install Qt Creator (uncheck the rest during the installation process).
 
 1. Make sure you installed everything through Homebrew mentioned above
 2. Do a proper ./configure --enable-debug
@@ -71,8 +90,7 @@ Uncheck everything except Qt Creator during the installation process.
 9. Select LLDB as debugger (you might need to set the path to your installation)
 10. Start debugging with Qt Creator
 
-Creating a release build
-------------------------
+## Creating a release build
 You can ignore this section if you are building `iond` for your own use.
 
 iond/ion-cli binaries are not included in the ion-Qt.app bundle.
@@ -89,8 +107,7 @@ All dependencies should be compiled with these flags:
 Once dependencies are compiled, see release-process.md for how the Ion-Qt.app
 bundle is packaged and signed to create the .dmg disk image that is distributed.
 
-Running
--------
+## Running
 
 It's now available at `./iond`, provided that you are still in the `src`
 directory. We have to first create the RPC configuration file, though.
@@ -107,8 +124,7 @@ you can monitor its process by looking at the debug.log file, like this:
 
     tail -f $HOME/Library/Application\ Support/ioncoin/debug.log
 
-Other commands:
--------
+## Other commands:
 
     ./iond -daemon # to start the ion daemon.
     ./ion-cli --help  # for a list of command-line options.

@@ -1,21 +1,20 @@
-// Copyright (c) 2009-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#if defined(HAVE_CONFIG_H)
-#include "config/ion-config.h"
-#endif
-
-#include <base58.h>
-#include <clientversion.h>
-#include <coins.h>
-#include <consensus/consensus.h>
-#include <core_io.h>
-#include <keystore.h>
-#include <policy/policy.h>
-#include <primitives/transaction.h>
-#include <script/script.h>
-#include <script/sign.h>
+#include "base58.h"
+#include "clientversion.h"
+#include "coins.h"
+#include "core_io.h"
+#include "dstencode.h"
+#include "keystore.h"
+#include "primitives/block.h" // for MAX_BLOCK_SIZE
+#include "primitives/transaction.h"
+#include "script/script.h"
+#include "script/sign.h"
+#include "ui_interface.h" // for _(...)
 #include <univalue.h>
 #include <util.h>
 #include <utilmoneystr.h>
@@ -262,47 +261,13 @@ static void MutateTxAddOutAddr(CMutableTransaction& tx, const std::string& strIn
     CAmount value = ExtractAndValidateValue(vStrInputParts[0]);
 
     // extract and validate ADDRESS
-    std::string strAddr = vStrInputParts[1];
+    string strAddr = strInput.substr(pos + 1, string::npos);
     CTxDestination destination = DecodeDestination(strAddr);
     if (!IsValidDestination(destination)) {
-        throw std::runtime_error("invalid TX output address");
+        throw runtime_error("invalid TX output address");
+
     }
     CScript scriptPubKey = GetScriptForDestination(destination);
-
-    // construct TxOut, append to transaction output list
-    CTxOut txout(value, scriptPubKey);
-    tx.vout.push_back(txout);
-}
-
-static void MutateTxAddOutPubKey(CMutableTransaction& tx, const std::string& strInput)
-{
-    // Separate into VALUE:PUBKEY[:FLAGS]
-    std::vector<std::string> vStrInputParts;
-    boost::split(vStrInputParts, strInput, boost::is_any_of(":"));
-
-    if (vStrInputParts.size() < 2 || vStrInputParts.size() > 3)
-        throw std::runtime_error("TX output missing or too many separators");
-
-    // Extract and validate VALUE
-    CAmount value = ExtractAndValidateValue(vStrInputParts[0]);
-
-    // Extract and validate PUBKEY
-    CPubKey pubkey(ParseHex(vStrInputParts[1]));
-    if (!pubkey.IsFullyValid())
-        throw std::runtime_error("invalid TX output pubkey");
-    CScript scriptPubKey = GetScriptForRawPubKey(pubkey);
-
-    // Extract and validate FLAGS
-    bool bScriptHash = false;
-    if (vStrInputParts.size() == 3) {
-        std::string flags = vStrInputParts[2];
-        bScriptHash = (flags.find('S') != std::string::npos);
-    }
-
-    if (bScriptHash) {
-        // Get the ID for the script, and then construct a P2SH destination for it.
-        scriptPubKey = GetScriptForDestination(CScriptID(scriptPubKey));
-    }
 
     // construct TxOut, append to transaction output list
     CTxOut txout(value, scriptPubKey);
@@ -646,11 +611,9 @@ public:
     }
 };
 
-static void MutateTx(CMutableTransaction& tx, const std::string& command,
-                     const std::string& commandVal)
+static void MutateTx(CMutableTransaction& tx, const string& command, const string& commandVal)
 {
-    std::unique_ptr<Secp256k1Init> ecc;
-
+    boost::scoped_ptr<Secp256k1Init> ecc;
     if (command == "nversion")
         MutateTxVersion(tx, commandVal);
     else if (command == "locktime")
@@ -676,8 +639,8 @@ static void MutateTx(CMutableTransaction& tx, const std::string& command,
     else if (command == "outdata")
         MutateTxAddOutData(tx, commandVal);
 
-    else if (command == "sign") {
-        ecc.reset(new Secp256k1Init());
+    else if (command == "sign"){
+        if (!ecc) { ecc.reset(new Secp256k1Init()); }
         MutateTxSign(tx, commandVal);
     }
 

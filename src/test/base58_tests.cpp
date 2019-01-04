@@ -1,8 +1,11 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2014 The Bitcoin Core developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <base58.h>
+#include "base58.h"
+#include "dstencode.h"
 
 #include <test/data/base58_encode_decode.json.h>
 #include <test/data/base58_keys_invalid.json.h>
@@ -122,7 +125,6 @@ BOOST_AUTO_TEST_CASE(base58_keys_valid_parse)
     UniValue tests = read_json(std::string(json_tests::base58_keys_valid, json_tests::base58_keys_valid + sizeof(json_tests::base58_keys_valid)));
     CBitcoinSecret secret;
     CTxDestination destination;
-    SelectParams(CBaseChainParams::MAIN);
 
     for (unsigned int idx = 0; idx < tests.size(); idx++) {
         UniValue test = tests[idx];
@@ -229,7 +231,7 @@ BOOST_AUTO_TEST_CASE(base58_keys_valid_gen)
         }
     }
 
-    SelectParams(CBaseChainParams::MAIN);
+    SelectParams(CBaseChainParams::UNITTEST);
 }
 
 // Goal: check that base58 parsing code is robust against a variety of corrupted data

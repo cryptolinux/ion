@@ -10,6 +10,7 @@
  * @license    This project is released under the MIT license.
  **/
 // Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 
 #include "Commitment.h"
 #include "hash.h"
@@ -22,6 +23,12 @@ Commitment::Commitment(const IntegerGroupParams* p,
     this->randomness = CBigNum::randBignum(params->groupOrder);
     this->commitmentValue = (params->g.pow_mod(this->contents, params->modulus).mul_mod(
                              params->h.pow_mod(this->randomness, params->modulus), params->modulus));
+}
+
+Commitment::Commitment(const IntegerGroupParams* p, const CBigNum& bnSerial, const CBigNum& bnRandomness): params(p), contents(bnSerial) {
+    this->randomness = bnRandomness;
+    this->commitmentValue = (params->g.pow_mod(this->contents, params->modulus).mul_mod(
+        params->h.pow_mod(this->randomness, params->modulus), params->modulus));
 }
 
 Commitment::Commitment(const IntegerGroupParams* p, const CBigNum& bnSerial, const CBigNum& bnRandomness): params(p), contents(bnSerial) {
@@ -105,39 +112,39 @@ CommitmentProofOfKnowledge::CommitmentProofOfKnowledge(const IntegerGroupParams*
 
 bool CommitmentProofOfKnowledge::Verify(const CBigNum& A, const CBigNum& B) const
 {
-    // Compute the maximum range of S1, S2, S3 and verify that the given values are
-    // in a correct range. This might be an unnecessary check.
-    uint32_t maxSize = 64 * (COMMITMENT_EQUALITY_CHALLENGE_SIZE + COMMITMENT_EQUALITY_SECMARGIN +
-                             std::max(std::max(this->ap->modulus.bitSize(), this->bp->modulus.bitSize()),
-                                      std::max(this->ap->groupOrder.bitSize(), this->bp->groupOrder.bitSize())));
+	// Compute the maximum range of S1, S2, S3 and verify that the given values are
+	// in a correct range. This might be an unnecessary check.
+	uint32_t maxSize = 64 * (COMMITMENT_EQUALITY_CHALLENGE_SIZE + COMMITMENT_EQUALITY_SECMARGIN +
+	                         std::max(std::max(this->ap->modulus.bitSize(), this->bp->modulus.bitSize()),
+	                                  std::max(this->ap->groupOrder.bitSize(), this->bp->groupOrder.bitSize())));
 
-    if ((uint32_t)this->S1.bitSize() > maxSize ||
-            (uint32_t)this->S2.bitSize() > maxSize ||
-            (uint32_t)this->S3.bitSize() > maxSize ||
-            this->S1 < CBigNum(0) ||
-            this->S2 < CBigNum(0) ||
-            this->S3 < CBigNum(0) ||
-            this->challenge < CBigNum(0) ||
-            this->challenge > (CBigNum(2).pow(COMMITMENT_EQUALITY_CHALLENGE_SIZE) - CBigNum(1))) {
-        // Invalid inputs. Reject.
-        return false;
-    }
+	if ((uint32_t)this->S1.bitSize() > maxSize ||
+	        (uint32_t)this->S2.bitSize() > maxSize ||
+	        (uint32_t)this->S3.bitSize() > maxSize ||
+	        this->S1 < CBigNum(0) ||
+	        this->S2 < CBigNum(0) ||
+	        this->S3 < CBigNum(0) ||
+	        this->challenge < CBigNum(0) ||
+	        this->challenge > (CBigNum(2).pow(COMMITMENT_EQUALITY_CHALLENGE_SIZE) - CBigNum(1))) {
+		// Invalid inputs. Reject.
+		return false;
+	}
 
-    // Compute T1 = g1^S1 * h1^S2 * inverse(A^{challenge}) mod p1
-    CBigNum T1 = A.pow_mod(this->challenge, ap->modulus).inverse(ap->modulus).mul_mod(
-                    (ap->g.pow_mod(S1, ap->modulus).mul_mod(ap->h.pow_mod(S2, ap->modulus), ap->modulus)),
-                    ap->modulus);
+	// Compute T1 = g1^S1 * h1^S2 * inverse(A^{challenge}) mod p1
+	CBigNum T1 = A.pow_mod(this->challenge, ap->modulus).inverse(ap->modulus).mul_mod(
+	                (ap->g.pow_mod(S1, ap->modulus).mul_mod(ap->h.pow_mod(S2, ap->modulus), ap->modulus)),
+	                ap->modulus);
 
-    // Compute T2 = g2^S1 * h2^S3 * inverse(B^{challenge}) mod p2
-    CBigNum T2 = B.pow_mod(this->challenge, bp->modulus).inverse(bp->modulus).mul_mod(
-                    (bp->g.pow_mod(S1, bp->modulus).mul_mod(bp->h.pow_mod(S3, bp->modulus), bp->modulus)),
-                    bp->modulus);
+	// Compute T2 = g2^S1 * h2^S3 * inverse(B^{challenge}) mod p2
+	CBigNum T2 = B.pow_mod(this->challenge, bp->modulus).inverse(bp->modulus).mul_mod(
+	                (bp->g.pow_mod(S1, bp->modulus).mul_mod(bp->h.pow_mod(S3, bp->modulus), bp->modulus)),
+	                bp->modulus);
 
-    // Hash T1 and T2 along with all of the public parameters
-    CBigNum computedChallenge = calculateChallenge(A, B, T1, T2);
+	// Hash T1 and T2 along with all of the public parameters
+	CBigNum computedChallenge = calculateChallenge(A, B, T1, T2);
 
-    // Return success if the computed challenge matches the incoming challenge
-    return computedChallenge == this->challenge;
+	// Return success if the computed challenge matches the incoming challenge
+	return computedChallenge == this->challenge;
 }
 
 const CBigNum CommitmentProofOfKnowledge::calculateChallenge(const CBigNum& a, const CBigNum& b, const CBigNum &commitOne, const CBigNum &commitTwo) const {

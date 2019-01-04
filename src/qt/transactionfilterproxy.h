@@ -1,4 +1,6 @@
-// Copyright (c) 2011-2014 The Bitcoin Core developers
+// Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -24,8 +26,8 @@ public:
     static const QDateTime MAX_DATE;
     /** Type filter bit field (all types) */
     static const quint32 ALL_TYPES = 0xFFFFFFFF;
-    /** Type filter bit field (all types but Darksend-SPAM) */
-    static const quint32 COMMON_TYPES = 4223;
+    /** Type filter bit field (all types but Obfuscation-SPAM ... enum 0-14 are common) */
+    static const quint32 COMMON_TYPES = 0x0005FFFF;
 
     static quint32 TYPE(int type) { return 1<<type; }
 
@@ -51,7 +53,11 @@ public:
     /** Set whether to show conflicted transactions. */
     void setShowInactive(bool showInactive);
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    /** Set whether to hide orphan stakes. */
+    void setHideOrphans(bool fHide);
+
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    static bool isOrphan(const int status, const int type);
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex & source_parent) const;
@@ -65,6 +71,7 @@ private:
     CAmount minAmount;
     int limitRows;
     bool showInactive;
+    bool fHideOrphans;
 };
 
 #endif // BITCOIN_QT_TRANSACTIONFILTERPROXY_H

@@ -1,12 +1,20 @@
-Unauthenticated REST Interface
-==============================
-
+# Unauthenticated REST Interface
 The REST API can be enabled with the `-rest` option.
 
-The interface runs on the same port as the JSON-RPC interface, by default port 12705 for mainnet and port 27171 for testnet.
+Table of Contents
+-----------------
+- [Unauthenticated REST Interface](#unauthenticated-rest-interface)
+      - [Supported API](#supported-api)
+         - [Transactions](#transactions)
+         - [Blocks](#blocks)
+         - [Blockheaders](#blockheaders)
+         - [Chaininfos](#chaininfos)
+         - [Query UTXO set](#query-utxo-set)
+         - [Memory pool](#memory-pool)
+      - [Risks](#risks)
 
-Supported API
--------------
+### Supported API
+
 
 #### Transactions
 `GET /rest/tx/<TX-HASH>.<bin|hex|json>`
@@ -97,6 +105,5 @@ Only supports JSON as output format.
 Returns transactions in the TX mempool.
 Only supports JSON as output format.
 
-Risks
--------------
-Running a web browser on the same node with a REST enabled iond can be a risk. Accessing prepared XSS websites could read out tx/block data of your node by placing links like `<script src="http://127.0.0.1:27171/rest/tx/1234567890.json">` which might break the nodes privacy.
+### Risks
+Running a web browser on the same node with a REST enabled iond can be a risk. Accessing prepared XSS websites could read out tx/block data of your node by placing links like `<script src="http://127.0.0.1:12705/rest/tx/1234567890.json">` which might break the nodes privacy.

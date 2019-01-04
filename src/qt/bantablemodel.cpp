@@ -1,4 +1,6 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -52,10 +54,8 @@ public:
             g_connman->GetBanned(banMap);
 
         cachedBanlist.clear();
-#if QT_VERSION >= 0x040700
         cachedBanlist.reserve(banMap.size());
-#endif
-        for (const auto& entry : banMap)
+        for (banmap_t::iterator it = banMap.begin(); it != banMap.end(); it++)
         {
             CCombinedBan banEntry;
             banEntry.subnet = entry.first;

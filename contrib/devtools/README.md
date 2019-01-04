@@ -1,5 +1,5 @@
 Contents
-========
+===========
 This directory contains tools for developers working on this repository.
 
 check-doc.py
@@ -117,7 +117,7 @@ For example:
   ./github-merge.py 3077
 
 (in any git repository) will help you merge pull request #3077 for the
-ionpay/ion repository.
+ioncoincore/ion repository.
 
 What it does:
 * Fetch master and the pull request.
@@ -135,9 +135,9 @@ couldn't mess with the sources.
 
 Setup
 ---------
-Configuring the github-merge tool for the Ion repository is done in the following way:
+Configuring the github-merge tool for the ion repository is done in the following way:
 
-    git config githubmerge.repository ionpay/ion
+    git config githubmerge.repository ioncoincore/ion
     git config githubmerge.testcmd "make -j4 check" (adapt to whatever you want to use for testing)
     git config --global user.signingkey mykeyid (if you want to GPG sign)
 
@@ -221,4 +221,3 @@ Reading icns family from ion.icns...
   Saved 'ic09' element to ion_512x512x32.png.
 Extracted 6 images from ion.icns.
 ```
-

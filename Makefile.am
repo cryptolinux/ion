@@ -1,5 +1,4 @@
 # Copyright (c) 2013-2016 The Bitcoin Core developers
-# Copyright (c) 2014-2018 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -42,10 +41,12 @@ DIST_DOCS = $(wildcard doc/*.md) $(wildcard doc/release-notes/*.md)
 DIST_CONTRIB = $(top_srcdir)/contrib/ion-cli.bash-completion \
 	       $(top_srcdir)/contrib/ion-tx.bash-completion \
 	       $(top_srcdir)/contrib/iond.bash-completion \
-	       $(top_srcdir)/contrib/init
+           $(top_srcdir)/contrib/init \
+           $(top_srcdir)/contrib/install_db4.sh
+
 DIST_SHARE = \
-  $(top_srcdir)/share/genbuild.sh \
-  $(top_srcdir)/share/rpcauth
+           $(top_srcdir)/share/genbuild.sh \
+           $(top_srcdir)/share/rpcauth
 
 BIN_CHECKS=$(top_srcdir)/contrib/devtools/symbol-check.py \
            $(top_srcdir)/contrib/devtools/security-check.py
@@ -99,9 +100,9 @@ $(OSX_APP)/Contents/Resources/ion.icns: $(OSX_INSTALLER_ICONS)
 	$(MKDIR_P) $(@D)
 	$(INSTALL_DATA) $< $@
 
-$(OSX_APP)/Contents/MacOS/Ion-Qt: $(BITCOIN_QT_BIN)
+$(OSX_APP)/Contents/MacOS/Ion-Qt: all-recursive
 	$(MKDIR_P) $(@D)
-	STRIPPROG="$(STRIP)" $(INSTALL_STRIP_PROGRAM)  $< $@
+	STRIPPROG="$(STRIP)" $(INSTALL_STRIP_PROGRAM)  $(BITCOIN_QT_BIN) $@
 
 $(OSX_APP)/Contents/Resources/Base.lproj/InfoPlist.strings:
 	$(MKDIR_P) $(@D)
@@ -173,7 +174,7 @@ $(BITCOIN_CLI_BIN): FORCE
 	$(MAKE) -C src $(@F)
 
 if USE_LCOV
-LCOV_FILTER_PATTERN=-p "/usr/include/" -p "src/leveldb/" -p "src/bench/" -p "src/univalue" -p "src/crypto/ctaes" -p "src/secp256k1"
+LCOV_FILTER_PATTERN=-p "/usr/include/" -p "src/leveldb/" -p "src/univalue" -p "src/secp256k1"
 
 baseline.info:
 	$(LCOV) -c -i -d $(abs_builddir)/src -o $@
@@ -220,15 +221,13 @@ endif
 
 dist_noinst_SCRIPTS = autogen.sh
 
-EXTRA_DIST = $(DIST_SHARE) test/functional/test_runner.py test/functional $(DIST_CONTRIB) $(DIST_DOCS) $(WINDOWS_PACKAGING) $(OSX_PACKAGING) $(BIN_CHECKS)
+EXTRA_DIST = $(DIST_SHARE) qa/pull-tester/rpc-tests.sh qa/pull-tester/run-bitcoin-cli qa/rpc-tests $(DIST_CONTRIB) $(DIST_DOCS) $(WINDOWS_PACKAGING) $(OSX_PACKAGING) $(BIN_CHECKS)
 
 EXTRA_DIST += \
     test/util/bitcoin-util-test.py \
     test/util/data/bitcoin-util-test.json \
     test/util/data/blanktxv1.hex \
     test/util/data/blanktxv1.json \
-    test/util/data/blanktxv2.hex \
-    test/util/data/blanktxv2.json \
     test/util/data/tt-delin1-out.hex \
     test/util/data/tt-delin1-out.json \
     test/util/data/tt-delout1-out.hex \
@@ -240,27 +239,11 @@ EXTRA_DIST += \
     test/util/data/txcreate1.json \
     test/util/data/txcreate2.hex \
     test/util/data/txcreate2.json \
-    test/util/data/txcreatedata1.hex \
-    test/util/data/txcreatedata1.json \
-    test/util/data/txcreatedata2.hex \
-    test/util/data/txcreatedata2.json \
-    test/util/data/txcreatedata_seq0.hex \
-    test/util/data/txcreatedata_seq0.json \
-    test/util/data/txcreatedata_seq1.hex \
-    test/util/data/txcreatedata_seq1.json \
-    test/util/data/txcreatemultisig1.hex \
-    test/util/data/txcreatemultisig1.json \
-    test/util/data/txcreatemultisig2.hex \
-    test/util/data/txcreatemultisig2.json \
-    test/util/data/txcreateoutpubkey1.hex \
-    test/util/data/txcreateoutpubkey1.json \
     test/util/data/txcreatescript1.hex \
     test/util/data/txcreatescript1.json \
-    test/util/data/txcreatescript2.hex \
-    test/util/data/txcreatescript2.json \
-    test/util/data/txcreatesignv1.hex \
-    test/util/data/txcreatesignv1.json \
-    test/util/data/txcreatesignv2.hex
+    test/util/data/txcreatesign.hex \
+    test/util/data/txcreatesign.json \
+    test/util/rpcauth-test.py
 
 CLEANFILES = $(OSX_DMG) $(BITCOIN_WIN_INSTALLER)
 
@@ -268,6 +251,20 @@ CLEANFILES = $(OSX_DMG) $(BITCOIN_WIN_INSTALLER)
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-man
 
-clean-local:
+doc/doxygen/.stamp: doc/Doxyfile FORCE
+	$(MKDIR_P) $(@D)
+	$(DOXYGEN) $^
+	$(AM_V_at) touch $@
+
+if HAVE_DOXYGEN
+docs: doc/doxygen/.stamp
+else
+docs:
+	@echo "error: doxygen not found"
+endif
+
+clean-docs:
+	rm -rf doc/doxygen
+
+clean-local: clean-docs
 	rm -rf coverage_percent.txt test_ion.coverage/ total.coverage/ test/tmp/ cache/ $(OSX_APP)
-	rm -rf test/functional/__pycache__

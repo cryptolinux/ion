@@ -1,4 +1,6 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -8,7 +10,7 @@
 #include <qt/guiutil.h>
 
 #include <QWidget>
-#include <QKeyEvent>
+#include <QAction>
 
 class TransactionFilterProxy;
 class WalletModel;
@@ -59,14 +61,15 @@ public:
     };
 
 private:
-    WalletModel *model;
-    TransactionFilterProxy *transactionProxyModel;
-    QTableView *transactionView;
-    QComboBox *dateWidget;
-    QComboBox *typeWidget;
-    QComboBox *watchOnlyWidget;
-    QLineEdit *search_widget;
-    QLineEdit *amountWidget;
+    WalletModel* model;
+    TransactionFilterProxy* transactionProxyModel;
+    QTableView* transactionView;
+    QComboBox* dateWidget;
+    QComboBox* typeWidget;
+    QComboBox* watchOnlyWidget;
+    QLineEdit* addressWidget;
+    QLineEdit* amountWidget;
+    QAction* hideOrphansAction;
 
     QMenu *contextMenu;
     QSignalMapper *mapperThirdPartyTxUrls;
@@ -115,6 +118,8 @@ Q_SIGNALS:
 public Q_SLOTS:
     void chooseDate(int idx);
     void chooseType(int idx);
+    void hideOrphans(bool fHide);
+    void updateHideOrphans(bool fHide);
     void chooseWatchonly(int idx);
     void changedAmount();
     void changedSearch();

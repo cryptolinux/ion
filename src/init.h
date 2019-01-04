@@ -1,5 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,6 +13,7 @@
 
 class CScheduler;
 class CWallet;
+class CxIONWallet;
 
 class WalletInitInterface;
 extern WalletInitInterface* const g_wallet_init_interface;
@@ -19,6 +22,9 @@ namespace boost
 {
 class thread_group;
 } // namespace boost
+
+extern CWallet* pwalletMain;
+extern CxIONWallet* zwalletMain;
 
 void StartShutdown();
 void StartRestart();
@@ -61,6 +67,7 @@ bool AppInitLockDataDirectory();
  */
 bool AppInitMain();
 void PrepareShutdown();
+bool AppInit2();
 
 /** The help message mode determines what help message to show */
 enum HelpMessageMode {

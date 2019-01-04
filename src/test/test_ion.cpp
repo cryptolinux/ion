@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 // Copyright (c) 2011-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
+=======
+// Copyright (c) 2011-2013 The Bitcoin Core developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
+>>>>>>> Fix merge issues
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #define BOOST_TEST_MODULE Ion Test Suite
@@ -54,12 +61,23 @@ FastRandomContext insecure_rand_ctx(insecure_rand_seed);
 extern bool fPrintToConsole;
 extern void noui_connect();
 
+<<<<<<< HEAD
 BasicTestingSetup::BasicTestingSetup(const std::string& chainName)
 {
         SHA256AutoDetect();
         RandomInit();
         ECC_Start();
         BLSInit();
+=======
+struct TestingSetup {
+    CCoinsViewDB *pcoinsdbview;
+    boost::filesystem::path pathTemp;
+    boost::thread_group threadGroup;
+    ECCVerifyHandle globalVerifyHandle;
+
+    TestingSetup() {
+        ECC_Start();
+>>>>>>> Fix merge issues
         SetupEnvironment();
         SetupNetworking();
         InitSignatureCache();
@@ -124,6 +142,7 @@ TestingSetup::~TestingSetup()
         llmq::StopLLMQSystem();
         threadGroup.interrupt_all();
         threadGroup.join_all();
+<<<<<<< HEAD
         GetMainSignals().FlushBackgroundCallbacks();
         GetMainSignals().UnregisterBackgroundSignalScheduler();
         g_connman.reset();
@@ -183,6 +202,21 @@ CBlock TestChainSetup::CreateBlock(const std::vector<CMutableTransaction>& txns,
         if (tx->nVersion == 3 && tx->nType == TRANSACTION_QUORUM_COMMITMENT) {
             llmqCommitments.emplace_back(tx);
         }
+=======
+        UnregisterNodeSignals(GetNodeSignals());
+#ifdef ENABLE_WALLET
+        delete pwalletMain;
+        pwalletMain = NULL;
+#endif
+        delete pcoinsTip;
+        delete pcoinsdbview;
+        delete pblocktree;
+#ifdef ENABLE_WALLET
+        bitdb.Flush(true);
+#endif
+        boost::filesystem::remove_all(pathTemp);
+        ECC_Stop();
+>>>>>>> Fix merge issues
     }
 
     // Replace mempool-selected txns with just coinbase plus passed-in txns:

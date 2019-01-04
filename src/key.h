@@ -1,20 +1,24 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2017 The Zcash developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_KEY_H
-#define BITCOIN_KEY_H
+#ifndef ION_KEY_H
+#define ION_KEY_H
 
-#include <pubkey.h>
-#include <serialize.h>
-#include <support/allocators/secure.h>
-#include <uint256.h>
+#include "allocators.h"
+#include "serialize.h"
+#include "uint256.h"
+#include "pubkey.h"
 
 #include <stdexcept>
 #include <vector>
 
+class CPubKey;
+
+struct CExtPubKey;
 
 /**
  * secure_allocator is defined in allocators.h
@@ -82,7 +86,7 @@ public:
         } else {
             fValid = false;
         }
-    }
+}
 
     //! Simple read-only vector-like interface.
     unsigned int size() const { return (fValid ? keydata.size() : 0); }
@@ -139,6 +143,9 @@ public:
 
     //! Load private key and check that public key matches.
     bool Load(const CPrivKey& privkey, const CPubKey& vchPubKey, bool fSkipCheck);
+
+    //! Check whether an element of a signature (r or s) is valid.
+    static bool CheckSignatureElement(const unsigned char* vch, int len, bool half);
 };
 
 struct CExtKey {
@@ -192,4 +199,4 @@ void ECC_Stop(void);
 /** Check that required EC support is available at runtime. */
 bool ECC_InitSanityCheck(void);
 
-#endif // BITCOIN_KEY_H
+#endif // ION_KEY_H

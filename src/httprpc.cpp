@@ -1,23 +1,21 @@
-// Copyright (c) 2015 The Bitcoin Core developers
+// Copyright (c) 2015-2017 The Bitcoin Core developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <httprpc.h>
+#include "httprpc.h"
 
-#include <base58.h>
-#include <chainparams.h>
-#include <httpserver.h>
-#include <rpc/protocol.h>
-#include <rpc/server.h>
-#include <random.h>
-#include <sync.h>
-#include <util.h>
-#include <utilstrencodings.h>
-#include <ui_interface.h>
-#include <crypto/hmac_sha256.h>
-#include <stdio.h>
-
-#include <memory>
+#include "base58.h"
+#include "chainparams.h"
+#include "httpserver.h"
+#include "rpc/protocol.h"
+#include "rpc/server.h"
+#include "random.h"
+#include "sync.h"
+#include "util.h"
+#include "utilstrencodings.h"
+#include "ui_interface.h"
 
 #include <boost/algorithm/string.hpp> // boost::trim
 
@@ -240,8 +238,8 @@ bool StartHTTPRPC()
     RegisterHTTPHandler("/wallet/", false, HTTPReq_JSONRPC);
 #endif
     assert(EventBase());
-    httpRPCTimerInterface = MakeUnique<HTTPRPCTimerInterface>(EventBase());
-    RPCSetTimerInterface(httpRPCTimerInterface.get());
+    httpRPCTimerInterface = new HTTPRPCTimerInterface(EventBase());
+    RPCSetTimerInterface(httpRPCTimerInterface);
     return true;
 }
 
@@ -255,7 +253,8 @@ void StopHTTPRPC()
     LogPrint(BCLog::RPC, "Stopping HTTP RPC server\n");
     UnregisterHTTPHandler("/", true);
     if (httpRPCTimerInterface) {
-        RPCUnsetTimerInterface(httpRPCTimerInterface.get());
-        httpRPCTimerInterface.reset();
+        RPCUnsetTimerInterface(httpRPCTimerInterface);
+        delete httpRPCTimerInterface;
+        httpRPCTimerInterface = 0;
     }
 }

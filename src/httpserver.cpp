@@ -1,18 +1,18 @@
 // Copyright (c) 2015 The Bitcoin Core developers
+// Copyright (c) 2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <httpserver.h>
 
-#include <init.h>
-#include <chainparamsbase.h>
-#include <compat.h>
-#include <util.h>
-#include <utilstrencodings.h>
-#include <netbase.h>
-#include <rpc/protocol.h> // For HTTP status codes
-#include <sync.h>
-#include <ui_interface.h>
+#include "chainparamsbase.h"
+#include "compat.h"
+#include "util.h"
+#include "netbase.h"
+#include "rpc/protocol.h" // For HTTP status codes
+#include "sync.h"
+#include "ui_interface.h"
 
 #include <memory>
 #include <stdio.h>
@@ -22,6 +22,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <signal.h>
+#include <future>
 
 #include <event2/thread.h>
 #include <event2/buffer.h>
@@ -37,10 +38,6 @@
 #include <arpa/inet.h>
 #endif
 #endif
-
-#include <thread>
-#include <mutex>
-#include <condition_variable>
 
 /** Maximum size of http request (request line + headers) */
 static const size_t MAX_HEADERS_SIZE = 8192;
@@ -75,9 +72,29 @@ private:
     /** Mutex protects entire object */
     std::mutex cs;
     std::condition_variable cond;
-    std::deque<std::unique_ptr<WorkItem>> queue;
+    /* XXX in C++11 we can use std::unique_ptr here and avoid manual cleanup */
+    std::deque<WorkItem*> queue;
     bool running;
     size_t maxDepth;
+    int numThreads;
+
+    /** RAII object to keep track of number of running worker threads */
+    class ThreadCounter
+    {
+    public:
+        WorkQueue &wq;
+        ThreadCounter(WorkQueue &w): wq(w)
+        {
+            std::lock_guard<std::mutex> lock(wq.cs);
+            wq.numThreads += 1;
+        }
+        ~ThreadCounter()
+        {
+            std::lock_guard<std::mutex> lock(wq.cs);
+            wq.numThreads -= 1;
+            wq.cond.notify_all();
+        }
+    };
 
 public:
     explicit WorkQueue(size_t _maxDepth) : running(true),
@@ -124,6 +141,20 @@ public:
         running = false;
         cond.notify_all();
     }
+    /** Wait for worker threads to exit */
+    void WaitExit()
+    {
+        std::unique_lock<std::mutex> lock(cs);
+        while (numThreads > 0)
+            cond.wait(lock);
+    }
+
+    /** Return current depth of queue */
+    size_t Depth()
+    {
+        std::unique_lock<std::mutex> lock(cs);
+        return queue.size();
+    }
 };
 
 struct HTTPPathHandler
@@ -158,7 +189,7 @@ static bool ClientAllowed(const CNetAddr& netaddr)
 {
     if (!netaddr.IsValid())
         return false;
-    for(const CSubNet& subnet : rpc_allow_subnets)
+    for (const CSubNet& subnet : rpc_allow_subnets)
         if (subnet.Match(netaddr))
             return true;
     return false;
@@ -168,20 +199,19 @@ static bool ClientAllowed(const CNetAddr& netaddr)
 static bool InitHTTPAllowList()
 {
     rpc_allow_subnets.clear();
-    CNetAddr localv4;
-    CNetAddr localv6;
-    LookupHost("127.0.0.1", localv4, false);
-    LookupHost("::1", localv6, false);
-    rpc_allow_subnets.push_back(CSubNet(localv4, 8));      // always allow IPv4 local subnet
-    rpc_allow_subnets.push_back(CSubNet(localv6));         // always allow IPv6 localhost
-    for (const std::string& strAllow : gArgs.GetArgs("-rpcallowip")) {
-        CSubNet subnet;
-        LookupSubNet(strAllow.c_str(), subnet);
-        if (!subnet.IsValid()) {
-            uiInterface.ThreadSafeMessageBox(
-                strprintf("Invalid -rpcallowip subnet specification: %s. Valid are a single IP (e.g. 1.2.3.4), a network/netmask (e.g. 1.2.3.4/255.255.255.0) or a network/CIDR (e.g. 1.2.3.4/24).", strAllow),
-                "", CClientUIInterface::MSG_ERROR);
-            return false;
+    rpc_allow_subnets.push_back(CSubNet("127.0.0.0/8")); // always allow IPv4 local subnet
+    rpc_allow_subnets.push_back(CSubNet("::1"));         // always allow IPv6 localhost
+    if (mapMultiArgs.count("-rpcallowip")) {
+        const std::vector<std::string>& vAllow = mapMultiArgs["-rpcallowip"];
+        for (std::string strAllow : vAllow) {
+            CSubNet subnet(strAllow);
+            if (!subnet.IsValid()) {
+                uiInterface.ThreadSafeMessageBox(
+                    strprintf("Invalid -rpcallowip subnet specification: %s. Valid are a single IP (e.g. 1.2.3.4), a network/netmask (e.g. 1.2.3.4/255.255.255.0) or a network/CIDR (e.g. 1.2.3.4/24).", strAllow),
+                    "", CClientUIInterface::MSG_ERROR);
+                return false;
+            }
+            rpc_allow_subnets.push_back(subnet);
         }
         rpc_allow_subnets.push_back(subnet);
     }
@@ -289,7 +319,7 @@ static bool ThreadHTTP(struct event_base* base, struct evhttp* http)
     LogPrint(BCLog::HTTP, "Entering http event loop\n");
     event_base_dispatch(base);
     // Event loop will be interrupted by InterruptHTTPServer()
-    LogPrint(BCLog::HTTP, "Exited http event loop\n");
+    LogPrint("http", "Exited http event loop\n");
     return event_base_got_break(base) == 0;
 }
 
@@ -425,17 +455,20 @@ bool UpdateHTTPServerLogging(bool enable) {
 }
 
 std::thread threadHTTP;
-static std::vector<std::thread> g_thread_http_workers;
+std::future<bool> threadResult;
 
 bool StartHTTPServer()
 {
     LogPrint(BCLog::HTTP, "Starting HTTP server\n");
     int rpcThreads = std::max((long)gArgs.GetArg("-rpcthreads", DEFAULT_HTTP_THREADS), 1L);
     LogPrintf("HTTP: starting %d worker threads\n", rpcThreads);
-    threadHTTP = std::thread(ThreadHTTP, eventBase, eventHTTP);
+    std::packaged_task<bool(event_base*, evhttp*)> task(ThreadHTTP);
+    threadResult = task.get_future();
+    threadHTTP = std::thread(std::move(task), eventBase, eventHTTP);
 
     for (int i = 0; i < rpcThreads; i++) {
-        g_thread_http_workers.emplace_back(HTTPWorkQueueRun, workQueue);
+        std::thread rpc_worker(HTTPWorkQueueRun, workQueue);
+        rpc_worker.detach();
     }
     return true;
 }
@@ -444,8 +477,10 @@ void InterruptHTTPServer()
 {
     LogPrint(BCLog::HTTP, "Interrupting HTTP server\n");
     if (eventHTTP) {
-        // Reject requests on current connections
-        evhttp_set_gencb(eventHTTP, http_reject_request_cb, nullptr);
+        for (evhttp_bound_socket *socket : boundSockets) {
+            evhttp_del_accept_socket(eventHTTP, socket);
+        }
+        evhttp_set_gencb(eventHTTP, http_reject_request_cb, NULL);
     }
     if (workQueue)
         workQueue->Interrupt();
@@ -470,7 +505,18 @@ void StopHTTPServer()
     }
     boundSockets.clear();
     if (eventBase) {
-        LogPrint(BCLog::HTTP, "Waiting for HTTP event thread to exit\n");
+        LogPrint("http", "Waiting for HTTP event thread to exit\n");
+        // Give event loop a few seconds to exit (to send back last RPC responses), then break it
+        // Before this was solved with event_base_loopexit, but that didn't work as expected in
+        // at least libevent 2.0.21 and always introduced a delay. In libevent
+        // master that appears to be solved, so in the future that solution
+        // could be used again (if desirable).
+        // (see discussion in https://github.com/bitcoin/bitcoin/pull/6990)
+        if (threadResult.valid() && threadResult.wait_for(std::chrono::milliseconds(2000)) == std::future_status::timeout) {
+            LogPrintf("HTTP event loop did not exit within allotted time, sending loopbreak\n");
+            event_base_loopbreak(eventBase);
+
+        }
         threadHTTP.join();
     }
     if (eventHTTP) {
@@ -498,8 +544,8 @@ static void httpevent_callback_fn(evutil_socket_t, short, void* data)
         delete self;
 }
 
-HTTPEvent::HTTPEvent(struct event_base* base, bool _deleteWhenTriggered, const std::function<void(void)>& _handler):
-    deleteWhenTriggered(_deleteWhenTriggered), handler(_handler)
+HTTPEvent::HTTPEvent(struct event_base* base, bool deleteWhenTriggered, const std::function<void(void)>& handler):
+    deleteWhenTriggered(deleteWhenTriggered), handler(handler)
 {
     ev = event_new(base, -1, 0, httpevent_callback_fn, this);
     assert(ev);
@@ -582,22 +628,9 @@ void HTTPRequest::WriteReply(int nStatus, const std::string& strReply)
     struct evbuffer* evb = evhttp_request_get_output_buffer(req);
     assert(evb);
     evbuffer_add(evb, strReply.data(), strReply.size());
-    auto req_copy = req;
-    HTTPEvent* ev = new HTTPEvent(eventBase, true, [req_copy, nStatus]{
-        evhttp_send_reply(req_copy, nStatus, nullptr, nullptr);
-        // Re-enable reading from the socket. This is the second part of the libevent
-        // workaround above.
-        if (event_get_version_number() >= 0x02010600 && event_get_version_number() < 0x02020001) {
-            evhttp_connection* conn = evhttp_request_get_connection(req_copy);
-            if (conn) {
-                bufferevent* bev = evhttp_connection_get_bufferevent(conn);
-                if (bev) {
-                    bufferevent_enable(bev, EV_READ | EV_WRITE);
-                }
-            }
-        }
-    });
-    ev->trigger(nullptr);
+    HTTPEvent* ev = new HTTPEvent(eventBase, true,
+        std::bind(evhttp_send_reply, req, nStatus, (const char*)NULL, (struct evbuffer *)NULL));
+    ev->trigger(0);
     replySent = true;
     req = nullptr; // transferred back to main thread
 }

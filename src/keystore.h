@@ -1,5 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,6 +16,9 @@
 #include <sync.h>
 
 #include <boost/signals2/signal.hpp>
+
+class CScript;
+class CScriptID;
 
 /** A virtual base class for key stores */
 class CKeyStore
@@ -64,38 +69,24 @@ protected:
     CHDChain hdChain;
 
 public:
-    bool AddKeyPubKey(const CKey& key, const CPubKey &pubkey) override;
-    bool GetPubKey(const CKeyID &address, CPubKey& vchPubKeyOut) const override;
-    bool HaveKey(const CKeyID &address) const override;
-    std::set<CKeyID> GetKeys() const override;
-    bool GetKey(const CKeyID &address, CKey &keyOut) const override;
-    bool AddCScript(const CScript& redeemScript) override;
-    bool HaveCScript(const CScriptID &hash) const override;
-    std::set<CScriptID> GetCScripts() const override;
-    bool GetCScript(const CScriptID &hash, CScript& redeemScriptOut) const override;
+    bool AddKeyPubKey(const CKey& key, const CPubKey& pubkey);
+    bool HaveKey(const CKeyID& address) const;
+    void GetKeys(std::set<CKeyID>& setAddress) const;
+    bool GetKey(const CKeyID& address, CKey& keyOut) const;
 
-    bool AddWatchOnly(const CScript &dest) override;
-    bool RemoveWatchOnly(const CScript &dest) override;
-    bool HaveWatchOnly(const CScript &dest) const override;
-    bool HaveWatchOnly() const override;
+    virtual bool AddCScript(const CScript& redeemScript);
+    virtual bool HaveCScript(const CScriptID& hash) const;
+    virtual bool GetCScript(const CScriptID& hash, CScript& redeemScriptOut) const;
 
-    virtual bool GetHDChain(CHDChain& hdChainRet) const;
+    virtual bool AddWatchOnly(const CScript& dest);
+    virtual bool RemoveWatchOnly(const CScript& dest);
+    virtual bool HaveWatchOnly(const CScript& dest) const;
+    virtual bool HaveWatchOnly() const;
 
-    class CheckTxDestination : public boost::static_visitor<bool>
-    {
-        const CKeyStore *keystore;
-
-    public:
-        CheckTxDestination(const CKeyStore *keystore) : keystore(keystore) {}
-        bool operator()(const CKeyID &id) const { return keystore->HaveKey(id); }
-        bool operator()(const CScriptID &id) const { return keystore->HaveCScript(id); }
-        bool operator()(const CNoDestination &) const { return false; }
-    };
-
-    virtual bool HaveTxDestination(const CTxDestination &addr)
-    {
-        return boost::apply_visitor(CheckTxDestination(this), addr);
-    }
+    virtual bool AddMultiSig(const CScript& dest);
+    virtual bool RemoveMultiSig(const CScript& dest);
+    virtual bool HaveMultiSig(const CScript& dest) const;
+    virtual bool HaveMultiSig() const;
 };
 
 typedef std::vector<unsigned char, secure_allocator<unsigned char> > CKeyingMaterial;

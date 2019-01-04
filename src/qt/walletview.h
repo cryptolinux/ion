@@ -1,14 +1,20 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2011-2014 The Bitcoin developers
+// Copyright (c) 2017-2018 The PIVX developers
+// Copyright (c) 2018 The PHORE developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_WALLETVIEW_H
-#define BITCOIN_QT_WALLETVIEW_H
+#ifndef ION_QT_WALLETVIEW_H
+#define ION_QT_WALLETVIEW_H
 
-#include <amount.h>
-#include <qt/masternodelist.h>
+#include "amount.h"
+#include "askpassphrasedialog.h"
+#include "masternodelist.h"
+#include "proposallist.h"
 
 #include <QStackedWidget>
+#include <ui_interface.h>
 
 class BitcoinGUI;
 class ClientModel;
@@ -60,16 +66,17 @@ private:
     ClientModel *clientModel;
     WalletModel *walletModel;
 
-    OverviewPage *overviewPage;
-    QWidget *transactionsPage;
-    ReceiveCoinsDialog *receiveCoinsPage;
-    SendCoinsDialog *sendCoinsPage;
-    SendCoinsDialog* privateSendCoinsPage;
-    AddressBookPage *usedSendingAddressesPage;
-    AddressBookPage *usedReceivingAddressesPage;
-    MasternodeList *masternodeListPage;
+    OverviewPage* overviewPage;
+    QWidget* transactionsPage;
+    ReceiveCoinsDialog* receiveCoinsPage;
+    PrivacyDialog* privacyPage;
+    SendCoinsDialog* sendCoinsPage;
+    BlockExplorer* explorerWindow;
+    MasternodeList* masternodeListPage;
+    QWidget* proposalListPage;
 
-    TransactionView *transactionView;
+    TransactionView* transactionView;
+    ProposalList* proposalList;
 
     QProgressDialog *progressDialog;
     QLabel *transactionSum;
@@ -81,6 +88,12 @@ public Q_SLOTS:
     void gotoHistoryPage();
     /** Switch to masternode page */
     void gotoMasternodePage();
+    /** Switch to explorer page */
+    void gotoBlockExplorerPage();
+    /** Switch to privacy page */
+    void gotoPrivacyPage();
+    /** Switch to proposal page */
+    void gotoProposalPage();
     /** Switch to receive coins page */
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
@@ -94,7 +107,6 @@ public Q_SLOTS:
     void gotoVerifyMessageTab(QString addr = "");
 
     /** Show incoming transaction notification for new transactions.
-
         The new items are those between start and end inclusive, under the given parent item.
     */
     void processNewTransaction(const QModelIndex& parent, int start, int /*end*/);
@@ -124,7 +136,7 @@ public Q_SLOTS:
     void requestedSyncWarningInfo();
 
 
-    /** Update selected Ion amount from transactionview */
+    /** Update selected ION amount from transactionview */
     void trxAmount(QString amount);
 Q_SIGNALS:
     /** Signal that we want to show the main window */
@@ -141,4 +153,4 @@ Q_SIGNALS:
     void outOfSyncWarningClicked();
 };
 
-#endif // BITCOIN_QT_WALLETVIEW_H
+#endif // ION_QT_WALLETVIEW_H

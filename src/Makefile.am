@@ -1,13 +1,13 @@
 # Copyright (c) 2013-2016 The Bitcoin Core developers
-# Copyright (c) 2014-2018 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 DIST_SUBDIRS = secp256k1 univalue
 
-AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LIBTOOL_LDFLAGS) $(HARDENED_LDFLAGS)
-AM_CXXFLAGS = $(HARDENED_CXXFLAGS) $(ERROR_CXXFLAGS)
-AM_CPPFLAGS = $(HARDENED_CPPFLAGS)
+AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LIBTOOL_LDFLAGS) $(HARDENED_LDFLAGS) $(GPROF_LDFLAGS) $(SANITIZER_LDFLAGS)
+AM_CXXFLAGS = $(DEBUG_CXXFLAGS) $(HARDENED_CXXFLAGS) $(WARN_CXXFLAGS) $(NOWARN_CXXFLAGS) $(ERROR_CXXFLAGS) $(GPROF_CXXFLAGS) $(SANITIZER_CXXFLAGS)
+AM_CPPFLAGS = $(DEBUG_CPPFLAGS) $(HARDENED_CPPFLAGS)
+AM_LIBTOOLFLAGS = --preserve-dup-deps
 EXTRA_LIBRARIES =
 
 if ENABLE_CRASH_HOOKS
@@ -79,7 +79,7 @@ LIBBITCOIN_CRYPTO_SHANI = crypto/libion_crypto_shani.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_SHANI)
 endif
 
-$(LIBSECP256K1): $(wildcard secp256k1/src/*) $(wildcard secp256k1/include/*)
+$(LIBSECP256K1): $(wildcard secp256k1/src/*.h) $(wildcard secp256k1/src/*.c) $(wildcard secp256k1/include/*)
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C $(@D) $(@F)
 
 # Make is not made aware of per-object dependencies to avoid limiting building parallelization
@@ -113,19 +113,17 @@ endif
 .PHONY: FORCE check-symbols check-security
 # ion core #
 BITCOIN_CORE_H = \
-  addrdb.h \
-  addressindex.h \
-  spentindex.h \
+  activemasternode.h \
+  accumulators.h \
+  accumulatorcheckpoints.h \
+  accumulatorcheckpoints.json.h \
+  accumulatormap.h \
   addrman.h \
   base58.h \
-  batchedlogger.h \
   bech32.h \
-  bip39.h \
-  bip39_english.h \
-  blockencodings.h \
+  bip38.h \
   bloom.h \
-  cachemap.h \
-  cachemultimap.h \
+  blocksignature.h \
   chain.h \
   chainparams.h \
   chainparamsbase.h \
@@ -139,69 +137,49 @@ BITCOIN_CORE_H = \
   compat/endian.h \
   compat/sanity.h \
   compressor.h \
-  consensus/consensus.h \
-  consensus/tokengroups.h \
-  consensus/tx_verify.h \
-  core_io.h \
+  consensus/validation.h \
   core_memusage.h \
-  cuckoocache.h \
-  ctpl.h \
-  cxxtimer.hpp \
   dstencode.h \
-  evo/cbtx.h \
-  evo/deterministicmns.h \
-  evo/evodb.h \
-  evo/mnauth.h \
-  evo/providertx.h \
-  evo/simplifiedmns.h \
-  evo/specialtx.h \
-  privatesend/privatesend.h \
-  privatesend/privatesend-client.h \
-  privatesend/privatesend-server.h \
-  privatesend/privatesend-util.h \
-  dsnotificationinterface.h \
-  governance/governance.h \
-  governance/governance-classes.h \
-  governance/governance-exceptions.h \
-  governance/governance-object.h \
-  governance/governance-validators.h \
-  governance/governance-vote.h \
-  governance/governance-votedb.h \
-  flat-database.h \
-  hdchain.h \
-  fs.h \
+  primitives/block.h \
+  primitives/deterministicmint.h \
+  primitives/transaction.h \
+  primitives/zerocoin.h \
+  core_io.h \
+  crypter.h \
+  denomination_functions.h \
+  obfuscation.h \
+  obfuscation-relay.h \
+  db.h \
+  hash.h \
   httprpc.h \
   httpserver.h \
   indirectmap.h \
   init.h \
+  invalid.h \
+  invalid_outpoints.json.h \
+  invalid_serials.json.h \
   ionaddrenc.h \
+  kernel.h \
+  swifttx.h \
   key.h \
   keepass.h \
   keystore.h \
   dbwrapper.h \
   limitedmap.h \
-  llmq/quorums.h \
-  llmq/quorums_blockprocessor.h \
-  llmq/quorums_commitment.h \
-  llmq/quorums_chainlocks.h \
-  llmq/quorums_debug.h \
-  llmq/quorums_dkgsessionhandler.h \
-  llmq/quorums_dkgsessionmgr.h \
-  llmq/quorums_dkgsession.h \
-  llmq/quorums_init.h \
-  llmq/quorums_instantsend.h \
-  llmq/quorums_signing.h \
-  llmq/quorums_signing_shares.h \
-  llmq/quorums_utils.h \
-  masternode/activemasternode.h \
-  masternode/masternode-meta.h \
-  masternode/masternode-payments.h \
-  masternode/masternode-sync.h \
-  masternode/masternode-utils.h \
+  main.h \
   memusage.h \
+  masternode.h \
+  masternode-payments.h \
+  masternode-budget.h \
+  masternode-sync.h \
+  masternodeman.h \
+  masternodeconfig.h \
   merkleblock.h \
   messagesigner.h \
   miner.h \
+  mintpool.h \
+  mruset.h \
+  netbase.h \
   net.h \
   net_processing.h \
   netaddress.h \
@@ -221,15 +199,10 @@ BITCOIN_CORE_H = \
   random.h \
   reverse_iterator.h \
   reverselock.h \
-  rpc/blockchain.h \
+  reverse_iterate.h \
   rpc/client.h \
-  rpc/mining.h \
   rpc/protocol.h \
-  rpc/safemode.h \
   rpc/server.h \
-  rpc/register.h \
-  rpc/util.h \
-  saltedhasher.h \
   scheduler.h \
   script/interpreter.h \
   script/script.h \
@@ -238,15 +211,10 @@ BITCOIN_CORE_H = \
   script/standard.h \
   script/ismine.h \
   spork.h \
-  stacktraces.h \
+  sporkdb.h \
+  stakeinput.h \
   streams.h \
-  support/allocators/mt_pooled_secure.h \
-  support/allocators/pooled_secure.h \
-  support/allocators/secure.h \
-  support/allocators/zeroafterfree.h \
   support/cleanse.h \
-  support/events.h \
-  support/lockedpool.h \
   sync.h \
   threadsafety.h \
   threadinterrupt.h \
@@ -267,26 +235,13 @@ BITCOIN_CORE_H = \
   utiltime.h \
   validation.h \
   validationinterface.h \
-  versionbits.h \
-  walletinitinterface.h \
-  wallet/coincontrol.h \
-  wallet/crypter.h \
-  wallet/db.h \
-  wallet/fees.h \
-  wallet/rpcwallet.h \
-  wallet/wallet.h \
-  wallet/walletdb.h \
-  warnings.h \
-  xion/accumulators.h \
-  xion/accumulatorcheckpoints.h \
-  xion/accumulatorcheckpoints.json.h \
-  xion/accumulatormap.h \
-  xion/deterministicmint.h \
-  xion/xionchain.h \
-  xion/xionmodule.h \
-  xion/witness.h \
-  xion/zerocoin.h \
-  xion/zerocoindb.h \
+  version.h \
+  wallet.h \
+  wallet_ismine.h \
+  walletdb.h \
+  xionchain.h \
+  xiontracker.h \
+  xionwallet.h \
   zmq/zmqabstractnotifier.h \
   zmq/zmqconfig.h\
   zmq/zmqnotificationinterface.h \
@@ -306,7 +261,7 @@ libion_server_a_SOURCES = \
   addrman.cpp \
   batchedlogger.cpp \
   bloom.cpp \
-  blockencodings.cpp \
+  blocksignature.cpp \
   chain.cpp \
   checkpoints.cpp \
   consensus/tx_verify.cpp \
@@ -365,16 +320,12 @@ libion_server_a_SOURCES = \
   rest.cpp \
   rpc/blockchain.cpp \
   rpc/masternode.cpp \
-  rpc/governance.cpp \
+  rpc/budget.cpp \
   rpc/mining.cpp \
   rpc/misc.cpp \
   rpc/net.cpp \
   rpc/rawtransaction.cpp \
-  rpc/rpcevo.cpp \
-  rpc/rpcquorums.cpp \
-  rpc/safemode.cpp \
   rpc/server.cpp \
-  rpc/privatesend.cpp \
   script/sigcache.cpp \
   script/ismine.cpp \
   spork.cpp \
@@ -386,16 +337,7 @@ libion_server_a_SOURCES = \
   ui_interface.cpp \
   validation.cpp \
   validationinterface.cpp \
-  versionbits.cpp \
-  xion/accumulators.cpp \
-  xion/accumulatorcheckpoints.cpp \
-  xion/accumulatormap.cpp \
-  xion/deterministicmint.cpp \
-  xion/witness.cpp \
-  xion/xionchain.cpp \
-  xion/xionmodule.cpp \
-  xion/zerocoin.cpp \
-  xion/zerocoindb.cpp \
+  xionchain.cpp \
   $(BITCOIN_CORE_H)
 
 if ENABLE_ZMQ
@@ -410,30 +352,35 @@ endif
 
 # wallet: shared between iond and ion-qt, but only linked
 # when wallet enabled
-libion_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libion_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libion_wallet_a_SOURCES = \
-  keepass.cpp \
-  privatesend/privatesend-client.cpp \
-  privatesend/privatesend-util.cpp \
-  tokens/rpctokens.cpp \
-  tokens/tokengroupconfiguration.cpp \
-  tokens/tokengroupdescription.cpp \
-  tokens/tokengroupmanager.cpp \
-  tokens/tokengroupwallet.cpp \
-  wallet/crypter.cpp \
-  wallet/db.cpp \
-  wallet/fees.cpp \
-  wallet/init.cpp \
-  wallet/rpcdump.cpp \
-  wallet/rpcwallet.cpp \
-  wallet/wallet.cpp \
-  wallet/walletdb.cpp \
-  xion/deterministicmint.cpp \
-  xion/accumulators.cpp \
-  xion/xionmodule.cpp \
-  xion/witness.cpp \
-  xion/zerocoin.cpp \
+libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcoin_wallet_a_SOURCES = \
+  activemasternode.cpp \
+  bip38.cpp \
+  denomination_functions.cpp \
+  obfuscation.cpp \
+  obfuscation-relay.cpp \
+  db.cpp \
+  crypter.cpp \
+  swifttx.cpp \
+  masternode.cpp \
+  masternode-budget.cpp \
+  masternode-payments.cpp \
+  masternode-sync.cpp \
+  masternodeconfig.cpp \
+  masternodeman.cpp \
+  mintpool.cpp \
+  rpcdump.cpp \
+  primitives/deterministicmint.cpp \
+  primitives/zerocoin.cpp \
+  rpcwallet.cpp \
+  kernel.cpp \
+  wallet.cpp \
+  wallet_ismine.cpp \
+  walletdb.cpp \
+  xionwallet.cpp \
+  xiontracker.cpp \
+  stakeinput.cpp \
   $(BITCOIN_CORE_H)
 
 libioncore_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
@@ -469,16 +416,12 @@ libioncore_a_SOURCES = \
   utiltime.h
 
 # crypto primitives library
-crypto_libion_crypto_base_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_CONFIG_INCLUDES) $(PIC_FLAGS)
-crypto_libion_crypto_base_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
-crypto_libion_crypto_base_a_SOURCES = \
-  crypto/aes.cpp \
-  crypto/aes.h \
-  crypto/chacha_poly_aead.h \
-  crypto/chacha_poly_aead.cpp \
-  crypto/chacha20.h \
-  crypto/chacha20.cpp \
-  crypto/common.h \
+crypto_libbitcoin_crypto_a_CPPFLAGS = $(AM_CPPFLAGS) $(PIC_FLAGS)
+crypto_libbitcoin_crypto_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIC_FLAGS)
+crypto_libbitcoin_crypto_a_SOURCES = \
+  crypto/sha1.cpp \
+  crypto/sha256.cpp \
+  crypto/sha512.cpp \
   crypto/hmac_sha256.cpp \
   crypto/hmac_sha256.h \
   crypto/hmac_sha512.cpp \
@@ -613,21 +556,30 @@ libion_consensus_a_SOURCES = \
   version.h
 
 # common: shared between iond, and ion-qt and non-server tools
-libion_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libion_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libion_common_a_SOURCES = \
+libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcoin_common_a_SOURCES = \
+  accumulators.cpp \
+  accumulatorcheckpoints.cpp \
+  accumulatormap.cpp \
+  allocators.cpp \
+  amount.cpp \
   base58.cpp \
   bech32.cpp \
-  bip39.cpp \
+  bip38.cpp \
   chainparams.cpp \
   coins.cpp \
   compressor.cpp \
-  consensus/tokengroups.cpp \
+  dstencode.cpp \
+  ionaddrenc.cpp \
+  primitives/block.cpp \
+  primitives/deterministicmint.cpp \
+  primitives/transaction.cpp \
+  primitives/zerocoin.cpp \
   core_read.cpp \
   core_write.cpp \
-  dstencode.cpp \
-  hdchain.cpp \
-  ionaddrenc.cpp \
+  hash.cpp \
+  invalid.cpp \
   key.cpp \
   keystore.cpp \
   netaddress.cpp \
@@ -649,25 +601,17 @@ libion_common_a_SOURCES = \
 # util: shared between all executables.
 # This library *must* be included to make sure that the glibc
 # backward-compatibility objects and their sanity checks are linked.
-libion_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libion_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libion_util_a_SOURCES = \
-  bls/bls_batchverifier.h \
-  bls/bls_ies.cpp \
-  bls/bls_ies.h \
-  bls/bls_worker.cpp \
-  bls/bls_worker.h \
-  support/lockedpool.cpp \
+libbitcoin_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libbitcoin_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcoin_util_a_SOURCES = \
+  allocators.cpp \
   chainparamsbase.cpp \
   clientversion.cpp \
   compat/glibc_sanity.cpp \
   compat/glibcxx_sanity.cpp \
   compat/strnlen.cpp \
-  fs.cpp \
   random.cpp \
   rpc/protocol.cpp \
-  rpc/util.cpp \
-  stacktraces.cpp \
   support/cleanse.cpp \
   sync.cpp \
   threadinterrupt.cpp \
@@ -678,14 +622,14 @@ libion_util_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 if GLIBC_BACK_COMPAT
-libion_util_a_SOURCES += compat/glibc_compat.cpp
-AM_LDFLAGS += -Wl,--wrap=log2f -Wl,--wrap=__divmoddi4
+libbitcoin_util_a_SOURCES += compat/glibc_compat.cpp
+AM_LDFLAGS += $(COMPAT_LDFLAGS)
 endif
 
 # cli: shared between ion-cli and ion-qt
-libion_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libion_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libion_cli_a_SOURCES = \
+libbitcoin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libbitcoin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcoin_cli_a_SOURCES = \
   rpc/client.cpp \
   $(BITCOIN_CORE_H)
 
@@ -704,11 +648,11 @@ endif
 
 iond_LDADD = \
   $(LIBBITCOIN_SERVER) \
+  $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_COMMON) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_ZEROCOIN) \
   $(LIBBITCOIN_UTIL) \
-  $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_ZMQ) \
   $(LIBBITCOIN_CONSENSUS) \
   $(LIBBITCOIN_CRYPTO) \
@@ -761,28 +705,35 @@ ion_tx_LDADD += $(BACKTRACE_LIB) $(BOOST_LIBS) $(CRYPTO_LIBS) $(BLS_LIBS)
 
 # ioncore library #
 if BUILD_BITCOIN_LIBS
-libioncore_la_SOURCES = $(libioncore_a_SOURCES) $(crypto_libion_crypto_a_SOURCES)
+include_HEADERS = script/bitcoinconsensus.h
+libbitcoinconsensus_la_SOURCES = \
+  allocators.cpp \
+  primitives/transaction.cpp \
+  crypto/hmac_sha512.cpp \
+  crypto/scrypt.cpp \
+  crypto/sha1.cpp \
+  crypto/sha256.cpp \
+  crypto/sha512.cpp \
+  crypto/ripemd160.cpp \
+  hash.cpp \
+  pubkey.cpp \
+  script/script.cpp \
+  script/interpreter.cpp \
+  script/bitcoinconsensus.cpp \
+  uint256.cpp \
+  utilstrencodings.cpp
 
 if GLIBC_BACK_COMPAT
   libioncore_la_SOURCES += compat/glibc_compat.cpp
 endif
 
-libioncore_la_LDFLAGS = $(AM_LDFLAGS) $(SSL_LIBS) $(CRYPTO_LIBS) $(BOOST_LIBS) -no-undefined $(RELDFLAGS)
-libioncore_la_LIBADD = $(LIBSECP256K1)
-libioncore_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(BOOST_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
-libioncore_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcoinconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
+libbitcoinconsensus_la_LIBADD = $(LIBSECP256K1)
+libbitcoinconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
+libbitcoinconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 endif
 #
-
-# ionconsensus library #
-if BUILD_BITCOIN_LIBS
-include_HEADERS = script/ionconsensus.h
-libionconsensus_la_SOURCES = support/cleanse.cpp $(crypto_libion_crypto_base_a_SOURCES) $(libion_consensus_a_SOURCES)
-
-if GLIBC_BACK_COMPAT
-  libionconsensus_la_SOURCES += compat/glibc_compat.cpp
-endif
 
 libionconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
 libionconsensus_la_LIBADD = $(LIBSECP256K1) $(BLS_LIBS)
@@ -815,10 +766,7 @@ CLEANFILES += wallet/test/*.gcda wallet/test/*.gcno
 CLEANFILES += zmq/*.gcda zmq/*.gcno
 CLEANFILES += xion/*.gcda xion/*.gcno
 
-IMMER_DIST = immer
-
-EXTRA_DIST = $(CTAES_DIST)
-EXTRA_DIST += $(IMMER_DIST)
+EXTRA_DIST =
 
 
 config/ion-config.h: config/stamp-h1
@@ -828,14 +776,12 @@ config/stamp-h1: $(top_srcdir)/$(subdir)/config/ion-config.h.in $(top_builddir)/
 $(top_srcdir)/$(subdir)/config/ion-config.h.in:  $(am__configure_deps)
 	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/ion-config.h.in
 
-
 clean-local:
 	-$(MAKE) -C secp256k1 clean
 	-$(MAKE) -C univalue clean
 	-rm -f leveldb/*/*.gcda leveldb/*/*.gcno leveldb/helpers/memenv/*.gcda leveldb/helpers/memenv/*.gcno
 	-rm -f config.h
 	-rm -rf test/__pycache__
-	-rm -rf *.dSYM test/*.dSYM bench/*.dSYM qt/*.dSYM qt/test/*.dSYM
 
 .rc.o:
 	@test -f $(WINDRES)
@@ -853,10 +799,6 @@ if HARDEN
 	@echo "Checking binary security..."
 	$(AM_V_at) READELF=$(READELF) OBJDUMP=$(OBJDUMP) $(top_srcdir)/contrib/devtools/security-check.py < $(bin_PROGRAMS)
 endif
-
-
-osx_debug: $(bin_PROGRAMS)
-	for i in $(bin_PROGRAMS); do mkdir -p $$i.dSYM/Contents/Resources/DWARF && $(DSYMUTIL_FLAT) -o $$i.dSYM/Contents/Resources/DWARF/$$(basename $$i) $$i &> /dev/null ; done
 
 %.pb.cc %.pb.h: %.proto
 	@test -f $(PROTOC)

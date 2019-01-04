@@ -3,7 +3,7 @@
     <name>AddressBookPage</name>
     <message>
         <source>Right-click to edit address or label</source>
-        <translation>Clique com o botão direito para editar o endereço ou o etiqueta</translation>
+        <translation>Clique com o botão direito do rato para editar o endereço ou a descrição</translation>
     </message>
     <message>
         <source>Create a new address</source>
@@ -31,11 +31,11 @@
     </message>
     <message>
         <source>Delete the currently selected address from the list</source>
-        <translation>Excluir os endereços selecionados da lista</translation>
+        <translation>Apagar o endereço selecionado da lista</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>E&amp;xcluir</translation>
+        <translation>&amp;Apagar</translation>
     </message>
     <message>
         <source>Export the data in the current tab to a file</source>
@@ -47,19 +47,19 @@
     </message>
     <message>
         <source>C&amp;lose</source>
-        <translation>&amp;Fechar</translation>
+        <translation>F&amp;echar</translation>
     </message>
     <message>
         <source>Choose the address to send coins to</source>
-        <translation>Escolha o endereço no qual receberá as moedas</translation>
+        <translation>Escolha o endereço para onde enviar moedas</translation>
     </message>
     <message>
         <source>Choose the address to receive coins with</source>
-        <translation>Escolha o endereço para receber moedas com ele</translation>
+        <translation>Escolha o endereço onde receber moedas</translation>
     </message>
     <message>
         <source>C&amp;hoose</source>
-        <translation>E&amp;scolha</translation>
+        <translation>E&amp;scolher</translation>
     </message>
     <message>
         <source>Sending addresses</source>
@@ -70,12 +70,12 @@
         <translation>Endereços de recebimento</translation>
     </message>
     <message>
-        <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Esses são seus endereços Ion para enviar pagamentos. Sempre confira a quantidade e os endereços de destino antes de enviar moedas.</translation>
+        <source>These are your ION addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Esses são seus endereços ION para onde enviar pagamentos. Confira sempre o montante e os endereços de destino antes de enviar moedas.</translation>
     </message>
     <message>
-        <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Esses são seus endereços Ion para receber pagamentos. É recomendado usar um novo endereço para cada transação.</translation>
+        <source>These are your ION addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Esses são seus endereços ION onde receber pagamentos. Recomenda-se o uso de um novo endereço para cada transacção.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -83,7 +83,7 @@
     </message>
     <message>
         <source>Copy &amp;Label</source>
-        <translation>Copiar &amp;Rótulo</translation>
+        <translation>Copiar &amp;Descrição</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
@@ -172,11 +172,11 @@
     <name>AskPassphraseDialog</name>
     <message>
         <source>Passphrase Dialog</source>
-        <translation>Janela da Frase de Segurança</translation>
+        <translation>Caixa de diálogo de senha</translation>
     </message>
     <message>
         <source>Enter passphrase</source>
-        <translation>Digite a frase de segurança</translation>
+        <translation>Digite a sua senha</translation>
     </message>
     <message>
         <source>New passphrase</source>
@@ -184,11 +184,11 @@
     </message>
     <message>
         <source>Repeat new passphrase</source>
-        <translation>Repita a nova frase de segurança</translation>
+        <translation>Repetir nova senha</translation>
     </message>
     <message>
-        <source>Show password</source>
-        <translation>Mostrar senha</translation>
+        <source>Serves to disable the trivial sendmoney when OS account compromised. Provides no real security.</source>
+        <translation>Serve para desabilitar envio trivial de dinheiro quando a conta do SO for comprometida, mas não provê segurança real.</translation>
     </message>
     <message>
         <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
@@ -289,6 +289,9 @@
 </context>
 <context>
     <name>BanTableModel</name>
+    </context>
+<context>
+    <name>Bip38ToolDialog</name>
     <message>
         <source>IP/Netmask</source>
         <translation>IP/Máscara de rede</translation>
@@ -301,23 +304,12 @@
 <context>
     <name>BitcoinAmountField</name>
     <message>
-        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
-        <translation>Digite um endereço Ion que você gostaria de criptografar usando BIP 38. Digite uma frase secreta na caixa do meio. Pressione criptografar para calcular a chave privada criptografada.</translation>
-    </message>
-</context>
-<context>
-    <name>BitcoinGUI</name>
-    <message>
-        <source>A fatal error occurred. Ion Core can no longer continue safely and will quit.</source>
-        <translation>Ocorreu um erro fatal. A Ion não pode mais continuar de forma segura, e irá fechar</translation>
+        <source>Address:</source>
+        <translation>Endereço:</translation>
     </message>
     <message>
-        <source>The Ion address to sign the message with</source>
-        <translation>Um endereço Ion para assinar a mensagem</translation>
-    </message>
-    <message>
-        <source>Wallet</source>
-        <translation>Carteira</translation>
+        <source>Choose previously used address</source>
+        <translation>Escolha o endereço usado anteriormente.</translation>
     </message>
     <message>
         <source>Node</source>
@@ -344,32 +336,20 @@
         <translation>&amp;Receber</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Ion address</source>
-        <translation>Assinar a Mensagem para provar que você e dono desse endereço ION.</translation>
+        <source>Encrypt &amp;Key</source>
+        <translation>Criptografar Chave</translation>
     </message>
     <message>
-        <source>&amp;Transactions</source>
-        <translation>&amp;Transações</translation>
-    </message>
-    <message>
-        <source>Browse transaction history</source>
-        <translation>Navegar pelo histórico de transações</translation>
-    </message>
-    <message>
-        <source>&amp;Masternodes</source>
-        <translation>&amp;Masternodes</translation>
+        <source>Clear &amp;All</source>
+        <translation>Limpar todos</translation>
     </message>
     <message>
         <source>Browse masternodes</source>
         <translation>Exibir masternodes</translation>
     </message>
     <message>
-        <source>The Ion address the message was signed with</source>
-        <translation>O endereço Ion que foi assinado com</translation>
-    </message>
-    <message>
-        <source>Quit application</source>
-        <translation>Sair da aplicação</translation>
+        <source>Decrypted Key:</source>
+        <translation>Chave descriptografada:</translation>
     </message>
     <message>
         <source>Show information about Ion Core</source>
@@ -456,6 +436,26 @@
         <translation>&amp;Verificar mensagem...</translation>
     </message>
     <message>
+        <source>&amp;Label</source>
+        <translation>&amp;Descrição</translation>
+    </message>
+    <message>
+        <source>&amp;Address</source>
+        <translation>&amp;Endereço</translation>
+    </message>
+    </context>
+<context>
+    <name>FreespaceChecker</name>
+    </context>
+<context>
+    <name>HelpMessageDialog</name>
+    </context>
+<context>
+    <name>Intro</name>
+    </context>
+<context>
+    <name>MasternodeList</name>
+    <message>
         <source>Verify messages to ensure they were signed with specified Ion addresses</source>
         <translation>Verifique as mensagens para ter certeza de que elas foram assinadas com o endereço da Ion especificado</translation>
     </message>
@@ -467,6 +467,38 @@
         <source>Show diagnostic information</source>
         <translation>Mostrar informação de diagnóstico</translation>
     </message>
+    <message>
+        <source>(no label)</source>
+        <translation>(Sem descrição)</translation>
+    </message>
+    </context>
+<context>
+    <name>MultisigDialog</name>
+    <message>
+        <source>Amount:</source>
+        <translation>Quantidade:</translation>
+    </message>
+    </context>
+<context>
+    <name>ObfuscationConfig</name>
+    </context>
+<context>
+    <name>OpenURIDialog</name>
+    </context>
+<context>
+    <name>OptionsDialog</name>
+    </context>
+<context>
+    <name>OverviewPage</name>
+    </context>
+<context>
+    <name>PaymentServer</name>
+    </context>
+<context>
+    <name>PeerTableModel</name>
+    </context>
+<context>
+    <name>PrivacyDialog</name>
     <message>
         <source>&amp;Debug console</source>
         <translation>&amp;Console de depuração</translation>
@@ -660,8 +692,8 @@
         <translation>Receber e enviar múltiplas transações</translation>
     </message>
     <message>
-        <source>The Ion address to sign the message with</source>
-        <translation>Um endereço Ion para assinar a mensagem</translation>
+        <source>The ION address to sign the message with</source>
+        <translation>Um endereço ION para assinar a mensagem</translation>
     </message>
     <message>
         <source>Received multiple transactions</source>
@@ -704,12 +736,12 @@
 </translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Ion address</source>
+        <source>Sign the message to prove you own this ION address</source>
         <translation>Assinar a Mensagem para provar que você e dono desse endereço ION.</translation>
     </message>
     <message>
-        <source>The Ion address the message was signed with</source>
-        <translation>O endereço Ion que foi assinado com</translation>
+        <source>The ION address the message was signed with</source>
+        <translation>O endereço ION que foi assinado com</translation>
     </message>
     <message>
         <source>Incoming transaction</source>
@@ -983,28 +1015,8 @@
     </message>
 </context>
 <context>
-    <name>FreespaceChecker</name>
-    <message>
-        <source>A new data directory will be created.</source>
-        <translation>Um novo diretório de dados será criado.</translation>
-    </message>
-    <message>
-        <source>name</source>
-        <translation>nome</translation>
-    </message>
-    <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
-        <translation>O diretório já existe. Adicione %1 se você pretende criar um novo diretório aqui.</translation>
-    </message>
-    <message>
-        <source>Path already exists, and is not a directory.</source>
-        <translation>Esta pasta já existe, e não é um diretório.</translation>
-    </message>
-    <message>
-        <source>Cannot create data directory here.</source>
-        <translation>Não é possível criar um diretório de dados aqui</translation>
-    </message>
-</context>
+    <name>XIonControlDialog</name>
+    </context>
 <context>
     <name>HelpMessageDialog</name>
     <message>
@@ -1012,12 +1024,8 @@
         <translation>versão</translation>
     </message>
     <message>
-        <source>Disable all Ion specific functionality (Masternodes, Obfuscation, SwiftTX, Budgeting) (0-1, default: %u)</source>
-        <translation>Desabilitar todas as funcionacilidades específicas da Ion (Masternodes, Ofuscação, SwiftTX, Budgeting) (0-1, default %u)</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation>Sobre %1</translation>
+        <source>Connect through SOCKS5 proxy</source>
+        <translation>Conectar usando proxy SOCKS5</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1115,16 +1123,8 @@
         <translation>Use o diretório de dados padrão</translation>
     </message>
     <message>
-        <source>Use a custom data directory:</source>
-        <translation>Use um diretório de dados personalizado:</translation>
-    </message>
-    <message>
-        <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation>No mínimo %1 GB de dados irão ser armazenados nesta pasta. </translation>
-    </message>
-    <message>
-        <source>Approximately %1 GB of data will be stored in this directory.</source>
-        <translation>Aproximadamente %1 GB de dados irão ser guardados nesta pasta. </translation>
+        <source>Session not complete!</source>
+        <translation>Sessão não concluída!</translation>
     </message>
     <message>
         <source>%1 will download and store a copy of the Ion block chain.</source>
@@ -1234,12 +1234,8 @@
         <translation>Copiar Outpoint Collateral</translation>
     </message>
     <message>
-        <source>Updating...</source>
-        <translation>Atualizando...</translation>
-    </message>
-    <message>
-        <source>ENABLED</source>
-        <translation>HABILITADO </translation>
+        <source>Synchronization failed</source>
+        <translation>Sincronização falhou</translation>
     </message>
     <message>
         <source>POSE_BANNED</source>
@@ -1348,15 +1344,8 @@
         <translation>Selecione o arquivo de cobrança</translation>
     </message>
     <message>
-        <source>Select payment request file to open</source>
-        <translation>Selecione o arquivo de cobrança para ser aberto</translation>
-    </message>
-</context>
-<context>
-    <name>OptionsDialog</name>
-    <message>
-        <source>Options</source>
-        <translation>Opções</translation>
+        <source>Use UPnP to map the listening port (default: %u)</source>
+        <translation>Use UPnP para mapear as portas de escuta(padrão: %u)</translation>
     </message>
     <message>
         <source>&amp;Main</source>

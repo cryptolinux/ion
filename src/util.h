@@ -1,6 +1,8 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2009-2014 The Bitcoin developers
+// Copyright (c) 2014-2015 The Dash developers
+// Copyright (c) 2015-2018 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -33,43 +35,32 @@
 #include <unordered_set>
 #include <vector>
 
-#include <boost/signals2/signal.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/thread/exceptions.hpp>
 #include <boost/thread/condition_variable.hpp> // for boost::thread_interrupted
 
-// Debugging macros
+//ION only features
 
-// Uncomment the following line to enable debugging messages
-// or enable on a per file basis prior to inclusion of util.h
-//#define ENABLE_ION_DEBUG
-#ifdef ENABLE_ION_DEBUG
-#define DBG( x ) x
-#else
-#define DBG( x )
-#endif
+extern bool fMasterNode;
+extern bool fLiteMode;
+extern bool fEnableSwiftTX;
+extern int nSwiftTXDepth;
+extern int nZeromintPercentage;
+extern const int64_t AUTOMINT_DELAY;
+extern int nPreferredDenom;
+extern int nAnonymizeIonAmount;
+extern int nLiquidityProvider;
+extern bool fEnableZeromint;
+extern int64_t enforceMasternodePaymentsTime;
+extern std::string strMasterNodeAddr;
+extern int keysLoaded;
+extern bool fSucessfullyLoaded;
+extern std::vector<int64_t> obfuScationDenominations;
+extern std::string strBudgetMode;
 
-//Ion only features
-
-extern bool fMasternodeMode;
-extern bool fDisableGovernance;
-extern int nWalletBackups;
-
-// Application startup time (used for uptime calculation)
-int64_t GetStartupTime();
-
-static const bool DEFAULT_LOGTIMEMICROS  = false;
-static const bool DEFAULT_LOGIPS         = false;
-static const bool DEFAULT_LOGTIMESTAMPS  = true;
-static const bool DEFAULT_LOGTHREADNAMES = false;
-extern const char * const DEFAULT_DEBUGLOGFILE;
-
-/** Signals for translation. */
-class CTranslationInterface
-{
-public:
-    /** Translate a message to the native language of the user. */
-    boost::signals2::signal<std::string (const char* psz)> Translate;
-};
-
+extern std::map<std::string, std::string> mapArgs;
+extern std::map<std::string, std::vector<std::string> > mapMultiArgs;
+extern bool fDebug;
 extern bool fPrintToConsole;
 extern bool fPrintToDebugLog;
 

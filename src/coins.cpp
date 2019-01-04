@@ -1,4 +1,6 @@
-// Copyright (c) 2012-2015 The Bitcoin Core developers
+// Copyright (c) 2012-2014 The Bitcoin developers
+// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -122,9 +124,20 @@ const Coin& CCoinsViewCache::AccessCoin(const COutPoint &outpoint) const {
     }
 }
 
-bool CCoinsViewCache::HaveCoin(const COutPoint &outpoint) const {
-    CCoinsMap::const_iterator it = FetchCoin(outpoint);
-    return (it != cacheCoins.end() && !it->second.coin.IsSpent());
+const Coin CCoinsViewCache::AccessCoin(const COutPoint &outpoint) const
+{
+    const CCoins* coins = AccessCoins(outpoint.hash);
+    return Coin(*coins, outpoint.n);
+}
+
+bool CCoinsViewCache::HaveCoins(const uint256& txid) const
+{
+    CCoinsMap::const_iterator it = FetchCoins(txid);
+    // We're using vtx.empty() instead of IsPruned here for performance reasons,
+    // as we only care about the case where a transaction was replaced entirely
+    // in a reorganization (which wipes vout entirely, as opposed to spending
+    // which just cleans individual outputs).
+    return (it != cacheCoins.end() && !it->second.coins.vout.empty());
 }
 
 bool CCoinsViewCache::HaveCoinInCache(const COutPoint &outpoint) const {

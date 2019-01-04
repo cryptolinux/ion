@@ -1,5 +1,7 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Ion developers
+// Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <qt/walletmodeltransaction.h>
@@ -44,9 +46,9 @@ void WalletModelTransaction::setTransactionFee(const CAmount& newFee)
     fee = newFee;
 }
 
-void WalletModelTransaction::reassignAmounts()
+void WalletModelTransaction::reassignAmounts(int nChangePosRet)
 {
-    // For each recipient look for a matching CTxOut in walletTransaction and reassign amounts
+    int i = 0;
     for (QList<SendCoinsRecipient>::iterator it = recipients.begin(); it != recipients.end(); ++it)
     {
         SendCoinsRecipient& rcp = (*it);
@@ -59,31 +61,24 @@ void WalletModelTransaction::reassignAmounts()
             {
                 const payments::Output& out = details.outputs(j);
                 if (out.amount() <= 0) continue;
-                const unsigned char* scriptStr = (const unsigned char*)out.script().data();
-                CScript scriptPubKey(scriptStr, scriptStr+out.script().size());
-                for (const auto& txout : walletTransaction->tx->vout) {
-                    if (txout.scriptPubKey == scriptPubKey) {
-                        subtotal += txout.nValue;
-                        break;
-                    }
-                }
+                if (i == nChangePosRet)
+                    i++;
+                subtotal += walletTransaction->vout[i].nValue;
+                i++;
             }
             rcp.amount = subtotal;
         }
         else // normal recipient (no payment request)
         {
-            for (const auto& txout : walletTransaction->tx->vout) {
-                CScript scriptPubKey = GetScriptForDestination(DecodeDestination(rcp.address.toStdString()));
-                if (txout.scriptPubKey == scriptPubKey) {
-                    rcp.amount = txout.nValue;
-                    break;
-                }
-            }
+            if (i == nChangePosRet)
+                i++;
+            rcp.amount = walletTransaction->vout[i].nValue;
+            i++;
         }
     }
 }
 
-CAmount WalletModelTransaction::getTotalTransactionAmount() const
+CAmount WalletModelTransaction::getTotalTransactionAmount()
 {
     CAmount totalTransactionAmount = 0;
     for (const SendCoinsRecipient &rcp : recipients)

@@ -70,12 +70,12 @@
         <translation>收款位址</translation>
     </message>
     <message>
-        <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>這是你用來付款的 Ion 位址, 送出前, 請務必確認金額及接收位址是否正確.</translation>
+        <source>These are your ION addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>這是你用來付款的 ION 位址, 送出前, 請務必確認金額及接收位址是否正確.</translation>
     </message>
     <message>
-        <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>這是你用來接收款項的 Ion 位址, 建議你每次付款都使用新的位址.</translation>
+        <source>These are your ION addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>這是你用來接收款項的 ION 位址, 建議你每次付款都使用新的位址.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -232,7 +232,7 @@
     </message>
     <message>
         <source>ION will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your IONs from being stolen by malware infecting your computer.</source>
-        <translation>ION 現在會關閉程式來處理加密流程, 請注意, 僅僅是加密你的錢包並不能完全保護你的 Ion 幣被可疑軟體或病毒偷走的風險.</translation>
+        <translation>ION 現在會關閉程式來處理加密流程, 請注意, 僅僅是加密你的錢包並不能完全保護你的 ION 幣被可疑軟體或病毒偷走的風險.</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -289,6 +289,9 @@
 </context>
 <context>
     <name>BanTableModel</name>
+    </context>
+<context>
+    <name>Bip38ToolDialog</name>
     <message>
         <source>IP/Netmask</source>
         <translation>IP /掩碼</translation>
@@ -301,23 +304,12 @@
 <context>
     <name>BitcoinAmountField</name>
     <message>
-        <source>Enter a Ion Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
-        <translation>輸入你想 BIP 38 加密的 Ion 位址, 輸入密碼在中間欄, 按下加密按鈕來產生加密私鑰.</translation>
-    </message>
-</context>
-<context>
-    <name>BitcoinGUI</name>
-    <message>
-        <source>A fatal error occurred. Ion Core can no longer continue safely and will quit.</source>
-        <translation>發生致命錯誤。達世幣核心軟體不再能安全地繼續運行下去，程式將會關閉。</translation>
+        <source>Address:</source>
+        <translation>位址:</translation>
     </message>
     <message>
-        <source>The Ion address to sign the message with</source>
-        <translation>對訊息簽名的 Ion 位址</translation>
-    </message>
-    <message>
-        <source>Wallet</source>
-        <translation>錢包</translation>
+        <source>Choose previously used address</source>
+        <translation>選擇之前用過的位址</translation>
     </message>
     <message>
         <source>Node</source>
@@ -344,44 +336,24 @@
         <translation>接收(&amp;R)</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Ion address</source>
-        <translation>使用簽章來證明你是該  Ion 位址的擁有者,</translation>
+        <source>Encrypt &amp;Key</source>
+        <translation>加密 &amp;鑰匙</translation>
     </message>
     <message>
-        <source>&amp;Transactions</source>
-        <translation>交易(&amp;T)</translation>
-    </message>
-    <message>
-        <source>Browse transaction history</source>
-        <translation>瀏覽交易紀錄</translation>
-    </message>
-    <message>
-        <source>&amp;Masternodes</source>
-        <translation>主節點(&amp;M)</translation>
+        <source>Clear &amp;All</source>
+        <translation>清除 &amp;全部</translation>
     </message>
     <message>
         <source>Browse masternodes</source>
         <translation>瀏覽主節點</translation>
     </message>
     <message>
-        <source>The Ion address the message was signed with</source>
-        <translation>此訊息之 Ion 位址已簽章於</translation>
+        <source>Decrypt &amp;Key</source>
+        <translation>解密 &amp;鑰匙</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified Ion address</source>
-        <translation>驗證訊息以確保該  Ion 位址已被簽章</translation>
-    </message>
-    <message>
-        <source>Show information about Ion Core</source>
-        <translation>顯示達世幣核心的相關資訊</translation>
-    </message>
-    <message>
-        <source>About &amp;Qt</source>
-        <translation>關於 &amp;Qt</translation>
-    </message>
-    <message>
-        <source>Show information about Qt</source>
-        <translation>顯示 Qt 相關資訊</translation>
+        <source>Decrypted Key:</source>
+        <translation>已解密鑰匙:</translation>
     </message>
     <message>
         <source>&amp;Options...</source>
@@ -668,8 +640,8 @@
         <translation>收到多筆交易</translation>
     </message>
     <message>
-        <source>Send coins to a Ion address</source>
-        <translation>送出錢幣到 Ion 地址</translation>
+        <source>Send coins to a ION address</source>
+        <translation>送出錢幣到 ION 地址</translation>
     </message>
     <message>
         <source>Received Amount: %1
@@ -703,15 +675,15 @@
     </message>
     <message>
         <source>Modify configuration options for ION</source>
-        <translation>修改 Ion 設定</translation>
+        <translation>修改 ION 設定</translation>
     </message>
     <message>
-        <source>Sign messages with your Ion addresses to prove you own them</source>
-        <translation>使用你的 Ion 位址對訊息簽章, 來證明你是擁有者</translation>
+        <source>Sign messages with your ION addresses to prove you own them</source>
+        <translation>使用你的 ION 位址對訊息簽章, 來證明你是擁有者</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
-        <translation>驗證訊息簽章與 Ion 位址吻合</translation>
+        <source>Verify messages to ensure they were signed with specified ION addresses</source>
+        <translation>驗證訊息簽章與 ION 位址吻合</translation>
     </message>
     <message>
         <source>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</source>
@@ -757,8 +729,8 @@
         <translation>零散錢:</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible Ion command-line options</source>
-        <translation>顯示 Ion Core 幫助訊息以取得 Ion 命令列表選項</translation>
+        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
+        <translation>顯示 Ion Core 幫助訊息以取得 ION 命令列表選項</translation>
     </message>
     <message>
         <source>Change:</source>
@@ -793,6 +765,34 @@
         <translation>收款標記</translation>
     </message>
     <message>
+        <source>(no label)</source>
+        <translation>(沒有標記)</translation>
+    </message>
+    </context>
+<context>
+    <name>MultisigDialog</name>
+    </context>
+<context>
+    <name>ObfuscationConfig</name>
+    </context>
+<context>
+    <name>OpenURIDialog</name>
+    </context>
+<context>
+    <name>OptionsDialog</name>
+    </context>
+<context>
+    <name>OverviewPage</name>
+    </context>
+<context>
+    <name>PaymentServer</name>
+    </context>
+<context>
+    <name>PeerTableModel</name>
+    </context>
+<context>
+    <name>PrivacyDialog</name>
+    <message>
         <source>Received with address</source>
         <translation>收款位址</translation>
     </message>
@@ -808,6 +808,19 @@
         <source>Confirmed</source>
         <translation>已確認</translation>
     </message>
+    <message>
+        <source>TextLabel</source>
+        <translation>文字標籤</translation>
+    </message>
+    </context>
+<context>
+    <name>QObject</name>
+    </context>
+<context>
+    <name>QRImageWidget</name>
+    </context>
+<context>
+    <name>RPCConsole</name>
     <message>
         <source>Copy address</source>
         <translation>複製位址</translation>
@@ -982,8 +995,8 @@
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>The Ion address to sign the message with</source>
-        <translation>對訊息簽名的 Ion 位址</translation>
+        <source>The ION address to sign the message with</source>
+        <translation>對訊息簽名的 ION 位址</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
@@ -1006,16 +1019,16 @@
         <translation>命令列選項</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Ion address</source>
-        <translation>使用簽章來證明你是該  Ion 位址的擁有者,</translation>
+        <source>Sign the message to prove you own this ION address</source>
+        <translation>使用簽章來證明你是該  ION 位址的擁有者,</translation>
     </message>
     <message>
-        <source>The Ion address the message was signed with</source>
-        <translation>此訊息之 Ion 位址已簽章於</translation>
+        <source>The ION address the message was signed with</source>
+        <translation>此訊息之 ION 位址已簽章於</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified Ion address</source>
-        <translation>驗證訊息以確保該  Ion 位址已被簽章</translation>
+        <source>Verify the message to ensure it was signed with the specified ION address</source>
+        <translation>驗證訊息以確保該  ION 位址已被簽章</translation>
     </message>
     <message>
         <source>Set a scale factor which gets applied to the base font size. Possible range %1 (smallest fonts) to %2 (largest fonts). (default: %3)</source>
@@ -1126,132 +1139,8 @@
     </message>
 </context>
 <context>
-    <name>MasternodeList</name>
-    <message>
-        <source>Form</source>
-        <translation>表單</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation>狀態</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation>0</translation>
-    </message>
-    <message>
-        <source>Filter List:</source>
-        <translation>篩選列表:</translation>
-    </message>
-    <message>
-        <source>Filter masternode list</source>
-        <translation>篩選主節點列表</translation>
-    </message>
-    <message>
-        <source>Node Count:</source>
-        <translation>節點數:</translation>
-    </message>
-    <message>
-        <source>Show only masternodes this wallet has keys for.</source>
-        <translation>僅顯示此錢包中有密鑰的主節點。</translation>
-    </message>
-    <message>
-        <source>My masternodes only</source>
-        <translation>只顯示我的主節點</translation>
-    </message>
-    <message>
-        <source>Service</source>
-        <translation>服務</translation>
-    </message>
-    <message>
-        <source>PoSe Score</source>
-        <translation>PoSe 評分</translation>
-    </message>
-    <message>
-        <source>Registered</source>
-        <translation>經己註冊</translation>
-    </message>
-    <message>
-        <source>Last Paid</source>
-        <translation>最後一次付款</translation>
-    </message>
-    <message>
-        <source>Next Payment</source>
-        <translation>下一次付款</translation>
-    </message>
-    <message>
-        <source>Payout Address</source>
-        <translation>獎金位址</translation>
-    </message>
-    <message>
-        <source>Operator Reward</source>
-        <translation>運營者獎勵</translation>
-    </message>
-    <message>
-        <source>Collateral Address</source>
-        <translation>抵押品位址</translation>
-    </message>
-    <message>
-        <source>Owner Address</source>
-        <translation>所有者位址</translation>
-    </message>
-    <message>
-        <source>Voting Address</source>
-        <translation>投票位址</translation>
-    </message>
-    <message>
-        <source>Copy ProTx Hash</source>
-        <translation>複製 ProTx 哈希</translation>
-    </message>
-    <message>
-        <source>Copy Collateral Outpoint</source>
-        <translation>複製抵押品出點</translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation>更新中...</translation>
-    </message>
-    <message>
-        <source>ENABLED</source>
-        <translation>已啟用</translation>
-    </message>
-    <message>
-        <source>POSE_BANNED</source>
-        <translation>POSE_BANNED</translation>
-    </message>
-    <message>
-        <source>UNKNOWN</source>
-        <translation>未知</translation>
-    </message>
-    <message>
-        <source>to %1</source>
-        <translation>到 %1</translation>
-    </message>
-    <message>
-        <source>to UNKNOWN</source>
-        <translation>到未知</translation>
-    </message>
-    <message>
-        <source>but not claimed</source>
-        <translation>但無被認領</translation>
-    </message>
-    <message>
-        <source>NONE</source>
-        <translation>沒有</translation>
-    </message>
-    <message>
-        <source>Filter by any property (e.g. address or protx hash)</source>
-        <translation>按任何屬性過濾 (例如 位址 或 protx 哈希值)</translation>
-    </message>
-    <message>
-        <source>Please wait...</source>
-        <translation>請稍候...</translation>
-    </message>
-    <message>
-        <source>Additional information for DIP3 Masternode %1</source>
-        <translation>關於DIP3主節點%1 的附加信息</translation>
-    </message>
-</context>
+    <name>XIonControlDialog</name>
+    </context>
 <context>
     <name>ModalOverlay</name>
     <message>
