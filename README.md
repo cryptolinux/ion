@@ -79,7 +79,7 @@ _For full information about usage and possible installation methods and Branches
 ## Documentation
 
 - [Client Documentation](../../tree/master/doc)
-- [Technical documentation (doxygen)](techdocu.ioncore.xyz)
+- [Technical documentation (doxygen)](techdocu.ioncoin.org)
 
 ## Introduction
 
