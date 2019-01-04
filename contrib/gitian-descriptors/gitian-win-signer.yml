@@ -13,7 +13,7 @@ packages:
 - "libtool"
 - "pkg-config"
 remotes:
-- "url": "https://github.com/cevap/ion-detached-sigs.git"
+- "url": "https://github.com/ioncoincore/ion-detached-sigs.git"
   "dir": "signature"
 files:
 - "v1.7.1.tar.gz"

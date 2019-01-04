@@ -47,7 +47,7 @@ Follow the instructions in [build-generic](build-generic.md)
 Running
 -------
 
-       git clone https://github.com/cevap/ion.git
+       git clone https://github.com/ioncoincore/ion.git
        cd ION
 
 Before running, it's recommended you create an RPC configuration file.

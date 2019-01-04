@@ -27,7 +27,7 @@ Table of Contents
         - [Next steps:](#next-steps)
         - [After 3 or more people have gitian-built and their results match:](#after-3-or-more-people-have-gitian-built-and-their-results-match)
 
-- Update translations (ask for more info on discord or support) see [translation_process.md](https://github.com/cevap/ion/blob/master/doc/translation_process.md#synchronising-translations).
+- Update translations (ask for more info on discord or support) see [translation_process.md](https://github.com/ioncoincore/ion/blob/master/doc/translation_process.md#synchronising-translations).
 
 Before every minor and major release:
 
