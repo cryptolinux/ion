@@ -1,8 +1,8 @@
 ---
 name: Report some random issue
 about: Report a issue
-title: ''
-labels: bug
+title: "[random issue]"
+labels: question, random issue
 assignees: ckti, MitchellCash, CeForce, cevap, FornaxA
 
 ---
