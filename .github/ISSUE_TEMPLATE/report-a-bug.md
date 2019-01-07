@@ -1,8 +1,8 @@
 ---
 name: Report a bug
 about: Create a report to help us improve Ion Core
-title: "[BUG]"
-labels: Bug
+title: "[bug]"
+labels: bug
 assignees: ckti, MitchellCash, CeForce, cevap, FornaxA
 
 ---

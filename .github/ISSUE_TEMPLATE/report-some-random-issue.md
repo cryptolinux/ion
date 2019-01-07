@@ -2,7 +2,7 @@
 name: Report some random issue
 about: Report a issue
 title: ''
-labels: ''
+labels: bug
 assignees: ckti, MitchellCash, CeForce, cevap, FornaxA
 
 ---
