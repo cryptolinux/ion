@@ -3914,16 +3914,18 @@ UniValue searchdxion(const UniValue& params, bool fHelp)
 UniValue createautomintaddress(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() != 0)
-        throw runtime_error(
+        throw std::runtime_error(
                 "createautomintaddress\n"
-                        "Overview: generates new auto mint address\n"
-                        "\nResult\n"
-                        "\"address\"             160hash of public key\n" +
+                "\nGenerates new auto mint address\n" +
+                HelpRequiringPassphrase() + "\n"
+
+                "\nResult\n"
+                "\"address\"     (string) ION address for auto minting\n" +
                 HelpExampleCli("createautomintaddress", "") +
                 HelpExampleRpc("createautomintaddress", ""));
+
+    EnsureWalletIsUnlocked();
     LOCK(pwalletMain->cs_wallet);
     CBitcoinAddress address = pwalletMain->GenerateNewAutoMintKey();
-    UniValue ret(UniValue::VOBJ);
-    ret.push_back(Pair("address", address.ToString()));
-    return ret;
+    return address.ToString();
 }
