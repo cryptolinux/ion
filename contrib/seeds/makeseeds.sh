@@ -20,6 +20,12 @@ sed -i 's/\"]}/:12700/g' contrib/seeds/nodes_main.txt
 sed -i 's/\\//g' contrib/seeds/nodes_main.txt
 touch ./contrib/seeds/nodes_test.txt
 tee ./contrib/seeds/nodes_test.txt <<EOF
+199.247.15.235:27170
+149.248.59.142:27170
+140.82.26.131:27170
+45.63.89.41:27170
+202.182.121.198:27170
+149.28.13.221:27170
 185.107.224.197:39020
 45.77.215.23:27170
 51.15.95.171:27170
