@@ -23,6 +23,7 @@ Table of Contents
       - [Install latest release candidate from terminal](#install-latest-release-candidate-from-terminal)
       - [Install latest beta release from terminal](#install-latest-beta-release-from-terminal)
       - [Install latest edge release from terminal](#install-latest-edge-release-from-terminal)
+      - [To test specific build version on your PC or cloud instance](#to-test-specific-build-version-on-your-pc-or-cloud-instance)
       - [Upgrade to latest version from terminal](#upgrade-to-latest-version-from-terminal)
       - [OS's supported by snap](#oss-supported-by-snap)
     - [Method 3. Download and install latest release](#method-3-download-and-install-latest-release)
@@ -120,6 +121,10 @@ Please use **only stable release** for production/commercial purpose.
 #### Install latest edge release from terminal
 
     sudo snap install --edge ioncore
+
+#### To test specific build version on your PC or cloud instance
+
+    sudo snap install --edge ioncore --revision=66 
 
 #### Upgrade to latest version from terminal
 
