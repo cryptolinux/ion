@@ -25,6 +25,8 @@ Table of Contents
       - [Install latest edge release from terminal](#install-latest-edge-release-from-terminal)
       - [To test specific build version on your PC or cloud instance](#to-test-specific-build-version-on-your-pc-or-cloud-instance)
       - [Upgrade to latest version from terminal](#upgrade-to-latest-version-from-terminal)
+      - [Snap post install setup (optional)](#snap-post-install-setup-optional)
+        - [Create ion-qt, iond, ion-cli and ion-tx aliases](#create-ion-qt-iond-ion-cli-and-ion-tx-aliases)
       - [OS's supported by snap](#oss-supported-by-snap)
     - [Method 3. Download and install latest release](#method-3-download-and-install-latest-release)
       - [Latest stable Release](#latest-stable-release)
@@ -129,6 +131,37 @@ Please use **only stable release** for production/commercial purpose.
 #### Upgrade to latest version from terminal
 
     sudo snapcraft refresh
+
+#### Snap post install setup (optional)
+
+We might have many users who are not comfortable with name change of the binaries. This can be especially nasty for those who have many scripts and would hate to be forced to edit them where gitian release binaries do have label.
+
+Here is what we suggest, if specific request comes, we could add it as post install script to snap.
+
+##### Create ion-qt, iond, ion-cli and ion-tx aliases
+
+```sh
+sudo nano ~/.bash_aliases
+```
+
+Add following entries and save the file:
+```
+alias ion-qt='ioncore.qt'
+alias iond='ioncore.daemon'
+alias ion-cli='ioncore.cli'
+alias ion-tx='ioncore.tx'
+```
+
+Your aliases will not be available until you run:
+```sh
+source ~/.bash_aliases
+```
+
+now you can use `ion-qt`, `iond`, `ion-cli` and `ion-tx`, example:
+```sh
+$ ion-cli --version
+Ion Core RPC client version v3.1.99.0-fc81e5f-dirty
+```
 
 #### OS's supported by snap
 
