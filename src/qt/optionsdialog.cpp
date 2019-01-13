@@ -521,3 +521,8 @@ QValidator::State ProxyAddressValidator::validate(QString &input, int &pos) cons
 
     return QValidator::Invalid;
 }
+
+void OptionsDialog::setCurrentIndex(int index)
+{
+    ui->tabWidget->setCurrentIndex(index);
+}

@@ -46,6 +46,7 @@ public:
 
     void setModel(OptionsModel *model);
     void setMapper();
+    void setCurrentIndex(int index);
 
 private Q_SLOTS:
     /** custom tab buttons clicked */

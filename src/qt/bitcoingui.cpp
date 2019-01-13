@@ -932,9 +932,7 @@ void BitcoinGUI::optionsClicked()
 
     OptionsDialog dlg(this, enableWallet);
     dlg.setModel(clientModel->getOptionsModel());
-    connect(&dlg, &OptionsDialog::appearanceChanged, [=]() {
-        updateWidth();
-    });
+    dlg.setCurrentIndex(0);
     dlg.exec();
 
     updatePrivateSendVisibility();
