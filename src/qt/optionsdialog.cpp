@@ -282,7 +282,14 @@ void OptionsDialog::setMapper()
 #endif
     mapper->addMapping(ui->threadsScriptVerif, OptionsModel::ThreadsScriptVerif);
     mapper->addMapping(ui->databaseCache, OptionsModel::DatabaseCache);
-    mapper->addMapping(ui->privateSendEnabled, OptionsModel::PrivateSendEnabled);
+    // Zeromint Enabled
+    mapper->addMapping(ui->checkBoxZeromintEnable, OptionsModel::ZeromintEnable);
+    // Zeromint Addresses
+    mapper->addMapping(ui->checkBoxZeromintAddresses, OptionsModel::ZeromintAddresses);
+    // Zerocoin mint percentage
+    mapper->addMapping(ui->zeromintPercentage, OptionsModel::ZeromintPercentage);
+    // Zerocoin preferred denomination
+    mapper->addMapping(ui->preferredDenom, OptionsModel::ZeromintPrefDenom);
 
     /* Wallet */
     mapper->addMapping(ui->coinControlFeatures, OptionsModel::CoinControlFeatures);

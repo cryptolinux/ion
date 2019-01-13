@@ -108,8 +108,17 @@ void OptionsModel::Init(bool resetSettings)
         settings.setValue("fCoinControlFeatures", false);
     fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
 
-    if (!settings.contains("digits"))
-        settings.setValue("digits", "2");
+    if (!settings.contains("fZeromintEnable"))
+        settings.setValue("fZeromintEnable", true);
+    fEnableZeromint = settings.value("fZeromintEnable").toBool();
+
+    if (!settings.contains("fEnableAutoConvert"))
+        settings.setValue("fEnableAutoConvert", true);
+    fEnableAutoConvert = settings.value("fEnableAutoConvert").toBool();
+
+    if (!settings.contains("nZeromintPercentage"))
+        settings.setValue("nZeromintPercentage", 10);
+    nZeromintPercentage = settings.value("nZeromintPercentage").toLongLong();
 
     // PrivateSend
     if (!settings.contains("fPrivateSendEnabled")) {
@@ -218,6 +227,8 @@ void OptionsModel::Init(bool resetSettings)
 
     if (settings.contains("fZeromintEnable"))
         SoftSetBoolArg("-enablezeromint", settings.value("fZeromintEnable").toBool());
+    if (settings.contains("fEnableAutoConvert"))
+        SoftSetBoolArg("-enableautoconvertaddress", settings.value("fEnableAutoConvert").toBool());
     if (settings.contains("nZeromintPercentage"))
         SoftSetArg("-zeromintpercentage", settings.value("nZeromintPercentage").toString().toStdString());
     if (settings.contains("nPreferredDenom"))
@@ -399,6 +410,8 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return settings.value("fHideOrphans");
         case ZeromintEnable:
             return QVariant(fEnableZeromint);
+        case ZeromintAddresses:
+            return QVariant(fEnableAutoConvert);
         case ZeromintPercentage:
             return QVariant(nZeromintPercentage);
         case ZeromintPrefDenom:
@@ -609,6 +622,10 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             settings.setValue("fZeromintEnable", fEnableZeromint);
             emit zeromintEnableChanged(fEnableZeromint);
             break;
+        case ZeromintAddresses:
+            fEnableAutoConvert = value.toBool();
+            settings.setValue("fEnableAutoConvert", fEnableAutoConvert);
+            emit zeromintAddressesChanged(fEnableAutoConvert);
         case ZeromintPercentage:
             nZeromintPercentage = value.toInt();
             settings.setValue("nZeromintPercentage", nZeromintPercentage);
