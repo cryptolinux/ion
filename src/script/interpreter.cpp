@@ -255,6 +255,27 @@ static const valtype vchTrue(1, 1);
 // Returns info about the next instruction to be run
 std::tuple<bool, opcodetype, StackDataType, ScriptError> ScriptMachine::Peek()
 {
+    ScriptMachine sm(flags, checker, maxOps);
+    sm.setStack(stack);
+    bool result = sm.Eval(script);
+    stack = sm.getStack();
+    if (serror)
+        *serror = sm.getError();
+    return result;
+}
+
+
+static const CScriptNum bnZero(0);
+static const CScriptNum bnOne(1);
+static const CScriptNum bnFalse(0);
+static const CScriptNum bnTrue(1);
+static const StackDataType vchFalse(0);
+static const StackDataType vchZero(0);
+static const StackDataType vchTrue(1, 1);
+
+// Returns info about the next instruction to be run
+std::tuple<bool, opcodetype, StackDataType, ScriptError> ScriptMachine::Peek()
+{
     ScriptError err;
     opcodetype opcode;
     StackDataType vchPushValue;
@@ -277,7 +298,7 @@ bool ScriptMachine::BeginStep(const CScript &_script)
     pend = script->end();
     pbegincodehash = pc;
 
-    sigversion = SigVersion::SIGVERSION_BASE;
+    sighashtype = 0;
     nOpCount = 0;
     vfExec.clear();
 
@@ -328,7 +349,6 @@ bool ScriptMachine::Step()
     ScriptError *serror = &error;
     try
     {
-        while (pc < pend)
         {
             bool fExec = !count(vfExec.begin(), vfExec.end(), false);
 
@@ -1063,9 +1083,6 @@ bool ScriptMachine::Step()
     {
         return set_error(serror, SCRIPT_ERR_UNKNOWN_ERROR);
     }
-
-    if (!vfExec.empty())
-        return set_error(serror, SCRIPT_ERR_UNBALANCED_CONDITIONAL);
 
     return set_success(serror);
 }

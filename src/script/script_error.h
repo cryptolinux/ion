@@ -53,7 +53,7 @@ typedef enum ScriptError_t
     /* softfork safeness */
     SCRIPT_ERR_DISCOURAGE_UPGRADABLE_NOPS,
 
-    /* misc */
+     /* misc */
     SCRIPT_ERR_NUMBER_OVERFLOW,
     SCRIPT_ERR_NUMBER_BAD_ENCODING,
 

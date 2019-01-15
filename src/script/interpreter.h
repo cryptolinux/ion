@@ -142,7 +142,7 @@ protected:
     const BaseSignatureChecker &checker;
     ScriptError error;
 
-    SigVersion sigversion;
+    unsigned char sighashtype;
 
     CScript::const_iterator pc;
     CScript::const_iterator pbegin;
@@ -163,7 +163,7 @@ public:
         altstack = from.altstack;
         script = from.script;
         error = from.error;
-        sigversion = from.sigversion;
+        sighashtype = from.sighashtype;
         nOpCount = from.nOpCount;
         vfExec = from.vfExec;
         maxOps = from.maxOps;
@@ -242,11 +242,13 @@ public:
     const std::vector<StackDataType> &getAltStack() { return altstack; }
     // Get any error that may have occurred
     const ScriptError &getError() { return error; }
+    // Get the bitwise OR of all sighashtype bytes that occurred in the script
+    unsigned char getSigHashType() { return sighashtype; }
     // Return the number of instructions executed since the last Reset()
     unsigned int getOpCount() { return nOpCount; }
 };
 
-bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& script, unsigned int flags, const BaseSignatureChecker& checker, SigVersion sigversion, ScriptError* error = nullptr);
-bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, unsigned int flags, const BaseSignatureChecker& checker, ScriptError* error = nullptr);
+bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& script, unsigned int flags, const BaseSignatureChecker& checker, ScriptError* error = NULL);
+bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, unsigned int flags, const BaseSignatureChecker& checker, ScriptError* error = NULL);
 
 #endif // BITCOIN_SCRIPT_INTERPRETER_H
