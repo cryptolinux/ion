@@ -2,8 +2,8 @@ name: ioncore
 version: 3.1.99
 summary:   gaming related peer-to-peer network based digital currency
 description: |
-  ION is an MIT licensed,
-  open source, blockchain-based cryptocurrency with 
+  Ion Core is an MIT licensed,
+  open source, gaming oriented, blockchain-based cryptocurrency with 
   ultra fast transactions, low fees, high network decentralization, and
   Zero Knowledge cryptography proofs for industry-leading
   transaction anonymity. This package include QT, daemon, cli and tx
@@ -21,6 +21,7 @@ description: |
     https://github.com/ionomy/ion/wiki/ION-Technical-Whitepaper
   
   Get source code from Github: https://github.com/ioncoincore/ion.git
+  Get CE source code from Github: https://github.com/cevap/ion.git
   
   Chat with Support on Discord: https://discord.gg/vuZn7gC
   
