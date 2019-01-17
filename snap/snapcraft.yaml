@@ -1,9 +1,9 @@
 name: ioncore
-version: 3.1.99
+version: 3.0.5
 summary:   gaming related peer-to-peer network based digital currency
 description: |
   Ion Core is an MIT licensed,
-  open source, gaming oriented, blockchain-based cryptocurrency with 
+  open source, gaming oriented, blockchain-based cryptocurrency with
   ultra fast transactions, low fees, high network decentralization, and
   Zero Knowledge cryptography proofs for industry-leading
   transaction anonymity. This package include QT, daemon, cli and tx
@@ -31,7 +31,7 @@ description: |
     Reddit:    https://www.reddit.com/r/ionomy/
     Facebook:  https://facebook.com/ionomy
 
-grade: devel
+grade: stable
 confinement: strict
 icon: src/qt/res/src/ion.svg
 apps:
@@ -56,7 +56,7 @@ parts:
   ion:
     source: https://github.com/ioncoincore/ion
     source-type: git
-    source-tag: master
+    source-tag: v3.0.5
     plugin: autotools
     # We don't want to copy the full blockchain every time that the snap is   
     # updated, but there's no way to define a default data dir in ion-qt.
