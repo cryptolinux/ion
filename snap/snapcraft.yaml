@@ -9,8 +9,9 @@ description: |
   transaction anonymity. This package include QT, daemon, cli and tx
   binaries.
   
-  Wiki (Ionomy):   https://github.com/ioncoincore/ion/wiki
-  Wiki (IonomyCE): https://github.com/ioncoincore/ion/wiki
+  Wiki (Ion Core):    https://github.com/ioncoincore/ion/wiki
+  Wiki (Ionomy):      https://github.com/ionomy/ion/wiki
+  Wiki (Ion Core CE): https://github.com/cevap/ion/wiki
   
   Technical documentaion: https://techdoc.ioncoin.org
   
