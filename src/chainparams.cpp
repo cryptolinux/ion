@@ -191,11 +191,12 @@ static Checkpoints::MapCheckpoints mapCheckpoints =
         (  886654,  uint256("c816d0e907ab44f43ec6bef321ac2c9b4e4a578c9ee4e7946e4a74c3073edf66") ) //                                1542390128   2316854
         (  908698,  uint256("aa44b1eebd7ad5d4bc7b428dcdacd527677fa639557b58666a68dc2fdba3f133") ) // Last active zerocoin v1 block  1543722397   2371470 (zerocoin v1 disabled: 1543722400)
         (  936756,  uint256("873aa1d52ca79dc77d67f8162a2a60b9c936f50449b58b5464b91e412d351c29") ) //                                1543729708   2371718
-        (  956579,  uint256("bac382323420c9c8e89024b66a3cab28d6133ca7450eae07de63364f74f087f6") );//                                1543729708   2371718
+        (  956579,  uint256("bac382323420c9c8e89024b66a3cab28d6133ca7450eae07de63364f74f087f6") ) //                                1546631813   2492172
+        (  980729,  uint256("a12927283f8396a65bf45cf516f5d8a2c618ac6b2a9cc530cdd962c9263b3398") );//                                1548101941   2552465
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1546631813, // * UNIX timestamp of last checkpoint block
-    2492172,    // * total number of transactions between genesis and last checkpoint
+    1548101941, // * UNIX timestamp of last checkpoint block
+    2552465,    // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     2000 	// * estimated number of transactions per day after checkp
 };
@@ -216,11 +217,12 @@ static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
 	(  443601,      uint256("c5e9467f24b1d149a9716776be2fdc806af2db54d11330df33bb931f8ebf6254") ) // Testnet Fork June 2018
 	(  472999,      uint256("5d55f229074b930f4dd42a0f4e0e2f1d855dcd1d87cb86553ea21c797825482c") ) // Testnet Fork June 2018
 	(  473000,      uint256("237bc8d1e7cb02af8cd3e6affe1fa134c1a29a4852f3fa177ebcd50014463152") ) // Testnet Fork December 2018; timestamp=1545338100  txcount=947151
-	(  500535,      uint256("d6a5202217fcbdbe34592e78038937cb89541cb41051492bde6d061188285086") );// timestamp=1547025824 txcount=1003348
+	(  500535,      uint256("d6a5202217fcbdbe34592e78038937cb89541cb41051492bde6d061188285086") ) // timestamp=1547025824 txcount=1003348
+	(  516559,      uint256("8b91cc91179419e72777e51b3c298fd29df8827256b361c48cf61bab0b1e1bb5") );// timestamp=1548102045 txcount=1035503
 static const Checkpoints::CCheckpointData dataTestnet = {
     &mapCheckpointsTestnet,
-    1547025824,
-    1003348,
+    1548102045,
+    1035503,
     2000};
 
 static Checkpoints::MapCheckpoints mapCheckpointsRegtest =
@@ -416,7 +418,7 @@ public:
         nBlockLastGoodCheckpoint = 550137;          //Last valid accumulator checkpoint
         nBlockEnforceInvalidUTXO = 550137;          //Start enforcing the invalid UTXO's
         nInvalidAmountFiltered = 0*COIN;            //Amount of invalid coins filtered through exchanges, that should be considered valid
-        nBlockZerocoinV2 = 1012710;                 //!> The block that zerocoin v2 becomes active - roughly GMT: Thursday, February 7, 2019 12:00:01 AM
+        nBlockZerocoinV2 = 980678;                 //!> The block that zerocoin v2 becomes active - 1548098308 - GMT: Monday, January 21, 2019 7:18:28 PM
         nEnforceNewSporkKey = 1548979201;           //!> Sporks signed after, GMT: Friday, February 1, 2019 12:00:01 AM must use the new spork key
         nRejectOldSporkKey = 1549497601;            //!> Reject old spork key afters, GMT: Thursday, February 7, 2019 12:00:01 AM
 
