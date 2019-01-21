@@ -115,7 +115,7 @@ script: |
   # Correct tar file order
   mkdir -p temp
   pushd temp
-  tar xf ../$SOURCEDIST
+  tar xJf ../$SOURCEDIST
   find ion-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | xz -9 > ../$SOURCEDIST
   popd
 
