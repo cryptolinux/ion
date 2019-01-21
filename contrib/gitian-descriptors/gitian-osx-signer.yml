@@ -33,7 +33,7 @@ script: |
   UNSIGNED=ion-osx-unsigned.tar.xz
   SIGNED=ion-osx-signed.dmg
 
-  tar -xf ${UNSIGNED}
+  tar -xJf ${UNSIGNED}
   OSX_VOLNAME="$(cat osx_volname)"
   ./detached-sig-apply.sh ${UNSIGNED} signature/osx
   ${WRAP_DIR}/genisoimage -no-cache-inodes -D -l -probe -V "${OSX_VOLNAME}" -no-pad -r -dir-mode 0755 -apple -o uncompressed.dmg signed-app
