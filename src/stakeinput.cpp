@@ -136,8 +136,15 @@ bool CXIonStake::CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount nT
         return error("%s: failed to database the staked xION", __func__);
 
     CAmount toMint = (nTotal - this->GetValue()) / 2;
+    CAmount nRemaining = 0;
     while (toMint >= 1 * COIN) {
-        libzerocoin::CoinDenomination denomination = libzerocoin::AmountToClosestDenomination(toMint, toMint);
+        libzerocoin::CoinDenomination denomination = libzerocoin::AmountToClosestDenomination(toMint, nRemaining);
+
+        if (denomination == libzerocoin::ZQ_ERROR)
+            return error("%s: failed to create xION output", __func__);
+
+        CAmount nValueNewMint = libzerocoin::ZerocoinDenominationToAmount(denomination);
+        toMint -= nValueNewMint;
 
         CTxOut out;
         CDeterministicMint dMintReward;
