@@ -56,7 +56,7 @@ parts:
   ion:
     source: https://github.com/ioncoincore/ion
     source-type: git
-    source-tag: v3.1.00-beta1
+    source-tag: master
     plugin: autotools
     # We don't want to copy the full blockchain every time that the snap is   
     # updated, but there's no way to define a default data dir in ion-qt.
