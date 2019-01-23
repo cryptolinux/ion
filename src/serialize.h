@@ -64,6 +64,46 @@ inline T* NCONST_PTR(const T* val)
     return const_cast<T*>(val);
 }
 
+/////////////////////////////////////////////////////////////////
+//
+// Templates for serializing to anything that looks like a stream,
+// i.e. anything that supports .read(char*, size_t) and .write(char*, size_t)
+//
+
+enum {
+    // primary actions
+    SER_NETWORK = (1 << 0),
+    SER_DISK = (1 << 1),
+    SER_GETHASH = (1 << 2),
+};
+
+#define READWRITE(obj) (::SerReadWrite(s, (obj), nType, nVersion, ser_action))
+
+/** 
+ * Implement three methods for serializable objects. These are actually wrappers over
+ * "SerializationOp" template, which implements the body of each class' serialization
+ * code. Adding "ADD_SERIALIZE_METHODS" in the body of the class causes these wrappers to be
+ * added as members. 
+ */
+#define ADD_SERIALIZE_METHODS                                                         \
+    size_t GetSerializeSize(int nType, int nVersion) const                            \
+    {                                                                                 \
+        CSizeComputer s(nType, nVersion);                                             \
+        NCONST_PTR(this)->SerializationOp(s, CSerActionSerialize(), nType, nVersion); \
+        return s.size();                                                              \
+    }                                                                                 \
+    template <typename Stream>                                                        \
+    void Serialize(Stream& s, int nType, int nVersion) const                          \
+    {                                                                                 \
+        NCONST_PTR(this)->SerializationOp(s, CSerActionSerialize(), nType, nVersion); \
+    }                                                                                 \
+    template <typename Stream>                                                        \
+    void Unserialize(Stream& s, int nType, int nVersion)                              \
+    {                                                                                 \
+        SerializationOp(s, CSerActionUnserialize(), nType, nVersion);                 \
+    }
+
+
 /*
  * Lowest-level serialization and conversion.
  * @note Sizes of these types are verified in the tests

@@ -12,13 +12,12 @@
 
 #include "util.h"
 
-#include <support/allocators/secure.h>
-#include <chainparamsbase.h>
-#include <ctpl.h>
-#include <random.h>
-#include <serialize.h>
-#include <stacktraces.h>
-#include <utilstrencodings.h>
+#include "allocators.h"
+#include "chainparamsbase.h"
+#include "random.h"
+#include "sync.h"
+#include "utilstrencodings.h"
+#include "utiltime.h"
 
 #include <stdarg.h>
 
@@ -1187,9 +1186,8 @@ void ShrinkDebugFile()
         int nBytes = fread(vch.data(), 1, vch.size(), file);
         fclose(file);
 
-        file = fsbridge::fopen(pathLog, "w");
-        if (file)
-        {
+        file = fopen(pathLog.string().c_str(), "w");
+        if (file) {
             fwrite(vch.data(), 1, nBytes, file);
             fclose(file);
         }
