@@ -93,7 +93,7 @@ parts:
       - libtool
       - bsdmainutils
       - g++-multilib 
-      - binutils-gold
+      - binutils
       - python3
     stage-packages: [ca-certificates]
     after:
