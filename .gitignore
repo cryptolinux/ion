@@ -5,6 +5,7 @@ reset-files.bash
 
 *.tar.gz
 *.tar.xz
+*.tar.bz2
 
 *.exe
 src/ion
