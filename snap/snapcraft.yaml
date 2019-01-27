@@ -60,10 +60,10 @@ parts:
     # Also, it would be better if we could split the wallet from the blockchain
     prepare: |
       export DEPENDSARCH=$(./depends/config.guess)
-      if [ $DEPENDSARCH != "x86_64-pc-linux-gnu" ] 
-      then
-        apt install g++-$DEPENDSARCH binutils-$DEPENDSARCH
-      fi
+      #if [ $DEPENDSARCH != "x86_64-pc-linux-gnu" ] 
+      #then
+      #  apt install g++-$DEPENDSARCH binutils-$DEPENDSARCH
+      #fi
       git apply $SNAPCRAFT_STAGE/default_data_dir.patch
       sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' ./depends/funcs.mk
       mv ./depends $SNAPCRAFT_STAGE/depends
@@ -89,7 +89,6 @@ parts:
       - pkg-config
       - libtool
       - bsdmainutils
-      - g++-multilib 
       - binutils
       - python3
     stage-packages: [ca-certificates]
