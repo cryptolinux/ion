@@ -238,7 +238,7 @@ public:
 
     CxIONWallet* zwalletMain;
 
-    std::set<CBitcoinAddress> setAutoConvertAddresses;
+    std::set<CTxDestination> setAutoConvertAddresses;
 
     bool fFileBacked;
     bool fWalletUnlockAnonymizeOnly;
@@ -406,7 +406,7 @@ public:
     //  keystore implementation
     // Generate a new key
     CPubKey GenerateNewKey();
-    CBitcoinAddress GenerateNewAutoMintKey();
+    CKeyID GenerateNewAutoMintKey();
 
     //! Adds a key to the store, and saves it to disk.
     bool AddKeyPubKey(const CKey& key, const CPubKey& pubkey);

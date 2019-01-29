@@ -15,6 +15,7 @@
 #include "primitives/zerocoin.h"
 #include "libzerocoin/Accumulator.h"
 #include "libzerocoin/Denominations.h"
+#include "script/standard.h"
 #include "xiontracker.h"
 
 #include <list>
@@ -25,7 +26,6 @@
 
 class CAccount;
 class CAccountingEntry;
-class CBitcoinAddress;
 struct CBlockLocator;
 class CKeyPool;
 class CMasterKey;
@@ -103,8 +103,8 @@ public:
     bool WriteCryptedKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret, const CKeyMetadata& keyMeta);
     bool WriteMasterKey(unsigned int nID, const CMasterKey& kMasterKey);
 
-    bool WriteAutoConvertKey(const CBitcoinAddress& btcAddress);
-    void LoadAutoConvertKeys(std::set<CBitcoinAddress>& setAddresses);
+    bool WriteAutoConvertKey(const CTxDestination& dest);
+    void LoadAutoConvertKeys(std::set<CTxDestination>& setDestinations);
 
     bool WriteCScript(const uint160& hash, const CScript& redeemScript);
 

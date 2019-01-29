@@ -22,6 +22,7 @@
 #include <boost/foreach.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/thread.hpp>
+#include <boost/variant/get.hpp>
 #include <fstream>
 
 using namespace boost;
@@ -71,17 +72,18 @@ bool CWalletDB::EraseTx(uint256 hash)
     return Erase(std::make_pair(std::string("tx"), hash));
 }
 
-bool CWalletDB::WriteAutoConvertKey(const CBitcoinAddress& btcAddress)
+bool CWalletDB::WriteAutoConvertKey(const CTxDestination& dest)
 {
-    CKeyID keyID;
-    if (!btcAddress.GetKeyID(keyID))
+    if (!IsValidDestination(dest))
         return false;
-    return Write(std::make_pair(std::string("automint"), keyID), btcAddress.ToString());
+    if (const CKeyID* keyID = boost::get<CKeyID>(&dest))
+        return Write(std::make_pair(std::string("automint"), *keyID), EncodeDestination(dest));
+    else return false;
 }
 
-void CWalletDB::LoadAutoConvertKeys(std::set<CBitcoinAddress>& setAddresses)
+void CWalletDB::LoadAutoConvertKeys(std::set<CTxDestination>& setDestinations)
 {
-    setAddresses.clear();
+    setDestinations.clear();
     Dbc* pcursor = GetCursor();
     if (!pcursor)
         throw runtime_error(std::string(__func__)+" : cannot create DB cursor");
@@ -118,7 +120,7 @@ void CWalletDB::LoadAutoConvertKeys(std::set<CBitcoinAddress>& setAddresses)
 
         std::string strAddress;
         ssValue >> strAddress;
-        setAddresses.emplace(strAddress);
+        setDestinations.emplace(DecodeDestination(strAddress));
     }
 
     pcursor->close();

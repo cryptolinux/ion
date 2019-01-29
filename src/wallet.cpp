@@ -114,15 +114,13 @@ CPubKey CWallet::GenerateNewKey()
     return pubkey;
 }
 
-CBitcoinAddress CWallet::GenerateNewAutoMintKey()
+CKeyID CWallet::GenerateNewAutoMintKey()
 {
-    CBitcoinAddress btcAddress;
     CKeyID keyID = GenerateNewKey().GetID();
-    btcAddress.Set(keyID);
-    CWalletDB(strWalletFile).WriteAutoConvertKey(btcAddress);
+    CWalletDB(strWalletFile).WriteAutoConvertKey(keyID);
     SetAddressBook(keyID, "automint-address", "receive");
-    setAutoConvertAddresses.emplace(btcAddress);
-    return btcAddress;
+    setAutoConvertAddresses.emplace(keyID);
+    return keyID;
 }
 
 bool CWallet::AddKeyPubKey(const CKey& secret, const CPubKey& pubkey)
@@ -4164,12 +4162,10 @@ void CWallet::InitAutoConvertAddresses()
 void CWallet::AutoZeromintForAddress()
 {
     std::map<CTxDestination, CAmount> mapBalances = GetAddressBalances();
-    std::map<CBitcoinAddress, vector<COutput> > mapAddressCoins = AvailableCoinsByAddress(true);
+    std::map<CTxDestination, vector<COutput> > mapAddressCoins = AvailableCoinsByAddress(true);
 
-    for (auto address : setAutoConvertAddresses) {
-        CTxDestination dest = address.Get();
-
-        if (!mapBalances.count(dest) || !mapAddressCoins.count(address))
+    for (auto dest : setAutoConvertAddresses) {
+        if (!mapBalances.count(dest) || !mapAddressCoins.count(dest))
             continue;
 
         CAmount nBalance = mapBalances.at(dest);
@@ -4184,7 +4180,7 @@ void CWallet::AutoZeromintForAddress()
 
         CAmount nSelected = 0;
         std::unique_ptr<CCoinControl> coinControl(new CCoinControl());
-        for (auto out : mapAddressCoins.at(address)) {
+        for (auto out : mapAddressCoins.at(dest)) {
             COutPoint outPoint(out.tx->GetHash(), out.i);
             coinControl->Select(outPoint);
             nSelected += out.tx->vout[out.i].nValue;

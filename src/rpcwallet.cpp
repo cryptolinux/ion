@@ -3946,6 +3946,6 @@ UniValue createautomintaddress(const UniValue& params, bool fHelp)
 
     EnsureWalletIsUnlocked();
     LOCK(pwalletMain->cs_wallet);
-    CBitcoinAddress address = pwalletMain->GenerateNewAutoMintKey();
-    return address.ToString();
+    CKeyID address = pwalletMain->GenerateNewAutoMintKey();
+    return EncodeDestination(address);
 }
