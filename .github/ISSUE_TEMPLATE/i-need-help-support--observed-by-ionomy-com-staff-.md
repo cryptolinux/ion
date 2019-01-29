@@ -15,10 +15,10 @@ For reporting security issues, please read instructions at support@ionomy.com or
 
 If the node is "stuck" during sync or giving "block checksum mismatch" errors, please ensure your hardware is stable by running memtest and observe CPU temperature with a load-test tool such as linpack before creating an issue! -->
 
-<!-- !!!PLEASE NEVER UPLOAD PRIVATE KEYS IN PLAIN OR UPLOAD WALLET.DAT, IF YOU STILL WANT TO SUPPLY YOUR WALLET.DAT TO DEVS, PLEASE MAKE SURE IT IS ENCRYPTED WITH GPG WHICH CAN BE FOUND HERE: https://github.com/ioncoincore/ion/tree/master/contrib/gitian-keys -->
+<!-- !!!PLEASE NEVER UPLOAD PRIVATE KEYS IN PLAIN OR UPLOAD WALLET.DAT, IF YOU STILL WANT TO SUPPLY YOUR WALLET.DAT TO DEVS, PLEASE MAKE SURE IT IS ENCRYPTED WITH GPG WHICH CAN BE FOUND HERE: https://github.com/cevap/ion/tree/master/contrib/gitian-keys -->
 
 <!-- Before asking a question you might find your answer in
-- Ion Wiki/Faq/Help (https://github.com/ioncoincore/ion/wiki)
+- Ion Wiki/Faq/Help (https://github.com/cevap/ion/wiki)
 - Bitcoin Wiki (https://en.bitcoin.it/wiki/) -->
 
 <!-- Describe the issue -->

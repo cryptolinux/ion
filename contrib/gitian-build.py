@@ -33,7 +33,7 @@ def setup():
     if not os.path.isdir('gitian-builder'):
         subprocess.check_call(['git', 'clone', 'https://github.com/devrandom/gitian-builder.git'])
     if not os.path.isdir('ion'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/ioncoincore/ion.git'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/cevap/ion.git'])
     os.chdir('gitian-builder')
     make_image_prog = ['bin/make-base-vm', '--suite', 'bionic', '--arch', 'amd64']
     if args.docker:
@@ -93,6 +93,27 @@ def build():
             subprocess.check_call(['git', 'add', args.version+'-osx-unsigned/'+args.signer])
         subprocess.check_call(['git', 'commit', '-m', 'Add '+args.version+' unsigned sigs for '+args.signer])
         os.chdir(workdir)
+
+    os.chdir('ion-binaries/'+args.version')
+
+    if args.hash == 'SHA1':
+        subprocess.check_call(['gpg', '--digest-algo', sha1, '--clearsign', args.hash+'SUMS', args.signer])
+
+    if args.hash == 'SHA256':
+        subprocess.check_call(['gpg', '--digest-algo', sha256, '--clearsign', args.hash+'SUMS', args.signer])
+
+    if args.hash == 'SHA512':
+        subprocess.check_call(['gpg', '--digest-algo', sha512, '--clearsign', args.hash+'SUMS', args.signer])
+
+    subprocess.check_call(['rm', '-f', args.hash+'SUMS', args.signer])
+
+    os.chdir(workdir)
+
+    if args.upload not '':
+        print(args.upload': Start uploading all files to uploadserver.')
+        subprocess.check_call(['ssh', args.upload, 'mkdir', '-p', args.uploadfolder+'/'+args.version])
+        subprocess.check_call(['scp', '-r', 'ion-binaries/'+args.version, args.upload+'/'+args.uploadfolder+'/'+args.version])
+        subprocess.check_call(['scp', '-r', 'gitian-builder/var', args.uploadfolder+'/'+args.version+'/'+args.uploadlogs])
 
 def sign():
     global args, workdir
@@ -159,7 +180,7 @@ def main():
     parser = argparse.ArgumentParser(usage='%(prog)s [options] signer version')
     parser.add_argument('-c', '--commit', action='store_true', dest='commit', help='Indicate that the version argument is for a commit or branch')
     parser.add_argument('-p', '--pull', action='store_true', dest='pull', help='Indicate that the version argument is the number of a github repository pull request')
-    parser.add_argument('-u', '--url', dest='url', default='https://github.com/ioncoincore/ion', help='Specify the URL of the repository. Default is %(default)s')
+    parser.add_argument('-u', '--url', dest='url', default='https://github.com/cevap/ion', help='Specify the URL of the repository. Default is %(default)s')
     parser.add_argument('-v', '--verify', action='store_true', dest='verify', help='Verify the Gitian build')
     parser.add_argument('-b', '--build', action='store_true', dest='build', help='Do a Gitian build')
     parser.add_argument('-s', '--sign', action='store_true', dest='sign', help='Make signed binaries for Windows and MacOS')
@@ -174,7 +195,10 @@ def main():
     parser.add_argument('-n', '--no-commit', action='store_false', dest='commit_files', help='Do not commit anything to git')
     parser.add_argument('signer', help='GPG signer to sign each build assert file')
     parser.add_argument('version', help='Version number, commit, or branch to build. If building a commit or branch, the -c option must be specified')
-
+    parser.add_argument('upload', help='Use scp to upload file to the server, defines in .ssh as uploadserver, pass serverIp and path to ssh private key')
+    parser.add_argument('uploadlogs', help='Upload logs and scripts (var folder)')
+    parser.add_argument('uploadfolder', help='Upload folder on uploadserver')
+    parser.add_argument('hash', help='Create hashes')
     args = parser.parse_args()
     workdir = os.getcwd()
 
@@ -223,7 +247,6 @@ def main():
         print(script_name+': Missing version.')
         print('Try '+script_name+' --help for more information')
         exit(1)
-
     # Add leading 'v' for tags
     if args.commit and args.pull:
         raise Exception('Cannot have both commit and pull')

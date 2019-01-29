@@ -101,7 +101,7 @@ If you require further assistance contact the support team @ [Discord](https://d
 * Paste the code below into the Bitvise terminal then press enter (it will just go to a new line)
 ![Example-RootPassEnter](https://i.imgur.com/K6xlnav.png)
 
-`wget -q https://raw.githubusercontent.com/ioncoincore/ion/contrib/mn-setup/ion_install.sh`
+`wget -q https://raw.githubusercontent.com/cevap/ion/contrib/mn-setup/ion_install.sh`
 ***
 
 ***Step 8***
@@ -132,7 +132,7 @@ If you require further assistance contact the support team @ [Discord](https://d
 ## Section D: Preparing the Local wallet
 
 ***Step 1***
-* Download and install the Ion wallet [here](https://github.com/ioncoincore/ion/releases)
+* Download and install the Ion wallet [here](https://github.com/cevap/ion/releases)
 ***
 
 ***Step 2***

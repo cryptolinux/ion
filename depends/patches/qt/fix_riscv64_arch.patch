@@ -1,5 +1,5 @@
 diff --git a/qtbase/src/3rdparty/double-conversion/include/double-conversion/utils.h b/qtbase/src/3rdparty/double-conversion/include/double-conversion/utils.h
-index 20bfd36..93729fa 100644
+index 20bfd36c..93729fae 100644
 --- a/qtbase/src/3rdparty/double-conversion/include/double-conversion/utils.h
 +++ b/qtbase/src/3rdparty/double-conversion/include/double-conversion/utils.h
 @@ -65,7 +65,8 @@

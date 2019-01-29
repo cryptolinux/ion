@@ -15,20 +15,9 @@ Table of Contents
     - [After 3 or more people have gitian-built and their results match:](#after-3-or-more-people-have-gitian-built-and-their-results-match)
 
 
-Table of Contents
------------------
-- [Release Process](#release-process)
-        - [First time / New builders](#first-time--new-builders)
-        - [ION maintainers/release engineers, suggestion for writing release notes](#ion-maintainersrelease-engineers-suggestion-for-writing-release-notes)
-        - [Setup and perform Gitian builds](#setup-and-perform-gitian-builds)
-        - [Fetch and create inputs: (first time, or when dependency versions change)](#fetch-and-create-inputs-first-time-or-when-dependency-versions-change)
-        - [Optional: Seed the Gitian sources cache and offline git repositories](#optional-seed-the-gitian-sources-cache-and-offline-git-repositories)
-        - [Build and sign Ion Core for Linux, Windows, and OS X:](#build-and-sign-ion-core-for-linux-windows-and-os-x)
-        - [Verify other gitian builders signatures to your own. (Optional)](#verify-other-gitian-builders-signatures-to-your-own-optional)
-        - [Next steps:](#next-steps)
-        - [After 3 or more people have gitian-built and their results match:](#after-3-or-more-people-have-gitian-built-and-their-results-match)
+Before every release candidate:
 
-- Update translations (ask for more info on discord or support) see [translation_process.md](https://github.com/ioncoincore/ion/blob/master/doc/translation_process.md#synchronising-translations).
+- Update translations (ask for more info on discord or support) see [translation_process.md](https://github.com/cevap/ion/blob/master/doc/translation_process.md#synchronising-translations).
 
 Before every minor and major release:
 
@@ -52,7 +41,7 @@ Check out the source code in the following directory hierarchy.
     git clone https://github.com/gitianuser/gitian.sigs.git
     git clone https://github.com/gitianuser/ion-detached-sigs.git
     git clone https://github.com/devrandom/gitian-builder.git
-    git clone https://github.com/ioncoincore/ion.git
+    git clone https://github.com/cevap/ion.git
 
 ### ION maintainers/release engineers, suggestion for writing release notes
 
@@ -295,6 +284,6 @@ Note: check that SHA256SUMS itself doesn't end up in SHA256SUMS, which is a spur
 
   - Archive release notes for the new version to `doc/release-notes/` (branch `master` and branch of the release)
 
-  - Create a [new GitHub release](https://github.com/ioncoincore/ion/releases/new) with a link to the archived release notes.
+  - Create a [new GitHub release](https://github.com/cevap/ion/releases/new) with a link to the archived release notes.
 
   - Celebrate

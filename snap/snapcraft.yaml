@@ -1,23 +1,22 @@
-# Copyright (c) 2018-2019 The Ion developers
-name: ioncore
-base: core18
-version: 3.1.02
+name: ioncoin-ce
+version: 3.1.99
 summary:   gaming related peer-to-peer network based digital currency
 description: |
   [Ion Core](https://github.com/ioncoincore/ion) is an [MIT licensed](https://github.com/cevap/ion/blob/master/LICENSE),
   open source, gaming oriented, blockchain-based cryptocurrency with
   ultra fast transactions, low fees, high network decentralization, and
   Zero Knowledge cryptography proofs for industry-leading
-  transaction anonymity. This package include QT, daemon, cli and tx
-  binaries.
+  transaction anonymity. 
   
-  Documentation and wiki:
-  - Wiki (Ion Core):    https://github.com/ioncoincore/ion/wiki
-  - Wiki (Ionomy):      https://github.com/ionomy/ion/wiki
-  - Wiki (Ion Core CE): https://github.com/cevap/ion/wiki
-  - Technical documentation: https://techdoc.ioncoin.org
-  - Whitepaper: https://ionomy.com/en/whitepaper
-  - Technical whitepaper: 
+  Wiki (Ion Core):    https://github.com/ioncoincore/ion/wiki
+  Wiki (Ionomy):      https://github.com/ionomy/ion/wiki
+  Wiki (Ion Core CE): https://github.com/cevap/ion/wiki
+  
+  Technical documentaion: https://techdoc.ioncore.xyz
+  
+  Whitepaper: https://ionomy.com/en/whitepaper
+  
+  Technical whitepaper: 
     https://github.com/ionomy/ion/wiki/ION-Technical-Whitepaper
   
   Get source code from Github: https://github.com/ioncoincore/ion.git
@@ -47,12 +46,17 @@ icon: src/qt/res/src/ion.svg
 apps:
   daemon:
     command: iond
-    plugs: [network, network-bind, home, removable-media]
+    plugs: [network, network-bind, home, personal-files, system-files]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   daemon-testnet:
     command: iond --testnet
-    plugs: [network, network-bind, home, removable-media]
+    plugs: [network, network-bind, home, personal-files, system-files]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+  test-daemon:
+    command: test_ion
+    plugs: [network, network-bind, home, personal-files, system-files]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   daemon-regtest:
@@ -60,76 +64,58 @@ apps:
     plugs: [network, network-bind, home, removable-media]
   qt:
     command: desktop-launch ion-qt
-    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, mir, opengl, home, removable-media]
-    desktop: qt.desktop
+    plugs: [network, network-bind, unity7, unity8, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home, personal-files, system-files]
+    desktop: ion.desktop
   qt-testnet:
     command: desktop-launch ion-qt --testnet
-    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, mir, opengl, home, removable-media]
-    desktop: qt-testnet.desktop
-  qt-regtest:
-    command: desktop-launch ion-qt --regtest
-    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, mir, opengl, home, removable-media]
-    desktop: qt-regtest.desktop
+    plugs: [network, network-bind, unity7, unity8, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home, personal-files, system-files]
+    desktop: ion-testnet.desktop
+  test-qt:
+    command: desktop-launch test_ion-qt
+    plugs: [network, network-bind, unity7, unity8, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home, personal-files, system-files]
+    desktop: ion.desktop
   cli:
     command: ion-cli
     plugs: [network, network-bind, home]
   cli-testnet:
     command: ion-cli --testnet
     plugs: [network, network-bind, home]
-  cli-regtest:
-    command: ion-cli --regtest
-    plugs: [network, network-bind, home]
   tx:
     command: ion-tx
-    plugs: [home]
+    plugs: [home, personal-files]
 parts:
   ion:
-    source: https://github.com/ioncoincore/ion
+    source: https://github.com/cevap/ion
     source-type: git
-    source-tag: v3.1.02
+    source-tag: master
     plugin: nil
+    # We don't want to copy the full blockchain every time that the snap is   
+    # updated, but there's no way to define a default data dir in ion-qt.
+    # Also, it would be better if we could split the wallet from the blockchain
     override-build: |
-      SHORTNAME="ion"
-      if [ $SNAPCRAFT_ARCH_TRIPLET = "i386-linux-gnu" ]; then
-        HOST="i686-linux-gnu"
-      else
-        HOST="${SNAPCRAFT_ARCH_TRIPLET}"
+      # apply snap bbuild related patche
+      git apply $SNAPCRAFT_STAGE/default_data_dir.patch
+      # fix bug - extracting
+      if [ $SNAPCRAFT_ARCH_TRIPLET == "x86-64-linux-gnu" ] 
+      then
+        apt install g++-$SNAPCRAFT_ARCH_TRIPLET g++-8-$SNAPCRAFT_ARCH_TRIPLET gcc-$SNAPCRAFT_ARCH_TRIPLET gcc-8-$SNAPCRAFT_ARCH_TRIPLET binutils-$SNAPCRAFT_ARCH_TRIPLET
+        make HOST=$SNAPCRAFT_ARCH_TRIPLET
+        sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' $SNAPCRAFT_PART_BUILD/depends/funcs.mk
+        cd $SNAPCRAFT_PART_BUILD/depends
+        make HOST=$SNAPCRAFT_ARCH_TRIPLET
       fi
-      # APPLY PATCHES
-      echo "apply patches:"
-      git apply ${SNAPCRAFT_STAGE}/default_data_dir.patch
-      git apply ${SNAPCRAFT_STAGE}/fix-bdb-tmp-folder.patch
-      git apply ${SNAPCRAFT_STAGE}/fix-use-snap-instead-of-dirty.patch
-      sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' ${SNAPCRAFT_PART_BUILD}/depends/funcs.mk
-      # BUILD DEPENDENCIES
-      echo "START BUILDING ${SHORTNAME} FOR ${SNAPCRAFT_ARCH_TRIPLET} architecture"
-      cd ${SNAPCRAFT_PART_BUILD}/depends
-      make download-linux
-      make -j4 HOST=${HOST}
-      # CONFIGURE
-      echo "Configure ${SHORTNAME}"
-      cd ${SNAPCRAFT_PART_BUILD}
-      echo "Configure and build ${SHORTNAME}"
+      # build dependencies
+      # build ion core
+      cd $SNAPCRAFT_PART_BUILD
       ./autogen.sh
-      ./configure --prefix=`pwd`/depends/${HOST}
-      # COMPILE
-      echo "Compile ${SHORTNAME}"
-      make -j4
-      # INSTALL
-      echo "Install ${SHORTNAME}"
-      make install prefix=${SNAPCRAFT_PART_INSTALL}
-      # POST INSTALL
-      if [ $SNAPCRAFT_ARCH_TRIPLET = "powerpc64le-linux-gnu" ]; then
-        if [ -e $SNAPCRAFT_PART_BUILD/src/qt/${SHORTNAME}-qt ]; then
-          echo "PPC64EL fix - ${SHORTNAME}-qt exists, fix unrequired"
-        else
-          echo "echo ${SHORTNAME}-qt is not installed" > ${SNAPCRAFT_PART_INSTALL}/usr/bin/${SHORTNAME}-qt
-          chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/bin/${SHORTNAME}-qt
-          echo "PPC64EL fix - ${SHORTNAME}-qt exists, fix required, dummy as ${SHORTNAME}-qt"
-        fi
+      if [ $SNAPCRAFT_ARCH_TRIPLET == "x86-64-linux-gnu" ] 
+      then
+        ./configure --prefix=`pwd`/depends/$SNAPCRAFT_ARCH_TRIPLET
+      else
+        ./configure BDB_LIBS="-L${SNAPCRAFT_PART_INSTALL}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${SNAPCRAFT_PART_INSTALL}/include"
       fi
-      echo "Installed files:"
-      find ${SNAPCRAFT_PART_INSTALL} -type f
+      make
+      make install prefix=$SNAPCRAFT_PART_INSTALL
     build-packages:
       - curl
       - wget
@@ -146,6 +132,42 @@ parts:
       - bsdmainutils
       - binutils
       - python3
+      - libssl-dev
+      - libevent-dev
+      - libgmp-dev
+      # Boost.
+      - libboost-system-dev
+      - libboost-filesystem-dev
+      - libboost-chrono-dev
+      - libboost-program-options-dev
+      - libboost-test-dev
+      - libboost-thread-dev
+      # Optional.
+      - libminiupnpc-dev
+      - libzmq3-dev
+      # GUI.
+      - libqt5gui5
+      - libqt5core5a
+      - libqt5dbus5
+      - qttools5-dev
+      - qttools5-dev-tools
+      - libprotobuf-dev
+      - protobuf-compiler
+      # Files from the build host were migrated into the snap to satisfy dependencies that would otherwise not be met. This feature will be removed in a future release thats why we need to include them here
+      - libxcursor-dev
+      - libxinerama-dev
+      - libxrandr-dev
+      - libatk1.0-dev
+      #- libgdk2.0-cil
+      - libgtk2.0-dev
+      # Optional.
+      - libqrencode-dev
+    stage-packages: [ca-certificates]
+    after:
+      - berkeleydb
+      - desktop-qt5
+      - patches
+  desktop-qt5:
     stage-packages:
       - libxkbcommon0
       - ttf-ubuntu-font-family
@@ -157,14 +179,30 @@ parts:
       - libqt5svg5 # for loading icon themes which are svg
       - locales-all
       - qtwayland5
-      - ca-certificates
-    after:
-      - patches
+  berkeleydb:
+    source: http://download.oracle.com/berkeley-db/db-4.8.30.tar.gz
+    plugin: nil
+    build: |
+      # Apply a patch necessary when building with clang and c++11 (see https://community.oracle.com/thread/3952592)
+      CLANG_CXX11_PATCH_URL='https://gist.githubusercontent.com/LnL7/5153b251fd525fe15de69b67e63a6075/raw/7778e9364679093a32dec2908656738e16b6bdcb/clang.patch'
+      CLANG_CXX11_PATCH_HASH='7a9a47b03fd5fb93a16ef42235fa9512db9b0829cfc3bdf90edd3ec1f44d637c'
+      wget --no-check-certificate "${CLANG_CXX11_PATCH_URL}" -O "clang.patch"
+      echo "${CLANG_CXX11_PATCH_HASH} clang.patch" | sha256sum -c
+      patch -p2 < clang.patch
+      cp $SNAPCRAFT_STAGE/../depends/config.guess ./dist
+      cp $SNAPCRAFT_STAGE/../depends/config.sub ./dist
+      cd build_unix
+      ../dist/configure --enable-cxx --disable-shared --disable-replication --with-pic --prefix=$SNAPCRAFT_PART_INSTALL "${@}"
+    install: |
+      cd build_unix
+      make install
+    prime:
+      - -*
   patches:
     source: snap/local/patches
     plugin: dump
     prime:
       - -*
   desktop:
-    source: snap/usr/share/applications
+    source: snap/gui
     plugin: dump
