@@ -182,7 +182,7 @@ parts:
         cd build_unix
         ../dist/configure --enable-cxx --disable-shared --disable-replication --with-pic --prefix=$SNAPCRAFT_PART_INSTALL "${@}"
         cd build_unix
-        make install
+        make install prefix=$SNAPCRAFT_PART_INSTALL
       fi
     prime:
       - -*
