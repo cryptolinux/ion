@@ -37,30 +37,30 @@ icon: src/qt/res/src/ion.svg
 apps:
   daemon:
     command: iond
-    plugs: [network, network-bind, home, personal-files, system-files]
+    plugs: [network, network-bind, home]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   daemon-testnet:
     command: iond --testnet
-    plugs: [network, network-bind, home, personal-files, system-files]
+    plugs: [network, network-bind, home]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   test-daemon:
     command: test_ion
-    plugs: [network, network-bind, home, personal-files, system-files]
+    plugs: [network, network-bind, home]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   qt:
     command: desktop-launch ion-qt
-    plugs: [network, network-bind, unity7, unity8, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home, personal-files, system-files]
+    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
     desktop: ion.desktop
   qt-testnet:
     command: desktop-launch ion-qt --testnet
-    plugs: [network, network-bind, unity7, unity8, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home, personal-files, system-files]
+    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
     desktop: ion-testnet.desktop
   test-qt:
     command: desktop-launch test_ion-qt
-    plugs: [network, network-bind, unity7, unity8, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home, personal-files, system-files]
+    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
     desktop: ion.desktop
   cli:
     command: ion-cli
@@ -70,7 +70,7 @@ apps:
     plugs: [network, network-bind, home]
   tx:
     command: ion-tx
-    plugs: [home, personal-files]
+    plugs: [home]
 parts:
   ion:
     source: https://github.com/ioncoincore/ion
@@ -84,21 +84,24 @@ parts:
       # apply snap bbuild related patche
       git apply $SNAPCRAFT_STAGE/default_data_dir.patch
       # fix bug - extracting
-      if [ $SNAPCRAFT_ARCH_TRIPLET == "x86-64-linux-gnu" ] 
+      if [ $SNAPCRAFT_ARCH_TRIPLET == "x86_64-linux-gnu" ] 
       then
-        apt install g++-$SNAPCRAFT_ARCH_TRIPLET g++-8-$SNAPCRAFT_ARCH_TRIPLET gcc-$SNAPCRAFT_ARCH_TRIPLET gcc-8-$SNAPCRAFT_ARCH_TRIPLET binutils-$SNAPCRAFT_ARCH_TRIPLET
-        make HOST=$SNAPCRAFT_ARCH_TRIPLET
+        apt install g++-x86-64-linux-gnu g++-5-x86-64-linux-gnu gcc-x86-64-linux-gnu gcc-5-x86-64-linux-gnu binutils-x86-64-linux-gnu
         sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' $SNAPCRAFT_PART_BUILD/depends/funcs.mk
         cd $SNAPCRAFT_PART_BUILD/depends
-        make HOST=$SNAPCRAFT_ARCH_TRIPLET
+        make HOST=x86_64-pc-linux-gnu
+      #elif [ $SNAPCRAFT_ARCH_TRIPLET == "i386-linux-gnu" ]
+      #elif [ $SNAPCRAFT_ARCH_TRIPLET == "ppc64el-linux-gnu" ] 
+      #elif [ $SNAPCRAFT_ARCH_TRIPLET == "arm64-linux-gnu" ] 
+      #elif [ $SNAPCRAFT_ARCH_TRIPLET == "armhf-linux-gnu" ] 
       fi
       # build dependencies
       # build ion core
       cd $SNAPCRAFT_PART_BUILD
       ./autogen.sh
-      if [ $SNAPCRAFT_ARCH_TRIPLET == "x86-64-linux-gnu" ] 
+      if [ $SNAPCRAFT_ARCH_TRIPLET == "x86_64-linux-gnu" ] 
       then
-        ./configure --prefix=`pwd`/depends/$SNAPCRAFT_ARCH_TRIPLET
+        ./configure --prefix=`pwd`/depends/x86_64-pc-linux-gnu
       else
         ./configure BDB_LIBS="-L${SNAPCRAFT_PART_INSTALL}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${SNAPCRAFT_PART_INSTALL}/include"
       fi
