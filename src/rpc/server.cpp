@@ -394,6 +394,7 @@ static const CRPCCommand vRPCCommands[] =
         {"wallet", "backupwallet", &backupwallet, true, false, true},
         {"wallet", "enableautomintaddress", &enableautomintaddress, true, false, true},
         {"wallet", "createautomintaddress", &createautomintaddress, true, false, true},
+        {"wallet", "listautomintaddresses", &listautomintaddresses, true, false, true},
         {"wallet", "dumpprivkey", &dumpprivkey, true, false, true},
         {"wallet", "dumpwallet", &dumpwallet, true, false, true},
         {"wallet", "bip38encrypt", &bip38encrypt, true, false, true},

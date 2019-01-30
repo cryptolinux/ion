@@ -3949,3 +3949,30 @@ UniValue createautomintaddress(const UniValue& params, bool fHelp)
     CKeyID address = pwalletMain->GenerateNewAutoMintKey();
     return EncodeDestination(address);
 }
+
+UniValue listautomintaddresses(const UniValue& params, bool fHelp)
+{
+    if (fHelp || params.size() != 0)
+        throw std::runtime_error(
+                "listautomintaddresses\n"
+                "\nLists the currently set auto mint addresses\n" +
+                HelpRequiringPassphrase() + "\n"
+
+                "\nResult:\n"
+                "[\n"
+                "  \"address\": n,    (string) ION address for auto minting\n"
+                "  ...,\n"
+                "]\n" +
+                HelpExampleCli("listautomintaddresses", "") +
+                HelpExampleRpc("listautomintaddresses", ""));
+
+    EnsureWalletIsUnlocked();
+    LOCK(pwalletMain->cs_wallet);
+
+    UniValue ret(UniValue::VOBJ);
+    for (auto dest : pwalletMain->setAutoConvertAddresses) {
+        ret.push_back(Pair("address: ", EncodeDestination(dest)));
+    }
+
+    return ret;
+}
