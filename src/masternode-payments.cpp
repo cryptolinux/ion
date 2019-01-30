@@ -339,6 +339,10 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, int64_t nFe
         ExtractDestination(payee, address1);
 
         LogPrint("masternode","Masternode payment of %s to %s\n", FormatMoney(masternodePayment).c_str(), EncodeDestination(address1).c_str());
+    } else {
+        if (!fProofOfStake) {
+            txNew.vout[0].nValue = blockValue;
+        }
     }
 }
 
