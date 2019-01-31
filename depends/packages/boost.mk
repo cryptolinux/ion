@@ -15,6 +15,7 @@ $(package)_config_opts_mingw32=binary-format=pe target-os=windows threadapi=win3
 $(package)_config_opts_x86_64_mingw32=address-model=64
 $(package)_config_opts_i686_mingw32=address-model=32
 $(package)_config_opts_i686_linux=address-model=32 architecture=x86
+$(package)_config_opts_i386_linux=address-model=32 architecture=x86
 $(package)_config_opts_s390x_linux=address-model=64
 $(package)_config_opts_mipsel_linux=address-model=32
 $(package)_config_opts_mips_linux=address-model=32
