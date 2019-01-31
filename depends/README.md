@@ -27,7 +27,8 @@ Common `host-platform-triplets` for cross compilation are:
 - `aarch64-linux-gnu` for Linux ARM 64 bit
 - `riscv32-linux-gnu` for Linux RISC-V 32 bit
 - `riscv64-linux-gnu` for Linux RISC-V 64 bit
-
+- `ppc64le-linux-gnu` for Linux PPC64EL 64 bit
+- `s390x-linux-gnu` for Linux S390X 64 bit
 No other options are needed, the paths are automatically configured.
 
 ### Install the required dependencies: Ubuntu & Debian

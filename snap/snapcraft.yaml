@@ -13,7 +13,7 @@ description: |
   Wiki (Ionomy):      https://github.com/ionomy/ion/wiki
   Wiki (Ion Core CE): https://github.com/cevap/ion/wiki
   
-  Technical documentaion: https://techdoc.ioncoin.org
+  Technical documentation: https://techdoc.ioncoin.org
   
   Whitepaper: https://ionomy.com/en/whitepaper
   
@@ -83,29 +83,20 @@ parts:
     override-build: |
       # apply snap bbuild related patche
       git apply $SNAPCRAFT_STAGE/default_data_dir.patch
-      # fix bug - extracting
-      if [ $SNAPCRAFT_ARCH_TRIPLET == "x86_64-linux-gnu" ] 
-      then
-        apt install g++-x86-64-linux-gnu g++-5-x86-64-linux-gnu gcc-x86-64-linux-gnu gcc-5-x86-64-linux-gnu binutils-x86-64-linux-gnu
-        sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' $SNAPCRAFT_PART_BUILD/depends/funcs.mk
-        cd $SNAPCRAFT_PART_BUILD/depends
-        make HOST=x86_64-pc-linux-gnu
-      #elif [ $SNAPCRAFT_ARCH_TRIPLET == "i386-linux-gnu" ]
-      #elif [ $SNAPCRAFT_ARCH_TRIPLET == "ppc64el-linux-gnu" ] 
-      #elif [ $SNAPCRAFT_ARCH_TRIPLET == "arm64-linux-gnu" ] 
-      #elif [ $SNAPCRAFT_ARCH_TRIPLET == "armhf-linux-gnu" ] 
-      fi
+      #SNAPCRAFT_ARCH_TRIPLET=$(./depends/config.guess)
+      echo "START BUILDING FOR $SNAPCRAFT_ARCH_TRIPLET architecture"
       # build dependencies
-      # build ion core
+      # fix bug - extracting
+      sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' $SNAPCRAFT_PART_BUILD/depends/funcs.mk
+      cd $SNAPCRAFT_PART_BUILD/depends
+      make HOST=$SNAPCRAFT_ARCH_TRIPLET
+      # configure ion core
       cd $SNAPCRAFT_PART_BUILD
       ./autogen.sh
-      if [ $SNAPCRAFT_ARCH_TRIPLET == "x86_64-linux-gnu" ] 
-      then
-        ./configure --prefix=`pwd`/depends/x86_64-pc-linux-gnu
-      else
-        ./configure BDB_LIBS="-L${SNAPCRAFT_PART_INSTALL}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${SNAPCRAFT_PART_INSTALL}/include"
-      fi
+      ./configure --prefix=`pwd`/depends/$SNAPCRAFT_ARCH_TRIPLET
+      # compile ion core
       make
+      # install ion core
       make install prefix=$SNAPCRAFT_PART_INSTALL
     build-packages:
       - curl
@@ -121,72 +112,9 @@ parts:
       - bsdmainutils
       - binutils
       - python3
-      - libssl-dev
-      - libevent-dev
-      - libgmp-dev
-      # Boost.
-      - libboost-system-dev
-      - libboost-filesystem-dev
-      - libboost-chrono-dev
-      - libboost-program-options-dev
-      - libboost-test-dev
-      - libboost-thread-dev
-      # Optional.
-      - libminiupnpc-dev
-      - libzmq3-dev
-      # GUI.
-      - libqt5gui5
-      - libqt5core5a
-      - libqt5dbus5
-      - qttools5-dev
-      - qttools5-dev-tools
-      - libprotobuf-dev
-      - protobuf-compiler
-      # Files from the build host were migrated into the snap to satisfy dependencies that would otherwise not be met. This feature will be removed in a future release thats why we need to include them here
-      - libxcursor-dev
-      - libxinerama-dev
-      - libxrandr-dev
-      - libatk1.0-dev
-      #- libgdk2.0-cil
-      - libgtk2.0-dev
-      # Optional.
-      - libqrencode-dev
     stage-packages: [ca-certificates]
     after:
-      - berkeleydb
-      - desktop-qt5
       - patches
-  desktop-qt5:
-    stage-packages:
-      - libxkbcommon0
-      - ttf-ubuntu-font-family
-      - dmz-cursor-theme
-      - light-themes
-      - shared-mime-info
-      - libqt5gui5
-      - libgdk-pixbuf2.0-0
-      - libqt5svg5 # for loading icon themes which are svg
-      - locales-all
-      - qtwayland5
-  berkeleydb:
-    source: http://download.oracle.com/berkeley-db/db-4.8.30.tar.gz
-    plugin: nil
-    build: |
-      # Apply a patch necessary when building with clang and c++11 (see https://community.oracle.com/thread/3952592)
-      CLANG_CXX11_PATCH_URL='https://gist.githubusercontent.com/LnL7/5153b251fd525fe15de69b67e63a6075/raw/7778e9364679093a32dec2908656738e16b6bdcb/clang.patch'
-      CLANG_CXX11_PATCH_HASH='7a9a47b03fd5fb93a16ef42235fa9512db9b0829cfc3bdf90edd3ec1f44d637c'
-      wget --no-check-certificate "${CLANG_CXX11_PATCH_URL}" -O "clang.patch"
-      echo "${CLANG_CXX11_PATCH_HASH} clang.patch" | sha256sum -c
-      patch -p2 < clang.patch
-      cp $SNAPCRAFT_STAGE/../depends/config.guess ./dist
-      cp $SNAPCRAFT_STAGE/../depends/config.sub ./dist
-      cd build_unix
-      ../dist/configure --enable-cxx --disable-shared --disable-replication --with-pic --prefix=$SNAPCRAFT_PART_INSTALL "${@}"
-    install: |
-      cd build_unix
-      make install
-    prime:
-      - -*
   patches:
     source: snap/local/patches
     plugin: dump

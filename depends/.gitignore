@@ -10,3 +10,6 @@ arm*
 aarch64*
 riscv32*
 riscv64*
+s390x*
+i386*
+powerpc64le*
