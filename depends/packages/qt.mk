@@ -107,10 +107,18 @@ $(package)_config_opts_i686_linux  = -xplatform linux-g++-32
 $(package)_config_opts_i386_linux  = -xplatform linux-g++-32
 $(package)_config_opts_x86_64_linux = -xplatform linux-g++-64
 $(package)_config_opts_aarch64_linux = -xplatform linux-aarch64-gnu-g++
-$(package)_config_opts_riscv64_linux = -platform linux-g++ -xplatform ion-linux-g++
-$(package)_config_opts_s390x_linux += -platform linux-g++ -xplatform ion-linux-g++
-$(package)_config_opts_powerpc64le_linux += -platform linux-g++ -xplatform ion-linux-g++
-$(package)_config_opts_mipsel_linux += -platform linux-g++ -xplatform ion-linux-g++
+$(package)_config_opts_riscv64_linux = -platform linux-g++ -xplatform linux-g++-64
+$(package)_config_opts_s390x_linux += -platform linux-g++ -xplatform linux-g++-64
+$(package)_config_opts_powerpc64le_linux += -platform linux-g++ -xplatform linux-g++-64
+$(package)_config_opts_mips_linux += -platform linux-g++ -xplatform linux-g++-32
+$(package)_config_opts_mipsel_linux += -platform linux-g++ -xplatform linux-g++-32
+$(package)_config_opts_mips64_linux += -platform linux-g++ -xplatform linux-g++-64
+$(package)_config_opts_mips64el_linux += -platform linux-g++ -xplatform linux-g++-64
+$(package)_config_opts_sparc64_linux += -platform linux-g++ -xplatform linux-g++-64
+$(package)_config_opts_sh4_linux += -platform linux-g++ -xplatform linux-g++-32
+$(package)_config_opts_alpha_linux += -platform linux-g++ -xplatform linux-g++-64
+$(package)_config_opts_hppa_linux += -platform linux-g++ -xplatform linux-g++-32
+$(package)_config_opts_m68k_linux += -platform linux-g++ -xplatform linux-g++-32
 $(package)_config_opts_mingw32  = -no-opengl -xplatform win32-g++ -device-option CROSS_COMPILE="$(host)-"
 $(package)_build_env  = QT_RCC_TEST=1
 $(package)_build_env += QT_RCC_SOURCE_DATE_OVERRIDE=1
