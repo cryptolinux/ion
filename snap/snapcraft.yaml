@@ -86,24 +86,14 @@ parts:
       #SNAPCRAFT_ARCH_TRIPLET=$(./depends/config.guess)
       echo "START BUILDING FOR $SNAPCRAFT_ARCH_TRIPLET architecture"
       # build dependencies
-      # fix bug - extracting
+      ## fix bug - extracting
       sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' $SNAPCRAFT_PART_BUILD/depends/funcs.mk
       cd $SNAPCRAFT_PART_BUILD/depends
-      if [ $SNAPCRAFT_ARCH_TRIPLET == "i386-linux-gnu" ] 
-      then
-        make HOST=i686-linux-gnu
-      else
-        make HOST=$SNAPCRAFT_ARCH_TRIPLET
-      fi
+      make HOST=$SNAPCRAFT_ARCH_TRIPLET
       # configure ion core
       cd $SNAPCRAFT_PART_BUILD
       ./autogen.sh
-      if [ $SNAPCRAFT_ARCH_TRIPLET == "i386-linux-gnu" ] 
-      then
-        ./configure --prefix=`pwd`/depends/i686-linux-gnu
-      else
-        ./configure --prefix=`pwd`/depends/$SNAPCRAFT_ARCH_TRIPLET
-      fi
+      ./configure --prefix=`pwd`/depends/$SNAPCRAFT_ARCH_TRIPLET
       # compile ion core
       make
       # install ion core
