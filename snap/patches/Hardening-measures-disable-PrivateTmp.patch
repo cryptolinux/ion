@@ -1,0 +1,26 @@
+From f336502ac1c287c00665da00531b13c1f7dccbb4 Mon Sep 17 00:00:00 2001
+From: cevap <dev@i2pmail.org>
+Date: Fri, 1 Feb 2019 19:14:49 +0100
+Subject: [PATCH] Hardening measures - disable PrivateTmp for iond service in
+ snap builds
+
+---
+ contrib/init/iond.service | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/init/iond.service b/contrib/init/iond.service
+index b289f5b..43429d3 100644
+--- a/contrib/init/iond.service
++++ b/contrib/init/iond.service
+@@ -24,7 +24,7 @@ Restart=on-failure
+ ####################
+ 
+ # Provide a private /tmp and /var/tmp.
+-PrivateTmp=true
++PrivateTmp=false
+ 
+ # Mount /usr, /boot/ and /etc read-only for the process.
+ ProtectSystem=full
+-- 
+2.17.1
+

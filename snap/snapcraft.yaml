@@ -38,35 +38,30 @@ apps:
     command: iond
     plugs: [network, network-bind, home]
     environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:/var/tmp:$XDG_DATA_DIRS
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   daemon-testnet:
     command: iond --testnet
     plugs: [network, network-bind, home]
     environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:/var/tmp:$XDG_DATA_DIRS
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   test-daemon:
     command: test_ion
     plugs: [network, network-bind, home]
     environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:/var/tmp:$XDG_DATA_DIRS
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+  test-qt:
+    command: test_ion-qt
+    plugs: [network, network-bind, home]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   qt:
     command: desktop-launch ion-qt
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
     desktop: ion.desktop
-    environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:/var/tmp:$XDG_DATA_DIRS
   qt-testnet:
     command: desktop-launch ion-qt --testnet
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
     desktop: ion-testnet.desktop
-    environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:/var/tmp:$XDG_DATA_DIRS
-  test-qt:
-    command: desktop-launch test_ion-qt
-    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
-    desktop: ion.desktop
-    environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:/var/tmp:$XDG_DATA_DIRS
   cli:
     command: ion-cli
     plugs: [network, network-bind, home]
