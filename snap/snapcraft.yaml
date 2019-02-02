@@ -108,6 +108,9 @@ parts:
       make
       # Install Ion Core
       make install prefix=$SNAPCRAFT_PART_INSTALL
+      # print in log which files are installed
+      echo "Installed files:"
+      ls $SNAPCRAFT_PART_INSTALL
     build-packages:
       - curl
       - wget
@@ -122,10 +125,6 @@ parts:
       - bsdmainutils
       - binutils
       - python3
-      # optional
-      - binutils-dev
-      - g++-5
-      - gcc-5
     stage-packages: [ca-certificates]
     after:
       - desktop-qt5
