@@ -11,4 +11,4 @@ Exec=ion --testnet %u
 Terminal=false
 Categories=Office;Finance;Games;
 Comment=Ion Digital Currency QT (Official release)
-Keywords=internet;ion;testnet;qt;crypto;currency;snap;snapcraft;ioncore;ioncoin;daemon;cli;qt;ioncoincore;candidate
+Keywords=internet;ion;testnet;qt;crypto;currency;snap;snapcraft;ioncore;ioncoin;daemon;cli;qt;ioncoincore
