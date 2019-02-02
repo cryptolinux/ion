@@ -3,15 +3,16 @@
 Table of Contents
 -----------------
 - [Release Process](#release-process)
-        - [First time / New builders](#first-time--new-builders)
-        - [ION maintainers/release engineers, suggestion for writing release notes](#ion-maintainersrelease-engineers-suggestion-for-writing-release-notes)
-        - [Setup and perform Gitian builds](#setup-and-perform-gitian-builds)
-        - [Fetch and create inputs: (first time, or when dependency versions change)](#fetch-and-create-inputs-first-time-or-when-dependency-versions-change)
-        - [Optional: Seed the Gitian sources cache and offline git repositories](#optional-seed-the-gitian-sources-cache-and-offline-git-repositories)
-        - [Build and sign Ion Core for Linux, Windows, and OS X:](#build-and-sign-ion-core-for-linux-windows-and-os-x)
-        - [Verify other gitian builders signatures to your own. (Optional)](#verify-other-gitian-builders-signatures-to-your-own-optional)
-        - [Next steps:](#next-steps)
-        - [After 3 or more people have gitian-built and their results match:](#after-3-or-more-people-have-gitian-built-and-their-results-match)
+  - [Table of Contents](#table-of-contents)
+    - [First time / New builders](#first-time--new-builders)
+    - [ION maintainers/release engineers, suggestion for writing release notes](#ion-maintainersrelease-engineers-suggestion-for-writing-release-notes)
+    - [Setup and perform Gitian builds](#setup-and-perform-gitian-builds)
+    - [Fetch and create inputs: (first time, or when dependency versions change)](#fetch-and-create-inputs-first-time-or-when-dependency-versions-change)
+    - [Optional: Seed the Gitian sources cache and offline git repositories](#optional-seed-the-gitian-sources-cache-and-offline-git-repositories)
+    - [Build and sign Ion Core for Linux, Windows, and OS X:](#build-and-sign-ion-core-for-linux-windows-and-os-x)
+    - [Verify other gitian builders signatures to your own. (Optional)](#verify-other-gitian-builders-signatures-to-your-own-optional)
+    - [Next steps:](#next-steps)
+    - [After 3 or more people have gitian-built and their results match:](#after-3-or-more-people-have-gitian-built-and-their-results-match)
 
 
 Table of Contents
@@ -57,12 +58,12 @@ Check out the source code in the following directory hierarchy.
 
 Write release notes. git shortlog helps a lot, for example:
 
-    git shortlog --no-merges v(current version, e.g. 3.0.5)..v(new version, e.g. 3.1.0)
+    git shortlog --email --no-merges --format="* [%h] %s" v(current version, e.g. 3.1.00-beta1)..(new version, e.g. v3.1.0-rc1)
 
 
 Generate list of authors:
 
-    git log --format='%aN' "$*" | sort -ui | sed -e 's/^/- /'
+    git log  --format='- %aN <%aE>' v(current version, e.g. 3.1.00-beta1)..(new version, e.g. v3.1.0-rc1) | sort -fiu
 
 Tag version (or release candidate) in git
 
