@@ -83,7 +83,8 @@ parts:
       # Additionaly we fix funcs.mk
       ## Patch - Default home folder
       git apply $SNAPCRAFT_STAGE/default_data_dir.patch
-      git apply $SNAPCRAFT_STAGE/Hardening-measures-disable-PrivateTmp.patch
+      git apply $SNAPCRAFT_STAGE/patch-var-tmp.patch
+      mkdir -p $SNAP_USER_COMMON/var/tmp
       ## Patch - Fix Bug extracting sources without ownership
       sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' $SNAPCRAFT_PART_BUILD/depends/funcs.mk
       # Build Dependencies
