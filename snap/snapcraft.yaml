@@ -62,15 +62,15 @@ apps:
   qt:
     command: desktop-launch ion-qt
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
-    desktop: ion.desktop
+    desktop: qt.desktop
   qt-testnet:
     command: desktop-launch ion-qt --testnet
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
-    desktop: ion-testnet.desktop
+    desktop: qt-testnet.desktop
   qt-regtest:
     command: desktop-launch ion-qt --regtest
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
-    desktop: ion-regtest.desktop
+    desktop: qt-regtest.desktop
   cli:
     command: ion-cli
     plugs: [network, network-bind, home]
