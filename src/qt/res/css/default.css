@@ -863,6 +863,7 @@ padding-right:10px;
 }
 
 QDialog#RPCConsole .QGroupBox #line { /* Network In Line */
+color:#fffcd3;
 background-color:#130fa2;
 }
 
@@ -1685,6 +1686,7 @@ border:1px solid #333;
 }
 
 QCalendarWidget QWidget#qt_calendar_navigationbar { /* Calendar widget navigation bar */
+color:#fffcd3;
 background-color:#130fa2;
 font-weight:bold;
 }
