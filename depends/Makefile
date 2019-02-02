@@ -8,6 +8,7 @@ NO_QT ?=
 NO_WALLET ?=
 NO_UPNP ?=
 FALLBACK_DOWNLOAD_PATH ?= https://bitcoincore.org/depends-sources
+FALLBACK_DOWNLOAD_PATH_ION ?= https://github.com/ioncoincore/ion-depends/releases/download/latest
 
 BUILD = $(shell ./config.guess)
 HOST ?= $(BUILD)
