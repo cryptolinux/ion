@@ -192,13 +192,14 @@ static Checkpoints::MapCheckpoints mapCheckpoints =
         (  908698,  uint256("aa44b1eebd7ad5d4bc7b428dcdacd527677fa639557b58666a68dc2fdba3f133") ) // Last active zerocoin v1 block  1543722397   2371470 (zerocoin v1 disabled: 1543722400)
         (  936756,  uint256("873aa1d52ca79dc77d67f8162a2a60b9c936f50449b58b5464b91e412d351c29") ) //                                1543729708   2371718
         (  956579,  uint256("bac382323420c9c8e89024b66a3cab28d6133ca7450eae07de63364f74f087f6") ) //                                1546631813   2492172
-        (  980729,  uint256("a12927283f8396a65bf45cf516f5d8a2c618ac6b2a9cc530cdd962c9263b3398") );//                                1548101941   2552465
+        (  980729,  uint256("a12927283f8396a65bf45cf516f5d8a2c618ac6b2a9cc530cdd962c9263b3398") ) //                                1548101941   2552465
+        (  997048,  uint256("5fcdcf658a5b20a8c8e2c583a68122e9c0b66804f6c2941384c53cf90490d210") );//                                1549093695   2592520
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
     1548101941, // * UNIX timestamp of last checkpoint block
-    2552465,    // * total number of transactions between genesis and last checkpoint
+    2592520,    // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
-    2000 	// * estimated number of transactions per day after checkp
+    3490 	// * estimated number of transactions per day after checkp
 };
 
 static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
@@ -218,12 +219,13 @@ static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
 	(  472999,      uint256("5d55f229074b930f4dd42a0f4e0e2f1d855dcd1d87cb86553ea21c797825482c") ) // Testnet Fork June 2018
 	(  473000,      uint256("237bc8d1e7cb02af8cd3e6affe1fa134c1a29a4852f3fa177ebcd50014463152") ) // Testnet Fork December 2018; timestamp=1545338100  txcount=947151
     (  500535,      uint256("d6a5202217fcbdbe34592e78038937cb89541cb41051492bde6d061188285086") ) // timestamp=1547025824 txcount=1003348
-    (  516559,      uint256("8b91cc91179419e72777e51b3c298fd29df8827256b361c48cf61bab0b1e1bb5") );// timestamp=1548102045 txcount=1035503
+    (  516559,      uint256("8b91cc91179419e72777e51b3c298fd29df8827256b361c48cf61bab0b1e1bb5") ) // timestamp=1548102045 txcount=1035503
+    (  532875,      uint256("483a77879f686a3e04076776ef82409ff17c4955d04c5b221ace7bfd4c3b5086") );// timestamp=1549094295 txcount=1070146
 static const Checkpoints::CCheckpointData dataTestnet = {
     &mapCheckpointsTestnet,
-    1548102045,
-    1035503,
-    2000};
+    1549094295,
+    1070146,
+    3017};
 
 static Checkpoints::MapCheckpoints mapCheckpointsRegtest =
     boost::assign::map_list_of(0, uint256("0x001"));
