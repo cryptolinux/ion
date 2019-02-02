@@ -724,7 +724,7 @@ public:
         nPoolMaxTransactions = 2;
         strSporkKey = "0430b1f83d3acb90cde0b7e0e1d9365c00bfaf04ab8614457cfa0766a787239dd47ad6ca478659dd5e401fccb7fea6fa83acad23a2c7b451aafe6fa2ae4cfd4a58";
         strSporkKeyOld = "0470e14fc60a25e0eb4f6b1fe280e4c3f9427f7bb8b38f14a0c310c2e56402bdce0f25049bf22351dc3d07f389d4d433b339d8e1b991784f11df68f50340185c1d";
-        strObfuscationPoolDummyAddress = "TMPUBzcsHZawA32XYYDF9FHQp6icv492CV";
+        strObfuscationPoolDummyAddress = "g9gvvemz52aDkRn4iiGrzTbBRS1HiqcY9r";
         nStartMasternodePayments = 1558696183; // GMT: Thursday, 15. February 2018 12:03:03
         nBudget_Fee_Confirmations = 3; // Number of confirmations for the finalization fee. We have to make this very short
                                        // here because we only have a 8 block finalization window on testnet
@@ -749,17 +749,32 @@ public:
         pchMessageStart[2] = 0x39;
         pchMessageStart[3] = 0x9e;
         nSubsidyHalvingInterval = 150;
-        nEnforceBlockUpgradeMajority = 750;
-        nRejectBlockOutdatedMajority = 950;
-        nToCheckBlockUpgradeMajority = 1000;
+        nEnforceBlockUpgradeMajority = 4320; // 75%
+        nRejectBlockOutdatedMajority = 5472; // 95%
+        nToCheckBlockUpgradeMajority = 5760; // 4 days
         nMinerThreads = 1;
         nTargetTimespanMidas = 7 * 24 * 60 * 60;    // 1 week
-        nTargetTimespanDGW = 24 * 60 * 60;             // ION: 1 day
+        nTargetTimespanDGW = 24 * 60 * 60;          // ION: 1 day
         nTargetSpacing = 1 * 60;                    // ION: 1 minutes
         bnProofOfWorkLimit = ~uint256(0) >> 1;
+        nLastPOWBlock = 850;
+        nMasternodeCountDrift = 4;
+        nModifierUpdateBlock = 51197; //approx Mon, 17 Apr 2017 04:00:00 GMT
+        nMaxMoneyOut = 38600000 * COIN;
+        nZerocoinStartHeight = 1;
+        nZerocoinStartTime = 1521414629;
+        nBlockEnforceSerialRange = 10000000; //Enforce serial range starting this block
+        nBlockRecalculateAccumulators = 10000000; //Trigger a recalculation of accumulators
+        nBlockFirstFraudulent = 99999999; //First block that bad serials emerged
+        nBlockLastGoodCheckpoint = 10000000; //Last valid accumulator checkpoint
+        nBlockEnforceInvalidUTXO = 10000000; //Start enforcing the invalid UTXO's
+        nInvalidAmountFiltered = 0; //Amount of invalid coins filtered through exchanges, that should be considered valid
+        nBlockZerocoinV2 = 1000; //!> The block that zerocoin v2 becomes active
+        nEnforceNewSporkKey = 1545361200; //!> Sporks signed after 12/21/2018 @ 3:00am (UTC) must use the new spork key
+        nRejectOldSporkKey = 1545620400; //!> Reject old spork key after 12/24/2018 @ 3:00am (UTC)
 
-        nMidasStartHeight = 75000;
-        nMidasStartTime = 1497209344;
+        nMidasStartHeight = 99999999;
+        nMidasStartTime = 9997209344;
         nDGWStartHeight = nZerocoinStartHeight;
         nDGWStartTime = nZerocoinStartTime;
 
@@ -777,13 +792,12 @@ public:
         genesis.vtx.push_back(txNew);
 
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
-        genesis.nNonce = 1603027;                  // hex 57 47 52 in text = ION
-        genesis.nBits = 0x1e00ffff;
+        genesis.nNonce = 574752;                  // hex 57 47 52 in text = ION
+        genesis.nBits = 0x207ffff;
 
         hashGenesisBlock = genesis.GetHash();
         nDefaultPort = 34567;
-        assert(hashGenesisBlock == uint256("0x0000002bed128b6b2a62bd8edd4e6f8a414eac38e256aa0194adb8c93fe18132"));
-//        assert(genesis.hashMerkleRoot == uint256("0xa5858fca488dee5e9a0cd0a33287e1049ddf8e0065779a0aacc54581dbeaf59f"));
+        assert(hashGenesisBlock == uint256("0x47c7c6267ccd4a73c21c696d4bc004f74edc172a470c9c5a4201aa8d3196f99e"));
 
         vFixedSeeds.clear(); //! Testnet mode doesn't have any fixed seeds.
         vSeeds.clear();      //! Testnet mode doesn't have any DNS seeds.
