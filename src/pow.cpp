@@ -468,8 +468,8 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits)
         return false;
 
     // Check proof of work matches claimed amount
-    if (UintToArith256(hash) > bnTarget)
-        return false;
+    if (hash > bnTarget && Params().NetworkID() != CBaseChainParams::REGTEST)
+        return error("CheckProofOfWork() : hash doesn't match nBits");
 
     return true;
 }
