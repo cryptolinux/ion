@@ -202,6 +202,8 @@ RES_ICONS = \
   qt/res/icons/ion.ico \
   qt/res/icons/ion_testnet.ico \
   qt/res/icons/ion_testnet.png \
+  qt/res/icons/ion_regtest.ico \
+  qt/res/icons/ion_regtest.png \
   qt/res/icons/browse.png \
   qt/res/icons/clock1.png \
   qt/res/icons/clock2.png \
@@ -243,7 +245,10 @@ RES_ICONS = \
   qt/res/icons/unit_uion.png \
   qt/res/icons/unit_tion.png \
   qt/res/icons/unit_tmion.png \
-  qt/res/icons/unit_tuion.png
+  qt/res/icons/unit_tuion.png \
+  qt/res/icons/unit_rion.png \
+  qt/res/icons/unit_rmion.png \
+  qt/res/icons/unit_ruion.png
 
 BITCOIN_QT_BASE_CPP = \
   qt/bantablemodel.cpp \
@@ -316,6 +321,7 @@ RES_IMAGES = \
   qt/res/images/about.png \
   qt/res/images/splash.png \
   qt/res/images/splash_testnet.png \
+  qt/res/images/splash_regtest.png \
   qt/res/images/ion_logo_horizontal.png \
   qt/res/images/ion_logo_toolbar.png \
   qt/res/images/qtreeview_selected.png \

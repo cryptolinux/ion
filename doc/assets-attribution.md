@@ -101,3 +101,4 @@ Jonas Schnelli
 	src/qt/res/src/ion.ico, src/qt/res/src/ion.png,
 	src/qt/res/src/ion_testnet.png, docs/ion_logo_doxygen.png,
 	src/qt/res/images/splash.png, src/qt/res/images/splash_testnet.png
+	src/qt/res/images/splash_regtest.png
