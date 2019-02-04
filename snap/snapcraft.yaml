@@ -82,7 +82,7 @@ apps:
       TEMP: $SNAP_USER_COMMON/temp
   qt:
     command: desktop-launch ion-qt
-    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, mir, home, removable-media]
+    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
     desktop: qt.desktop
     environment:
       TMPDIR: $SNAP_USER_COMMON/var/tmp
@@ -91,7 +91,7 @@ apps:
       TEMP: $SNAP_USER_COMMON/temp
   qt-testnet:
     command: desktop-launch ion-qt --testnet
-    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, mir, home, removable-media]
+    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
     desktop: qt-testnet.desktop
     environment:
       TMPDIR: $SNAP_USER_COMMON/var/tmp
@@ -100,7 +100,7 @@ apps:
       TEMP: $SNAP_USER_COMMON/temp
   qt-regtest:
     command: desktop-launch ion-qt --regtest
-    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, mir, home, removable-media]
+    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home]
     desktop: qt-regtest.desktop
     environment:
       TMPDIR: $SNAP_USER_COMMON/var/tmp
