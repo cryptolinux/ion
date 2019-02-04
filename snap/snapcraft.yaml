@@ -81,7 +81,7 @@ apps:
       TMP: $SNAP_USER_COMMON/tmp
       TEMP: $SNAP_USER_COMMON/temp
   qt:
-    command: env TMPDIR=$XDG_RUNTIME_DIR PATH=/usr/local/bin:${PATH} ${SNAP}/bin/desktop-launch $SNAP/ioncore/qt-testnet
+    command: ion-qt
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, mir, home, removable-media]
     desktop: qt.desktop
     environment:
@@ -90,7 +90,7 @@ apps:
       TMP: $SNAP_USER_COMMON/tmp
       TEMP: $SNAP_USER_COMMON/temp
   qt-testnet:
-    command: env TMPDIR=$XDG_RUNTIME_DIR PATH=/usr/local/bin:${PATH} ${SNAP}/bin/desktop-launch $SNAP/ioncore/qt-testnet --testnet
+    command: ion-qt --testnet
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, mir, home, removable-media]
     desktop: qt-testnet.desktop
     environment:
@@ -99,7 +99,7 @@ apps:
       TMP: $SNAP_USER_COMMON/tmp
       TEMP: $SNAP_USER_COMMON/temp
   qt-regtest:
-    command: env TMPDIR=$XDG_RUNTIME_DIR PATH=/usr/local/bin:${PATH} ${SNAP}/bin/desktop-launch $SNAP/ioncore/qt-regtest --regtest
+    command: ion-qt --regtest
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, mir, home, removable-media]
     desktop: qt-regtest.desktop
     environment:
