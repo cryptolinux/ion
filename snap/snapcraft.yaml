@@ -41,56 +41,72 @@ apps:
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       TMPDIR: $SNAP_USER_COMMON/var/tmp
+      TEMPDIR: $SNAP_USER_COMMON/usr/tmp
       TMP: $SNAP_USER_COMMON/tmp
+      TEMP: $SNAP_USER_COMMON/temp
   daemon-testnet:
     command: iond --testnet
     plugs: [network, network-bind, home]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       TMPDIR: $SNAP_USER_COMMON/var/tmp
+      TEMPDIR: $SNAP_USER_COMMON/usr/tmp
       TMP: $SNAP_USER_COMMON/tmp
+      TEMP: $SNAP_USER_COMMON/temp
   daemon-regtest:
     command: iond --regtest
     plugs: [network, network-bind, home]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       TMPDIR: $SNAP_USER_COMMON/var/tmp
+      TEMPDIR: $SNAP_USER_COMMON/usr/tmp
       TMP: $SNAP_USER_COMMON/tmp
+      TEMP: $SNAP_USER_COMMON/temp
   test-daemon:
     command: test_ion
     plugs: [network, network-bind, home]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       TMPDIR: $SNAP_USER_COMMON/var/tmp
+      TEMPDIR: $SNAP_USER_COMMON/usr/tmp
       TMP: $SNAP_USER_COMMON/tmp
+      TEMP: $SNAP_USER_COMMON/temp
   test-qt:
     command: test_ion-qt
     plugs: [network, network-bind, home]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       TMPDIR: $SNAP_USER_COMMON/var/tmp
+      TEMPDIR: $SNAP_USER_COMMON/usr/tmp
       TMP: $SNAP_USER_COMMON/tmp
+      TEMP: $SNAP_USER_COMMON/temp
   qt:
     command: env TMPDIR=$XDG_RUNTIME_DIR PATH=/usr/local/bin:${PATH} ${SNAP}/bin/desktop-launch $SNAP/ioncore/qt-testnet
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, mir, home, removable-media]
     desktop: qt.desktop
     environment:
       TMPDIR: $SNAP_USER_COMMON/var/tmp
+      TEMPDIR: $SNAP_USER_COMMON/usr/tmp
       TMP: $SNAP_USER_COMMON/tmp
+      TEMP: $SNAP_USER_COMMON/temp
   qt-testnet:
     command: env TMPDIR=$XDG_RUNTIME_DIR PATH=/usr/local/bin:${PATH} ${SNAP}/bin/desktop-launch $SNAP/ioncore/qt-testnet --testnet
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, mir, home, removable-media]
     desktop: qt-testnet.desktop
     environment:
-      TMPDIR: $HOME/var/tmp
-      TMP: $HOME/var/tmp
+      TMPDIR: $SNAP_USER_COMMON/var/tmp
+      TEMPDIR: $SNAP_USER_COMMON/usr/tmp
+      TMP: $SNAP_USER_COMMON/tmp
+      TEMP: $SNAP_USER_COMMON/temp
   qt-regtest:
     command: env TMPDIR=$XDG_RUNTIME_DIR PATH=/usr/local/bin:${PATH} ${SNAP}/bin/desktop-launch $SNAP/ioncore/qt-regtest --regtest
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, mir, home, removable-media]
     desktop: qt-regtest.desktop
     environment:
       TMPDIR: $SNAP_USER_COMMON/var/tmp
+      TEMPDIR: $SNAP_USER_COMMON/usr/tmp
       TMP: $SNAP_USER_COMMON/tmp
+      TEMP: $SNAP_USER_COMMON/temp
   cli:
     command: ion-cli
     plugs: [network, network-bind, home]
@@ -115,15 +131,6 @@ parts:
       ## updated, but there's no way to define a default data dir in ion-qt.
       ## Additionaly we fix funcs.mk
       git apply $SNAPCRAFT_STAGE/default_data_dir.patch
-      # Patch - berkeleydb uses /var/tmp, /usr/tmp, /temp or /tmp folders
-      ##        and using strict confinment does not allow this snap to
-      ##        read or write outside of this SNAPS folder 
-      ##        We currently patch bdb.mk to patch tmp folders with
-      ##        prefix $HOME and we added home plug which allows this
-      ##        snap to write to home folder
-      git apply $SNAPCRAFT_STAGE/snap-patch-bdb-tmp-folder.patch
-      mkdir -p depends/patches/bdb
-      cp -f $SNAPCRAFT_STAGE/Change-tmp-folders-to-be-in-HOME-folder.patch depends/patches/bdb/Change-tmp-folders-to-be-in-HOME-folder.patch
       ## Patch - Fix Bug extracting sources without ownership
       sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' $SNAPCRAFT_PART_BUILD/depends/funcs.mk
       # Build Dependencies
