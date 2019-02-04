@@ -131,6 +131,7 @@ parts:
       ## updated, but there's no way to define a default data dir in ion-qt.
       ## Additionaly we fix funcs.mk
       git apply $SNAPCRAFT_STAGE/default_data_dir.patch
+      git apply $SNAPCRAFT_STAGE/fix-bdb-tmp-folder.patch
       ## Patch - Fix Bug extracting sources without ownership
       sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' $SNAPCRAFT_PART_BUILD/depends/funcs.mk
       # Build Dependencies
