@@ -63,6 +63,7 @@ public:
     CBaseDevNetParams(const std::string &dataDir)
     {
         networkID = CBaseChainParams::REGTEST;
+        nRPCPort = 28171;
         strDataDir = "regtest";
     }
 };
