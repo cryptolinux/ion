@@ -4609,20 +4609,6 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
             // Start at the block we're adding on to
             CBlockIndex *prev = pindexPrev;
 
-            // Inputs
-            std::vector<CTxIn> ionInputs;
-            std::vector<CTxIn> xIONInputs;
-
-            for (CTxIn stakeIn : stakeTxIn.vin) {
-                if(stakeIn.scriptSig.IsZerocoinSpend()){
-                    xIONInputs.push_back(stakeIn);
-                }else{
-                    ionInputs.push_back(stakeIn);
-                }
-            }
-            const bool hasIONInputs = !ionInputs.empty();
-            const bool hasXIONInputs = !xIONInputs.empty();
-
             int readBlock = 0;
             vector<CBigNum> vBlockSerials;
             CBlock bl;
