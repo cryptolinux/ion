@@ -1,5 +1,5 @@
 name: ioncore
-version: 3.1.00
+version: 3.0.5
 summary:   gaming related peer-to-peer network based digital currency
 description: |
   Ion Core is an MIT licensed,
@@ -76,7 +76,7 @@ parts:
   ion:
     source: https://github.com/ioncoincore/ion
     source-type: git
-    source-tag: master
+    source-tag: v3.0.5
     plugin: nil
     override-build: |
       # Patch - Default home folder
