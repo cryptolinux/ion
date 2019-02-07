@@ -4561,25 +4561,47 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
 
         CTransaction &stakeTxIn = block.vtx[1];
 
+        // Inputs
+        std::vector<CTxIn> ionInputs;
+        std::vector<CTxIn> xIONInputs;
+
+        for (CTxIn stakeIn : stakeTxIn.vin) {
+            if(stakeIn.scriptSig.IsZerocoinSpend()){
+                xIONInputs.push_back(stakeIn);
+            }else{
+                ionInputs.push_back(stakeIn);
+            }
+        }
+        const bool hasIONInputs = !ionInputs.empty();
+        const bool hasXIONInputs = !xIONInputs.empty();
+
         // ZC started after PoS.
         // Check for serial double spent on the same block, TODO: Move this to the proper method..
-        if(nHeight >= Params().Zerocoin_StartHeight()) {
-            vector<CBigNum> inBlockSerials;
-            for (CTransaction tx : block.vtx) {
-                for (CTxIn in: tx.vin) {
+        vector<CBigNum> inBlockSerials;
+        for (CTransaction tx : block.vtx) {
+            for (CTxIn in: tx.vin) {
+                if(nHeight >= Params().Zerocoin_StartHeight()) {
                     if (in.scriptSig.IsZerocoinSpend()) {
                         CoinSpend spend = TxInToZerocoinSpend(in);
                         // Check for serials double spending in the same block
-                        if (std::find(inBlockSerials.begin(), inBlockSerials.end(), spend.getCoinSerialNumber()) != inBlockSerials.end()) {
-                            return state.DoS(100, error("%s: serial double spent on the same block", __func__));
+                        if (std::find(inBlockSerials.begin(), inBlockSerials.end(), spend.getCoinSerialNumber()) !=
+                            inBlockSerials.end()) {
                         }
                         inBlockSerials.push_back(spend.getCoinSerialNumber());
                     }
                 }
+                if(tx.IsCoinStake()) continue;
+                if(hasIONInputs)
+                    // Check if coinstake input is double spent inside the same block
+                    for (CTxIn ionIn : ionInputs){
+                        if(ionIn.prevout == in.prevout){
+                            // double spent coinstake input inside block
+                            return error("%s: double spent coinstake input inside block", __func__);
+                        }
+                    }
             }
-            inBlockSerials.clear();
         }
-
+        inBlockSerials.clear();
 
         // Check whether is a fork or not
         if (isBlockFromFork) {
