@@ -40,34 +40,12 @@ apps:
     plugs: [network, network-bind, home, removable-media]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
-  daemon-testnet:
-    command: iond --testnet
-    plugs: [network, network-bind, home, removable-media]
-    environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
-  daemon-regtest:
-    command: iond --regtest
-    plugs: [network, network-bind, home, removable-media]
   qt:
     command: desktop-launch ion-qt
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, mir, opengl, home, removable-media]
     desktop: qt.desktop
-  qt-testnet:
-    command: desktop-launch ion-qt --testnet
-    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, mir, opengl, home, removable-media]
-    desktop: qt-testnet.desktop
-  qt-regtest:
-    command: desktop-launch ion-qt --regtest
-    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, mir, opengl, home, removable-media]
-    desktop: qt-regtest.desktop
   cli:
     command: ion-cli
-    plugs: [network, network-bind, home]
-  cli-testnet:
-    command: ion-cli --testnet
-    plugs: [network, network-bind, home]
-  cli-regtest:
-    command: ion-cli --regtest
     plugs: [network, network-bind, home]
   tx:
     command: ion-tx
