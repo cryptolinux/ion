@@ -233,27 +233,7 @@ bool static CheckMinimalPush(const valtype& data, opcodetype opcode) {
     return true;
 }
 
-bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& script, unsigned int flags, const BaseSignatureChecker& checker, SigVersion sigversion, ScriptError* serror)
-{
-    ScriptMachine sm(flags, checker, MAX_OPS_PER_SCRIPT);
-    sm.setStack(stack);
-    bool result = sm.Eval(script);
-    stack = sm.getStack();
-    if (serror)
-        *serror = sm.getError();
-    return result;
-}
-
-static const CScriptNum bnZero(0);
-static const CScriptNum bnOne(1);
-// static const CScriptNum bnFalse(0);
-// static const CScriptNum bnTrue(1);
-static const valtype vchFalse(0);
-// static const valtype vchZero(0);
-static const valtype vchTrue(1, 1);
-
-// Returns info about the next instruction to be run
-std::tuple<bool, opcodetype, StackDataType, ScriptError> ScriptMachine::Peek()
+bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, unsigned int flags, unsigned int maxOps, const BaseSignatureChecker& checker, ScriptError* serror)
 {
     ScriptMachine sm(flags, checker, maxOps);
     sm.setStack(stack);
@@ -1252,7 +1232,7 @@ bool TransactionSignatureChecker::CheckLockTime(const CScriptNum& nLockTime) con
 }
 
 
-bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, unsigned int flags, const BaseSignatureChecker& checker, ScriptError* serror)
+bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, unsigned int flags, unsigned int maxOps, const BaseSignatureChecker& checker, ScriptError* serror)
 {
     set_error(serror, SCRIPT_ERR_UNKNOWN_ERROR);
 
@@ -1260,13 +1240,13 @@ bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, unsigne
         return set_error(serror, SCRIPT_ERR_SIG_PUSHONLY);
     }
 
-    std::vector<std::vector<unsigned char> > stack, stackCopy;
-    if (!EvalScript(stack, scriptSig, flags, checker, SIGVERSION_BASE, serror))
+    vector<vector<unsigned char> > stack, stackCopy;
+    if (!EvalScript(stack, scriptSig, flags, maxOps, checker, serror))
         // serror is set
         return false;
     if (flags & SCRIPT_VERIFY_P2SH)
         stackCopy = stack;
-    if (!EvalScript(stack, scriptPubKey, flags, checker, SIGVERSION_BASE, serror))
+    if (!EvalScript(stack, scriptPubKey, flags, maxOps, checker, serror))
         // serror is set
         return false;
     if (stack.empty())
@@ -1294,7 +1274,7 @@ bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, unsigne
         CScript pubKey2(pubKeySerialized.begin(), pubKeySerialized.end());
         popstack(stack);
 
-        if (!EvalScript(stack, pubKey2, flags, checker, SIGVERSION_BASE, serror))
+        if (!EvalScript(stackCopy, pubKey2, flags, maxOps, checker, serror))
             // serror is set
             return false;
         if (stack.empty())

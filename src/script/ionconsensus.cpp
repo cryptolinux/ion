@@ -95,9 +95,7 @@ int ionconsensus_verify_script(const unsigned char *scriptPubKey, unsigned int s
         // Regardless of the verification result, the tx did not error.
         set_error(err, ionconsensus_ERR_OK);
 
-        PrecomputedTransactionData txdata(tx);
-		CAmount am(0);
-        return VerifyScript(tx.vin[nIn].scriptSig, CScript(scriptPubKey, scriptPubKey + scriptPubKeyLen), flags, TransactionSignatureChecker(&tx, nIn, am, txdata), nullptr);
+        return VerifyScript(tx.vin[nIn].scriptSig, CScript(scriptPubKey, scriptPubKey + scriptPubKeyLen), flags, MAX_OPS_PER_SCRIPT, TransactionSignatureChecker(&tx, nIn), NULL);
     } catch (const std::exception&) {
         return set_error(err, ionconsensus_ERR_TX_DESERIALIZE); // Error deserializing
     }

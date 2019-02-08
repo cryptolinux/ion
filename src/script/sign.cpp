@@ -150,34 +150,7 @@ bool ProduceSignature(const BaseSignatureCreator& creator, const CScript& fromPu
     sigdata.scriptSig = PushAll(result);
 
     // Test solution
-    return solved && VerifyScript(sigdata.scriptSig, fromPubKey, STANDARD_SCRIPT_VERIFY_FLAGS, creator.Checker());
-}
-
-SignatureData DataFromTransaction(const CMutableTransaction& tx, unsigned int nIn)
-{
-    SignatureData data;
-    assert(tx.vin.size() > nIn);
-    data.scriptSig = tx.vin[nIn].scriptSig;
-    return data;
-}
-
-void UpdateTransaction(CMutableTransaction& tx, unsigned int nIn, const SignatureData& data)
-{
-    assert(tx.vin.size() > nIn);
-    tx.vin[nIn].scriptSig = data.scriptSig;
-}
-
-bool SignSignature(const CKeyStore &keystore, const CScript& fromPubKey, CMutableTransaction& txTo, unsigned int nIn, const CAmount& amount, int nHashType)
-{
-    assert(nIn < txTo.vin.size());
-
-    CTransaction txToConst(txTo);
-    TransactionSignatureCreator creator(&keystore, &txToConst, nIn, amount, nHashType);
-
-    SignatureData sigdata;
-    bool ret = ProduceSignature(creator, fromPubKey, sigdata);
-    UpdateTransaction(txTo, nIn, sigdata);
-    return ret;
+    return VerifyScript(txin.scriptSig, fromPubKey, STANDARD_SCRIPT_VERIFY_FLAGS, MAX_OPS_PER_SCRIPT, MutableTransactionSignatureChecker(&txTo, nIn));
 }
 
 bool SignSignature(const CKeyStore &keystore, const CTransaction& txFrom, CMutableTransaction& txTo, unsigned int nIn, int nHashType)
@@ -327,28 +300,10 @@ SignatureData CombineSignatures(const CScript& scriptPubKey, const BaseSignature
     std::vector<std::vector<unsigned char> > vSolutions;
     Solver(scriptPubKey, txType, vSolutions);
 
-    return CombineSignatures(scriptPubKey, checker, txType, vSolutions, Stacks(scriptSig1), Stacks(scriptSig2), SIGVERSION_BASE).Output();
-}
-
-namespace {
-/** Dummy signature checker which accepts all signatures. */
-class DummySignatureChecker : public BaseSignatureChecker
-{
-public:
-    DummySignatureChecker() {}
-
-    bool CheckSig(const std::vector<unsigned char>& scriptSig, const std::vector<unsigned char>& vchPubKey, const CScript& scriptCode, SigVersion sigversion) const override
-    {
-        return true;
-    }
-};
-const DummySignatureChecker dummyChecker;
-} // namespace
-
-const BaseSignatureChecker& DummySignatureCreator::Checker() const
-{
-    return dummyChecker;
-}
+    vector<valtype> stack1;
+    EvalScript(stack1, scriptSig1, SCRIPT_VERIFY_STRICTENC, MAX_OPS_PER_SCRIPT, BaseSignatureChecker());
+    vector<valtype> stack2;
+    EvalScript(stack2, scriptSig2, SCRIPT_VERIFY_STRICTENC, MAX_OPS_PER_SCRIPT, BaseSignatureChecker());
 
 bool DummySignatureCreator::CreateSig(std::vector<unsigned char>& vchSig, const CKeyID& keyid, const CScript& scriptCode, SigVersion sigversion) const
 {
