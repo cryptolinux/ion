@@ -2,12 +2,12 @@
 
 [Desktop Entry]
 Type=Application
-Version=3.1.00
+Version=3.1.99
 Encoding=UTF-8
 Name=Ion Qt Testnet
 Icon=${SNAP}/qt-testnet.ico
 MimeType=x-scheme-handler/ioncore;
-Exec=ioncore.qt --testnet %u
+Exec=ioncore.qt-testnet %u
 Terminal=false
 Categories=Office;Finance;Games;
 Comment=Ion Digital Currency QT Official release

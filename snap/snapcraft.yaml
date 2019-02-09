@@ -1,5 +1,5 @@
 name: ioncore
-version: 3.1.01
+version: 3.1.99
 summary:   gaming related peer-to-peer network based digital currency
 description: |
   Ion Core is an MIT licensed,
@@ -31,7 +31,7 @@ description: |
     Reddit:    https://www.reddit.com/r/ionomy/
     Facebook:  https://facebook.com/ionomy
 
-grade: stable
+grade: devel
 confinement: strict
 icon: src/qt/res/src/ion.svg
 apps:
@@ -40,12 +40,34 @@ apps:
     plugs: [network, network-bind, home, removable-media]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+  daemon-testnet:
+    command: iond --testnet
+    plugs: [network, network-bind, home, removable-media]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+  daemon-regtest:
+    command: iond --regtest
+    plugs: [network, network-bind, home, removable-media]
   qt:
     command: desktop-launch ion-qt
     plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, mir, opengl, home, removable-media]
     desktop: qt.desktop
+  qt-testnet:
+    command: desktop-launch ion-qt --testnet
+    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, mir, opengl, home, removable-media]
+    desktop: qt-testnet.desktop
+  qt-regtest:
+    command: desktop-launch ion-qt --regtest
+    plugs: [network, network-bind, unity7, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, mir, opengl, home, removable-media]
+    desktop: qt-regtest.desktop
   cli:
     command: ion-cli
+    plugs: [network, network-bind, home]
+  cli-testnet:
+    command: ion-cli --testnet
+    plugs: [network, network-bind, home]
+  cli-regtest:
+    command: ion-cli --regtest
     plugs: [network, network-bind, home]
   tx:
     command: ion-tx
@@ -54,7 +76,7 @@ parts:
   ion:
     source: https://github.com/ioncoincore/ion
     source-type: git
-    source-tag: v3.1.01
+    source-tag: master
     plugin: nil
     override-build: |
       # Patch - Default home folder
@@ -68,6 +90,9 @@ parts:
       # Build Dependencies
       echo "START BUILDING FOR $SNAPCRAFT_ARCH_TRIPLET architecture"
       cd $SNAPCRAFT_PART_BUILD/depends
+      # Fix building ARM and AARCh64, as on some point they fail with, predownload all packages
+      #   curl: (22) The requested URL returned error: 407
+      make download-linux
       if [ $SNAPCRAFT_ARCH_TRIPLET = "i386-linux-gnu" ]
       then
         make HOST=i686-linux-gnu
@@ -89,8 +114,7 @@ parts:
       make install prefix=$SNAPCRAFT_PART_INSTALL
       # print in log which files are installed
       echo "Installed files:"
-      ls $SNAPCRAFT_PART_INSTALL
-    # Fix: You need multipass installed to build snaps which use the base keyword.
+      find $SNAPCRAFT_PART_INSTALL -type f
     build-packages:
       - curl
       - wget
