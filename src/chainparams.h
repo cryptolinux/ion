@@ -124,7 +124,7 @@ public:
     CAmount InvalidAmountFiltered() const { return nInvalidAmountFiltered; };
 
     int MidasStartHeight() const { return nMidasStartHeight;   }
-    int MidasStartTime()   const { return nMidasStartTime;     }
+    int64_t MidasStartTime()   const { return nMidasStartTime;     }
     int DGWStartHeight()   const { return nDGWStartHeight;     }
     int DGWStartTime()     const { return nDGWStartTime;       }
 
@@ -178,7 +178,7 @@ protected:
     int nBlockZerocoinV2;
 
     int nMidasStartHeight;
-    int nMidasStartTime;
+    int64_t nMidasStartTime;
     int nDGWStartHeight;
     int nDGWStartTime;
 };
