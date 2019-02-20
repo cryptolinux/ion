@@ -132,7 +132,9 @@ public:
 
     CAmount InvalidAmountFiltered() const { return nInvalidAmountFiltered; };
 
+    // Token groups
     int OpGroup_StartHeight() const { return nOpGroupStartHeight; }
+    std::string TokenManagementKey() const { return strTokenManagementKey; }
 
     int MidasStartHeight() const { return nMidasStartHeight;   }
     int64_t MidasStartTime()   const { return nMidasStartTime;     }
@@ -195,6 +197,7 @@ protected:
     int nPublicZCSpends;
 
     int nOpGroupStartHeight;
+    std::string strTokenManagementKey;
 
     // fake serial attack
     int nFakeSerialBlockheightEnd = 0;
