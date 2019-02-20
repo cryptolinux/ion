@@ -278,6 +278,7 @@ struct CLogCategoryDesc
                 ptrCategory->insert(string("mnbudget"));
                 ptrCategory->insert(string("precompute"));
                 ptrCategory->insert(string("staking"));
+                ptrCategory->insert(string("token"));
             }
         }
     }
