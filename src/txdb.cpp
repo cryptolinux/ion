@@ -307,6 +307,7 @@ bool CBlockTreeDB::LoadBlockIndexGuts()
                 pindexNew->nNonce = diskindex.nNonce;
                 pindexNew->nStatus = diskindex.nStatus;
                 pindexNew->nTx = diskindex.nTx;
+                pindexNew->nXDMTransactions = diskindex.nXDMTransactions;
 
 bool CBlockTreeDB::WriteAddressIndex(const std::vector<std::pair<CAddressIndexKey, CAmount > >&vect) {
     CDBBatch batch(*this);
