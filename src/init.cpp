@@ -35,7 +35,9 @@
 #include "script/standard.h"
 #include "script/sigcache.h"
 #include "scheduler.h"
-#include "timedata.h"
+#include "spork.h"
+#include "sporkdb.h"
+#include "tokengroupmanager.h"
 #include "txdb.h"
 #include "txmempool.h"
 #include "torcontrol.h"
@@ -2078,6 +2080,8 @@ bool AppInitMain()
         LogPrintf(" wallet      %15dms\n", GetTimeMillis() - nStart);
         zwalletMain = new CxIONWallet(pwalletMain->strWalletFile);
         pwalletMain->setZWallet(zwalletMain);
+
+        tokenGroupManager = CTokenGroupManager();
 
         RegisterValidationInterface(pwalletMain);
 
