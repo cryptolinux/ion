@@ -274,10 +274,8 @@ void PrepareShutdown()
         pcoinscatcher.reset();
         pcoinsdbview.reset();
         pblocktree.reset();
-        delete zerocoinDB;
-        zerocoinDB = nullptr;
-        delete pTokenDB;
-        pTokenDB = nullptr;
+        zerocoinDB.reset();
+        pSporkDB.reset();
     }
 #ifdef ENABLE_WALLET
     for (CWalletRef pwallet : vpwallets) {
@@ -1793,20 +1791,17 @@ bool AppInitMain()
                 pcoinsdbview.reset();
                 pcoinscatcher.reset();
                 pblocktree.reset();
+                zerocoinDB.reset();
+                pSporkDB.reset();
+
                 pblocktree.reset(new CBlockTreeDB(nBlockTreeDBCache, false, fReindex));
                 pcoinsdbview.reset(new CCoinsViewDB(nCoinDBCache, false, fReindex));
                 pcoinscatcher.reset(new CCoinsViewErrorCatcher(pcoinsdbview.get()));
                 pcoinsTip.reset(new CCoinsViewCache(pcoinscatcher.get()));
-                delete zerocoinDB;
-                delete pTokenDB;
 
-                evoDb = new CEvoDB(nEvoDbCache, false, fReset || fReindexChainState);
-                deterministicMNManager = new CDeterministicMNManager(*evoDb);
-                pblocktree = new CBlockTreeDB(nBlockTreeDBCache, false, fReset);
-                llmq::InitLLMQSystem(*evoDb, &scheduler, false, fReset || fReindexChainState);
-                zerocoinDB = new CZerocoinDB(0, false, fReset || fReindexChainState);
-                pTokenDB = new CTokenDB(0, false, fReset || fReindexChainState);
-
+                //ION specific: zerocoin and spork DB's
+                zerocoinDB.reset(new CZerocoinDB(0, false, fReindex));
+                pSporkDB.reset(new CSporkDB(0, false, false));
 
                 if (fReindex)
                     pblocktree->WriteReindexing(true);
