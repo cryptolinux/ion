@@ -5064,7 +5064,7 @@ bool CWallet::CreateZerocoinSpendTransaction(CAmount nValue, int nSecurityLevel,
     }
 
     if ((static_cast<int>(vSelectedMints.size()) > Params().Zerocoin_MaxSpendsPerTransaction())) {
-        receipt.SetStatus(_("Failed to find coin set amongst held coins with less than maxNumber of Spends"), nStatus);
+        receipt.SetStatus(_("You can only spend a maximum of 5 xION inputs at once. Please try the transaction again with a smaller amount. Clicking the 'xION control' button will allow you to see xION denominations available for spending."), nStatus);
         return false;
     }
 
