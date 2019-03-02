@@ -3658,7 +3658,7 @@ UniValue reconsiderzerocoins(const UniValue& params, bool fHelp)
     if(fHelp || !params.empty())
         throw runtime_error(
             "reconsiderzerocoins\n"
-            "\nCheck archived xION list to see if any mints were added to the blockchain.\n" +
+            "\nReturns the value of the wallet's deterministic xION seed.\n" +
             HelpRequiringPassphrase() + "\n"
 
             "\nResult:\n"
@@ -3743,7 +3743,7 @@ UniValue getxionseed(const UniValue& params, bool fHelp)
     if(fHelp || !params.empty())
         throw runtime_error(
             "getxionseed\n"
-            "\nCheck archived xION list to see if any mints were added to the blockchain.\n" +
+            "\nReturns the value of the wallet's deterministic xION seed.\n" +
             HelpRequiringPassphrase() + "\n"
 
             "\nResult\n"
