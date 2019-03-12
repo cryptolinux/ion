@@ -1736,6 +1736,8 @@ bool AppInitMain()
     //ION: Load Accumulator Checkpoints according to network (main/test/regtest)
     assert(AccumulatorCheckpoints::LoadCheckpoints(Params().NetworkIDString()));
 
+    tokenGroupManager = std::shared_ptr<CTokenGroupManager>(new CTokenGroupManager());
+
     fReindex = GetBoolArg("-reindex", false);
 
     if (gArgs.IsArgSet("-maxuploadtarget")) {
@@ -2080,8 +2082,6 @@ bool AppInitMain()
         LogPrintf(" wallet      %15dms\n", GetTimeMillis() - nStart);
         zwalletMain = new CxIONWallet(pwalletMain->strWalletFile);
         pwalletMain->setZWallet(zwalletMain);
-
-        tokenGroupManager = CTokenGroupManager();
 
         RegisterValidationInterface(pwalletMain);
 
