@@ -1,6 +1,5 @@
 # Copyright (c) 2018-2019 The Ion developers
-
-name: ioncore
+name: ioncore-ce
 version: 3.2.00
 summary:   gaming related peer-to-peer network based digital currency
 description: |
@@ -89,7 +88,8 @@ parts:
   ion:
     source: https://github.com/cevap/ion
     source-type: git
-    source-tag: v3.2.00
+    source-tag: master
+    source-tag: rc-v3.2.0-cevap
     plugin: nil
     # We don't want to copy the full blockchain every time that the snap is   
     # updated, but there's no way to define a default data dir in ion-qt.
@@ -118,6 +118,9 @@ parts:
       fi
       make
       make install prefix=$SNAPCRAFT_PART_INSTALL
+      # print in log which files are installed
+      echo "Installed files:"
+      ls $SNAPCRAFT_PART_INSTALL
     build-packages:
       - curl
       - wget
