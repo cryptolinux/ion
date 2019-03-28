@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2014-2016 The Bitcoin Core developers
+# Copyright (c) 2014-2017 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test mempool limiting together/eviction with the wallet."""
@@ -22,7 +22,7 @@ class MempoolLimitTest(BitcoinTestFramework):
         assert_equal(self.nodes[0].getmempoolinfo()['mempoolminfee'], Decimal('0.00001000'))
 
         txids = []
-        utxos = create_confirmed_utxos(relayfee, self.nodes[0], 491)
+        utxos = create_confirmed_utxos(relayfee, self.nodes[0], 91)
 
         self.log.info('Create a mempool tx that will be evicted')
         us0 = utxos.pop()

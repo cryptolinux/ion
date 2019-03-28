@@ -15,140 +15,31 @@
 # include <arpa/inet.h>
 #endif
 
-static std::atomic<bool> g_initial_block_download_completed(false);
+static const char* ppszTypeName[] =
+    {
+        "ERROR",
+        "tx",
+        "block",
+        "filtered block",
+        "tx lock request",
+        "tx lock vote",
+        "spork",
+        "mn winner",
+        "mn scan error",
+        "mn budget vote",
+        "mn budget proposal",
+        "mn budget finalized",
+        "mn budget finalized vote",
+        "mn quorum",
+        "mn announce",
+        "mn ping",
+        "dstx",
+        "pubcoins",
+        "genwit",
+        "accvalue"
+    };
 
-namespace NetMsgType {
-const char *VERSION="version";
-const char *VERACK="verack";
-const char *ADDR="addr";
-const char *INV="inv";
-const char *GETDATA="getdata";
-const char *MERKLEBLOCK="merkleblock";
-const char *GETBLOCKS="getblocks";
-const char *GETHEADERS="getheaders";
-const char *TX="tx";
-const char *HEADERS="headers";
-const char *BLOCK="block";
-const char *GETADDR="getaddr";
-const char *MEMPOOL="mempool";
-const char *PING="ping";
-const char *PONG="pong";
-const char *NOTFOUND="notfound";
-const char *FILTERLOAD="filterload";
-const char *FILTERADD="filteradd";
-const char *FILTERCLEAR="filterclear";
-const char *REJECT="reject";
-const char *SENDHEADERS="sendheaders";
-const char *SENDCMPCT="sendcmpct";
-const char *CMPCTBLOCK="cmpctblock";
-const char *GETBLOCKTXN="getblocktxn";
-const char *BLOCKTXN="blocktxn";
-// Ion message types
-const char *LEGACYTXLOCKREQUEST="ix";
-const char *SPORK="spork";
-const char *GETSPORKS="getsporks";
-const char *DSACCEPT="dsa";
-const char *DSVIN="dsi";
-const char *DSFINALTX="dsf";
-const char *DSSIGNFINALTX="dss";
-const char *DSCOMPLETE="dsc";
-const char *DSSTATUSUPDATE="dssu";
-const char *DSTX="dstx";
-const char *DSQUEUE="dsq";
-const char *SENDDSQUEUE="senddsq";
-const char *SYNCSTATUSCOUNT="ssc";
-const char *MNGOVERNANCESYNC="govsync";
-const char *MNGOVERNANCEOBJECT="govobj";
-const char *MNGOVERNANCEOBJECTVOTE="govobjvote";
-const char *GETMNLISTDIFF="getmnlistd";
-const char *MNLISTDIFF="mnlistdiff";
-const char *QSENDRECSIGS="qsendrecsigs";
-const char *QFCOMMITMENT="qfcommit";
-const char *QCONTRIB="qcontrib";
-const char *QCOMPLAINT="qcomplaint";
-const char *QJUSTIFICATION="qjustify";
-const char *QPCOMMITMENT="qpcommit";
-const char *QWATCH="qwatch";
-const char *QSIGSESANN="qsigsesann";
-const char *QSIGSHARESINV="qsigsinv";
-const char *QGETSIGSHARES="qgetsigs";
-const char *QBSIGSHARES="qbsigs";
-const char *QSIGREC="qsigrec";
-const char *QSIGSHARE="qsigshare";
-const char *CLSIG="clsig";
-const char *ISLOCK="islock";
-const char *MNAUTH="mnauth";
-}; // namespace NetMsgType
-
-/** All known message types. Keep this in the same order as the list of
- * messages above and in protocol.h.
- */
-const static std::string allNetMessageTypes[] = {
-    NetMsgType::VERSION,
-    NetMsgType::VERACK,
-    NetMsgType::ADDR,
-    NetMsgType::INV,
-    NetMsgType::GETDATA,
-    NetMsgType::MERKLEBLOCK,
-    NetMsgType::GETBLOCKS,
-    NetMsgType::GETHEADERS,
-    NetMsgType::TX,
-    NetMsgType::HEADERS,
-    NetMsgType::BLOCK,
-    NetMsgType::GETADDR,
-    NetMsgType::MEMPOOL,
-    NetMsgType::PING,
-    NetMsgType::PONG,
-    NetMsgType::NOTFOUND,
-    NetMsgType::FILTERLOAD,
-    NetMsgType::FILTERADD,
-    NetMsgType::FILTERCLEAR,
-    NetMsgType::REJECT,
-    NetMsgType::SENDHEADERS,
-    NetMsgType::SENDCMPCT,
-    NetMsgType::CMPCTBLOCK,
-    NetMsgType::GETBLOCKTXN,
-    NetMsgType::BLOCKTXN,
-    // Ion message types
-    // NOTE: do NOT include non-implmented here, we want them to be "Unknown command" in ProcessMessage()
-    NetMsgType::LEGACYTXLOCKREQUEST,
-    NetMsgType::SPORK,
-    NetMsgType::GETSPORKS,
-    NetMsgType::SENDDSQUEUE,
-    NetMsgType::DSACCEPT,
-    NetMsgType::DSVIN,
-    NetMsgType::DSFINALTX,
-    NetMsgType::DSSIGNFINALTX,
-    NetMsgType::DSCOMPLETE,
-    NetMsgType::DSSTATUSUPDATE,
-    NetMsgType::DSTX,
-    NetMsgType::DSQUEUE,
-    NetMsgType::SYNCSTATUSCOUNT,
-    NetMsgType::MNGOVERNANCESYNC,
-    NetMsgType::MNGOVERNANCEOBJECT,
-    NetMsgType::MNGOVERNANCEOBJECTVOTE,
-    NetMsgType::GETMNLISTDIFF,
-    NetMsgType::MNLISTDIFF,
-    NetMsgType::QSENDRECSIGS,
-    NetMsgType::QFCOMMITMENT,
-    NetMsgType::QCONTRIB,
-    NetMsgType::QCOMPLAINT,
-    NetMsgType::QJUSTIFICATION,
-    NetMsgType::QPCOMMITMENT,
-    NetMsgType::QWATCH,
-    NetMsgType::QSIGSESANN,
-    NetMsgType::QSIGSHARESINV,
-    NetMsgType::QGETSIGSHARES,
-    NetMsgType::QBSIGSHARES,
-    NetMsgType::QSIGREC,
-    NetMsgType::QSIGSHARE,
-    NetMsgType::CLSIG,
-    NetMsgType::ISLOCK,
-    NetMsgType::MNAUTH,
-};
-const static std::vector<std::string> allNetMessageTypesVec(allNetMessageTypes, allNetMessageTypes+ARRAYLEN(allNetMessageTypes));
-
-CMessageHeader::CMessageHeader(const MessageStartChars& pchMessageStartIn)
+CMessageHeader::CMessageHeader()
 {
     memcpy(pchMessageStart, pchMessageStartIn, MESSAGE_START_SIZE);
     memset(pchCommand, 0, sizeof(pchCommand));

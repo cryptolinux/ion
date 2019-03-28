@@ -32,7 +32,10 @@ JSON-RPC server. Running `iond` or `ion-qt -server` will be sufficient.
     $ ./linearize-data.py linearize.cfg
 
 Required configuration file settings:
-* `output_file`: The file that will contain the final blockchain.
+* "input": iond blocks/ directory containing blkNNNNN.dat
+* "hashlist": text file containing list of block hashes, linearized-hashes.py
+output.
+* "output_file": bootstrap.dat
       or
 * `output`: Output directory for linearized `blocks/blkNNNNN.dat` output.
 

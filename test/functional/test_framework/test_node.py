@@ -15,7 +15,6 @@ import subprocess
 import time
 
 from .authproxy import JSONRPCException
-from .messages import MY_SUBVERSION
 from .util import (
     assert_equal,
     delete_cookie_file,
@@ -28,7 +27,7 @@ from .util import (
 # For Python 3.4 compatibility
 JSONDecodeError = getattr(json, "JSONDecodeError", ValueError)
 
-BITCOIND_PROC_WAIT_TIMEOUT = 60
+BITCOIND_PROC_WAIT_TIMEOUT = 600
 
 class TestNode():
     """A class for representing a iond node under test.
@@ -44,7 +43,7 @@ class TestNode():
     To make things easier for the test writer, any unrecognised messages will
     be dispatched to the RPC connection."""
 
-    def __init__(self, i, dirname, extra_args, extra_args_from_options, rpchost, timewait, binary, stderr, mocktime, coverage_dir, use_cli=False):
+    def __init__(self, i, dirname, extra_args, rpchost, timewait, binary, stderr, mocktime, coverage_dir, use_cli=False):
         self.index = i
         self.datadir = os.path.join(dirname, "node" + str(i))
         self.rpchost = rpchost
@@ -52,23 +51,19 @@ class TestNode():
             self.rpc_timeout = timewait
         else:
             # Wait for up to 60 seconds for the RPC server to respond
-            self.rpc_timeout = 60
+            self.rpc_timeout = 600
         if binary is None:
             self.binary = os.getenv("BITCOIND", "iond")
         else:
             self.binary = binary
         self.stderr = stderr
         self.coverage_dir = coverage_dir
-        self.mocktime = mocktime
         # Most callers will just need to add extra args to the standard list below. For those callers that need more flexibity, they can just set the args property directly.
         self.extra_args = extra_args
-        self.extra_args_from_options = extra_args_from_options
         self.args = [self.binary, "-datadir=" + self.datadir, "-server", "-keypool=1", "-discover=0", "-rest", "-logtimemicros", "-debug", "-debugexclude=libevent", "-debugexclude=leveldb", "-mocktime=" + str(mocktime), "-uacomment=testnode%d" % i]
 
         self.cli = TestNodeCLI(os.getenv("BITCOINCLI", "ion-cli"), self.datadir)
-
-        # Don't try auto backups (they fail a lot when running tests)
-        self.args.append("-createwalletbackups=0")
+        self.use_cli = use_cli
 
         self.running = False
         self.process = None
@@ -81,7 +76,7 @@ class TestNode():
         self.p2ps = []
 
     def __del__(self):
-        # Ensure that we don't leave any dashd processes lying around after
+        # Ensure that we don't leave any bitcoind processes lying around after
         # the test ends
         if self.process and self.cleanup_on_exit:
             # Should only happen on test failure
@@ -104,14 +99,11 @@ class TestNode():
             extra_args = self.extra_args
         if stderr is None:
             stderr = self.stderr
-        all_args = self.args + self.extra_args_from_options + extra_args
-        if self.mocktime != 0:
-            all_args = all_args + ["-mocktime=%d" % self.mocktime]
         # Delete any existing cookie file -- if such a file exists (eg due to
-        # unclean shutdown), it will get overwritten anyway by dashd, and
+        # unclean shutdown), it will get overwritten anyway by bitcoind, and
         # potentially interfere with our attempt to authenticate
         delete_cookie_file(self.datadir)
-        self.process = subprocess.Popen(all_args, stderr=stderr, *args, **kwargs)
+        self.process = subprocess.Popen(self.args + extra_args, stderr=stderr, *args, **kwargs)
         self.running = True
         self.log.debug("iond started, waiting for RPC to come up")
 
@@ -119,11 +111,13 @@ class TestNode():
         """Sets up an RPC connection to the iond process. Returns False if unable to connect."""
         # Poll at a rate of four times per second
         poll_per_s = 4
+        time.sleep(5)
         for _ in range(poll_per_s * self.rpc_timeout):
             assert self.process.poll() is None, "iond exited with status %i during initialization" % self.process.returncode
             try:
                 self.rpc = get_rpc_proxy(rpc_url(self.datadir, self.index, self.rpchost), self.index, timeout=self.rpc_timeout, coveragedir=self.coverage_dir)
-                self.rpc.getblockcount()
+                while self.rpc.getblockcount() < 0:
+                    time.sleep(1)
                 # If the call to getblockcount() succeeds then the RPC connection is up
                 self.rpc_connected = True
                 self.url = self.rpc.url
@@ -133,11 +127,9 @@ class TestNode():
                 if e.errno != errno.ECONNREFUSED:  # Port not yet open?
                     raise  # unknown IO error
             except JSONRPCException as e:  # Initialization phase
-                # -28 RPC in warmup
-                # -342 Service unavailable, RPC server started but is shutting down due to error
-                if e.error['code'] != -28 and e.error['code'] != -342:
+                if e.error['code'] != -28:  # RPC in warmup?
                     raise  # unknown JSON RPC exception
-            except ValueError as e:  # cookie file not found and no rpcuser or rpcassword. iond still starting
+            except ValueError as e:  # cookie file not found and no rpcuser or rpcassword. bitcoind still starting
                 if "No RPC credentials" not in str(e):
                     raise
             time.sleep(1.0 / poll_per_s)
@@ -152,13 +144,13 @@ class TestNode():
             wallet_path = "wallet/%s" % wallet_name
             return self.rpc / wallet_path
 
-    def stop_node(self, wait=0):
+    def stop_node(self):
         """Stop the node."""
         if not self.running:
             return
         self.log.debug("Stopping node")
         try:
-            self.stop(wait=wait)
+            self.stop()
         except http.client.CannotSendRequest:
             self.log.exception("Unable to stop node.")
         del self.p2ps[:]
@@ -168,6 +160,7 @@ class TestNode():
 
         Returns True if the node has stopped. False otherwise.
         This method is responsible for freeing resources (self.process)."""
+        time.sleep(20)
         if not self.running:
             return True
         return_code = self.process.poll()
@@ -224,14 +217,6 @@ class TestNode():
             p.peer_disconnect()
         del self.p2ps[:]
 
-        # wait for p2p connections to disappear from getpeerinfo()
-        def check_peers():
-            for p in self.getpeerinfo():
-                if p['subver'] == MY_SUBVERSION.decode():
-                    return False
-            return True
-        wait_until(check_peers, timeout=5)
-
 class TestNodeCLIAttr:
     def __init__(self, cli, command):
         self.cli = cli
@@ -244,17 +229,17 @@ class TestNodeCLIAttr:
         return lambda: self(*args, **kwargs)
 
 class TestNodeCLI():
-    """Interface to dash-cli for an individual node"""
+    """Interface to ion-cli for an individual node"""
 
     def __init__(self, binary, datadir):
         self.options = []
         self.binary = binary
         self.datadir = datadir
         self.input = None
-        self.log = logging.getLogger('TestFramework.dashcli')
+        self.log = logging.getLogger('TestFramework.bitcoincli')
 
     def __call__(self, *options, input=None):
-        # TestNodeCLI is callable with dash-cli command-line options
+        # TestNodeCLI is callable with ion-cli command-line options
         cli = TestNodeCLI(self.binary, self.datadir)
         cli.options = [str(o) for o in options]
         cli.input = input
@@ -273,18 +258,18 @@ class TestNodeCLI():
         return results
 
     def send_cli(self, command=None, *args, **kwargs):
-        """Run dash-cli command. Deserializes returned string as python object."""
+        """Run ion-cli command. Deserializes returned string as python object."""
 
         pos_args = [str(arg) for arg in args]
         named_args = [str(key) + "=" + str(value) for (key, value) in kwargs.items()]
-        assert not (pos_args and named_args), "Cannot use positional arguments and named arguments in the same dash-cli call"
+        assert not (pos_args and named_args), "Cannot use positional arguments and named arguments in the same ion-cli call"
         p_args = [self.binary, "-datadir=" + self.datadir] + self.options
         if named_args:
             p_args += ["-named"]
         if command is not None:
             p_args += [command]
         p_args += pos_args + named_args
-        self.log.debug("Running dash-cli command: %s" % command)
+        self.log.debug("Running bitcoin-cli command: %s" % command)
         process = subprocess.Popen(p_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
         cli_stdout, cli_stderr = process.communicate(input=self.input)
         returncode = process.poll()

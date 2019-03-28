@@ -1055,13 +1055,19 @@ void CTxMemPool::check(const CCoinsViewCache *pcoins) const
                     parentSigOpCount += it2->GetSigOpCount();
                 }
             } else {
-                assert(pcoins->HaveCoin(txin.prevout));
+                const CCoins* coins = pcoins->AccessCoins(txin.prevout.hash);
+                if(!txin.scriptSig.IsZerocoinSpend())
+                    assert(coins && coins->IsAvailable(txin.prevout.n));
             }
             // Check whether its inputs are marked in mapNextTx.
-            auto it3 = mapNextTx.find(txin.prevout);
-            assert(it3 != mapNextTx.end());
-            assert(it3->first == &txin.prevout);
-            assert(it3->second == &tx);
+            if(!txin.scriptSig.IsZerocoinSpend()) {
+                std::map<COutPoint, CInPoint>::const_iterator it3 = mapNextTx.find(txin.prevout);
+                assert(it3 != mapNextTx.end());
+                assert(it3->second.ptx == &tx);
+                assert(it3->second.n == i);
+            }else{
+                fDependsWait=false;
+            }
             i++;
         }
         assert(setParentCheck == GetMemPoolParents(it));

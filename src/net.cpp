@@ -10,27 +10,21 @@
 #include "config/ion-config.h"
 #endif
 
-#include <net.h>
-#include <netmessagemaker.h>
+#include "net.h"
 
-#include <chainparams.h>
-#include <clientversion.h>
-#include <consensus/consensus.h>
-#include <crypto/common.h>
-#include <crypto/sha256.h>
-#include <primitives/transaction.h>
-#include <netbase.h>
-#include <scheduler.h>
-#include <ui_interface.h>
-#include <utilstrencodings.h>
-#include <validation.h>
+#include "addrman.h"
+#include "chainparams.h"
+#include "clientversion.h"
+#include "miner.h"
+#include "obfuscation.h"
+#include "primitives/transaction.h"
+#include "scheduler.h"
+#include "ui_interface.h"
 
-#include <masternode/masternode-meta.h>
-#include <masternode/masternode-sync.h>
-#include <privatesend/privatesend.h>
-#include <evo/deterministicmns.h>
+#ifdef ENABLE_WALLET
+#include "wallet.h"
+#endif // ENABLE_WALLET
 
-#include <memory>
 #ifdef WIN32
 #include <string.h>
 #else
@@ -470,35 +464,14 @@ CNode* CConnman::ConnectNode(CAddress addrConnect, const char *pszDest, bool fCo
     }
 
     // Connect
-    bool connected = false;
-    SOCKET hSocket = INVALID_SOCKET;
-    proxyType proxy;
-    if (addrConnect.IsValid()) {
-        bool proxyConnectionFailed = false;
-
-        if (GetProxy(addrConnect.GetNetwork(), proxy)) {
-            hSocket = CreateSocket(proxy.proxy);
-            if (hSocket == INVALID_SOCKET) {
-                return nullptr;
-            }
-            connected = ConnectThroughProxy(proxy, addrConnect.ToStringIP(), addrConnect.GetPort(), hSocket, nConnectTimeout, &proxyConnectionFailed);
-        } else {
-            // no proxy needed (none set for target network)
-            hSocket = CreateSocket(addrConnect);
-            if (hSocket == INVALID_SOCKET) {
-                return nullptr;
-            }
-            connected = ConnectSocketDirectly(addrConnect, hSocket, nConnectTimeout);
-        }
-        if (!proxyConnectionFailed) {
-            // If a connection to the node was attempted, and failure (if any) is not caused by a problem connecting to
-            // the proxy, mark this as an attempt.
-            addrman.Attempt(addrConnect, fCountFailure);
-        }
-    } else if (pszDest && GetNameProxy(proxy)) {
-        hSocket = CreateSocket(proxy.proxy);
-        if (hSocket == INVALID_SOCKET) {
-            return nullptr;
+    SOCKET hSocket = INVALID_SOCKET;;
+    bool proxyConnectionFailed = false;
+    if (pszDest ? ConnectSocketByName(addrConnect, hSocket, pszDest, Params().GetDefaultPort(), nConnectTimeout, &proxyConnectionFailed) :
+                  ConnectSocket(addrConnect, hSocket, nConnectTimeout, &proxyConnectionFailed)) {
+        if (!IsSelectableSocket(hSocket)) {
+            LogPrintf("Cannot create connection: non-selectable socket created (fd >= FD_SETSIZE ?)\n");
+            CloseSocket(hSocket);
+            return NULL;
         }
         std::string host;
         int port = default_port;
@@ -2757,6 +2730,24 @@ void CConnman::ThreadMessageHandler()
     }
 }
 
+#ifdef ENABLE_WALLET
+// ppcoin: stake minter thread
+void static ThreadStakeMinter()
+{
+    boost::this_thread::interruption_point();
+    LogPrintf("ThreadStakeMinter started\n");
+    CWallet* pwallet = pwalletMain;
+    try {
+        BitcoinMiner(pwallet, true);
+        boost::this_thread::interruption_point();
+    } catch (std::exception& e) {
+        LogPrintf("ThreadStakeMinter() exception \n");
+    } catch (...) {
+        LogPrintf("ThreadStakeMinter() error \n");
+    }
+    LogPrintf("ThreadStakeMinter exiting,\n");
+}
+#endif // ENABLE_WALLET
 
 
 
@@ -3426,10 +3417,11 @@ bool CConnman::IsMasternodeQuorumNode(const CNode* pnode)
     return false;
 }
 
-void CConnman::AddPendingProbeConnections(const std::set<uint256> &proTxHashes)
-{
-    LOCK(cs_vPendingMasternodes);
-    masternodePendingProbes.insert(proTxHashes.begin(), proTxHashes.end());
+#ifdef ENABLE_WALLET
+    // ppcoin:mint proof-of-stake blocks in the background
+    if (GetBoolArg("-staking", true) && pwalletMain)
+        threadGroup.create_thread(boost::bind(&TraceThread<void (*)()>, "stakemint", &ThreadStakeMinter));
+#endif // ENABLE_WALLET
 }
 
 size_t CConnman::GetNodeCount(NumConnections flags)
@@ -3533,14 +3525,10 @@ void CConnman::RelayInvFiltered(CInv &inv, const CTransaction& relatedTx, const 
 void CConnman::RelayInvFiltered(CInv &inv, const uint256& relatedTxHash, const int minProtoVersion, bool fAllowMasternodeConnections)
 {
     LOCK(cs_vNodes);
-    for (const auto& pnode : vNodes) {
-        if (pnode->nVersion < minProtoVersion || (pnode->fMasternode && !fAllowMasternodeConnections))
-            continue;
-        {
-            LOCK(pnode->cs_filter);
-            if(pnode->pfilter && !pnode->pfilter->contains(relatedTxHash)) continue;
-        }
-        pnode->PushInventory(inv);
+    BOOST_FOREACH (CNode* pnode, vNodes){
+        if((pnode->nServices == NODE_BLOOM_WITHOUT_MN || pnode->nServices == NODE_BLOOM_LIGHT_ZC) && inv.IsMasterNodeType())continue;
+        if (pnode->nVersion >= ActiveProtocol())
+            pnode->PushInventory(inv);
     }
 }
 

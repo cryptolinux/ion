@@ -1,5 +1,5 @@
 ---
-name: "ion-linux-5.0"
+name: "ion-linux-3.2"
 enable_cache: true
 distro: "ubuntu"
 suites:

@@ -18,7 +18,7 @@ WORKINGDIR="/tmp/bitcoin"
 TMPFILE="hashes.tmp"
 
 #this URL is used if a version number is not specified as an argument to the script
-SIGNATUREFILE="https://bitcoin.org/bin/0.9.2.1/SHA256SUMS.asc"
+SIGNATUREFILE="https://github.com/ioncoincore/ion/releases/download/v3.2.00/SHA256SUMS.asc"
 
 SIGNATUREFILENAME="SHA256SUMS.asc"
 RCSUBDIR="test/"

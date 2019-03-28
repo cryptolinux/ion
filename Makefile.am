@@ -255,46 +255,6 @@ EXTRA_DIST += \
     test/util/data/bitcoin-util-test.json \
     test/util/data/blanktxv1.hex \
     test/util/data/blanktxv1.json \
-    test/util/data/blanktxv2.hex \
-    test/util/data/blanktxv2.json \
-    test/util/data/tt-delin1-out.hex \
-    test/util/data/tt-delin1-out.json \
-    test/util/data/tt-delout1-out.hex \
-    test/util/data/tt-delout1-out.json \
-    test/util/data/tt-locktime317000-out.hex \
-    test/util/data/tt-locktime317000-out.json \
-    test/util/data/tx394b54bb.hex \
-    test/util/data/txcreate1.hex \
-    test/util/data/txcreate1.json \
-    test/util/data/txcreate2.hex \
-    test/util/data/txcreate2.json \
-    test/util/data/txcreatedata1.hex \
-    test/util/data/txcreatedata1.json \
-    test/util/data/txcreatedata2.hex \
-    test/util/data/txcreatedata2.json \
-    test/util/data/txcreatedata_seq0.hex \
-    test/util/data/txcreatedata_seq0.json \
-    test/util/data/txcreatedata_seq1.hex \
-    test/util/data/txcreatedata_seq1.json \
-    test/util/data/txcreatemultisig1.hex \
-    test/util/data/txcreatemultisig1.json \
-    test/util/data/txcreatemultisig2.hex \
-    test/util/data/txcreatemultisig2.json \
-    test/util/data/txcreateoutpubkey1.hex \
-    test/util/data/txcreateoutpubkey1.json \
-    test/util/data/txcreatescript1.hex \
-    test/util/data/txcreatescript1.json \
-    test/util/data/txcreatescript2.hex \
-    test/util/data/txcreatescript2.json \
-    test/util/data/txcreatesignv1.hex \
-    test/util/data/txcreatesignv1.json \
-    test/util/data/txcreatesignv2.hex
-
-EXTRA_DIST += \
-    test/util/bitcoin-util-test.py \
-    test/util/data/bitcoin-util-test.json \
-    test/util/data/blanktxv1.hex \
-    test/util/data/blanktxv1.json \
     test/util/data/tt-delin1-out.hex \
     test/util/data/tt-delin1-out.json \
     test/util/data/tt-delout1-out.hex \
@@ -335,6 +295,5 @@ clean-docs:
 
 clean-local:
 	rm -rf coverage_percent.txt test_ion.coverage/ total.coverage/ test/tmp/ cache/ $(OSX_APP)
-	rm -rf test/functional/__pycache__
-	rm -rf test/functional/test_framework/__pycache__ test/cache share/rpcauth/__pycache__
-	rm -rf osx_volname dist/ dpi36.background.tiff dpi72.background.tiff
+	rm -rf test/functional/__pycache__ test/functional/test_framework/__pycache__ test/cache
+

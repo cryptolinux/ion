@@ -295,13 +295,16 @@ enum ServiceFlags : uint64_t {
     // Ion Core nodes used to support this by default, without advertising this bit,
     // but no longer do as of protocol version 70201 (= NO_BLOOM_VERSION)
     NODE_BLOOM = (1 << 2),
-    // NODE_XTHIN means the node supports Xtreme Thinblocks
-    // If this is turned off then the node will not service nor make xthin requests
-    NODE_XTHIN = (1 << 4),
-    // NODE_NETWORK_LIMITED means the same as NODE_NETWORK with the limitation of only
-    // serving the last 288 blocks
-    // See BIP159 for details on how this is implemented.
-    NODE_NETWORK_LIMITED = (1 << 10),
+
+	// NODE_BLOOM_WITHOUT_MN means the node has the same features as NODE_BLOOM with the only difference
+	// that the node doens't want to receive master nodes messages. (the 1<<3 was not picked as constant because on bitcoin 0.14 is witness and we want that update here )
+
+    NODE_BLOOM_WITHOUT_MN = (1 << 4),
+
+
+    // NODE_BLOOM_LIGHT_ZC means the node has the same feature as NODE_BLOOM_WITHOUT_MN with the addition of
+    // support for the light zerocoin protocol.
+    NODE_BLOOM_LIGHT_ZC = (1 << 5),
 
     // Bits 24-31 are reserved for temporary experiments. Just pick a bit that
     // isn't getting used, or one not being used much, and notify the
@@ -425,5 +428,28 @@ public:
     uint256 hash;
 };
 
+enum {
+    MSG_TX = 1,
+    MSG_BLOCK,
+    // Nodes may always request a MSG_FILTERED_BLOCK in a getdata, however,
+    // MSG_FILTERED_BLOCK should not appear in any invs except as a part of getdata.
+    MSG_FILTERED_BLOCK,
+    MSG_TXLOCK_REQUEST,
+    MSG_TXLOCK_VOTE,
+    MSG_SPORK,
+    MSG_MASTERNODE_WINNER,
+    MSG_MASTERNODE_SCANNING_ERROR,
+    MSG_BUDGET_VOTE,
+    MSG_BUDGET_PROPOSAL,
+    MSG_BUDGET_FINALIZED,
+    MSG_BUDGET_FINALIZED_VOTE,
+    MSG_MASTERNODE_QUORUM,
+    MSG_MASTERNODE_ANNOUNCE,
+    MSG_MASTERNODE_PING,
+    MSG_DSTX,
+    MSG_PUBCOINS,
+    MSG_GENWIT,
+    MSG_ACC_VALUE
+};
 
 #endif // BITCOIN_PROTOCOL_H

@@ -21,7 +21,6 @@ from test_framework.mininode import (
     mininode_lock,
     msg_block,
     msg_getdata,
-    NODE_NETWORK,
     network_thread_join,
     network_thread_start,
 )
@@ -114,7 +113,7 @@ class ExampleTest(BitcoinTestFramework):
         # sync_all() should not include node2, since we're not expecting it to
         # sync.
         connect_nodes(self.nodes[0], 1)
-        self.sync_all(self.nodes[0:1])
+        self.sync_all([self.nodes[0:1]])
 
     # Use setup_nodes() to customize the node start behaviour (for example if
     # you don't want to start all nodes at the start of the test).
@@ -143,8 +142,8 @@ class ExampleTest(BitcoinTestFramework):
         self.nodes[0].p2p.wait_for_verack()
 
         # Generating a block on one of the nodes will get us out of IBD
-        blocks = [int(self.nodes[0].generate(nblocks=1)[0], 16)]
-        self.sync_all(self.nodes[0:1])
+        blocks = [int(self.nodes[0].generate(1)[0], 16)]
+        self.sync_all([self.nodes[0:1]])
 
         # Notice above how we called an RPC by calling a method with the same
         # name on the node object. Notice also how we used a keyword argument
@@ -189,9 +188,6 @@ class ExampleTest(BitcoinTestFramework):
         self.log.info("Connect node2 and node1")
         connect_nodes(self.nodes[1], 2)
 
-        self.log.info("Wait for node2 to receive all the blocks from node1")
-        self.sync_all()
-
         self.log.info("Add P2P connection to node2")
         # We can't add additional P2P connections once the network thread has started. Disconnect the connection
         # to node0, wait for the network thread to terminate, then connect to node2. This is specific to
@@ -203,7 +199,7 @@ class ExampleTest(BitcoinTestFramework):
         network_thread_start()
         self.nodes[2].p2p.wait_for_verack()
 
-        self.log.info("Test that node2 propagates all the blocks to us")
+        self.log.info("Wait for node2 reach current tip. Test that it has propagated all the blocks to us")
 
         getdata_request = msg_getdata()
         for block in blocks:

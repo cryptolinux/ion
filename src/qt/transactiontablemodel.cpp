@@ -1,7 +1,6 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2016 The Dash developers
 // Copyright (c) 2016-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -589,8 +588,9 @@ QVariant TransactionTableModel::txStatusDecoration(const TransactionRecord *wtx)
     case TransactionStatus::Immature: {
         int total = wtx->status.depth + wtx->status.matures_in;
         int part = (wtx->status.depth * 5 / total) + 1;
-        return GUIUtil::getIcon(QString("transaction_%1").arg(part), GUIUtil::ThemedColor::ORANGE);
-        }
+        return QIcon(QString(":/icons/transaction_%1").arg(part));
+    }
+    case TransactionStatus::MaturesWarning:
     case TransactionStatus::NotAccepted:
         return GUIUtil::getIcon("transaction_0", GUIUtil::ThemedColor::RED);
     default:

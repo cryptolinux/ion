@@ -44,11 +44,12 @@ This will build ion-qt as well if the dependencies are met.
 
 These dependencies are required:
 
- Library     | Purpose          | Description
- ------------|------------------|----------------------
- libssl      | SSL Support      | Secure communications
- libboost    | Boost            | C++ Library
- libevent    | Events           | Asynchronous event notification
+ Library     | Purpose            | Description
+ ------------|--------------------|----------------------
+ libssl      | SSL Support        | Secure communications
+ libboost    | Boost              | C++ Library
+ libevent    | Events             | Asynchronous event notification
+ libgmp      | Bignum Arithmetic  | Precision arithmetic
 
 Optional dependencies:
 
@@ -60,6 +61,7 @@ Optional dependencies:
  protobuf    | Payments in GUI  | Data interchange format used for payment protocol (only needed when GUI enabled)
  libqrencode | QR codes in GUI  | Optional for generating QR codes (only needed when GUI enabled)
  univalue    | Utility          | JSON parsing and encoding (bundled version will be used unless --with-system-univalue passed to configure)
+ libzmq3     | ZMQ notification | Optional, allows generating ZMQ notifications (requires ZMQ version >= 4.0.0)
 
 For the versions used in the release, see [release-process.md](release-process.md) under *Fetch and build inputs*.
 
@@ -210,71 +212,17 @@ Hardening enables the following features:
 
 Disable-wallet mode
 --------------------
-When the intention is to run only a P2P node without a wallet, Ion Core may be compiled in
+**Note:** This functionality is not yet completely implemented, and compilation using the below option will currently fail.
+
+When the intention is to run only a P2P node without a wallet, ION Core may be compiled in
 disable-wallet mode with:
 
-    ./configure --prefix=<prefix> --disable-wallet
+    ./configure --disable-wallet
 
 In this case there is no dependency on Berkeley DB 4.8.
-
-Mining is also possible in disable-wallet mode, but only using the `getblocktemplate` RPC
-call not `getwork`.
 
 Additional Configure Flags
 --------------------------
 A list of additional configure flags can be displayed with:
 
     ./configure --help
-
-Building on FreeBSD
---------------------
-
-(TODO, this is untested, please report if it works and if changes to this documentation are needed)
-
-Building on FreeBSD is basically the same as on Linux based systems, with the difference that you have to use `gmake`
-instead of `make`.
-
-*Note on debugging*: The version of `gdb` installed by default is [ancient and considered harmful](https://wiki.freebsd.org/GdbRetirement).
-It is not suitable for debugging a multi-threaded C++ program, not even for getting backtraces. Please install the package `gdb` and
-use the versioned gdb command e.g. `gdb7111`.
-
-Building on OpenBSD
--------------------
-
-(TODO, this is untested, please report if it works and if changes to this documentation are needed)
-
-**Important**: From OpenBSD 6.2 onwards a C++11-supporting clang compiler is
-part of the base image, and while building it is necessary to make sure that this
-compiler is used and not ancient g++ 4.2.1. This is done by appending
-`CC=cc CXX=c++` to configuration commands. Mixing different compilers
-within the same executable will result in linker errors.
-
-```bash
-$ cd depends
-$ make CC=cc CXX=c++
-$ cd ..
-$ export AUTOCONF_VERSION=2.69 # replace this with the autoconf version that you installed
-$ export AUTOMAKE_VERSION=1.15 # replace this with the automake version that you installed
-$ ./autogen.sh
-$ ./configure --prefix=<prefix> CC=cc CXX=c++
-$ gmake # use -jX here for parallelism
-```
-
-OpenBSD Resource limits
--------------------
-If the build runs into out-of-memory errors, the instructions in this section
-might help.
-
-The standard ulimit restrictions in OpenBSD are very strict:
-
-    data(kbytes)         1572864
-
-This, unfortunately, in some cases not enough to compile some `.cpp` files in the project,
-(see issue [#6658](https://github.com/bitcoin/bitcoin/issues/6658)).
-If your user is in the `staff` group the limit can be raised with:
-
-    ulimit -d 3000000
-
-The change will only affect the current shell and processes spawned by it. To
-make the change system-wide, change `datasize-cur` and `datasize-max` in
-`/etc/login.conf`, and reboot.

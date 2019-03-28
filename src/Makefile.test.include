@@ -27,10 +27,13 @@ BITCOIN_TEST_SUITE = \
   test/test_ion.cpp
 # test_ion binary #
 BITCOIN_TESTS =\
-  test/arith_uint256_tests.cpp \
-  test/scriptnum10.h \
-  test/addrman_tests.cpp \
-  test/amount_tests.cpp \
+  test/zerocoin_implementation_tests.cpp\
+  test/zerocoin_denomination_tests.cpp\
+  test/zerocoin_transactions_tests.cpp \
+  test/zerocoin_coinspend_tests.cpp \
+  test/benchmark_zerocoin.cpp \
+  test/tutorial_zerocoin.cpp \
+  test/libzerocoin_tests.cpp \
   test/allocator_tests.cpp \
   test/base32_tests.cpp \
   test/base58_tests.cpp \

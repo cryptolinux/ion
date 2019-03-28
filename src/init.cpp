@@ -340,6 +340,10 @@ void Shutdown()
     }
    // Shutdown part 2: Stop TOR thread and delete wallet instance
     StopTorControl();
+    // Shutdown witness thread if it's enabled
+    if (nLocalServices == NODE_BLOOM_LIGHT_ZC) {
+        lightWorker.StopLightXionThread();
+    }
 #ifdef ENABLE_WALLET
     delete pwalletMain;
     pwalletMain = NULL;
@@ -391,12 +395,17 @@ void OnRPCStarted()
     uiInterface.NotifyBlockTip.connect(&RPCNotifyBlockChange);
 }
 
+void OnRPCStarted()
+{
+    uiInterface.NotifyBlockTip.connect(RPCNotifyBlockChange);
+}
+
 void OnRPCStopped()
 {
-    uiInterface.NotifyBlockTip.disconnect(&RPCNotifyBlockChange);
-    RPCNotifyBlockChange(false, nullptr);
-    g_best_block_cv.notify_all();
-    LogPrint(BCLog::RPC, "RPC stopped.\n");
+    uiInterface.NotifyBlockTip.disconnect(RPCNotifyBlockChange);
+    //RPCNotifyBlockChange(0);
+    cvBlockChange.notify_all();
+    LogPrint("rpc", "RPC stopped.\n");
 }
 
 std::string GetSupportedSocketEventsStr()
@@ -493,7 +502,8 @@ std::string HelpMessage(HelpMessageMode mode)
     strUsage += HelpMessageOpt("-onlynet=<net>", _("Only connect to nodes in network <net> (ipv4, ipv6 or onion)"));
     strUsage += HelpMessageOpt("-permitbaremultisig", strprintf(_("Relay non-P2SH multisig (default: %u)"), DEFAULT_PERMIT_BAREMULTISIG));
     strUsage += HelpMessageOpt("-peerbloomfilters", strprintf(_("Support filtering of blocks and transaction with bloom filters (default: %u)"), DEFAULT_PEERBLOOMFILTERS));
-    strUsage += HelpMessageOpt("-port=<port>", strprintf(_("Listen for connections on <port> (default: %u or testnet: %u)"), defaultChainParams->GetDefaultPort(), testnetChainParams->GetDefaultPort()));
+    strUsage += HelpMessageOpt("-peerbloomfilterszc", strprintf(_("Support the zerocoin light node protocol (default: %u)"), DEFAULT_PEERBLOOMFILTERS_ZC));
+    strUsage += HelpMessageOpt("-port=<port>", strprintf(_("Listen for connections on <port> (default: %u or testnet: %u)"), 12700, 27170));
     strUsage += HelpMessageOpt("-proxy=<ip:port>", _("Connect through SOCKS5 proxy"));
     strUsage += HelpMessageOpt("-proxyrandomize", strprintf(_("Randomize credentials for every proxy connection. This enables Tor stream isolation (default: %u)"), DEFAULT_PROXYRANDOMIZE));
     strUsage += HelpMessageOpt("-seednode=<ip>", _("Connect to a node to retrieve peer addresses, and disconnect"));
@@ -1291,30 +1301,14 @@ bool AppInitParameterInteraction()
         InitWarning(_("-masternode option is deprecated and ignored, specifying -masternodeblsprivkey is enough to start this node as a masternode."));
     }
 
-    if (gArgs.IsArgSet("-masternodeblsprivkey")) {
-        if (!gArgs.GetBoolArg("-listen", DEFAULT_LISTEN) && Params().RequireRoutableExternalIP()) {
-            return InitError("Masternode must accept connections from outside, set -listen=1");
-        }
-        if (!gArgs.GetBoolArg("-txindex", DEFAULT_TXINDEX)) {
-            return InitError("Masternode must have transaction index enabled, set -txindex=1");
-        }
-        if (!gArgs.GetBoolArg("-peerbloomfilters", DEFAULT_PEERBLOOMFILTERS)) {
-            return InitError("Masternode must have bloom filters enabled, set -peerbloomfilters=1");
-        }
-        if (gArgs.GetArg("-prune", 0) > 0) {
-            return InitError("Masternode must have no pruning enabled, set -prune=0");
-        }
-        if (gArgs.GetArg("-maxconnections", DEFAULT_MAX_PEER_CONNECTIONS) < DEFAULT_MAX_PEER_CONNECTIONS) {
-            return InitError(strprintf("Masternode must be able to handle at least %d connections, set -maxconnections=%d", DEFAULT_MAX_PEER_CONNECTIONS, DEFAULT_MAX_PEER_CONNECTIONS));
-        }
-        if (gArgs.GetBoolArg("-disablegovernance", false)) {
-            return InitError(_("You can not disable governance validation on a masternode."));
-        }
-    }
+    if (GetBoolArg("-peerbloomfilterszc", DEFAULT_PEERBLOOMFILTERS_ZC))
+        nLocalServices |= NODE_BLOOM_LIGHT_ZC;
 
-    if (gArgs.IsArgSet("-litemode")) {
-        InitWarning(_("-litemode is deprecated.") + (gArgs.GetBoolArg("-litemode", false) ? (" "  + _("Its replacement -disablegovernance has been forced instead.")) : ( " " + _("It has been replaced by -disablegovernance."))));
-        gArgs.ForceRemoveArg("-litemode");
+    if (nLocalServices != NODE_BLOOM_LIGHT_ZC) {
+
+        if (GetBoolArg("-peerbloomfilters", DEFAULT_PEERBLOOMFILTERS))
+            nLocalServices |= NODE_BLOOM;
+
     }
 
     fDisableGovernance = gArgs.GetBoolArg("-disablegovernance", false);
@@ -1591,13 +1585,10 @@ bool AppInitMain()
             strSubVersion.size(), MAX_SUBVERSION_LENGTH));
     }
 
-    // sanitize comments per BIP-0014, format user agent and check total size
-    std::vector<std::string> uacomments;
-    for (const std::string& cmt : mapMultiArgs["-uacomment"]) {
-        if (cmt != SanitizeString(cmt, SAFE_CHARS_UA_COMMENT))
-            return InitError(strprintf(_("User Agent comment (%s) contains unsafe characters."), cmt));
-        uacomments.push_back(cmt);
-    }
+    }  // (!fDisableWallet)
+#endif // ENABLE_WALLET
+
+    // ********************************************************* Step 6: network initialization
 
     // format user agent, check total size
     strSubVersion = FormatSubVersion(CLIENT_NAME, CLIENT_VERSION, uacomments);
@@ -1880,27 +1871,53 @@ bool AppInitMain()
                     }
                 }
 
-                // Drop all information from the zerocoinDB and repopulate
-                if (GetBoolArg("-reindexzerocoin", false)) {
-                    if (chainActive.Height() > Params().Zerocoin_StartHeight()) {
-                        uiInterface.InitMessage(_("Reindexing zerocoin database..."));
-                        std::string strError = ReindexZerocoinDB();
-                        if (strError != "") {
-                            strLoadError = strError;
-                            break;
-                        }
+                // Wrapped serials inflation check
+                bool reindexDueWrappedSerials = false;
+                bool reindexZerocoin = false;
+                int chainHeight = chainActive.Height();
+                if(Params().NetworkID() == CBaseChainParams::MAIN && chainHeight > Params().Zerocoin_Block_EndFakeSerial()) {
+
+                    // Supply needs to be exactly GetSupplyBeforeFakeSerial + GetWrapppedSerialInflationAmount
+                    CBlockIndex* pblockindex = chainActive[Params().Zerocoin_Block_EndFakeSerial() + 1];
+                    CAmount xionSupplyCheckpoint = Params().GetSupplyBeforeFakeSerial() + GetWrapppedSerialInflationAmount();
+
+                    if (pblockindex->GetZerocoinSupply() < xionSupplyCheckpoint) {
+                        // Trigger reindex due wrapping serials
+                        LogPrintf("Current GetZerocoinSupply: %d vs %d\n", pblockindex->GetZerocoinSupply()/COIN , xionSupplyCheckpoint/COIN);
+                        reindexDueWrappedSerials = true;
+                    } else if (pblockindex->GetZerocoinSupply() > xionSupplyCheckpoint) {
+                        // Trigger global xION reindex
+                        reindexZerocoin = true;
+                        LogPrintf("Current GetZerocoinSupply: %d vs %d\n", pblockindex->GetZerocoinSupply()/COIN , xionSupplyCheckpoint/COIN);
                     }
+
                 }
 
-                // Check for changed -timestampindex state
-                if (fTimestampIndex != gArgs.GetBoolArg("-timestampindex", DEFAULT_TIMESTAMPINDEX)) {
-                    strLoadError = _("You need to rebuild the database using -reindex to change -timestampindex");
-                    break;
+                // Reindex only for wrapped serials inflation.
+                if (reindexDueWrappedSerials)
+                    AddWrappedSerialsInflation();
+
+                // Recalculate money supply for blocks that are impacted by accounting issue after zerocoin activation
+                if (GetBoolArg("-reindexmoneysupply", false) || reindexZerocoin) {
+                    if (chainHeight > Params().Zerocoin_StartHeight()) {
+                        RecalculateXIONMinted();
+                        RecalculateXIONSpent();
+                    }
+                    // Recalculate from the zerocoin activation or from scratch.
+                    RecalculateIONSupply(reindexZerocoin ? Params().Zerocoin_StartHeight() : 1);
+                }
+
+                // Check Recalculation result
+                if(Params().NetworkID() == CBaseChainParams::MAIN && chainHeight > Params().Zerocoin_Block_EndFakeSerial()) {
+                    CBlockIndex* pblockindex = chainActive[Params().Zerocoin_Block_EndFakeSerial() + 1];
+                    CAmount xionSupplyCheckpoint = Params().GetSupplyBeforeFakeSerial() + GetWrapppedSerialInflationAmount();
+                    if (pblockindex->GetZerocoinSupply() != xionSupplyCheckpoint)
+                        return InitError(strprintf("ZerocoinSupply Recalculation failed: %d vs %d", pblockindex->GetZerocoinSupply()/COIN , xionSupplyCheckpoint/COIN));
                 }
 
                 // Force recalculation of accumulators.
                 if (GetBoolArg("-reindexaccumulators", false)) {
-                    if (chainActive.Height() > Params().Zerocoin_Block_V2_Start()) {
+                    if (chainHeight > Params().Zerocoin_Block_V2_Start()) {
                         CBlockIndex *pindex = chainActive[Params().Zerocoin_Block_V2_Start()];
                         while (pindex->nHeight < chainActive.Height()) {
                             if (!count(listAccCheckpointsNoDB.begin(), listAccCheckpointsNoDB.end(),
@@ -1920,27 +1937,30 @@ bool AppInitMain()
                     }
                 }
 
-                uiInterface.InitMessage(_("Verifying blocks..."));
+                if (!fReindex) {
+                    uiInterface.InitMessage(_("Verifying blocks..."));
 
-                // flush evodb
-                if (!evoDb->CommitRootTransaction()) {
-                    strLoadError = _("Failed to commit EvoDB");
-                    break;
-                }
+                    // Flag sent to validation code to let it know it can skip certain checks
+                    fVerifyingBlocks = true;
 
-                bool is_coinsview_empty = fReset || fReindexChainState || pcoinsTip->GetBestBlock().IsNull();
-                if (!is_coinsview_empty) {
-                    // LoadChainTip sets chainActive based on pcoinsTip's best block
-                    if (!LoadChainTip(chainparams)) {
-                        strLoadError = _("Error initializing block database");
+                    {
+                        LOCK(cs_main);
+                        CBlockIndex *tip = chainActive[chainActive.Height()];
+                        RPCNotifyBlockChange(tip->GetBlockHash());
+                        if (tip && tip->nTime > GetAdjustedTime() + 2 * 60 * 60) {
+                            strLoadError = _("The block database contains a block which appears to be from the future. "
+                                             "This may be due to your computer's date and time being set incorrectly. "
+                                             "Only rebuild the block database if you are sure that your computer's date and time are correct");
+                            break;
+                        }
+                    }
+
+                    // Zerocoin must check at level 4
+                    if (!CVerifyDB().VerifyDB(pcoinsdbview, 4, GetArg("-checkblocks", 100))) {
+                        strLoadError = _("Corrupted block database detected");
+                        fVerifyingBlocks = false;
                         break;
                     }
-                    assert(chainActive.Tip() != NULL);
-                }
-
-                if (!deterministicMNManager->UpgradeDBIfNeeded()) {
-                    strLoadError = _("Error upgrading evo database");
-                    break;
                 }
 
                 if (!is_coinsview_empty) {
@@ -2379,21 +2399,15 @@ bool AppInitMain()
 
     connOptions.vSeedNodes = gArgs.GetArgs("-seednode");
 
-    // Initiate outbound connections unless connect=0
-    connOptions.m_use_addrman_outgoing = !gArgs.IsArgSet("-connect");
-    if (!connOptions.m_use_addrman_outgoing) {
-        const auto connect = gArgs.GetArgs("-connect");
-        if (connect.size() != 1 || connect[0] != "0") {
-            connOptions.m_specified_outgoing = connect;
-        }
+    if (nLocalServices & NODE_BLOOM_LIGHT_ZC) {
+        // Run a thread to compute witnesses
+        lightWorker.StartLightXionThread(threadGroup);
     }
 
-    std::string strSocketEventsMode = gArgs.GetArg("-socketevents", DEFAULT_SOCKETEVENTS);
-    if (strSocketEventsMode == "select") {
-        connOptions.socketEventsMode = CConnman::SOCKETEVENTS_SELECT;
-#ifdef USE_POLL
-    } else if (strSocketEventsMode == "poll") {
-        connOptions.socketEventsMode = CConnman::SOCKETEVENTS_POLL;
+#ifdef ENABLE_WALLET
+    // Generate coins in the background
+    if (pwalletMain)
+        GenerateBitcoins(GetBoolArg("-gen", false), pwalletMain, GetArg("-genproclimit", 1));
 #endif
 #ifdef USE_EPOLL
     } else if (strSocketEventsMode == "epoll") {
@@ -2414,5 +2428,6 @@ bool AppInitMain()
 
     g_wallet_init_interface->Start(scheduler);
 
-    return true;
+
+    return !fRequestShutdown;
 }

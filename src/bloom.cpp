@@ -6,16 +6,15 @@
 
 #include <bloom.h>
 
-#include <primitives/transaction.h>
-#include <evo/specialtx.h>
-#include <evo/providertx.h>
-#include <evo/cbtx.h>
-#include <llmq/quorums_commitment.h>
-#include <hash.h>
-#include <script/script.h>
-#include <script/standard.h>
-#include <random.h>
-#include <streams.h>
+
+#include "chainparams.h"
+#include "hash.h"
+#include "libzerocoin/bignum.h"
+#include "libzerocoin/CoinSpend.h"
+#include "primitives/transaction.h"
+#include "script/script.h"
+#include "script/standard.h"
+#include "streams.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -61,7 +60,12 @@ inline unsigned int CBloomFilter::Hash(unsigned int nHashNum, const std::vector<
     return MurmurHash3(nHashNum * 0xFBA4C795 + nTweak, vDataToHash) % (vData.size() * 8);
 }
 
-void CBloomFilter::insert(const std::vector<unsigned char>& vKey)
+void CBloomFilter::setNotFull()
+{
+    isFull = false;
+}
+
+void CBloomFilter::insert(const vector<unsigned char>& vKey)
 {
     if (isFull)
         return;
@@ -90,12 +94,13 @@ void CBloomFilter::insert(const uint256& hash)
 
 bool CBloomFilter::contains(const std::vector<unsigned char>& vKey) const
 {
-    if (isFull)
+    if (isFull) {
         return true;
-    if (isEmpty)
+    }
+    if (isEmpty) {
         return false;
-    for (unsigned int i = 0; i < nHashFuncs; i++)
-    {
+    }
+    for (unsigned int i = 0; i < nHashFuncs; i++) {
         unsigned int nIndex = Hash(i, vKey);
         // Checks bit nIndex of vData
         if (!(vData[nIndex >> 3] & (1 << (7 & nIndex))))
@@ -142,94 +147,36 @@ bool CBloomFilter::IsWithinSizeConstraints() const
     return vData.size() <= MAX_BLOOM_FILTER_SIZE && nHashFuncs <= MAX_HASH_FUNCS;
 }
 
-// Match if the filter contains any arbitrary script data element in script
-bool CBloomFilter::CheckScript(const CScript &script) const
-{
-    CScript::const_iterator pc = script.begin();
-    std::vector<unsigned char> data;
-    while (pc < script.end()) {
-        opcodetype opcode;
-        if (!script.GetOp(pc, opcode, data))
-            break;
-        if (data.size() != 0 && contains(data))
-            return true;
-    }
-    return false;
+/**
+ * Returns true if this filter will match anything. See {@link org.ionj.core.BloomFilter#setMatchAll()}
+ * for when this can be a useful thing to do.
+ */
+bool CBloomFilter::MatchesAll() const {
+    for (unsigned char b : vData)
+        if (b !=  0xff)
+            return false;
+    return true;
 }
 
-// If the transaction is a special transaction that has a registration
-// transaction hash, test the registration transaction hash.
-// If the transaction is a special transaction with any public keys or any
-// public key hashes test them.
-// If the transaction is a special transaction with payout addresses test
-// the hash160 of those addresses.
-// Filter is updated only if it has BLOOM_UPDATE_ALL flag to be able to have
-// simple SPV wallets that doesn't work with DIP2 transactions (multicoin
-// wallets, etc.)
-bool CBloomFilter::CheckSpecialTransactionMatchesAndUpdate(const CTransaction &tx)
-{
-    if(tx.nVersion != 3 || tx.nType == TRANSACTION_NORMAL) {
-        return false; // it is not a special transaction
-    }
-    switch(tx.nType) {
-    case(TRANSACTION_PROVIDER_REGISTER): {
-        CProRegTx proTx;
-        if (GetTxPayload(tx, proTx)) {
-            if(contains(proTx.collateralOutpoint) ||
-                    contains(proTx.keyIDOwner) ||
-                    contains(proTx.keyIDVoting) ||
-                    CheckScript(proTx.scriptPayout)) {
-                if ((nFlags & BLOOM_UPDATE_MASK) == BLOOM_UPDATE_ALL)
-                    insert(tx.GetHash());
-                return true;
-            }
+/**
+ * Copies filter into this. Filter must have the same size, hash function count and nTweak or an
+ * IllegalArgumentException will be thrown.
+ */
+bool CBloomFilter::Merge(const CBloomFilter& filter) {
+    if (!this->MatchesAll() && !filter.MatchesAll()) {
+        if(! (filter.vData.size() == this->vData.size() &&
+                filter.nHashFuncs == this->nHashFuncs &&
+                filter.nTweak == this->nTweak)){
+            return false;
         }
-        return false;
+        for (unsigned int i = 0; i < vData.size(); i++)
+            this->vData[i] |= filter.vData[i];
+    } else {
+        // TODO: Check this.
+        this->vData.clear();
+        this->vData[0] = 0xff;
     }
-    case(TRANSACTION_PROVIDER_UPDATE_SERVICE): {
-        CProUpServTx proTx;
-        if (GetTxPayload(tx, proTx)) {
-            if(contains(proTx.proTxHash)) {
-                return true;
-            }
-            if(CheckScript(proTx.scriptOperatorPayout)) {
-                if ((nFlags & BLOOM_UPDATE_MASK) == BLOOM_UPDATE_ALL)
-                    insert(proTx.proTxHash);
-                return true;
-            }
-        }
-        return false;
-    }
-    case(TRANSACTION_PROVIDER_UPDATE_REGISTRAR): {
-        CProUpRegTx proTx;
-        if (GetTxPayload(tx, proTx)) {
-            if(contains(proTx.proTxHash))
-                return true;
-            if(contains(proTx.keyIDVoting) ||
-                    CheckScript(proTx.scriptPayout)) {
-                if ((nFlags & BLOOM_UPDATE_MASK) == BLOOM_UPDATE_ALL)
-                    insert(proTx.proTxHash);
-                return true;
-            }
-        }
-        return false;
-    }
-    case(TRANSACTION_PROVIDER_UPDATE_REVOKE): {
-        CProUpRevTx proTx;
-        if (GetTxPayload(tx, proTx)) {
-            if(contains(proTx.proTxHash))
-                return true;
-        }
-        return false;
-    }
-    case(TRANSACTION_COINBASE):
-    case(TRANSACTION_QUORUM_COMMITMENT):
-        // No aditional checks for this transaction types
-        return false;
-    }
-
-    LogPrintf("Unknown special transaction type in Bloom filter check.\n");
-    return false;
+    return true;
 }
 
 bool CBloomFilter::IsRelevantAndUpdate(const CTransaction& tx)
@@ -255,15 +202,26 @@ bool CBloomFilter::IsRelevantAndUpdate(const CTransaction& tx)
         // If this matches, also add the specific output that was matched.
         // This means clients don't have to update the filter themselves when a new relevant tx 
         // is discovered in order to find spending transactions, which avoids round-tripping and race conditions.
-        if(CheckScript(txout.scriptPubKey)) {
-            fFound = true;
-            if ((nFlags & BLOOM_UPDATE_MASK) == BLOOM_UPDATE_ALL)
-                insert(COutPoint(hash, i));
-            else if ((nFlags & BLOOM_UPDATE_MASK) == BLOOM_UPDATE_P2PUBKEY_ONLY)
-            {
-                txnouttype type;
-                std::vector<std::vector<unsigned char> > vSolutions;
-                if (Solver(txout.scriptPubKey, type, vSolutions) &&
+        CScript::const_iterator pc = txout.scriptPubKey.begin();
+        vector<unsigned char> data;
+        while (pc < txout.scriptPubKey.end()) {
+            opcodetype opcode;
+            if (!txout.scriptPubKey.GetOp(pc, opcode, data)){
+                break;
+            }
+
+            if (txout.IsZerocoinMint()){
+                data = vector<unsigned char>(txout.scriptPubKey.begin() + 6, txout.scriptPubKey.begin() + txout.scriptPubKey.size());
+            }
+
+            if (data.size() != 0 && contains(data)) {
+                fFound = true;
+                if ((nFlags & BLOOM_UPDATE_MASK) == BLOOM_UPDATE_ALL)
+                    insert(COutPoint(hash, i));
+                else if ((nFlags & BLOOM_UPDATE_MASK) == BLOOM_UPDATE_P2PUBKEY_ONLY) {
+                    txnouttype type;
+                    vector<vector<unsigned char> > vSolutions;
+                    if (Solver(txout.scriptPubKey, type, vSolutions) &&
                         (type == TX_PUBKEY || type == TX_MULTISIG))
                     insert(COutPoint(hash, i));
             }
@@ -280,8 +238,22 @@ bool CBloomFilter::IsRelevantAndUpdate(const CTransaction& tx)
             return true;
 
         // Match if the filter contains any arbitrary script data element in any scriptSig in tx
-        if(CheckScript(txin.scriptSig))
-            return true;
+        CScript::const_iterator pc = txin.scriptSig.begin();
+        vector<unsigned char> data;
+        while (pc < txin.scriptSig.end()) {
+            opcodetype opcode;
+            if (!txin.scriptSig.GetOp(pc, opcode, data))
+                break;
+            if (txin.scriptSig.IsZerocoinSpend()){
+                CDataStream s(vector<unsigned char>(txin.scriptSig.begin() + 44, txin.scriptSig.end()),
+                        SER_NETWORK, PROTOCOL_VERSION);
+
+                data = libzerocoin::CoinSpend::ParseSerial(s);
+            }
+            if (data.size() != 0 && contains(data)) {
+                return true;
+            }
+        }
     }
 
     return false;

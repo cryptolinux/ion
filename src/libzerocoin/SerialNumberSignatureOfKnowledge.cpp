@@ -57,10 +57,10 @@ SerialNumberSignatureOfKnowledge::SerialNumberSignatureOfKnowledge(const
     CHashWriter hasher(0,0);
     hasher << *params << commitmentToCoin.getCommitmentValue() << coin.getSerialNumber() << msghash;
 
-    std::vector<CBigNum> r(params->zkp_iterations);
-    std::vector<CBigNum> v_seed(params->zkp_iterations);
-    std::vector<CBigNum> v_expanded(params->zkp_iterations);
-    std::vector<CBigNum> c(params->zkp_iterations);
+    vector<CBigNum> r(params->zkp_iterations);
+    vector<CBigNum> v_seed(params->zkp_iterations);
+    vector<CBigNum> v_expanded(params->zkp_iterations);
+    vector<CBigNum> c(params->zkp_iterations);
 
     for(uint32_t i=0; i < params->zkp_iterations; i++) {
         r[i] = CBigNum::randBignum(params->coinCommitmentGroup.groupOrder);
@@ -145,7 +145,7 @@ bool SerialNumberSignatureOfKnowledge::Verify(const CBigNum& coinSerialNumber, c
     CHashWriter hasher(0,0);
     hasher << *params << valueOfCommitmentToCoin << coinSerialNumber << msghash;
 
-    std::vector<CBigNum> tprime(params->zkp_iterations);
+    vector<CBigNum> tprime(params->zkp_iterations);
     unsigned char *hashbytes = (unsigned char*) &this->hash;
 
     try {
@@ -171,7 +171,7 @@ bool SerialNumberSignatureOfKnowledge::Verify(const CBigNum& coinSerialNumber, c
             hasher << tprime[i];
         }
         return hasher.GetHash() == hash;
-    } catch (const std::range_error& e) {
+    }catch (std::range_error e){
         return error("SoK Verify() :: sprime invalid range.");
     }
 }

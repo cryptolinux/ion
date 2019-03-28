@@ -286,9 +286,7 @@ if __name__ == '__main__':
 	settings['rev_hash_bytes'] = settings['rev_hash_bytes'].lower()
 
 	if 'netmagic' not in settings:
-		settings['netmagic'] = 'bf0c6bbd'
-	if 'genesis' not in settings:
-		settings['genesis'] = '00000ffd590b1485b3caadc19b22e6379c733355108f107a430458cdf3407ab6'
+		settings['netmagic'] = 'c4e1d8ec'
 	if 'input' not in settings:
 		settings['input'] = 'input'
 	if 'hashlist' not in settings:
@@ -318,8 +316,7 @@ if __name__ == '__main__':
 	blkindex = get_block_hashes(settings)
 	blkmap = mkblockmap(blkindex)
 
-	# Block hash map won't be byte-reversed. Neither should the genesis hash.
-	if not settings['genesis'] in blkmap:
-		print("Genesis block not found in hashlist")
+	if not "0000004cf5ffbf2e31a9aa07c86298efb01a30b8911b80af7473d1114715084b" in blkmap:
+		print("not found")
 	else:
 		BlockDataCopier(settings, blkindex, blkmap).run()

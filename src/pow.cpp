@@ -16,48 +16,12 @@
 
 #include <math.h>
 
-const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfStake)
+unsigned int GetNextWorkRequiredOrig(const CBlockIndex* pindexLast)
 {
-    assert(pindexLast != nullptr);
-    unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
-
-    // Only change once per interval
-    if ((pindexLast->nHeight+1) % params.DifficultyAdjustmentInterval() != 0)
-    {
-        if (params.fPowAllowMinDifficultyBlocks)
-        {
-            // Special difficulty rule for testnet:
-            // If the new block's timestamp is more than 2* 2.5 minutes
-            // then allow mining of a min-difficulty block.
-            if (pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing*2)
-                return nProofOfWorkLimit;
-            else
-            {
-                // Return the last non-special-min-difficulty-rules-block
-                const CBlockIndex* pindex = pindexLast;
-                while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0 && pindex->nBits == nProofOfWorkLimit)
-                    pindex = pindex->pprev;
-                return pindex->nBits;
-            }
-        }
-        return pindexLast->nBits;
-    }
-
-    // Go back by what we want to be 1 day worth of blocks
-    int nHeightFirst = pindexLast->nHeight - (params.DifficultyAdjustmentInterval()-1);
-    assert(nHeightFirst >= 0);
-    const CBlockIndex* pindexFirst = pindexLast->GetAncestor(nHeightFirst);
-    assert(pindexFirst);
-
-   return CalculateNextWorkRequired(pindexLast, pindexFirst->GetBlockTime(), params);
-}
-
-unsigned int static GetNextWorkRequiredPivx(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params, const bool fProofOfStake)
-{
-    if (Params().NetworkIDString() == CBaseChainParams::REGTEST)
+    if (Params().NetworkID() == CBaseChainParams::REGTEST)
         return pindexLast->nBits;
 
-    /* current difficulty formula, ion - DarkGravity v3, written by Evan Duffield - evan@ionpay.io */
+    /* current difficulty formula, pivx - DarkGravity v3, written by Evan Duffield - evan@dashpay.io */
     const CBlockIndex* BlockLastSolved = pindexLast;
     const CBlockIndex* BlockReading = pindexLast;
     int64_t nActualTimespan = 0;
@@ -65,15 +29,15 @@ unsigned int static GetNextWorkRequiredPivx(const CBlockIndex* pindexLast, const
     int64_t PastBlocksMin = 24;
     int64_t PastBlocksMax = 24;
     int64_t CountBlocks = 0;
-    arith_uint256 PastDifficultyAverage;
-    arith_uint256 PastDifficultyAveragePrev;
+    uint256 PastDifficultyAverage;
+    uint256 PastDifficultyAveragePrev;
 
-    if (BlockLastSolved == NULL || BlockLastSolved->nHeight == 0 || BlockLastSolved->nHeight < params.DGWStartHeight + PastBlocksMin) {
-        return UintToArith256(params.powLimit).GetCompact();
+    if (BlockLastSolved == NULL || BlockLastSolved->nHeight == 0 || BlockLastSolved->nHeight < PastBlocksMin) {
+        return Params().ProofOfWorkLimit().GetCompact();
     }
 
-    arith_uint256 bnTargetLimit = fProofOfStake ? UintToArith256(params.posLimit) : UintToArith256(params.powLimit);
-    if (pindexLast->nHeight > params.POSStartHeight) {
+    if (pindexLast->nHeight > Params().LAST_POW_BLOCK()) {
+        uint256 bnTargetLimit = (~uint256(0) >> 24);
         int64_t nTargetSpacing = 60;
         int64_t nTargetTimespan = 60 * 40;
 
@@ -86,7 +50,7 @@ unsigned int static GetNextWorkRequiredPivx(const CBlockIndex* pindexLast, const
 
         // ppcoin: target change every block
         // ppcoin: retarget with exponential moving toward target spacing
-        arith_uint256 bnNew;
+        uint256 bnNew;
         bnNew.SetCompact(pindexLast->nBits);
 
         int64_t nInterval = nTargetTimespan / nTargetSpacing;
@@ -109,7 +73,7 @@ unsigned int static GetNextWorkRequiredPivx(const CBlockIndex* pindexLast, const
             if (CountBlocks == 1) {
                 PastDifficultyAverage.SetCompact(BlockReading->nBits);
             } else {
-                PastDifficultyAverage = ((PastDifficultyAveragePrev * CountBlocks) + (arith_uint256().SetCompact(BlockReading->nBits))) / (CountBlocks + 1);
+                PastDifficultyAverage = ((PastDifficultyAveragePrev * CountBlocks) + (uint256().SetCompact(BlockReading->nBits))) / (CountBlocks + 1);
             }
             PastDifficultyAveragePrev = PastDifficultyAverage;
         }
@@ -127,9 +91,9 @@ unsigned int static GetNextWorkRequiredPivx(const CBlockIndex* pindexLast, const
         BlockReading = BlockReading->pprev;
     }
 
-    arith_uint256 bnNew(PastDifficultyAverage);
+    uint256 bnNew(PastDifficultyAverage);
 
-    int64_t _nTargetTimespan = CountBlocks * params.nPosTargetSpacing;
+    int64_t _nTargetTimespan = CountBlocks * Params().TargetSpacing();
 
     if (nActualTimespan < _nTargetTimespan / 3)
         nActualTimespan = _nTargetTimespan / 3;
@@ -140,8 +104,8 @@ unsigned int static GetNextWorkRequiredPivx(const CBlockIndex* pindexLast, const
     bnNew *= nActualTimespan;
     bnNew /= _nTargetTimespan;
 
-    if (bnNew > bnTargetLimit) {
-        bnNew = bnTargetLimit;
+    if (bnNew > Params().ProofOfWorkLimit()) {
+        bnNew = Params().ProofOfWorkLimit();
     }
 
     return bnNew.GetCompact();
@@ -183,7 +147,7 @@ void avgRecentTimestamps(const CBlockIndex* pindexLast, int64_t *avgOf5, int64_t
   *avgOf17 /= 17;
 }
 
-unsigned int static GetNextWorkRequiredMidas(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params, const bool fProofOfStake)
+unsigned int GetNextWorkRequiredMidas(const CBlockIndex* pindexLast)
 {
     int64_t avgOf5;
     int64_t avgOf9;
@@ -198,6 +162,8 @@ unsigned int static GetNextWorkRequiredMidas(const CBlockIndex* pindexLast, cons
     int64_t nFastInterval = (params.nPosTargetSpacingMidas * 9 ) / 10; // seconds per block desired when far behind schedule
     int64_t nSlowInterval = (params.nPosTargetSpacingMidas * 11) / 10; // seconds per block desired when far ahead of schedule
     int64_t nIntervalDesired;
+
+    bool fProofOfStake = true;
 
     uint256 bnTargetLimit = fProofOfStake ? Params().ProofOfStakeLimit() : Params().ProofOfWorkLimit();
     unsigned int nTargetLimit = bnTargetLimit.GetCompact();
@@ -297,8 +263,19 @@ unsigned int static GetNextWorkRequiredMidas(const CBlockIndex* pindexLast, cons
 
 unsigned int static GetNextWorkRequiredOrig(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params, const bool fProofOfStake)
 {
-    uint256 bnTargetLimit = fProofOfStake ? uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
-        : uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+    if (Params().NetworkID() == CBaseChainParams::REGTEST)
+        return pindexLast->nBits;
+
+    /* current difficulty formula, ion - DarkGravity v3, written by Evan Duffield - evan@dashpay.io */
+    const CBlockIndex* BlockLastSolved = pindexLast;
+    const CBlockIndex* BlockReading = pindexLast;
+    int64_t nActualTimespan = 0;
+    int64_t LastBlockTime = 0;
+    int64_t PastBlocksMin = 24;
+    int64_t PastBlocksMax = 24;
+    int64_t CountBlocks = 0;
+    uint256 PastDifficultyAverage;
+    uint256 PastDifficultyAveragePrev;
 
     if (pindexLast == NULL)
         return UintToArith256(bnTargetLimit).GetCompact(); // genesis block
@@ -440,12 +417,12 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     return bnNew.GetCompact();
 }
 
-unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader* pblock, bool fProofOfStake)
+unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader* pblock)
 {
     if (pindexLast->nHeight < Params().MidasStartHeight()){
-        return GetNextWorkRequiredOrig(pindexLast, fProofOfStake);
+        return GetNextWorkRequiredOrig(pindexLast);
     } else if (pindexLast->nHeight >= Params().MidasStartHeight() && pindexLast->nHeight < Params().Zerocoin_StartHeight() -1){
-        return GetNextWorkRequiredMidas(pindexLast, fProofOfStake);
+        return GetNextWorkRequiredMidas(pindexLast);
     } else if (pindexLast->nHeight >= Params().Zerocoin_StartHeight() -1 && pindexLast->nHeight < Params().Zerocoin_StartHeight()) {
         return GetNextWorkRequiredDGW(pindexLast, pblock);
     } else if (pindexLast->nHeight >= Params().Zerocoin_StartHeight()) {
@@ -468,8 +445,12 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits)
         return false;
 
     // Check proof of work matches claimed amount
-    if (hash > bnTarget && Params().NetworkID() != CBaseChainParams::REGTEST)
-        return error("CheckProofOfWork() : hash doesn't match nBits");
+    if (hash > bnTarget) {
+        if (Params().MineBlocksOnDemand())
+            return false;
+        else
+            return error("CheckProofOfWork() : hash doesn't match nBits");
+    }
 
     return true;
 }

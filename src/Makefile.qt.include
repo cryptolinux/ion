@@ -43,6 +43,7 @@ QT_FORMS_UI = \
   qt/forms/askpassphrasedialog.ui \
   qt/forms/coincontroldialog.ui \
   qt/forms/editaddressdialog.ui \
+  qt/forms/governancepage.ui \
   qt/forms/helpmessagedialog.ui \
   qt/forms/intro.ui \
   qt/forms/modaloverlay.ui \
@@ -75,6 +76,7 @@ QT_MOC_CPP = \
   qt/moc_coincontroltreewidget.cpp \
   qt/moc_csvmodelwriter.cpp \
   qt/moc_editaddressdialog.cpp \
+  qt/moc_governancepage.cpp \
   qt/moc_guiutil.cpp \
   qt/moc_intro.cpp \
   qt/moc_macdockiconhandler.cpp \
@@ -88,13 +90,11 @@ QT_MOC_CPP = \
   qt/moc_overviewpage.cpp \
   qt/moc_peertablemodel.cpp \
   qt/moc_paymentserver.cpp \
-  qt/moc_columnalignedlayout.cpp \
-  qt/moc_proposalfilterproxy.cpp \
-  qt/moc_proposaltablemodel.cpp \
-  qt/moc_proposallist.cpp \
   qt/moc_qvalidatedlineedit.cpp \
   qt/moc_qvaluecombobox.cpp \
   qt/moc_receivecoinsdialog.cpp \
+  qt/moc_privacydialog.cpp \
+  qt/moc_proposalframe.cpp \
   qt/moc_receiverequestdialog.cpp \
   qt/moc_recentrequeststablemodel.cpp \
   qt/moc_rpcconsole.cpp \
@@ -151,6 +151,7 @@ BITCOIN_QT_H = \
   qt/coincontroltreewidget.h \
   qt/csvmodelwriter.h \
   qt/editaddressdialog.h \
+  qt/governancepage.h \
   qt/guiconstants.h \
   qt/guiutil.h \
   qt/intro.h \
@@ -167,13 +168,9 @@ BITCOIN_QT_H = \
   qt/overviewpage.h \
   qt/paymentrequestplus.h \
   qt/paymentserver.h \
-  qt/columnalignedlayout.h \
-  qt/proposalfilterproxy.h \
-  qt/proposallist.h \
-  qt/proposalrecord.h \
-  qt/proposaltablemodel.h \
   qt/peertablemodel.h \
-  qt/qrdialog.h \
+  qt/platformstyle.h \
+  qt/proposalframe.h \
   qt/qvalidatedlineedit.h \
   qt/qvaluecombobox.h \
   qt/receivecoinsdialog.h \
@@ -202,7 +199,6 @@ RES_ICONS = \
   qt/res/icons/ion.ico \
   qt/res/icons/ion_testnet.ico \
   qt/res/icons/ion_testnet.png \
-  qt/res/icons/ion_regtest.ico \
   qt/res/icons/ion_regtest.png \
   qt/res/icons/browse.png \
   qt/res/icons/clock1.png \
@@ -225,13 +221,18 @@ RES_ICONS = \
   qt/res/icons/masternodes.png \
   qt/res/icons/onion.png \
   qt/res/icons/overview.png \
-  qt/res/icons/proposal.png \
   qt/res/icons/qrcode.png \
   qt/res/icons/quit.png \
   qt/res/icons/receive.png \
   qt/res/icons/receive_dark.png \
   qt/res/icons/privacy.png \
   qt/res/icons/remove.png \
+  qt/res/icons/send.png \
+  qt/res/icons/send_dark.png \
+  qt/res/icons/governance.png \
+  qt/res/icons/governance_dark.png \
+  qt/res/icons/staking_active.png \
+  qt/res/icons/staking_inactive.png \
   qt/res/icons/synced.png \
   qt/res/icons/transaction0.png \
   qt/res/icons/transaction2.png \
@@ -248,7 +249,10 @@ RES_ICONS = \
   qt/res/icons/unit_tuion.png \
   qt/res/icons/unit_rion.png \
   qt/res/icons/unit_rmion.png \
-  qt/res/icons/unit_ruion.png
+  qt/res/icons/unit_ruion.png \
+  qt/res/icons/yesvote.png \
+  qt/res/icons/novote.png \
+  qt/res/icons/abstainvote.png
 
 BITCOIN_QT_BASE_CPP = \
   qt/bantablemodel.cpp \
@@ -283,17 +287,15 @@ BITCOIN_QT_WALLET_CPP = \
   qt/coincontroldialog.cpp \
   qt/coincontroltreewidget.cpp \
   qt/editaddressdialog.cpp \
+  qt/governancepage.cpp \
   qt/masternodelist.cpp \
   qt/openuridialog.cpp \
   qt/overviewpage.cpp \
   qt/paymentrequestplus.cpp \
   qt/paymentserver.cpp \
-  qt/columnalignedlayout.cpp \
-  qt/proposalfilterproxy.cpp \
-  qt/proposallist.cpp \
-  qt/proposalrecord.cpp \
-  qt/proposaltablemodel.cpp \
   qt/receivecoinsdialog.cpp \
+  qt/privacydialog.cpp \
+  qt/proposalframe.cpp \
   qt/receiverequestdialog.cpp \
   qt/recentrequeststablemodel.cpp \
   qt/sendcoinsdialog.cpp \

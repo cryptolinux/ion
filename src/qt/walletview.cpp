@@ -12,6 +12,7 @@
 #include "bitcoingui.h"
 #include "blockexplorer.h"
 #include "clientmodel.h"
+#include "governancepage.h"
 #include "guiutil.h"
 #include "masternodeconfig.h"
 #include "multisenddialog.h"
@@ -25,7 +26,6 @@
 #include "transactiontablemodel.h"
 #include "transactionview.h"
 #include "walletmodel.h"
-#include "proposallist.h"
 
 #include "ui_interface.h"
 
@@ -77,6 +77,8 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
     vbox->addLayout(hbox_buttons);
     transactionsPage->setLayout(vbox);
 
+    privacyPage = new PrivacyDialog();
+    governancePage = new GovernancePage();
     receiveCoinsPage = new ReceiveCoinsDialog();
     sendCoinsPage = new SendCoinsDialog();
     privateSendCoinsPage = new SendCoinsDialog(true);
@@ -86,6 +88,8 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
 
     addWidget(overviewPage);
     addWidget(transactionsPage);
+    addWidget(privacyPage);
+    addWidget(governancePage);
     addWidget(receiveCoinsPage);
     addWidget(sendCoinsPage);
     addWidget(privateSendCoinsPage);
@@ -95,53 +99,6 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
         masternodeListPage = new MasternodeList();
         addWidget(masternodeListPage);
     }
-
-    proposalListPage = new QWidget(this);
-
-    QFrame *frame_Header_2 = new QFrame(proposalListPage);
-    frame_Header_2->setObjectName(QStringLiteral("frame_Header_2"));
-
-    QVBoxLayout* verticalLayout_9 = new QVBoxLayout(frame_Header_2);
-    verticalLayout_9->setObjectName(QStringLiteral("verticalLayout_9"));
-    verticalLayout_9->setContentsMargins(0, 0, 0, 0);
-
-    QHBoxLayout* horizontalLayout_Header_2 = new QHBoxLayout();
-    horizontalLayout_Header_2->setObjectName(QStringLiteral("horizontalLayout_Header"));
-
-    QLabel* labelOverviewHeaderLeft_2 = new QLabel(frame_Header_2);
-    labelOverviewHeaderLeft_2->setObjectName(QStringLiteral("labelOverviewHeaderLeft"));
-    labelOverviewHeaderLeft_2->setMinimumSize(QSize(464, 60));
-    labelOverviewHeaderLeft_2->setMaximumSize(QSize(16777215, 60));
-    labelOverviewHeaderLeft_2->setText(tr("PROPOSAL"));
-    labelOverviewHeaderLeft_2->setFont(fontHeaderLeft);
-    horizontalLayout_Header_2->addWidget(labelOverviewHeaderLeft_2);
-    verticalLayout_9->addLayout(horizontalLayout_Header_2);
-
-    QSpacerItem* horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    horizontalLayout_Header_2->addItem(horizontalSpacer_4);
-
-    QLabel* labelOverviewHeaderRight_2 = new QLabel(frame_Header_2);
-    labelOverviewHeaderRight_2->setObjectName(QStringLiteral("labelOverviewHeaderRight"));
-    labelOverviewHeaderRight_2->setMinimumSize(QSize(464, 60));
-    labelOverviewHeaderRight_2->setMaximumSize(QSize(16777215, 60));
-    labelOverviewHeaderRight_2->setText(QString());
-    labelOverviewHeaderRight_2->setFont(fontHeaderRight);
-    labelOverviewHeaderRight_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-    horizontalLayout_Header_2->addWidget(labelOverviewHeaderRight_2);
-
-    horizontalLayout_Header_2->setStretch(0, 1);
-    horizontalLayout_Header_2->setStretch(2, 1);
-
-    QVBoxLayout* vbox_2 = new QVBoxLayout();
-    vbox_2->addWidget(frame_Header_2);
-
-    proposalList = new ProposalList(this);
-    vbox_2->addWidget(proposalList);
-
-    vbox_2->setStretch(1, 1);
-
-    proposalListPage->setLayout(vbox_2);
-    addWidget(proposalListPage);
 
     // Clicking on a transaction on the overview pre-selects the transaction on the transaction history page
     connect(overviewPage, SIGNAL(transactionClicked(QModelIndex)), transactionView, SLOT(focusTransaction(QModelIndex)));
@@ -202,6 +159,7 @@ void WalletView::setClientModel(ClientModel *_clientModel)
     if (settings.value("fShowMasternodesTab").toBool()) {
         masternodeListPage->setClientModel(_clientModel);
     }
+    governancePage->setClientModel(clientModel);
 }
 
 void WalletView::setWalletModel(WalletModel *_walletModel)
@@ -215,14 +173,12 @@ void WalletView::setWalletModel(WalletModel *_walletModel)
     if (settings.value("fShowMasternodesTab").toBool()) {
         masternodeListPage->setWalletModel(_walletModel);
     }
-    receiveCoinsPage->setModel(_walletModel);
-    sendCoinsPage->setModel(_walletModel);
-    privateSendCoinsPage->setModel(_walletModel);
-    usedReceivingAddressesPage->setModel(_walletModel ? _walletModel->getAddressTableModel() : nullptr);
-    usedSendingAddressesPage->setModel(_walletModel ? _walletModel->getAddressTableModel() : nullptr);
+    privacyPage->setModel(walletModel);
+    receiveCoinsPage->setModel(walletModel);
+    sendCoinsPage->setModel(walletModel);
+    governancePage->setWalletModel(walletModel);
 
-    if (_walletModel)
-    {
+    if (walletModel) {
         // Receive and pass through messages from wallet model
         connect(_walletModel, SIGNAL(message(QString,QString,unsigned int)), this, SIGNAL(message(QString,QString,unsigned int)));
 
@@ -284,6 +240,16 @@ void WalletView::gotoHistoryPage()
     setCurrentWidget(transactionsPage);
 }
 
+void WalletView::gotoGovernancePage()
+{
+    setCurrentWidget(governancePage);
+}
+
+void WalletView::gotoBlockExplorerPage()
+{
+    setCurrentWidget(explorerWindow);
+}
+
 void WalletView::gotoMasternodePage()
 {
     QSettings settings;
@@ -304,11 +270,6 @@ void WalletView::gotoSendCoinsPage(QString addr)
     if (!addr.isEmpty()) {
         sendCoinsPage->setAddress(addr);
     }
-}
-
-void WalletView::gotoProposalPage()
-{
-    setCurrentWidget(proposalListPage);
 }
 
 void WalletView::gotoProposalPage()

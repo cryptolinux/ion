@@ -118,8 +118,10 @@ public:
     SpendType getSpendType() const { return spendType; }
     std::vector<unsigned char> getSignature() const { return vchSig; }
 
-    virtual const uint256 signatureHash() const;
-    virtual bool Verify(const Accumulator& a, bool verifyParams = true) const;
+    static std::vector<unsigned char> ParseSerial(CDataStream& s);
+
+    const uint256 signatureHash() const;
+    bool Verify(const Accumulator& a, bool verifyParams = true) const;
     bool HasValidSerial(ZerocoinParams* params) const;
     bool HasValidSignature() const;
     CBigNum CalculateValidSerial(ZerocoinParams* params);
@@ -159,6 +161,7 @@ protected:
     uint256 ptxHash;
 
 private:
+    CoinDenomination denomination;
     uint32_t accChecksum;
     CBigNum accCommitmentToCoinValue;
     CBigNum serialCommitmentToCoinValue;

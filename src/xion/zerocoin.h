@@ -260,4 +260,4 @@ int GetWrapppedSerialInflation(libzerocoin::CoinDenomination denom);
 
 int64_t GetWrapppedSerialInflationAmount();
 
-#endif //PIVX_ZEROCOIN_H
+#endif //ION_ZEROCOIN_H

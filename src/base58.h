@@ -97,6 +97,30 @@ public:
     bool operator>(const CBase58Data& b58) const { return CompareTo(b58) > 0; }
 };
 
+class CBitcoinAddress : public CBase58Data
+{
+public:
+    bool Set(const CKeyID& id);
+    bool Set(const CScriptID& id);
+    bool Set(const CTxDestination& dest);
+    bool IsValid() const;
+    bool IsValid(const CChainParams& params) const;
+
+    CBitcoinAddress() {}
+    /*
+     * unmark for now
+     * reason: libbitcoin_server.a(libbitcoin_server_a-blockchain.o): In function `getserials(UniValue const&, bool)':
+/media/dev/M2SSD/go/github.com/cevap/ion/src/./base58.h:115: undefined reference to `CBitcoinAddress::Set(boost::variant<CNoDestination, CKeyID, CScriptID> const&)'
+     */
+    CBitcoinAddress(const CTxDestination& dest) { Set(dest); }
+    CBitcoinAddress(const std::string& strAddress) { SetString(strAddress); }
+    CBitcoinAddress(const char* pszAddress) { SetString(pszAddress); }
+
+    CTxDestination Get() const;
+    bool GetKeyID(CKeyID& keyID) const;
+    bool IsScript() const;
+};
+
 /**
  * A base58-encoded secret key
  */
