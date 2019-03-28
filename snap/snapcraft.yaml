@@ -88,7 +88,6 @@ parts:
   ion:
     source: https://github.com/cevap/ion
     source-type: git
-    source-tag: master
     source-tag: rc-v3.2.0-cevap
     plugin: nil
     # We don't want to copy the full blockchain every time that the snap is   
