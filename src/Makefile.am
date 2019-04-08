@@ -116,6 +116,7 @@ BITCOIN_CORE_H = \
   activemasternode.h \
   addrman.h \
   base58.h \
+  bech32.h \
   bip38.h \
   bloom.h \
   blocksignature.h \
@@ -151,6 +152,7 @@ BITCOIN_CORE_H = \
   invalid.h \
   invalid_outpoints.json.h \
   invalid_serials.json.h \
+  ionaddrenc.h \
   kernel.h \
   swifttx.h \
   key.h \
@@ -571,10 +573,13 @@ libbitcoin_common_a_SOURCES = \
   allocators.cpp \
   amount.cpp \
   base58.cpp \
+  bech32.cpp \
   bip38.cpp \
   chainparams.cpp \
   coins.cpp \
   compressor.cpp \
+  dstencode.cpp \
+  ionaddrenc.cpp \
   primitives/block.cpp \
   xion/deterministicmint.cpp \
   primitives/transaction.cpp \
