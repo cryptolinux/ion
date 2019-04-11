@@ -112,7 +112,7 @@ CSS, artworks and their sources have been updated/renewed
 
 ## Transifex Translations
 
-Updated translations, you can follow the status [on Transifex](https://www.transifex.com/cevap/ioncoin/)
+Updated translations, you can follow the status [on Transifex](https://www.transifex.com/ioncoincore/ioncore/)
 
 ## xION Updates
 
@@ -467,4 +467,4 @@ Thanks to everyone who directly contributed to this release:
 - PeterL73
 - Anthony Posselli
 
-As well as everyone that helped translating on [Transifex](https://www.transifex.com/cevap/ioncoin/), the QA team during Testing and the Node hosts supporting our Testnet.
+As well as everyone that helped translating on [Transifex](https://www.transifex.com/ioncoincore/ioncore/), the QA team during Testing and the Node hosts supporting our Testnet.
