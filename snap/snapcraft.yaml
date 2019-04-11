@@ -48,37 +48,40 @@ icon: src/qt/res/src/ion.svg
 apps:
   daemon:
     command: iond
-    plugs: [network, network-bind, home, personal-files, system-files]
+    plugs: [network, network-bind, network-status, home, removable-media]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   daemon-testnet:
     command: iond --testnet
-    plugs: [network, network-bind, home, personal-files, system-files]
-    environment:
-      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
-  test-daemon:
-    command: test_ion
-    plugs: [network, network-bind, home, personal-files, system-files]
+    plugs: [network, network-bind, network-status, home, removable-media]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   daemon-regtest:
     command: iond --regtest
-    plugs: [network, network-bind, home, removable-media]
+    plugs: [network, network-bind, network-status, home, removable-media]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   qt:
-    command: desktop-launch ion-qt
-    plugs: [network, network-bind, unity7, unity8, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home, personal-files, system-files]
-    desktop: ion.desktop
+    command: ion-qt
+    plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
+    desktop: qt.desktop
+    environment:
+      QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
   qt-testnet:
-    command: desktop-launch ion-qt --testnet
-    plugs: [network, network-bind, unity7, unity8, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home, personal-files, system-files]
-    desktop: ion-testnet.desktop
-  test-qt:
-    command: desktop-launch test_ion-qt
-    plugs: [network, network-bind, unity7, unity8, unity8-calendar, unity8-contacts, desktop, desktop-legacy, wayland, x11, opengl, home, personal-files, system-files]
-    desktop: ion.desktop
+    command: ion-qt --testnet
+    plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
+    desktop: qt-testnet.desktop
+    environment:
+      QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
+  qt-regtest:
+    command: ion-qt --regtest
+    plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
+    desktop: qt-regtest.desktop
+    environment:
+      QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
   cli:
     command: ion-cli
-    plugs: [network, network-bind, home]
+    plugs: [network, network-bind, network-status, home]
   cli-testnet:
     command: ion-cli --testnet
     plugs: [network, network-bind, home]
