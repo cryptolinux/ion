@@ -1,25 +1,23 @@
 # Copyright (c) 2018-2019 The Ion developers
-
 name: ioncore
+base: core18
 version: 3.1.02
 summary:   gaming related peer-to-peer network based digital currency
 description: |
-  Ion Core is an MIT licensed,
+  [Ion Core](https://github.com/ioncoincore/ion) is an [MIT licensed](https://github.com/cevap/ion/blob/master/LICENSE),
   open source, gaming oriented, blockchain-based cryptocurrency with
   ultra fast transactions, low fees, high network decentralization, and
   Zero Knowledge cryptography proofs for industry-leading
   transaction anonymity. This package include QT, daemon, cli and tx
   binaries.
   
-  Wiki (Ion Core):    https://github.com/ioncoincore/ion/wiki
-  Wiki (Ionomy):      https://github.com/ionomy/ion/wiki
-  Wiki (Ion Core CE): https://github.com/cevap/ion/wiki
-  
-  Technical documentation: https://techdoc.ioncoin.org
-  
-  Whitepaper: https://ionomy.com/en/whitepaper
-  
-  Technical whitepaper: 
+  Documentation and wiki:
+  - Wiki (Ion Core):    https://github.com/ioncoincore/ion/wiki
+  - Wiki (Ionomy):      https://github.com/ionomy/ion/wiki
+  - Wiki (Ion Core CE): https://github.com/cevap/ion/wiki
+  - Technical documentation: https://techdoc.ioncoin.org
+  - Whitepaper: https://ionomy.com/en/whitepaper
+  - Technical whitepaper: 
     https://github.com/ionomy/ion/wiki/ION-Technical-Whitepaper
   
   Get source code from Github: https://github.com/ioncoincore/ion.git
@@ -32,7 +30,17 @@ description: |
     Twitter:   https://twitter.com/ionomics
     Reddit:    https://www.reddit.com/r/ionomy/
     Facebook:  https://facebook.com/ionomy
-
+  
+  - [Feature request](https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D)
+    Suggest an idea for this project
+  - [I need help/support (observed by ionomy.com staff)](https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D)
+    Ask for help/support
+  - [Report a bug](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D)
+    Create a report to help us improve Ion Core
+  - [Report some random issue](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D)
+    Report a issue
+  - [Testing Report](https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D)
+     Document Testing and Results
 grade: stable
 confinement: strict
 icon: src/qt/res/src/ion.svg
@@ -81,47 +89,54 @@ parts:
     source-tag: v3.1.02
     plugin: nil
     override-build: |
-      # Patch - Default home folder
-      ## We don't want to copy the full blockchain every time that the snap is   
-      ## updated, but there's no way to define a default data dir in ion-qt.
-      ## Additionaly we fix funcs.mk
-      git apply $SNAPCRAFT_STAGE/default_data_dir.patch
-      git apply $SNAPCRAFT_STAGE/fix-bdb-tmp-folder.patch
-      ## Patch - Fix Bug extracting sources without ownership
-      sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' $SNAPCRAFT_PART_BUILD/depends/funcs.mk
-      # Build Dependencies
-      echo "START BUILDING FOR $SNAPCRAFT_ARCH_TRIPLET architecture"
-      cd $SNAPCRAFT_PART_BUILD/depends
-      # Fix building ARM and AARCh64, as on some point they fail with, predownload all packages
-      #   curl: (22) The requested URL returned error: 407
+      SHORTNAME="ion"
+      if [ $SNAPCRAFT_ARCH_TRIPLET = "i386-linux-gnu" ]; then
+        HOST="i686-linux-gnu"
+      else
+        HOST="${SNAPCRAFT_ARCH_TRIPLET}"
+      fi
+      # APPLY PATCHES
+      echo "apply patches:"
+      git apply ${SNAPCRAFT_STAGE}/default_data_dir.patch
+      git apply ${SNAPCRAFT_STAGE}/fix-bdb-tmp-folder.patch
+      git apply ${SNAPCRAFT_STAGE}/fix-use-snap-instead-of-dirty.patch
+      sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' ${SNAPCRAFT_PART_BUILD}/depends/funcs.mk
+      # BUILD DEPENDENCIES
+      echo "START BUILDING ${SHORTNAME} FOR ${SNAPCRAFT_ARCH_TRIPLET} architecture"
+      cd ${SNAPCRAFT_PART_BUILD}/depends
       make download-linux
-      if [ $SNAPCRAFT_ARCH_TRIPLET = "i386-linux-gnu" ]
-      then
-        make HOST=i686-linux-gnu
-      else
-        make HOST=$SNAPCRAFT_ARCH_TRIPLET
-      fi
-      # Configure Ion Core
-      cd $SNAPCRAFT_PART_BUILD
+      make -j4 HOST=${HOST}
+      # CONFIGURE
+      echo "Configure ${SHORTNAME}"
+      cd ${SNAPCRAFT_PART_BUILD}
+      echo "Configure and build ${SHORTNAME}"
       ./autogen.sh
-      if [ $SNAPCRAFT_ARCH_TRIPLET = "i386-linux-gnu" ]
-      then
-        ./configure --prefix=`pwd`/depends/i686-linux-gnu
-      else
-        ./configure --prefix=`pwd`/depends/$SNAPCRAFT_ARCH_TRIPLET
+      ./configure --prefix=`pwd`/depends/${HOST}
+      # COMPILE
+      echo "Compile ${SHORTNAME}"
+      make -j4
+      # INSTALL
+      echo "Install ${SHORTNAME}"
+      make install prefix=${SNAPCRAFT_PART_INSTALL}
+      # POST INSTALL
+      if [ $SNAPCRAFT_ARCH_TRIPLET = "powerpc64le-linux-gnu" ]; then
+        if [ -e $SNAPCRAFT_PART_BUILD/src/qt/${SHORTNAME}-qt ]; then
+          echo "PPC64EL fix - ${SHORTNAME}-qt exists, fix unrequired"
+        else
+          echo "echo ${SHORTNAME}-qt is not installed" > ${SNAPCRAFT_PART_INSTALL}/usr/bin/${SHORTNAME}-qt
+          chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/bin/${SHORTNAME}-qt
+          echo "PPC64EL fix - ${SHORTNAME}-qt exists, fix required, dummy as ${SHORTNAME}-qt"
+        fi
       fi
-      # Compile Ion Core
-      make
-      # Install Ion Core
-      make install prefix=$SNAPCRAFT_PART_INSTALL
-      # print in log which files are installed
       echo "Installed files:"
-      find $SNAPCRAFT_PART_INSTALL -type f
+      find ${SNAPCRAFT_PART_INSTALL} -type f
     build-packages:
       - curl
       - wget
-      - g++
       - gcc
+      - gcc-8
+      - g++
+      - g++-8
       - make
       - autoconf
       - automake
@@ -131,11 +146,6 @@ parts:
       - bsdmainutils
       - binutils
       - python3
-    stage-packages: [ca-certificates]
-    after:
-      - desktop-qt5
-      - patches
-  desktop-qt5:
     stage-packages:
       - libxkbcommon0
       - ttf-ubuntu-font-family
@@ -147,6 +157,9 @@ parts:
       - libqt5svg5 # for loading icon themes which are svg
       - locales-all
       - qtwayland5
+      - ca-certificates
+    after:
+      - patches
   patches:
     source: snap/local/patches
     plugin: dump
