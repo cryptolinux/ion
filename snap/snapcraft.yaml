@@ -1,6 +1,7 @@
 # Copyright (c) 2018-2019 The Ion developers
-name: ioncoin-ce
-version: 3.2.00
+name: ioncore
+base: core18
+version: 3.1.02
 summary:   gaming related peer-to-peer network based digital currency
 description: |
   [Ion Core](https://github.com/ioncoincore/ion) is an [MIT licensed](https://github.com/cevap/ion/blob/master/LICENSE),
@@ -86,9 +87,9 @@ apps:
     plugs: [home, personal-files]
 parts:
   ion:
-    source: https://github.com/cevap/ion
+    source: https://github.com/ioncoincore/ion
     source-type: git
-    source-tag: rc-v3.2.0-cevap
+    source-tag: v3.1.02
     plugin: nil
     # We don't want to copy the full blockchain every time that the snap is   
     # updated, but there's no way to define a default data dir in ion-qt.
