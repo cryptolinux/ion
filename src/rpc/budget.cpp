@@ -173,7 +173,7 @@ UniValue preparebudget(const UniValue& params, bool fHelp)
             "\"xxxx\"       (string) proposal fee hash (if successful) or error message (if failed)\n"
 
             "\nExamples:\n" +
-            HelpExampleCli("preparebudget", "\"test-proposal\" \"https://forum.ioncoin.org/t/test-proposal\" 2 820800 \"iZ9pJ6N3T1BJmR3mG7Qnvugqyuv7xUa71M\" 500") 
+            HelpExampleCli("preparebudget", "\"test-proposal\" \"https://forum.ioncoin.org/t/test-proposal\" 2 820800 \"iZ9pJ6N3T1BJmR3mG7Qnvugqyuv7xUa71M\" 500") +
             HelpExampleRpc("preparebudget", "\"test-proposal\" \"https://forum.ioncoin.org/t/test-proposal\" 2 820800 \"iZ9pJ6N3T1BJmR3mG7Qnvugqyuv7xUa71M\" 500"));
 
     LOCK2(cs_main, pwalletMain->cs_wallet);
