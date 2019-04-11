@@ -4,7 +4,7 @@ base: core18
 version: 3.2.99
 summary:   gaming related peer-to-peer network based digital currency
 description: |
-  [Ion Core](https://github.com/ioncoincore/ion) is an [MIT licensed](https://github.com/cevap/ion/blob/master/LICENSE),
+  [Ion Core](https://github.com/ioncoincore/ion) is an [MIT licensed](https://github.com/ioncoincore/ion/blob/master/LICENSE),
   open source, gaming oriented, blockchain-based cryptocurrency with
   ultra fast transactions, low fees, high network decentralization, and
   Zero Knowledge cryptography proofs for industry-leading
