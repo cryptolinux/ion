@@ -1,3 +1,14 @@
+Wallet Tools
+---------------------
+
+### [BitRPC](/contrib/bitrpc) ###
+Allows for sending of all standard Ion commands via RPC rather than as command line args.
+
+### [SpendFrom](/contrib/spendfrom) ###
+
+Use the raw transactions API to send coins received on a particular
+address (or addresses).
+
 Repository Tools
 ---------------------
 
@@ -21,8 +32,8 @@ Build Tools and Keys
 ---------------------
 
 ### [Debian](/debian) ###
-Contains files used to package bitcoind/bitcoin-qt
-for Debian-based Linux systems. If you compile bitcoind/bitcoin-qt yourself, there are some useful files here.
+Contains files used to package iond/ion-qt
+for Debian-based Linux systems. If you compile iond/ion-qt yourself, there are some useful files here.
 
 ### [Gitian-descriptors](/contrib/gitian-descriptors) ###
 Notes on getting Gitian builds up and running using KVM.
@@ -41,6 +52,10 @@ Test and Verify Tools
 
 ### [TestGen](/contrib/testgen) ###
 Utilities to generate test vectors for the data-driven Ion tests.
+
+### [Test Patches](/contrib/test-patches) ###
+These patches are applied when the automated pull-tester
+tests each pull and when master is tested using jenkins.
 
 ### [Verify Binaries](/contrib/verifybinaries) ###
 This script attempts to download and verify the signature file SHA256SUMS.asc from bitcoin.org.
