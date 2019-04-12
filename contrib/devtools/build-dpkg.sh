@@ -1,5 +1,4 @@
 #!/bin/bash
- 
 # copy this file to root of ion folder and run it to
 BUILD_ROOT=/tmp/build-root/ioncore
 mkdir -p $BUILD_ROOT
