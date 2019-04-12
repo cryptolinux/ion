@@ -1,14 +1,12 @@
-# http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.0.html
-
 [Desktop Entry]
 Encoding=UTF-8
-Name=Ion Core
-Comment=main
-GenericName=Ion Digital Currency QT client main network
+Name=ION
+Comment=ION P2P Cryptocurrency
+Comment[fr]=ION, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=ION, eşten eşe kriptografik sanal para birimi
 Exec=ion-qt %u
 Terminal=false
 Type=Application
 Icon=ion128
 MimeType=x-scheme-handler/ion;
-Categories=X-Finance;X-Games;
-Keywords=internet;ion;xion;core;wallet;qt;main;deb;launchpad;crypto;digital;currency;coin;token;zerocoin;
+Categories=Office;Finance;
