@@ -23,8 +23,8 @@ Build-Depends: debhelper,
  libgmp-dev,
  libqrencode-dev,
  libprotobuf-dev, protobuf-compiler,
- libevent,
- libzmq3
+ libevent-dev,
+ libzmq3-dev
 Standards-Version: 3.9.2
 Homepage: http://www.ioncoin.org
 Vcs-Git: git://github.com/ioncoincore/ion.git
