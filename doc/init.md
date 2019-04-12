@@ -12,15 +12,16 @@ can be found in the contrib/init folder.
 Table of Contents
 -----------------
 - [Sample init scripts and service configuration for iond](#sample-init-scripts-and-service-configuration-for-iond)
-    - [1. Service User](#1-service-user)
-    - [2. Configuration](#2-configuration)
-    - [3. Paths](#3-paths)
-    - [4. Installing Service Configuration](#4-installing-service-configuration)
-        - [4(a) systemd](#4a-systemd)
-        - [4(b) OpenRC](#4b-openrc)
-        - [4(c) Upstart (for Debian/Ubuntu based distributions)](#4c-upstart-for-debianubuntu-based-distributions)
-        - [4(d) CentOS](#4d-centos)
-    - [5. Auto-respawn](#5-auto-respawn)
+  - [Table of Contents](#table-of-contents)
+  - [1. Service User](#1-service-user)
+  - [2. Configuration](#2-configuration)
+  - [3. Paths](#3-paths)
+  - [4. Installing Service Configuration](#4-installing-service-configuration)
+    - [4(a) systemd](#4a-systemd)
+    - [4(b) OpenRC](#4b-openrc)
+    - [4(c) Upstart (for Debian/Ubuntu based distributions)](#4c-upstart-for-debianubuntu-based-distributions)
+    - [4(d) CentOS](#4d-centos)
+  - [5. Auto-respawn](#5-auto-respawn)
 
 
 ## 1. Service User
@@ -50,7 +51,7 @@ with the option '-rpccookiefile'.
 Once you have a password in hand, set rpcpassword= in /etc/ioncoin/ioncoin.conf
 
 For an example configuration file that describes the configuration settings,
-see contrib/debian/examples/ioncoin.conf.
+see debian/examples/ioncoin.conf.
 
 ## 3. Paths
 All three configurations assume several paths that might need to be adjusted.

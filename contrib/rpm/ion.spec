@@ -24,7 +24,7 @@ URL:		https://ioncoin.xyz/
 Source0:	https://ioncoin.xyz/bin/ion-core-%{version}/ion-%{version}.tar.gz
 Source1:	http://download.oracle.com/berkeley-db/db-%{bdbv}.NC.tar.gz
 
-Source10:	https://raw.githubusercontent.com/ion-project/ion/v%{version}/contrib/debian/examples/ion.conf
+Source10:	https://raw.githubusercontent.com/ion-project/ion/v%{version}/debian/examples/ion.conf
 
 #man pages
 Source20:	https://raw.githubusercontent.com/ion-project/ion/v%{version}/doc/man/iond.1
