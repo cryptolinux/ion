@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Select xION to Spend</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout1" stretch="0,0,0,0">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
      <property name="spacing">
