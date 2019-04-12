@@ -1,31 +1,34 @@
-Source: ion
+Source: ioncore
 Section: utils
 Priority: optional
-Maintainer: Jonas Smedegaard <dr@jones.dk> ***TODO***
-Uploaders: Micah Anderson <micah@debian.org> ***TODO***
+Maintainer: ionomy <dev@i2pmail.org>
+Uploaders: ionomy <dev@i2pmail.org>
 Build-Depends: debhelper,
  devscripts,
  automake,
  libtool,
  bash-completion,
  libdb4.8++-dev,
- libssl-dev,
+ libssl1.0-dev,
  pkg-config,
- libminiupnpc8-dev,
+ libminiupnpc-dev,
  libboost-filesystem-dev (>> 1.35) | libboost-filesystem1.35-dev,
  libboost-program-options-dev (>> 1.35) | libboost-program-options1.35-dev,
  libboost-thread-dev (>> 1.35) | libboost-thread1.35-dev,
  libboost-test-dev (>> 1.35) | libboost-test1.35-dev,
- qt4-qmake,
- libqt4-dev,
+ qt5-qmake,
+ libqt5gui5,
+ libqt5svg5,
+ qtwayland5,
+ libgmp-dev,
  libqrencode-dev,
  libprotobuf-dev, protobuf-compiler,
  python,
  libzmq3-dev
 Standards-Version: 3.9.2
 Homepage: http://www.ioncoin.org
-Vcs-Git: git://github.com/cevap/ion.git
-Vcs-Browser: http://github.com/cevap/ion
+Vcs-Git: git://github.com/ioncoincore/ion.git
+Vcs-Browser: http://github.com/ioncoincore/ion
 
 Package: iond
 Architecture: any
