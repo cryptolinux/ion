@@ -505,7 +505,7 @@ BOOST_AUTO_TEST_CASE(checksum_tests)
 BOOST_AUTO_TEST_CASE(test_checkpoints)
 {
     BOOST_CHECK_MESSAGE(AccumulatorCheckpoints::LoadCheckpoints("main"), "failed to load checkpoints");
-    BOOST_CHECK_MESSAGE(AccumulatorCheckpoints::mapCheckpoints.at(1050020)
+    BOOST_CHECK_MESSAGE(AccumulatorCheckpoints::mapCheckpoints.at(1000020)
                                 .at(libzerocoin::CoinDenomination::ZQ_FIVE_THOUSAND)
                                 .GetHex() == "5e33c35654a34b971acd068760eda578a3e512e78b333cecaf7ae8cf3e665b19d091faa819f2a98063be4992b8beed47885e58fd5344d43fcdff14afb38da59fe3c4b22ff81c6730de6c6ddf8ea5c9f25305b5dbab276db410bfe3d59dfdb7bb3e664998696b00d25e1caf9f1d298b7276c9690c5fc2b2e3e77e89b57bb46a646b9955cf3d175a45b9337189ae4275898d10ecddc66955862ca42fcf18b44d43a0b89b13298e951f4ce5933beca41b4f1924d688415d255dab54ecb54e37bcc1174464be979cf79cb366387d9bd10afc4f20ba1494d87b680b15af2b492da18f375fac6eeccda47ea0eda6d8e22fa1d413a73a14febc23a867b5edfc263f6455", "does not match");
 }
