@@ -89,10 +89,10 @@ apps:
     command: ion-tx
     plugs: [home]
   test:
-    command: ion-tx
+    command: test_ion
     plugs: [home]
   testqt:
-    command: ion-tx
+    command: test_ion-qt
     plugs: [home]
 parts:
   ion:
