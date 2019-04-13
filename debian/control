@@ -5,6 +5,7 @@ Maintainer: ionomy <dev@i2pmail.org>
 Uploaders: ionomy <dev@i2pmail.org>
 Build-Depends: debhelper,
  devscripts,
+ bash-completion,
  build-essential,
  libtool,
  autotools-dev,
