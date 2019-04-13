@@ -109,9 +109,21 @@ parts:
         cd $SNAPCRAFT_PART_BUILD/depends
         make HOST=$SNAPCRAFT_ARCH_TRIPLET
       fi
-      # build dependencies
-      # build ion core
-      cd $SNAPCRAFT_PART_BUILD
+      # APPLY PATCHES
+      echo "apply patches:"
+      git apply ${SNAPCRAFT_PART_BUILD}/share/snap/patches/default_data_dir.patch
+      git apply ${SNAPCRAFT_PART_BUILD}/share/snap/patches/fix-bdb-tmp-folder.patch
+      git apply ${SNAPCRAFT_PART_BUILD}/share/snap/patches/fix-use-snap-instead-of-dirty.patch
+      sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' ${SNAPCRAFT_PART_BUILD}/depends/funcs.mk
+      # BUILD DEPENDENCIES
+      echo "START BUILDING ${SHORTNAME} FOR ${SNAPCRAFT_ARCH_TRIPLET} architecture"
+      cd ${SNAPCRAFT_PART_BUILD}/depends
+      make download-linux
+      make -j4 HOST=${HOST}
+      # CONFIGURE
+      echo "Configure ${SHORTNAME}"
+      cd ${SNAPCRAFT_PART_BUILD}
+      echo "Configure and build ${SHORTNAME}"
       ./autogen.sh
       if [ $SNAPCRAFT_ARCH_TRIPLET == "x86-64-linux-gnu" ] 
       then
@@ -119,9 +131,15 @@ parts:
       else
         ./configure BDB_LIBS="-L${SNAPCRAFT_PART_INSTALL}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${SNAPCRAFT_PART_INSTALL}/include"
       fi
-      make
-      make install prefix=$SNAPCRAFT_PART_INSTALL
-      # print in log which files are installed
+      ## COPY ICONS AND SHORTCUTS
+      #   we can place icons into projects ./snap/usr/share/applications folder
+      #   instead we will copy them in this step and remove snap/usr folder, we
+      #   wll use instead icons from ./share/pixmap foler
+      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/ion.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/ionqtsnap.ico
+      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/iontestnet.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/ionqttestnetsnap.ico
+      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/ionregtest.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/ionqtregtestsnap.ico
+      cp ${SNAPCRAFT_PART_BUILD}/share/snap/shortcuts/* ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/
+      # List installed files
       echo "Installed files:"
       ls $SNAPCRAFT_PART_INSTALL
     build-packages:

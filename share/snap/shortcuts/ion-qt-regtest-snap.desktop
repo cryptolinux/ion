@@ -2,13 +2,12 @@
 
 [Desktop Entry]
 Type=Application
-Version=3.2.99
 Encoding=UTF-8
 Name=Ion Qt Regtest
-Icon=${SNAP}/qt-regtest.ico
+Icon=${SNAP}/ionqtregtestsnap.ico
 MimeType=x-scheme-handler/ioncore;
 Exec=ioncore.qt-regtest %u
 Terminal=false
 Categories=Office;Finance;Games;
-Comment=Ion Digital Currency QT Official release
+Comment=Ion Digital Currency QT Official release (Regtest)
 Keywords=internet;ion;regtest;qt;crypto;currency;snap;snapcraft;ioncore;ioncoin;daemon;cli;qt;ioncoincore
