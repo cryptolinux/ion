@@ -321,7 +321,7 @@ BOOST_AUTO_TEST_CASE(checkzerocoinspend_test)
     BOOST_CHECK_MESSAGE(fSerialize, "failed to serialize coinspend object");
 
     std::vector<unsigned char> data(serializedCoinSpend2.begin(), serializedCoinSpend2.end());
-*/
+*///DISABLE AS NOT WORKING - **TODO** - fix it
     /** Check valid spend */
 /* DISABLE AS NOT WORKING - **TODO** - fix it
     CTxIn newTxIn;
@@ -354,7 +354,7 @@ BOOST_AUTO_TEST_CASE(checkzerocoinspend_test)
         cout << state.GetRejectCode() << endl;
         BOOST_CHECK_MESSAGE(false, strError);
     }
-*/
+*///DISABLE AS NOT WORKING - **TODO** - fix it
     /**check an overspend*/
 /* DISABLE AS NOT WORKING - **TODO** - fix it
     CTxOut txOutOverSpend(100 * COIN, script);
@@ -411,7 +411,7 @@ BOOST_AUTO_TEST_CASE(checkzerocoinspend_test)
     BOOST_CHECK_MESSAGE(coinSpend_v2.getVersion() == 2, "coinspend_v2 version is wrong");
     BOOST_CHECK_MESSAGE(coinSpend_v2.getPubKey() == privateCoin_v2.getPubKey(), "pub keys do not match");
 }
-*/
+*///DISABLE AS NOT WORKING - **TODO** - fix it
 
 BOOST_AUTO_TEST_CASE(setup_exceptions_test)
 {

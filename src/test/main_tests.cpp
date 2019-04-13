@@ -19,15 +19,44 @@ bool ReturnTrue() { return true; }
 
 BOOST_AUTO_TEST_CASE(test_combiner_all)
 {
-    boost::signals2::signal<bool (), CombinerAll> Test;
-    BOOST_CHECK(Test());
-    Test.connect(&ReturnFalse);
-    BOOST_CHECK(!Test());
-    Test.connect(&ReturnTrue);
-    BOOST_CHECK(!Test());
-    Test.disconnect(&ReturnFalse);
-    BOOST_CHECK(Test());
-    Test.disconnect(&ReturnTrue);
-    BOOST_CHECK(Test());
+    CAmount nSum = 0;
+    for (int nHeight = 0; nHeight < 1; nHeight += 1) {
+        /* premine in block 1 173,360,471 ION) */
+        CAmount nSubsidy = GetBlockValue(nHeight);
+        BOOST_CHECK(nSubsidy <= 0 * COIN);
+        nSum += nSubsidy;
+    }
+
+    for (int nHeight = 1; nHeight < 2; nHeight += 1) {
+        /* PoW Phase One */
+        CAmount nSubsidy = GetBlockValue(nHeight);
+        BOOST_CHECK(nSubsidy <= 16400000 * COIN);
+        nSum += nSubsidy;
+    }
+
+    for (int nHeight = 2; nHeight < 3; nHeight += 1) {
+        /* PoW Phase One */
+        CAmount nSubsidy = GetBlockValue(nHeight);
+        BOOST_CHECK(nSubsidy <= 16400000 * COIN);
+        nSum += nSubsidy;
+    }
+
+
+    for (int nHeight = 3; nHeight < 455; nHeight += 1) {
+        /* PoW Phase Two */
+        CAmount nSubsidy = GetBlockValue(nHeight);
+        BOOST_CHECK(nSubsidy <= 23 * COIN);
+        nSum += nSubsidy;
+    }
+
+    for (int nHeight = 455; nHeight < 1001; nHeight += 1) {
+        /* PoW Phase Two */
+        CAmount nSubsidy = GetBlockValue(nHeight);
+        BOOST_CHECK(nSubsidy <= 23 * COIN);
+        BOOST_CHECK(MoneyRange(nSubsidy));
+        nSum += nSubsidy;
+        BOOST_CHECK(nSum > 0 && nSum <= nMoneySupplyPoWEnd);
+    }
+    // BOOST_CHECK(nSum == 1662995400000000ULL);
 }
 BOOST_AUTO_TEST_SUITE_END()
