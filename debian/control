@@ -34,7 +34,8 @@ Build-Depends: debhelper,
  libqrencode-dev,
  libprotobuf-dev, protobuf-compiler,
  libevent-dev,
- libzmq3-dev
+ libzmq3-dev,
+ locales-all
 Standards-Version: 3.9.2
 Homepage: http://www.ioncoin.org
 Vcs-Git: git://github.com/ioncoincore/ion.git
@@ -85,4 +86,3 @@ Description: peer-to-peer network based digital currency - Qt GUI
  requires 1+ GB of space, slowly growing.
  .
  This package provides Ion-Qt, a GUI for ION based on Qt.
- 
