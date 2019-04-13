@@ -146,10 +146,8 @@ CMutableTransaction BuildSpendingTransaction(const CScript& scriptSig, const CMu
 
 void DoTest(const CScript& scriptPubKey, const CScript& scriptSig, int flags, const std::string& message, int scriptError)
 {
-    bool expect = (scriptError == SCRIPT_ERR_OK);
-    ScriptError err;
-    CMutableTransaction txCredit = BuildCreditingTransaction(scriptPubKey);
-    CMutableTransaction tx = BuildSpendingTransaction(scriptSig, txCredit);
+    // ScriptError err; /* DISABLE AS NOT WORKING - **TODO** - fix it */
+    CMutableTransaction tx = BuildSpendingTransaction(scriptSig, BuildCreditingTransaction(scriptPubKey));
     CMutableTransaction tx2 = tx;
     /* DISABLE AS NOT WORKING - **TODO** - fix it
     BOOST_CHECK_MESSAGE(VerifyScript(scriptSig, scriptPubKey, flags, MutableTransactionSignatureChecker(&tx, 0), &err) == expect, message);
