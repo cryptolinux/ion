@@ -1,0 +1,13 @@
+# http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.0.html
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=Ion Qt (Regtest)
+Comment=Ion Digital Currency QT Official release (Testnet)
+Exec=ion-qt --regtest %u
+Terminal=false
+Type=Application
+Icon=ionregtest128
+MimeType=x-scheme-handler/ion;
+Categories=Finance;Games;
+Keywords=internet;ion;regtest;qt;crypto;currency;deb;launchpad;ioncore;ioncoin;daemon;cli;qt;ioncoincore;
