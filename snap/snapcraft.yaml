@@ -87,7 +87,13 @@ apps:
     plugs: [network, network-bind, home]
   tx:
     command: ion-tx
-    plugs: [home, personal-files]
+    plugs: [home]
+  test:
+    command: ion-tx
+    plugs: [home]
+  testqt:
+    command: ion-tx
+    plugs: [home]
 parts:
   ion:
     source: https://github.com/ioncoincore/ion
