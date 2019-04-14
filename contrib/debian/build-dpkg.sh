@@ -11,7 +11,12 @@
 #    ./contrib/debian/build-dpkg.sh -d
 #
 BUILD_ROOT=/tmp/build-root/ioncore;
+
+# cleanup
+rm -fR $BUILD_ROOT;
+# start
 mkdir -p $BUILD_ROOT;
 cp -r -f . $BUILD_ROOT;
 cd $BUILD_ROOT;
+# buils
 dpkg-buildpackage -b -rfakeroot -us -uc ${1};
