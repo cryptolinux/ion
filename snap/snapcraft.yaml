@@ -148,9 +148,11 @@ parts:
       #   we can place icons into projects ./snap/usr/share/applications folder
       #   instead we will copy them in this step and remove snap/usr folder, we
       #   wll use instead icons from ./share/pixmap foler
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/applications
       cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/ion.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/ionqtsnap.ico
       cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/iontestnet.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/ionqttestnetsnap.ico
       cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/ionregtest.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/ionqtregtestsnap.ico
+      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/iond.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/iondsnap.ico
       cp ${SNAPCRAFT_PART_BUILD}/share/snap/shortcuts/* ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/
       # List installed files
       echo "Installed files:"
