@@ -180,8 +180,6 @@ parts:
         if [ $SCUTNOEXT = "${SHORTNAME}d" ]; then
           cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-testnet-snap.desktop
           cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-regtest-snap.desktop
-        else
-          cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         fi
         sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         sed -i "s/Exec=${SHORTNAME}-qt/${SHORTNAME}core.qt/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
