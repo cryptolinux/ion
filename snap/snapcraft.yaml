@@ -172,6 +172,8 @@ parts:
       cp ${PIXMAPS}/${SHORTNAME}testnet.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qttestnetsnap.ico
       cp ${PIXMAPS}/${SHORTNAME}regtest.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qtregtestsnap.ico
       cp ${PIXMAPS}/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}dsnap.ico
+      cp ${PIXMAPS}/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.ico
+      cp ${PIXMAPS}/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.ico
       # very simply test of binaries, run a command to get version and use it to set vars
       SNAPCRAFT_PROJECT_VERSION=$(src/ion-cli --version | grep "version" | awk '{print $6;}')
       for SCUT in $(ls -1a ${PIXMAPS}/*.desktop); do
