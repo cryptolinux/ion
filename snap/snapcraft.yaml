@@ -198,8 +198,6 @@ parts:
         sed -i "s/deb;launchpad;/snap;launchpad;/" ${PRIMINGDIR}/${SCUT}
         cat "Version=${RETVERDAEMON}" >> ${PRIMINGDIR}/${SCUT}
       done
-      BUILDDIR=$PWD contrib/devtools/gen-manpages.sh
-      cp ${SNAPCRAFT_PART_BUILD}/doc/man/{SHORTNAME}*.1 usr/share/man/
       # List installed files
       echo "Installed files:"
       ls $SNAPCRAFT_PART_INSTALL
