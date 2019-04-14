@@ -179,6 +179,10 @@ parts:
       for SCUT in $(ls -1a ${PIXMAPS}/*.desktop); do
         SCUTNOEXT=$(echo ${SCUT} | sed "s/.desktop//")
         cp ${DEBIANDIR}/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        if [ $SCUTNOEXT = "iond" ]; then
+          cp ${DEBIANDIR}/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-testnet-snap.desktop
+          cp ${DEBIANDIR}/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-regtest-snap.desktop
+        fi
         sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         sed -i "s/Exec=${SHORTNAME}-qt/${SHORTNAME}core.qt/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         sed -i "s/Exec=${SHORTNAME}d/${SHORTNAME}core.daemon/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
@@ -192,6 +196,8 @@ parts:
         sed -i "s/Icon\=${SHORTNAME}testnet128/Icon\=$\{SNAP\}\/${SHORTNAME}qttestnetsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         sed -i "s/Icon\=${SHORTNAME}regtest128/Icon\=$\{SNAP\}\/${SHORTNAME}qtregtestsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         sed -i "s/Icon\=${SHORTNAME}d128/Icon\=$\{SNAP\}\/${SHORTNAME}dsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Icon\=${SHORTNAME}dtestnet128/Icon\=$\{SNAP\}\/${SHORTNAME}}d-testnet-snap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Icon\=${SHORTNAME}dregtest128/Icon\=$\{SNAP\}\/${SHORTNAME}d-regtest-snap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         sed -i "s/deb;launchpad;/snap;launchpad;/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         cat "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SCUT}
       done
