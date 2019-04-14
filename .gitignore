@@ -167,3 +167,10 @@ mncache.dat
 mnpayments.dat
 sporks/
 zerocoin
+
+# debian build
+debian/.debhelper/
+
+# depends
+depends/config.guess
+depends/config.sub
