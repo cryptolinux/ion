@@ -122,10 +122,11 @@ parts:
         HOST="${SNAPCRAFT_ARCH_TRIPLET}"
       fi
       # APPLY PATCHES
+      cd ${SNAPCRAFT_PART_BUILD}
       echo "apply patches:"
-      for PATCH in "default_data_dir fix-bdb-tmp-folder fix-use-snap-instead-of-dirty"; do
-        git apply ${SNAPCRAFT_PART_BUILD}/share/snap/patches/${PATCH}
-      done
+      git apply $SNAPCRAFT_PART_BUILD/share/snap/patches/default_data_dir
+      git apply $SNAPCRAFT_PART_BUILD/share/snap/patches/fix-bdb-tmp-folder
+      git apply $SNAPCRAFT_PART_BUILD/share/snap/patches/fix-use-snap-instead-of-dirty
       sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' ${SNAPCRAFT_PART_BUILD}/depends/funcs.mk
       # BUILD DEPENDENCIES
       echo "START BUILDING ${SHORTNAME} FOR ${SNAPCRAFT_ARCH_TRIPLET} architecture"
