@@ -153,7 +153,7 @@ parts:
         else
           echo "echo ${SHORTNAME}-qt is not installed" > ${SNAPCRAFT_PART_INSTALL}/usr/bin/${SHORTNAME}-qt
           chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/bin/${SHORTNAME}-qt
-          echo "PPC64EL fix - ${SHORTNAME}-qt exists, fix required, dummy as ${SHORTNAME}-qt"
+          echo "PPC64EL fix - ${SHORTNAME}-qt does not exist, fix required, dummy as ${SHORTNAME}-qt"
         fi
       fi
       ## COPY ICONS AND SHORTCUTS
@@ -171,10 +171,10 @@ parts:
       SNAPCRAFT_PROJECT_VERSION=$(src/ion-cli --version | grep "version" | awk '{print $6;}')
       for SCUT in $(ls -1a ${SNAPCRAFT_PART_BUILD}/debian/*.desktop); do
         SCUTNOEXT=$(echo ${SCUT} | sed "s/.desktop//")
-        cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUTNOEXT}.desktop ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         if [ $SCUTNOEXT = "${SHORTNAME}d" ]; then
-          cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-testnet-snap.desktop
-          cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-regtest-snap.desktop
+          cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUTNOEXT}.desktop ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-testnet-snap.desktop
+          cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUTNOEXT}.desktop ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-regtest-snap.desktop
         fi
         sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         sed -i "s/Exec=${SHORTNAME}-qt/${SHORTNAME}core.qt/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
