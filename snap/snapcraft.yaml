@@ -189,6 +189,3 @@ parts:
       - locales-all
       - qtwayland5
       - ca-certificates
-  desktop:
-    source: snap/gui
-    plugin: dump
