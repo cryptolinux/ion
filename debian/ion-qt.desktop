@@ -3,11 +3,12 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Ion Qt
-Comment=Ion Digital Currency QT Official release
+Comment=main
+GenericName=Ion Digital Currency QT
 Exec=ion-qt %u
 Terminal=false
 Type=Application
 Icon=ion128
 MimeType=x-scheme-handler/ion;
-Categories=Finance;Games;
-Keywords=internet;ion;main;qt;crypto;currency;deb;launchpad;ioncore;ioncoin;ioncoincore;
+Categories=X-Finance;X-Games;
+Keywords=internet;ion;main;qt;crypto;currency;deb;launchpad;core;coin;

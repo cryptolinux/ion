@@ -2,12 +2,13 @@
 
 [Desktop Entry]
 Encoding=UTF-8
-Name=Ion Qt (Regtest)
-Comment=Ion Digital Currency QT Official release (Testnet)
+Name=Ion Qt Regtest
+Comment=regtest
+GenericName=Ion Digital Currency QT
 Exec=ion-qt --regtest %u
 Terminal=false
 Type=Application
 Icon=ionregtest128
 MimeType=x-scheme-handler/ion;
-Categories=Finance;Games;
-Keywords=internet;ion;regtest;qt;crypto;currency;deb;launchpad;ioncore;ioncoin;daemon;cli;qt;ioncoincore;
+Categories=X-Finance;X-Games;
+Keywords=internet;ion;regtest;qt;crypto;currency;deb;launchpad;core;coin;

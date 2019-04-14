@@ -1,7 +1,10 @@
 
 Debian
 ====================
-This directory contains files used to package iond/ion-qt
+This directory contains files used to package
+
+    iond, ion-qt, ion-tx, ion-full, ion-dev
+
 for Debian-based Linux systems. If you compile iond/ion-qt yourself, there are some useful files here.
 
 ## ion: URI support ##

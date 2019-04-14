@@ -104,6 +104,7 @@ parts:
     # updated, but there's no way to define a default data dir in ion-qt.
     # Also, it would be better if we could split the wallet from the blockchain
     override-build: |
+<<<<<<< HEAD
       # apply snap bbuild related patche
       git apply $SNAPCRAFT_STAGE/default_data_dir.patch
       # fix bug - extracting
@@ -114,6 +115,14 @@ parts:
         sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' $SNAPCRAFT_PART_BUILD/depends/funcs.mk
         cd $SNAPCRAFT_PART_BUILD/depends
         make HOST=$SNAPCRAFT_ARCH_TRIPLET
+=======
+      SHORTNAME="ion"
+      JOBS=4
+      if [ $SNAPCRAFT_ARCH_TRIPLET = "i386-linux-gnu" ]; then
+        HOST="i686-linux-gnu"
+      else
+        HOST="${SNAPCRAFT_ARCH_TRIPLET}"
+>>>>>>> build - add additional packages to deb build
       fi
       # APPLY PATCHES
       echo "apply patches:"
@@ -125,17 +134,36 @@ parts:
       echo "START BUILDING ${SHORTNAME} FOR ${SNAPCRAFT_ARCH_TRIPLET} architecture"
       cd ${SNAPCRAFT_PART_BUILD}/depends
       make download-linux
-      make -j4 HOST=${HOST}
+      make -j${JOBS} HOST=${HOST}
       # CONFIGURE
       echo "Configure ${SHORTNAME}"
       cd ${SNAPCRAFT_PART_BUILD}
       echo "Configure and build ${SHORTNAME}"
       ./autogen.sh
+<<<<<<< HEAD
       if [ $SNAPCRAFT_ARCH_TRIPLET == "x86-64-linux-gnu" ] 
       then
         ./configure --prefix=`pwd`/depends/$SNAPCRAFT_ARCH_TRIPLET
       else
         ./configure BDB_LIBS="-L${SNAPCRAFT_PART_INSTALL}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${SNAPCRAFT_PART_INSTALL}/include"
+=======
+      ./configure --prefix=`pwd`/depends/${HOST}
+      # COMPILE
+      echo "Compile ${SHORTNAME}"
+      make -j${JOBS}
+      # INSTALL
+      echo "Install ${SHORTNAME}"
+      make install prefix=${SNAPCRAFT_PART_INSTALL}
+      # POST INSTALL
+      if [ $SNAPCRAFT_ARCH_TRIPLET = "powerpc64le-linux-gnu" ]; then
+        if [ -e $SNAPCRAFT_PART_BUILD/src/qt/${SHORTNAME}-qt ]; then
+          echo "PPC64EL fix - ${SHORTNAME}-qt exists, fix unrequired"
+        else
+          echo "echo ${SHORTNAME}-qt is not installed" > ${SNAPCRAFT_PART_INSTALL}/usr/bin/${SHORTNAME}-qt
+          chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/bin/${SHORTNAME}-qt
+          echo "PPC64EL fix - ${SHORTNAME}-qt exists, fix required, dummy as ${SHORTNAME}-qt"
+        fi
+>>>>>>> build - add additional packages to deb build
       fi
       ## COPY ICONS AND SHORTCUTS
       #   we can place icons into projects ./snap/usr/share/applications folder

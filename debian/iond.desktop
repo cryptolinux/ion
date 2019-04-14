@@ -2,13 +2,24 @@
 
 [Desktop Entry]
 Encoding=UTF-8
+<<<<<<< HEAD
 Name=Ion Core Daemon
 Comment=main
 GenericName=Ion Digital Currency Daemon Client main network
 Exec=iond %u
+=======
+Name=Ion Daemon
+Comment=Main
+GenericName=Ion Digital Currency Daemon
+Exec=iond --regtest %u
+>>>>>>> build - add additional packages to deb build
 Terminal=true
 Type=Application
 Icon=iond128
 MimeType=x-scheme-handler/ion;
 Categories=X-Finance;X-Games;
+<<<<<<< HEAD
 Keywords=internet;ion;xion;core;wallet;daemon;main;deb;launchpad;crypto;digital;currency;coin;token;zerocoin;
+=======
+Keywords=internet;ion;regtest;crypto;currency;deb;launchpad;ioncore;ioncoin;daemon;ioncoincore;
+>>>>>>> build - add additional packages to deb build

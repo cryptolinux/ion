@@ -1,2 +1,5 @@
 usr/local/bin/iond usr/bin
 usr/local/bin/ion-cli usr/bin
+usr/local/bin/ion-tx usr/bin
+debian/iond.desktop usr/share/applications
+debian/iond.protocol usr/share/kde4/services/
