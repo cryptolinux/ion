@@ -167,7 +167,7 @@ parts:
       cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.ico
       cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.ico
       # very simply test of binaries, run a command to get version and use it to set vars
-      SNAPCRAFT_PROJECT_VERSION=$(src/ion-cli --version | grep "version" | awk '{print $6;}')
+      SNAPCRAFT_PROJECT_VERSION=$(src/${SHORTNAME}-cli --version | grep "version" | awk '{print $6;}')
       cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}-qt.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-snap.desktop
       cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}-qt-testnet.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-testnet-snap.desktop
       cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}-qt-regtest.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-regtest-snap.desktop
@@ -175,22 +175,29 @@ parts:
       cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}d.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.desktop
       cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}d.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.desktop
       # patch desktop files
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Exec\=${SHORTNAME}-qt/Exec\=${SHORTNAME}core.qt/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Exec\=${SHORTNAME}d/Exec\=${SHORTNAME}core.daemon/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Exec\=${SHORTNAME}-cli/Exec\=${SHORTNAME}core.cli/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Exec\=${SHORTNAME}-tx/Exec\=${SHORTNAME}core.tx/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Exec\=test_${SHORTNAME}/Exec\=${SHORTNAME}core.test/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Exec\=test_${SHORTNAME}-qt/Exec\=${SHORTNAME}core.test-qt/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/ --regtest/-regtest/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/ --testnet/-testnet/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}128/Icon\=$\{SNAP\}\/${SHORTNAME}qtsnap.ico/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}testnet128/Icon\=$\{SNAP\}\/${SHORTNAME}qttestnetsnap.ico/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}regtest128/Icon\=$\{SNAP\}\/${SHORTNAME}qtregtestsnap.ico/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}d128/Icon\=$\{SNAP\}\/${SHORTNAME}dsnap.ico/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}dtestnet128/Icon\=$\{SNAP\}\/${SHORTNAME}}d-testnet-snap.ico/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}dregtest128/Icon\=$\{SNAP\}\/${SHORTNAME}d-regtest-snap.ico/" {} ";"
-      find ${SNAPCRAFT_PRIME} -type f -print0 | xargs -0 sed -i "s/deb;launchpad;/snap;launchpad;/" {} ";"
+      sed -i "s/Exec\=${SHORTNAME}-qt/Exec\=${SNAPCRAFT_PROJECT_NAME}.qt/" ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-snap.desktop
+      sed -i "s/Exec\=${SHORTNAME}-qt/Exec\=${SNAPCRAFT_PROJECT_NAME}.qt/" ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-testnet-snap.desktop
+      sed -i "s/Exec\=${SHORTNAME}-qt/Exec\=${SNAPCRAFT_PROJECT_NAME}.qt/" ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-regtest-snap.desktop
+      sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${SNAPCRAFT_PRIME}/${SHORTNAME}d-snap.desktop
+      sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.desktop
+      sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.desktop
+      sed -i "s/Exec\=${SHORTNAME}d/Exec\=${SNAPCRAFT_PROJECT_NAME}.daemon/" ${SNAPCRAFT_PRIME}/${SHORTNAME}d-snap.desktop
+      sed -i "s/Exec\=${SHORTNAME}d/Exec\=${SNAPCRAFT_PROJECT_NAME}.daemon/" ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.desktop
+      sed -i "s/Exec\=${SHORTNAME}d/Exec\=${SNAPCRAFT_PROJECT_NAME}.daemon/" ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.desktop
+      sed -i "s/ --testnet/-testnet/" ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-testnet-snap.desktop
+      #sed -i "s/ --testnet/-testnet/" ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.desktop
+      sed -i "s/${SNAPCRAFT_PROJECT_NAME}.daemon/${SNAPCRAFT_PROJECT_NAME}.daemon-testnet/" ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.desktop
+      sed -i "s/ --regtest/-regtest/" ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-regtest-snap.desktop
+      #sed -i "s/ --regtest/-regtest/" ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.desktop
+      sed -i "s/${SNAPCRAFT_PROJECT_NAME}.daemon/${SNAPCRAFT_PROJECT_NAME}.daemon-regtest/" ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.desktop
+
+      sed -i "s/Icon\=${SHORTNAME}128/Icon\=$\{SNAP\}\/${SHORTNAME}qtsnap.ico/" {} ";"
+      sed -i "s/Icon\=${SHORTNAME}testnet128/Icon\=$\{SNAP\}\/${SHORTNAME}qttestnetsnap.ico/" {} ";"
+      sed -i "s/Icon\=${SHORTNAME}regtest128/Icon\=$\{SNAP\}\/${SHORTNAME}qtregtestsnap.ico/" {} ";"
+      sed -i "s/Icon\=${SHORTNAME}d128/Icon\=$\{SNAP\}\/${SHORTNAME}dsnap.ico/" {} ";"
+      sed -i "s/Icon\=${SHORTNAME}dtestnet128/Icon\=$\{SNAP\}\/${SHORTNAME}}d-testnet-snap.ico/" {} ";"
+      sed -i "s/Icon\=${SHORTNAME}dregtest128/Icon\=$\{SNAP\}\/${SHORTNAME}d-regtest-snap.ico/" {} ";"
+      sed -i "s/deb;launchpad;/snap;launchpad;/" {} ";"
       # add version info
       echo "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-snap.desktop
       echo "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-testnet-snap.desktop
