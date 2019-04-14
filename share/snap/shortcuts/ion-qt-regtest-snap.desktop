@@ -3,11 +3,12 @@
 [Desktop Entry]
 Type=Application
 Encoding=UTF-8
-Name=Ion Qt Regtest
+Name=Ion SNAP Regtest
 Icon=${SNAP}/ionqtregtestsnap.ico
-MimeType=x-scheme-handler/ioncore;
+MimeType=x-scheme-handler/ion;
 Exec=ioncore.qt-regtest %u
 Terminal=false
-Categories=Office;Finance;Games;
-Comment=Ion Digital Currency QT Official release (Regtest)
-Keywords=internet;ion;regtest;qt;crypto;currency;snap;snapcraft;ioncore;ioncoin;daemon;cli;qt;ioncoincore
+Comment=snap regtest
+GenericName=Ion Digital Currency QT
+Categories=X-Finance;X-Games;
+Keywords=internet;ion;regtest;qt;crypto;currency;deb;launchpad;core;coin;snap;

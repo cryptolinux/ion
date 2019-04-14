@@ -3,11 +3,12 @@
 [Desktop Entry]
 Type=Application
 Encoding=UTF-8
-Name=Ion Qt Testnet
+Name=Ion SNAP Testnet
 Icon=${SNAP}/ionqttestnetsnap.ico
-MimeType=x-scheme-handler/ioncore;
+MimeType=x-scheme-handler/ion;
 Exec=ioncore.qt-testnet %u
 Terminal=false
-Categories=Office;Finance;Games;
-Comment=Ion Digital Currency QT Official release (Testnet)
-Keywords=internet;ion;testnet;qt;crypto;currency;snap;snapcraft;ioncore;ioncoin;daemon;cli;qt;ioncoincore
+Comment=snap testnet
+GenericName=Ion Digital Currency QT
+Categories=X-Finance;X-Games;
+Keywords=internet;ion;testnet;qt;crypto;currency;deb;launchpad;core;coin;snap;
