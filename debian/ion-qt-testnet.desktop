@@ -2,7 +2,7 @@
 
 [Desktop Entry]
 Encoding=UTF-8
-Name=Ion Qt Testnet
+Name=ION Core testnet
 Comment=testnet
 GenericName=Ion Digital Currency QT
 Exec=ion-qt --testnet %u
@@ -11,4 +11,4 @@ Type=Application
 Icon=iontestnet128
 MimeType=x-scheme-handler/ion;
 Categories=X-Finance;X-Games;
-Keywords=internet;ion;testnet;qt;crypto;currency;deb;launchpad;core;coin;
+Keywords=internet;ion;xion;core;wallet;qt;testnet;deb;launchpad;crypto;digital;currency;coin;token;zerocoin;
