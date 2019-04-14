@@ -32,16 +32,11 @@ description: |
     Reddit:    https://www.reddit.com/r/ionomy/
     Facebook:  https://facebook.com/ionomy
   
-  - [Feature request](https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D)
-    Suggest an idea for this project
-  - [I need help/support (observed by ionomy.com staff)](https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D)
-    Ask for help/support
-  - [Report a bug](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D)
-    Create a report to help us improve Ion Core
-  - [Report some random issue](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D)
-    Report a issue
-  - [Testing Report](https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D)
-     Document Testing and Results
+  - Feature request: https://tinyurl.com/y5ds7s3t
+  - I need help/support (observed by ionomy.com staff): https://tinyurl.com/yy6xa3p4
+  - Report a bug: https://tinyurl.com/y5wzybwe
+  - Report some random issue: https://tinyurl.com/y5cgm2vp
+  - Testing Report: https://tinyurl.com/y39n2hsv
 grade: devel
 confinement: strict
 icon: src/qt/res/src/ion.svg
@@ -130,9 +125,9 @@ parts:
       fi
       # APPLY PATCHES
       echo "apply patches:"
-      git apply ${SNAPCRAFT_PART_BUILD}/share/snap/patches/default_data_dir.patch
-      git apply ${SNAPCRAFT_PART_BUILD}/share/snap/patches/fix-bdb-tmp-folder.patch
-      git apply ${SNAPCRAFT_PART_BUILD}/share/snap/patches/fix-use-snap-instead-of-dirty.patch
+      for PATCH in "default_data_dir fix-bdb-tmp-folder fix-use-snap-instead-of-dirty"; do
+        git apply ${SNAPCRAFT_PART_BUILD}/share/snap/patches/${PATCH}.patch
+      done
       sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' ${SNAPCRAFT_PART_BUILD}/depends/funcs.mk
       # BUILD DEPENDENCIES
       echo "START BUILDING ${SHORTNAME} FOR ${SNAPCRAFT_ARCH_TRIPLET} architecture"
