@@ -77,15 +77,15 @@ Description: gaming related peer-to-peer network based digital currency daemon
  Reddit:    https://www.reddit.com/r/ionomy/
  Facebook:  https://facebook.com/ionomy
  .
- - [Feature request](https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D)
+ - Feature request - https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D
  Suggest an idea for this project
- - [I need help/support (observed by ionomy.com staff)](https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D)
+ - I need help/support (observed by ionomy.com staff - https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D
  Ask for help/support
- - [Report a bug](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D)
+ - Report a bug - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D
  Create a report to help us improve Ion Core
- - [Report some random issue](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D)
+ - Report some random issue - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D
  Report a issue
- - [Testing Report](https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D)
+ - Testing Report - https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D
      Document Testing and Results
 
 Package: ion-cli
@@ -123,15 +123,15 @@ Description: gaming related peer-to-peer network based digital currency CLI
  Reddit:    https://www.reddit.com/r/ionomy/
  Facebook:  https://facebook.com/ionomy
  .
- - [Feature request](https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D)
+ - Feature request - https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D
  Suggest an idea for this project
- - [I need help/support (observed by ionomy.com staff)](https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D)
+ - I need help/support (observed by ionomy.com staff - https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D
  Ask for help/support
- - [Report a bug](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D)
+ - Report a bug - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D
  Create a report to help us improve Ion Core
- - [Report some random issue](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D)
+ - Report some random issue - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D
  Report a issue
- - [Testing Report](https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D)
+ - Testing Report - https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D
      Document Testing and Results
 
 Package: ion-qt
@@ -169,15 +169,15 @@ Description: gaming related peer-to-peer network based digital currency ION GUI
  Reddit:    https://www.reddit.com/r/ionomy/
  Facebook:  https://facebook.com/ionomy
  .
- - [Feature request](https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D)
+ - Feature request - https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D
  Suggest an idea for this project
- - [I need help/support (observed by ionomy.com staff)](https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D)
+ - I need help/support (observed by ionomy.com staff - https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D
  Ask for help/support
- - [Report a bug](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D)
+ - Report a bug - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D
  Create a report to help us improve Ion Core
- - [Report some random issue](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D)
+ - Report some random issue - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D
  Report a issue
- - [Testing Report](https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D)
+ - Testing Report - https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D
      Document Testing and Results
 
 Package: ion-tx
@@ -215,21 +215,21 @@ Description: gaming related peer-to-peer network based digital currency tx tool
  Reddit:    https://www.reddit.com/r/ionomy/
  Facebook:  https://facebook.com/ionomy
  .
- - [Feature request](https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D)
+ - Feature request - https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D
  Suggest an idea for this project
- - [I need help/support (observed by ionomy.com staff)](https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D)
+ - I need help/support (observed by ionomy.com staff - https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D
  Ask for help/support
- - [Report a bug](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D)
+ - Report a bug - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D
  Create a report to help us improve Ion Core
- - [Report some random issue](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D)
+ - Report some random issue - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D
  Report a issue
- - [Testing Report](https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D)
+ - Testing Report - https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D
      Document Testing and Results
 
 Package: ion-full
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: gaming related peer-to-peer network based digital currency
+Description: gaming related peer-to-peer network based digital currency full suite
  Ion Core is an MIT licensed,
  open source, gaming oriented, blockchain-based cryptocurrency with
  ultra fast transactions, low fees, high network decentralization, and
@@ -262,21 +262,21 @@ Description: gaming related peer-to-peer network based digital currency
  Reddit:    https://www.reddit.com/r/ionomy/
  Facebook:  https://facebook.com/ionomy
  .
- - [Feature request](https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D)
+ - Feature request - https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D
  Suggest an idea for this project
- - [I need help/support (observed by ionomy.com staff)](https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D)
+ - I need help/support (observed by ionomy.com staff - https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D
  Ask for help/support
- - [Report a bug](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D)
+ - Report a bug - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D
  Create a report to help us improve Ion Core
- - [Report some random issue](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D)
+ - Report some random issue - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D
  Report a issue
- - [Testing Report](https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D)
+ - Testing Report - https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D
      Document Testing and Results
 
 Package: ion-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: gaming related peer-to-peer network based digital currency
+Description: gaming related peer-to-peer network based digital currency dev package
  Ion Core is an MIT licensed,
  open source, gaming oriented, blockchain-based cryptocurrency with
  ultra fast transactions, low fees, high network decentralization, and
@@ -309,13 +309,13 @@ Description: gaming related peer-to-peer network based digital currency
  Reddit:    https://www.reddit.com/r/ionomy/
  Facebook:  https://facebook.com/ionomy
  .
- - [Feature request](https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D)
+ - Feature request - https://github.com/ioncoincore/ion/issues/new?assignees=cevap%2C+FornaxA&labels=feature+request&template=feature_request.md&title=%5Bfeature+request%5D
  Suggest an idea for this project
- - [I need help/support (observed by ionomy.com staff)](https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D)
+ - I need help/support (observed by ionomy.com staff - https://github.com/ioncoincore/ion/issues/new?assignees=MitchellCash&labels=help+wanted%2C+ionomy.com%2C+question%2C+ticket&template=i-need-help-support--observed-by-ionomy-com-staff-.md&title=%5Bticket%5D%5Bionomy.com%5D%5Bhelp+wanted%5D%5Bquestion%5D
  Ask for help/support
- - [Report a bug](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D)
+ - Report a bug - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=bug&template=report-a-bug.md&title=%5Bbug%5D
  Create a report to help us improve Ion Core
- - [Report some random issue](https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D)
+ - Report some random issue - https://github.com/ioncoincore/ion/issues/new?assignees=ckti%2C+MitchellCash%2C+CeForce%2C+cevap%2C+FornaxA&labels=question%2C+random+issue&template=report-some-random-issue.md&title=%5Brandom+issue%5D
  Report a issue
- - [Testing Report](https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D)
+ - Testing Report - https://github.com/ioncoincore/ion/issues/new?assignees=&labels=Testing&template=testing-report.md&title=Test+Report+%5BBuild%5D+%5BOS%5D
      Document Testing and Results
