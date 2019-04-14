@@ -114,10 +114,8 @@ parts:
     # updated, but there's no way to define a default data dir in ion-qt.
     # Also, it would be better if we could split the wallet from the blockchain
     override-build: |
-      env
       SHORTNAME="ion"
       JOBS=4
-      DEBIANDIR=${SNAPCRAFT_PART_BUILD}/debian
       if [ $SNAPCRAFT_ARCH_TRIPLET = "i386-linux-gnu" ]; then
         HOST="i686-linux-gnu"
       else
@@ -126,7 +124,7 @@ parts:
       # APPLY PATCHES
       echo "apply patches:"
       for PATCH in "default_data_dir fix-bdb-tmp-folder fix-use-snap-instead-of-dirty"; do
-        git apply ${SNAPCRAFT_PART_BUILD}/share/snap/patches/${PATCH}.patch
+        git apply ${SNAPCRAFT_PART_BUILD}/share/snap/patches/${PATCH}*
       done
       sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' ${SNAPCRAFT_PART_BUILD}/depends/funcs.mk
       # BUILD DEPENDENCIES
@@ -194,6 +192,9 @@ parts:
         sed -i "s/deb;launchpad;/snap;launchpad;/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         cat "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SCUT}
       done
+      # create .ioncoin folder and copy example config
+      mkdir -p ${SNAP_USER_COMMON}/.ioncoin
+      cd ${SNAPCRAFT_PART_BUILD}/debian/manpages/ioncoin.conf.5 ${SNAP_USER_COMMON}/.ioncoin/ioncoin-example.conf
       # List installed files
       echo "Installed files:"
       ls $SNAPCRAFT_PART_INSTALL
