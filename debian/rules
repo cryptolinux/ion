@@ -17,7 +17,7 @@ DEB_INSTALL_MANPAGES_ion-dev += debian/manpages/*
 DEB_INSTALL_EXAMPLES_ion-dev += debian/examples/*
 
 %:
-	dh --with bash-completion $@
+	dh $@ --with bash-completion
 
 override_dh_auto_clean:
 	if [ -f Makefile ]; then $(MAKE) distclean; fi
