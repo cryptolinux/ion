@@ -122,7 +122,6 @@ parts:
       env
       SHORTNAME="ion"
       JOBS=4
-      PRIMINGDIR=/build/${SNAP_NAME}/prime
       PIXMAPS=${SNAPCRAFT_PART_BUILD}/share/pixmaps
       DEBIANDIR=${SNAPCRAFT_PART_BUILD}/debian
       if [ $SNAPCRAFT_ARCH_TRIPLET = "i386-linux-gnu" ]; then
@@ -169,34 +168,34 @@ parts:
       #   instead we will copy them in this step and remove snap/usr folder, we
       #   wll use instead icons from ./share/pixmap foler
       #mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/applications
-      mkdir -p ${PRIMINGDIR}
-      cp ${PIXMAPS}/${SHORTNAME}.ico ${PRIMINGDIR}/${SHORTNAME}qtsnap.ico
-      cp ${PIXMAPS}/${SHORTNAME}testnet.ico ${PRIMINGDIR}/${SHORTNAME}qttestnetsnap.ico
-      cp ${PIXMAPS}/${SHORTNAME}regtest.ico ${PRIMINGDIR}/${SHORTNAME}qtregtestsnap.ico
-      cp ${PIXMAPS}/${SHORTNAME}d.ico ${PRIMINGDIR}/${SHORTNAME}dsnap.ico
+      cp ${PIXMAPS}/${SHORTNAME}.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qtsnap.ico
+      cp ${PIXMAPS}/${SHORTNAME}testnet.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qttestnetsnap.ico
+      cp ${PIXMAPS}/${SHORTNAME}regtest.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qtregtestsnap.ico
+      cp ${PIXMAPS}/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}dsnap.ico
       # very simply test of binaries, run a command to get version and use it to set vars
-      RETVERDAEMON=$(src/iond --version | grep "version" | awk '{print $5;}')
+      SNAPCRAFT_PROJECT_VERSION=$(src/ion-cli --version | grep "version" | awk '{print $6;}')
+      RETVERDAEMON=
       RETNAMEDAEMON=$(src/iond --version | grep "version" | awk '{print $1,$2,$3;}')
       RETVERQT=$(src/qt/ion-qt --version | grep "version" | awk '{print $6;}')
       RETNAMEQT=$(src/qt/ion-qt --version | grep "version" | awk '{print $1,$2,$3;}')
       for SCUT in $(ls -1a ${PIXMAPS}/*.desktop); do
-        cp ${DEBIANDIR}/${SCUT} ${PRIMINGDIR}/${SCUT}-snap.desktop
-        #cp ${DEBIANDIR}/${SHORTNAME}-qt.desktop ${PRIMINGDIR}/${SHORTNAME}-qt-snap.desktop
-        sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/Exec=${SHORTNAME}-qt/${SHORTNAME}core.qt/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/Exec=${SHORTNAME}d/${SHORTNAME}core.daemon/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/Exec=${SHORTNAME}-cli/${SHORTNAME}core.cli/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/Exec=${SHORTNAME}-tx/${SHORTNAME}core.tx/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/Exec=test_${SHORTNAME}/${SHORTNAME}core.test/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/Exec=test_${SHORTNAME}-qt/${SHORTNAME}core.test-qt/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/ --regtest/-regtest/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/ --testnet/-testnet/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/Icon\=${SHORTNAME}128/Icon\=$\{SNAP\}\/${SHORTNAME}qtsnap.ico/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/Icon\=${SHORTNAME}testnet128/Icon\=$\{SNAP\}\/${SHORTNAME}qttestnetsnap.ico/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/Icon\=${SHORTNAME}regtest128/Icon\=$\{SNAP\}\/${SHORTNAME}qtregtestsnap.ico/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/Icon\=${SHORTNAME}d128/Icon\=$\{SNAP\}\/${SHORTNAME}dsnap.ico/" ${PRIMINGDIR}/${SCUT}
-        sed -i "s/deb;launchpad;/snap;launchpad;/" ${PRIMINGDIR}/${SCUT}
-        cat "Version=${RETVERDAEMON}" >> ${PRIMINGDIR}/${SCUT}
+        SCUTNOEXT=$(echo ${SCUT} | sed "s/.desktop//")
+        cp ${DEBIANDIR}/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Exec=${SHORTNAME}-qt/${SHORTNAME}core.qt/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Exec=${SHORTNAME}d/${SHORTNAME}core.daemon/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Exec=${SHORTNAME}-cli/${SHORTNAME}core.cli/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Exec=${SHORTNAME}-tx/${SHORTNAME}core.tx/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Exec=test_${SHORTNAME}/${SHORTNAME}core.test/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Exec=test_${SHORTNAME}-qt/${SHORTNAME}core.test-qt/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/ --regtest/-regtest/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/ --testnet/-testnet/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Icon\=${SHORTNAME}128/Icon\=$\{SNAP\}\/${SHORTNAME}qtsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Icon\=${SHORTNAME}testnet128/Icon\=$\{SNAP\}\/${SHORTNAME}qttestnetsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Icon\=${SHORTNAME}regtest128/Icon\=$\{SNAP\}\/${SHORTNAME}qtregtestsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/Icon\=${SHORTNAME}d128/Icon\=$\{SNAP\}\/${SHORTNAME}dsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        sed -i "s/deb;launchpad;/snap;launchpad;/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        cat "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SCUT}
       done
       # List installed files
       echo "Installed files:"
