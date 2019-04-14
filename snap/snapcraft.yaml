@@ -122,7 +122,6 @@ parts:
       env
       SHORTNAME="ion"
       JOBS=4
-      PIXMAPS=${SNAPCRAFT_PART_BUILD}/share/pixmaps
       DEBIANDIR=${SNAPCRAFT_PART_BUILD}/debian
       if [ $SNAPCRAFT_ARCH_TRIPLET = "i386-linux-gnu" ]; then
         HOST="i686-linux-gnu"
@@ -151,7 +150,6 @@ parts:
       make -j${JOBS}
       # INSTALL
       echo "Install ${SHORTNAME}"
-      BUILDDIR=$PWD contrib/devtools/gen-manpages.sh
       make install prefix=${SNAPCRAFT_PART_INSTALL}
       # POST INSTALL
       if [ $SNAPCRAFT_ARCH_TRIPLET = "powerpc64le-linux-gnu" ]; then
@@ -168,20 +166,22 @@ parts:
       #   instead we will copy them in this step and remove snap/usr folder, we
       #   wll use instead icons from ./share/pixmap foler
       #mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/applications
-      cp ${PIXMAPS}/${SHORTNAME}.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qtsnap.ico
-      cp ${PIXMAPS}/${SHORTNAME}testnet.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qttestnetsnap.ico
-      cp ${PIXMAPS}/${SHORTNAME}regtest.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qtregtestsnap.ico
-      cp ${PIXMAPS}/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}dsnap.ico
-      cp ${PIXMAPS}/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.ico
-      cp ${PIXMAPS}/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.ico
+      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/${SHORTNAME}.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qtsnap.ico
+      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/${SHORTNAME}testnet.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qttestnetsnap.ico
+      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/${SHORTNAME}regtest.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}qtregtestsnap.ico
+      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}dsnap.ico
+      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.ico
+      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.ico
       # very simply test of binaries, run a command to get version and use it to set vars
       SNAPCRAFT_PROJECT_VERSION=$(src/ion-cli --version | grep "version" | awk '{print $6;}')
-      for SCUT in $(ls -1a ${PIXMAPS}/*.desktop); do
+      for SCUT in $(ls -1a ${SNAPCRAFT_PART_BUILD}/debian/*.desktop); do
         SCUTNOEXT=$(echo ${SCUT} | sed "s/.desktop//")
-        cp ${DEBIANDIR}/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        if [ $SCUTNOEXT = "iond" ]; then
-          cp ${DEBIANDIR}/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-testnet-snap.desktop
-          cp ${DEBIANDIR}/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-regtest-snap.desktop
+        cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
+        if [ $SCUTNOEXT = "${SHORTNAME}d" ]; then
+          cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-testnet-snap.desktop
+          cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-regtest-snap.desktop
+        else
+          cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUT} ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         fi
         sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
         sed -i "s/Exec=${SHORTNAME}-qt/${SHORTNAME}core.qt/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
@@ -220,12 +220,7 @@ parts:
       - bsdmainutils
       - binutils
       - python3
-    stage-packages: [ca-certificates]
-    after:
-      - berkeleydb
-      - desktop-qt5
-      - patches
-  desktop-qt5:
+      - help2man
     stage-packages:
       - libxkbcommon0
       - ttf-ubuntu-font-family
