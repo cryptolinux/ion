@@ -168,31 +168,36 @@ parts:
       cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/${SHORTNAME}d.ico ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.ico
       # very simply test of binaries, run a command to get version and use it to set vars
       SNAPCRAFT_PROJECT_VERSION=$(src/ion-cli --version | grep "version" | awk '{print $6;}')
-      for SCUT in $(ls -1a ${SNAPCRAFT_PART_BUILD}/debian/*.desktop); do
-        SCUTNOEXT=$(echo ${SCUT} | sed "s/.desktop//")
-        cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUTNOEXT}.desktop ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        if [ $SCUTNOEXT = "${SHORTNAME}d" ]; then
-          cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUTNOEXT}.desktop ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-testnet-snap.desktop
-          cp ${SNAPCRAFT_PART_BUILD}/debian/${SCUTNOEXT}.desktop ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-regtest-snap.desktop
-        fi
-        sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Exec=${SHORTNAME}-qt/${SHORTNAME}core.qt/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Exec=${SHORTNAME}d/${SHORTNAME}core.daemon/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Exec=${SHORTNAME}-cli/${SHORTNAME}core.cli/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Exec=${SHORTNAME}-tx/${SHORTNAME}core.tx/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Exec=test_${SHORTNAME}/${SHORTNAME}core.test/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Exec=test_${SHORTNAME}-qt/${SHORTNAME}core.test-qt/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/ --regtest/-regtest/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/ --testnet/-testnet/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Icon\=${SHORTNAME}128/Icon\=$\{SNAP\}\/${SHORTNAME}qtsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Icon\=${SHORTNAME}testnet128/Icon\=$\{SNAP\}\/${SHORTNAME}qttestnetsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Icon\=${SHORTNAME}regtest128/Icon\=$\{SNAP\}\/${SHORTNAME}qtregtestsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Icon\=${SHORTNAME}d128/Icon\=$\{SNAP\}\/${SHORTNAME}dsnap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Icon\=${SHORTNAME}dtestnet128/Icon\=$\{SNAP\}\/${SHORTNAME}}d-testnet-snap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/Icon\=${SHORTNAME}dregtest128/Icon\=$\{SNAP\}\/${SHORTNAME}d-regtest-snap.ico/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        sed -i "s/deb;launchpad;/snap;launchpad;/" ${SNAPCRAFT_PRIME}/${SCUTNOEXT}-snap.desktop
-        cat "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SCUT}
-      done
+      cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}-qt.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-snap.desktop
+      cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}-qt-testnet.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-testnet-snap.desktop
+      cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}-qt-regtest.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-regtest-snap.desktop
+      cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}d.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}d-snap.desktop
+      cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}d.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.desktop
+      cp ${SNAPCRAFT_PART_BUILD}/debian/${SHORTNAME}d.desktop ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.desktop
+      # patch desktop files
+      find . -type f -print0 | xargs -0 sed -i "s/Exec\=${SHORTNAME}-qt/Exec\=${SHORTNAME}core.qt/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Exec\=${SHORTNAME}d/Exec\=${SHORTNAME}core.daemon/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Exec\=${SHORTNAME}-cli/Exec\=${SHORTNAME}core.cli/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Exec\=${SHORTNAME}-tx/Exec\=${SHORTNAME}core.tx/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Exec\=test_${SHORTNAME}/Exec\=${SHORTNAME}core.test/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Exec\=test_${SHORTNAME}-qt/Exec\=${SHORTNAME}core.test-qt/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/ --regtest/-regtest/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/ --testnet/-testnet/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}128/Icon\=$\{SNAP\}\/${SHORTNAME}qtsnap.ico/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}testnet128/Icon\=$\{SNAP\}\/${SHORTNAME}qttestnetsnap.ico/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}regtest128/Icon\=$\{SNAP\}\/${SHORTNAME}qtregtestsnap.ico/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}d128/Icon\=$\{SNAP\}\/${SHORTNAME}dsnap.ico/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}dtestnet128/Icon\=$\{SNAP\}\/${SHORTNAME}}d-testnet-snap.ico/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/Icon\=${SHORTNAME}dregtest128/Icon\=$\{SNAP\}\/${SHORTNAME}d-regtest-snap.ico/" {} ";"
+      find . -type f -print0 | xargs -0 sed -i "s/deb;launchpad;/snap;launchpad;/" {} ";"
+      # add version info
+      echo "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-snap.desktop
+      echo "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-testnet-snap.desktop
+      echo "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SHORTNAME}-qt-regtest-snap.desktop
+      echo "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SHORTNAME}d-snap.desktop
+      echo "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SHORTNAME}d-testnet-snap.desktop
+      echo "Version=${SNAPCRAFT_PROJECT_VERSION}" >> ${SNAPCRAFT_PRIME}/${SHORTNAME}d-regtest-snap.desktop
       # create .ioncoin folder and copy example config
       mkdir -p ${SNAP_USER_COMMON}/.ioncoin
       cd ${SNAPCRAFT_PART_BUILD}/debian/manpages/ioncoin.conf.5 ${SNAP_USER_COMMON}/.ioncoin/ioncoin-example.conf
