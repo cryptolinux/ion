@@ -49,42 +49,57 @@ apps:
   daemon:
     command: iond
     plugs: [network, network-bind, network-status, home, removable-media]
+    desktop: iond-snap.desktop
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   daemon-testnet:
     command: iond --testnet
     plugs: [network, network-bind, network-status, home, removable-media]
+    desktop: iond-testnet-snap.desktop
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   daemon-regtest:
     command: iond --regtest
+    desktop: iond-regtest-snap.desktop
     plugs: [network, network-bind, network-status, home, removable-media]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   qt:
     command: ion-qt
     plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
-    desktop: qt.desktop
+    desktop: ion-qt-snap.desktop
     environment:
       QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   qt-testnet:
     command: ion-qt --testnet
     plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
-    desktop: qt-testnet.desktop
+    desktop: ion-qt-testnet-snap.desktop
     environment:
       QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   qt-regtest:
     command: ion-qt --regtest
     plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
-    desktop: qt-regtest.desktop
+    desktop: ion-qt-regtest-snap.desktop
     environment:
       QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   cli:
     command: ion-cli
     plugs: [network, network-bind, network-status, home]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   cli-testnet:
     command: ion-cli --testnet
     plugs: [network, network-bind, home]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+  cli-regtest:
+    command: ion-cli --regtest
+    plugs: [network, network-bind, home]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   tx:
     command: ion-tx
     plugs: [home]
@@ -104,8 +119,12 @@ parts:
     # updated, but there's no way to define a default data dir in ion-qt.
     # Also, it would be better if we could split the wallet from the blockchain
     override-build: |
+      env
       SHORTNAME="ion"
       JOBS=4
+      PRIMINGDIR=/build/${SNAP_NAME}/prime
+      PIXMAPS=${SNAPCRAFT_PART_BUILD}/share/pixmaps
+      DEBIANDIR=${SNAPCRAFT_PART_BUILD}/debian
       if [ $SNAPCRAFT_ARCH_TRIPLET = "i386-linux-gnu" ]; then
         HOST="i686-linux-gnu"
       else
@@ -133,6 +152,7 @@ parts:
       make -j${JOBS}
       # INSTALL
       echo "Install ${SHORTNAME}"
+      BUILDDIR=$PWD contrib/devtools/gen-manpages.sh
       make install prefix=${SNAPCRAFT_PART_INSTALL}
       # POST INSTALL
       if [ $SNAPCRAFT_ARCH_TRIPLET = "powerpc64le-linux-gnu" ]; then
@@ -148,12 +168,38 @@ parts:
       #   we can place icons into projects ./snap/usr/share/applications folder
       #   instead we will copy them in this step and remove snap/usr folder, we
       #   wll use instead icons from ./share/pixmap foler
-      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/applications
-      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/ion.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/ionqtsnap.ico
-      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/iontestnet.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/ionqttestnetsnap.ico
-      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/ionregtest.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/ionqtregtestsnap.ico
-      cp ${SNAPCRAFT_PART_BUILD}/share/pixmaps/iond.ico ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/iondsnap.ico
-      cp ${SNAPCRAFT_PART_BUILD}/share/snap/shortcuts/* ${SNAPCRAFT_PART_INSTALL}/usr/share/applications/
+      #mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/share/applications
+      mkdir -p ${PRIMINGDIR}
+      cp ${PIXMAPS}/${SHORTNAME}.ico ${PRIMINGDIR}/${SHORTNAME}qtsnap.ico
+      cp ${PIXMAPS}/${SHORTNAME}testnet.ico ${PRIMINGDIR}/${SHORTNAME}qttestnetsnap.ico
+      cp ${PIXMAPS}/${SHORTNAME}regtest.ico ${PRIMINGDIR}/${SHORTNAME}qtregtestsnap.ico
+      cp ${PIXMAPS}/${SHORTNAME}d.ico ${PRIMINGDIR}/${SHORTNAME}dsnap.ico
+      # very simply test of binaries, run a command to get version and use it to set vars
+      RETVERDAEMON=$(src/iond --version | grep "version" | awk '{print $5;}')
+      RETNAMEDAEMON=$(src/iond --version | grep "version" | awk '{print $1,$2,$3;}')
+      RETVERQT=$(src/qt/ion-qt --version | grep "version" | awk '{print $6;}')
+      RETNAMEQT=$(src/qt/ion-qt --version | grep "version" | awk '{print $1,$2,$3;}')
+      for SCUT in $(ls -1a ${PIXMAPS}/*.desktop); do
+        cp ${DEBIANDIR}/${SCUT} ${PRIMINGDIR}/${SCUT}-snap.desktop
+        #cp ${DEBIANDIR}/${SHORTNAME}-qt.desktop ${PRIMINGDIR}/${SHORTNAME}-qt-snap.desktop
+        sed -i "s/Name\=ION Core Daemon/Name\=Ion Core Daemon/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/Exec=${SHORTNAME}-qt/${SHORTNAME}core.qt/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/Exec=${SHORTNAME}d/${SHORTNAME}core.daemon/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/Exec=${SHORTNAME}-cli/${SHORTNAME}core.cli/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/Exec=${SHORTNAME}-tx/${SHORTNAME}core.tx/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/Exec=test_${SHORTNAME}/${SHORTNAME}core.test/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/Exec=test_${SHORTNAME}-qt/${SHORTNAME}core.test-qt/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/ --regtest/-regtest/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/ --testnet/-testnet/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/Icon\=${SHORTNAME}128/Icon\=$\{SNAP\}\/${SHORTNAME}qtsnap.ico/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/Icon\=${SHORTNAME}testnet128/Icon\=$\{SNAP\}\/${SHORTNAME}qttestnetsnap.ico/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/Icon\=${SHORTNAME}regtest128/Icon\=$\{SNAP\}\/${SHORTNAME}qtregtestsnap.ico/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/Icon\=${SHORTNAME}d128/Icon\=$\{SNAP\}\/${SHORTNAME}dsnap.ico/" ${PRIMINGDIR}/${SCUT}
+        sed -i "s/deb;launchpad;/snap;launchpad;/" ${PRIMINGDIR}/${SCUT}
+        cat "Version=${RETVERDAEMON}" >> ${PRIMINGDIR}/${SCUT}
+      done
+      BUILDDIR=$PWD contrib/devtools/gen-manpages.sh
+      cp ${SNAPCRAFT_PART_BUILD}/doc/man/{SHORTNAME}*.1 usr/share/man/
       # List installed files
       echo "Installed files:"
       ls $SNAPCRAFT_PART_INSTALL
