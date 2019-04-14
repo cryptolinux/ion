@@ -18,5 +18,5 @@ rm -fR $BUILD_ROOT;
 mkdir -p $BUILD_ROOT;
 cp -r -f . $BUILD_ROOT;
 cd $BUILD_ROOT;
-# buils
+# builds
 dpkg-buildpackage -b -rfakeroot -us -uc ${1};
