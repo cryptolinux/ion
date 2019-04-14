@@ -144,6 +144,7 @@ MacOSX10.11.sdk/
 
 #Vscode
 .vscode/
+.vscode/settings.json
 
 #SNAP
 parts/
@@ -170,6 +171,19 @@ zerocoin
 
 # debian build
 debian/.debhelper/
+debian/files
+debian/ion-cli.substvars
+debian/ion-cli/
+debian/ion-dev.substvars
+debian/ion-dev/
+debian/ion-full.substvars
+debian/ion-full/
+debian/ion-qt.substvars
+debian/ion-tx.substvars
+debian/ion-tx/
+debian/iond.substvars
+debian/iond/
+debian/tmp/
 
 # depends
 depends/config.guess
