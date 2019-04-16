@@ -220,9 +220,13 @@ parts:
         if [ -e $SNAPCRAFT_PART_BUILD/src/qt/${BINPREF}-qt ]; then
           echo "PPC64EL fix - ${BINPREF}-qt exists, fix unrequired"
         else
+          echo "PPC64EL fix - ${BINPREF}-qt does not exist, fix required, dummy as ${BINPREF}-qt"
           echo "echo ${BINPREF}-qt is not installed" > ${SNAPCRAFT_PART_INSTALL}/usr/bin/${BINPREF}-qt
           chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/bin/${BINPREF}-qt
-          echo "PPC64EL fix - ${BINPREF}-qt does not exist, fix required, dummy as ${BINPREF}-qt"
+          echo "echo test_${BINPREF} is not installed" > ${SNAPCRAFT_PART_INSTALL}/usr/bin/test_${BINPREF}
+          chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/bin/test_${BINPREF}
+          echo "echo test_${BINPREF}-qt is not installed" > ${SNAPCRAFT_PART_INSTALL}/usr/bin/test_${BINPREF}-qt
+          chmod +x ${SNAPCRAFT_PART_INSTALL}/usr/bin/test_${BINPREF}-qt
         fi
       fi
       echo "-----------------------------------------------"
