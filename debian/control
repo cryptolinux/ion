@@ -48,11 +48,10 @@ Package: iond
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: gaming related peer-to-peer network based digital currency daemon
- Ion Core is an MIT licensed,
- open source, gaming oriented, blockchain-based cryptocurrency with
- ultra fast transactions, low fees, high network decentralization, and
- Zero Knowledge cryptography proofs for industry-leading
- transaction anonymity.
+ Ion Core is an MIT licensed,  open source, gaming oriented,
+ blockchain-based cryptocurrency with ultra fast transactions,
+ low fees, high network decentralization, and Zero Knowledge
+ cryptography proofs for industry-leading transaction anonymity.
  .
  Full transaction history is stored locally at each client.  This
  requires 1+ GB of space, slowly growing.
@@ -88,11 +87,10 @@ Package: ion-cli
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: gaming related peer-to-peer network based digital currency CLI
- Ion Core is an MIT licensed,
- open source, gaming oriented, blockchain-based cryptocurrency with
- ultra fast transactions, low fees, high network decentralization, and
- Zero Knowledge cryptography proofs for industry-leading
- transaction anonymity.
+ Ion Core is an MIT licensed,  open source, gaming oriented,
+ blockchain-based cryptocurrency with ultra fast transactions,
+ low fees, high network decentralization, and Zero Knowledge
+ cryptography proofs for industry-leading transaction anonymity.
  .
  Full transaction history is stored locally at each client.  This
  requires 1+ GB of space, slowly growing.
@@ -128,11 +126,10 @@ Package: ion-qt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: gaming related peer-to-peer network based digital currency ION GUI
- Ion Core is an MIT licensed,
- open source, gaming oriented, blockchain-based cryptocurrency with
- ultra fast transactions, low fees, high network decentralization, and
- Zero Knowledge cryptography proofs for industry-leading
- transaction anonymity.
+ Ion Core is an MIT licensed,  open source, gaming oriented,
+ blockchain-based cryptocurrency with ultra fast transactions,
+ low fees, high network decentralization, and Zero Knowledge
+ cryptography proofs for industry-leading transaction anonymity.
  .
  Full transaction history is stored locally at each client.  This
  requires 1+ GB of space, slowly growing.
@@ -168,11 +165,10 @@ Package: ion-tx
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: gaming related peer-to-peer network based digital currency tx tool
- Ion Core is an MIT licensed,
- open source, gaming oriented, blockchain-based cryptocurrency with
- ultra fast transactions, low fees, high network decentralization, and
- Zero Knowledge cryptography proofs for industry-leading
- transaction anonymity.
+ Ion Core is an MIT licensed,  open source, gaming oriented,
+ blockchain-based cryptocurrency with ultra fast transactions,
+ low fees, high network decentralization, and Zero Knowledge
+ cryptography proofs for industry-leading transaction anonymity.
  .
  Full transaction history is stored locally at each client.  This
  requires 1+ GB of space, slowly growing.
@@ -208,11 +204,10 @@ Package: ion-full
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: gaming related peer-to-peer network based digital currency full suite
- Ion Core is an MIT licensed,
- open source, gaming oriented, blockchain-based cryptocurrency with
- ultra fast transactions, low fees, high network decentralization, and
- Zero Knowledge cryptography proofs for industry-leading
- transaction anonymity.
+ Ion Core is an MIT licensed,  open source, gaming oriented,
+ blockchain-based cryptocurrency with ultra fast transactions,
+ low fees, high network decentralization, and Zero Knowledge
+ cryptography proofs for industry-leading transaction anonymity.
  .
  Full transaction history is stored locally at each client.  This
  requires 1+ GB of space, slowly growing.
@@ -249,11 +244,10 @@ Package: ion-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: gaming related peer-to-peer network based digital currency dev package
- Ion Core is an MIT licensed,
- open source, gaming oriented, blockchain-based cryptocurrency with
- ultra fast transactions, low fees, high network decentralization, and
- Zero Knowledge cryptography proofs for industry-leading
- transaction anonymity.
+ Ion Core is an MIT licensed,  open source, gaming oriented,
+ blockchain-based cryptocurrency with ultra fast transactions,
+ low fees, high network decentralization, and Zero Knowledge
+ cryptography proofs for industry-leading transaction anonymity.
  .
  Full transaction history is stored locally at each client.  This
  requires 1+ GB of space, slowly growing.

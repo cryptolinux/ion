@@ -178,14 +178,14 @@ parts:
       echo "+++++++++++++++++++++++++++++++++++++++++++++++"
       cd ${SNAPCRAFT_PART_BUILD}
       echo "apply patches:"
-      git apply $SNAPCRAFT_PART_BUILD/share/snap/patches/X001-default_data_dir.patch
-      git apply $SNAPCRAFT_PART_BUILD/share/snap/patches/X002-fix-bdb-tmp-folder.patch
-      git apply $SNAPCRAFT_PART_BUILD/share/snap/patches/X003-fix-use-snap-instead-of-dirty.patch
+      git apply $SNAPCRAFT_PART_BUILD/snap/local/patches/X001-default_data_dir.patch
+      git apply $SNAPCRAFT_PART_BUILD/snap/local/patches/X002-fix-bdb-tmp-folder.patch
+      git apply $SNAPCRAFT_PART_BUILD/snap/local/patches/X003-fix-use-snap-instead-of-dirty.patch
       sed -i 's/tar --strip-components/tar --no-same-owner --strip-components/' ${SNAPCRAFT_PART_BUILD}/depends/funcs.mk
       echo "replace splash screen with snapcrafts"
-      mv -f $SNAPCRAFT_PART_BUILD/src/qt/res/images/splash_snap.png $SNAPCRAFT_PART_BUILD/src/qt/res/images/splash.png
-      mv -f $SNAPCRAFT_PART_BUILD/src/qt/res/images/splash_regtest_snap.png $SNAPCRAFT_PART_BUILD/src/qt/res/images/splash_regtest.png
-      mv -f $SNAPCRAFT_PART_BUILD/src/qt/res/images/splash_testnet_snap.png $SNAPCRAFT_PART_BUILD/src/qt/res/images/splash_testnet.png
+      mv -f $SNAPCRAFT_PART_BUILD/contrib/snap/splash/splash.png $SNAPCRAFT_PART_BUILD/src/qt/res/images/splash.png
+      mv -f $SNAPCRAFT_PART_BUILD/contrib/snap/splash/splash_regtest.png $SNAPCRAFT_PART_BUILD/src/qt/res/images/splash_regtest.png
+      mv -f $SNAPCRAFT_PART_BUILD/contrib/snap/splash/splash_testnet.png $SNAPCRAFT_PART_BUILD/src/qt/res/images/splash_testnet.png
       echo "-----------------------------------------------"
       echo "+++++++++++++++++++++++++++++++++++++++++++++++"
       echo "BUILD DEPENDENCIES"
@@ -271,10 +271,10 @@ parts:
     after:
       - patches
   patches:
-    source: snap/patches
+    source: snap/local/patches
     plugin: dump
     prime:
       - -*
   desktop:
-    source: snap/usr/share/applications
+    source: snap/local/desktop
     plugin: dump
