@@ -131,18 +131,20 @@ BOOST_AUTO_TEST_CASE(key_test1)
         BOOST_CHECK(key2C.Sign(hashMsg, sign2C));
 
         BOOST_CHECK( pubkey1.Verify(hashMsg, sign1));
-        /* DISABLE AS NOT WORKING - **TODO** - fix it
         BOOST_CHECK(!pubkey1.Verify(hashMsg, sign2));
+        /* DISABLE AS NOT WORKING - **TODO** - fix it
         BOOST_CHECK( pubkey1.Verify(hashMsg, sign1C));
-        */
+        *///DISABLE AS NOT WORKING - **TODO** - fix it
         BOOST_CHECK(!pubkey1.Verify(hashMsg, sign2C));
+
         BOOST_CHECK(!pubkey2.Verify(hashMsg, sign1));
         BOOST_CHECK( pubkey2.Verify(hashMsg, sign2));
         BOOST_CHECK(!pubkey2.Verify(hashMsg, sign1C));
         /* DISABLE AS NOT WORKING - **TODO** - fix it
         BOOST_CHECK( pubkey2.Verify(hashMsg, sign2C));
+
         BOOST_CHECK( pubkey1C.Verify(hashMsg, sign1));
-        */
+        *///DISABLE AS NOT WORKING - **TODO** - fix it
         BOOST_CHECK(!pubkey1C.Verify(hashMsg, sign2));
         BOOST_CHECK( pubkey1C.Verify(hashMsg, sign1C));
         BOOST_CHECK(!pubkey1C.Verify(hashMsg, sign2C));
@@ -150,7 +152,7 @@ BOOST_AUTO_TEST_CASE(key_test1)
         BOOST_CHECK(!pubkey2C.Verify(hashMsg, sign1));
         /* DISABLE AS NOT WORKING - **TODO** - fix it
         BOOST_CHECK( pubkey2C.Verify(hashMsg, sign2));
-        */
+        *///DISABLE AS NOT WORKING - **TODO** - fix it
         BOOST_CHECK(!pubkey2C.Verify(hashMsg, sign1C));
         BOOST_CHECK( pubkey2C.Verify(hashMsg, sign2C));
 
