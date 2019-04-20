@@ -687,7 +687,7 @@
         <translation>&amp;Apua</translation>
     </message>
     <message>
-        <source>Ion Core</source>
+        <source>ION Core</source>
         <translation>ION Ydin</translation>
     </message>
     <message>
@@ -707,11 +707,11 @@
         <translation>Lähetä kolikkoja ION osoitteeseen</translation>
     </message>
     <message>
-        <source>Syncing Headers (%1%)...</source>
-        <translation>Synkronoidaan otsikoita (%1%)...</translation>
+        <source>&amp;About ION Core</source>
+        <translation>ION Core &amp;ytimestä</translation>
     </message>
     <message>
-        <source>Show information about Ion Core</source>
+        <source>Show information about ION Core</source>
         <translation>Näytä tietoja ION Ytimestä</translation>
     </message>
     <message>
@@ -767,12 +767,12 @@
         <translation>Varoitus</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
         <translation>Näytä ION Ydin apuviesti saadaksesi lista mahdollisista ION komentolinja komennoista.</translation>
     </message>
     <message>
-        <source>Received and sent multiple transactions</source>
-        <translation>Vastaanotettu ja lähetetty useita siirtotapahtumia</translation>
+        <source>ION Core client</source>
+        <translation>ION Ydin asiakasohjelma</translation>
     </message>
     <message>
         <source>Sent multiple transactions</source>
@@ -1015,9 +1015,23 @@
         <source>Show all PrivateSend coins</source>
         <translation>Näytä kaikki PrivateSend kolikot</translation>
     </message>
+    </context>
+<context>
+    <name>GovernancePage</name>
     <message>
-        <source>Show spendable coins only</source>
-        <translation>Näytä vain käytettävissä olevat kolikot</translation>
+        <source>Form</source>
+        <translation>Lomake</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    </context>
+<context>
+    <name>HelpMessageDialog</name>
+    <message>
+        <source>ION Core</source>
+        <translation>ION Ydin</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -1043,12 +1057,12 @@
         <translation>Muokkaa osoitetta</translation>
     </message>
     <message>
-        <source>Welcome to Ion Core.</source>
+        <source>Welcome to ION Core.</source>
         <translation>Tervetuloa ION Ytimeen.</translation>
     </message>
     <message>
-        <source>The label associated with this address list entry</source>
-        <translation>Tähän osoitteeseen liitetty nimi</translation>
+        <source>ION Core</source>
+        <translation>ION Ydin</translation>
     </message>
     <message>
         <source>&amp;Address</source>
@@ -1177,96 +1191,8 @@
         <translation>(ei nimikettä)</translation>
     </message>
     <message>
-        <source>The entered address:
-</source>
-        <translation>Syötetty osoite:</translation>
-    </message>
-    <message>
-        <source>Set SSL root certificates for payment request (default: -system-)</source>
-        <translation>Aseta SSL root varmenne maksupyynnöille (oletus: -system-)</translation>
-    </message>
-    <message>
-        <source>Show splash screen on startup (default: %u)</source>
-        <translation>Näytä aloitusruutu käynnistettäessä (oletus: %u)</translation>
-    </message>
-    <message>
-        <source>Reset all settings changed in the GUI</source>
-        <translation>Palauta kaikki muokatut käyttöliittymän asetukset</translation>
-    </message>
-    <message>
-        <source>PrivateSend information</source>
-        <translation>PrivateSend tietoja</translation>
-    </message>
-    <message>
-        <source>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Ion in your wallet is comprised of different "inputs" which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type="1"&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 ION, 0.01 ION, 0.1 ION, 1 ION and 10 ION -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called "masternodes." These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know "who" you are.&lt;/li&gt; &lt;li&gt;When two other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users' wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it's called a "round." Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be anonymized. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these "change addresses." Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more information, see the &lt;a href="https://docs.ionomy.com/en/latest/wallets/ioncoin/privatesend-instantsend.html"&gt;PrivateSend documentation&lt;/a&gt;.</source>
-        <translation>&lt;h3&gt;PrivateSend perusteet&lt;/h3&gt; PrivateSend tarjoaa yksityisyyden hämärtämällä varojesi alkuperäisen osoitteen. Kaikki Ion:it lompakossasi muodostuvat erillisistä "syötteistä", joita voit ajatella erillisinä kolikkoina.&lt;br&gt; PrivateSend käyttää innovatiivista prosessia sekoittaakseen lompakkosi syötteet kahden muun ihmisen syötteisiin, siirtämättä varoja pois lompakostasi. Varojesi kontrolli pysyy aina sinulla.&lt;hr&gt; &lt;b&gt; PrivateSend prosessi toimii seuraavasti:&lt;/b&gt;&lt;ol type="1"&gt; &lt;li&gt;PrivateSend aloittaa pilkkomalla siirtotapahtumiesi syötteet pienemmiksi standardi arvoiksi. Nämä arvot ovat 0.001 ION, 0.01 ION, 0.1 ION, 1 ION ja 10 ION.&lt;/li&gt; &lt;li&gt;Sitten lompakkosi lähettää pyynnön verkon palvelimille, joita kutsutaan "masternode:iksi". Masternodet saavat tiedon että haluat sekoittaa pilkottuja standardi arvoja. Mitään tunnistetietoja ei lähetetä masternode:ille, ne eivät koskaan tiedä "kuka" olet.&lt;/li&gt; &lt;li&gt;Kun 2 muuta käyttäjää ilmoittaa että he haluavat myös sekoittaa varoja, alkaa sekoitus-sessio. Masternodet sekoittavat standardi arvot ja ilmoittavat kaikille 3:lle käyttäjän lompakoille että maksavat sekoitetut arvot takaisin itselleen. Lompakkosi maksaa nuo sekoitetut arvot suoraan itselleen, mutta eri osoitteeseen (vaihto-osoite).&lt;/li&gt; &lt;li&gt;Jotta varojesi alkuperäinen lähde hämärretään, lompakkosi suorittaa tämän prosessin useita kertoja kaikilla standardi arvoilla. Aina kun prosessi on valmis, sitä kutsutaan "kierrokseksi". Jokainen PrivateSend kierros tekee eksponentiaalisesti vaikeammaksi löytää varojesi alkuperäisen osoitteen.&lt;/li&gt; &lt;li&gt;Tämä sekoitusprosessi tapahtuu taustalla ilman käyttäjän toimenpiteitä. Kun haluat myöhemmin tehdä anonyymin varojen siirron, on varasi valmiiksi sekoitettu eli anonymisoitu. Erillistä sekoitusta/odotusta ei tarvita.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;TÄRKEÄÄ:&lt;/b&gt; Lompakkosi sisältää vain 1000 "vaihto-osoitetta". Aina kun sekoitustapahtuma tehdään, max 9 osoitetta käytetään. Tämä tarkoittaa sitä että nuo 1000 osoitetta kestää noin 100 sekoitustapahtumaa. Kun 900 osoitetta on käytetty, lompakkosi täytyy tehdä lisää osoitteita. Se voi tehdä niitä vain jos automaattinen varmistus on käytössä.&lt;br&gt; Tästä seuraa että jos varmistus ei ole käytössä, myös PrivateSend on pois käytöstä. &lt;hr&gt;Katso lisätietoja &lt;a href="https://docs.ionomy.com/en/latest/wallets/ioncoin/privatesend-instantsend.html"&gt;PrivateSend dokumentaatiosta&lt;/a&gt;.</translation>
-    </message>
-</context>
-<context>
-    <name>Intro</name>
-    <message>
-        <source>Welcome</source>
-        <translation>Tervetuloa</translation>
-    </message>
-    <message>
-        <source>Welcome to Ion Core.</source>
-        <translation>Tervetuloa Ion Ytimeen.</translation>
-    </message>
-    <message>
-        <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation>Tämä on ensimmäinen kerta, kun %1 on käynnistetty, joten voit valita datahakemiston paikan.</translation>
-    </message>
-    <message>
-        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
-        <translation>Kun klikkaat OK, %1 alkaa latautua ja prosessoida %4 lohkoketjua (%2GB) alkaen esimmäisestä siirtotapahtumasta %3 kun %4 ensi kerran käynnistettiin.</translation>
-    </message>
-    <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation>Tämä ensimmäinen synkronointi on vaativa, ja saattaa paljastaa laitteisto-ongelmia tietokoneessasi joita ei aikaisemmin ole huomattu. Aina kun käynnistät %1, jatkuu latautuminen siitä mihin se jäi aikaisemmin.</translation>
-    </message>
-    <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation>Jos olet valinnut rajoitetun lohkoketjun levytilan (karsimalla), historialliset tiedot täytyy silti ladata ja prosessoida, mutta ne poistetaan jälkeenpäin jotta levytilaa säästyy.</translation>
-    </message>
-    <message>
-        <source>Use the default data directory</source>
-        <translation>Käytä oletushakemistoa</translation>
-    </message>
-    <message>
-        <source>Use a custom data directory:</source>
-        <translation>Määritä oma datahakemisto:</translation>
-    </message>
-    <message>
-        <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation>Vähintään %1 GB dataa tallennetaan tähän hakemistoon, ja se kasvaa ajan kuluessa.</translation>
-    </message>
-    <message>
-        <source>Approximately %1 GB of data will be stored in this directory.</source>
-        <translation>Arviolta %1 GB dataa tallennetaan tähän hakemistoon.</translation>
-    </message>
-    <message>
-        <source>%1 will download and store a copy of the Ion block chain.</source>
-        <translation>%1 lataa ja tallentaa kopion Ion lohkoketjusta.</translation>
-    </message>
-    <message>
-        <source>The wallet will also be stored in this directory.</source>
-        <translation>Myös lompakko tallennetaan tähän hakemistoon.</translation>
-    </message>
-    <message>
-        <source>Error: Specified data directory "%1" cannot be created.</source>
-        <translation>Virhe: Annettua datahakemistoa "%1" ei voida luoda.</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Virhe</translation>
-    </message>
-    <message>
-        <source>%1 GB of free space available</source>
-        <translation>%1 GB vapaata levytilaa</translation>
-    </message>
-    <message>
-        <source>(of %1 GB needed)</source>
-        <translation>(tarvitaan %1GB)</translation>
+        <source>Please Enter 1 - 100 for percent.</source>
+        <translation>Syötä 1 - 100 prosenttia</translation>
     </message>
 </context>
 <context>
@@ -1310,32 +1236,32 @@
         <translation>Lohkoja jäljellä</translation>
     </message>
     <message>
-        <source>Unknown...</source>
-        <translation>Tuntematon...</translation>
+        <source>Use 2 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Käytä 2 erillistä masternodea sekoittaaksesi enintään 20000 ION</translation>
     </message>
     <message>
-        <source>Last block time</source>
-        <translation>Viimeisimmän lohkon aika</translation>
+        <source>Use 8 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Käytä 8 erillistä masternodea sekoittaaksesi enintään 20000 ION</translation>
     </message>
     <message>
         <source>Progress</source>
         <translation>Edistyminen</translation>
     </message>
     <message>
-        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 10000 ION</source>
-        <translation>Tämä vaihtoehto on nopein ja maksaa noin ~0.025 ION anonymoidaksesi 10000 ION</translation>
+        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 20000 ION</source>
+        <translation>Tämä vaihtoehto on nopein ja maksaa noin ~0.025 ION anonymoidaksesi 20000 ION</translation>
     </message>
     <message>
-        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 10000 ION</source>
-        <translation>Tämä vaihtoehto on suhteellisen nopea ja maksaa 0.05 ION anonymoidaksesi 10000 ION</translation>
+        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 20000 ION</source>
+        <translation>Tämä vaihtoehto on suhteellisen nopea ja maksaa 0.05 ION anonymoidaksesi 20000 ION</translation>
     </message>
     <message>
         <source>Estimated time left until synced</source>
         <translation>Synkronoinnin jäljellä oleva aika</translation>
     </message>
     <message>
-        <source>0.1 ION per 10000 ION you anonymize.</source>
-        <translation>0.1 per 10000 ION, jotka anonymisoit.</translation>
+        <source>0.1 ION per 20000 ION you anonymize.</source>
+        <translation>0.1 per 20000 ION, jotka anonymisoit.</translation>
     </message>
     <message>
         <source>Unknown. Syncing Headers (%1)...</source>
@@ -1768,10 +1694,23 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>Not enough compatible inputs to mix &lt;span style='%1'&gt;%2&lt;/span&gt;,&lt;br&gt;will mix &lt;span style='%1'&gt;%3&lt;/span&gt; instead</source>
         <translation>Ei tarpeeksi yhteensopivia syötteitä sekoitukseen &lt;span style='%1'&gt;%2&lt;/span&gt;,&lt;br&gt;sekoitetaan &lt;span style='%1'&gt;%3&lt;/span&gt; sen sijaan</translation>
     </message>
+    </context>
+<context>
+    <name>ProposalFrame</name>
+    </context>
+<context>
+    <name>QObject</name>
     <message>
         <source>Overall progress</source>
         <translation>Edistyminen</translation>
     </message>
+    <message>
+        <source>ION Core</source>
+        <translation>ION Ydin</translation>
+    </message>
+    </context>
+<context>
+    <name>QRImageWidget</name>
     <message>
         <source>Denominated</source>
         <translation>Denominoitu</translation>
@@ -4368,6 +4307,10 @@ Näillä toiminnoilla voit korjata korruptoituneen lohkoketjun tai puuttuvat/van
         <translation>Tor hallintaportin salasana (oletus: tyhjä)</translation>
     </message>
     <message>
+        <source>A&amp;mount:</source>
+        <translation>M&amp;äärä:</translation>
+    </message>
+    <message>
         <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the ION network.</source>
         <translation>Vaihtoehtoinen viesti joka liitetään maksupyyntöön, joka näytetään kun pyyntö avataan. Huomio: Viestiä ei lähetetä maksun mukana ION verkolle.</translation>
     </message>
@@ -4388,12 +4331,8 @@ Näillä toiminnoilla voit korjata korruptoituneen lohkoketjun tai puuttuvat/van
         <translation>Ei tuettu argumentti -debugnet jätetty huomiotta, käytä -debug=net.</translation>
     </message>
     <message>
-        <source>Unsupported argument -tor found, use -onion.</source>
-        <translation>Ei tuettu argumentti -tor löytyi, käytä -onion.</translation>
-    </message>
-    <message>
-        <source>Upgrade wallet to latest format on startup</source>
-        <translation>Päivitä lompakkotiedosto uusimpaan formaattiin käynnistyksessä</translation>
+        <source>&amp;Request payment</source>
+        <translation>&amp;Pyydä maksua</translation>
     </message>
     <message>
         <source>Use KeePass 2 integration using KeePassHttp plugin (default: %u)</source>
@@ -4435,6 +4374,13 @@ Näillä toiminnoilla voit korjata korruptoituneen lohkoketjun tai puuttuvat/van
         <source>Invalid script detected.</source>
         <translation>Virheellinen scripti havaittu.</translation>
     </message>
+    <message>
+        <source>Copy address</source>
+        <translation>Kopioi osoite</translation>
+    </message>
+</context>
+<context>
+    <name>ReceiveRequestDialog</name>
     <message>
         <source>KeePassHttp id for the established association</source>
         <translation>KeePassHttp tunnus (id) yhdistymiseen</translation>
@@ -4500,8 +4446,12 @@ Näillä toiminnoilla voit korjata korruptoituneen lohkoketjun tai puuttuvat/van
         <translation>InstantSend ei tue näin korkeaa lähetysmäärää vielä. Siirtotapahtumat on tällä hetkellä rajoitettu %1 ION.</translation>
     </message>
     <message>
-        <source>InstantSend requires inputs with at least %d confirmations, you might need to wait a few minutes and try again.</source>
-        <translation>InstantSend vaatii syötteille vähintään %d vahvistusta, odota muutama minuutti ja yritä uudelleen.</translation>
+        <source>Address</source>
+        <translation>Osoite</translation>
+    </message>
+    <message>
+        <source>Amount</source>
+        <translation>Määrä</translation>
     </message>
     <message>
         <source>Maintain a full address index, used to query for the balance, txids and unspent outputs for addresses (default: %u)</source>
@@ -4725,7 +4675,7 @@ Vähennä uakommenttien määrää tai kokoa.</translation>
         <translation>Varmistuksen poisto epäonnistui, virhe: %s</translation>
     </message>
     <message>
-        <source>Ion Core is shutting down...</source>
+        <source>ION Core is shutting down...</source>
         <translation>ION core sammuu...</translation>
     </message>
     <message>
@@ -4861,8 +4811,8 @@ Vähennä uakommenttien määrää tai kokoa.</translation>
         <translation>PrivateSend asetukset:</translation>
     </message>
     <message>
-        <source>PrivateSend request incomplete:</source>
-        <translation>PrivateSend pyyntö kesken:</translation>
+        <source>ION Core</source>
+        <translation>ION Ydin</translation>
     </message>
     <message>
         <source>Prune cannot be configured with a negative value.</source>
@@ -4877,7 +4827,7 @@ Vähennä uakommenttien määrää tai kokoa.</translation>
         <translation>Karsintatila on epäyhteensopiva -txindex kanssa.</translation>
     </message>
     <message>
-        <source>The Ion Core developers</source>
+        <source>The ION Core developers</source>
         <translation>ION core kehittäjät</translation>
     </message>
     <message>
@@ -5202,8 +5152,8 @@ Vähennä uakommenttien määrää tai kokoa.</translation>
         <translation>Virhe ladattaessa %s: Lompakko vioittunut</translation>
     </message>
     <message>
-        <source>Error loading %s: Wallet requires newer version of %s</source>
-        <translation>Virhe ladattaessa %s: Tarvitset uudemman %s version</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of ION Core</source>
+        <translation>Virhe ladattaessa wallet.dat tiedostoa: Lompakko vaatii uudemman version ION Coresta</translation>
     </message>
     <message>
         <source>Error loading %s: You can't disable HD on an already existing HD wallet</source>

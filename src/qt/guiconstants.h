@@ -1,7 +1,6 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -55,9 +54,8 @@ static const int MAX_URI_LENGTH = 255;
 #define SPINNER_FRAMES 90
 
 #define QAPP_ORG_NAME "ION"
-#define QAPP_ORG_DOMAIN "ioncoin.org"
-#define QAPP_APP_NAME_DEFAULT "Ion-Qt"
-#define QAPP_APP_NAME_TESTNET "Ion-Qt-testnet"
-#define QAPP_APP_NAME_REGTEST "Ion-Qt-regtest"
+#define QAPP_ORG_DOMAIN "ioncoin.xyz"
+#define QAPP_APP_NAME_DEFAULT "ION-Qt"
+#define QAPP_APP_NAME_TESTNET "ION-Qt-testnet"
 
 #endif // BITCOIN_QT_GUICONSTANTS_H

@@ -4,6 +4,7 @@
         <file alias="bg">locale/ion_bg.qm</file>
         <file alias="de">locale/ion_de.qm</file>
         <file alias="en">locale/ion_en.qm</file>
+        <file alias="en_GB">locale/ion_en_GB.qm</file>
         <file alias="en_US">locale/ion_en_US.qm</file>
         <file alias="eo">locale/ion_eo.qm</file>
         <file alias="es">locale/ion_es.qm</file>

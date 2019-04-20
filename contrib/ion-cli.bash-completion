@@ -46,7 +46,7 @@ _ion_cli() {
 
     if ((cword > 4)); then
         case ${words[cword-4]} in
-            importaddress|listtransactions|listtransactionrecords|setban)
+            importaddress|listtransactions|setban)
                 COMPREPLY=( $( compgen -W "true false" -- "$cur" ) )
                 return 0
                 ;;
@@ -63,7 +63,7 @@ _ion_cli() {
                 _ion_accounts
                 return 0
                 ;;
-            getbalance|gettxout|importaddress|importpubkey|importprivkey|listreceivedbyaccount|listreceivedbyaddress|listrecordssinceblock|listsinceblock)
+            getbalance|gettxout|importaddress|importpubkey|importprivkey|listreceivedbyaccount|listreceivedbyaddress|listsinceblock)
                 COMPREPLY=( $( compgen -W "true false" -- "$cur" ) )
                 return 0
                 ;;

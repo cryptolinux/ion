@@ -1,6 +1,5 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -320,7 +319,7 @@ void ReceiveCoinsDialog::copyAddress()
 
 void ReceiveCoinsDialog::receiveAddressUsed()
 {
-    if ((!ui->reuseAddress->isChecked()) && model && model->isUsed(DecodeDestination(address.toStdString()))) {
+    if ((!ui->reuseAddress->isChecked()) && model && model->isUsed(CBitcoinAddress(address.toStdString()))) {
         address = getAddress();
         clear();
     }

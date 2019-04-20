@@ -13,7 +13,7 @@
 #include "chain.h"
 #include "uint256.h"
 #include "bloom.h"
-//#include "witness.h"
+#include "witness.h"
 
 class CBlockIndex;
 
@@ -24,7 +24,6 @@ std::map<libzerocoin::CoinDenomination, int> GetMintMaturityHeight();
  * @return true if the witness was calculated well
  */
 
-/*
 bool CalculateAccumulatorWitnessFor(
         const libzerocoin::ZerocoinParams* params,
         int startingHeight,
@@ -34,8 +33,8 @@ bool CalculateAccumulatorWitnessFor(
         libzerocoin::Accumulator& accumulator,
         libzerocoin::AccumulatorWitness& witness,
         int& nMintsAdded,
-        std::string& strError,
-        std::list<CBigNum>& ret,
+        string& strError,
+        list<CBigNum>& ret,
         int &heightStop
 );
 
@@ -44,13 +43,12 @@ bool GenerateAccumulatorWitness(
         libzerocoin::Accumulator& accumulator,
         libzerocoin::AccumulatorWitness& witness,
         int& nMintsAdded,
-        std::string& strError,
+        string& strError,
         CBlockIndex* pindexCheckpoint = nullptr);
 
 
 bool GenerateAccumulatorWitness(CoinWitnessData* coinWitness, AccumulatorMap& mapAccumulators, CBlockIndex* pindexCheckpoint);
-*/
-std::list<libzerocoin::PublicCoin> GetPubcoinFromBlock(const CBlockIndex* pindex);
+list<libzerocoin::PublicCoin> GetPubcoinFromBlock(const CBlockIndex* pindex);
 bool GetAccumulatorValueFromDB(uint256 nCheckpoint, libzerocoin::CoinDenomination denom, CBigNum& bnAccValue);
 bool GetAccumulatorValue(int& nHeight, const libzerocoin::CoinDenomination denom, CBigNum& bnAccValue);
 bool GetAccumulatorValueFromChecksum(uint32_t nChecksum, bool fMemoryOnly, CBigNum& bnAccValue);
@@ -72,25 +70,26 @@ bool ValidateAccumulatorCheckpoint(const CBlock& block, CBlockIndex* pindex, Acc
 class NotEnoughMintsException : public std::exception {
 public:
     std::string message;
-    NotEnoughMintsException(const std::string &message) : message(message) {}
+    NotEnoughMintsException(const string &message) : message(message) {}
 };
 
 class GetPubcoinException : public std::exception {
 public:
     std::string message;
-    GetPubcoinException(const std::string &message) : message(message) {}
+    GetPubcoinException(const string &message) : message(message) {}
 };
 
 class ChecksumInDbNotFoundException : public std::exception {
 public:
     std::string message;
-    ChecksumInDbNotFoundException(const std::string &message) : message(message) {}
+    ChecksumInDbNotFoundException(const string &message) : message(message) {}
 };
 
 class searchMintHeightException : public std::exception {
 public:
     std::string message;
-    searchMintHeightException(const std::string &message) : message(message) {}
+    searchMintHeightException(const string &message) : message(message) {}
 };
 
 #endif //ION_ACCUMULATORS_H
+

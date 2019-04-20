@@ -2,7 +2,6 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -15,11 +14,10 @@
 #include "txdb.h"
 #include "util.h"
 #include "utilmoneystr.h"
-#include "accumulatormap.h"
-#include "accumulators.h"
-#include "wallet.h"
+#include "xion/accumulatormap.h"
+#include "xion/accumulators.h"
+#include "wallet/wallet.h"
 #include "xionchain.h"
-
 #include <stdint.h>
 #include <fstream>
 #include <iostream>
@@ -1261,47 +1259,6 @@ UniValue getaccumulatorvalues(const UniValue& params, bool fHelp)
     return ret;
 }
 
-UniValue calculateaccumulatorvalues(const UniValue& params, bool fHelp)
-{
-    if (fHelp || params.size() != 1)
-        throw runtime_error(
-            "calculateaccumulatorvalues \"height\"\n"
-                    "\nReturns the calculated accumulator values associated with a block height\n"
-
-                    "\nArguments:\n"
-                    "1. height   (numeric, required) the height of the checkpoint.\n"
-
-                    "\nExamples:\n" +
-            HelpExampleCli("calculateaccumulatorvalues", "\"height\"") + HelpExampleRpc("generateaccumulatorvalues", "\"height\""));
-
-    int nHeight = params[0].get_int();
-
-    CBlockIndex* pindex = chainActive[nHeight];
-    if (!pindex)
-        throw JSONRPCError(RPC_INVALID_PARAMETER, "invalid block height");
-
-    uint256 nCheckpointCalculated = 0;
-
-    AccumulatorMap mapAccumulators(Params().Zerocoin_Params(false));
-
-    if (!CalculateAccumulatorCheckpointWithoutDB(nHeight, nCheckpointCalculated, mapAccumulators))
-        return error("%s : failed to calculate accumulator checkpoint", __func__);
-
-    UniValue ret(UniValue::VARR);
-    UniValue obj(UniValue::VOBJ);
-
-    obj.push_back(Pair("height", nHeight));
-    for (libzerocoin::CoinDenomination denom : libzerocoin::zerocoinDenomList) {
-        CBigNum bnValue;
-
-        bnValue = mapAccumulators.GetValue(denom);
-        obj.push_back(Pair(std::to_string(denom), bnValue.GetHex()));
-    }
-    ret.push_back(obj);
-
-    return ret;
-}
-
 
 UniValue getaccumulatorwitness(const UniValue& params, bool fHelp)
 {
@@ -1342,7 +1299,8 @@ UniValue getaccumulatorwitness(const UniValue& params, bool fHelp)
     string strFailReason = "";
     int nMintsAdded = 0;
     CZerocoinSpendReceipt receipt;
-    if (!GenerateAccumulatorWitness(pubCoin, accumulator, witness, 100, nMintsAdded, strFailReason)) {
+
+    if (!GenerateAccumulatorWitness(pubCoin, accumulator, witness, nMintsAdded, strFailReason)) {
         receipt.SetStatus(_(strFailReason.c_str()), XION_FAILED_ACCUMULATOR_INITIALIZATION);
         throw JSONRPCError(RPC_DATABASE_ERROR, receipt.GetStatusMessage());
     }
@@ -1519,4 +1477,43 @@ UniValue getserials(const UniValue& params, bool fHelp) {
 
 }
 
+UniValue getaccumulatorcheckpoints(const UniValue& params, bool fHelp)
+{
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "getaccumulatorcheckpoints \"height\"\n"
+                    "\nReturns the calculated accumulator values associated with a block height\n"
 
+                    "\nArguments:\n"
+                    "1. height   (numeric, required) the height of the checkpoint.\n"
+
+                    "\nExamples:\n" +
+            HelpExampleCli("getaccumulatorcheckpoints", "\"height\"") + HelpExampleRpc("generateaccumulatorvalues", "\"height\""));
+
+    int nHeight = params[0].get_int();
+
+    CBlockIndex* pindex = chainActive[nHeight];
+    if (!pindex)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "invalid block height");
+
+    uint256 nCheckpointCalculated = 0;
+
+    AccumulatorMap mapAccumulators(Params().Zerocoin_Params(false));
+
+    if (!CalculateAccumulatorCheckpointWithoutDB(nHeight, nCheckpointCalculated, mapAccumulators))
+        return error("%s : failed to calculate accumulator checkpoint", __func__);
+
+    UniValue ret(UniValue::VARR);
+    UniValue obj(UniValue::VOBJ);
+
+    obj.push_back(Pair("height", nHeight));
+    for (libzerocoin::CoinDenomination denom : libzerocoin::zerocoinDenomList) {
+        CBigNum bnValue;
+
+        bnValue = mapAccumulators.GetValue(denom);
+        obj.push_back(Pair(std::to_string(denom), bnValue.GetHex()));
+    }
+    ret.push_back(obj);
+
+    return ret;
+}

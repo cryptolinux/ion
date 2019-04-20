@@ -94,23 +94,6 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-// Work around clang compilation problem in Boost 1.46:
-// /usr/include/boost/program_options/detail/config_file.hpp:163:17: error: call to function 'to_internal' that is neither visible in the template definition nor found by argument-dependent lookup
-// See also: http://stackoverflow.com/questions/10020179/compilation-fail-in-boost-librairies-program-options
-//           http://clang.debian.net/status.php?version=3.0&key=CANNOT_FIND_FUNCTION
-/*
- * warning: redundant redeclaration of ‘std::__cxx11::string boost::program_options::to_internal(const string&)’ in same scope
- *   included from /usr/include/boost/program_options/detail/config_file.hpp:20:0
-namespace boost
-{
-namespace program_options
-{
-std::string to_internal(const std::string&);
-}
-
-} // namespace boost
-*/
-
 using namespace std;
 
 // ION only features
@@ -278,81 +261,25 @@ struct CLogCategoryDesc
     std::string category;
 };
 
-const CLogCategoryDesc LogCategories[] =
-{
-    {BCLog::NONE, "0"},
-    {BCLog::NONE, "none"},
-    {BCLog::NET, "net"},
-    {BCLog::TOR, "tor"},
-    {BCLog::MEMPOOL, "mempool"},
-    {BCLog::HTTP, "http"},
-    {BCLog::BENCHMARK, "bench"},
-    {BCLog::ZMQ, "zmq"},
-    {BCLog::DB, "db"},
-    {BCLog::RPC, "rpc"},
-    {BCLog::ESTIMATEFEE, "estimatefee"},
-    {BCLog::ADDRMAN, "addrman"},
-    {BCLog::SELECTCOINS, "selectcoins"},
-    {BCLog::REINDEX, "reindex"},
-    {BCLog::CMPCTBLOCK, "cmpctblock"},
-    {BCLog::RANDOM, "rand"},
-    {BCLog::PRUNE, "prune"},
-    {BCLog::PROXY, "proxy"},
-    {BCLog::MEMPOOLREJ, "mempoolrej"},
-    {BCLog::LIBEVENT, "libevent"},
-    {BCLog::COINDB, "coindb"},
-    {BCLog::QT, "qt"},
-    {BCLog::LEVELDB, "leveldb"},
-    {BCLog::ALL, "1"},
-    {BCLog::ALL, "all"},
-
-    //Start Ion
-    {BCLog::CHAINLOCKS, "chainlocks"},
-    {BCLog::GOBJECT, "gobject"},
-    {BCLog::INSTANTSEND, "instantsend"},
-    {BCLog::KEEPASS, "keepass"},
-    {BCLog::LLMQ, "llmq"},
-    {BCLog::LLMQ_DKG, "llmq-dkg"},
-    {BCLog::LLMQ_SIGS, "llmq-sigs"},
-    {BCLog::MNPAYMENTS, "mnpayments"},
-    {BCLog::MNSYNC, "mnsync"},
-    {BCLog::PRIVATESEND, "privatesend"},
-    {BCLog::SPORK, "spork"},
-    //End Ion
-
-    //Start ION
-    {BCLog::ZEROCOIN, "zerocoin"},
-    {BCLog::STAKING, "staking"},
-    {BCLog::TOKEN, "tokens"},
-    //End ION
-
-};
-
-bool GetLogCategory(uint64_t *f, const std::string *str)
-{
-    if (f && str) {
-        if (*str == "") {
-            *f = BCLog::ALL;
-            return true;
-        }
-        if (*str == "ion") {
-            *f = BCLog::CHAINLOCKS
-                | BCLog::GOBJECT
-                | BCLog::INSTANTSEND
-                | BCLog::KEEPASS
-                | BCLog::LLMQ
-                | BCLog::LLMQ_DKG
-                | BCLog::LLMQ_SIGS
-                | BCLog::MNPAYMENTS
-                | BCLog::MNSYNC
-                | BCLog::PRIVATESEND
-                | BCLog::SPORK;
-            return true;
-        }
-        for (unsigned int i = 0; i < ARRAYLEN(LogCategories); i++) {
-            if (LogCategories[i].category == *str) {
-                *f = LogCategories[i].flag;
-                return true;
+        // Give each thread quick access to -debug settings.
+        // This helps prevent issues debugging global destructors,
+        // where mapMultiArgs might be deleted before another
+        // global destructor calls LogPrint()
+        static boost::thread_specific_ptr<set<string> > ptrCategory;
+        if (ptrCategory.get() == NULL) {
+            const vector<string>& categories = mapMultiArgs["-debug"];
+            ptrCategory.reset(new set<string>(categories.begin(), categories.end()));
+            // thread_specific_ptr automatically deletes the set when the thread ends.
+            // "ion" is a composite category enabling all ION-related debug output
+            if (ptrCategory->count(string("ion"))) {
+                ptrCategory->insert(string("obfuscation"));
+                ptrCategory->insert(string("swiftx"));
+                ptrCategory->insert(string("masternode"));
+                ptrCategory->insert(string("mnpayments"));
+                ptrCategory->insert(string("zero"));
+                ptrCategory->insert(string("mnbudget"));
+                ptrCategory->insert(string("precompute"));
+                ptrCategory->insert(string("staking"));
             }
         }
     }

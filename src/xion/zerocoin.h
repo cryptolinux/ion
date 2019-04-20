@@ -1,5 +1,4 @@
 // Copyright (c) 2017-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -66,7 +65,7 @@ public:
         this->serialNumber = serialNumber;
         this->isUsed = isUsed;
         this->version = nVersion;
-        if (nVersion >= 7 && privkey)
+        if (nVersion >= 2 && privkey)
             this->privkey = *privkey;
     }
 

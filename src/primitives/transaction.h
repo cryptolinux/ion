@@ -1,28 +1,21 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_PRIMITIVES_TRANSACTION_H
 #define BITCOIN_PRIMITIVES_TRANSACTION_H
 
-#include <amount.h>
-#include <script/script.h>
-#include <serialize.h>
-#include <uint256.h>
+#include "amount.h"
+#include "libzerocoin/CoinSpend.h"
+#include "script/script.h"
+#include "serialize.h"
+#include "uint256.h"
 
-/** Transaction types */
-enum {
-    TRANSACTION_NORMAL = 0,
-    TRANSACTION_PROVIDER_REGISTER = 1,
-    TRANSACTION_PROVIDER_UPDATE_SERVICE = 2,
-    TRANSACTION_PROVIDER_UPDATE_REGISTRAR = 3,
-    TRANSACTION_PROVIDER_UPDATE_REVOKE = 4,
-    TRANSACTION_COINBASE = 5,
-    TRANSACTION_QUORUM_COMMITMENT = 6,
-};
+#include <list>
+
+class CTransaction;
 
 /** An outpoint - a combination of a transaction hash and an index n into its vout */
 class COutPoint
@@ -130,40 +123,14 @@ public:
      * 9 bits. */
     static const int SEQUENCE_LOCKTIME_GRANULARITY = 9;
 
-    /* Setting nSequence to this value for every input in a transaction
-     * disables nLockTime. */
-    static const uint32_t SEQUENCE_FINAL = 0xffffffff;
-
-    /* Below flags apply in the context of BIP 68*/
-    /* If this flag set, CTxIn::nSequence is NOT interpreted as a
-     * relative lock-time. */
-    static const uint32_t SEQUENCE_LOCKTIME_DISABLE_FLAG = (1 << 31);
-
-    /* If CTxIn::nSequence encodes a relative lock-time and this flag
-     * is set, the relative lock-time has units of 512 seconds,
-     * otherwise it specifies blocks with a granularity of 1. */
-    static const uint32_t SEQUENCE_LOCKTIME_TYPE_FLAG = (1 << 22);
-
-    /* If CTxIn::nSequence encodes a relative lock-time, this mask is
-     * applied to extract that lock-time from the sequence field. */
-    static const uint32_t SEQUENCE_LOCKTIME_MASK = 0x0000ffff;
-
-    /* In order to use the same number of bits to encode roughly the
-     * same wall-clock duration, and because blocks are naturally
-     * limited to occur every 600s on average, the minimum granularity
-     * for time-based relative lock-time is fixed at 512 seconds.
-     * Converting from CTxIn::nSequence to seconds is performed by
-     * multiplying by 512 = 2^9, or equivalently shifting up by
-     * 9 bits. */
-    static const int SEQUENCE_LOCKTIME_GRANULARITY = 9;
-
     CTxIn()
     {
         nSequence = SEQUENCE_FINAL;
     }
 
-    explicit CTxIn(COutPoint prevoutIn, CScript scriptSigIn=CScript(), uint32_t nSequenceIn=SEQUENCE_FINAL);
-    CTxIn(uint256 hashPrevTx, uint32_t nOut, CScript scriptSigIn=CScript(), uint32_t nSequenceIn=SEQUENCE_FINAL);
+    explicit CTxIn(COutPoint prevoutIn, CScript scriptSigIn=CScript(), uint32_t nSequenceIn=std::numeric_limits<unsigned int>::max());
+    CTxIn(uint256 hashPrevTx, uint32_t nOut, CScript scriptSigIn=CScript(), uint32_t nSequenceIn=std::numeric_limits<uint32_t>::max());
+    CTxIn(const libzerocoin::CoinSpend& spend, libzerocoin::CoinDenomination denom);
 
     ADD_SERIALIZE_METHODS;
 
@@ -247,7 +214,7 @@ public:
 
     uint256 GetHash() const;
 
-    CAmount GetDustThreshold(const CFeeRate &minRelayTxFee) const
+    bool IsDust(CFeeRate minRelayTxFee) const
     {
         // "Dust" is defined in terms of CTransaction::minRelayTxFee, which has units uion-per-kilobyte.
         // If you'd pay more than 1/3 in fees to spend something, then we consider it dust.
@@ -257,12 +224,7 @@ public:
         // So dust is a txout less than 1820 *3 = 5460 uion
         // with default -minrelaytxfee = minRelayTxFee = 10000 uion per kB.
         size_t nSize = GetSerializeSize(SER_DISK,0)+148u;
-        return 3*minRelayTxFee.GetFee(nSize);
-    }
-
-    bool IsDust(const CFeeRate &minRelayTxFee) const
-    {
-        return (nValue < GetDustThreshold(minRelayTxFee));
+        return (nValue < 3*minRelayTxFee.GetFee(nSize));
     }
 
     bool IsZerocoinMint() const
@@ -328,16 +290,20 @@ public:
     CTransaction(const CMutableTransaction &tx);
     CTransaction(CMutableTransaction &&tx);
 
-    template <typename Stream>
-    inline void Serialize(Stream& s) const {
-        int32_t n32bitVersion = this->nVersion | (this->nType << 16);
-        s << n32bitVersion;
-        s << nTime;
-        s << vin;
-        s << vout;
-        s << nLockTime;
-        if (this->nVersion == 3 && this->nType != TRANSACTION_NORMAL)
-            s << vExtraPayload;
+    CTransaction& operator=(const CTransaction& tx);
+
+    ADD_SERIALIZE_METHODS;
+
+    template <typename Stream, typename Operation>
+    inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
+        READWRITE(*const_cast<int32_t*>(&this->nVersion));
+        nVersion = this->nVersion;
+        READWRITE(*const_cast<uint32_t*>(&nTime));
+        READWRITE(*const_cast<std::vector<CTxIn>*>(&vin));
+        READWRITE(*const_cast<std::vector<CTxOut>*>(&vout));
+        READWRITE(*const_cast<uint32_t*>(&nLockTime));
+        if (ser_action.ForRead())
+            UpdateHash();
     }
 
     /** This deserializing constructor is provided instead of an Unserialize method.
@@ -414,13 +380,9 @@ struct CMutableTransaction
     ADD_SERIALIZE_METHODS;
 
     template <typename Stream, typename Operation>
-    inline void SerializationOp(Stream& s, Operation ser_action) {
-        int32_t n32bitVersion = this->nVersion | (this->nType << 16);
-        READWRITE(n32bitVersion);
-        if (ser_action.ForRead()) {
-            this->nVersion = (int16_t) (n32bitVersion & 0xffff);
-            this->nType = (int16_t) ((n32bitVersion >> 16) & 0xffff);
-        }
+    inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
+        READWRITE(this->nVersion);
+        nVersion = this->nVersion;
         READWRITE(nTime);
         READWRITE(vin);
         READWRITE(vout);

@@ -1,14 +1,13 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <qt/bitcoinaddressvalidator.h>
 #include <qt/guiutil.h>
 
-#include "dstencode.h"
+#include "base58.h"
 
 /* Base58 characters are:
      "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
@@ -97,9 +96,9 @@ QValidator::State BitcoinAddressCheckValidator::validate(QString &input, int &po
 {
     Q_UNUSED(pos);
     // Validate the passed ION address
-    if (IsValidDestinationString(input.toStdString())) {
+    CBitcoinAddress addr(input.toStdString());
+    if (addr.IsValid())
         return QValidator::Acceptable;
-    }
 
     return QValidator::Invalid;
 }

@@ -1,5 +1,4 @@
 // Copyright (c) 2017-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -60,12 +59,13 @@ static std::string ScriptToString(const CScript& Script, bool Long = false, bool
     if (Script.empty())
         return "unknown";
 
-    CTxDestination dest;
-    if (ExtractDestination(Script, dest)) {
+    CTxDestination Dest;
+    CBitcoinAddress Address;
+    if (ExtractDestination(Script, Dest) && Address.Set(Dest)) {
         if (Highlight)
-            return "<span class=\"addr\">" + EncodeDestination(dest) + "</span>";
+            return "<span class=\"addr\">" + Address.ToString() + "</span>";
         else
-            return makeHRef(EncodeDestination(dest));
+            return makeHRef(Address.ToString());
     } else
         return Long ? "<pre>" + FormatScript(Script) + "</pre>" : _("Non-standard script");
 }
@@ -180,7 +180,7 @@ const CBlockIndex* getexplorerBlockIndex(int64_t height)
 
 std::string getexplorerBlockHash(int64_t Height)
 {
-    std::string genesisblockhash = "0000041e482b9b9691d98eefb48473405c0b8ec31b76df3797c74a78680ef818";
+    std::string genesisblockhash = "0000004cf5ffbf2e31a9aa07c86298efb01a30b8911b80af7473d1114715084b";
     CBlockIndex* pindexBest = mapBlockIndex[chainActive.Tip()->GetBlockHash()];
     if ((Height < 0) || (Height > pindexBest->nHeight)) {
         return genesisblockhash;
@@ -377,7 +377,7 @@ std::string TxToString(uint256 BlockHash, const CTransaction& tx)
     return Content;
 }
 
-std::string AddressToString(const CTxDestination& dest)
+std::string AddressToString(const CBitcoinAddress& Address)
 {
     std::string TxLabels[] =
         {
@@ -425,7 +425,7 @@ std::string AddressToString(const CTxDestination& dest)
     TxContent += "</table>";
 
     std::string Content;
-    Content += "<h1>" + _("Transactions to/from") + "&nbsp;<span>" + EncodeDestination(dest) + "</span></h1>";
+    Content += "<h1>" + _("Transactions to/from") + "&nbsp;<span>" + Address.ToString() + "</span></h1>";
     Content += TxContent;
     return Content;
 }
@@ -478,7 +478,7 @@ void BlockExplorer::showEvent(QShowEvent*)
 
         if (!GetBoolArg("-txindex", true)) {
             QString Warning = tr("Not all transactions will be shown. To view all transactions you need to set txindex=1 in the configuration file (ioncoin.conf).");
-            QMessageBox::warning(this, "Ion Core Blockchain Explorer", Warning, QMessageBox::Ok);
+            QMessageBox::warning(this, "ION Core Blockchain Explorer", Warning, QMessageBox::Ok);
         }
     }
 }
@@ -517,9 +517,10 @@ bool BlockExplorer::switchTo(const QString& query)
     }
 
     // If the query is not an integer, nor a block hash, nor a transaction hash, assume an address
-    if (IsValidDestinationString(query.toUtf8().constData())) {
-        CTxDestination dest = DecodeDestination(query.toUtf8().constData());
-        std::string Content = EncodeDestination(dest);
+    CBitcoinAddress Address;
+    Address.SetString(query.toUtf8().constData());
+    if (Address.IsValid()) {
+        std::string Content = AddressToString(Address);
         if (Content.empty())
             return false;
         setContent(Content);

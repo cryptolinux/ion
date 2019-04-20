@@ -608,10 +608,6 @@
         <source>&amp;Command-line options</source>
         <translation>&amp;Komandinės eilutės parinktys</translation>
     </message>
-    <message numerus="yes">
-        <source>Processed %n blocks of transaction history.</source>
-        <translation><numerusform>Apdorota %n operacijų istorijos blokų.</numerusform><numerusform>Apdorota %n operacijų istorijos blokų.</numerusform><numerusform>Apdorota %n operacijų istorijos blokų.</numerusform><numerusform>Apdorota %n operacijų istorijos blokų.</numerusform></translation>
-    </message>
     <message>
         <source>Synchronizing additional data: %p%</source>
         <translation>Sinchronizuojami papildomi duomenys: %p%</translation>
@@ -645,8 +641,8 @@
         <translation>Skirtukų įrankių juosta</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Send coins to a ION address</source>
@@ -669,12 +665,12 @@
         <translation>Naršyti masternod'us</translation>
     </message>
     <message>
-        <source>&amp;About Ion Core</source>
-        <translation>&amp;Apie Ion Core</translation>
+        <source>&amp;About ION Core</source>
+        <translation>&amp;Apie ION Core</translation>
     </message>
     <message>
-        <source>Show information about Ion Core</source>
-        <translation>Rodyti informaciją apie Ion Core</translation>
+        <source>Show information about ION Core</source>
+        <translation>Rodyti informaciją apie ION Core</translation>
     </message>
     <message>
         <source>Modify configuration options for ION</source>
@@ -729,16 +725,12 @@
         <translation>Blokų naršyklės langas</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
-        <translation>Rodyti Ion Core žinyną, kad gautumėte sąrašą su galimomis ION komandinės eilutės parinktimis</translation>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
+        <translation>Rodyti ION Core žinyną, kad gautumėte sąrašą su galimomis ION komandinės eilutės parinktimis</translation>
     </message>
     <message>
-        <source>Ion Core client</source>
-        <translation>Ion Core piniginė</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n active connection(s) to ION network</source>
-        <translation><numerusform>%n aktyvių prisijungimų ION tinkle ()</numerusform><numerusform>%n aktyvių prisijungimų ION tinkle ()</numerusform><numerusform>%n aktyvių prisijungimų ION tinkle ()</numerusform><numerusform>%n aktyvių prisijungimų ION tinkle ()</numerusform></translation>
+        <source>ION Core client</source>
+        <translation>ION Core piniginė</translation>
     </message>
     <message>
         <source>Synchronizing with network...</source>
@@ -760,25 +752,9 @@
         <source>Up to date</source>
         <translation>Atnaujinta</translation>
     </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation><numerusform>%n valanda</numerusform><numerusform>%n valandų</numerusform><numerusform>%n valandų</numerusform><numerusform>%n valandų</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day(s)</source>
-        <translation><numerusform>%n diena</numerusform><numerusform>%n dienų</numerusform><numerusform>%n dienų</numerusform><numerusform>%n dienų</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n week(s)</source>
-        <translation><numerusform>%n savaitė</numerusform><numerusform>%n savaičių</numerusform><numerusform>%n savaičių</numerusform><numerusform>%n savaičių</numerusform></translation>
-    </message>
     <message>
         <source>%1 and %2</source>
         <translation>%1 ir %2</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year(s)</source>
-        <translation><numerusform>%n metai</numerusform><numerusform>%n metų</numerusform><numerusform>%n metų</numerusform><numerusform>%n metų</numerusform></translation>
     </message>
     <message>
         <source>Catching up...</source>
@@ -864,7 +840,7 @@ MultiSend: %1</translation>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Piniginė yra &lt;b&gt;užšifruota&lt;/b&gt; ir šiuo metu &lt;b&gt;užrakinta&lt;/b&gt;</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>BlockExplorer</name>
     <message>
@@ -1217,22 +1193,33 @@ MultiSend: %1</translation>
     </message>
 </context>
 <context>
+    <name>GovernancePage</name>
+    <message>
+        <source>Form</source>
+        <translation>Forma</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    </context>
+<context>
     <name>HelpMessageDialog</name>
     <message>
         <source>version</source>
         <translation>versija</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
         <translation>(%1-bitai)</translation>
     </message>
     <message>
-        <source>About Ion Core</source>
-        <translation>Apie Ion Core</translation>
+        <source>About ION Core</source>
+        <translation>Apie ION Core</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1278,16 +1265,16 @@ MultiSend: %1</translation>
         <translation>Sveiki</translation>
     </message>
     <message>
-        <source>Welcome to Ion Core.</source>
-        <translation>Sveiki atvykę į Ion Core</translation>
+        <source>Welcome to ION Core.</source>
+        <translation>Sveiki atvykę į ION Core</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Ion Core will store its data.</source>
-        <translation>Kadangi programa paleista pirmą kartą, galite pasirinkti kur Ion Core saugos savo duomenis.</translation>
+        <source>As this is the first time the program is launched, you can choose where ION Core will store its data.</source>
+        <translation>Kadangi programa paleista pirmą kartą, galite pasirinkti kur ION Core saugos savo duomenis.</translation>
     </message>
     <message>
-        <source>Ion Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>Ion Core atsisiųs ir saugos ION blockchain'o kopiją. Šiame kataloge bus saugomas ne mažesnis kaip %1GB duomenų kiekis, kuris laikui bėgant augs. Piniginė taip pat bus saugoma šiame kataloge.</translation>
+        <source>ION Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>ION Core atsisiųs ir saugos ION blockchain'o kopiją. Šiame kataloge bus saugomas ne mažesnis kaip %1GB duomenų kiekis, kuris laikui bėgant augs. Piniginė taip pat bus saugoma šiame kataloge.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1298,8 +1285,8 @@ MultiSend: %1</translation>
         <translation>Naudoti pasirinktą duomenų katalogą:</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1534,42 +1521,8 @@ MultiSend nebus aktyvuotas, nebent paspausite "Įjungti"</translation>
         <translation>(nėra etiketės)</translation>
     </message>
     <message>
-        <source>The entered address:
-</source>
-        <translation>Įvestas adresas: 
-</translation>
-    </message>
-    <message>
-        <source> is invalid.
-Please check the address and try again.</source>
-        <translation>yra netinkamas.
-Patikrinkite adresą ir bandykite dar kartą.</translation>
-    </message>
-    <message>
-        <source>The total amount of your MultiSend vector is over 100% of your stake reward
-</source>
-        <translation>Bendra MultiSend sąrašo suma yra didesnė nei 100% jūsų stake'inimo atlygio
-</translation>
-    </message>
-    <message>
         <source>Please Enter 1 - 100 for percent.</source>
         <translation>Įveskite 1-100 procentų</translation>
-    </message>
-    <message>
-        <source>MultiSend Vector
-</source>
-        <translation>MultiSend Sąrašas
-</translation>
-    </message>
-    <message>
-        <source>Removed </source>
-        <translation>Pašalintas</translation>
-    </message>
-    <message>
-        <source>Could not locate address
-</source>
-        <translation>Nepavyko rasti adreso
-</translation>
     </message>
 </context>
 <context>
@@ -1750,11 +1703,11 @@ Patikrinkite adresą ir bandykite dar kartą.</translation>
         <translation>Pasirinkite privatumo lygmenį.</translation>
     </message>
     <message>
-        <source>Use 2 separate masternodes to mix funds up to 10000 ION</source>
+        <source>Use 2 separate masternodes to mix funds up to 20000 ION</source>
         <translation>Naudokite 2 atskirus masternod'us, kad sumaišytumėte lėšas iki 10 000 ION</translation>
     </message>
     <message>
-        <source>Use 8 separate masternodes to mix funds up to 10000 ION</source>
+        <source>Use 8 separate masternodes to mix funds up to 20000 ION</source>
         <translation>Naudokite 8 atskirus masternod'us, kad sumaišytumėte lėšas iki 10 000 ION</translation>
     </message>
     <message>
@@ -1762,19 +1715,19 @@ Patikrinkite adresą ir bandykite dar kartą.</translation>
         <translation>Naudokite 16 atskirų masternod'ų</translation>
     </message>
     <message>
-        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 10000 ION</source>
-        <translation>Ši parinktis yra greičiausia ir kainuos apie ~0.025 ION, kad anonimizuotų 10000 ION</translation>
+        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 20000 ION</source>
+        <translation>Ši parinktis yra greičiausia ir kainuos apie ~0.025 ION, kad anonimizuotų 20000 ION</translation>
     </message>
     <message>
-        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 10000 ION</source>
-        <translation>Ši parinktis yra vidutiniškai greita ir kainuoja apie 0,05 ION, kad anonimizuotų 10000 ION</translation>
+        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 20000 ION</source>
+        <translation>Ši parinktis yra vidutiniškai greita ir kainuoja apie 0,05 ION, kad anonimizuotų 20000 ION</translation>
     </message>
     <message>
         <source>This is the slowest and most secure option. Using maximum anonymity will cost</source>
         <translation>Tai yra lėčiausias ir saugiausias variantas. Maksimalus anonimiškumas kainuos.</translation>
     </message>
     <message>
-        <source>0.1 ION per 10000 ION you anonymize.</source>
+        <source>0.1 ION per 20000 ION you anonymize.</source>
         <translation>0.1 ION kas 1000 ION kuriuos anonimizuosite.</translation>
     </message>
     <message>
@@ -2294,14 +2247,6 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos to pačio nominalo
         <translation>0 xION</translation>
     </message>
     <message>
-        <source>Security Level:</source>
-        <translation>Saugumo Lygmuo:</translation>
-    </message>
-    <message>
-        <source>Security Level 1 - 100 (default: 42)</source>
-        <translation>Saugumo Lygmuo 1 - 100 (numatytas: 42)</translation>
-    </message>
-    <message>
         <source>Pay &amp;To:</source>
         <translation>&amp;Mokėti:</translation>
     </message>
@@ -2357,7 +2302,7 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos to pačio nominalo
         <source>Unconfirmed: less than 20 confirmations
 Immature: confirmed, but less than 1 mint of the same denomination after it was minted</source>
         <translation>Nepatvirtinta: mažiau nei 20 patvirtinimų
-Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominalo po to, kai buvo konvertuota.</translation>
+Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos to pačio nominalo po to, kai buvo konvertuotas.</translation>
     </message>
     <message>
         <source>Denom. 1:</source>
@@ -2501,7 +2446,7 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
     </message>
     <message>
         <source>out of sync</source>
-        <translation>ne sinchronizuotas</translation>
+        <translation>nesinchronizuotas</translation>
     </message>
     <message>
         <source>Mint Status: Okay</source>
@@ -2624,14 +2569,6 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
         <translation>į adresą</translation>
     </message>
     <message>
-        <source>with Security Level </source>
-        <translation>su Saugumo Lygmeniu</translation>
-    </message>
-    <message>
-        <source>Failed to spend xION</source>
-        <translation>Nepavyko išleisti xION</translation>
-    </message>
-    <message>
         <source>serial: </source>
         <translation>serija:</translation>
     </message>
@@ -2644,6 +2581,9 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
         <translation>mokestis: </translation>
     </message>
 </context>
+<context>
+    <name>ProposalFrame</name>
+    </context>
 <context>
     <name>QObject</name>
     <message>
@@ -2685,6 +2625,10 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
     <message>
         <source>N/A</source>
         <translation>N/A</translation>
+    </message>
+    <message>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     </context>
 <context>
@@ -2840,12 +2784,12 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
 <context>
     <name>ReceiveCoinsDialog</name>
     <message>
-        <source>&amp;Label:</source>
-        <translation>&amp;Etiketė:</translation>
+        <source>A&amp;mount:</source>
+        <translation>S&amp;uma:</translation>
     </message>
     <message>
-        <source>&amp;Amount:</source>
-        <translation>&amp;Suma:</translation>
+        <source>&amp;Label:</source>
+        <translation>&amp;Etiketė:</translation>
     </message>
     <message>
         <source>&amp;Request payment</source>
@@ -2882,6 +2826,10 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
     <message>
         <source>Copy amount</source>
         <translation>Kopijuoti sumą</translation>
+    </message>
+    <message>
+        <source>Copy address</source>
+        <translation>Kopijuoti adresą</translation>
     </message>
 </context>
 <context>
@@ -2928,6 +2876,10 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
     <message>
         <source>Message</source>
         <translation>Žinutė</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Adresas</translation>
     </message>
     <message>
         <source>Amount</source>
@@ -3229,8 +3181,8 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     </context>
 <context>
@@ -3494,8 +3446,8 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
         <translation>Klaida kraunant wallet.dat: Piniginė yra sugadinta</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Ion Core</source>
-        <translation>Klaida kraunant wallet.dat: Piniginė reikalauja naujesnės Ion Core versijos</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of ION Core</source>
+        <translation>Klaida kraunant wallet.dat: Piniginė reikalauja naujesnės ION Core versijos</translation>
     </message>
     <message>
         <source>Error opening block database</source>
@@ -3570,10 +3522,6 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
         <translation>SwiftX nustatymai:</translation>
     </message>
     <message>
-        <source>Failed to deserialize</source>
-        <translation>Nepavyko deserializuoti</translation>
-    </message>
-    <message>
         <source>Failed to select a zerocoin</source>
         <translation>Nepavyko pasirinkti zerocoin</translation>
     </message>
@@ -3602,8 +3550,8 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
         <translation>Kraunami sporkai...</translation>
     </message>
     <message>
-        <source>Loading wallet... (%3.1f %%)</source>
-        <translation>Kraunama piniginė... (%3.1f %%)</translation>
+        <source>Loading wallet... (%3.2f %%)</source>
+        <translation>Kraunama piniginė... (%3.2f %%)</translation>
     </message>
     <message>
         <source>Loading wallet...</source>
@@ -3726,8 +3674,8 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
         <translation>Piniginė užrakinta.</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Ion Core to complete</source>
-        <translation>Piniginę reikia perrašyti: paleiskite Ion Core iš naujo</translation>
+        <source>Wallet needed to be rewritten: restart ION Core to complete</source>
+        <translation>Piniginę reikia perrašyti: paleiskite ION Core iš naujo</translation>
     </message>
     <message>
         <source>Wallet options:</source>

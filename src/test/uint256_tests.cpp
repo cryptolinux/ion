@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2019 The Bitcoin Core developers
+// Copyright (c) 2011-2013 The Bitcoin Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #include "arith_uint256.h"
@@ -94,6 +94,28 @@ BOOST_AUTO_TEST_CASE( basics ) // constructors, equality, inequality
     BOOST_CHECK(ZeroL != OneL && ZeroS != OneS);
     BOOST_CHECK(OneL != ZeroL && OneS != ZeroS);
     BOOST_CHECK(MaxL != ZeroL && MaxS != ZeroS);
+    BOOST_CHECK(~MaxL == ZeroL && ~MaxS == ZeroS);
+    BOOST_CHECK( ((R1L ^ R2L) ^ R1L) == R2L);
+    BOOST_CHECK( ((R1S ^ R2S) ^ R1S) == R2S);
+    
+    uint64_t Tmp64 = 0xe1dab720d9c7acaaULL;
+    for (unsigned int i = 0; i < 256; ++i) 
+    {
+        BOOST_CHECK(ZeroL != (OneL << i)); 
+        BOOST_CHECK((OneL << i) != ZeroL); 
+        BOOST_CHECK(R1L != (R1L ^ (OneL << i)));
+        BOOST_CHECK(((uint256(Tmp64) ^ (OneL << i) ) != Tmp64 ));
+    }
+    BOOST_CHECK(ZeroL == (OneL << 256)); 
+
+    for (unsigned int i = 0; i < 160; ++i) 
+    {
+        BOOST_CHECK(ZeroS != (OneS << i)); 
+        BOOST_CHECK((OneS << i) != ZeroS); 
+        BOOST_CHECK(R1S != (R1S ^ (OneS << i)));
+        BOOST_CHECK(((uint160(Tmp64) ^ (OneS << i) ) != Tmp64 ));
+    }
+    BOOST_CHECK(ZeroS == (OneS << 256)); 
 
     // String Constructor and Copy Constructor
     BOOST_CHECK(uint256S("0x"+R1L.ToString()) == R1L);

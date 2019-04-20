@@ -40,11 +40,14 @@ QT_TRANSLATE_NOOP("ion-core", ""
 "Bind to given address and whitelist peers connecting to it. Use [host]:port "
 "notation for IPv6"),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Bind to given address to listen for JSON-RPC connections. This option is "
-"ignored unless -rpcallowip is also passed. Port is optional and overrides -"
-"rpcport. Use [host]:port notation for IPv6. This option can be specified "
-"multiple times (default: 127.0.0.1 and ::1 i.e., localhost, or if -"
-"rpcallowip has been specified, 0.0.0.0 and :: i.e., all addresses)"),
+"Bind to given address to listen for JSON-RPC connections. Use [host]:port "
+"notation for IPv6. This option can be specified multiple times (default: "
+"bind to all interfaces)"),
+QT_TRANSLATE_NOOP("ion-core", ""
+"Calculated accumulator checkpoint is not what is recorded by block index"),
+QT_TRANSLATE_NOOP("ion-core", ""
+"Cannot obtain a lock on data directory %s. ION Core is probably already "
+"running."),
 QT_TRANSLATE_NOOP("ion-core", ""
 "Cannot obtain a lock on data directory %s. %s is probably already running."),
 QT_TRANSLATE_NOOP("ion-core", ""
@@ -68,7 +71,9 @@ QT_TRANSLATE_NOOP("ion-core", ""
 QT_TRANSLATE_NOOP("ion-core", ""
 "Do not keep transactions in the mempool longer than <n> hours (default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Enable InstantSend, show confirmations for locked transactions (0-1, "
+"Enable automatic Zerocoin minting from specific addresses (0-1, default: %u)"),
+QT_TRANSLATE_NOOP("ion-core", ""
+"Enable automatic wallet backups triggered after each xION minting (0-1, "
 "default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", ""
 "Enable or disable staking functionality for ION inputs (0-1, default: %u)"),
@@ -162,26 +167,16 @@ QT_TRANSLATE_NOOP("ion-core", ""
 "Maintain a full transaction index, used by the getrawtransaction rpc call "
 "(default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Maintain a timestamp index for block hashes, used to query blocks hashes by "
-"a range of timestamps (default: %u)"),
-QT_TRANSLATE_NOOP("ion-core", ""
-"Maintain at most <n> connections to peers (temporary service connections "
-"excluded) (default: %u)"),
-QT_TRANSLATE_NOOP("ion-core", ""
-"Make sure to encrypt your wallet and delete all non-encrypted backups after "
-"you verified that wallet works!"),
-QT_TRANSLATE_NOOP("ion-core", ""
-"Maximum allowed median peer time offset adjustment. Local perspective of "
-"time may be influenced by peers forward or backward by this amount. "
-"(default: %u seconds)"),
+"Maximum average size of an index occurrence in the block spam filter "
+"(default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", ""
 "Maximum size of data in data carrier transactions we relay and mine "
 "(default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Maximum total fees (in %s) to use in a single wallet transaction or raw "
-"transaction; setting this too low may abort large transactions (default: %s)"),
+"Maximum size of the list of indexes in the block spam filter (default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Name to construct url for KeePass entry that stores the wallet passphrase"),
+"Maximum total fees to use in a single wallet transaction, setting too low "
+"may abort large transactions (default: %s)"),
 QT_TRANSLATE_NOOP("ion-core", ""
 "Number of seconds to keep misbehaving peers from reconnecting (default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", ""
@@ -230,6 +225,9 @@ QT_TRANSLATE_NOOP("ion-core", ""
 QT_TRANSLATE_NOOP("ion-core", ""
 "Set maximum size of high-priority/low-fee transactions in bytes (default: %d)"),
 QT_TRANSLATE_NOOP("ion-core", ""
+"Set the number of included blocks to precompute per cycle. (minimum: %d) "
+"(maximum: %d) (default: %d)"),
+QT_TRANSLATE_NOOP("ion-core", ""
 "Set the number of script verification threads (%u to %d, 0 = auto, <0 = "
 "leave that many cores free, default: %d)"),
 QT_TRANSLATE_NOOP("ion-core", ""
@@ -262,6 +260,11 @@ QT_TRANSLATE_NOOP("ion-core", ""
 QT_TRANSLATE_NOOP("ion-core", ""
 "The transaction amount is too small to send after the fee has been deducted"),
 QT_TRANSLATE_NOOP("ion-core", ""
+"The block database contains a block which appears to be from the future. "
+"This may be due to your computer's date and time being set incorrectly. Only "
+"rebuild the block database if you are sure that your computer's date and "
+"time are correct"),
+QT_TRANSLATE_NOOP("ion-core", ""
 "This is a pre-release test build - use at your own risk - do not use for "
 "mining or merchant applications"),
 QT_TRANSLATE_NOOP("ion-core", ""
@@ -274,7 +277,7 @@ QT_TRANSLATE_NOOP("ion-core", ""
 "Total length of network version string (%i) exceeds maximum length (%i). "
 "Reduce the number or size of uacomments."),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Unable to bind to %s on this computer. Ion Core is probably already running."),
+"Unable to bind to %s on this computer. ION Core is probably already running."),
 QT_TRANSLATE_NOOP("ion-core", ""
 "Unable to locate enough Obfuscation denominated funds for this transaction."),
 QT_TRANSLATE_NOOP("ion-core", ""
@@ -304,11 +307,8 @@ QT_TRANSLATE_NOOP("ion-core", ""
 QT_TRANSLATE_NOOP("ion-core", ""
 "WARNING! Failed to replenish keypool, please unlock your wallet to do so."),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Wallet is locked, can't replenish keypool! Automatic backups and mixing are "
-"disabled, please unlock your wallet to replenish keypool."),
-QT_TRANSLATE_NOOP("ion-core", ""
-"Wallet will not create transactions that violate mempool chain limits "
-"(default: %u)"),
+"Warning: Please check that your computer's date and time are correct! If "
+"your clock is wrong ION Core will not work properly."),
 QT_TRANSLATE_NOOP("ion-core", ""
 "Warning: The network does not appear to fully agree! Some miners appear to "
 "be experiencing issues."),
@@ -353,6 +353,7 @@ QT_TRANSLATE_NOOP("ion-core", "<category> can be:"),
 QT_TRANSLATE_NOOP("ion-core", "Accept command line and JSON-RPC commands"),
 QT_TRANSLATE_NOOP("ion-core", "Accept public REST requests (default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", "Add a node to connect to and attempt to keep the connection open"),
+QT_TRANSLATE_NOOP("ion-core", "Adding Wrapped Serials supply..."),
 QT_TRANSLATE_NOOP("ion-core", "Allow DNS lookups for -addnode, -seednode and -connect"),
 QT_TRANSLATE_NOOP("ion-core", "Allow RFC1918 addresses to be relayed and connected to (default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", "Already have that input."),
@@ -369,6 +370,7 @@ QT_TRANSLATE_NOOP("ion-core", "Cannot downgrade wallet"),
 QT_TRANSLATE_NOOP("ion-core", "Cannot resolve -%s address: '%s'"),
 QT_TRANSLATE_NOOP("ion-core", "Cannot write default address"),
 QT_TRANSLATE_NOOP("ion-core", "CoinSpend: Accumulator witness does not verify"),
+QT_TRANSLATE_NOOP("ion-core", "CoinSpend: failed check"),
 QT_TRANSLATE_NOOP("ion-core", "Collateral not valid."),
 QT_TRANSLATE_NOOP("ion-core", "Connect through SOCKS5 proxy"),
 QT_TRANSLATE_NOOP("ion-core", "Connect to KeePassHttp on port <port> (default: %u)"),
@@ -377,14 +379,16 @@ QT_TRANSLATE_NOOP("ion-core", "Connection options:"),
 QT_TRANSLATE_NOOP("ion-core", "Copyright (C) 2009-%i The Bitcoin Core Developers"),
 QT_TRANSLATE_NOOP("ion-core", "Copyright (C) 2014-%i The Dash Core Developers"),
 QT_TRANSLATE_NOOP("ion-core", "Copyright (C) 2015-%i The PIVX Core Developers"),
-QT_TRANSLATE_NOOP("ion-core", "Copyright (C) 2018-%i The Ion Core Developers"),
+QT_TRANSLATE_NOOP("ion-core", "Copyright (C) 2018-%i The ION Core Developers"),
 QT_TRANSLATE_NOOP("ion-core", "Corrupted block database detected"),
 QT_TRANSLATE_NOOP("ion-core", "Could not parse masternode.conf"),
+QT_TRANSLATE_NOOP("ion-core", "Couldn't generate the accumulator witness"),
 QT_TRANSLATE_NOOP("ion-core", "Debugging/Testing options:"),
 QT_TRANSLATE_NOOP("ion-core", "Do not load the wallet and disable wallet RPC calls"),
 QT_TRANSLATE_NOOP("ion-core", "Do you want to rebuild the block database now?"),
 QT_TRANSLATE_NOOP("ion-core", "Done loading"),
-QT_TRANSLATE_NOOP("ion-core", "ERROR! Failed to create automatic backup"),
+QT_TRANSLATE_NOOP("ion-core", "Enable automatic Zerocoin minting (0-1, default: %u)"),
+QT_TRANSLATE_NOOP("ion-core", "Enable precomputation of xION spends and stakes (0-1, default %u)"),
 QT_TRANSLATE_NOOP("ion-core", "Enable publish hash block in <address>"),
 QT_TRANSLATE_NOOP("ion-core", "Enable publish hash of governance objects (like proposals) in <address>"),
 QT_TRANSLATE_NOOP("ion-core", "Enable publish hash of governance votes in <address>"),
@@ -403,6 +407,9 @@ QT_TRANSLATE_NOOP("ion-core", "Error loading %s: Wallet corrupted"),
 QT_TRANSLATE_NOOP("ion-core", "Error loading %s: Wallet requires newer version of %s"),
 QT_TRANSLATE_NOOP("ion-core", "Error loading %s: You can't disable HD on a already existing HD wallet"),
 QT_TRANSLATE_NOOP("ion-core", "Error loading block database"),
+QT_TRANSLATE_NOOP("ion-core", "Error loading wallet.dat"),
+QT_TRANSLATE_NOOP("ion-core", "Error loading wallet.dat: Wallet corrupted"),
+QT_TRANSLATE_NOOP("ion-core", "Error loading wallet.dat: Wallet requires newer version of ION Core"),
 QT_TRANSLATE_NOOP("ion-core", "Error opening block database"),
 QT_TRANSLATE_NOOP("ion-core", "Error reading from database, shutting down."),
 QT_TRANSLATE_NOOP("ion-core", "Error recovering public key."),
@@ -418,7 +425,6 @@ QT_TRANSLATE_NOOP("ion-core", "Error: Wallet locked, unable to create transactio
 QT_TRANSLATE_NOOP("ion-core", "Error: You already have pending entries in the Obfuscation pool"),
 QT_TRANSLATE_NOOP("ion-core", "Failed to calculate accumulator checkpoint"),
 QT_TRANSLATE_NOOP("ion-core", "Failed to create mint"),
-QT_TRANSLATE_NOOP("ion-core", "Failed to deserialize"),
 QT_TRANSLATE_NOOP("ion-core", "Failed to find Zerocoins in wallet.dat"),
 QT_TRANSLATE_NOOP("ion-core", "Failed to listen on any port. Use -listen=0 if you want this."),
 QT_TRANSLATE_NOOP("ion-core", "Failed to parse host:port string"),
@@ -439,7 +445,7 @@ QT_TRANSLATE_NOOP("ion-core", "Incompatible mode."),
 QT_TRANSLATE_NOOP("ion-core", "Incompatible version."),
 QT_TRANSLATE_NOOP("ion-core", "Incorrect or no genesis block found. Wrong datadir for network?"),
 QT_TRANSLATE_NOOP("ion-core", "Information"),
-QT_TRANSLATE_NOOP("ion-core", "Initialization sanity check failed. %s is shutting down."),
+QT_TRANSLATE_NOOP("ion-core", "Initialization sanity check failed. ION Core is shutting down."),
 QT_TRANSLATE_NOOP("ion-core", "Input is not valid."),
 QT_TRANSLATE_NOOP("ion-core", "InstantSend options:"),
 QT_TRANSLATE_NOOP("ion-core", "Insufficient funds."),
@@ -473,7 +479,7 @@ QT_TRANSLATE_NOOP("ion-core", "Loading governance cache..."),
 QT_TRANSLATE_NOOP("ion-core", "Loading masternode cache..."),
 QT_TRANSLATE_NOOP("ion-core", "Loading masternode payment cache..."),
 QT_TRANSLATE_NOOP("ion-core", "Loading sporks..."),
-QT_TRANSLATE_NOOP("ion-core", "Loading wallet... (%3.1f %%)"),
+QT_TRANSLATE_NOOP("ion-core", "Loading wallet... (%3.2f %%)"),
 QT_TRANSLATE_NOOP("ion-core", "Loading wallet..."),
 QT_TRANSLATE_NOOP("ion-core", "Location of the auth cookie (default: data dir)"),
 QT_TRANSLATE_NOOP("ion-core", "Lock is already in place."),
@@ -518,6 +524,9 @@ QT_TRANSLATE_NOOP("ion-core", "RPC server options:"),
 QT_TRANSLATE_NOOP("ion-core", "Randomly drop 1 of every <n> network messages"),
 QT_TRANSLATE_NOOP("ion-core", "Randomly fuzz 1 of every <n> network messages"),
 QT_TRANSLATE_NOOP("ion-core", "Rebuild block chain index from current blk000??.dat files"),
+QT_TRANSLATE_NOOP("ion-core", "Recalculating ION supply..."),
+QT_TRANSLATE_NOOP("ion-core", "Recalculating minted XION..."),
+QT_TRANSLATE_NOOP("ion-core", "Recalculating spent XION..."),
 QT_TRANSLATE_NOOP("ion-core", "Receive and display P2P network alerts (default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", "Reindex the ION and xION money supply statistics"),
 QT_TRANSLATE_NOOP("ion-core", "Reindex the accumulator database"),
@@ -552,6 +561,8 @@ QT_TRANSLATE_NOOP("ion-core", "Starting network threads..."),
 QT_TRANSLATE_NOOP("ion-core", "Submitted following entries to masternode: %u"),
 QT_TRANSLATE_NOOP("ion-core", "Submitted to masternode, waiting for more entries ( %u ) %s"),
 QT_TRANSLATE_NOOP("ion-core", "Submitted to masternode, waiting in queue %s"),
+QT_TRANSLATE_NOOP("ion-core", "Support the zerocoin light node protocol (default: %u)"),
+QT_TRANSLATE_NOOP("ion-core", "SwiftX options:"),
 QT_TRANSLATE_NOOP("ion-core", "Synchronization failed"),
 QT_TRANSLATE_NOOP("ion-core", "Synchronization finished"),
 QT_TRANSLATE_NOOP("ion-core", "Synchronization pending..."),
@@ -561,8 +572,6 @@ QT_TRANSLATE_NOOP("ion-core", "Synchronizing masternodes..."),
 QT_TRANSLATE_NOOP("ion-core", "Synchronizing sporks..."),
 QT_TRANSLATE_NOOP("ion-core", "Syncing xION wallet..."),
 QT_TRANSLATE_NOOP("ion-core", "The coin spend has been used"),
-QT_TRANSLATE_NOOP("ion-core", "The new spend coin transaction did not verify"),
-QT_TRANSLATE_NOOP("ion-core", "The selected mint coin is an invalid coin"),
 QT_TRANSLATE_NOOP("ion-core", "The transaction did not verify"),
 QT_TRANSLATE_NOOP("ion-core", "This help message"),
 QT_TRANSLATE_NOOP("ion-core", "This is experimental software."),
@@ -585,7 +594,6 @@ QT_TRANSLATE_NOOP("ion-core", "Transaction not valid."),
 QT_TRANSLATE_NOOP("ion-core", "Transaction too large for fee policy"),
 QT_TRANSLATE_NOOP("ion-core", "Transaction too large"),
 QT_TRANSLATE_NOOP("ion-core", "Transmitting final transaction."),
-QT_TRANSLATE_NOOP("ion-core", "Try to spend with a higher security level to include more coins"),
 QT_TRANSLATE_NOOP("ion-core", "Trying to spend an already spent serial #, try again."),
 QT_TRANSLATE_NOOP("ion-core", "Unable to bind to %s on this computer (bind returned error %s)"),
 QT_TRANSLATE_NOOP("ion-core", "Unable to find transaction containing mint"),
@@ -598,6 +606,7 @@ QT_TRANSLATE_NOOP("ion-core", "Upgrade wallet to latest format"),
 QT_TRANSLATE_NOOP("ion-core", "Use UPnP to map the listening port (default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", "Use UPnP to map the listening port (default: 1 when listening)"),
 QT_TRANSLATE_NOOP("ion-core", "Use a custom max chain reorganization depth (default: %u)"),
+QT_TRANSLATE_NOOP("ion-core", "Use block spam filter (default: %u)"),
 QT_TRANSLATE_NOOP("ion-core", "Use the test network"),
 QT_TRANSLATE_NOOP("ion-core", "User Agent comment (%s) contains unsafe characters."),
 QT_TRANSLATE_NOOP("ion-core", "Username for JSON-RPC connections"),
@@ -605,12 +614,10 @@ QT_TRANSLATE_NOOP("ion-core", "Value is below the smallest available denominatio
 QT_TRANSLATE_NOOP("ion-core", "Value more than Obfuscation pool maximum allows."),
 QT_TRANSLATE_NOOP("ion-core", "Verifying blocks..."),
 QT_TRANSLATE_NOOP("ion-core", "Verifying wallet..."),
-QT_TRANSLATE_NOOP("ion-core", "Version 1 xION require a security level of 100 to successfully spend."),
 QT_TRANSLATE_NOOP("ion-core", "Wallet %s resides outside data directory %s"),
 QT_TRANSLATE_NOOP("ion-core", "Wallet debugging/testing options:"),
 QT_TRANSLATE_NOOP("ion-core", "Wallet is locked."),
-QT_TRANSLATE_NOOP("ion-core", "Wallet is not initialized"),
-QT_TRANSLATE_NOOP("ion-core", "Wallet needed to be rewritten: restart %s to complete"),
+QT_TRANSLATE_NOOP("ion-core", "Wallet needed to be rewritten: restart ION Core to complete"),
 QT_TRANSLATE_NOOP("ion-core", "Wallet options:"),
 QT_TRANSLATE_NOOP("ion-core", "Wallet window title"),
 QT_TRANSLATE_NOOP("ion-core", "Warning"),
@@ -625,6 +632,7 @@ QT_TRANSLATE_NOOP("ion-core", "Your transaction was accepted into the pool!"),
 QT_TRANSLATE_NOOP("ion-core", "Zapping all transactions from wallet..."),
 QT_TRANSLATE_NOOP("ion-core", "ZeroMQ notification options:"),
 QT_TRANSLATE_NOOP("ion-core", "Zerocoin options:"),
+QT_TRANSLATE_NOOP("ion-core", "could not get lock on cs_spendcache"),
 QT_TRANSLATE_NOOP("ion-core", "isValid(): Invalid -proxy address or hostname: '%s'"),
 QT_TRANSLATE_NOOP("ion-core", "on startup"),
 QT_TRANSLATE_NOOP("ion-core", "wallet.dat corrupt, salvage failed"),

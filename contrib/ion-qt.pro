@@ -97,7 +97,7 @@ HEADERS += src/activemasternode.h \
            src/obfuscation-relay.h \
            src/obfuscation.h \
            src/ion-config.h \
-           src/db.h \
+           src/wallet/db.h \
            src/eccryptoverify.h \
            src/ecwrapper.h \
            src/hash.h \
@@ -145,9 +145,9 @@ HEADERS += src/activemasternode.h \
            src/utilstrencodings.h \
            src/utiltime.h \
            src/version.h \
-           src/wallet.h \
-           src/wallet_ismine.h \
-           src/walletdb.h \
+           src/wallet/wallet.h \
+           src/wallet/wallet_ismine.h \
+           src/wallet/walletdb.h \
            src/compat/sanity.h \
            src/config/ion-config.h \
            src/crypto/common.h \
@@ -224,7 +224,7 @@ HEADERS += src/activemasternode.h \
            src/qt/transactiondesc.h \
            src/qt/transactiondescdialog.h \
            src/qt/transactionfilterproxy.h \
-           src/transactionrecord.h \
+           src/qt/transactionrecord.h \
            src/qt/transactiontablemodel.h \
            src/qt/transactionview.h \
            src/qt/utilitydialog.h \
@@ -394,7 +394,7 @@ SOURCES += src/activemasternode.cpp \
            src/ion-cli.cpp \
            src/ion-tx.cpp \
            src/ion.cpp \
-           src/db.cpp \
+           src/wallet/db.cpp \
            src/eccryptoverify.cpp \
            src/ecwrapper.cpp \
            src/editaddressdialog.cpp \
@@ -424,7 +424,7 @@ SOURCES += src/activemasternode.cpp \
            src/rest.cpp \
            src/rpcblockchain.cpp \
            src/rpcclient.cpp \
-           src/rpcdump.cpp \
+           src/wallet/rpcdump.cpp \
            src/rpcmasternode-budget.cpp \
            src/rpcmasternode.cpp \
            src/rpcmining.cpp \
@@ -433,7 +433,7 @@ SOURCES += src/activemasternode.cpp \
            src/rpcprotocol.cpp \
            src/rpcrawtransaction.cpp \
            src/rpcserver.cpp \
-           src/rpcwallet.cpp \
+           src/wallet/rpcwallet.cpp \
            src/spork.cpp \
            src/sync.cpp \
            src/timedata.cpp \
@@ -444,9 +444,9 @@ SOURCES += src/activemasternode.cpp \
            src/utilmoneystr.cpp \
            src/utilstrencodings.cpp \
            src/utiltime.cpp \
-           src/wallet.cpp \
-           src/wallet_ismine.cpp \
-           src/walletdb.cpp \
+           src/wallet/wallet.cpp \
+           src/wallet/wallet_ismine.cpp \
+           src/wallet/walletdb.cpp \
            src/compat/glibc_compat.cpp \
            src/compat/glibc_sanity.cpp \
            src/compat/glibcxx_compat.cpp \
@@ -517,7 +517,7 @@ SOURCES += src/activemasternode.cpp \
            src/qt/transactiondesc.cpp \
            src/qt/transactiondescdialog.cpp \
            src/qt/transactionfilterproxy.cpp \
-           src/transactionrecord.cpp \
+           src/qt/transactionrecord.cpp \
            src/qt/transactiontablemodel.cpp \
            src/qt/transactionview.cpp \
            src/qt/utilitydialog.cpp \
@@ -573,7 +573,7 @@ SOURCES += src/activemasternode.cpp \
            src/test/uint256_tests.cpp \
            src/test/univalue_tests.cpp \
            src/test/util_tests.cpp \
-           src/test/wallet_tests.cpp \
+           src/wallet/test/wallet_tests.cpp \
            src/univalue/gen.cpp \
            src/univalue/univalue.cpp \
            src/univalue/univalue_read.cpp \

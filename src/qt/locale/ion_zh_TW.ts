@@ -629,8 +629,8 @@
         <translation>發送多筆交易</translation>
     </message>
     <message>
-        <source>Received multiple transactions</source>
-        <translation>收到多筆交易</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Send coins to a ION address</source>
@@ -655,16 +655,12 @@
 </translation>
     </message>
     <message>
-        <source>Type: %1
-</source>
-        <translation>種類: %1
-</translation>
+        <source>&amp;About ION Core</source>
+        <translation>&amp;關於 ION Core</translation>
     </message>
     <message>
-        <source>Label: %1
-</source>
-        <translation>標記: %1
-</translation>
+        <source>Show information about ION Core</source>
+        <translation>顯示 ION Core 相關資訊</translation>
     </message>
     <message>
         <source>Modify configuration options for ION</source>
@@ -722,12 +718,12 @@
         <translation>零散錢:</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
-        <translation>顯示 Ion Core 幫助訊息以取得 ION 命令列表選項</translation>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
+        <translation>顯示 ION Core 幫助訊息以取得 ION 命令列表選項</translation>
     </message>
     <message>
-        <source>Change:</source>
-        <translation>找零金額:</translation>
+        <source>ION Core client</source>
+        <translation>ION Core 客戶端</translation>
     </message>
     <message>
         <source>(un)select all</source>
@@ -737,13 +733,25 @@
         <source>toggle lock state</source>
         <translation>切換鎖定狀態</translation>
     </message>
+    </context>
+<context>
+    <name>EditAddressDialog</name>
+    </context>
+<context>
+    <name>FreespaceChecker</name>
+    </context>
+<context>
+    <name>GovernancePage</name>
+    </context>
+<context>
+    <name>HelpMessageDialog</name>
     <message>
-        <source>Tree mode</source>
-        <translation>樹狀模式</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
-        <source>List mode</source>
-        <translation>列表模式</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>(1 locked)</source>
@@ -818,7 +826,14 @@
     </message>
     </context>
 <context>
+    <name>ProposalFrame</name>
+    </context>
+<context>
     <name>QObject</name>
+    <message>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
+    </message>
     </context>
 <context>
     <name>QRImageWidget</name>
@@ -842,8 +857,12 @@
         <translation>複製交易識別碼</translation>
     </message>
     <message>
-        <source>Lock unspent</source>
-        <translation>鎖定未動用資金</translation>
+        <source>Address</source>
+        <translation>位址</translation>
+    </message>
+    <message>
+        <source>(no label)</source>
+        <translation>(沒有標記)</translation>
     </message>
     <message>
         <source>Unlock unspent</source>
@@ -1067,8 +1086,8 @@
         <translation>重置所有在GUI 更改的設置</translation>
     </message>
     <message>
-        <source>PrivateSend information</source>
-        <translation>匿名發送資訊</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Ion in your wallet is comprised of different "inputs" which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type="1"&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 ION, 0.01 ION, 0.1 ION, 1 ION and 10 ION -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called "masternodes." These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know "who" you are.&lt;/li&gt; &lt;li&gt;When two other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users' wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it's called a "round." Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be anonymized. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these "change addresses." Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more information, see the &lt;a href="https://docs.ionomy.com/en/latest/wallets/ioncoin/privatesend-instantsend.html"&gt;PrivateSend documentation&lt;/a&gt;.</source>

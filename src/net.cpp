@@ -22,7 +22,7 @@
 #include "ui_interface.h"
 
 #ifdef ENABLE_WALLET
-#include "wallet.h"
+#include "wallet/wallet.h"
 #endif // ENABLE_WALLET
 
 #ifdef WIN32

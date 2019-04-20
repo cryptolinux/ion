@@ -4,21 +4,21 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <qt/transactiondesc.h>
+#include "transactiondesc.h"
 
-#include <qt/bitcoinunits.h>
-#include <qt/guiutil.h>
-#include <qt/paymentserver.h>
-#include <qt/transactionrecord.h>
+#include "bitcoinunits.h"
+#include "guiutil.h"
+#include "paymentserver.h"
+#include "transactionrecord.h"
 
-#include <base58.h>
-#include <consensus/consensus.h>
-#include <validation.h>
-#include <script/script.h>
-#include <timedata.h>
-#include <util.h>
-#include <wallet/db.h>
-#include <wallet/wallet.h>
+#include "base58.h"
+#include "wallet/db.h"
+#include "main.h"
+#include "script/script.h"
+#include "timedata.h"
+#include "ui_interface.h"
+#include "util.h"
+#include "wallet/wallet.h"
 
 #include <stdint.h>
 #include <string>
@@ -240,7 +240,7 @@ QString TransactionDesc::toHTML(CWallet *wallet, CWalletTx &wtx, TransactionReco
     if (wtx.mapValue.count("comment") && !wtx.mapValue["comment"].empty())
         strHTML += "<br><b>" + tr("Comment") + ":</b><br>" + GUIUtil::HtmlEscape(wtx.mapValue["comment"], true) + "<br>";
 
-    strHTML += "<b>" + tr("Transaction ID") + ":</b> " + QString::fromStdString(rec->getTxID()) + "<br>";
+    strHTML += "<b>" + tr("Transaction ID") + ":</b> " + rec->getTxID() + "<br>";
     strHTML += "<b>" + tr("Output index") + ":</b> " + QString::number(rec->getOutputIndex()) + "<br>";
     strHTML += "<b>" + tr("Transaction total size") + ":</b> " + QString::number(wtx.tx->GetTotalSize()) + " bytes<br>";
 

@@ -602,8 +602,8 @@
         <translation>Tabs toolbar</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Send coins to a ION address</source>
@@ -622,12 +622,12 @@
         <translation>Browse masternodes</translation>
     </message>
     <message>
-        <source>&amp;About Ion Core</source>
-        <translation>&amp;About Ion Core</translation>
+        <source>&amp;About ION Core</source>
+        <translation>&amp;About ION Core</translation>
     </message>
     <message>
-        <source>Show information about Ion Core</source>
-        <translation>Show information about Ion Core</translation>
+        <source>Show information about ION Core</source>
+        <translation>Show information about ION Core</translation>
     </message>
     <message>
         <source>Modify configuration options for ION</source>
@@ -682,12 +682,12 @@
         <translation>Block explorer window</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
-        <translation>Show the Ion Core help message to get a list with possible ION command-line options</translation>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
+        <translation>Show the ION Core help message to get a list with possible ION command-line options</translation>
     </message>
     <message>
-        <source>Ion Core client</source>
-        <translation>Ion Core client</translation>
+        <source>ION Core client</source>
+        <translation>ION Core client</translation>
     </message>
     <message numerus="yes">
         <source>%n active connection(s) to ION network</source>
@@ -1184,16 +1184,16 @@ Address: %4
         <translation>version</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
         <translation>(%1-bit)</translation>
     </message>
     <message>
-        <source>About Ion Core</source>
-        <translation>About Ion Core</translation>
+        <source>About ION Core</source>
+        <translation>About ION Core</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1239,16 +1239,16 @@ Address: %4
         <translation>Welcome</translation>
     </message>
     <message>
-        <source>Welcome to Ion Core.</source>
-        <translation>Welcome to Ion Core.</translation>
+        <source>Welcome to ION Core.</source>
+        <translation>Welcome to ION Core.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Ion Core will store its data.</source>
-        <translation>As this is the first time the program is launched, you can choose where Ion Core will store its data.</translation>
+        <source>As this is the first time the program is launched, you can choose where ION Core will store its data.</source>
+        <translation>As this is the first time the program is launched, you can choose where ION Core will store its data.</translation>
     </message>
     <message>
-        <source>Ion Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>Ion Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</translation>
+        <source>ION Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>ION Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1259,8 +1259,8 @@ Address: %4
         <translation>Use a custom data directory:</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1544,32 +1544,32 @@ Please check the address and try again.</translation>
         <translation>Please select a privacy level.</translation>
     </message>
     <message>
-        <source>Use 2 separate masternodes to mix funds up to 10000 ION</source>
-        <translation>Use 2 separate masternodes to mix funds up to 10000 ION</translation>
+        <source>Use 2 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Use 2 separate masternodes to mix funds up to 20000 ION</translation>
     </message>
     <message>
-        <source>Use 8 separate masternodes to mix funds up to 10000 ION</source>
-        <translation>Use 8 separate masternodes to mix funds up to 10000 ION</translation>
+        <source>Use 8 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Use 8 separate masternodes to mix funds up to 20000 ION</translation>
     </message>
     <message>
         <source>Use 16 separate masternodes</source>
         <translation>Use 16 separate masternodes</translation>
     </message>
     <message>
-        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 10000 ION</source>
-        <translation>This option is the quickest and will cost about ~0.025 ION to anonymize 10000 ION</translation>
+        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 20000 ION</source>
+        <translation>This option is the quickest and will cost about ~0.025 ION to anonymize 20000 ION</translation>
     </message>
     <message>
-        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 10000 ION</source>
-        <translation>This option is moderately fast and will cost about 0.05 ION to anonymize 10000 ION</translation>
+        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 20000 ION</source>
+        <translation>This option is moderately fast and will cost about 0.05 ION to anonymize 20000 ION</translation>
     </message>
     <message>
         <source>This is the slowest and most secure option. Using maximum anonymity will cost</source>
         <translation>This is the slowest and most secure option. Using maximum anonymity will cost</translation>
     </message>
     <message>
-        <source>0.1 ION per 10000 ION you anonymize.</source>
-        <translation>0.1 ION per 10000 ION you anonymize.</translation>
+        <source>0.1 ION per 20000 ION you anonymize.</source>
+        <translation>0.1 ION per 20000 ION you anonymize.</translation>
     </message>
     <message>
         <source>Obfuscation Configuration</source>
@@ -3126,8 +3126,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>Ion Core is shutting down...</source>
-        <translation>Ion Core is shutting down...</translation>
+        <source>ION Core is shutting down...</source>
+        <translation>ION Core is shutting down...</translation>
     </message>
     <message>
         <source>Do not shut down the computer until this window disappears.</source>
@@ -3276,8 +3276,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Version %1</source>
@@ -3292,8 +3292,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>The Dash Core developers</translation>
     </message>
     <message>
-        <source>The Ion Core developers</source>
-        <translation>The Ion Core developers</translation>
+        <source>The ION Core developers</source>
+        <translation>The ION Core developers</translation>
     </message>
     <message>
         <source>[testnet]</source>
@@ -3910,8 +3910,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Bind to given address to listen for JSON-RPC connections. Use [host]:port notation for IPv6. This option can be specified multiple times (default: bind to all interfaces)</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. Ion Core is probably already running.</source>
-        <translation>Cannot obtain a lock on data directory %s. Ion Core is probably already running.</translation>
+        <source>Cannot obtain a lock on data directory %s. ION Core is probably already running.</source>
+        <translation>Cannot obtain a lock on data directory %s. ION Core is probably already running.</translation>
     </message>
     <message>
         <source>Change automatic finalized budget voting behavior. mode=auto: Vote for only exact finalized budget match to my generated budget. (string, default: auto)</source>
@@ -4106,20 +4106,20 @@ for example: alertnotify=echo %%s | mail -s "ION Alert" admin@foo.com
 </translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. Ion Core is probably already running.</source>
-        <translation>Unable to bind to %s on this computer. Ion Core is probably already running.</translation>
+        <source>Unable to bind to %s on this computer. ION Core is probably already running.</source>
+        <translation>Unable to bind to %s on this computer. ION Core is probably already running.</translation>
     </message>
     <message>
         <source>Unable to locate enough Obfuscation denominated funds for this transaction.</source>
         <translation>Unable to locate enough Obfuscation denominated funds for this transaction.</translation>
     </message>
     <message>
-        <source>Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 10000 ION.</source>
-        <translation>Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 10000 ION.</translation>
+        <source>Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 20000 ION.</source>
+        <translation>Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 20000 ION.</translation>
     </message>
     <message>
-        <source>Unable to locate enough funds for this transaction that are not equal 10000 ION.</source>
-        <translation>Unable to locate enough funds for this transaction that are not equal 10000 ION.</translation>
+        <source>Unable to locate enough funds for this transaction that are not equal 20000 ION.</source>
+        <translation>Unable to locate enough funds for this transaction that are not equal 20000 ION.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</source>
@@ -4134,8 +4134,8 @@ for example: alertnotify=echo %%s | mail -s "ION Alert" admin@foo.com
         <translation>Warning: -paytxfee is set very high! This is the transaction fee you will pay if you send a transaction.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Ion Core will not work properly.</source>
-        <translation>Warning: Please check that your computer's date and time are correct! If your clock is wrong Ion Core will not work properly.</translation>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong ION Core will not work properly.</source>
+        <translation>Warning: Please check that your computer's date and time are correct! If your clock is wrong ION Core will not work properly.</translation>
     </message>
     <message>
         <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
@@ -4286,8 +4286,8 @@ for example: alertnotify=echo %%s | mail -s "ION Alert" admin@foo.com
         <translation>Copyright (C) 2015-%i The PIVX Core Developers</translation>
     </message>
     <message>
-        <source>Copyright (C) 2018-%i The Ion Core Developers</source>
-        <translation>Copyright (C) 2018-%i The Ion Core Developers</translation>
+        <source>Copyright (C) 2018-%i The ION Core Developers</source>
+        <translation>Copyright (C) 2018-%i The ION Core Developers</translation>
     </message>
     <message>
         <source>Corrupted block database detected</source>
@@ -4358,8 +4358,8 @@ for example: alertnotify=echo %%s | mail -s "ION Alert" admin@foo.com
         <translation>Error loading wallet.dat: Wallet corrupted</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Ion Core</source>
-        <translation>Error loading wallet.dat: Wallet requires newer version of Ion Core</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of ION Core</source>
+        <translation>Error loading wallet.dat: Wallet requires newer version of ION Core</translation>
     </message>
     <message>
         <source>Error opening block database</source>
@@ -4470,8 +4470,8 @@ for example: alertnotify=echo %%s | mail -s "ION Alert" admin@foo.com
         <translation>Information</translation>
     </message>
     <message>
-        <source>Initialization sanity check failed. Ion Core is shutting down.</source>
-        <translation>Initialization sanity check failed. Ion Core is shutting down.</translation>
+        <source>Initialization sanity check failed. ION Core is shutting down.</source>
+        <translation>Initialization sanity check failed. ION Core is shutting down.</translation>
     </message>
     <message>
         <source>Input is not valid.</source>
@@ -4634,8 +4634,8 @@ for example: alertnotify=echo %%s | mail -s "ION Alert" admin@foo.com
         <translation>Loading masternode payment cache...</translation>
     </message>
     <message>
-        <source>Loading wallet... (%3.1f %%)</source>
-        <translation>Loading wallet... (%3.1f %%)</translation>
+        <source>Loading wallet... (%3.2f %%)</source>
+        <translation>Loading wallet... (%3.2f %%)</translation>
     </message>
     <message>
         <source>Loading wallet...</source>
@@ -5090,8 +5090,8 @@ for example: alertnotify=echo %%s | mail -s "ION Alert" admin@foo.com
         <translation>Wallet is locked.</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Ion Core to complete</source>
-        <translation>Wallet needed to be rewritten: restart Ion Core to complete</translation>
+        <source>Wallet needed to be rewritten: restart ION Core to complete</source>
+        <translation>Wallet needed to be rewritten: restart ION Core to complete</translation>
     </message>
     <message>
         <source>Wallet options:</source>

@@ -1,5 +1,4 @@
 // Copyright (c) 2017-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -103,7 +102,7 @@ void MultiSendDialog::on_addButton_clicked()
 {
     bool fValidConversion = false;
     std::string strAddress = ui->multiSendAddressEdit->text().toStdString();
-    if (!IsValidDestinationString(strAddress)) {
+    if (!CBitcoinAddress(strAddress).IsValid()) {
         ui->message->setProperty("status", "error");
         ui->message->style()->polish(ui->message);
         ui->message->setText(tr("The entered address: %1 is invalid.\nPlease check the address and try again.").arg(ui->multiSendAddressEdit->text()));
@@ -145,12 +144,12 @@ void MultiSendDialog::on_addButton_clicked()
 
     if (model && model->getAddressTableModel()) {
         // update the address book with the label given or no label if none was given.
-        CTxDestination dest = DecodeDestination(strAddress);
+        CBitcoinAddress address(strAddress);
         std::string userInputLabel = ui->labelAddressLabelEdit->text().toStdString();
         if (!userInputLabel.empty())
-            model->updateAddressBookLabels(dest, userInputLabel, "send");
+            model->updateAddressBookLabels(address.Get(), userInputLabel, "send");
         else
-            model->updateAddressBookLabels(dest, "(no label)", "send");
+            model->updateAddressBookLabels(address.Get(), "(no label)", "send");
     }
 
     CWalletDB walletdb(pwalletMain->strWalletFile);
@@ -196,7 +195,7 @@ void MultiSendDialog::on_activateButton_clicked()
         strRet = tr("Unable to activate MultiSend, check MultiSend vector");
     else if (!(ui->multiSendStakeCheckBox->isChecked() || ui->multiSendMasternodeCheckBox->isChecked())) {
         strRet = tr("Need to select to send on stake and/or masternode rewards");
-    } else if (IsValidDestinationString(pwalletMain->vMultiSend[0].first)) {
+    } else if (CBitcoinAddress(pwalletMain->vMultiSend[0].first).IsValid()) {
         pwalletMain->fMultiSendStake = ui->multiSendStakeCheckBox->isChecked();
         pwalletMain->fMultiSendMasternodeReward = ui->multiSendMasternodeCheckBox->isChecked();
 

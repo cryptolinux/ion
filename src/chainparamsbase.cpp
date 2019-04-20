@@ -42,7 +42,7 @@ public:
 };
 
 /**
- * Testnet (v3)
+ * Testnet (v4)
  */
 class CBaseTestNetParams : public CBaseChainParams
 {
@@ -63,7 +63,7 @@ public:
     CBaseDevNetParams(const std::string &dataDir)
     {
         networkID = CBaseChainParams::REGTEST;
-        nRPCPort = 28171;
+        nRPCPort = 27171;
         strDataDir = "regtest";
     }
 };

@@ -154,6 +154,7 @@ stage/
 *.snap
 # datadir
 datadir/
+datadir*/
 
 # test suite
 .cookie

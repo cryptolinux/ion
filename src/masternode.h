@@ -1,13 +1,12 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef MASTERNODE_H
 #define MASTERNODE_H
 
-#include "dstencode.h"
+#include "base58.h"
 #include "key.h"
 #include "main.h"
 #include "net.h"

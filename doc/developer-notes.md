@@ -430,6 +430,13 @@ TRY_LOCK(cs_vNodes, lockNodes);
     should not interact with the user. That's where View classes come in. The converse also
     holds: try to not directly access core data structures from Views.
 
+### Add/change artworks
+
+- all artworks must have source as vector graphics
+  - use only open source software for creation/editing vector graphics (_suggested software for SVG:_ [Inkscape](https://inkscape.org/))
+- format to be used: [SVG](https://www.w3.org/TR/2003/REC-SVG11-20030114/).
+- all artworks source must have a license and full metadata and descriptioins
+
 ## Git and github tips
 
 - For resolving merge/rebase conflicts, it can be useful to enable diff3 style using

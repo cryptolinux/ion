@@ -445,6 +445,9 @@
     <name>FreespaceChecker</name>
     </context>
 <context>
+    <name>GovernancePage</name>
+    </context>
+<context>
     <name>HelpMessageDialog</name>
     </context>
 <context>
@@ -539,6 +542,12 @@
         <source>Show wallet repair options</source>
         <translation>Mostrar opções de reparação da carteira</translation>
     </message>
+    </context>
+<context>
+    <name>ProposalFrame</name>
+    </context>
+<context>
+    <name>QObject</name>
     <message>
         <source>Open Wallet &amp;Configuration File</source>
         <translation>Abrir arquivo de &amp;Configuração da carteira</translation>
@@ -584,8 +593,12 @@
         <translation>Opções de linha de &amp;comando</translation>
     </message>
     <message>
-        <source>Show the %1 help message to get a list with possible Ion command-line options</source>
-        <translation>Mostrar a mensagem de ajuda do %1 para obter uma lista com possíveis opções de linha de comando Ion</translation>
+        <source>Address</source>
+        <translation>Endereço</translation>
+    </message>
+    <message>
+        <source>Amount</source>
+        <translation>Quantidade</translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1327,8 +1340,8 @@
         <translation>&amp;Aparência</translation>
     </message>
     <message>
-        <source>Show additional tab listing all your masternodes in first sub-tab&lt;br/&gt;and all masternodes on the network in second sub-tab.</source>
-        <translation>Mostre uma guia adicional listando todos os seus masternodes na primeira subposição &lt;br/&gt; e todos os masternodes na rede na segunda sub-guia.</translation>
+        <source>Wallet needed to be rewritten: restart ION Core to complete</source>
+        <translation>Carteira precisa ser reescrita: reinicie o ION Core para completar.</translation>
     </message>
     <message>
         <source>Show Masternodes Tab</source>

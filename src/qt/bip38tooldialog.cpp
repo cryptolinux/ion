@@ -1,5 +1,4 @@
 // Copyright (c) 2017-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -13,7 +12,7 @@
 #include "base58.h"
 #include "bip38.h"
 #include "init.h"
-#include "wallet.h"
+#include "wallet/wallet.h"
 #include "askpassphrasedialog.h"
 
 #include <string>
@@ -120,15 +119,15 @@ void Bip38ToolDialog::on_encryptKeyButton_ENC_clicked()
         return;
     }
 
-    CTxDestination dest = DecodeDestination(ui->addressIn_ENC->text().toStdString());
-    if (!IsValidDestination(dest)) {
+    CBitcoinAddress addr(ui->addressIn_ENC->text().toStdString());
+    if (!addr.IsValid()) {
         ui->statusLabel_ENC->setStyleSheet("QLabel { color: red; }");
         ui->statusLabel_ENC->setText(tr("The entered address is invalid.") + QString(" ") + tr("Please check the address and try again."));
         return;
     }
 
-    CKeyID *keyID = boost::get<CKeyID>(&dest);
-    if (!keyID) {
+    CKeyID keyID;
+    if (!addr.GetKeyID(keyID)) {
         ui->addressIn_ENC->setValid(false);
         ui->statusLabel_ENC->setStyleSheet("QLabel { color: red; }");
         ui->statusLabel_ENC->setText(tr("The entered address does not refer to a key.") + QString(" ") + tr("Please check the address and try again."));
@@ -143,13 +142,13 @@ void Bip38ToolDialog::on_encryptKeyButton_ENC_clicked()
     }
 
     CKey key;
-    if (!pwalletMain->GetKey(*keyID, key)) {
+    if (!pwalletMain->GetKey(keyID, key)) {
         ui->statusLabel_ENC->setStyleSheet("QLabel { color: red; }");
         ui->statusLabel_ENC->setText(tr("Private key for the entered address is not available."));
         return;
     }
 
-    std::string encryptedKey = BIP38_Encrypt(EncodeDestination(dest), qstrPassphrase.toStdString(), key.GetPrivKey_256(), key.IsCompressed());
+    std::string encryptedKey = BIP38_Encrypt(addr.ToString(), qstrPassphrase.toStdString(), key.GetPrivKey_256(), key.IsCompressed());
     ui->encryptedKeyOut_ENC->setText(QString::fromStdString(encryptedKey));
 }
 
@@ -190,9 +189,10 @@ void Bip38ToolDialog::on_decryptKeyButton_DEC_clicked()
 
     key.Set(privKey.begin(), privKey.end(), fCompressed);
     CPubKey pubKey = key.GetPubKey();
-    
+    CBitcoinAddress address(pubKey.GetID());
+
     ui->decryptedKeyOut_DEC->setText(QString::fromStdString(CBitcoinSecret(key).ToString()));
-    ui->addressOut_DEC->setText(QString::fromStdString(EncodeDestination(pubKey.GetID())));
+    ui->addressOut_DEC->setText(QString::fromStdString(address.ToString()));
 }
 
 void Bip38ToolDialog::on_importAddressButton_DEC_clicked()
@@ -204,18 +204,17 @@ void Bip38ToolDialog::on_importAddressButton_DEC_clicked()
         return;
     }
 
+    CBitcoinAddress address(ui->addressOut_DEC->text().toStdString());
     CPubKey pubkey = key.GetPubKey();
 
-    if (!IsValidDestinationString(ui->addressOut_DEC->text().toStdString())) {
+    if (!address.IsValid() || !key.IsValid() || CBitcoinAddress(pubkey.GetID()).ToString() != address.ToString()) {
         ui->statusLabel_DEC->setStyleSheet("QLabel { color: red; }");
         ui->statusLabel_DEC->setText(tr("Data Not Valid.") + QString(" ") + tr("Please try again."));
         return;
     }
 
-    CTxDestination dest = DecodeDestination(ui->addressOut_DEC->text().toStdString());
-
-    if (!key.IsValid() || EncodeDestination(pubkey.GetID()) != EncodeDestination(dest)) {
-        CKeyID vchAddress = pubkey.GetID();
+    CKeyID vchAddress = pubkey.GetID();
+    {
         ui->statusLabel_DEC->setStyleSheet("QLabel { color: red; }");
         ui->statusLabel_DEC->setText(tr("Please wait while key is imported"));
 

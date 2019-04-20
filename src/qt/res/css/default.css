@@ -22,7 +22,7 @@
 /****************************************************************************************/
 
 WalletFrame {
-border-image: url(':/images/walletFrame_bg') 0 0 0 0 stretch stretch;
+background-color:#ffffff;
 border-top:0px solid #000;
 margin:0;
 padding:0;
@@ -1715,8 +1715,8 @@ QWidget#GovernancePage .ProposalFrame {
 }
 
 QWidget#GovernancePage .ProposalFrame#proposalFrame {
-    background-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #9179c7, stop: 1 #b396f6);
-    border:1px solid #b396f6;
+    background-color:qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #adb0d8, stop: 1 #17b7f7);
+    border:1px solid #17b7f7;
 }
 
 QWidget#GovernancePage .ProposalFrame#proposalFramePassing {

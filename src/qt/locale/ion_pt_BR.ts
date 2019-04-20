@@ -613,8 +613,8 @@
         <translation>Ferramentas de abas</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Send coins to a ION address</source>
@@ -637,12 +637,12 @@
         <translation>Procurar masternodes</translation>
     </message>
     <message>
-        <source>&amp;About Ion Core</source>
-        <translation>&amp;Sobre o Ion Core</translation>
+        <source>&amp;About ION Core</source>
+        <translation>&amp;Sobre o ION Core</translation>
     </message>
     <message>
-        <source>Show information about Ion Core</source>
-        <translation>Mostra informação sobre o Ion Core</translation>
+        <source>Show information about ION Core</source>
+        <translation>Mostra informação sobre o ION Core</translation>
     </message>
     <message>
         <source>Modify configuration options for ION</source>
@@ -697,11 +697,11 @@
         <translation>Janela de exploração de blocos</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
-        <translation>Mostra a ajuda da Ion Core para receber uma lista com possíveis opções de linha de comando ION</translation>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
+        <translation>Mostra a ajuda da ION Core para receber uma lista com possíveis opções de linha de comando ION</translation>
     </message>
     <message>
-        <source>Ion Core client</source>
+        <source>ION Core client</source>
         <translation>Cliente Core ION</translation>
     </message>
     <message>
@@ -809,7 +809,7 @@ MultiSend: %1</translation>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>A carteira está &lt;b&gt;criptografada&lt;/b&gt; e atualmente &lt;b&gt;travada&lt;/b&gt;</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>BlockExplorer</name>
     <message>
@@ -1158,22 +1158,33 @@ MultiSend: %1</translation>
     </message>
 </context>
 <context>
+    <name>GovernancePage</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulário</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    </context>
+<context>
     <name>HelpMessageDialog</name>
     <message>
         <source>version</source>
         <translation>versão</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>(%1-bit)</source>
         <translation>(%1-bit)</translation>
     </message>
     <message>
-        <source>About Ion Core</source>
-        <translation>Sobre o Ion Core</translation>
+        <source>About ION Core</source>
+        <translation>Sobre o ION Core</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1215,16 +1226,16 @@ MultiSend: %1</translation>
         <translation>Bem-vindo</translation>
     </message>
     <message>
-        <source>Welcome to Ion Core.</source>
-        <translation>Bem-vindo ao Ion Core.</translation>
+        <source>Welcome to ION Core.</source>
+        <translation>Bem-vindo ao ION Core.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Ion Core will store its data.</source>
-        <translation>Como essa é a primeira vez que o programa é utilizado, você pode escolher onde Ion Core vai armazenar os seus dados.</translation>
+        <source>As this is the first time the program is launched, you can choose where ION Core will store its data.</source>
+        <translation>Como essa é a primeira vez que o programa é utilizado, você pode escolher onde ION Core vai armazenar os seus dados.</translation>
     </message>
     <message>
-        <source>Ion Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>Ion Core vai baixar e armazenar uma cópia da blockchain ION. Pelo menos %1GB de informação será armazenado neste diretório e irá aumentar com o tempo. A carteira também será armazenada neste diretório.</translation>
+        <source>ION Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>ION Core vai baixar e armazenar uma cópia da blockchain ION. Pelo menos %1GB de informação será armazenado neste diretório e irá aumentar com o tempo. A carteira também será armazenada neste diretório.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1235,8 +1246,8 @@ MultiSend: %1</translation>
         <translation>Usar um diretório personalizado de dados:</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1437,43 +1448,8 @@ MultiSend: %1</translation>
         <translation>(sem rótulo)</translation>
     </message>
     <message>
-        <source>The entered address:
-</source>
-        <translation>O endereço informado:
-</translation>
-    </message>
-    <message>
-        <source> is invalid.
-Please check the address and try again.</source>
-        <translation>é inválido.
-
-Favor verificar o endereço e tente novamente.</translation>
-    </message>
-    <message>
-        <source>The total amount of your MultiSend vector is over 100% of your stake reward
-</source>
-        <translation>A quantia total de seu vetor MultiSend é superior a 100% da recompensa de seu stake
-</translation>
-    </message>
-    <message>
         <source>Please Enter 1 - 100 for percent.</source>
         <translation>Favor inserir 1 - 100 para porcentagem.</translation>
-    </message>
-    <message>
-        <source>MultiSend Vector
-</source>
-        <translation>Vetor MultiSend
-</translation>
-    </message>
-    <message>
-        <source>Removed </source>
-        <translation>Removido</translation>
-    </message>
-    <message>
-        <source>Could not locate address
-</source>
-        <translation>Não foi possível localizar o endereço
-</translation>
     </message>
 </context>
 <context>
@@ -1574,32 +1550,32 @@ Favor verificar o endereço e tente novamente.</translation>
         <translation>Favor selecionar o nível de privacidade.</translation>
     </message>
     <message>
-        <source>Use 2 separate masternodes to mix funds up to 10000 ION</source>
-        <translation>Use 2 masternodes separados para embaralhar fundos até 10000 ION</translation>
+        <source>Use 2 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Use 2 masternodes separados para embaralhar fundos até 20000 ION</translation>
     </message>
     <message>
-        <source>Use 8 separate masternodes to mix funds up to 10000 ION</source>
-        <translation>Use 8 masternodes separados para embaralhar fundos até 10000 ION</translation>
+        <source>Use 8 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Use 8 masternodes separados para embaralhar fundos até 20000 ION</translation>
     </message>
     <message>
         <source>Use 16 separate masternodes</source>
         <translation>Use 16 masternodes separados</translation>
     </message>
     <message>
-        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 10000 ION</source>
-        <translation>Está opção é a mais rápida e vai custar em torno de ~0.025 ION para anonimizar 10000 ION</translation>
+        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 20000 ION</source>
+        <translation>Está opção é a mais rápida e vai custar em torno de ~0.025 ION para anonimizar 20000 ION</translation>
     </message>
     <message>
-        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 10000 ION</source>
-        <translation>Está opção moderamente rápida e vai custar em torno de ~0.05 ION para anonimizar 10000 ION</translation>
+        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 20000 ION</source>
+        <translation>Está opção moderamente rápida e vai custar em torno de ~0.05 ION para anonimizar 20000 ION</translation>
     </message>
     <message>
         <source>This is the slowest and most secure option. Using maximum anonymity will cost</source>
         <translation>Esta é a opção mais lenta e mais segura. Usando a anonimização máxima vai custar</translation>
     </message>
     <message>
-        <source>0.1 ION per 10000 ION you anonymize.</source>
-        <translation>0.1 ION por 10000 ION que deixar anônima.</translation>
+        <source>0.1 ION per 20000 ION you anonymize.</source>
+        <translation>0.1 ION por 20000 ION que deixar anônima.</translation>
     </message>
     <message>
         <source>Obfuscation Configuration</source>
@@ -1986,14 +1962,6 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Saldo disponível:</translation>
     </message>
     <message>
-        <source>Security Level:</source>
-        <translation>Nível de Segurança:</translation>
-    </message>
-    <message>
-        <source>Security Level 1 - 100 (default: 42)</source>
-        <translation>Nível de segurança 1 - 100 (padrão: 42)</translation>
-    </message>
-    <message>
         <source>Pay &amp;To:</source>
         <translation>Pagar &amp;Para:</translation>
     </message>
@@ -2167,6 +2135,9 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
     </message>
 </context>
 <context>
+    <name>ProposalFrame</name>
+    </context>
+<context>
     <name>QObject</name>
     <message>
         <source>Amount</source>
@@ -2212,7 +2183,11 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <source>%1 ms</source>
         <translation>%1 ms</translation>
     </message>
-</context>
+    <message>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
+    </message>
+    </context>
 <context>
     <name>QRImageWidget</name>
     <message>
@@ -2439,10 +2414,6 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Você deseja continuar?.&lt;br /&gt;</translation>
     </message>
     <message>
-        <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
-        <translation>Utilize as teclas para cima ou baixo para navegar no histórico e &lt;b&gt;Ctrl-L&lt;/b&gt; para limpar a tela.</translation>
-    </message>
-    <message>
         <source>%1 B</source>
         <translation>%1 B</translation>
     </message>
@@ -2486,12 +2457,12 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Um rótulo opcional para associar a novos endereços de recebimento.</translation>
     </message>
     <message>
-        <source>&amp;Label:</source>
-        <translation>&amp;Rótulo:</translation>
+        <source>A&amp;mount:</source>
+        <translation>Quantia:</translation>
     </message>
     <message>
-        <source>&amp;Amount:</source>
-        <translation>&amp;Quantidade:</translation>
+        <source>&amp;Label:</source>
+        <translation>&amp;Rótulo:</translation>
     </message>
     <message>
         <source>&amp;Request payment</source>
@@ -2536,6 +2507,10 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
     <message>
         <source>Copy amount</source>
         <translation>Copiar quantia</translation>
+    </message>
+    <message>
+        <source>Copy address</source>
+        <translation>Copiar endereço</translation>
     </message>
 </context>
 <context>
@@ -2606,6 +2581,10 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
     <message>
         <source>Message</source>
         <translation>Mensagem</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Endereço</translation>
     </message>
     <message>
         <source>Amount</source>
@@ -2969,8 +2948,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>Ion Core is shutting down...</source>
-        <translation>Ion Core está desligando...</translation>
+        <source>ION Core is shutting down...</source>
+        <translation>ION Core está desligando...</translation>
     </message>
     <message>
         <source>Do not shut down the computer until this window disappears.</source>
@@ -3111,8 +3090,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Version %1</source>
@@ -3127,8 +3106,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Os desenvolvedores do Dash Core</translation>
     </message>
     <message>
-        <source>The Ion Core developers</source>
-        <translation>Os desenvolvedores do Ion Core</translation>
+        <source>The ION Core developers</source>
+        <translation>Os desenvolvedores do ION Core</translation>
     </message>
     <message>
         <source>[testnet]</source>
@@ -3696,8 +3675,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Define o tamanho máximo de transações de alta prioridade/taxa baixa em bytes (padrão: %d)</translation>
     </message>
     <message>
-        <source>Unable to locate enough funds for this transaction that are not equal 10000 ION.</source>
-        <translation>Incapaz de localizar fundos para esta transação que não são iguais a 10000 ION.</translation>
+        <source>Unable to locate enough funds for this transaction that are not equal 20000 ION.</source>
+        <translation>Incapaz de localizar fundos para esta transação que não são iguais a 20000 ION.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</source>
@@ -3712,7 +3691,7 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Aviso: -paytxfee está definido como muito alto! Está e a taxa de transação que você irá pagar se enviar uma transação.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Ion Core will not work properly.</source>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong ION Core will not work properly.</source>
         <translation>Aviso: Favor verificar se o horário e data de seu computador estão corretos! Se o seu relógio estiver errado o Core ION não vai funcionar corretamente.</translation>
     </message>
     <message>
@@ -3796,8 +3775,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Todos os direitos reservados (C) 2015-%i aos Desenvolvedores do PIVX Core</translation>
     </message>
     <message>
-        <source>Copyright (C) 2018-%i The Ion Core Developers</source>
-        <translation>Todos os direitos reservados (C) 2018-%i aos Desenvolvedores do Ion Core</translation>
+        <source>Copyright (C) 2018-%i The ION Core Developers</source>
+        <translation>Todos os direitos reservados (C) 2018-%i aos Desenvolvedores do ION Core</translation>
     </message>
     <message>
         <source>Corrupted block database detected</source>
@@ -3856,8 +3835,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Erro no carregamento da wallet.dat: Carteira corrompida</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Ion Core</source>
-        <translation>Erro ao carregar wallet.dat: A Carteira requer uma nova versão da Ion Core</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of ION Core</source>
+        <translation>Erro ao carregar wallet.dat: A Carteira requer uma nova versão da ION Core</translation>
     </message>
     <message>
         <source>Error opening block database</source>
@@ -4054,8 +4033,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Carregando o cachê de pagamento do masternode...</translation>
     </message>
     <message>
-        <source>Loading wallet... (%3.1f %%)</source>
-        <translation>Carregando carteira... (%3.1f %%)</translation>
+        <source>Loading wallet... (%3.2f %%)</source>
+        <translation>Carregando carteira... (%3.2f %%)</translation>
     </message>
     <message>
         <source>Loading wallet...</source>
@@ -4346,8 +4325,8 @@ https://www.transifex.com/ioncoincore/ioncore</translation>
         <translation>Carteira está travada.</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Ion Core to complete</source>
-        <translation>A carteira precisa ser reescrita: reinicia o Ion Core para completar</translation>
+        <source>Wallet needed to be rewritten: restart ION Core to complete</source>
+        <translation>A carteira precisa ser reescrita: reinicia o ION Core para completar</translation>
     </message>
     <message>
         <source>Wallet options:</source>

@@ -3,7 +3,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Ion daemon main net (normal)",
+            "name": "Ion daemon main net (normal)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -22,7 +22,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (normal)",
+            "name": "Ion daemon testnet (normal)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -41,7 +41,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (normal)",
+            "name": "Ion-QT main net (normal)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -60,7 +60,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (normal)",
+            "name": "Ion-QT testnet (normal)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -79,7 +79,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug)",
+            "name": "Ion daemon main net (debug)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -98,7 +98,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug addrman)",
+            "name": "Ion daemon main net (debug addrman)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -117,7 +117,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug alert)",
+            "name": "Ion daemon main net (debug alert)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -136,7 +136,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug bench)",
+            "name": "Ion daemon main net (debug bench)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -155,7 +155,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug coindb)",
+            "name": "Ion daemon main net (debug coindb)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -174,7 +174,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug db)",
+            "name": "Ion daemon main net (debug db)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -193,7 +193,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug lock)",
+            "name": "Ion daemon main net (debug lock)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -212,7 +212,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug rand)",
+            "name": "Ion daemon main net (debug rand)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -231,7 +231,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug rpc)",
+            "name": "Ion daemon main net (debug rpc)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -250,7 +250,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug rpc)",
+            "name": "Ion daemon main net (debug rpc)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -269,7 +269,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug tor)",
+            "name": "Ion daemon main net (debug tor)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -288,7 +288,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug mempool)",
+            "name": "Ion daemon main net (debug mempool)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -307,7 +307,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug net)",
+            "name": "Ion daemon main net (debug net)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -326,7 +326,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug proxy)",
+            "name": "Ion daemon main net (debug proxy)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -345,7 +345,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug http)",
+            "name": "Ion daemon main net (debug http)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -364,7 +364,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug libevent)",
+            "name": "Ion daemon main net (debug libevent)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -383,7 +383,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug ion)",
+            "name": "Ion daemon main net (debug ion)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -402,7 +402,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug obfuscation)",
+            "name": "Ion daemon main net (debug obfuscation)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -421,7 +421,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug swiftx)",
+            "name": "Ion daemon main net (debug swiftx)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -440,7 +440,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug masternode)",
+            "name": "Ion daemon main net (debug masternode)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -459,7 +459,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug mnpayments)",
+            "name": "Ion daemon main net (debug mnpayments)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -478,7 +478,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug mnbudget)",
+            "name": "Ion daemon main net (debug mnbudget)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -497,7 +497,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon main net (debug zero)",
+            "name": "Ion daemon main net (debug zero)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -516,7 +516,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug)",
+            "name": "Ion-QT main net (debug)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -535,7 +535,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug addrman)",
+            "name": "Ion-QT main net (debug addrman)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -554,7 +554,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug alert)",
+            "name": "Ion-QT main net (debug alert)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -573,7 +573,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug bench)",
+            "name": "Ion-QT main net (debug bench)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -592,7 +592,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug coindb)",
+            "name": "Ion-QT main net (debug coindb)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -611,7 +611,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug db)",
+            "name": "Ion-QT main net (debug db)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -630,7 +630,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug lock)",
+            "name": "Ion-QT main net (debug lock)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -649,7 +649,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug rand)",
+            "name": "Ion-QT main net (debug rand)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -668,7 +668,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug rpc)",
+            "name": "Ion-QT main net (debug rpc)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -687,7 +687,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug rpc)",
+            "name": "Ion-QT main net (debug rpc)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -706,7 +706,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug tor)",
+            "name": "Ion-QT main net (debug tor)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -725,7 +725,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug mempool)",
+            "name": "Ion-QT main net (debug mempool)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -744,7 +744,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug net)",
+            "name": "Ion-QT main net (debug net)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -763,7 +763,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug proxy)",
+            "name": "Ion-QT main net (debug proxy)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -782,7 +782,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug http)",
+            "name": "Ion-QT main net (debug http)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -801,7 +801,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug libevent)",
+            "name": "Ion-QT main net (debug libevent)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -820,7 +820,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug ion)",
+            "name": "Ion-QT main net (debug ion)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -839,7 +839,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug obfuscation)",
+            "name": "Ion-QT main net (debug obfuscation)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -858,7 +858,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug swiftx)",
+            "name": "Ion-QT main net (debug swiftx)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -877,7 +877,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug masternode)",
+            "name": "Ion-QT main net (debug masternode)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -896,7 +896,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug mnpayments)",
+            "name": "Ion-QT main net (debug mnpayments)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -915,7 +915,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug mnbudget)",
+            "name": "Ion-QT main net (debug mnbudget)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -934,7 +934,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT main net (debug zero)",
+            "name": "Ion-QT main net (debug zero)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -953,7 +953,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug)",
+            "name": "Ion daemon testnet (debug)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -972,7 +972,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug addrman)",
+            "name": "Ion daemon testnet (debug addrman)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -991,7 +991,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug alert)",
+            "name": "Ion daemon testnet (debug alert)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1010,7 +1010,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug bench)",
+            "name": "Ion daemon testnet (debug bench)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1029,7 +1029,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug coindb)",
+            "name": "Ion daemon testnet (debug coindb)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1048,7 +1048,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug db)",
+            "name": "Ion daemon testnet (debug db)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1067,7 +1067,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug lock)",
+            "name": "Ion daemon testnet (debug lock)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1086,7 +1086,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug rand)",
+            "name": "Ion daemon testnet (debug rand)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1105,7 +1105,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug rpc)",
+            "name": "Ion daemon testnet (debug rpc)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1124,7 +1124,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug rpc)",
+            "name": "Ion daemon testnet (debug rpc)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1143,7 +1143,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug tor)",
+            "name": "Ion daemon testnet (debug tor)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1162,7 +1162,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug mempool)",
+            "name": "Ion daemon testnet (debug mempool)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1181,7 +1181,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug net)",
+            "name": "Ion daemon testnet (debug net)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1200,7 +1200,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug proxy)",
+            "name": "Ion daemon testnet (debug proxy)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1219,7 +1219,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug http)",
+            "name": "Ion daemon testnet (debug http)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1238,7 +1238,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug libevent)",
+            "name": "Ion daemon testnet (debug libevent)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1257,7 +1257,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug ion)",
+            "name": "Ion daemon testnet (debug ion)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1276,7 +1276,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug obfuscation)",
+            "name": "Ion daemon testnet (debug obfuscation)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1295,7 +1295,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug swiftx)",
+            "name": "Ion daemon testnet (debug swiftx)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1314,7 +1314,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug masternode)",
+            "name": "Ion daemon testnet (debug masternode)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1333,7 +1333,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug mnpayments)",
+            "name": "Ion daemon testnet (debug mnpayments)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1352,7 +1352,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug mnbudget)",
+            "name": "Ion daemon testnet (debug mnbudget)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1371,7 +1371,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion daemon testnet (debug zero)",
+            "name": "Ion daemon testnet (debug zero)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/iond",
@@ -1390,7 +1390,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug)",
+            "name": "Ion-QT testnet (debug)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1409,7 +1409,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug addrman)",
+            "name": "Ion-QT testnet (debug addrman)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1428,7 +1428,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug alert)",
+            "name": "Ion-QT testnet (debug alert)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1447,7 +1447,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug bench)",
+            "name": "Ion-QT testnet (debug bench)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1466,7 +1466,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug coindb)",
+            "name": "Ion-QT testnet (debug coindb)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1485,7 +1485,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug db)",
+            "name": "Ion-QT testnet (debug db)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1504,7 +1504,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug lock)",
+            "name": "Ion-QT testnet (debug lock)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1523,7 +1523,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug rand)",
+            "name": "Ion-QT testnet (debug rand)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1542,7 +1542,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug rpc)",
+            "name": "Ion-QT testnet (debug rpc)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1561,7 +1561,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug rpc)",
+            "name": "Ion-QT testnet (debug rpc)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1580,7 +1580,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug tor)",
+            "name": "Ion-QT testnet (debug tor)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1599,7 +1599,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug mempool)",
+            "name": "Ion-QT testnet (debug mempool)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1618,7 +1618,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug net)",
+            "name": "Ion-QT testnet (debug net)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1637,7 +1637,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug proxy)",
+            "name": "Ion-QT testnet (debug proxy)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1656,7 +1656,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug http)",
+            "name": "Ion-QT testnet (debug http)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1675,7 +1675,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug libevent)",
+            "name": "Ion-QT testnet (debug libevent)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1694,7 +1694,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug ion)",
+            "name": "Ion-QT testnet (debug ion)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1713,7 +1713,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug obfuscation)",
+            "name": "Ion-QT testnet (debug obfuscation)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1732,7 +1732,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug swiftx)",
+            "name": "Ion-QT testnet (debug swiftx)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1751,7 +1751,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug masternode)",
+            "name": "Ion-QT testnet (debug masternode)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1770,7 +1770,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug mnpayments)",
+            "name": "Ion-QT testnet (debug mnpayments)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1789,7 +1789,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug mnbudget)",
+            "name": "Ion-QT testnet (debug mnbudget)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1808,7 +1808,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion-QT testnet (debug zero)",
+            "name": "Ion-QT testnet (debug zero)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
@@ -1827,7 +1827,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion tests",
+            "name": "Ion tests",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/test/test_ion",
@@ -1845,7 +1845,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion CLI main net (normal)",
+            "name": "Ion CLI main net (normal)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/ion-cli",
@@ -1864,7 +1864,7 @@
             ]
         },
         {
-            "name": "(gdb) Ion CLI testnet (normal)",
+            "name": "Ion CLI testnet (normal)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/ion-cli",
@@ -1881,6 +1881,835 @@
                     "ignoreFailures": true
                 }
             ]
+        },
+        // FULL SUITE ALL TESTS
+        {
+            "name": "test suite (extended) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--extended", "--jobs=4"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "test suite (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        // NORMAL SINGLE TESTS
+        {
+            "name": "wallet_backup.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_backup.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_pos_fakestake.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_pos_fakestake.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_pos_fakestake_accepted.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_pos_fakestake_accepted.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_zpos_fakestake.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_zpos_fakestake.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_zpos_fakestake_accepted.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_zpos_fakestake_accepted.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "zerocoin_wrapped_serials.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "zerocoin_wrapped_serials.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "feature_block.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "feature_block.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_fundrawtransaction.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_fundrawtransaction.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_pos_doublespend.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_pos_doublespend.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_basic.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_basic.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_accounts.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_accounts.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_dump.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_dump.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_listtransactions.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_listtransactions.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_zapwallettxes.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_zapwallettxes.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_importmulti.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_importmulti.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "mempool_limit.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "mempool_limit.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_listreceivedby.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_listreceivedby.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_abandonconflict.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_abandonconflict.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_rawtransaction.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_rawtransaction.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "feature_reindex.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "feature_reindex.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_bip38.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_bip38.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_keypool_topup.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_keypool_topup.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "interface_zmq.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "interface_zmq.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        }, # **TODO**
+        {
+            "name": "interface_bitcoin_cli.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "interface_bitcoin_cli.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "mempool_resurrect.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "mempool_resurrect.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_txn_doublespend.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_txn_doublespend.py", "--mineblock"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_txn_clone.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_txn_clone.py","--mineblock"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_getchaintips.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_getchaintips.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "interface_rest.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "interface_rest.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "mempool_spend_coinbase.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "mempool_spend_coinbase.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "mempool_reorg.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "mempool_reorg.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "mempool_persist.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "mempool_persist.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "interface_http.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "interface_http.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_users.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_users.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "feature_proxy.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "feature_proxy.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_signrawtransaction.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_signrawtransaction.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_disconnect_ban.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_disconnect_ban.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_decodescript.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_decodescript.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_blockchain.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_blockchain.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_deprecated.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_deprecated.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_disable.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_disable.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_net.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_net.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_keypool.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_keypool.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_mempool.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_mempool.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "mining_prioritisetransaction.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "mining_prioritisetransaction.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_invalid_block.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_invalid_block.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_invalid_tx.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_invalid_tx.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_signmessage.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_signmessage.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_import_rescan.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_import_rescan.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "mining_basic.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "mining_basic.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_bumpfee.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_bumpfee.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_listsinceblock.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_listsinceblock.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_leak.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_leak.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_encryption.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_encryption.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "feature_cltv.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "feature_cltv.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "wallet_resendwallettransactions.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "wallet_resendwallettransactions.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "feature_minchainwork.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "feature_minchainwork.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_fingerprint.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_fingerprint.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "feature_uacomment.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "feature_uacomment.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_unrequested_blocks.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_unrequested_blocks.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "feature_config_args.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "feature_config_args.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "feature_help.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "feature_help.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+	    // EXTENDED_SCRIPTS
+        {
+            "name": "feature_fee_estimation.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "feature_fee_estimation.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_timeouts.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_timeouts.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "p2p_feefilter.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "p2p_feefilter.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_bind.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_bind.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "example_test.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "example_test.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "feature_notifications.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "feature_notifications.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "rpc_invalidateblock.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "rpc_invalidateblock.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+	    // NON_SCRIPTS
+        {
+            "name": "combine_logs.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "combine_logs.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "create_cache.py (normal) (internal terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4", "create_cache.py"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "test suite (extended) (external terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--extended", "--jobs=4"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "externalTerminal"
+        },
+        {
+            "name": "test suite (normal) (external terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/test/functional/test_runner.py",
+            "args": ["--jobs=4"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "externalTerminal"
         }
     ]
 }

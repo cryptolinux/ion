@@ -40,7 +40,7 @@ stages:
 env:
   global:
     - MAKEJOBS=-j3
-    - RUN_UNIT_TESTS=true
+    - RUN_UNIT_TESTS=flase
     - RUN_FUNCTIONAL_TESTS=false # Not Yet Implemented
     - RUN_BENCH=false  # Set to true for any one job that has debug enabled, to quickly check bench is not crashing or hitting assertions
     - DOCKER_NAME_TAG=ubuntu:18.04
@@ -87,7 +87,6 @@ jobs:
         HOST=arm-linux-gnueabihf
         PACKAGES="python3 g++-arm-linux-gnueabihf"
         DEP_OPTS="NO_QT=1"
-        RUN_UNIT_TESTS=false
         RUN_FUNCTIONAL_TESTS=false
         GOAL="install"
         # -Wno-psabi is to disable ABI warnings: "note: parameter passing for argument of type ... changed in GCC 7.1"
@@ -99,7 +98,6 @@ jobs:
         HOST=aarch64-linux-gnu
         PACKAGES="python3 g++-aarch64-linux-gnu"
         DEP_OPTS="NO_QT=1"
-        RUN_UNIT_TESTS=false
         RUN_FUNCTIONAL_TESTS=false
         GOAL="install"
         ION_CONFIG="--enable-glibc-back-compat --enable-reduce-exports"
@@ -109,7 +107,6 @@ jobs:
         HOST=riscv64-linux-gnu
         PACKAGES="python3 g++-riscv64-linux-gnu"
         DEP_OPTS="NO_QT=1"
-        RUN_UNIT_TESTS=false
         RUN_FUNCTIONAL_TESTS=false
         GOAL="install"
         ION_CONFIG="--enable-glibc-back-compat --enable-reduce-exports"

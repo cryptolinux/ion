@@ -5,15 +5,16 @@ This guide will show you how to build iond (headless client) for OSX.
 Table of Contents
 ------------------
 - [Mac OS X Build Instructions and Notes](#mac-os-x-build-instructions-and-notes)
-        - [Notes](#notes)
-        - [Preparation](#preparation)
-        - [Instructions: Homebrew](#instructions-homebrew)
-                        - [Install dependencies using Homebrew](#install-dependencies-using-homebrew)
-                - [Building `iond`](#building-iond)
-        - [Use Qt Creator as IDE](#use-qt-creator-as-ide)
-        - [Creating a release build](#creating-a-release-build)
-        - [Running](#running)
-        - [Other commands:](#other-commands)
+  - [Table of Contents](#table-of-contents)
+  - [Notes](#notes)
+  - [Preparation](#preparation)
+  - [Instructions: Homebrew](#instructions-homebrew)
+      - [Install dependencies using Homebrew](#install-dependencies-using-homebrew)
+    - [Building `iond`](#building-iond)
+  - [Use Qt Creator as IDE](#use-qt-creator-as-ide)
+  - [Creating a release build](#creating-a-release-build)
+  - [Running](#running)
+  - [Other commands:](#other-commands)
 
 ## Notes
 
@@ -98,7 +99,7 @@ All dependencies should be compiled with these flags:
  -arch x86_64
  -isysroot $(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
 
-Once dependencies are compiled, see release-process.md for how the Ion-Qt.app
+Once dependencies are compiled, see release-process.md for how the ION-Qt.app
 bundle is packaged and signed to create the .dmg disk image that is distributed.
 
 ## Running

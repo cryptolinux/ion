@@ -4,21 +4,21 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <qt/transactiontablemodel.h>
+#include "transactiontablemodel.h"
 
-#include <qt/addresstablemodel.h>
-#include <qt/guiutil.h>
-#include <qt/optionsmodel.h>
-#include <qt/transactiondesc.h>
-#include <qt/transactionrecord.h>
-#include <qt/walletmodel.h>
+#include "addresstablemodel.h"
+#include "guiconstants.h"
+#include "guiutil.h"
+#include "optionsmodel.h"
+#include "transactiondesc.h"
+#include "transactionrecord.h"
+#include "walletmodel.h"
 
-#include <core_io.h>
-#include <validation.h>
-#include <sync.h>
-#include <uint256.h>
-#include <util.h>
-#include <wallet/wallet.h>
+#include "main.h"
+#include "sync.h"
+#include "uint256.h"
+#include "util.h"
+#include "wallet/wallet.h"
 
 #include <QColor>
 #include <QDateTime>
@@ -81,13 +81,8 @@ public:
         {
             LOCK2(cs_main, wallet->cs_wallet);
             for (std::map<uint256, CWalletTx>::iterator it = wallet->mapWallet.begin(); it != wallet->mapWallet.end(); ++it) {
-                if (TransactionRecord::showTransaction(it->second)) {
-                    std::vector<TransactionRecord> vRecs = TransactionRecord::decomposeTransaction(wallet, it->second);
-                    QList<TransactionRecord> QLRecs;
-                    QLRecs.reserve(vRecs.size());
-                    std::copy(vRecs.begin(), vRecs.end(), std::back_inserter(QLRecs));
-                    cachedWallet.append(QLRecs);
-                }
+                if (TransactionRecord::showTransaction(it->second))
+                    cachedWallet.append(TransactionRecord::decomposeTransaction(wallet, it->second));
             }
         }
     }
@@ -141,11 +136,8 @@ public:
                     break;
                 }
                 // Added -- insert at the right position
-                std::vector<TransactionRecord> vToInsert = TransactionRecord::decomposeTransaction(wallet, mi->second);
-                QList<TransactionRecord> toInsert;
-                toInsert.reserve(vToInsert.size());
-                std::copy(vToInsert.begin(), vToInsert.end(), std::back_inserter(toInsert));
-
+                QList<TransactionRecord> toInsert =
+                    TransactionRecord::decomposeTransaction(wallet, mi->second);
                 if (!toInsert.isEmpty()) /* only if something to insert */
                 {
                     parent->beginInsertRows(QModelIndex(), lowerIndex, lowerIndex+toInsert.size()-1);
@@ -660,7 +652,7 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
         case Status:
             return QString::fromStdString(rec->status.sortKey);
         case Date:
-            return qint64(rec->time);
+            return rec->time;
         case Type:
             return formatTxType(rec);
         case Watchonly:
@@ -719,7 +711,7 @@ QVariant TransactionTableModel::data(const QModelIndex &index, int role) const
     case AmountRole:
         return qint64(rec->credit + rec->debit);
     case TxIDRole:
-        return QString::fromStdString(rec->getTxID());
+        return rec->getTxID();
     case TxHashRole:
         return QString::fromStdString(rec->hash.ToString());
     case TxHexRole:

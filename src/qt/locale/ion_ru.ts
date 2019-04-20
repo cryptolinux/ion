@@ -765,10 +765,6 @@
         <source>&amp;Command-line options</source>
         <translation>&amp;Параметры командной строки</translation>
     </message>
-    <message numerus="yes">
-        <source>Processed %n blocks of transaction history.</source>
-        <translation><numerusform>Обработано %n блоков истории транзакций</numerusform><numerusform>Обработано %n блоков истории транзакций</numerusform><numerusform>Обработано %n блоков истории транзакций</numerusform><numerusform>Обработано %n блоков истории транзакций</numerusform></translation>
-    </message>
     <message>
         <source>Show the %1 help message to get a list with possible Ion command-line options</source>
         <translation>Показать справку по %1 со списком возможных параметров командной строки</translation>
@@ -830,8 +826,8 @@
         <translation><numerusform>%n активное соединение с сетью Ion</numerusform><numerusform>%n активных соединения с сетью Ion</numerusform><numerusform>%n активных соединений с сетью Ion</numerusform><numerusform>%n активных соединений с сетью Ion</numerusform></translation>
     </message>
     <message>
-        <source>Send coins to a ION address</source>
-        <translation>Отправить монеты на ION адрес</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Send coins to a ION address</source>
@@ -854,12 +850,12 @@
         <translation>Индексация блоков на диске...</translation>
     </message>
     <message>
-        <source>Processing blocks on disk...</source>
-        <translation>Обработка блоков на диске...</translation>
+        <source>&amp;About ION Core</source>
+        <translation>&amp;О ION Core</translation>
     </message>
     <message>
-        <source>Reindexing blocks on disk...</source>
-        <translation>Идёт переиндексация блоков на диске...</translation>
+        <source>Show information about ION Core</source>
+        <translation>Показать информацию о ION Core</translation>
     </message>
     <message>
         <source>Connecting to peers...</source>
@@ -918,16 +914,12 @@
         <translation>Получено несколько транзакций</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
         <translation>Смотрите помощь к программе, чтобы получить документацию ко всем возможным опциям комманды ION</translation>
     </message>
     <message>
-        <source>Ion Core client</source>
-        <translation>Клиент Ion Core</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n active connection(s) to ION network</source>
-        <translation><numerusform>%n активных подключений к сети ION</numerusform><numerusform>%n активных подключений к сети ION</numerusform><numerusform>%n активных подключений к сети ION</numerusform><numerusform>%n активных подключений к сети ION</numerusform></translation>
+        <source>ION Core client</source>
+        <translation>Клиент ION Core</translation>
     </message>
     <message>
         <source>Synchronizing with network...</source>
@@ -949,25 +941,9 @@
         <source>Up to date</source>
         <translation>Обновление не требуется</translation>
     </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation><numerusform>%n часов</numerusform><numerusform>%n часов</numerusform><numerusform>%n часов</numerusform><numerusform>%n часов</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day(s)</source>
-        <translation><numerusform>%n дней</numerusform><numerusform>%n дней</numerusform><numerusform>%n дней</numerusform><numerusform>%n дней</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n week(s)</source>
-        <translation><numerusform>%n недель</numerusform><numerusform>%n недель</numerusform><numerusform>%n недель</numerusform><numerusform>%n недель</numerusform></translation>
-    </message>
     <message>
         <source>%1 and %2</source>
         <translation>%1 и %2</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year(s)</source>
-        <translation><numerusform>%n лет</numerusform><numerusform>%n лет</numerusform><numerusform>%n лет</numerusform><numerusform>%n лет</numerusform></translation>
     </message>
     <message>
         <source>Catching up...</source>
@@ -1039,7 +1015,7 @@
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Кошелек &lt;b&gt;зашифрован&lt;/b&gt; и в настоящее время &lt;b&gt;заблокирован&lt;/b&gt;</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>BlockExplorer</name>
     <message>
@@ -1408,18 +1384,33 @@
     </message>
 </context>
 <context>
+    <name>GovernancePage</name>
+    <message>
+        <source>Form</source>
+        <translation>Вид</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    </context>
+<context>
     <name>HelpMessageDialog</name>
     <message>
         <source>version</source>
         <translation>версия</translation>
     </message>
     <message>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
+    </message>
+    <message>
         <source>(%1-bit)</source>
         <translation>(%1-бит)</translation>
     </message>
     <message>
-        <source>About %1</source>
-        <translation>О %1</translation>
+        <source>About ION Core</source>
+        <translation>О ION Core</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1493,24 +1484,16 @@
         <translation>Добро пожаловать</translation>
     </message>
     <message>
-        <source>Welcome to %1.</source>
-        <translation>Добро пожаловать в %1.</translation>
+        <source>Welcome to ION Core.</source>
+        <translation>Добро пожаловать в ION Core.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation>Так как вы впервые запустили программу, вы можете выбрать, где %1 будет хранить данные.</translation>
+        <source>As this is the first time the program is launched, you can choose where ION Core will store its data.</source>
+        <translation>Поскольку это первый запуск программы, вы можете выбрать, где будут храниться данные ION Core.</translation>
     </message>
     <message>
-        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
-        <translation>После нажатия OK, %1 начнет скачивать и проверять всю цепочку блоков %4 (%2GB), начиная с самых ранних транзакций %3, т.е. со времени запуска проекта %4.</translation>
-    </message>
-    <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation>Начальная синхронизация требует много ресурсов и, возможно, обнаружит проблемы с Вашим компьютером, которых Вы ранее не замечали. Каждый раз, когда Вы запускаете %1, скачивание будет продолжено с того места, где оно было остановлено в прошлый раз.</translation>
-    </message>
-    <message>
-        <source>Ion Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>Ion Core загрузит и сохранит копию цепочки блоков ION. Каталог будет занимать около %1GB и со временем размер будет увеличиваться. Кроме того, в этом каталоге будет храниться кошелек.</translation>
+        <source>ION Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>ION Core загрузит и сохранит копию цепочки блоков ION. Каталог будет занимать около %1GB и со временем размер будет увеличиваться. Кроме того, в этом каталоге будет храниться кошелек.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1521,20 +1504,8 @@
         <translation>Использовать другой каталог данных:</translation>
     </message>
     <message>
-        <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation>Как минимум %1 GB данных будет сохранено в этой папке, но со временем размер будет увеличиваться.</translation>
-    </message>
-    <message>
-        <source>Approximately %1 GB of data will be stored in this directory.</source>
-        <translation>Приблизительно %1 GB данных будет сохранено в этой папке.</translation>
-    </message>
-    <message>
-        <source>%1 will download and store a copy of the Ion block chain.</source>
-        <translation>%1 скачает и сохранит копию цепочки блоков Ion.</translation>
-    </message>
-    <message>
-        <source>The wallet will also be stored in this directory.</source>
-        <translation>Ваш кошелек будет сохранен в этой же папке.</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1773,51 +1744,8 @@ MultiSend будет неактивен до тех пор, пока вы не �
         <translation>(нет метки)</translation>
     </message>
     <message>
-        <source>The entered address:
-</source>
-        <translation>Введенный адрес:
-</translation>
-    </message>
-    <message>
-        <source>Unknown. Syncing Headers (%1)...</source>
-        <translation>Неизвестно. Синхронизация заголовков (%1)...</translation>
-    </message>
-</context>
-<context>
-    <name>OpenURIDialog</name>
-    <message>
-        <source>Open URI</source>
-        <translation>Открыть URI</translation>
-    </message>
-    <message>
-        <source>Open payment request from URI or file</source>
-        <translation>Открыть запрос платежа из URI или файла</translation>
-    </message>
-    <message>
-        <source>Saved the MultiSend to memory, but failed saving properties to the database.
-</source>
-        <translation>Сохранили МультиОтправку в памяти, но не удалось сохранить свойства в базе данных.
-</translation>
-    </message>
-    <message>
-        <source>Saved the MultiSend to memory, but failed saving properties to the database.
-</source>
-        <translation>Сохранили МультиОтправку в памяти, но не удалось сохранить свойства в базе данных.
-</translation>
-    </message>
-    <message>
-        <source>MultiSend Vector
-</source>
-        <translation>Вектор MultiSend
-</translation>
-    </message>
-    <message>
-        <source>Select payment request file</source>
-        <translation>Выбрать файл запроса платежа</translation>
-    </message>
-    <message>
-        <source>Select payment request file to open</source>
-        <translation>Выберите файл запроса платежа</translation>
+        <source>Please Enter 1 - 100 for percent.</source>
+        <translation>Введите 1 - 100 для указания процентов.</translation>
     </message>
 </context>
 <context>
@@ -2014,32 +1942,32 @@ Please be patient after clicking import.</source>
         <translation>Метка адреса:</translation>
     </message>
     <message>
-        <source>Add another address that could sign to verify a transaction from the multisig address.</source>
-        <translation>Добавьте еще один адрес, который может подписать, подтвержденную транзакцию с многоподписного адреса.</translation>
+        <source>Use 2 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Используйте 2 разные мастерноды для смешивания средств до 20000 ION</translation>
     </message>
     <message>
-        <source>&amp;Add Address / Key</source>
-        <translation>&amp;Добавить Адрес / Ключ</translation>
+        <source>Use 8 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Используйте 8 разных мастернод для смешивания средств до 20000 ION</translation>
     </message>
     <message>
         <source>Local addresses or public keys that can sign:</source>
         <translation>Локальные адреса или публичные ключи кторые могут подписать:</translation>
     </message>
     <message>
-        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 10000 ION</source>
-        <translation>Этот вариант является самым быстрым и будет стоить порядка ~0.025 ION для анонимизации 10000 ION</translation>
+        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 20000 ION</source>
+        <translation>Этот вариант является самым быстрым и будет стоить порядка ~0.025 ION для анонимизации 20000 ION</translation>
     </message>
     <message>
-        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 10000 ION</source>
-        <translation>Это средний по скорости вариант и он будет стоить около 0.05 ION для анонимизации 10000 ION</translation>
+        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 20000 ION</source>
+        <translation>Это средний по скорости вариант и он будет стоить около 0.05 ION для анонимизации 20000 ION</translation>
     </message>
     <message>
         <source>Status:</source>
         <translation>Статус:</translation>
     </message>
     <message>
-        <source>0.1 ION per 10000 ION you anonymize.</source>
-        <translation>0.1 ION за 10000 ION которые вы собираетесь анонимизировать.</translation>
+        <source>0.1 ION per 20000 ION you anonymize.</source>
+        <translation>0.1 ION за 20000 ION которые вы собираетесь анонимизировать.</translation>
     </message>
     <message>
         <source>&amp;Import Redeem</source>
@@ -2717,18 +2645,6 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>0 xION</translation>
     </message>
     <message>
-        <source>Security Level for Zerocoin Transactions. More is better, but needs more time and resources.</source>
-        <translation>Уровень безопасности для транзакций Zerocoin. Больше лучше, но требуется больше времени и ресурсов.</translation>
-    </message>
-    <message>
-        <source>Security Level:</source>
-        <translation>Уровень безопасности:</translation>
-    </message>
-    <message>
-        <source>Security Level 1 - 100 (default: 42)</source>
-        <translation>Уровень безопасности 1-100 ( по умолчанию: 42)</translation>
-    </message>
-    <message>
         <source>Pay &amp;To:</source>
         <translation>Оплатить &amp;кому:</translation>
     </message>
@@ -3011,14 +2927,6 @@ Please be patient...</source>
 Будьте терпеливы ...</translation>
     </message>
     <message>
-        <source>Spending Zerocoin.
-Computationally expensive, might need several minutes depending on the selected Security Level and your hardware.
-Please be patient...</source>
-        <translation>Расходы Zerocoin.
-Вычислительно дорого, может потребоваться несколько минут в зависимости от выбранного уровня безопасности и вашего оборудования.
-Пожалуйста, будьте терпеливы...</translation>
-    </message>
-    <message>
         <source>) needed.
 Maximum allowed: </source>
         <translation>) необходимо.
@@ -3189,20 +3097,8 @@ Maximum allowed: </source>
         <translation>к вновь созданному (неиспользуемому и поэтому анонимному) локальному адресу &lt;br /&gt;</translation>
     </message>
     <message>
-        <source>with Security Level </source>
-        <translation>с безопасным уровнем</translation>
-    </message>
-    <message>
         <source>Confirm send coins</source>
         <translation>Подтвердить отправку монет</translation>
-    </message>
-    <message>
-        <source>Version 1 xION require a security level of 100 to successfully spend.</source>
-        <translation>Для версии 1 xION требуется уровень безопасности 100, который можно успешно тратить.</translation>
-    </message>
-    <message>
-        <source>Failed to spend xION</source>
-        <translation>Не удалось провести xION</translation>
     </message>
     <message>
         <source>Failed to fetch mint associated with serial hash</source>
@@ -3221,11 +3117,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     <message>
         <source>Spend Zerocoin failed with status = </source>
         <translation>Провести Zerocoin не удалось со статусом =</translation>
-    </message>
-    <message numerus="yes">
-        <source>PrivacyDialog</source>
-        <comment>Enter an amount of ION to convert to xION</comment>
-        <translation><numerusform>PrivacyDialog</numerusform><numerusform>PrivacyDialog</numerusform><numerusform>PrivacyDialog</numerusform><numerusform>PrivacyDialog</numerusform></translation>
     </message>
     <message>
         <source>denomination: </source>
@@ -3260,6 +3151,9 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Комиссия:</translation>
     </message>
 </context>
+<context>
+    <name>ProposalFrame</name>
+    </context>
 <context>
     <name>QObject</name>
     <message>
@@ -3310,7 +3204,11 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <source>%1 ms</source>
         <translation>%1 мс</translation>
     </message>
-</context>
+    <message>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
+    </message>
+    </context>
 <context>
     <name>QRImageWidget</name>
     <message>
@@ -3674,10 +3572,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Подтвердить повторную синхронизацию Blockchain</translation>
     </message>
     <message>
-        <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
-        <translation>Используйте стрелки вверх и вниз для навигации по истории, и &lt;b&gt;Ctrl-L&lt;/b&gt; для очистки экрана.</translation>
-    </message>
-    <message>
         <source>Type &lt;b&gt;help&lt;/b&gt; for an overview of available commands.</source>
         <translation>Введите &lt;b&gt;help&lt;/b&gt; для просмотра доступных команд.</translation>
     </message>
@@ -3749,6 +3643,10 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Дополнительный ярлык для связи с новым адресом приема.</translation>
     </message>
     <message>
+        <source>A&amp;mount:</source>
+        <translation>С&amp;умма:</translation>
+    </message>
+    <message>
         <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the ION network.</source>
         <translation>Необязательное сообщение для присоединения к платежному запросу, которое будет отображаться при открытии запроса. Примечание. Сообщение не будет отправлено с оплатой через сеть ION.</translation>
     </message>
@@ -3771,10 +3669,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     <message>
         <source>An optional amount to request. Leave this empty or zero to not request a specific amount.</source>
         <translation>Необязательная сумма для запроса. Оставьте это пустое или ноль, чтобы не запрашивать определенную сумму.</translation>
-    </message>
-    <message>
-        <source>&amp;Amount:</source>
-        <translation>&amp;Количество:</translation>
     </message>
     <message>
         <source>&amp;Request payment</source>
@@ -3819,6 +3713,10 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     <message>
         <source>Copy amount</source>
         <translation>Копировать сумму</translation>
+    </message>
+    <message>
+        <source>Copy address</source>
+        <translation>Копировать адрес</translation>
     </message>
 </context>
 <context>
@@ -3889,6 +3787,10 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     <message>
         <source>Message</source>
         <translation>Сообщение</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Адрес</translation>
     </message>
     <message>
         <source>Amount</source>
@@ -4173,10 +4075,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <source>A fee %1 times higher than %2 per kB is considered an insanely high fee.</source>
         <translation>Плата в %1 раз выше, чем %2 за КБ, считается безумно высокой.</translation>
     </message>
-    <message numerus="yes">
-        <source>Estimated to begin confirmation within %n block(s).</source>
-        <translation><numerusform>Предполагается начать подтверждение в пределах %n блоков.</numerusform><numerusform>Предполагается начать подтверждение в пределах %n блоков.</numerusform><numerusform>Предполагается начать подтверждение в пределах %n блоков.</numerusform><numerusform>Предполагается начать подтверждение в пределах %n блоков.</numerusform></translation>
-    </message>
     <message>
         <source>The recipient address is not valid, please recheck.</source>
         <translation>Адрес получателя недействителен, повторите проверку.</translation>
@@ -4316,8 +4214,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>Ion Core is shutting down...</source>
-        <translation>Ion Core выключается...</translation>
+        <source>ION Core is shutting down...</source>
+        <translation>ION Core выключается...</translation>
     </message>
     <message>
         <source>Do not shut down the computer until this window disappears.</source>
@@ -4466,8 +4364,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Version %1</source>
@@ -4482,8 +4380,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Разработчики Dash Core</translation>
     </message>
     <message>
-        <source>The Ion Core developers</source>
-        <translation>Разработчики Ion Core</translation>
+        <source>The ION Core developers</source>
+        <translation>Разработчики ION Core</translation>
     </message>
     <message>
         <source>[testnet]</source>
@@ -4499,10 +4397,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
 </context>
 <context>
     <name>TransactionDesc</name>
-    <message numerus="yes">
-        <source>Open for %n more block(s)</source>
-        <translation><numerusform>Открыть для  %n блоков</numerusform><numerusform>Открыть для  %n блоков</numerusform><numerusform>Открыть для  %n блоков</numerusform><numerusform>Открыть для  %n блоков</numerusform></translation>
-    </message>
     <message>
         <source>Open until %1</source>
         <translation>Открыть до %1</translation>
@@ -4563,10 +4457,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <source>, has not been successfully broadcast yet</source>
         <translation>, еще не была успешно передана</translation>
     </message>
-    <message numerus="yes">
-        <source>, broadcast through %n node(s)</source>
-        <translation><numerusform>, передается через %n узлов</numerusform><numerusform>, передается через %n узлов</numerusform><numerusform>, передается через %n узлов</numerusform><numerusform>, передается через %n узлов</numerusform></translation>
-    </message>
     <message>
         <source>Date</source>
         <translation>Дата</translation>
@@ -4606,10 +4496,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     <message>
         <source>Credit</source>
         <translation>Кредит</translation>
-    </message>
-    <message numerus="yes">
-        <source>matures in %n more block(s)</source>
-        <translation><numerusform>созревает в %n блоков</numerusform><numerusform>созревает в %n блоков</numerusform><numerusform>созревает в %n блоков</numerusform><numerusform>созревает в %n блоков</numerusform></translation>
     </message>
     <message>
         <source>not accepted</source>
@@ -4708,10 +4594,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     <message>
         <source>Address</source>
         <translation>Адрес</translation>
-    </message>
-    <message numerus="yes">
-        <source>Open for %n more block(s)</source>
-        <translation><numerusform>Открыть для %n блоков</numerusform><numerusform>Открыть для %n блоков</numerusform><numerusform>Открыть для %n блоков</numerusform><numerusform>Открыть для  %n блоков</numerusform></translation>
     </message>
     <message>
         <source>Open until %1</source>
@@ -5115,11 +4997,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <source>Select/Deselect All</source>
         <translation>Выбрать / Отменить выбор</translation>
     </message>
-    <message>
-        <source>Is Spendable</source>
-        <translation>Расходы</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>ion-core</name>
     <message>
@@ -5147,8 +5025,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Расчетная контрольная точка  не является тем, что регистрируется блочным индексом</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. Ion Core is probably already running.</source>
-        <translation>Не удается получить блокировку в каталоге данных %s. Ion Core, вероятно, уже запущен.</translation>
+        <source>Cannot obtain a lock on data directory %s. ION Core is probably already running.</source>
+        <translation>Не удается получить блокировку в каталоге данных %s. ION Core, вероятно, уже запущен.</translation>
     </message>
     <message>
         <source>Change automatic finalized budget voting behavior. mode=auto: Vote for only exact finalized budget match to my generated budget. (string, default: auto)</source>
@@ -5323,20 +5201,20 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Этот продукт включает программное обеспечение, разработанное OpenSSL Project для использования в OpenSSL Toolkit &lt;https://www.openssl.org/&gt; и криптографическом программном обеспечении, написанном Эриком Яном и программным обеспечением UPnP, написанным Томасом Бернардом.</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. Ion Core is probably already running.</source>
-        <translation>Не удалось привязать к %s на этом компьютере. Ion Core, вероятно, уже запущен.</translation>
+        <source>Unable to bind to %s on this computer. ION Core is probably already running.</source>
+        <translation>Не удалось привязать к %s на этом компьютере. ION Core, вероятно, уже запущен.</translation>
     </message>
     <message>
         <source>Unable to locate enough Obfuscation denominated funds for this transaction.</source>
         <translation>Не удалось найти достаточное количество средств, предназначенных для обфускации, для этой транзакции.</translation>
     </message>
     <message>
-        <source>Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 10000 ION.</source>
-        <translation>Невозможно найти достаточное количество средств, не предназначенных для обфускации, для этой транзакции, которые не равны 10000 ION.</translation>
+        <source>Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 20000 ION.</source>
+        <translation>Невозможно найти достаточное количество средств, не предназначенных для обфускации, для этой транзакции, которые не равны 20000 ION.</translation>
     </message>
     <message>
-        <source>Unable to locate enough funds for this transaction that are not equal 10000 ION.</source>
-        <translation>Не удалось найти достаточное количество средств для этой транзакции, которые не равны 10000 ION.</translation>
+        <source>Unable to locate enough funds for this transaction that are not equal 20000 ION.</source>
+        <translation>Не удалось найти достаточное количество средств для этой транзакции, которые не равны 20000 ION.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</source>
@@ -5351,8 +5229,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Предупреждение: -paytxfee установлен очень высоко! Это комиссия за транзакцию, которую вы заплатите, если вы отправляете транзакцию.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Ion Core will not work properly.</source>
-        <translation>Внимание: проверьте правильность даты и времени вашего компьютера! Если ваши часы ошибочны, Ion Core не будет работать должным образом.</translation>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong ION Core will not work properly.</source>
+        <translation>Внимание: проверьте правильность даты и времени вашего компьютера! Если ваши часы ошибочны, ION Core не будет работать должным образом.</translation>
     </message>
     <message>
         <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
@@ -5507,8 +5385,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Copyright (C) 2015-%i Разработчики PIVX Core</translation>
     </message>
     <message>
-        <source>Copyright (C) 2018-%i The Ion Core Developers</source>
-        <translation>Copyright (C) 2018-%i Разработчики Ion Core</translation>
+        <source>Copyright (C) 2018-%i The ION Core Developers</source>
+        <translation>Copyright (C) 2018-%i Разработчики ION Core</translation>
     </message>
     <message>
         <source>Corrupted block database detected</source>
@@ -5595,8 +5473,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Ошибка при загрузке wallet.dat: Кошелек поврежден</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Ion Core</source>
-        <translation>Ошибка загрузки wallet.dat: Кошелек требует более новой версии Ion Core</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of ION Core</source>
+        <translation>Ошибка загрузки wallet.dat: Кошелек требует более новой версии ION Core</translation>
     </message>
     <message>
         <source>Error opening block database</source>
@@ -5609,6 +5487,10 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     <message>
         <source>Error recovering public key.</source>
         <translation>Ошибка при восстановлении открытого ключа.</translation>
+    </message>
+    <message>
+        <source>Error writing zerocoinDB to disk</source>
+        <translation>Ошибка записи zerocoinDB на диск</translation>
     </message>
     <message>
         <source>Error</source>
@@ -5645,6 +5527,10 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     <message>
         <source>Failed to listen on any port. Use -listen=0 if you want this.</source>
         <translation>Не удалось прослушивать любой порт. Используйте -listen = 0, если вы этого хотите.</translation>
+    </message>
+    <message>
+        <source>Failed to parse host:port string</source>
+        <translation>Не удалось проанализировать хост: строка порта</translation>
     </message>
     <message>
         <source>Failed to read block</source>
@@ -5711,8 +5597,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Информация</translation>
     </message>
     <message>
-        <source>Initialization sanity check failed. Ion Core is shutting down.</source>
-        <translation>Инициализация проверки работоспособности не удалась. Ion Core отключается.</translation>
+        <source>Initialization sanity check failed. ION Core is shutting down.</source>
+        <translation>Инициализация проверки работоспособности не удалась. ION Core отключается.</translation>
     </message>
     <message>
         <source>Input is not valid.</source>
@@ -5923,10 +5809,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Не удалось создать монетный двор</translation>
     </message>
     <message>
-        <source>Failed to deserialize</source>
-        <translation>Не удалось десериализовать</translation>
-    </message>
-    <message>
         <source>Failed to find Zerocoins in wallet.dat</source>
         <translation>Не удалось найти Zerocoins в файле wallet.dat</translation>
     </message>
@@ -5995,8 +5877,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Загрузка ...</translation>
     </message>
     <message>
-        <source>Loading wallet... (%3.1f %%)</source>
-        <translation>Загрузка кошелька ... (%3.1f %%)</translation>
+        <source>Loading wallet... (%3.2f %%)</source>
+        <translation>Загрузка кошелька ... (%3.2f %%)</translation>
     </message>
     <message>
         <source>Wallet options:</source>
@@ -6367,14 +6249,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Расходы на монеты использовались</translation>
     </message>
     <message>
-        <source>The new spend coin transaction did not verify</source>
-        <translation>Новая транзакция с мошенничеством не подтвердила</translation>
-    </message>
-    <message>
-        <source>The selected mint coin is an invalid coin</source>
-        <translation>Выбранная монетка - недействительна</translation>
-    </message>
-    <message>
         <source>The transaction did not verify</source>
         <translation>Транзакция не подтверждена</translation>
     </message>
@@ -6523,10 +6397,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Проверка кошелька ...</translation>
     </message>
     <message>
-        <source>Version 1 xION require a security level of 100 to successfully spend.</source>
-        <translation>Для версии 1 xION требуется уровень безопасности 100, который можно успешно тратить.</translation>
-    </message>
-    <message>
         <source>Wallet %s resides outside data directory %s</source>
         <translation>Кошелек %s находится за пределами каталога данных %s</translation>
     </message>
@@ -6535,8 +6405,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Кошелек заблокирован.</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Ion Core to complete</source>
-        <translation>Кошелек необходимо переписать: перезапустите Ion Core, чтобы завершить</translation>
+        <source>Wallet needed to be rewritten: restart ION Core to complete</source>
+        <translation>Кошелек необходимо переписать: перезапустите ION Core, чтобы завершить</translation>
     </message>
     <message>
         <source>Wallet options:</source>

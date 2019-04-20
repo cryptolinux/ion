@@ -10,7 +10,6 @@
 * @license    This project is released under the MIT license.
 **/
 // Copyright (c) 2017-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 
 #include <boost/test/unit_test.hpp>
 #include <string>

@@ -1,5 +1,4 @@
 // Copyright (c) 2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -27,7 +26,7 @@ BOOST_AUTO_TEST_CASE(budget_value)
 
     SelectParams(CBaseChainParams::MAIN);
     nHeightTest = Params().Zerocoin_Block_V2_Start() + 1;
-    CheckBudgetValue(nHeightTest, "mainnet", 11.50*COIN);
+    CheckBudgetValue(nHeightTest, "mainnet", 11.5*COIN);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

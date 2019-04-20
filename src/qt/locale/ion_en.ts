@@ -593,7 +593,7 @@
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <location filename="../bitcoingui.cpp" line="+122"/>
+        <location filename="../bitcoingui.cpp" line="+123"/>
         <source>Wallet</source>
         <translation>Wallet</translation>
     </message>
@@ -638,7 +638,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+28"/>
+        <source>&amp;Governance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show Proposals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
         <source>E&amp;xit</source>
         <translation>E&amp;xit</translation>
     </message>
@@ -838,7 +848,7 @@
         <translation>%1 client</translation>
     </message>
     <message numerus="yes">
-        <location line="+482"/>
+        <location line="+490"/>
         <source>Processed %n blocks of transaction history.</source>
         <translation>
             <numerusform>Processed %n block of transaction history.</numerusform>
@@ -866,7 +876,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+242"/>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for anonymization and staking only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -876,7 +886,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-762"/>
+        <location line="-779"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
@@ -901,13 +911,13 @@
         <translation>Tabs toolbar</translation>
     </message>
     <message>
-        <location line="-436"/>
-        <location line="+918"/>
-        <source>Ion Core</source>
+        <location line="-448"/>
+        <location line="+938"/>
+        <source>ION Core</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-722"/>
+        <location line="-742"/>
         <source>Send coins to a ION address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -927,14 +937,14 @@
         <translation>Synchronizing with network...</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Indexing blocks on disk...</source>
-        <translation>Indexing blocks on disk...</translation>
+        <location line="+43"/>
+        <source>&amp;About ION Core</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Processing blocks on disk...</source>
-        <translation>Processing blocks on disk...</translation>
+        <location line="+1"/>
+        <source>Show information about ION Core</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
@@ -1003,16 +1013,16 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+233"/>
-        <source>Ion Core client</source>
+        <location line="+234"/>
+        <source>ION Core client</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location line="+212"/>
+        <location line="+219"/>
         <source>%n active connection(s) to ION network</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -1100,20 +1110,20 @@ Address: %4
 </translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+54"/>
         <source>Staking is active
  MultiSend: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+0"/>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-4"/>
-        <location line="+4"/>
+        <location line="-6"/>
+        <location line="+6"/>
         <source>Not Active</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1124,17 +1134,17 @@ Address: %4
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+12"/>
         <source>AutoMint is currently enabled and set to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>AutoMint is disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
         <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</translation>
     </message>
@@ -1142,6 +1152,11 @@ Address: %4
         <location line="+20"/>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ion.cpp" line="+478"/>
+        <source>A fatal error occurred. ION can no longer continue safely and will quit.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1548,11 +1563,74 @@ Address: %4
     </message>
 </context>
 <context>
+    <name>GovernancePage</name>
+    <message>
+        <location filename="../forms/governancepage.ui" line="+14"/>
+        <source>Form</source>
+        <translation type="unfinished">Form</translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <source>GOVERNANCE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+168"/>
+        <source>Update Proposals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Next super block:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+14"/>
+        <location line="+14"/>
+        <location line="+14"/>
+        <location line="+14"/>
+        <location line="+14"/>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-63"/>
+        <source>Blocks to next super block:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Days to budget payout (estimate):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Allotted budget:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Budget left:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Masternodes count:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HelpMessageDialog</name>
     <message>
         <location filename="../utilitydialog.cpp" line="+44"/>
         <source>version</source>
         <translation>version</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>ION Core</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1561,9 +1639,9 @@ Address: %4
         <translation>(%1-bit)</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>About %1</source>
-        <translation>About %1</translation>
+        <location line="+4"/>
+        <source>About ION Core</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
@@ -1655,22 +1733,17 @@ Address: %4
     </message>
     <message>
         <location line="+9"/>
-        <source>Welcome to %1.</source>
-        <translation>Welcome to %1.</translation>
+        <source>Welcome to ION Core.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+26"/>
-        <source>As this is the first time the program is launched, you can choose where %1 will store its data.</source>
-        <translation>As this is the first time the program is launched, you can choose where %1 will store its data.</translation>
-    </message>
-    <message>
-        <location line="+157"/>
-        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
-        <translation>When you click OK, %1 will begin to download and process the full %4 block chain (%2GB) starting with the earliest transactions in %3 when %4 initially launched.</translation>
+        <source>As this is the first time the program is launched, you can choose where ION Core will store its data.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Ion Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <source>ION Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1689,9 +1762,9 @@ Address: %4
         <translation>Use a custom data directory:</translation>
     </message>
     <message>
-        <location filename="../intro.cpp" line="+26"/>
-        <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation>At least %1 GB of data will be stored in this directory, and it will grow over time.</translation>
+        <location filename="../intro.cpp" line="+77"/>
+        <source>ION Core</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
@@ -2363,13 +2436,13 @@ Please be patient after clicking import.</source>
     </message>
     <message>
         <location line="+13"/>
-        <source>IPv6</source>
-        <translation>IPv6</translation>
+        <source>Use 2 separate masternodes to mix funds up to 20000 ION</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Tor</source>
-        <translation>Tor</translation>
+        <source>Use 8 separate masternodes to mix funds up to 20000 ION</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+25"/>
@@ -2378,12 +2451,12 @@ Please be patient after clicking import.</source>
     </message>
     <message>
         <location line="+13"/>
-        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 10000 ION</source>
+        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 20000 ION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 10000 ION</source>
+        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 20000 ION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2393,7 +2466,7 @@ Please be patient after clicking import.</source>
     </message>
     <message>
         <location line="+13"/>
-        <source>0.1 ION per 10000 ION you anonymize.</source>
+        <source>0.1 ION per 20000 ION you anonymize.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2477,7 +2550,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Client will be shut down. Do you want to proceed?</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+132"/>
         <source>W&amp;allet</source>
         <translation>W&amp;allet</translation>
     </message>
@@ -2517,7 +2590,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Pending:</translation>
     </message>
     <message>
-        <location line="-210"/>
+        <location line="-227"/>
         <source>Automatically start ION after logging in to the system.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2527,7 +2600,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+213"/>
+        <location line="+230"/>
         <source>Whether to show coin control features or not.</source>
         <translation>Whether to show coin control features or not.</translation>
     </message>
@@ -2573,7 +2646,7 @@ https://www.transifex.com/ioncoincore/ioncore</source>
         <translation>Your current balance in watch-only addresses</translation>
     </message>
     <message>
-        <location line="-169"/>
+        <location line="-184"/>
         <source>Enable automatic minting of ION units to xION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2583,7 +2656,17 @@ https://www.transifex.com/ioncoincore/ioncore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+7"/>
+        <source>Enable automatic xION minting from specific addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Enable Automint Addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Percentage of incoming ION which get automatically converted to xION via Zerocoin Protocol (min: 10%)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2777,7 +2860,7 @@ https://www.transifex.com/ioncoincore/ioncore</source>
         <translation>none</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+98"/>
         <source>Confirm options reset</source>
         <translation>Confirm options reset</translation>
     </message>
@@ -3014,7 +3097,7 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
 <context>
     <name>PaymentServer</name>
     <message>
-        <location filename="../paymentserver.cpp" line="+292"/>
+        <location filename="../paymentserver.cpp" line="+291"/>
         <location line="+205"/>
         <location line="+33"/>
         <location line="+104"/>
@@ -3165,7 +3248,7 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
     </message>
     <message>
         <location line="+190"/>
-        <location filename="../privacydialog.cpp" line="+172"/>
+        <location filename="../privacydialog.cpp" line="+163"/>
         <location line="+112"/>
         <source>Mint Zerocoin</source>
         <translation type="unfinished"></translation>
@@ -3179,12 +3262,12 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
     </message>
     <message>
         <location line="-371"/>
-        <location line="+651"/>
+        <location line="+600"/>
         <source>xION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-644"/>
+        <location line="-593"/>
         <source>Available for minting are coins which are confirmed and not locked or Masternode collaterals.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3195,7 +3278,7 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
     </message>
     <message>
         <location line="+19"/>
-        <source>0.000 000 00 ION</source>
+        <source>0.000&#x2009;000&#x2009;00 ION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3266,18 +3349,16 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
     </message>
     <message>
         <location line="+37"/>
-        <location filename="../privacydialog.cpp" line="+563"/>
+        <location filename="../privacydialog.cpp" line="+542"/>
         <source>Spend Zerocoin. Without &apos;Pay To:&apos; address creates payments to yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../privacydialog.cpp" line="-514"/>
+        <location filename="../privacydialog.cpp" line="-493"/>
         <location line="+4"/>
         <location line="+12"/>
-        <location line="+84"/>
-        <location line="+32"/>
-        <location line="+11"/>
+        <location line="+106"/>
         <location line="+4"/>
         <source>Spend Zerocoin</source>
         <translation type="unfinished"></translation>
@@ -3303,7 +3384,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <location line="-548"/>
         <location line="+49"/>
         <location line="+504"/>
-        <location line="+421"/>
+        <location line="+370"/>
         <location line="+544"/>
         <location line="+31"/>
         <location line="+31"/>
@@ -3317,22 +3398,7 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1190"/>
-        <source>Security Level for Zerocoin Transactions. More is better, but needs more time and resources.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Security Level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Security Level 1 - 100 (default: 42)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+40"/>
+        <location line="-1126"/>
         <source>Pay &amp;To:</source>
         <translation type="unfinished">Pay &amp;To:</translation>
     </message>
@@ -3408,16 +3474,16 @@ xION are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation>Disabled</translation>
     </message>
     <message>
-        <location line="-893"/>
+        <location line="-842"/>
         <location line="+25"/>
-        <location line="+936"/>
+        <location line="+885"/>
         <location line="+38"/>
         <source>Total Balance including unconfirmed and immature xION</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-996"/>
-        <location line="+961"/>
+        <location line="-945"/>
+        <location line="+910"/>
         <source>Total Zerocoin  Balance:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3464,8 +3530,8 @@ To change the percentage (no restart required):
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1410"/>
-        <location line="+1459"/>
+        <location line="-1359"/>
+        <location line="+1408"/>
         <source>Global Supply:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3522,7 +3588,7 @@ To change the percentage (no restart required):
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1324"/>
+        <location line="-1273"/>
         <source>Show xION denominations list</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3532,7 +3598,7 @@ To change the percentage (no restart required):
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+967"/>
+        <location line="+916"/>
         <source>Denominations with value 5:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3651,9 +3717,9 @@ To change the percentage (no restart required):
     </message>
     <message>
         <location line="+75"/>
-        <location filename="../privacydialog.cpp" line="-438"/>
+        <location filename="../privacydialog.cpp" line="-408"/>
         <location line="+1"/>
-        <location line="+545"/>
+        <location line="+515"/>
         <location line="+1"/>
         <source>Coins automatically selected</source>
         <translation type="unfinished"></translation>
@@ -3689,18 +3755,18 @@ To change the percentage (no restart required):
         <translation>Bad response from server %1</translation>
     </message>
     <message>
-        <location filename="../privacydialog.cpp" line="-545"/>
+        <location filename="../privacydialog.cpp" line="-515"/>
         <source>out of sync</source>
         <translation type="unfinished">out of sync</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+129"/>
+        <location line="+120"/>
         <source>Mint Status: Okay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-123"/>
+        <location line="-114"/>
         <source>Copy quantity</source>
         <translation type="unfinished">Copy quantity</translation>
     </message>
@@ -3710,20 +3776,13 @@ To change the percentage (no restart required):
         <translation type="unfinished">Copy amount</translation>
     </message>
     <message>
-        <location line="+192"/>
+        <location line="+183"/>
         <source>Starting ResetMintZerocoin: rescanning complete blockchain, this will need up to 30 minutes depending on your hardware.
 Please be patient...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+171"/>
-        <source>Spending Zerocoin.
-Computationally expensive, might need several minutes depending on the selected Security Level and your hardware.
-Please be patient...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+54"/>
+        <location line="+204"/>
         <source>) needed.
 Maximum allowed: </source>
         <translation type="unfinished"></translation>
@@ -3760,13 +3819,13 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-666"/>
+        <location line="-645"/>
         <location line="+112"/>
         <source>xION is currently undergoing maintenance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-221"/>
+        <location line="-212"/>
         <source>Denom. with value &lt;b&gt;1&lt;/b&gt;:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3807,12 +3866,12 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+740"/>
+        <location line="+710"/>
         <source>AutoMint Status:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-737"/>
+        <location line="-707"/>
         <source>Denom. &lt;b&gt;1&lt;/b&gt;:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3852,7 +3911,7 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+94"/>
         <source>Error: Your wallet is locked. Please enter the wallet passphrase first.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3884,20 +3943,20 @@ Maximum allowed: </source>
     <message>
         <location line="+35"/>
         <location line="+15"/>
-        <location line="+260"/>
+        <location line="+239"/>
         <source>Duration: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-275"/>
+        <location line="-254"/>
         <location line="+15"/>
-        <location line="+260"/>
+        <location line="+239"/>
         <source> sec.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-265"/>
+        <location line="-244"/>
         <source>Starting ResetSpentZerocoin: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3925,8 +3984,8 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Denom. &lt;b&gt;500&lt;/b&gt;:</source>
+        <location line="+21"/>
+        <source>Are you sure you want to send?&lt;br /&gt;&lt;br /&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3940,42 +3999,17 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+103"/>
-        <source>Error: Your wallet is locked. Please enter the wallet passphrase first.</source>
-        <translation type="unfinished"></translation>
+        <location line="+6"/>
+        <source>Confirm send coins</source>
+        <translation type="unfinished">Confirm send coins</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Received</source>
-        <translation>Received</translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <location filename="../ion.cpp" line="+176"/>
-        <source>%1 didn&apos;t yet exit safely...</source>
-        <translation>%1 didn&apos;t yet exit safely...</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <location line="+32"/>
-        <source>Version 1 xION require a security level of 100 to successfully spend.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-31"/>
-        <location line="+32"/>
-        <source>Failed to spend xION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-25"/>
+        <location line="+23"/>
         <source>Failed to fetch mint associated with serial hash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+26"/>
         <source>Too much inputs (</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4004,9 +4038,15 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-31"/>
-        <location line="+32"/>
-        <source>Failed to spend xION</source>
+        <location line="-73"/>
+        <source>Spending Zerocoin.
+Computationally expensive, might need several minutes depending on your hardware.
+Please be patient...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+74"/>
+        <source>serial: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4058,6 +4098,93 @@ Maximum allowed: </source>
         <source>Error: Specified font-weight-bold invalid. Valid range %1 to %2.</source>
         <translation>Error: Specified font-weight-bold invalid. Valid range %1 to %2.</translation>
     </message>
+</context>
+<context>
+    <name>ProposalFrame</name>
+    <message>
+        <location filename="../proposalframe.cpp" line="+92"/>
+        <source>Open proposal page in browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source> remaining payment(s).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Yes:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Abstain:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>No:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>A proposal URL can be used for phishing, scams and computer viruses. Open this link only if you trust the following URL.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Open link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Copy link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <source>Wallet Locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>You must unlock your wallet to vote.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Do you want to vote %1 on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>using all your masternodes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Proposal Hash:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Proposal URL:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Confirm Vote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <source>Vote Results</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
     <message>
         <location line="+11"/>
         <source>Error: Specified font-scale invalid. Valid range %1 to %2.</source>
@@ -4088,12 +4215,12 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+40"/>
+        <location line="+43"/>
         <source>%1 s</source>
         <translation>%1 s</translation>
     </message>
     <message>
-        <location line="-25"/>
+        <location line="-28"/>
         <source>NETWORK</source>
         <translation>NETWORK</translation>
     </message>
@@ -4107,8 +4234,18 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Copy Image</source>
-        <translation>&amp;Copy Image</translation>
+        <source>ZK_BLOOM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>UNKNOWN</source>
+        <translation>UNKNOWN</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>None</source>
+        <translation>None</translation>
     </message>
     <message>
         <location line="+32"/>
@@ -4119,6 +4256,39 @@ Maximum allowed: </source>
         <location line="+0"/>
         <source>PNG Image (*.png)</source>
         <translation>PNG Image (*.png)</translation>
+    </message>
+    <message>
+        <location filename="../ion.cpp" line="+75"/>
+        <location line="+7"/>
+        <location line="+13"/>
+        <location line="+19"/>
+        <source>ION Core</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-38"/>
+        <source>Error: Specified data directory &quot;%1&quot; does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Error: Cannot parse configuration file: %1. Only use key=value syntax.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Error: Invalid combination of -regtest and -testnet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Error reading masternode configuration file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <source>ION Core didn&apos;t yet exit safely...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5561,9 +5731,9 @@ Maximum allowed: </source>
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <location filename="../utilitydialog.cpp" line="+70"/>
-        <source>%1 is shutting down...</source>
-        <translation>%1 is shutting down...</translation>
+        <location filename="../utilitydialog.cpp" line="+75"/>
+        <source>ION Core is shutting down...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5757,7 +5927,7 @@ Maximum allowed: </source>
     <name>SplashScreen</name>
     <message>
         <location filename="../splashscreen.cpp" line="+36"/>
-        <source>Ion Core</source>
+        <source>ION Core</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5777,7 +5947,7 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
-        <source>The Ion Core developers</source>
+        <source>The ION Core developers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6580,7 +6750,7 @@ Maximum allowed: </source>
 <context>
     <name>WalletView</name>
     <message>
-        <location filename="../walletview.cpp" line="+63"/>
+        <location filename="../walletview.cpp" line="+64"/>
         <source>HISTORY</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6600,7 +6770,7 @@ Maximum allowed: </source>
         <translation>Selected amount:</translation>
     </message>
     <message>
-        <location line="+257"/>
+        <location line="+265"/>
         <source>Backup Wallet</source>
         <translation>Backup Wallet</translation>
     </message>
@@ -6638,8 +6808,8 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+74"/>
-        <source>Is Spendable</source>
+        <location line="+79"/>
+        <source>Spendable?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6713,9 +6883,9 @@ Maximum allowed: </source>
         <translation>Allow JSON-RPC connections from specified source. Valid for &lt;ip&gt; are a single IP (e.g. 1.2.3.4), a network/netmask (e.g. 1.2.3.4/255.255.255.0) or a network/CIDR (e.g. 1.2.3.4/24). This option can be specified multiple times</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Bind to given address and whitelist peers connecting to it. Use [host]:port notation for IPv6</source>
-        <translation>Bind to given address and whitelist peers connecting to it. Use [host]:port notation for IPv6</translation>
+        <location line="+2"/>
+        <source>Cannot obtain a lock on data directory %s. ION Core is probably already running.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6764,6 +6934,11 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+5"/>
+        <source>Enable automatic Zerocoin minting from specific addresses (0-1, default: %u)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Enable automatic wallet backups triggered after each xION minting (0-1, default: %u)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6933,14 +7108,24 @@ Maximum allowed: </source>
         <translation>Always query for peer addresses via DNS lookup (default: %u)</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>Can&apos;t mix: no compatible inputs found!</source>
-        <translation>Can&apos;t mix: no compatible inputs found!</translation>
+        <location line="+3"/>
+        <source>Maximum average size of an index occurrence in the block spam filter (default: %u)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Chain selection options:</source>
-        <translation>Chain selection options:</translation>
+        <source>Maximum size of data in data carrier transactions we relay and mine (default: %u)</source>
+        <translation type="unfinished">Maximum size of data in data carrier transactions we relay and mine (default: %u)</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Maximum size of the list of indexes in the block spam filter (default: %u)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Maximum total fees to use in a single wallet transaction, setting too low may abort large transactions (default: %s)</source>
+        <translation type="unfinished">Maximum total fees to use in a single wallet transaction, setting too low may abort large transactions (default: %s)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6983,9 +7168,14 @@ Maximum allowed: </source>
         <translation>Found enough users, signing ...</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>How many blocks to check at startup (default: %u, 0 = all)</source>
-        <translation>How many blocks to check at startup (default: %u, 0 = all)</translation>
+        <location line="+2"/>
+        <source>Set the number of included blocks to precompute per cycle. (minimum: %d) (maximum: %d) (default: %d)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Set the number of script verification threads (%u to %d, 0 = auto, &lt;0 = leave that many cores free, default: %d)</source>
+        <translation type="unfinished">Set the number of script verification threads (%u to %d, 0 = auto, &lt;0 = leave that many cores free, default: %d)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7003,9 +7193,14 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Incompatible version.</source>
-        <translation>Incompatible version.</translation>
+        <location line="+5"/>
+        <source>The block database contains a block which appears to be from the future. This may be due to your computer&apos;s date and time being set incorrectly. Only rebuild the block database if you are sure that your computer&apos;s date and time are correct</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit &lt;https://www.openssl.org/&gt; and cryptographic software written by Eric Young and UPnP software written by Thomas Bernard.</source>
+        <translation type="unfinished">This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit &lt;https://www.openssl.org/&gt; and cryptographic software written by Eric Young and UPnP software written by Thomas Bernard.</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7014,7 +7209,7 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Unable to bind to %s on this computer. Ion Core is probably already running.</source>
+        <source>Unable to bind to %s on this computer. ION Core is probably already running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7023,14 +7218,14 @@ Maximum allowed: </source>
         <translation>Input is not valid.</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Insufficient funds.</source>
-        <translation>Insufficient funds.</translation>
+        <location line="+2"/>
+        <source>Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 20000 ION.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Invalid amount for -discardfee=&lt;amount&gt;: &apos;%s&apos;</source>
-        <translation>Invalid amount for -discardfee=&lt;amount&gt;: &apos;%s&apos;</translation>
+        <location line="+3"/>
+        <source>Unable to locate enough funds for this transaction that are not equal 20000 ION.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7049,8 +7244,8 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Listen for JSON-RPC connections on &lt;port&gt; (default: %u or testnet: %u)</source>
-        <translation>Listen for JSON-RPC connections on &lt;port&gt; (default: %u or testnet: %u)</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong ION Core will not work properly.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7128,9 +7323,14 @@ Maximum allowed: </source>
         <translation type="unfinished">Add a node to connect to and attempt to keep the connection open</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Send trace/debug info to debug.log file (default: %u)</source>
-        <translation>Send trace/debug info to debug.log file (default: %u)</translation>
+        <location line="+1"/>
+        <source>Adding Wrapped Serials supply...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Allow DNS lookups for -addnode, -seednode and -connect</source>
+        <translation type="unfinished">Allow DNS lookups for -addnode, -seednode and -connect</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -7209,6 +7409,11 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+2"/>
+        <source>CoinSpend: failed check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Collateral not valid.</source>
         <translation type="unfinished">Collateral not valid.</translation>
     </message>
@@ -7249,7 +7454,7 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Copyright (C) 2018-%i The Ion Core Developers</source>
+        <source>Copyright (C) 2018-%i The ION Core Developers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7264,8 +7469,13 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
-        <source>KeePassHttp key for AES encrypted communication with KeePass</source>
-        <translation>KeePassHttp key for AES encrypted communication with KeePass</translation>
+        <source>Couldn&apos;t generate the accumulator witness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Debugging/Testing options:</source>
+        <translation type="unfinished">Debugging/Testing options:</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7308,14 +7518,14 @@ Maximum allowed: </source>
         <translation>Extra transactions to keep in memory for compact block reconstructions (default: %u)</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Failed to create backup, file already exists! This could happen if you restarted wallet in less than 60 seconds. You can continue if you are ok with this.</source>
-        <translation>Failed to create backup, file already exists! This could happen if you restarted wallet in less than 60 seconds. You can continue if you are ok with this.</translation>
+        <location line="+1"/>
+        <source>Enable precomputation of xION spends and stakes (0-1, default %u)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Fees (in %s/kB) smaller than this are considered zero fee for relaying, mining and transaction creation (default: %s)</source>
-        <translation>Fees (in %s/kB) smaller than this are considered zero fee for relaying, mining and transaction creation (default: %s)</translation>
+        <location line="+2"/>
+        <source>Enable publish hash transaction (locked via SwiftX) in &lt;address&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -7373,9 +7583,9 @@ Maximum allowed: </source>
         <translation>Prune configured below the minimum of %d MiB.  Please use a higher number.</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Prune: last wallet synchronisation goes beyond pruned data. You need to -reindex (download the whole blockchain again in case of pruned node)</source>
-        <translation>Prune: last wallet synchronisation goes beyond pruned data. You need to -reindex (download the whole blockchain again in case of pruned node)</translation>
+        <location line="+1"/>
+        <source>Error loading wallet.dat: Wallet requires newer version of ION Core</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
@@ -7443,7 +7653,7 @@ Maximum allowed: </source>
         <translation>Try to create at least N inputs of each denominated amount (%u-%u, default: %u)</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Failed to listen on any port. Use -listen=0 if you want this.</source>
         <translation type="unfinished">Failed to listen on any port. Use -listen=0 if you want this.</translation>
     </message>
@@ -7534,8 +7744,8 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Enable publish hash of governance objects (like proposals) in &lt;address&gt;</source>
-        <translation>Enable publish hash of governance objects (like proposals) in &lt;address&gt;</translation>
+        <source>Initialization sanity check failed. ION Core is shutting down.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7633,7 +7843,22 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
+        <source>Recalculating ION supply...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Recalculating minted XION...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Recalculating spent XION...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Reindex the ION and xION money supply statistics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7654,16 +7879,21 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+32"/>
+        <source>Support the zerocoin light node protocol (default: %u)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>SwiftX options:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-274"/>
+        <location line="-281"/>
         <source>This is a pre-release test build - use at your own risk - do not use for staking or merchant applications!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-175"/>
+        <location line="-190"/>
         <source> mints deleted
 </source>
         <translation type="unfinished"></translation>
@@ -7689,7 +7919,7 @@ Maximum allowed: </source>
         <translation>Invalid amount for -fallbackfee=&lt;amount&gt;: &apos;%s&apos;</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+20"/>
         <source>Error: The transaction was rejected! This might happen if some of the coins in your wallet were already spent, such as if you used a copy of wallet.dat and coins were spent in the copy but not marked as spent here.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7724,12 +7954,12 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+37"/>
         <source>Preferred Denomination for automatically minted Zerocoin  (1/5/10/50/100/500/1000/5000), 0 for no preference. default: %u)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+27"/>
         <source>Specify custom backup path to add a copy of any automatic xION backup. If set as dir, every backup generates a timestamped file. If set as file, will rewrite to that file every backup. If backuppath is set as well, 4 backups will happen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7744,12 +7974,12 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+66"/>
         <source>&lt;category&gt; can be:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Attempt to force blockchain corruption recovery</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7759,7 +7989,7 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+18"/>
         <source>Display the stake modifier calculations in the debug.log file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7799,8 +8029,8 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>Failed to create mint</source>
+        <location line="+6"/>
+        <source>Enable publish hash block in &lt;address&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7836,11 +8066,6 @@ Maximum allowed: </source>
     <message>
         <location line="+5"/>
         <source>Failed to create mint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Failed to deserialize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7935,8 +8160,8 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Loading wallet... (%3.1f %%)</source>
-        <translation type="unfinished">Loading wallet... (%3.1f %%)</translation>
+        <source>Loading wallet... (%3.2f %%)</source>
+        <translation type="unfinished">Loading wallet... (%3.2f %%)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8129,12 +8354,22 @@ Maximum allowed: </source>
         <translation>Wallet debugging/testing options:</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+98"/>
+        <source>Use block spam filter (default: %u)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>could not get lock on cs_spendcache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>isValid(): Invalid -proxy address or hostname: &apos;%s&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-120"/>
+        <location line="-122"/>
         <source>Preparing for resync...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8164,7 +8399,7 @@ Maximum allowed: </source>
         <translation type="unfinished">Rebuild block chain index from current blk000??.dat files</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+4"/>
         <source>Receive and display P2P network alerts (default: %u)</source>
         <translation type="unfinished">Receive and display P2P network alerts (default: %u)</translation>
     </message>
@@ -8399,9 +8634,9 @@ Maximum allowed: </source>
         <translation>Error loading %s: You can&apos;t disable HD on an already existing HD wallet</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Error loading wallet %s. Duplicate -wallet filename specified.</source>
-        <translation>Error loading wallet %s. Duplicate -wallet filename specified.</translation>
+        <location line="+3"/>
+        <source>Synchronization failed</source>
+        <translation type="unfinished">Synchronization failed</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -8441,16 +8676,6 @@ Maximum allowed: </source>
     <message>
         <location line="+1"/>
         <source>The coin spend has been used</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>The new spend coin transaction did not verify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>The selected mint coin is an invalid coin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8575,11 +8800,6 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Try to spend with a higher security level to include more coins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
         <source>Trying to spend an already spent serial #, try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8639,9 +8859,9 @@ Maximum allowed: </source>
         <translation>Specify data directory</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>User Agent comment (%s) contains unsafe characters.</source>
-        <translation type="unfinished"></translation>
+        <location line="+2"/>
+        <source>Use the test network</source>
+        <translation type="unfinished">Use the test network</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -8680,11 +8900,6 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Version 1 xION require a security level of 100 to successfully spend.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
         <source>Wallet %s resides outside data directory %s</source>
         <translation type="unfinished">Wallet %s resides outside data directory %s</translation>
     </message>
@@ -8694,9 +8909,9 @@ Maximum allowed: </source>
         <translation>The transaction amount is too small to pay the fee</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>This is experimental software.</source>
-        <translation>This is experimental software.</translation>
+        <location line="+1"/>
+        <source>Wallet needed to be rewritten: restart ION Core to complete</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
@@ -8774,7 +8989,7 @@ Maximum allowed: </source>
         <translation>Very low number of keys left: %d</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>on startup</source>
         <translation type="unfinished">on startup</translation>
     </message>

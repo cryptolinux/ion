@@ -28,13 +28,13 @@ class ZapWalletTXesTest (BitcoinTestFramework):
 
     def run_test(self):
         self.log.info("Mining blocks...")
-        self.nodes[0].generate(1)
+        self.nodes[0].generate(2)
         self.sync_all()
         self.nodes[1].generate(101)
         self.sync_all()
 
         print("Node 0 Balance %s" % self.nodes[0].getbalance())
-        assert_equal(self.nodes[0].getbalance(), 23)
+        assert_equal(self.nodes[0].getbalance(), 250250)
         # This transaction will be confirmed
         txid1 = self.nodes[0].sendtoaddress(self.nodes[1].getnewaddress(), 10)
 

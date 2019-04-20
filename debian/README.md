@@ -17,7 +17,7 @@ To install:
 	sudo update-desktop-database
 
 If you build yourself, you will either need to modify the paths in
-the .desktop file or copy or symlink your ionqt binary to `/usr/bin`
+the .desktop file or copy or symlink your ion-qt binary to `/usr/bin`
 and the `../../share/pixmaps/ion128.png` to `/usr/share/pixmaps`
 
 ion-qt.protocol (KDE)

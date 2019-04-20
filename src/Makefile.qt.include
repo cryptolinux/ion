@@ -9,33 +9,38 @@ EXTRA_LIBRARIES += qt/libionqt.a
 QT_TS = \
   qt/locale/ion_ar.ts \
   qt/locale/ion_bg.ts \
-  qt/locale/ion_de.ts \
-  qt/locale/ion_en.ts \
-  qt/locale/ion_en_US.ts \
-  qt/locale/ion_eo.ts \
-  qt/locale/ion_es.ts \
-  qt/locale/ion_es_ES.ts \
-  qt/locale/ion_fi.ts \
-  qt/locale/ion_fr_FR.ts \
-  qt/locale/ion_hi_IN.ts \
-  qt/locale/ion_hr.ts \
-  qt/locale/ion_hr_HR.ts \
-  qt/locale/ion_it.ts \
-  qt/locale/ion_ja.ts \
-  qt/locale/ion_ko_KR.ts \
-  qt/locale/ion_lt_LT.ts \
-  qt/locale/ion_nl.ts \
-  qt/locale/ion_pl.ts \
-  qt/locale/ion_pt.ts \
-  qt/locale/ion_ru.ts \
-  qt/locale/ion_sk.ts \
-  qt/locale/ion_sv.ts \
-  qt/locale/ion_th.ts \
-  qt/locale/ion_tr.ts \
-  qt/locale/ion_uk.ts \
-  qt/locale/ion_vi.ts \
-  qt/locale/ion_zh_CN.ts \
-  qt/locale/ion_zh_TW.ts
+   qt/locale/ion_ca.ts \
+   qt/locale/ion_cs.ts \
+   qt/locale/ion_da.ts \
+   qt/locale/ion_de.ts \
+   qt/locale/ion_en.ts \
+   qt/locale/ion_en_GB.ts \
+   qt/locale/ion_en_US.ts \
+   qt/locale/ion_eo.ts \
+   qt/locale/ion_es.ts \
+   qt/locale/ion_es_ES.ts \
+   qt/locale/ion_fi.ts \
+   qt/locale/ion_fr_FR.ts \
+   qt/locale/ion_hi_IN.ts \
+   qt/locale/ion_hr.ts \
+   qt/locale/ion_hr_HR.ts \
+   qt/locale/ion_it.ts \
+   qt/locale/ion_ja.ts \
+   qt/locale/ion_ko_KR.ts \
+   qt/locale/ion_lt_LT.ts \
+   qt/locale/ion_nl.ts \
+   qt/locale/ion_pl.ts \
+   qt/locale/ion_pt.ts \
+   qt/locale/ion_pt_BR.ts \
+   qt/locale/ion_ro_RO.ts \
+   qt/locale/ion_ru.ts \
+   qt/locale/ion_sk.ts \
+   qt/locale/ion_sv.ts \
+   qt/locale/ion_tr.ts \
+   qt/locale/ion_uk.ts \
+   qt/locale/ion_vi.ts \
+   qt/locale/ion_zh_CN.ts \
+   qt/locale/ion_zh_TW.ts
 
 QT_FORMS_UI = \
   qt/forms/addressbookpage.ui \
@@ -186,6 +191,7 @@ BITCOIN_QT_H = \
   qt/transactiondesc.h \
   qt/transactiondescdialog.h \
   qt/transactionfilterproxy.h \
+  qt/transactionrecord.h \
   qt/transactiontablemodel.h \
   qt/transactionview.h \
   qt/utilitydialog.h \
@@ -199,6 +205,7 @@ RES_ICONS = \
   qt/res/icons/ion.ico \
   qt/res/icons/ion_testnet.ico \
   qt/res/icons/ion_testnet.png \
+  qt/res/icons/ion_regtest.ico \
   qt/res/icons/ion_regtest.png \
   qt/res/icons/browse.png \
   qt/res/icons/clock1.png \
@@ -215,12 +222,18 @@ RES_ICONS = \
   qt/res/icons/eye.png \
   qt/res/icons/eye_minus.png \
   qt/res/icons/eye_plus.png \
-  qt/res/icons/hd_enabled.png \
+  qt/res/icons/filesave.png \
+  qt/res/icons/history.png \
+  qt/res/icons/history_regtest.png \
+  qt/res/icons/history_testnet.png \
+  qt/res/icons/key.png \
   qt/res/icons/lock_closed.png \
   qt/res/icons/lock_open.png \
   qt/res/icons/masternodes.png \
   qt/res/icons/onion.png \
   qt/res/icons/overview.png \
+  qt/res/icons/overview_testnet.png \
+  qt/res/icons/overview_regtest.png \
   qt/res/icons/qrcode.png \
   qt/res/icons/quit.png \
   qt/res/icons/receive.png \
@@ -231,12 +244,23 @@ RES_ICONS = \
   qt/res/icons/send_dark.png \
   qt/res/icons/governance.png \
   qt/res/icons/governance_dark.png \
+  qt/res/icons/governance_testnet.png \
+  qt/res/icons/governance_regtest.png \
+  qt/res/icons/governance_dark_testnet.png \
+  qt/res/icons/governance_dark_regtest.png \
   qt/res/icons/staking_active.png \
   qt/res/icons/staking_inactive.png \
   qt/res/icons/synced.png \
+  qt/res/icons/notsynced.png \
+  qt/res/icons/notsynced_testnet.png \
+  qt/res/icons/notsynced_regtest.png \
   qt/res/icons/transaction0.png \
   qt/res/icons/transaction2.png \
+  qt/res/icons/transaction2_testnet.png \
+  qt/res/icons/transaction2_regtest.png \
   qt/res/icons/transaction_conflicted.png \
+  qt/res/icons/transaction_conflicted_testnet.png \
+  qt/res/icons/transaction_conflicted_regtest.png \
   qt/res/icons/tx_inout.png \
   qt/res/icons/tx_input.png \
   qt/res/icons/tx_output.png \
@@ -304,6 +328,7 @@ BITCOIN_QT_WALLET_CPP = \
   qt/transactiondesc.cpp \
   qt/transactiondescdialog.cpp \
   qt/transactionfilterproxy.cpp \
+  qt/transactionrecord.cpp \
   qt/transactiontablemodel.cpp \
   qt/transactionview.cpp \
   qt/walletframe.cpp \
@@ -325,13 +350,16 @@ RES_IMAGES = \
   qt/res/images/splash_testnet.png \
   qt/res/images/splash_regtest.png \
   qt/res/images/ion_logo_horizontal.png \
-  qt/res/images/ion_logo_toolbar.png \
-  qt/res/images/qtreeview_selected.png \
-  qt/res/images/splash.png \
-  qt/res/images/splash_testnet.png \
-  qt/res/images/splash_regtest.png \
-  qt/res/images/unchecked.png \
-  qt/res/images/walletframe_background.png
+  qt/res/images/ion_logo_horizontal_regtest.png \
+  qt/res/images/ion_logo_horizontal_testnet.png \
+  qt/res/images/downArrow_dark.png \
+  qt/res/images/downArrow_small_dark.png \
+  qt/res/images/downArrow_small.png \
+  qt/res/images/upArrow_small_dark.png \
+  qt/res/images/upArrow_small.png \
+  qt/res/images/leftArrow_small_dark.png \
+  qt/res/images/rightArrow_small_dark.png \
+  qt/res/images/qtreeview_selected.png
 
 RES_CSS = \
   qt/res/css/dark.css \

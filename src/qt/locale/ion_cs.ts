@@ -601,8 +601,8 @@
         <translation>Nástrojová lišta záložek</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Send coins to a ION address</source>
@@ -625,12 +625,12 @@
         <translation>Procházet masternody</translation>
     </message>
     <message>
-        <source>&amp;About Ion Core</source>
-        <translation>&amp;O Ion Core</translation>
+        <source>&amp;About ION Core</source>
+        <translation>&amp;O ION Core</translation>
     </message>
     <message>
-        <source>Show information about Ion Core</source>
-        <translation>Zobraz informace o Ion Core</translation>
+        <source>Show information about ION Core</source>
+        <translation>Zobraz informace o ION Core</translation>
     </message>
     <message>
         <source>Modify configuration options for ION</source>
@@ -685,12 +685,12 @@
         <translation>Okno blokového průzkumníka</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
-        <translation>Zobrazit Ion Core pomocnou zpráv pro získání seznamu možných parametrů ION pro příkazy do příkazové řádky</translation>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
+        <translation>Zobrazit ION Core pomocnou zpráv pro získání seznamu možných parametrů ION pro příkazy do příkazové řádky</translation>
     </message>
     <message>
-        <source>Ion Core client</source>
-        <translation>Ion Core klient</translation>
+        <source>ION Core client</source>
+        <translation>ION Core klient</translation>
     </message>
     <message>
         <source>Synchronizing with network...</source>
@@ -792,7 +792,7 @@ MultiSend: %1</translation>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Peněženka je &lt;b&gt;zašifrovaná&lt;/b&gt; a momentálně je &lt;b&gt;zamčená&lt;/b&gt;</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>BlockExplorer</name>
     <message>
@@ -1121,18 +1121,29 @@ MultiSend: %1</translation>
     </message>
 </context>
 <context>
+    <name>GovernancePage</name>
+    <message>
+        <source>Form</source>
+        <translation>Od</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    </context>
+<context>
     <name>HelpMessageDialog</name>
     <message>
         <source>version</source>
         <translation>verze</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
-        <source>About Ion Core</source>
-        <translation>O Ion Core</translation>
+        <source>About ION Core</source>
+        <translation>O ION Core</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1166,16 +1177,16 @@ MultiSend: %1</translation>
         <translation>Vítejte</translation>
     </message>
     <message>
-        <source>Welcome to Ion Core.</source>
-        <translation>Vítejte v Ion Core.</translation>
+        <source>Welcome to ION Core.</source>
+        <translation>Vítejte v ION Core.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Ion Core will store its data.</source>
-        <translation>Při prvním spuštění programu si můžete vybrat, kam bude Ion Core ukládat svá data.</translation>
+        <source>As this is the first time the program is launched, you can choose where ION Core will store its data.</source>
+        <translation>Při prvním spuštění programu si můžete vybrat, kam bude ION Core ukládat svá data.</translation>
     </message>
     <message>
-        <source>Ion Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>Ion Core stáhne a uloží kopii ION blockchainu. Nejméně %1GB dat bude do této složky uloženo a v průběhu času bude ukládat další data. Peněženka bude v této složce uložena také.</translation>
+        <source>ION Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>ION Core stáhne a uloží kopii ION blockchainu. Nejméně %1GB dat bude do této složky uloženo a v průběhu času bude ukládat další data. Peněženka bude v této složce uložena také.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1186,8 +1197,8 @@ MultiSend: %1</translation>
         <translation>Použít vlastní složku pro data</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1392,42 +1403,8 @@ MultiSend: %1</translation>
         <translation>(bez popisku)</translation>
     </message>
     <message>
-        <source>The entered address:
-</source>
-        <translation>Zadaná adresa:
-</translation>
-    </message>
-    <message>
-        <source> is invalid.
-Please check the address and try again.</source>
-        <translation>není validní.
-Prosím zkontrolujte adresu a zkuste to znovu.</translation>
-    </message>
-    <message>
-        <source>The total amount of your MultiSend vector is over 100% of your stake reward
-</source>
-        <translation>Celkovvá hodnota Vašeho MultiSend Vekktoru je přes 100% vaší odměny ze vsázení
-</translation>
-    </message>
-    <message>
         <source>Please Enter 1 - 100 for percent.</source>
         <translation>Prosím, zadejte 1-100 procent.</translation>
-    </message>
-    <message>
-        <source>MultiSend Vector
-</source>
-        <translation>MultiSend Vektor
-</translation>
-    </message>
-    <message>
-        <source>Removed </source>
-        <translation>Odstraněno</translation>
-    </message>
-    <message>
-        <source>Could not locate address
-</source>
-        <translation>Nemůžu najít adresu
-</translation>
     </message>
 </context>
 <context>
@@ -1468,24 +1445,24 @@ Prosím zkontrolujte adresu a zkuste to znovu.</translation>
         <translation>Vyberte úrpvěň ochrany soukromí</translation>
     </message>
     <message>
-        <source>Use 2 separate masternodes to mix funds up to 10000 ION</source>
-        <translation>Použí 2 oddělené masternody k promíchání prostředků až do 10000 ION</translation>
+        <source>Use 2 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Použí 2 oddělené masternody k promíchání prostředků až do 20000 ION</translation>
     </message>
     <message>
         <source>Use 16 separate masternodes</source>
         <translation>Použít 16 oddělených masternodů</translation>
     </message>
     <message>
-        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 10000 ION</source>
-        <translation>Tato možnost je nejrychleší a bude stát zhruba ~0.025 ION pro anonymizaci 10000 ION</translation>
+        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 20000 ION</source>
+        <translation>Tato možnost je nejrychleší a bude stát zhruba ~0.025 ION pro anonymizaci 20000 ION</translation>
     </message>
     <message>
         <source>This is the slowest and most secure option. Using maximum anonymity will cost</source>
         <translation>Toto je nejpomalejší a nejvíce bezpečná volba. Použití maximalní anonymity bude stát</translation>
     </message>
     <message>
-        <source>0.1 ION per 10000 ION you anonymize.</source>
-        <translation>0.1 ION za 10000 ION anonymizujete.</translation>
+        <source>0.1 ION per 20000 ION you anonymize.</source>
+        <translation>0.1 ION za 20000 ION anonymizujete.</translation>
     </message>
     <message>
         <source>Obfuscation Configuration</source>
@@ -1747,6 +1724,9 @@ Prosím zkontrolujte adresu a zkuste to znovu.</translation>
     </message>
     </context>
 <context>
+    <name>ProposalFrame</name>
+    </context>
+<context>
     <name>QObject</name>
     <message>
         <source>Amount</source>
@@ -1771,6 +1751,10 @@ Prosím zkontrolujte adresu a zkuste to znovu.</translation>
     <message>
         <source>N/A</source>
         <translation>N/A</translation>
+    </message>
+    <message>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     </context>
 <context>
@@ -1946,12 +1930,12 @@ Prosím zkontrolujte adresu a zkuste to znovu.</translation>
 <context>
     <name>ReceiveCoinsDialog</name>
     <message>
-        <source>&amp;Label:</source>
-        <translation>&amp;Popis</translation>
+        <source>A&amp;mount:</source>
+        <translation>H&amp;odnota:</translation>
     </message>
     <message>
-        <source>&amp;Amount:</source>
-        <translation>&amp;Hodnota</translation>
+        <source>&amp;Label:</source>
+        <translation>&amp;Popis</translation>
     </message>
     <message>
         <source>&amp;Request payment</source>
@@ -1980,6 +1964,10 @@ Prosím zkontrolujte adresu a zkuste to znovu.</translation>
     <message>
         <source>Copy amount</source>
         <translation>Kopírovat hodnotu</translation>
+    </message>
+    <message>
+        <source>Copy address</source>
+        <translation>Kopírovat adresu</translation>
     </message>
 </context>
 <context>
@@ -2034,6 +2022,10 @@ Prosím zkontrolujte adresu a zkuste to znovu.</translation>
     <message>
         <source>Message</source>
         <translation>Zpráva</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Adresa</translation>
     </message>
     <message>
         <source>Amount</source>
@@ -2291,8 +2283,8 @@ Prosím zkontrolujte adresu a zkuste to znovu.</translation>
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     </context>
 <context>

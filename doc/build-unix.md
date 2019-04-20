@@ -8,18 +8,23 @@ Some notes on how to build ION in Unix.
 Table of Contents
 ------------------
 - [UNIX BUILD NOTES](#unix-build-notes)
-    - [Note](#note)
-    - [To Build](#to-build)
-    - [Dependencies](#dependencies)
-    - [System requirements](#system-requirements)
-    - [Dependency Build Instructions: Ubuntu & Debian](#dependency-build-instructions-ubuntu--debian)
-        - [Build requirements](#build-requirements)
-    - [Dependencies for the GUI: Ubuntu & Debian](#dependencies-for-the-gui-ubuntu--debian)
-    - [Notes](#notes)
-    - [miniupnpc](#miniupnpc)
-    - [Berkeley DB](#berkeley-db)
-    - [Boost](#boost)
-    - [Security](#security)
+  - [Table of Contents](#table-of-contents)
+  - [Note](#note)
+  - [To Build](#to-build)
+  - [Dependencies](#dependencies)
+  - [System requirements](#system-requirements)
+  - [Linux Distribution Specific Instructions](#linux-distribution-specific-instructions)
+    - [Ubuntu & Debian](#ubuntu--debian)
+      - [Dependency Build Instructions](#dependency-build-instructions)
+    - [Fedora](#fedora)
+      - [Dependency Build Instructions](#dependency-build-instructions-1)
+  - [Notes](#notes)
+  - [miniupnpc](#miniupnpc)
+  - [Berkeley DB](#berkeley-db)
+  - [Boost](#boost)
+  - [Security](#security)
+  - [Disable-wallet mode](#disable-wallet-mode)
+  - [Additional Configure Flags](#additional-configure-flags)
 
 ## Note
 Always use absolute paths to configure and compile ion and the dependencies,
@@ -71,36 +76,52 @@ C++ compilers are memory-hungry. It is recommended to have at least 1 GB of
 memory available when compiling Ion Core. With 512MB of memory or less
 compilation will take much longer due to swap thrashing.
 
-## Dependency Build Instructions: Ubuntu & Debian
+## Linux Distribution Specific Instructions
 
-### Build requirements
+###  Ubuntu & Debian
 
-	sudo apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev automake
+#### Dependency Build Instructions
 
-For Ubuntu 12.04 and later or Debian 7 and later libboost-all-dev has to be installed:
+Build Requirements:
 
-	sudo apt-get install libboost-all-dev
+	sudo apt-get install build-essential libtool bsdmainutils autotools-dev autoconf pkg-config automake python3
 
- db4.8 packages are available [here](https://launchpad.net/~bitcoin/+archive/bitcoin).
+Now, you can either build from self-compiled [depends](/depends/README.md) or install the required dependencies:
+
+    sudo apt-get install libssl-dev libgmp-dev libevent-dev libboost-all-dev
+
+**Note:** For Ubuntu versions starting with Bionic (18.04), or Debian versions starting with Stretch, use `libssl1.0-dev`
+above instead of `libssl-dev`. ION Core does not support the use of OpenSSL 1.1, though compilation is still possible
+by passing `--with-incompatible-ssl` to configure (NOT RECOMMENDED!).
+
+BerkeleyDB is required for the wallet.
+
+ **For Ubuntu only:** db4.8 packages are available [here](https://launchpad.net/~bitcoin/+archive/bitcoin).
  You can add the repository using the following command:
 
+        sudo apt-get install software-properties-common
         sudo add-apt-repository ppa:bitcoin/bitcoin
         sudo apt-get update
+        sudo apt-get install libdb4.8-dev libdb4.8++-dev
 
- Ubuntu 12.04 and later have packages for libdb5.1-dev and libdb5.1++-dev,
- but using these will break binary wallet compatibility, and is not recommended.
+Ubuntu and Debian have their own libdb-dev and libdb++-dev packages, but these will install
+BerkeleyDB 5.1 or later. This will break binary wallet compatibility with the distributed executables, which
+are based on BerkeleyDB 4.8. If you do not care about wallet compatibility,
+pass `--with-incompatible-bdb` to configure.
 
-For other Debian & Ubuntu (with ppa):
+To build Bitcoin Core without wallet, see [*Disable-wallet mode*](/doc/build-unix.md#disable-wallet-mode)
 
-	sudo apt-get install libdb4.8-dev libdb4.8++-dev
+Optional (see --with-miniupnpc and --enable-upnp-default):
 
-Optional:
+    sudo apt-get install libminiupnpc-dev
 
-	sudo apt-get install libminiupnpc-dev (see --with-miniupnpc and --enable-upnp-default)
+ZMQ dependencies (provides ZMQ API):
 
-## Dependencies for the GUI: Ubuntu & Debian
+    sudo apt-get install libzmq3-dev
 
-If you want to build Ion-Qt, make sure that the required packages for Qt development
+GUI dependencies:
+
+If you want to build ion-qt, make sure that the required packages for Qt development
 are installed. Qt 5 is necessary to build the GUI.
 If both Qt 4 and Qt 5 are installed, Qt 5 will be used.
 To build without GUI pass `--without-gui`.
@@ -115,6 +136,27 @@ libqrencode (optional) can be installed with:
 
 Once these are installed, they will be found by configure and a ion-qt executable will be
 built by default.
+
+### Fedora
+
+#### Dependency Build Instructions
+
+Build requirements:
+
+    sudo dnf install which gcc-c++ libtool make autoconf automake compat-openssl10-devel libevent-devel boost-devel libdb4-devel libdb4-cxx-devel gmp-devel python3
+
+Optional:
+
+    sudo dnf install miniupnpc-devel zeromq-devel
+
+To build with Qt 5 you need the following:
+
+    sudo dnf install qt5-qttools-devel qt5-qtbase-devel protobuf-devel
+
+libqrencode (optional) can be installed with:
+
+    sudo dnf install qrencode-devel
+
 
 ## Notes
 The release is built with GCC and then "strip iond" to strip the debug
@@ -172,13 +214,11 @@ Hardening Flags:
 	./configure --prefix=<prefix> --enable-hardening
 	./configure --prefix=<prefix> --disable-hardening
 
-
 Hardening enables the following features:
 
-- Position Independent Executable
-    Build position independent code to take advantage of Address Space Layout Randomization
-    offered by some kernels. Attackers who can cause execution of code at an arbitrary memory
-    location are thwarted if they don't know where anything useful is located.
+* _Position Independent Executable_: Build position independent code to take advantage of Address Space Layout Randomization
+    offered by some kernels. An attacker who is able to cause execution of code at an arbitrary
+    memory location is thwarted if he doesn't know where anything useful is located.
     The stack and heap are randomly located by default but this allows the code section to be
     randomly located as well.
 
@@ -194,9 +234,8 @@ Hardening enables the following features:
      TYPE
     ET_DYN
 
-- Non-executable Stack
-    If the stack is executable then trivial stack based buffer overflow exploits are possible if
-    vulnerable buffers are found. By default, Ion Core should be built with a non-executable stack
+* _Non-executable Stack_: If the stack is executable then trivial stack based buffer overflow exploits are possible if
+    vulnerable buffers are found. By default, ion should be built with a non-executable stack
     but if one of the libraries it uses asks for an executable stack or someone makes a mistake
     and uses a compiler extension which requires an executable stack, it will silently build an
     executable without the non-executable stack protection.

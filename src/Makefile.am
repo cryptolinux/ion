@@ -114,13 +114,8 @@ endif
 # ion core #
 BITCOIN_CORE_H = \
   activemasternode.h \
-  accumulators.h \
-  accumulatorcheckpoints.h \
-  accumulatorcheckpoints.json.h \
-  accumulatormap.h \
   addrman.h \
   base58.h \
-  bech32.h \
   bip38.h \
   bloom.h \
   blocksignature.h \
@@ -137,19 +132,16 @@ BITCOIN_CORE_H = \
   compat/endian.h \
   compat/sanity.h \
   compressor.h \
-  consensus/validation.h \
   core_memusage.h \
   dstencode.h \
   primitives/block.h \
-  primitives/deterministicmint.h \
   primitives/transaction.h \
-  primitives/zerocoin.h \
   core_io.h \
   crypter.h \
   denomination_functions.h \
   obfuscation.h \
   obfuscation-relay.h \
-  db.h \
+  wallet/db.h \
   hash.h \
   httprpc.h \
   httpserver.h \
@@ -158,7 +150,6 @@ BITCOIN_CORE_H = \
   invalid.h \
   invalid_outpoints.json.h \
   invalid_serials.json.h \
-  ionaddrenc.h \
   kernel.h \
   swifttx.h \
   key.h \
@@ -167,17 +158,16 @@ BITCOIN_CORE_H = \
   dbwrapper.h \
   limitedmap.h \
   main.h \
-  memusage.h \
   masternode.h \
   masternode-payments.h \
   masternode-budget.h \
   masternode-sync.h \
   masternodeman.h \
   masternodeconfig.h \
+  memusage.h \
   merkleblock.h \
   messagesigner.h \
   miner.h \
-  mintpool.h \
   mruset.h \
   netbase.h \
   net.h \
@@ -225,7 +215,6 @@ BITCOIN_CORE_H = \
   tokens/tokengroupmanager.h \
   tokens/tokengroupwallet.h \
   torcontrol.h \
-  transactionrecord.h \
   txdb.h \
   txmempool.h \
   ui_interface.h \
@@ -237,12 +226,20 @@ BITCOIN_CORE_H = \
   validation.h \
   validationinterface.h \
   version.h \
-  wallet.h \
-  wallet_ismine.h \
-  walletdb.h \
+  wallet/wallet.h \
+  wallet/wallet_ismine.h \
+  wallet/walletdb.h \
   xionchain.h \
-  xiontracker.h \
-  xionwallet.h \
+  xion/accumulators.h \
+  xion/accumulatorcheckpoints.h \
+  xion/accumulatorcheckpoints.json.h \
+  xion/accumulatormap.h \
+  xion/deterministicmint.h \
+  xion/mintpool.h \
+  xion/witness.h \
+  xion/zerocoin.h \
+  xion/xiontracker.h \
+  xion/xionwallet.h \
   genwit.h \
   concurrentqueue.h \
   lightxionthread.h \
@@ -364,7 +361,7 @@ libbitcoin_wallet_a_SOURCES = \
   denomination_functions.cpp \
   obfuscation.cpp \
   obfuscation-relay.cpp \
-  db.cpp \
+  wallet/db.cpp \
   crypter.cpp \
   swifttx.cpp \
   masternode.cpp \
@@ -373,18 +370,19 @@ libbitcoin_wallet_a_SOURCES = \
   masternode-sync.cpp \
   masternodeconfig.cpp \
   masternodeman.cpp \
-  mintpool.cpp \
-  rpcdump.cpp \
-  primitives/deterministicmint.cpp \
-  primitives/zerocoin.cpp \
-  rpcwallet.cpp \
+  wallet/rpcdump.cpp \
+  xion/deterministicmint.cpp \
+  xion/zerocoin.cpp \
+  wallet/rpcwallet.cpp \
   kernel.cpp \
-  transactionrecord.cpp \
-  wallet.cpp \
-  wallet_ismine.cpp \
-  walletdb.cpp \
-  xionwallet.cpp \
-  xiontracker.cpp \
+  wallet/wallet.cpp \
+  wallet/wallet_ismine.cpp \
+  wallet/walletdb.cpp \
+  xion/accumulators.cpp \
+  xion/mintpool.cpp \
+  xion/witness.cpp \
+  xion/xionwallet.cpp \
+  xion/xiontracker.cpp \
   stakeinput.cpp \
   genwit.cpp \
   lightxionthread.cpp \
@@ -566,23 +564,20 @@ libion_consensus_a_SOURCES = \
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
-  accumulators.cpp \
-  accumulatorcheckpoints.cpp \
-  accumulatormap.cpp \
+  xion/accumulators.cpp \
+  xion/accumulatorcheckpoints.cpp \
+  xion/accumulatormap.cpp \
   allocators.cpp \
   amount.cpp \
   base58.cpp \
-  bech32.cpp \
   bip38.cpp \
   chainparams.cpp \
   coins.cpp \
   compressor.cpp \
-  dstencode.cpp \
-  ionaddrenc.cpp \
   primitives/block.cpp \
-  primitives/deterministicmint.cpp \
+  xion/deterministicmint.cpp \
   primitives/transaction.cpp \
-  primitives/zerocoin.cpp \
+  xion/zerocoin.cpp \
   core_read.cpp \
   core_write.cpp \
   hash.cpp \

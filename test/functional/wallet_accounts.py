@@ -31,7 +31,7 @@ class WalletAccountsTest(BitcoinTestFramework):
         # the same address, so we call twice to get two addresses w/50 each
         node.generate(1)
         node.generate(101)
-        assert_equal(node.getbalance(), 500)
+        assert_equal(node.getbalance(), 250250)
 
         # there should be 2 address groups
         # each with 1 address with a balance of 50 Bitcoins
@@ -43,7 +43,7 @@ class WalletAccountsTest(BitcoinTestFramework):
         #for address_group in address_groups:
         #    assert_equal(len(address_group), 1)
         #    assert_equal(len(address_group[0]), 2)
-        #    assert_equal(address_group[0][1], 23)
+        #    assert_equal(address_group[0][1], 250000)
         #    linked_addresses.add(address_group[0][0])
 
         # send 50 from each address to a third address not in this wallet

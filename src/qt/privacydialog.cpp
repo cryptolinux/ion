@@ -1,5 +1,4 @@
 // Copyright (c) 2017-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -23,8 +22,8 @@
 #include <QSettings>
 #include <utilmoneystr.h>
 #include <QtWidgets>
-#include <primitives/deterministicmint.h>
-#include <accumulators.h>
+#include <xion/deterministicmint.h>
+#include <xion/accumulators.h>
 
 PrivacyDialog::PrivacyDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowCloseButtonHint),
                                                           ui(new Ui::PrivacyDialog),
@@ -36,7 +35,7 @@ PrivacyDialog::PrivacyDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystem
     ui->setupUi(this);
 
     // "Spending 999999 xION ought to be enough for anybody." - Bill Gates, 2017
-    ui->xIONpayAmount->setValidator( new QDoubleValidator(0.0, 38600000.0, 20, this) );
+    ui->xIONpayAmount->setValidator( new QDoubleValidator(0.0, 21000000.0, 20, this) );
     ui->labelMintAmountValue->setValidator( new QIntValidator(0, 999999, this) );
 
     // Default texts for (mini-) coincontrol
@@ -86,14 +85,6 @@ PrivacyDialog::PrivacyDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystem
 
     // ION settings
     QSettings settings;
-    if (!settings.contains("nSecurityLevel")){
-        nSecurityLevel = 42;
-        settings.setValue("nSecurityLevel", nSecurityLevel);
-    }
-    else{
-        nSecurityLevel = settings.value("nSecurityLevel").toInt();
-    }
-
     if (!settings.contains("fMinimizeChange")){
         fMinimizeChange = false;
         settings.setValue("fMinimizeChange", fMinimizeChange);
@@ -141,7 +132,6 @@ void PrivacyDialog::setModel(WalletModel* walletModel)
                                SLOT(setBalance(CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount, CAmount)));
         connect(walletModel->getOptionsModel(), SIGNAL(zeromintEnableChanged(bool)), this, SLOT(updateAutomintStatus()));
         connect(walletModel->getOptionsModel(), SIGNAL(zeromintPercentageChanged(int)), this, SLOT(updateAutomintStatus()));
-        ui->securityLevel->setValue(nSecurityLevel);
     }
 }
 
@@ -329,18 +319,17 @@ void PrivacyDialog::sendxION()
     QSettings settings;
 
     // Handle 'Pay To' address options
+    CBitcoinAddress address(ui->payTo->text().toStdString());
     if(ui->payTo->text().isEmpty()){
         QMessageBox::information(this, tr("Spend Zerocoin"), tr("No 'Pay To' address provided, creating local payment"), QMessageBox::Ok, QMessageBox::Ok);
     }
     else{
-        if (!IsValidDestinationString(ui->payTo->text().toStdString())) {
+        if (!address.IsValid()) {
             QMessageBox::warning(this, tr("Spend Zerocoin"), tr("Invalid Ion Address"), QMessageBox::Ok, QMessageBox::Ok);
             ui->payTo->setFocus();
             return;
         }
     }
-
-    CTxDestination dest = DecodeDestination(ui->payTo->text().toStdString());
 
     // Double is allowed now
     double dAmount = ui->xIONpayAmount->text().toDouble();
@@ -382,10 +371,6 @@ void PrivacyDialog::sendxION()
         }
     }
 
-    // Persist Security Level for next start
-    nSecurityLevel = ui->securityLevel->value();
-    settings.setValue("nSecurityLevel", nSecurityLevel);
-
     // Spend confirmation message box
 
     // Add address info if available
@@ -397,15 +382,14 @@ void PrivacyDialog::sendxION()
     // General info
     QString strQuestionString = tr("Are you sure you want to send?<br /><br />");
     QString strAmount = "<b>" + QString::number(dAmount, 'f', 8) + " xION</b>";
-    QString strAddress = tr(" to address ") + QString::fromStdString(EncodeDestination(dest)) + strAddressLabel + " <br />";
+    QString strAddress = tr(" to address ") + QString::fromStdString(address.ToString()) + strAddressLabel + " <br />";
 
     if(ui->payTo->text().isEmpty()){
         // No address provided => send to local address
         strAddress = tr(" to a newly generated (unused and therefore anonymous) local address <br />");
     }
 
-    QString strSecurityLevel = tr("with Security Level ") + ui->securityLevel->text() + " ?";
-    strQuestionString += strAmount + strAddress + strSecurityLevel;
+    strQuestionString += strAmount + strAddress;
 
     // Display message box
     QMessageBox::StandardButton retval = QMessageBox::question(this, tr("Confirm send coins"),
@@ -419,7 +403,7 @@ void PrivacyDialog::sendxION()
     }
 
     int64_t nTime = GetTimeMillis();
-    ui->TEMintStatus->setPlainText(tr("Spending Zerocoin.\nComputationally expensive, might need several minutes depending on the selected Security Level and your hardware.\nPlease be patient..."));
+    ui->TEMintStatus->setPlainText(tr("Spending Zerocoin.\nComputationally expensive, might need several minutes depending on your hardware.\nPlease be patient..."));
     ui->TEMintStatus->repaint();
 
     // use mints from xION selector if applicable
@@ -429,15 +413,6 @@ void PrivacyDialog::sendxION()
         vMintsToFetch = XIonControlDialog::GetSelectedMints();
 
         for (auto& meta : vMintsToFetch) {
-            if (meta.nVersion < libzerocoin::PrivateCoin::PUBKEY_VERSION) {
-                //version 1 coins have to use full security level to successfully spend.
-                if (nSecurityLevel < 100) {
-                    QMessageBox::warning(this, tr("Spend Zerocoin"), tr("Version 1 xION require a security level of 100 to successfully spend."), QMessageBox::Ok, QMessageBox::Ok);
-                    ui->TEMintStatus->setPlainText(tr("Failed to spend xION"));
-                    ui->TEMintStatus->repaint();
-                    return;
-                }
-            }
             CZerocoinMint mint;
             if (!pwalletMain->GetMint(meta.hashSerial, mint)) {
                 ui->TEMintStatus->setPlainText(tr("Failed to fetch mint associated with serial hash"));
@@ -454,22 +429,15 @@ void PrivacyDialog::sendxION()
     bool fSuccess = false;
     if(ui->payTo->text().isEmpty()){
         // Spend to newly generated local address
-        fSuccess = pwalletMain->SpendZerocoin(nAmount, nSecurityLevel, wtxNew, receipt, vMintsSelected, fMintChange, fMinimizeChange);
+        fSuccess = pwalletMain->SpendZerocoin(nAmount, wtxNew, receipt, vMintsSelected, fMintChange, fMinimizeChange);
     }
     else {
         // Spend to supplied destination address
-        fSuccess = pwalletMain->SpendZerocoin(nAmount, nSecurityLevel, wtxNew, receipt, vMintsSelected, fMintChange, fMinimizeChange, &dest);
+        fSuccess = pwalletMain->SpendZerocoin(nAmount, wtxNew, receipt, vMintsSelected, fMintChange, fMinimizeChange, &address);
     }
 
     // Display errors during spend
     if (!fSuccess) {
-        if (receipt.GetStatus() == XION_SPEND_V1_SEC_LEVEL) {
-            QMessageBox::warning(this, tr("Spend Zerocoin"), tr("Version 1 xION require a security level of 100 to successfully spend."), QMessageBox::Ok, QMessageBox::Ok);
-            ui->TEMintStatus->setPlainText(tr("Failed to spend xION"));
-            ui->TEMintStatus->repaint();
-            return;
-        }
-
         int nNeededSpends = receipt.GetNeededSpends(); // Number of spends we would need for this transaction
         const int nMaxSpends = Params().Zerocoin_MaxSpendsPerTransaction(); // Maximum possible spends for one xION transaction
         if (nNeededSpends > nMaxSpends) {
@@ -492,9 +460,9 @@ void PrivacyDialog::sendxION()
         // If xION was spent successfully update the addressbook with the label
         std::string labelText = ui->addAsLabel->text().toStdString();
         if (!labelText.empty())
-            walletModel->updateAddressBookLabels(dest, labelText, "send");
+            walletModel->updateAddressBookLabels(address.Get(), labelText, "send");
         else
-            walletModel->updateAddressBookLabels(dest, "(no label)", "send");
+            walletModel->updateAddressBookLabels(address.Get(), "(no label)", "send");
     }
 
     // Clear xion selector in case it was used
@@ -525,7 +493,7 @@ void PrivacyDialog::sendxION()
         if(txout.scriptPubKey.IsZerocoinMint())
             strStats += tr("xION Mint");
         else if(ExtractDestination(txout.scriptPubKey, dest))
-            strStats += tr(EncodeDestination(dest).c_str());
+            strStats += tr(CBitcoinAddress(dest).ToString().c_str());
         strStats += "\n";
     }
     double fDuration = (double)(GetTimeMillis() - nTime)/1000.0;

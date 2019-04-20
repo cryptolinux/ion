@@ -6,6 +6,7 @@
 #include <tinyformat.h>
 #include "deterministicmint.h"
 
+using namespace libzerocoin;
 
 CDeterministicMint::CDeterministicMint()
 {
@@ -25,15 +26,15 @@ CDeterministicMint::CDeterministicMint(uint8_t nVersion, const uint32_t& nCount,
 
 void CDeterministicMint::SetNull()
 {
-    nVersion = libzerocoin::PrivateCoin::CURRENT_VERSION;
+    nVersion = PrivateCoin::CURRENT_VERSION;
     nCount = 0;
-    hashSeed = uint256();
-    hashSerial = uint256();
-    hashStake = uint256();
-    hashPubcoin = uint256();
-    txid = uint256();
+    hashSeed = 0;
+    hashSerial = 0;
+    hashStake = 0;
+    hashPubcoin = 0;
+    txid = 0;
     nHeight = 0;
-    denom = libzerocoin::CoinDenomination::ZQ_ERROR;
+    denom = CoinDenomination::ZQ_ERROR;
     isUsed = false;
 }
 

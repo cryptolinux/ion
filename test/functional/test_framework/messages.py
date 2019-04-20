@@ -327,6 +327,7 @@ class CTransaction():
     def __init__(self, tx=None):
         if tx is None:
             self.nVersion = 1
+            self.nTime = 0
             self.vin = []
             self.vout = []
             self.nLockTime = 0
@@ -342,6 +343,7 @@ class CTransaction():
 
     def deserialize(self, f):
         self.nVersion = struct.unpack("<i", f.read(4))[0]
+        self.nTime = struct.unpack("<Q", f.read(8))[0]
         self.vin = deser_vector(f, CTxIn)
         flags = 0
         if len(self.vin) == 0:
@@ -360,6 +362,7 @@ class CTransaction():
     def serialize_without_witness(self):
         r = b""
         r += struct.pack("<i", self.nVersion)
+        r += struct.pack("<Q", self.nTime)
         r += ser_vector(self.vin)
         r += ser_vector(self.vout)
         r += struct.pack("<I", self.nLockTime)
@@ -390,8 +393,8 @@ class CTransaction():
         return True
 
     def __repr__(self):
-        return "CTransaction(nVersion=%i vin=%s vout=%s nLockTime=%i)" \
-            % (self.nVersion, repr(self.vin), repr(self.vout), self.nLockTime)
+        return "CTransaction(nVersion=%i nTime=%i vin=%s vout=%s nLockTime=%i)" \
+            % (self.nVersion, self.nTime, repr(self.vin), repr(self.vout), self.nLockTime)
 
 
 class CBlockHeader():

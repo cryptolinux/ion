@@ -25,7 +25,7 @@ class xIONwrappedSerialsTest(ION_FakeStakeTest):
 
         INITAL_MINED_BLOCKS = 351   # Blocks mined before minting
         MORE_MINED_BLOCKS = 31      # Blocks mined after minting (before spending)
-        DENOM_TO_USE = 1000         # zc denomination used for double spending attack
+        DENOM_TO_USE = 10           # zc denomination used for double spending attack
         K_BITSIZE = 128             # bitsize of the range for random K
         NUM_OF_K = 5                # number of wrapping serials to try
 
@@ -50,7 +50,7 @@ class xIONwrappedSerialsTest(ION_FakeStakeTest):
             sleep(1)
             if total_mints % 5 == 0:
                 self.log.info("Minted %d coins" % total_mints)
-            if total_mints >= 20:
+            if total_mints >= 15:
                 break
             balance = self.node.getbalance("*", 100)
         sleep(2)

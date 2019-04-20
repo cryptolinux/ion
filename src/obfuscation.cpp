@@ -1,6 +1,5 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -417,12 +416,12 @@ void CObfuscationPool::SetNull()
 
 bool CObfuscationPool::SetCollateralAddress(std::string strAddress)
 {
-    CTxDestination dest = DecodeDestination(strAddress);
-    if (dest.which() == 0) {
+    CBitcoinAddress address;
+    if (!address.SetString(strAddress)) {
         LogPrintf("CObfuscationPool::SetCollateralAddress - Invalid Obfuscation collateral address\n");
         return false;
     }
-    collateralPubKey = GetScriptForDestination(dest);
+    collateralPubKey = GetScriptForDestination(address.Get());
     return true;
 }
 
@@ -1429,9 +1428,10 @@ bool CObfuscationPool::DoAutomaticDenominating(bool fDryRun)
     CAmount nOnlyDenominatedBalance;
     CAmount nBalanceNeedsDenominated;
 
-    CAmount nLowestDenom = obfuScationDenominations[obfuScationDenominations.size() - 1];
+    // should not be less than fees in OBFUSCATION_COLLATERAL + few (lets say 5) smallest denoms
+    CAmount nLowestDenom = OBFUSCATION_COLLATERAL + obfuScationDenominations[obfuScationDenominations.size() - 1] * 5;
 
-    // if there are no confirmed OBF collateral inputs yet
+    // if there are no OBF collateral inputs yet
     if (!pwalletMain->HasCollateralInputs())
         // should have some additional amount for them
         nLowestDenom += OBFUSCATION_COLLATERAL * 4;
@@ -1441,19 +1441,15 @@ bool CObfuscationPool::DoAutomaticDenominating(bool fDryRun)
     // if balanceNeedsAnonymized is more than pool max, take the pool max
     if (nBalanceNeedsAnonymized > OBFUSCATION_POOL_MAX) nBalanceNeedsAnonymized = OBFUSCATION_POOL_MAX;
 
-    // try to overshoot target OBF balance up to nLowestDenom
-    nBalanceNeedsAnonymized += nLowestDenom;
+    // if balanceNeedsAnonymized is more than non-anonymized, take non-anonymized
     CAmount nAnonymizableBalance = pwalletMain->GetAnonymizableBalance();
+    if (nBalanceNeedsAnonymized > nAnonymizableBalance) nBalanceNeedsAnonymized = nAnonymizableBalance;
 
-    // anonymizable balance is way too small
-    if (nAnonymizableBalance < nLowestDenom) {
+    if (nBalanceNeedsAnonymized < nLowestDenom) {
         LogPrintf("DoAutomaticDenominating : No funds detected in need of denominating \n");
         strAutoDenomResult = _("No funds detected in need of denominating.");
         return false;
     }
-
-    // not enough funds to anonymze amount we want, try the max we can
-    if (nBalanceNeedsAnonymized > nAnonymizableBalance) nBalanceNeedsAnonymized = nAnonymizableBalance;
 
     LogPrint("obfuscation", "DoAutomaticDenominating : nLowestDenom=%d, nBalanceNeedsAnonymized=%d\n", nLowestDenom, nBalanceNeedsAnonymized);
 
@@ -1507,7 +1503,7 @@ bool CObfuscationPool::DoAutomaticDenominating(bool fDryRun)
             return false;
         }
 
-        //check our collateral and create new if needed
+        //check our collateral nad create new if needed
         std::string strReason;
         CValidationState state;
         if (txCollateral == CMutableTransaction()) {
@@ -1691,15 +1687,13 @@ bool CObfuscationPool::SendRandomPaymentToSelf()
     CWalletTx wtx;
     CAmount nFeeRet = 0;
     std::string strFail = "";
-    std::vector<CRecipient> vecSend;
-    int nChangePosRet = -1;
+    vector<pair<CScript, CAmount> > vecSend;
 
     // ****** Add fees ************ /
-    CRecipient recipient = {scriptChange, nPayment, false};
-    vecSend.push_back(recipient);
+    vecSend.push_back(make_pair(scriptChange, nPayment));
 
     CCoinControl* coinControl = NULL;
-    bool success = pwalletMain->CreateTransaction(vecSend, wtx, reservekey, nFeeRet, nChangePosRet, strFail, coinControl, ONLY_DENOMINATED);
+    bool success = pwalletMain->CreateTransaction(vecSend, wtx, reservekey, nFeeRet, strFail, coinControl, ONLY_DENOMINATED);
     if (!success) {
         LogPrintf("SendRandomPaymentToSelf: Error - %s\n", strFail);
         return false;
@@ -1718,8 +1712,7 @@ bool CObfuscationPool::MakeCollateralAmounts()
     CWalletTx wtx;
     CAmount nFeeRet = 0;
     std::string strFail = "";
-    std::vector<CRecipient> vecSend;
-    int nChangePosRet = -1;
+    vector<pair<CScript, CAmount> > vecSend;
     CCoinControl coinControl;
     coinControl.fAllowOtherInputs = false;
     coinControl.fAllowWatchOnly = false;
@@ -1733,19 +1726,18 @@ bool CObfuscationPool::MakeCollateralAmounts()
     assert(reservekeyCollateral.GetReservedKey(vchPubKey)); // should never fail, as we just unlocked
     scriptCollateral = GetScriptForDestination(vchPubKey.GetID());
 
-    CRecipient recipient = {scriptCollateral, OBFUSCATION_COLLATERAL * 4, false};
-    vecSend.push_back(recipient);
+    vecSend.push_back(make_pair(scriptCollateral, OBFUSCATION_COLLATERAL * 4));
 
     // try to use non-denominated and not mn-like funds
     bool success = pwalletMain->CreateTransaction(vecSend, wtx, reservekeyChange,
-        nFeeRet, nChangePosRet, strFail, &coinControl, ONLY_NONDENOMINATED_NOT20000IFMN);
+        nFeeRet, strFail, &coinControl, ONLY_NONDENOMINATED_NOT20000IFMN);
     if (!success) {
         // if we failed (most likeky not enough funds), try to use all coins instead -
         // MN-like funds should not be touched in any case and we can't mix denominated without collaterals anyway
         CCoinControl* coinControlNull = NULL;
         LogPrintf("MakeCollateralAmounts: ONLY_NONDENOMINATED_NOT20000IFMN Error - %s\n", strFail);
         success = pwalletMain->CreateTransaction(vecSend, wtx, reservekeyChange,
-            nFeeRet, nChangePosRet, strFail, coinControlNull, ONLY_NOT20000IFMN);
+            nFeeRet, strFail, coinControlNull, ONLY_NOT20000IFMN);
         if (!success) {
             LogPrintf("MakeCollateralAmounts: ONLY_NOT20000IFMN Error - %s\n", strFail);
             reservekeyCollateral.ReturnKey();
@@ -1774,8 +1766,7 @@ bool CObfuscationPool::CreateDenominated(CAmount nTotalValue)
     CWalletTx wtx;
     CAmount nFeeRet = 0;
     std::string strFail = "";
-    std::vector<CRecipient> vecSend;
-    int nChangePosRet = -1;
+    vector<pair<CScript, CAmount> > vecSend;
     CAmount nValueLeft = nTotalValue;
 
     // make our collateral address
@@ -1792,8 +1783,7 @@ bool CObfuscationPool::CreateDenominated(CAmount nTotalValue)
 
     // ****** Add collateral outputs ************ /
     if (!pwalletMain->HasCollateralInputs()) {
-        CRecipient recipient = {scriptCollateral, OBFUSCATION_COLLATERAL * 4, false};
-        vecSend.push_back(recipient);
+        vecSend.push_back(make_pair(scriptCollateral, OBFUSCATION_COLLATERAL * 4));
         nValueLeft -= OBFUSCATION_COLLATERAL * 4;
     }
 
@@ -1802,7 +1792,7 @@ bool CObfuscationPool::CreateDenominated(CAmount nTotalValue)
         int nOutputs = 0;
 
         // add each output up to 10 times until it can't be added again
-        while (nValueLeft - v >= 0 && nOutputs <= 10) {
+        while (nValueLeft - v >= OBFUSCATION_COLLATERAL && nOutputs <= 10) {
             CScript scriptDenom;
             CPubKey vchPubKey;
             //use a unique change address
@@ -1811,8 +1801,7 @@ bool CObfuscationPool::CreateDenominated(CAmount nTotalValue)
             // TODO: do not keep reservekeyDenom here
             reservekeyDenom.KeepKey();
 
-            CRecipient recipient = {scriptDenom, v, false};
-            vecSend.push_back(recipient);
+            vecSend.push_back(make_pair(scriptDenom, v));
 
             //increment outputs and subtract denomination amount
             nOutputs++;
@@ -1828,7 +1817,7 @@ bool CObfuscationPool::CreateDenominated(CAmount nTotalValue)
 
     CCoinControl* coinControl = NULL;
     bool success = pwalletMain->CreateTransaction(vecSend, wtx, reservekeyChange,
-        nFeeRet, nChangePosRet, strFail, coinControl, ONLY_NONDENOMINATED_NOT20000IFMN);
+        nFeeRet, strFail, coinControl, ONLY_NONDENOMINATED_NOT20000IFMN);
     if (!success) {
         LogPrintf("CreateDenominated: Error - %s\n", strFail);
         // TODO: return reservekeyDenom here

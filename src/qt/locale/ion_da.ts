@@ -610,7 +610,7 @@
     </message>
     <message numerus="yes">
         <source>Processed %n blocks of transaction history.</source>
-        <translation><numerusform>Behandlet %n blok af transaktionshistorik.</numerusform><numerusform>Behandlet %n blokke af transaktionshistorik.</numerusform></translation>
+        <translation><numerusform>Der er gennemløbet %n blokke af transaktionshistorikken.</numerusform><numerusform>Der er gennemløbet %n blokke af transaktionshistorikken.</numerusform></translation>
     </message>
     <message>
         <source>Synchronizing additional data: %p%</source>
@@ -645,7 +645,7 @@
         <translation>Værktøjslinier</translation>
     </message>
     <message>
-        <source>Ion Core</source>
+        <source>ION Core</source>
         <translation>ION kerne</translation>
     </message>
     <message>
@@ -669,11 +669,11 @@
         <translation>Vis masternoder</translation>
     </message>
     <message>
-        <source>&amp;About Ion Core</source>
+        <source>&amp;About ION Core</source>
         <translation>&amp;Om ION kerne</translation>
     </message>
     <message>
-        <source>Show information about Ion Core</source>
+        <source>Show information about ION Core</source>
         <translation>Vis information om ION kerne</translation>
     </message>
     <message>
@@ -729,16 +729,16 @@
         <translation>Blockexplorer vindue</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
         <translation>Vis hjelpetekster fra ION kernen for at få en liste med mulige ION kommandolinie-startparametre</translation>
     </message>
     <message>
-        <source>Ion Core client</source>
+        <source>ION Core client</source>
         <translation>ION kerneklient</translation>
     </message>
     <message numerus="yes">
         <source>%n active connection(s) to ION network</source>
-        <translation><numerusform>%n aktiv forbindelse til ION-netværk</numerusform><numerusform>%n aktiv forbindelse(s) til ION netværk</numerusform></translation>
+        <translation><numerusform>%n aktiv forbindelse(s) til ION netværk</numerusform><numerusform>%n aktiv forbindelse(s) til ION netværk</numerusform></translation>
     </message>
     <message>
         <source>Synchronizing with network...</source>
@@ -864,7 +864,7 @@ Adresse: %4
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Tegnebogen er &lt;b&gt;krypteret og låst&lt;/b&gt;</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>BlockExplorer</name>
     <message>
@@ -1225,13 +1225,24 @@ Adresse: %4
     </message>
 </context>
 <context>
+    <name>GovernancePage</name>
+    <message>
+        <source>Form</source>
+        <translation>Formular</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    </context>
+<context>
     <name>HelpMessageDialog</name>
     <message>
         <source>version</source>
         <translation>version</translation>
     </message>
     <message>
-        <source>Ion Core</source>
+        <source>ION Core</source>
         <translation>ION kerne</translation>
     </message>
     <message>
@@ -1239,7 +1250,7 @@ Adresse: %4
         <translation>(%1-bit)</translation>
     </message>
     <message>
-        <source>About Ion Core</source>
+        <source>About ION Core</source>
         <translation>om ION kerne</translation>
     </message>
     <message>
@@ -1286,15 +1297,15 @@ Adresse: %4
         <translation>Velkommen</translation>
     </message>
     <message>
-        <source>Welcome to Ion Core.</source>
+        <source>Welcome to ION Core.</source>
         <translation>Velkommen til ION kerne</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Ion Core will store its data.</source>
+        <source>As this is the first time the program is launched, you can choose where ION Core will store its data.</source>
         <translation>Da det er første gang programmet startes, kan De vælge hvor ION kernen skal lagre sine data</translation>
     </message>
     <message>
-        <source>Ion Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <source>ION Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
         <translation>ION kernen vil nu hente og gemme en kopi af ION blockchain. Der skal være mindst %1GB ledigt på lagermediet, og behovet vil stige efterhånden som tiden går. Selve tegnebogen vil også blive gemt her.</translation>
     </message>
     <message>
@@ -1306,7 +1317,7 @@ Adresse: %4
         <translation>Anvend en mappe valgt af brugeren</translation>
     </message>
     <message>
-        <source>Ion Core</source>
+        <source>ION Core</source>
         <translation>ION kerne</translation>
     </message>
     <message>
@@ -1542,48 +1553,26 @@ Multisend vil ikke fungere med mindre systemet er aktiveret.</translation>
         <translation>(ingen opmærknig)</translation>
     </message>
     <message>
-        <source>The entered address:
-</source>
-        <translation>Den indtastede adresse:
-</translation>
-    </message>
-    <message>
-        <source> is invalid.
-Please check the address and try again.</source>
-        <translation>er ikke gyldig. 
-Kontroller adressen og prøv igen.</translation>
-    </message>
-    <message>
-        <source>The total amount of your MultiSend vector is over 100% of your stake reward
-</source>
+        <source>The total amount of your MultiSend vector is over 100% of your stake reward</source>
         <translation>Den totale sum af Deres Multisendgruppe er over 100% af Deres indskudsbelønning
 </translation>
     </message>
     <message>
-        <source>Please Enter 1 - 100 for percent.</source>
-        <translation>Indtast en procentsats 1-100 </translation>
-    </message>
-    <message>
-        <source>Saved the MultiSend to memory, but failed saving properties to the database.
-</source>
+        <source>Saved the MultiSend to memory, but failed saving properties to the database.</source>
         <translation>Gemt MultiSend til hukommelse, men fejlede gemme egenskaber til databasen.
 </translation>
     </message>
     <message>
-        <source>MultiSend Vector
-</source>
-        <translation>Multisendgruppe
-</translation>
+        <source>Removed %1</source>
+        <translation>Fjernet %1</translation>
     </message>
     <message>
-        <source>Removed </source>
-        <translation>Fjernet</translation>
+        <source>Could not locate address</source>
+        <translation>Kunne ikke finde adresse</translation>
     </message>
     <message>
-        <source>Could not locate address
-</source>
-        <translation>Kunne ikke finde adresse
-</translation>
+        <source>Please Enter 1 - 100 for percent.</source>
+        <translation>Indtast en procentsats 1-100 </translation>
     </message>
 </context>
 <context>
@@ -1780,32 +1769,32 @@ Vær tålmodig efter at du har klikket på import.</translation>
         <translation>Vælg tilsløringsniveau</translation>
     </message>
     <message>
-        <source>Use 2 separate masternodes to mix funds up to 10000 ION</source>
-        <translation>Brug 2 separate masternoder for at tilsløre beløb op til 10000 ION</translation>
+        <source>Use 2 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Brug 2 separate masternoder for at tilsløre beløb op til 20000 ION</translation>
     </message>
     <message>
-        <source>Use 8 separate masternodes to mix funds up to 10000 ION</source>
-        <translation>Brug 8 separate masternoder for at tilsløre op til 10000 ION</translation>
+        <source>Use 8 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Brug 8 separate masternoder for at tilsløre op til 20000 ION</translation>
     </message>
     <message>
         <source>Use 16 separate masternodes</source>
         <translation>Brug 16 separate masternoder</translation>
     </message>
     <message>
-        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 10000 ION</source>
-        <translation>Dette valg er det hurtigste og vil koste i omegnen af 0.025 ION for at anonymiser 10000 ION</translation>
+        <source>This option is the quickest and will cost about ~0.025 ION to anonymize 20000 ION</source>
+        <translation>Dette valg er det hurtigste og vil koste i omegnen af 0.025 ION for at anonymiser 20000 ION</translation>
     </message>
     <message>
-        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 10000 ION</source>
-        <translation>Dette valg er relativt hurtigt og vil koste i omegnen af 0.05 ION for at anonymiser 10000 ION</translation>
+        <source>This option is moderately fast and will cost about 0.05 ION to anonymize 20000 ION</source>
+        <translation>Dette valg er relativt hurtigt og vil koste i omegnen af 0.05 ION for at anonymiser 20000 ION</translation>
     </message>
     <message>
         <source>This is the slowest and most secure option. Using maximum anonymity will cost</source>
         <translation>Denne mulighed er den langsomste og det mest sikre valg. Valg af maksimal tilsløring vil koste</translation>
     </message>
     <message>
-        <source>0.1 ION per 10000 ION you anonymize.</source>
-        <translation>0.1 pr 10000 ION for at tilsløre.</translation>
+        <source>0.1 ION per 20000 ION you anonymize.</source>
+        <translation>0.1 pr 20000 ION for at tilsløre.</translation>
     </message>
     <message>
         <source>Obfuscation Configuration</source>
@@ -2485,18 +2474,6 @@ xION er modne, når de har mere end 20 bekræftelser OG mere end 2 minutter med 
         <translation>0 xION</translation>
     </message>
     <message>
-        <source>Security Level for Zerocoin Transactions. More is better, but needs more time and resources.</source>
-        <translation>Sikkerhedsniveau for Zerocoin Transaktioner. Mere er bedre, men har brug for mere tid og ressourcer.</translation>
-    </message>
-    <message>
-        <source>Security Level:</source>
-        <translation>Sikkerhedsniveau:</translation>
-    </message>
-    <message>
-        <source>Security Level 1 - 100 (default: 42)</source>
-        <translation>Sikkerhedsniveau 1 - 100 (standard: 42)</translation>
-    </message>
-    <message>
         <source>Pay &amp;To:</source>
         <translation>Betal &amp;Til</translation>
     </message>
@@ -2774,14 +2751,6 @@ Please be patient...</source>
 Vær tålmodig...</translation>
     </message>
     <message>
-        <source>Spending Zerocoin.
-Computationally expensive, might need several minutes depending on the selected Security Level and your hardware.
-Please be patient...</source>
-        <translation>Tilbringe Zerocoin
-Computationally dyrt, kan have brug for flere minutter afhængigt af det valgte sikkerhedsniveau og din hardware.
-Vær tålmodig..</translation>
-    </message>
-    <message>
         <source>) needed.
 Maximum allowed: </source>
         <translation>) havde brug for.
@@ -2952,20 +2921,8 @@ Maksimum tilladt:</translation>
         <translation>til en nyligt genereret (ubrugt og derfor anonym) lokal adresse &lt;br /&gt;</translation>
     </message>
     <message>
-        <source>with Security Level </source>
-        <translation>med sikkerhedsniveau</translation>
-    </message>
-    <message>
         <source>Confirm send coins</source>
         <translation>Bekræft at De vil sende mønter</translation>
-    </message>
-    <message>
-        <source>Version 1 xION require a security level of 100 to successfully spend.</source>
-        <translation>Version 1 xION kræver et sikkerhedsniveau på 100 til succes.</translation>
-    </message>
-    <message>
-        <source>Failed to spend xION</source>
-        <translation>Kunne ikke bruge xION</translation>
     </message>
     <message>
         <source>Failed to fetch mint associated with serial hash</source>
@@ -3024,6 +2981,9 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
     </message>
 </context>
 <context>
+    <name>ProposalFrame</name>
+    </context>
+<context>
     <name>QObject</name>
     <message>
         <source>Amount</source>
@@ -3073,7 +3033,11 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <source>%1 ms</source>
         <translation>%1 ms</translation>
     </message>
-</context>
+    <message>
+        <source>ION Core</source>
+        <translation>ION kerne</translation>
+    </message>
+    </context>
 <context>
     <name>QRImageWidget</name>
     <message>
@@ -3436,10 +3400,6 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Bekræft resync Blockchain</translation>
     </message>
     <message>
-        <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
-        <translation>Brug piltasterne for at navigere rundt i historiedata, og &lt;b&gt;Ctrl-L&lt;/b&gt; for at tømme skærmen.</translation>
-    </message>
-    <message>
         <source>Type &lt;b&gt;help&lt;/b&gt; for an overview of available commands.</source>
         <translation>Tast &lt;b&gt;help&gt; for at få en oversigt over tilgængelige kommandoer</translation>
     </message>
@@ -3511,6 +3471,14 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Valgfri opmærkning som tilknyttes den nye modtageradresse.</translation>
     </message>
     <message>
+        <source>&amp;Address:</source>
+        <translation>&amp;adresse</translation>
+    </message>
+    <message>
+        <source>A&amp;mount:</source>
+        <translation>A&amp;mount</translation>
+    </message>
+    <message>
         <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the ION network.</source>
         <translation>Valgfri besked som vedhæftes betalingsanmodnigen, og som bliver vist når anmodningen åbnes. Note: Beskeden fremsendes ikke sammen med betalingen, når denne sendes ud på ION netværket.</translation>
     </message>
@@ -3533,10 +3501,6 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
     <message>
         <source>An optional amount to request. Leave this empty or zero to not request a specific amount.</source>
         <translation>Beløbsfeltet er valgfrit. Efterlad det tomt, eller med værdien 0 for at anmode om et beløb, som afsenderen bestemmer.</translation>
-    </message>
-    <message>
-        <source>&amp;Amount:</source>
-        <translation>&amp;Beløb</translation>
     </message>
     <message>
         <source>&amp;Request payment</source>
@@ -3581,6 +3545,10 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
     <message>
         <source>Copy amount</source>
         <translation>Kopiér beløb</translation>
+    </message>
+    <message>
+        <source>Copy address</source>
+        <translation>Kopiér adresse</translation>
     </message>
 </context>
 <context>
@@ -3651,6 +3619,10 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
     <message>
         <source>Message</source>
         <translation>Besked</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Adresse</translation>
     </message>
     <message>
         <source>Amount</source>
@@ -4078,7 +4050,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>Ion Core is shutting down...</source>
+        <source>ION Core is shutting down...</source>
         <translation>ION kernen lukker ned</translation>
     </message>
     <message>
@@ -4228,7 +4200,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Ion Core</source>
+        <source>ION Core</source>
         <translation>ION kerne</translation>
     </message>
     <message>
@@ -4244,7 +4216,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>DASH "core" udviklerne</translation>
     </message>
     <message>
-        <source>The Ion Core developers</source>
+        <source>The ION Core developers</source>
         <translation>ION "core" udviklerne</translation>
     </message>
     <message>
@@ -4263,7 +4235,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
     <name>TransactionDesc</name>
     <message numerus="yes">
         <source>Open for %n more block(s)</source>
-        <translation><numerusform>Åbn for %n flere blokke</numerusform><numerusform>Åbn for %n flere blokke</numerusform></translation>
+        <translation><numerusform>Åbn for %n blokke</numerusform><numerusform>Åbn for %n blokke</numerusform></translation>
     </message>
     <message>
         <source>Open until %1</source>
@@ -4473,7 +4445,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
     </message>
     <message numerus="yes">
         <source>Open for %n more block(s)</source>
-        <translation><numerusform>Åbn for %n flere blokke</numerusform><numerusform>Åbn for %n flere blokke</numerusform></translation>
+        <translation><numerusform>Åbn for %n blokke</numerusform><numerusform>Åbn for %n blokke</numerusform></translation>
     </message>
     <message>
         <source>Open until %1</source>
@@ -4877,11 +4849,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <source>Select/Deselect All</source>
         <translation>Vælg / Fravælg alle</translation>
     </message>
-    <message>
-        <source>Is Spendable</source>
-        <translation>Kan tilbringes</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>ion-core</name>
     <message>
@@ -4909,7 +4877,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Beregnet akkumulator kontrolpunkt er ikke det, der er registreret af blok indeks</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. Ion Core is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s. ION Core is probably already running.</source>
         <translation>Kan ikke låse datamappen %s. ION core kører sandsynligvis allerede.</translation>
     </message>
     <message>
@@ -5086,7 +5054,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Dette produkt anvender software udviklet i OpenSSL projektet til brug i OpenSSL værktøjssættet &lt;https://www.openssl.org/&gt; og kryptosoftware skrevet afEric Young og UPnP software skrevet af Thomas Bernard.</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. Ion Core is probably already running.</source>
+        <source>Unable to bind to %s on this computer. ION Core is probably already running.</source>
         <translation>Det var ikke muligt at forbinde %s på denne computer. ION kører sandsynligvis allerede.</translation>
     </message>
     <message>
@@ -5094,12 +5062,12 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Det er ikke muligt at allokere tilstrækkeligt med tilsløret designeret indestående for at gennemføre denne transaktion.</translation>
     </message>
     <message>
-        <source>Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 10000 ION.</source>
-        <translation>Det er ikke muligt at allokere tilstrækkeligt med tilsløret  ikke-designeret indestående for at gennemføre denne transaktion, der ikke ækvivalerer 10000 ION.</translation>
+        <source>Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 20000 ION.</source>
+        <translation>Det er ikke muligt at allokere tilstrækkeligt med tilsløret  ikke-designeret indestående for at gennemføre denne transaktion, der ikke ækvivalerer 20000 ION.</translation>
     </message>
     <message>
-        <source>Unable to locate enough funds for this transaction that are not equal 10000 ION.</source>
-        <translation>Det var ikke muligt at allokere tilstrækkelige midler til denne transaktion som er forskellig fra 10000 ION.</translation>
+        <source>Unable to locate enough funds for this transaction that are not equal 20000 ION.</source>
+        <translation>Det var ikke muligt at allokere tilstrækkelige midler til denne transaktion som er forskellig fra 20000 ION.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</source>
@@ -5114,7 +5082,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Advarsel! -paytxfee er sat meget højt. Det er dette gebyr De kommer til at betale for transaktionen, hvis De gennemfører. </translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Ion Core will not work properly.</source>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong ION Core will not work properly.</source>
         <translation>Advarsel! Kontroller at computerens dato og tid er korrekt indstillet. Hvis tiden ikke er rigtig, vil ION core ikke fungere ordentligt.</translation>
     </message>
     <message>
@@ -5270,8 +5238,8 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Copyright (C) 2015-%i The PIVX Core Developers</translation>
     </message>
     <message>
-        <source>Copyright (C) 2018-%i The Ion Core Developers</source>
-        <translation>Copyright (C) 2018-%i The Ion Core Developers</translation>
+        <source>Copyright (C) 2018-%i The ION Core Developers</source>
+        <translation>Copyright (C) 2018-%i The ION Core Developers</translation>
     </message>
     <message>
         <source>Corrupted block database detected</source>
@@ -5358,7 +5326,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Fejl ved indlæsning af wallet.dat: Tegnebogen er beskadiget</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Ion Core</source>
+        <source>Error loading wallet.dat: Wallet requires newer version of ION Core</source>
         <translation>Fejl ved indlæsning af wallet.dat: Tegnebogen kræver en nyere version af ION core</translation>
     </message>
     <message>
@@ -5372,6 +5340,10 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
     <message>
         <source>Error recovering public key.</source>
         <translation>Fejl ved genskabelse af den offentlige nøgle</translation>
+    </message>
+    <message>
+        <source>Error writing zerocoinDB to disk</source>
+        <translation>Fejl ved at skrive zerocoinDB til disk</translation>
     </message>
     <message>
         <source>Error</source>
@@ -5408,6 +5380,10 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
     <message>
         <source>Failed to listen on any port. Use -listen=0 if you want this.</source>
         <translation>Lytning på uspecificerede porte mislykkedes. Brug -listen=0 hvis De ønsker denne funktion.</translation>
+    </message>
+    <message>
+        <source>Failed to parse host:port string</source>
+        <translation>Failed to parse host:port string</translation>
     </message>
     <message>
         <source>Failed to read block</source>
@@ -5474,7 +5450,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Info:</translation>
     </message>
     <message>
-        <source>Initialization sanity check failed. Ion Core is shutting down.</source>
+        <source>Initialization sanity check failed. ION Core is shutting down.</source>
         <translation>Initiering af sanitetskontrollen fejlede. ION core lukker ned. </translation>
     </message>
     <message>
@@ -5686,10 +5662,6 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Kunne ikke oprette mynte</translation>
     </message>
     <message>
-        <source>Failed to deserialize</source>
-        <translation>Kunne ikke deserialisere</translation>
-    </message>
-    <message>
         <source>Failed to find Zerocoins in wallet.dat</source>
         <translation>Kunne ikke finde Zerocoins i wallet.dat</translation>
     </message>
@@ -5758,8 +5730,8 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Indlæser sporks ...</translation>
     </message>
     <message>
-        <source>Loading wallet... (%3.1f %%)</source>
-        <translation>Indlæser tegnebog... (%3.1f%%)</translation>
+        <source>Loading wallet... (%3.2f %%)</source>
+        <translation>Indlæser tegnebog... (%3.2f%%)</translation>
     </message>
     <message>
         <source>Loading wallet...</source>
@@ -6130,14 +6102,6 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Møntudgifterne er blevet brugt</translation>
     </message>
     <message>
-        <source>The new spend coin transaction did not verify</source>
-        <translation>Den nye udgiftsmønttransaktion bekræftede ikke</translation>
-    </message>
-    <message>
-        <source>The selected mint coin is an invalid coin</source>
-        <translation>Den valgte mintmønter er en ugyldig mønt</translation>
-    </message>
-    <message>
         <source>The transaction did not verify</source>
         <translation>Transaktionen bekræftede ikke</translation>
     </message>
@@ -6286,10 +6250,6 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Verificerer  tegnebog</translation>
     </message>
     <message>
-        <source>Version 1 xION require a security level of 100 to successfully spend.</source>
-        <translation>Version 1 xION kræver et sikkerhedsniveau på 100 til succes.</translation>
-    </message>
-    <message>
         <source>Wallet %s resides outside data directory %s</source>
         <translation>Tegnbogen %s befinder sig udenfor datamappen %s</translation>
     </message>
@@ -6298,7 +6258,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Tegnebogen er låst</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Ion Core to complete</source>
+        <source>Wallet needed to be rewritten: restart ION Core to complete</source>
         <translation>Tegnebogen måtte genskrives. Genstart ION core for at gøre færdig</translation>
     </message>
     <message>

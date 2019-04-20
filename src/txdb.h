@@ -8,12 +8,9 @@
 #ifndef BITCOIN_TXDB_H
 #define BITCOIN_TXDB_H
 
-#include <coins.h>
-#include <dbwrapper.h>
-#include <chain.h>
-#include <limitedmap.h>
-#include <spentindex.h>
-#include <sync.h>
+#include "leveldbwrapper.h"
+#include "main.h"
+#include "xion/zerocoin.h"
 
 #include <map>
 #include <memory>

@@ -38,12 +38,19 @@ OPTIONS
 
 EXAMPLES
 
-       icns2png  -x  anicon.icns             #  Extract  all  icon  found   in
-       anicon.icns
-       icns2png -x -s 48 anicon.icns      # Extract all 48x48 32-bit icons
-       icns2png -x -s 32 -d 1 anicon.icns # Extract all 32x32 1-bit icons
-       icns2png  -l  anicon.icns             #  Lists  the  icons contained in
-       anicon.icns
+
+```#!/bin/sh
+icns2png  -x  ion.icns #Extracts  all  icon  found   in ion.icns
+```
+```#!/bin/sh
+icns2png -x -s 48 ion.icns #Extracts all 48x48 32-bit icons
+```
+```#!/bin/sh
+icns2png -x -s 32 -d 1 ion.icns #Extracts all 32x32 1-bit icons
+```
+```#!/bin/sh
+icns2png  -l  ion.icns #Lists  the  icons contained in ion.icns
+```
 
 AUTHOR
 

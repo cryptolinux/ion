@@ -694,10 +694,6 @@
         <source>&amp;Command-line options</source>
         <translation>Opzioni riga di &amp;Comando</translation>
     </message>
-    <message numerus="yes">
-        <source>Processed %n blocks of transaction history.</source>
-        <translation><numerusform>Elaborato 1 blocco dalla cronologia delle transazioni</numerusform><numerusform>Elaborati %n blocchi dalla cronologia delle transazioni.</numerusform></translation>
-    </message>
     <message>
         <source>Synchronizing additional data: %p%</source>
         <translation>Sincronizzazione dati addizionali: %p%</translation>
@@ -731,8 +727,8 @@
         <translation>Il wallet non è &lt;b&gt;crittografato&lt;/b&gt;</translation>
     </message>
     <message>
-        <source>&amp;PrivateSend information</source>
-        <translation>Informazioni su &amp;PrivateSend</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Send coins to a ION address</source>
@@ -759,12 +755,12 @@
         <translation>&amp;Strumenti</translation>
     </message>
     <message>
-        <source>&amp;About Ion Core</source>
-        <translation>&amp;Informazioni Ion Core</translation>
+        <source>&amp;About ION Core</source>
+        <translation>&amp;Informazioni ION Core</translation>
     </message>
     <message>
-        <source>Show information about Ion Core</source>
-        <translation>Visualizza informazioni su Ion Core</translation>
+        <source>Show information about ION Core</source>
+        <translation>Visualizza informazioni su ION Core</translation>
     </message>
     <message>
         <source>Modify configuration options for ION</source>
@@ -823,16 +819,12 @@
         <translation>Finestra Block Explorer</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
-        <translation>Mostra il messaggio di aiuto Ion Core per ottenere un elenco con le possibili opzioni di riga di comando ION</translation>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
+        <translation>Mostra il messaggio di aiuto ION Core per ottenere un elenco con le possibili opzioni di riga di comando ION</translation>
     </message>
     <message>
-        <source>Ion Core client</source>
-        <translation>Ion Core</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n active connection(s) to ION network</source>
-        <translation><numerusform>%n connessione attiva alla rete IONIX</numerusform><numerusform>%n connessioni attive alla rete IONIX</numerusform></translation>
+        <source>ION Core client</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Synchronizing with network...</source>
@@ -854,25 +846,9 @@
         <source>Up to date</source>
         <translation>Aggiornato</translation>
     </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation><numerusform>%n ora</numerusform><numerusform>%n ore</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day(s)</source>
-        <translation><numerusform>%n giorno</numerusform><numerusform>%n giorni</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n week(s)</source>
-        <translation><numerusform>%n settimana</numerusform><numerusform>%n settimane</numerusform></translation>
-    </message>
     <message>
         <source>%1 and %2</source>
         <translation>%1 e %2</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year(s)</source>
-        <translation><numerusform>%n anno</numerusform><numerusform>%n anni</numerusform></translation>
     </message>
     <message>
         <source>Last received block was generated %1 ago.</source>
@@ -956,7 +932,7 @@
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Il portafoglio è &lt;b&gt;crittografato&lt;/b&gt; e attualmente &lt;b&gt;bloccato&lt;/b&gt;</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>BlockExplorer</name>
     <message>
@@ -1341,22 +1317,33 @@
     </message>
 </context>
 <context>
+    <name>GovernancePage</name>
+    <message>
+        <source>Form</source>
+        <translation>Modulo</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    </context>
+<context>
     <name>HelpMessageDialog</name>
     <message>
         <source>highest</source>
         <translation>massima</translation>
     </message>
     <message>
-        <source>higher</source>
-        <translation>molto alta</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>high</source>
         <translation>alta</translation>
     </message>
     <message>
-        <source>About Ion Core</source>
-        <translation>Informazioni su Ion Core</translation>
+        <source>About ION Core</source>
+        <translation>Informazioni su ION Core</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1402,16 +1389,16 @@
         <translation>basso</translation>
     </message>
     <message>
-        <source>Welcome to Ion Core.</source>
+        <source>Welcome to ION Core.</source>
         <translation>Benvenuto in IONIX Core.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Ion Core will store its data.</source>
-        <translation>Essendo il primo avvio dell'applicazione, puoi scegliere dove Ion Core salverà i propri dati.</translation>
+        <source>As this is the first time the program is launched, you can choose where ION Core will store its data.</source>
+        <translation>Essendo il primo avvio dell'applicazione, puoi scegliere dove ION Core salverà i propri dati.</translation>
     </message>
     <message>
-        <source>Ion Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>Ion Core scaricherà e salverà una copia della blockchain ION. Verranno salvati almeno %1GB di dati in questa cartella, che cresceranno nel tempo. In questa cartella verrà salvato anche il portafoglio.</translation>
+        <source>ION Core will download and store a copy of the ION block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>ION Core scaricherà e salverà una copia della blockchain ION. Verranno salvati almeno %1GB di dati in questa cartella, che cresceranno nel tempo. In questa cartella verrà salvato anche il portafoglio.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1422,8 +1409,8 @@
         <translation>Utilizza una cartella dati personalizzata:</translation>
     </message>
     <message>
-        <source>Ion Core</source>
-        <translation>Ion Core</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1658,47 +1645,8 @@ MultiSend non verrà attivato a meno che tu non prema su Attiva</translation>
         <translation>(nessuna etichetta)</translation>
     </message>
     <message>
-        <source>The entered address:
-</source>
-        <translation>L'indirizzo immesso:</translation>
-    </message>
-    <message>
-        <source> is invalid.
-Please check the address and try again.</source>
-        <translation>è invalido.
-Per favore controlla l'indirizzo e riprova nuovamente.</translation>
-    </message>
-    <message>
-        <source>The total amount of your MultiSend vector is over 100% of your stake reward
-</source>
-        <translation>L'ammontare totale del tuo vettore MultiSend è superiore al 100% della tua ricompensa per lo stake
-</translation>
-    </message>
-    <message>
         <source>Please Enter 1 - 100 for percent.</source>
         <translation>Per favore inserisci 1 - 100 come percentuale.</translation>
-    </message>
-    <message>
-        <source>Saved the MultiSend to memory, but failed saving properties to the database.
-</source>
-        <translation>MultiSend è stato salvato con successo in memoria, ma il salvataggio delle proprietà nel database non è andato a buon fine.
-</translation>
-    </message>
-    <message>
-        <source>MultiSend Vector
-</source>
-        <translation>Vettore InvioMultiplo
-</translation>
-    </message>
-    <message>
-        <source>Removed </source>
-        <translation>Eliminato</translation>
-    </message>
-    <message>
-        <source>Could not locate address
-</source>
-        <translation>Impossibile trovare l'indirizzo
-</translation>
     </message>
 </context>
 <context>
@@ -1799,12 +1747,12 @@ Per favore controlla l'indirizzo e riprova nuovamente.</translation>
         <translation>Configura Offuscamento</translation>
     </message>
     <message>
-        <source>Use 2 separate masternodes to mix funds up to 10000 ION</source>
-        <translation>Usa 2 masternodi diversi per mescolare fino a 10000 ION</translation>
+        <source>Use 2 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Usa 2 masternodi diversi per mescolare fino a 20000 ION</translation>
     </message>
     <message>
-        <source>Use 8 separate masternodes to mix funds up to 10000 ION</source>
-        <translation>Usa 8 masternodi diversi per mixare fino a 10000 ION</translation>
+        <source>Use 8 separate masternodes to mix funds up to 20000 ION</source>
+        <translation>Usa 8 masternodi diversi per mixare fino a 20000 ION</translation>
     </message>
     <message>
         <source>Use 16 separate masternodes</source>
@@ -2003,7 +1951,7 @@ Se il conio automatico è attivato questa percentuale si stabilizzerà all'incir
     </message>
     <message>
         <source>AutoMint is currently enabled and set to </source>
-        <translation>AutoMint è attivo e impostato su</translation>
+        <translation>Conio automatico è attivo e impostato su</translation>
     </message>
     <message>
         <source>To disable AutoMint add 'enablezeromint=0' in ioncoin.conf.</source>
@@ -6721,7 +6669,7 @@ Per cambiare la percentuale (riavvio non necessario):
     </message>
     <message>
         <source>Fee:</source>
-        <translation>Tassa:</translation>
+        <translation>Commissione:</translation>
     </message>
     <message>
         <source>Dust:</source>
@@ -6738,6 +6686,10 @@ Per cambiare la percentuale (riavvio non necessario):
     <message>
         <source>Insufficient funds!</source>
         <translation>Fondi insufficienti!</translation>
+    </message>
+    <message>
+        <source>medium</source>
+        <translation>media</translation>
     </message>
     <message>
         <source>Amount After Fee:</source>
@@ -6773,7 +6725,7 @@ Per cambiare la percentuale (riavvio non necessario):
     </message>
     <message>
         <source>Confirm send coins</source>
-        <translation>Converma invio monete</translation>
+        <translation>Conferma invio monete</translation>
     </message>
     <message>
         <source>Sending successful, return code: </source>
@@ -6785,11 +6737,24 @@ Per cambiare la percentuale (riavvio non necessario):
     </message>
 </context>
 <context>
+    <name>ProposalFrame</name>
+    </context>
+<context>
     <name>QObject</name>
     <message>
         <source>Last Send</source>
         <translation>Ultimo Invio</translation>
     </message>
+    <message>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
+    </message>
+    </context>
+<context>
+    <name>QRImageWidget</name>
+    </context>
+<context>
+    <name>RPCConsole</name>
     <message>
         <source>&amp;Information</source>
         <translation>&amp;Informazioni</translation>
@@ -6807,6 +6772,10 @@ Per cambiare la percentuale (riavvio non necessario):
         <translation>Ultimo Invio</translation>
     </message>
     <message>
+        <source>A&amp;mount:</source>
+        <translation>Q&amp;uantità:</translation>
+    </message>
+    <message>
         <source>&amp;Label:</source>
         <translation>&amp;Etichetta:</translation>
     </message>
@@ -6818,6 +6787,13 @@ Per cambiare la percentuale (riavvio non necessario):
         <source>Distributed under the MIT software license, see the accompanying file %s or %s</source>
         <translation>Distribuito sotto licenza MIT del software, si veda il file %s o %s incluso</translation>
     </message>
+    <message>
+        <source>Copy address</source>
+        <translation>Copia indirizzo</translation>
+    </message>
+</context>
+<context>
+    <name>ReceiveRequestDialog</name>
     <message>
         <source>Enable use of PrivateSend for funds stored in this wallet (0-1, default: %u)</source>
         <translation>Abilita l'uso di PrivateSend per i fondi memorizzati in questo portafoglio (0-1, valore predefinito: %u)</translation>
@@ -6839,8 +6815,12 @@ Per cambiare la percentuale (riavvio non necessario):
         <translation>Forza la trasmissione della transazione da peer in whitelist anche se violano le regole di trasmissione locali (default: %d)</translation>
     </message>
     <message>
-        <source>Incorrect or no devnet genesis block found. Wrong datadir for devnet specified?</source>
-        <translation>Rilevato blocco genesi di devnet errato o inesistente. È stato specificato un datadir errato per devnet?</translation>
+        <source>Address</source>
+        <translation>Indirizzo</translation>
+    </message>
+    <message>
+        <source>Amount</source>
+        <translation>Ammontare</translation>
     </message>
     <message>
         <source>Maximum allowed median peer time offset adjustment. Local perspective of time may be influenced by peers forward or backward by this amount. (default: %u seconds)</source>
@@ -6887,12 +6867,12 @@ Per cambiare la percentuale (riavvio non necessario):
         <translation>Per favore controllare che la data del computer e l'ora siano corrette! Se il vostro orologio è sbagliato %s non funzionerà correttamente.</translation>
     </message>
     <message>
-        <source>Please contribute if you find %s useful. Visit %s for further information about the software.</source>
-        <translation>Per favore contribuite se ritenete %s utile. Visitate %s per maggiori informazioni riguardo il software.</translation>
+        <source>medium</source>
+        <translation>media</translation>
     </message>
     <message>
-        <source>Dust:</source>
-        <translation>Polvere:</translation>
+        <source>Fee:</source>
+        <translation>Commissione:</translation>
     </message>
     <message>
         <source>Dust:</source>
@@ -6904,7 +6884,7 @@ Per cambiare la percentuale (riavvio non necessario):
     </message>
     <message>
         <source>After Fee:</source>
-        <translation>Al netto della commissione:</translation>
+        <translation>Importo al netto della commissione:</translation>
     </message>
     <message>
         <source>Change:</source>
@@ -6952,15 +6932,19 @@ Per cambiare la percentuale (riavvio non necessario):
     </message>
     <message>
         <source>Copy fee</source>
-        <translation>Copia commissioni</translation>
+        <translation>Copia commissione</translation>
     </message>
     <message>
         <source>Copy after fee</source>
-        <translation>Copia al netto della commissione</translation>
+        <translation>Copia importo al netto della commissione</translation>
     </message>
     <message>
         <source>Copy bytes</source>
         <translation>Copia byte</translation>
+    </message>
+    <message>
+        <source>Copy priority</source>
+        <translation>Copia priorità</translation>
     </message>
     <message>
         <source>Copy dust</source>
@@ -7125,12 +7109,8 @@ Per cambiare la percentuale (riavvio non necessario):
         <translation>Mostra questo messaggio di aiuto ed esci</translation>
     </message>
     <message>
-        <source>Reducing -maxconnections from %d to %d, because of system limitations.</source>
-        <translation>Riduzione -maxconnections da %d a %d a causa di limitazioni di sistema.</translation>
-    </message>
-    <message>
-        <source>Status</source>
-        <translation>Stato</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Status</source>

@@ -658,9 +658,9 @@
         <source>Tabs toolbar</source>
         <translation>Lišta záložiek</translation>
     </message>
-    <message numerus="yes">
-        <source>%n active connection(s) to Ion network</source>
-        <translation><numerusform>%n aktívne spojenie so sieťou Ion</numerusform><numerusform>%n aktívne spojenia so sieťou Ion</numerusform><numerusform>%n aktívnych spojení so sieťou Ion</numerusform><numerusform>%n aktívnych spojení so sieťou Ion</numerusform></translation>
+    <message>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>Send coins to a ION address</source>
@@ -679,12 +679,12 @@
         <translation>Indexujem bloky na disku...</translation>
     </message>
     <message>
-        <source>Processing blocks on disk...</source>
-        <translation>Spracovávam bloky na disku...</translation>
+        <source>&amp;About ION Core</source>
+        <translation>O ION Core</translation>
     </message>
     <message>
-        <source>Reindexing blocks on disk...</source>
-        <translation>Reindexujú sa bloky na disku...</translation>
+        <source>Show information about ION Core</source>
+        <translation>Zobraziť informácie o ION Core</translation>
     </message>
     <message>
         <source>Connecting to peers...</source>
@@ -743,14 +743,16 @@
         <translation>Prijaté hromadné transakcie</translation>
     </message>
     <message>
-        <source>Show the Ion Core help message to get a list with possible ION command-line options</source>
-        <translation>Zobraziť pomocnú správu programu Ion Core a získajte zoznam možností príkazového riadka ION</translation>
+        <source>Show the ION Core help message to get a list with possible ION command-line options</source>
+        <translation>Zobraziť pomocnú správu programu ION Core a získajte zoznam možností príkazového riadka ION</translation>
     </message>
     <message>
-        <source>Received Amount: %1
-</source>
-        <translation>Prijatá suma: %1
-</translation>
+        <source>ION Core client</source>
+        <translation>ION Core klient</translation>
+    </message>
+    <message>
+        <source>Synchronizing with network...</source>
+        <translation>Synchronizácia so sieťou ...</translation>
     </message>
     <message>
         <source>Date: %1
@@ -844,6 +846,13 @@
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Peňaženka je &lt;b&gt;zašifrovaná&lt;/ b&gt; a momentálne je &lt;b&gt;zamknutá&lt;/ b&gt;</translation>
+    </message>
+    </context>
+<context>
+    <name>BlockExplorer</name>
+    <message>
+        <source>Blockchain Explorer</source>
+        <translation>Blockchain prehliadač</translation>
     </message>
     <message>
         <source>Amount</source>
@@ -952,13 +961,22 @@
 </context>
 <context>
     <name>EditAddressDialog</name>
+    </context>
+<context>
+    <name>FreespaceChecker</name>
+    </context>
+<context>
+    <name>GovernancePage</name>
+    </context>
+<context>
+    <name>HelpMessageDialog</name>
     <message>
-        <source>Edit Address</source>
-        <translation>Upraviť adresu</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
-        <source>&amp;Label</source>
-        <translation>&amp;Popis</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>The label associated with this address list entry</source>
@@ -1066,10 +1084,26 @@
         <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
         <translation>Priečinok už existuje. Pridajte "%1" ak chcete vytvoriť nový priečinok tu.</translation>
     </message>
+    </context>
+<context>
+    <name>ProposalFrame</name>
+    </context>
+<context>
+    <name>QObject</name>
     <message>
         <source>Path already exists, and is not a directory.</source>
         <translation>Cesta už existuje a nie je to adresár.</translation>
     </message>
+    <message>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
+    </message>
+    </context>
+<context>
+    <name>QRImageWidget</name>
+    </context>
+<context>
+    <name>RPCConsole</name>
     <message>
         <source>Cannot create data directory here.</source>
         <translation>Tu nemôžem vytvoriť dátový adresár.</translation>
@@ -1085,6 +1119,13 @@
         <source>(%1-bit)</source>
         <translation>(%1-bit)</translation>
     </message>
+    <message>
+        <source>Copy address</source>
+        <translation>Skopírovať adresu</translation>
+    </message>
+</context>
+<context>
+    <name>ReceiveRequestDialog</name>
     <message>
         <source>About %1</source>
         <translation>O %1</translation>
@@ -1106,8 +1147,12 @@
         <translation>Možnosti používateľského rozhrania:</translation>
     </message>
     <message>
-        <source>Choose data directory on startup (default: %u)</source>
-        <translation>Vyberte dátový priečinok pri štarte (predvolené: %u)</translation>
+        <source>Address</source>
+        <translation>Adresa</translation>
+    </message>
+    <message>
+        <source>Amount</source>
+        <translation>Suma</translation>
     </message>
     <message>
         <source>Set language, for example "de_DE" (default: system locale)</source>
@@ -1292,8 +1337,8 @@
         <translation>AKTÍVNE</translation>
     </message>
     <message>
-        <source>POSE_BANNED</source>
-        <translation>POSE_ZAKÁZANÉ</translation>
+        <source>ION Core</source>
+        <translation>ION Core</translation>
     </message>
     <message>
         <source>UNKNOWN</source>
