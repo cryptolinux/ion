@@ -36,7 +36,7 @@ BITCOIN_TESTS =\
   test/libzerocoin_tests.cpp \
   test/allocator_tests.cpp \
   test/base32_tests.cpp \
-  test/base58_tests.cpp \
+  #test/base58_tests.cpp \
   test/base64_tests.cpp \
   test/budget_tests.cpp \
   test/checkblock_tests.cpp \
@@ -72,13 +72,10 @@ BITCOIN_TESTS =\
   test/sanity_tests.cpp \
   test/scheduler_tests.cpp \
   test/script_P2SH_tests.cpp \
-  test/script_P2PK_tests.cpp \
-  test/script_P2PKH_tests.cpp \
-  test/script_tests.cpp \
-  test/script_standard_tests.cpp \
+  #test/script_tests.cpp \
   test/scriptnum_tests.cpp \
   test/serialize_tests.cpp \
-  test/sighash_tests.cpp \
+  #test/sighash_tests.cpp \
   test/sigopcount_tests.cpp \
   test/skiplist_tests.cpp \
   test/timedata_tests.cpp \
