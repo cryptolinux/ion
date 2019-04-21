@@ -198,9 +198,9 @@ parts:
       mv -f $SNAPCRAFT_PART_BUILD/contrib/snap/icons/favicon.ico $SNAPCRAFT_PART_BUILD/share/pixmaps/favicon.ico
       mv -f $SNAPCRAFT_PART_BUILD/contrib/snap/icons/favicon_testnet.ico $SNAPCRAFT_PART_BUILD/share/pixmaps/favicon_testnet.ico
       mv -f $SNAPCRAFT_PART_BUILD/contrib/snap/icons/favicon_regtest.ico $SNAPCRAFT_PART_BUILD/share/pixmaps/favicon_regtest.ico
-      mv -f $SNAPCRAFT_PART_BUILD/snap/local/desktop/ion.png $SNAPCRAFT_PART_BUILD/src/qt/res/icons/ion.png
-      mv -f $SNAPCRAFT_PART_BUILD/snap/local/desktop/ion_testnet.png $SNAPCRAFT_PART_BUILD/src/qt/res/icons/ion_testnet.png
-      mv -f $SNAPCRAFT_PART_BUILD/snap/local/desktop/ion_regtest.png $SNAPCRAFT_PART_BUILD/src/qt/res/icons/ion_regtest.png
+      mv -f $SNAPCRAFT_PART_BUILD/snap/local/desktop/${BINPREF}.png $SNAPCRAFT_PART_BUILD/src/qt/res/icons/${BINPREF}.png
+      mv -f $SNAPCRAFT_PART_BUILD/snap/local/desktop/${BINPREF}_testnet.png $SNAPCRAFT_PART_BUILD/src/qt/res/icons/${BINPREF}_testnet.png
+      mv -f $SNAPCRAFT_PART_BUILD/snap/local/desktop/${BINPREF}_regtest.png $SNAPCRAFT_PART_BUILD/src/qt/res/icons/${BINPREF}_regtest.png
       echo "-----------------------------------------------"
       echo "+++++++++++++++++++++++++++++++++++++++++++++++"
       echo "BUILD DEPENDENCIES"
