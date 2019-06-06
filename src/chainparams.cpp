@@ -669,7 +669,7 @@ public:
 
         // Token groups
         nOpGroupStartHeight = 1;
-        strTokenManagementKey = "";
+        strTokenManagementKey = "gBi3gDLnGfw8HA2rN4HmNxHk9hMC4GLFbh";
 
         // Fake Serial Attack
         nFakeSerialBlockheightEnd = -1;
