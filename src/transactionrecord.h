@@ -11,9 +11,6 @@
 #include <uint256.h>
 #include <base58.h>
 
-#include <QList>
-#include <QString>
-
 class CWallet;
 class CWalletTx;
 
@@ -61,8 +58,8 @@ public:
     /** @name Reported status
        @{*/
     Status status;
-    qint64 depth;
-    qint64 open_for; /**< Timestamp if status==OpenUntilDate, otherwise number
+    int64_t depth;
+    int64_t open_for; /**< Timestamp if status==OpenUntilDate, otherwise number
                       of additional blocks that need to be mined before
                       finalization */
     /**@}*/
@@ -115,13 +112,13 @@ public:
         txDest = DecodeDestination(strAddress);
     }
 
-    TransactionRecord(uint256 hash, qint64 time) : hash(hash), time(time), type(Other), address(""), debit(0),
+    TransactionRecord(uint256 hash, int64_t time) : hash(hash), time(time), type(Other), address(""), debit(0),
                                                    credit(0), idx(0)
     {
         txDest = DecodeDestination(strAddress);
     }
 
-    TransactionRecord(uint256 hash, qint64 time, Type type, const std::string& address, const CAmount& debit, const CAmount& credit) : hash(hash), time(time), type(type), address(address), debit(debit), credit(credit),
+    TransactionRecord(uint256 hash, int64_t time, Type type, const std::string& address, const CAmount& debit, const CAmount& credit) : hash(hash), time(time), type(type), address(address), debit(debit), credit(credit),
                                                                                                                                        idx(0)
     {
         txDest = DecodeDestination(strAddress);
@@ -130,12 +127,12 @@ public:
     /** Decompose CWallet transaction to model transaction records.
      */
     static bool showTransaction(const CWalletTx& wtx);
-    static QList<TransactionRecord> decomposeTransaction(const CWallet* wallet, const CWalletTx& wtx);
+    static std::vector<TransactionRecord> decomposeTransaction(const CWallet* wallet, const CWalletTx& wtx);
 
     /** @name Immutable transaction attributes
       @{*/
     uint256 hash;
-    qint64 time;
+    int64_t time;
     Type type;
     std::string strAddress;
     CTxDestination txDest;
@@ -154,7 +151,7 @@ public:
     bool involvesWatchAddress;
 
     /** Return the unique identifier for this transaction (part) */
-    QString getTxID() const;
+    std::string getTxID() const;
 
     /** Return the output index of the subtransaction  */
     int getOutputIndex() const;
@@ -166,6 +163,19 @@ public:
     /** Return whether a status update is needed.
      */
     bool statusUpdateNeeded();
+
+
+    /**
+     * Return stringified transaction record type
+     */
+    std::string GetTransactionRecordType() const;
+    std::string GetTransactionRecordType(Type type) const;
+
+    /**
+     * Return stringified transaction status
+     */
+    std::string GetTransactionStatus() const;
+    std::string GetTransactionStatus(TransactionStatus::Status status) const;
 };
 
 #endif // BITCOIN_QT_TRANSACTIONRECORD_H

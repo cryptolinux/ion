@@ -30,9 +30,9 @@ bool TransactionRecord::showTransaction(const CWalletTx &wtx)
 /*
  * Decompose CWallet transaction to model transaction records.
  */
-QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* wallet, const CWalletTx& wtx)
+std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* wallet, const CWalletTx& wtx)
 {
-    QList<TransactionRecord> parts;
+    std::vector<TransactionRecord> parts;
     int64_t nTime = wtx.GetComputedTxTime();
     CAmount nCredit = wtx.GetCredit(ISMINE_ALL);
     CAmount nDebit = wtx.GetDebit(ISMINE_ALL);
@@ -93,7 +93,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
             }
         }
 
-        parts.append(sub);
+        parts.push_back(sub);
     } else if (wtx.HasZerocoinSpendInputs()) {
         //zerocoin spend outputs
         bool fFeeAssigned = false;
@@ -114,7 +114,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
                     fFeeAssigned = true;
                 }
                 sub.idx = parts.size();
-                parts.append(sub);
+                parts.push_back(sub);
                 continue;
             }
 
@@ -138,7 +138,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
                 if (strAddress != "")
                     sub.address = strAddress;
                 sub.idx = parts.size();
-                parts.append(sub);
+                parts.push_back(sub);
                 continue;
             }
 
@@ -155,7 +155,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
             if (strAddress != "")
                 sub.address = strAddress;
             sub.idx = parts.size();
-            parts.append(sub);
+            parts.push_back(sub);
         }
     } else if (nNet > 0 || wtx.IsCoinBase()) {
         //
@@ -186,7 +186,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
                     sub.type = TransactionRecord::Generated;
                 }
 
-                parts.append(sub);
+                parts.push_back(sub);
             }
         }
     }
@@ -220,8 +220,8 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
         }
 
         if (fAllFromMeDenom && fAllToMeDenom && nFromMe * nToMe) {
-            parts.append(TransactionRecord(hash, nTime, TransactionRecord::ObfuscationDenominate, "", -nDebit, nCredit));
-            parts.last().involvesWatchAddress = false; // maybe pass to TransactionRecord as constructor argument
+            parts.push_back(TransactionRecord(hash, nTime, TransactionRecord::ObfuscationDenominate, "", -nDebit, nCredit));
+            parts.back().involvesWatchAddress = false; // maybe pass to TransactionRecord as constructor argument
         } else if (fAllFromMe && fAllToMe) {
             // Payment to self
             // TODO: this section still not accurate but covers most cases,
@@ -285,8 +285,8 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
 
             sub.debit = -(nDebit - nChange);
             sub.credit = nCredit - nChange;
-            parts.append(sub);
-            parts.last().involvesWatchAddress = involvesWatchAddress; // maybe pass to TransactionRecord as constructor argument
+            parts.push_back(sub);
+            parts.back().involvesWatchAddress = involvesWatchAddress; // maybe pass to TransactionRecord as constructor argument
         } else if (fAllFromMe || wtx.HasZerocoinMintOutputs()) {
             //
             // Debit
@@ -355,7 +355,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
                 }
                 sub.debit = -nValue;
 
-                parts.append(sub);
+                parts.push_back(sub);
             }
         }
         else
@@ -363,8 +363,8 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
             //
             // Mixed debit transaction, can't break down payees
             //
-            parts.append(TransactionRecord(hash, nTime, TransactionRecord::Other, "", nNet, 0));
-            parts.last().involvesWatchAddress = involvesWatchAddress;
+            parts.push_back(TransactionRecord(hash, nTime, TransactionRecord::Other, "", nNet, 0));
+            parts.back().involvesWatchAddress = involvesWatchAddress;
         }
     }
 
@@ -501,12 +501,69 @@ bool TransactionRecord::statusUpdateNeeded(int chainLockHeight) const
         || (!status.lockedByChainLocks && status.cachedChainLockHeight != chainLockHeight);
 }
 
-QString TransactionRecord::getTxID() const
+std::string TransactionRecord::getTxID() const
 {
-    return QString::fromStdString(hash.ToString());
+    return hash.ToString();
 }
 
 int TransactionRecord::getOutputIndex() const
 {
     return idx;
+}
+
+std::string TransactionRecord::GetTransactionRecordType() const
+{
+    return GetTransactionRecordType(type);
+}
+std::string TransactionRecord::GetTransactionRecordType(Type type) const
+{
+    switch (type)
+    {
+        case Other: return "Other";
+        case Generated: return "Generated";
+        case StakeMint: return "StakeMint";
+        case StakeXION: return "StakeXION";
+        case SendToAddress: return "SendToAddress";
+        case SendToOther: return "SendToOther";
+        case RecvWithAddress: return "RecvWithAddress";
+        case MNReward: return "MNReward";
+        case RecvFromOther: return "RecvFromOther";
+        case SendToSelf: return "SendToSelf";
+        case ZerocoinMint: return "ZerocoinMint";
+        case ZerocoinSpend: return "ZerocoinSpend";
+        case RecvFromZerocoinSpend: return "RecvFromZerocoinSpend";
+        case ZerocoinSpend_Change_xIon: return "ZerocoinSpend_Change_xIon";
+        case ZerocoinSpend_FromMe: return "ZerocoinSpend_FromMe";
+        case RecvWithObfuscation: return "RecvWithObfuscation";
+        case ObfuscationDenominate: return "ObfuscationDenominate";
+        case ObfuscationCollateralPayment: return "ObfuscationCollateralPayment";
+        case ObfuscationMakeCollaterals: return "ObfuscationMakeCollaterals";
+        case ObfuscationCreateDenominations: return "ObfuscationCreateDenominations";
+        case Obfuscated: return "Obfuscated";
+    }
+    return NULL;
+}
+
+std::string TransactionRecord::GetTransactionStatus() const
+{
+    return GetTransactionStatus(status.status);
+}
+std::string TransactionRecord::GetTransactionStatus(TransactionStatus::Status status) const
+{
+    switch (status)
+    {
+        case TransactionStatus::Confirmed: return "Confirmed";           /**< Have 6 or more confirmations (normal tx) or fully mature (mined tx) **/
+            /// Normal (sent/received) transactions
+        case TransactionStatus::OpenUntilDate: return "OpenUntilDate";   /**< Transaction not yet final, waiting for date */
+        case TransactionStatus::OpenUntilBlock: return "OpenUntilBlock"; /**< Transaction not yet final, waiting for block */
+        case TransactionStatus::Offline: return "Offline";               /**< Not sent to any other nodes **/
+        case TransactionStatus::Unconfirmed: return "Unconfirmed";       /**< Not yet mined into a block **/
+        case TransactionStatus::Confirming: return "Confirmed";          /**< Confirmed, but waiting for the recommended number of confirmations **/
+        case TransactionStatus::Conflicted: return "Conflicted";         /**< Conflicts with other transaction or mempool **/
+            /// Generated (mined) transactions
+        case TransactionStatus::Immature: return "Immature";             /**< Mined but waiting for maturity */
+        case TransactionStatus::MaturesWarning: return "MaturesWarning"; /**< Transaction will likely not mature because no nodes have confirmed */
+        case TransactionStatus::NotAccepted: return "NotAccepted";       /**< Mined but not accepted */
+    }
+    return NULL;
 }
