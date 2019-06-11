@@ -28,19 +28,7 @@ public:
     CScriptID(const uint160& in) : uint160(in) {}
 };
 
-/**
- * Default setting for nMaxDatacarrierBytes. 80 bytes of data, +1 for OP_RETURN,
- * +2 for the pushdata opcodes.
- */
-static const unsigned int MAX_OP_RETURN_RELAY = 83;
-
-/**
- * A data carrying output is an unspendable output containing data. The script
- * type is designated as TX_NULL_DATA.
- */
-extern bool fAcceptDatacarrier;
-
-/** Maximum size of TX_NULL_DATA scripts that this node considers standard. */
+static const unsigned int MAX_OP_RETURN_RELAY = 163;      //!< bytes (+1 for OP_RETURN, +5 for the OpRetGroupId, +157 for GroupDescData)
 extern unsigned nMaxDatacarrierBytes;
 
 /**
