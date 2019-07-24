@@ -419,6 +419,7 @@ public:
         // Token groups
         nOpGroupStartHeight = 99999999;
         strTokenManagementKey = "inqaYuaES1cmRBXHodp25UceeVPbWQG5wY";
+        nOpGroupNewRequiredConfirmations = 1;
 
         // Fake Serial Attack
         nFakeSerialBlockheightEnd = 1073534;
@@ -670,6 +671,7 @@ public:
         // Token groups
         nOpGroupStartHeight = 3100;
         strTokenManagementKey = "gBi3gDLnGfw8HA2rN4HmNxHk9hMC4GLFbh";
+        nOpGroupNewRequiredConfirmations = 1;
 
         // Fake Serial Attack
         nFakeSerialBlockheightEnd = -1;
