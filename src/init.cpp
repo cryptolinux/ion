@@ -1018,12 +1018,6 @@ bool AppInitParameterInteraction()
         }
     }
 
-    // -reindex implies reindexing the tokens
-    if (GetBoolArg("-reindex", false)) {
-        if (SoftSetBoolArg("-reindextokens", true))
-            LogPrintf("AppInit2 : parameter interaction: -reindex=<mode> -> setting -reindextokens=1\n");
-    }
-
     if (!GetBoolArg("-enableswifttx", fEnableSwiftTX)) {
         if (SoftSetArg("-swifttxdepth", "0"))
             LogPrintf("AppInit2 : parameter interaction: -enableswifttx=false -> setting -nSwiftTXDepth=0\n");
@@ -1834,7 +1828,7 @@ bool AppInitMain()
                 //ION specific: zerocoin and spork DB's
                 zerocoinDB.reset(new CZerocoinDB(0, false, fReindex));
                 pSporkDB.reset(new CSporkDB(0, false, false));
-                pTokenDB.reset(new CTokenDB(0, false, false));
+                pTokenDB.reset(new CTokenDB(0, false, fReindex));
 
                 if (fReindex)
                     pblocktree->WriteReindexing(true);
