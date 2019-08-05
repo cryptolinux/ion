@@ -215,6 +215,7 @@ int64_t CSporkManager::GetSporkValue(SporkId nSporkID)
         if (nSporkID == SPORK_8_NEW_PROTOCOL_ENFORCEMENT) r = SPORK_8_NEW_PROTOCOL_ENFORCEMENT_DEFAULT;
         if (nSporkID == SPORK_9_ZEROCOIN_MAINTENANCE_MODE) r = SPORK_9_ZEROCOIN_MAINTENANCE_MODE_DEFAULT;
         if (nSporkID == SPORK_10_TOKENGROUP_MAINTENANCE_MODE) r = SPORK_10_TOKENGROUP_MAINTENANCE_MODE_DEFAULT;
+        if (nSporkID == SPORK_11_NEW_PROTOCOL_ENFORCEMENT_2) r = SPORK_11_NEW_PROTOCOL_ENFORCEMENT_2_DEFAULT;
 
         if (r == -1) LogPrintf("%s : Unknown Spork %d\n", __func__, nSporkID);
     }
@@ -393,6 +394,7 @@ bool CSporkMessage::CheckSignature(const CKeyID& pubKeyId) const
     if (strName == "SPORK_8_NEW_PROTOCOL_ENFORCEMENT") return SPORK_8_NEW_PROTOCOL_ENFORCEMENT;
     if (strName == "SPORK_9_ZEROCOIN_MAINTENANCE_MODE") return SPORK_9_ZEROCOIN_MAINTENANCE_MODE;
     if (strName == "SPORK_10_TOKENGROUP_MAINTENANCE_MODE") return SPORK_10_TOKENGROUP_MAINTENANCE_MODE;
+    if (strName == "SPORK_11_NEW_PROTOCOL_ENFORCEMENT_2") return SPORK_11_NEW_PROTOCOL_ENFORCEMENT_2;
 
     // Harden Spork6 so that it is active on testnet and no other networks
     if (Params().NetworkIDString() == CBaseChainParams::TESTNET) {
@@ -456,6 +458,7 @@ void CSporkMessage::Relay(CConnman& connman)
     if (id == SPORK_8_NEW_PROTOCOL_ENFORCEMENT) return "SPORK_8_NEW_PROTOCOL_ENFORCEMENT";
     if (id == SPORK_9_ZEROCOIN_MAINTENANCE_MODE) return "SPORK_9_ZEROCOIN_MAINTENANCE_MODE";
     if (id == SPORK_10_TOKENGROUP_MAINTENANCE_MODE) return "SPORK_10_TOKENGROUP_MAINTENANCE_MODE";
+    if (id == SPORK_11_NEW_PROTOCOL_ENFORCEMENT_2) return "SPORK_11_NEW_PROTOCOL_ENFORCEMENT_2";
 
     return "Unknown";
 }
