@@ -11,6 +11,68 @@
 #include <regex>
 #include <string.h>
 
+// Returns true if the first 5 bytes indicate the script contains a Token Group Description
+// Output descriptionData[] holds 0 or more unverified char vectors of description data
+bool CTokenGroupDescription::BuildGroupDescData(CScript script, std::vector<std::vector<unsigned char> > &descriptionData) {
+    std::vector<std::vector<unsigned char> > desc;
+
+    CScript::const_iterator pc = script.begin();
+    std::vector<unsigned char> data;
+    opcodetype opcode;
+
+    // 1 byte
+    if (!script.GetOp(pc, opcode, data)) return false;
+    if (opcode != OP_RETURN) return false;
+
+    // 1+4 bytes
+    if (!script.GetOp(pc, opcode, data)) return false;
+    uint32_t OpRetGroupId;
+    if (data.size()!=4) return false;
+    // Little Endian
+    OpRetGroupId = (uint32_t)data[3] << 24 | (uint32_t)data[2] << 16 | (uint32_t)data[1] << 8 | (uint32_t)data[0];
+    if (OpRetGroupId != 88888888) return false;
+
+    while (script.GetOp(pc, opcode, data)) {
+        LogPrint("token", "Token description data: opcode=[%d] data=[%s]\n", opcode, std::string(data.begin(), data.end()));
+        desc.emplace_back(data);
+    }
+    descriptionData = desc;
+    return true;
+}
+
+// Returns true if the token description data fields have the correct maximum length
+// On success, *this is initialized with the data fields
+bool CTokenGroupDescription::SetGroupDescData(const std::vector<std::vector<unsigned char> > descriptionData) {
+
+    auto it = descriptionData.begin();
+
+    if (it == descriptionData.end()) return false;
+
+    strTicker = GetStringFromChars(*it, 8); // Max 9 bytes (1+8)
+    it++;
+
+    if (it == descriptionData.end()) return false;
+    strName = GetStringFromChars(*it, 32); // Max 33 bytes (1+32)
+    it++;
+
+    if (it == descriptionData.end()) return false;
+    nDecimalPos = (uint8_t)(*it)[0]; // Max 1 byte
+    it++;
+
+    if (it == descriptionData.end()) return false;
+    strDocumentUrl = GetStringFromChars(*it, 79); // Max 81 bytes (2+79)
+    it++;
+
+    if (it == descriptionData.end()) return false;
+    try {
+        documentHash = uint256(*it); // Max 33 bytes (1+32)
+    } catch (const std::exception& e) {
+        documentHash = 0;
+    }
+
+    return true;
+}
+
 bool CTokenGroupCreation::ValidateDescription() {
     for (auto tgFilters : tokenGroupManager->vTokenGroupFilters) {
         tgFilters(*this);
@@ -22,11 +84,11 @@ bool CTokenGroupCreation::ValidateDescription() {
 // Such as: max ticker length, no special characters, and sane decimal positions.
 // Validation is performed before data is written to the database
 void TGFilterCharacters(CTokenGroupCreation &tokenGroupCreation) {
-    std::regex regexAlpha("^[a-zA-Z]+$");
-    std::regex regexAlphaNum("^[a-zA-Z0-9]+$");
-    std::regex regexUrl(R"((https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?$)");
+    regex regexAlpha("^[a-zA-Z]+$");
+    regex regexAlphaNum("^[a-zA-Z0-9]+$");
+    regex regexUrl(R"((https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?$)");
 
-    std::smatch matchResult;
+    smatch matchResult;
 
     if (tokenGroupCreation.tokenGroupDescription.strTicker != "" &&
             !std::regex_match(tokenGroupCreation.tokenGroupDescription.strTicker, matchResult, regexAlpha)) {
@@ -143,11 +205,11 @@ bool GetTokenConfigurationParameters(const CTransaction &tx, CTokenGroupInfo &to
 
 }
 
-bool CreateTokenGroup(CTransactionRef tx, CTokenGroupCreation &newTokenGroupCreation) {
+bool CreateTokenGroup(CTransaction tx, CTokenGroupCreation &newTokenGroupCreation) {
     CScript firstOpReturn;
     CTokenGroupInfo tokenGroupInfo;
 
-    if (!GetTokenConfigurationParameters(*tx, tokenGroupInfo, firstOpReturn)) return false;
+    if (!GetTokenConfigurationParameters(tx, tokenGroupInfo, firstOpReturn)) return false;
 
     CTokenGroupDescription tokenGroupDescription = CTokenGroupDescription(firstOpReturn);
     CTokenGroupStatus tokenGroupStatus;

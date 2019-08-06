@@ -35,10 +35,12 @@ public:
 
     bool GetTokenGroupCreation(const CTokenGroupID& tgID, CTokenGroupCreation& tgCreation);
     std::string GetTokenGroupNameByID(CTokenGroupID tokenGroupId);
-    std::string GetTokenGroupTickerByID(CTokenGroupID tokenGroupId);
     bool GetTokenGroupIdByTicker(std::string strTicker, CTokenGroupID &tokenGroupID);
     bool GetTokenGroupIdByName(std::string strName, CTokenGroupID &tokenGroupID);
     std::map<CTokenGroupID, CTokenGroupCreation> GetMapTokenGroups() { return mapTokenGroups; };
+
+    bool BuildGroupDescData(CScript script, std::vector<std::vector<unsigned char> > &descriptionData);
+    bool ParseGroupDescData(const CTokenGroupInfo &tgInfo, const std::vector<std::vector<unsigned char> > descriptionData, CTokenGroupDescription &tokenGroupDescription);
 
     bool StoreManagementTokenGroups(CTokenGroupCreation tokenGroupCreation);
     void ClearManagementTokenGroups();
@@ -51,13 +53,14 @@ public:
     CTokenGroupID GetDarkMatterID() { return tgDarkMatterCreation->tokenGroupInfo.associatedGroup; };
     CTokenGroupID GetAtomID() { return tgAtomCreation->tokenGroupInfo.associatedGroup; };
 
-    bool MagicTokensCreated() { return tgMagicCreation ? true : false; };
-    bool DarkMatterTokensCreated() { return tgDarkMatterCreation ? true : false; };
-    bool AtomTokensCreated() { return tgAtomCreation ? true : false; };
+    bool MagicTokensCreated();
+    bool DarkMatterTokensCreated();
+    bool AtomTokensCreated();
 
     bool ManagementTokensCreated() {
         return MagicTokensCreated() && DarkMatterTokensCreated() && AtomTokensCreated();
     }
+    bool IsManagementTokenInput(CScript script);
 
     unsigned int GetTokenTxStats(const CTransaction &tx, const CCoinsViewCache& view, const CTokenGroupID &tgId, unsigned int &nTokenCount, CAmount &nTokenMint);
 
