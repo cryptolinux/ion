@@ -13,8 +13,8 @@
 #include <util.h>
 #include <utilstrencodings.h>
 
-#include <arith_uint256.h>
-
+#include <boost/assign/list_of.hpp>
+#include <limits>
 
 #include <chainparamsseeds.h>
 
@@ -238,19 +238,19 @@ libzerocoin::ZerocoinParams* CChainParams::Zerocoin_Params(bool useModulusV1) co
     return &ZCParamsDec;
 }
 
-/**
- * Main network
- */
-/**
- * What makes a good checkpoint block?
- * + Is surrounded by blocks with reasonable timestamps
- *   (no blocks before with a timestamp after, none after with
- *    timestamp before)
- * + Contains no strange transactions
- */
+bool CChainParams::HasStakeMinAgeOrDepth(const int contextHeight, const uint32_t contextTime,
+        const int utxoFromBlockHeight, const uint32_t utxoFromBlockTime) const
+{
+    // before stake modifier V2, the age required was 60 * 60 (1 hour) / not required on regtest
+    if (!IsStakeModifierV2(contextHeight))
+        return (NetworkID() == CBaseChainParams::REGTEST || (utxoFromBlockTime + 3600 <= contextTime));
 
+    // after stake modifier V2, we require the utxo to be nStakeMinDepth deep in the chain
+    return (contextHeight - utxoFromBlockHeight >= nStakeMinDepth);
+}
 
-class CMainParams : public CChainParams {
+class CMainParams : public CChainParams
+{
 public:
     CMainParams() {
         strNetworkID = "main";
@@ -388,10 +388,11 @@ public:
         nToCheckBlockUpgradeMajority = 10800; // Approximate expected amount of blocks in 7 days (1440*7.5)
         nMinerThreads = 0;
         nTargetTimespanMidas = 7 * 24 * 60 * 60;    // 1 week
-        nTargetTimespanDGW = 1 * 60; // ION: 1 day
-        nTargetSpacing = 1 * 60;  // ION: 1 minute
+        nTargetSpacing = 1 * 60;  // 1 minute
         nMaturity = 60;
-        nStakeMinAge = 60 * 60;                // ION: 1 hour
+        nStakeMinDepth = 600;
+        nFutureTimeDriftPoW = 7200;
+        nFutureTimeDriftPoS = 180;
         nMasternodeCountDrift = 20;
         nMaxMoneyOut = 38600000 * COIN;
 
@@ -419,6 +420,7 @@ public:
         nBIP66Height = 1; // Start enforcing BIP66 (Strict DER signatures) for blocks with version 7 and higher
         nBIP65Height = 1014023; // Start enforcing BIP65 (CHECKLOCKTIMEVERIFY) for blocks with version 9 and higher
         nOpGroupStartHeight = 1320000; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 10 and higher
+        nBlockStakeModifierlV2 = 1320000;
 
         // Public coin spend enforcement
         nPublicZCSpends = 1300000;
@@ -648,10 +650,10 @@ public:
         nToCheckBlockUpgradeMajority = 5760; // 4 days
         nMinerThreads = 0;
         nTargetTimespanMidas = 7 * 24 * 60 * 60;   // 1 week
-        nTargetTimespanDGW = 1 * 60; // ION: 1 day
         nTargetSpacing = 1 * 60;  // ION: 1 minute
         nLastPOWBlock = 200;
         nMaturity = 15;
+        nStakeMinDepth = 100;
         nMasternodeCountDrift = 4;
         nModifierUpdateBlock = 999999999; //approx Mon, 17 Apr 2017 04:00:00 GMT
         nMaxMoneyOut = 38600000 * COIN;
@@ -675,6 +677,8 @@ public:
         nBIP66Height = 1; // Start enforcing BIP66 (Strict DER signatures) for blocks with version 7 and higher
         nBIP65Height = 1; // Start enforcing BIP65 (CHECKLOCKTIMEVERIFY) for blocks with version 9 and higher
         nOpGroupStartHeight = 5540; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 10 and higher
+
+        nBlockStakeModifierlV2 = 5540;
 
         // Public coin spend enforcement
         nPublicZCSpends = 9999999;
@@ -770,12 +774,11 @@ public:
         nToCheckBlockUpgradeMajority = 1000;
         nMinerThreads = 1;
         nTargetTimespanMidas = 7 * 24 * 60 * 60; // 1 week
-        nTargetTimespanDGW = 24 * 60 * 60; // ION: 1 day
         nTargetSpacing = 1 * 60; // ION: 1 minutes
         bnProofOfWorkLimit = ~uint256(0) >> 1;
         nLastPOWBlock = 250;
         nMaturity = 100;
-        nStakeMinAge = 0;
+        nStakeMinDepth = 0;
         nMasternodeCountDrift = 4;
         nModifierUpdateBlock = 0; //approx Mon, 17 Apr 2017 04:00:00 GMT
         nMaxMoneyOut = 38600000 * COIN;
@@ -802,6 +805,8 @@ public:
         nBIP66Height = 1; // Start enforcing BIP66 (Strict DER signatures) for blocks with version 7 and higher (Used in rpc activation tests)
         nBIP65Height = 300; // Start enforcing BIP65 (CHECKLOCKTIMEVERIFY) for blocks with version 9 and higher (Used in rpc activation tests)
         nOpGroupStartHeight = 300; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 10 and higher
+
+        nBlockStakeModifierlV2 = 300;
 
         // Token groups
         strTokenManagementKey = "gAQQQjA4DCT2EZDVK6Jae4mFfB217V43Nt";

@@ -8,11 +8,13 @@
 #ifndef BITCOIN_CHAIN_H
 #define BITCOIN_CHAIN_H
 
-#include <arith_uint256.h>
-#include <primitives/block.h>
-#include <pow.h>
-#include <tinyformat.h>
-#include <uint256.h>
+#include "chainparams.h"
+#include "pow.h"
+#include "primitives/block.h"
+#include "tinyformat.h"
+#include "uint256.h"
+#include "util.h"
+#include "libzerocoin/Denominations.h"
 
 #include <vector>
 
@@ -198,19 +200,12 @@ public:
     uint64_t nStakeModifier;             // hash modifier for proof-of-stake
     uint256 nStakeModifierV2;
     unsigned int nStakeModifierChecksum; // checksum of index; in-memeory only
-
-    //! zerocoin specific fields
-    std::map<libzerocoin::CoinDenomination, int64_t> mapZerocoinSupply;
-    std::vector<libzerocoin::CoinDenomination> vMintDenominationsInBlock;
-
-    //! ATP specific fields
-    //! Number of XDM transactions in this block.
-    //! Note: in a potential headers-first mode, this number cannot be relied upon until after full block validation
-    unsigned int nXDMTransactions;
-
-    //! (memory only) Number of XDM transactions in the chain up to and including this block.
-    unsigned int nChainXDMTransactions;
-    int64_t nXDMSupply;
+    COutPoint prevoutStake;
+    unsigned int nStakeTime;
+    uint256 hashProofOfStake;
+    int64_t nMint;
+    int64_t nMoneySupply;
+    uint256 nStakeModifierV2;
 
     int64_t nXDMSupply;
 
@@ -291,23 +286,10 @@ public:
         if(block.nVersion > 7)
             nAccumulatorCheckpoint = block.nAccumulatorCheckpoint;
 
-        //Proof of Stake
-        bnChainTrust = uint256();
-        nMint = 0;
-        nMoneySupply = 0;
-        nXDMSupply = 0;
-        nFlags = 0;
-        nStakeModifier = 0;
-        nStakeModifierChecksum = 0;
-        hashProofOfStake = uint256();
-
         if (block.IsProofOfStake()) {
             SetProofOfStake();
             prevoutStake = block.vtx[1].vin[0].prevout;
             nStakeTime = block.nTime;
-        } else {
-            prevoutStake.SetNull();
-            nStakeTime = 0;
         }
     }
 
@@ -567,8 +549,27 @@ public:
         if (nStatus & BLOCK_HAVE_UNDO)
             READWRITE(VARINT(nUndoPos));
 
-        // block hash
-        READWRITE(hash);
+
+        READWRITE(nMint);
+        READWRITE(nMoneySupply);
+        READWRITE(nFlags);
+
+        // v1/v2 modifier selection.
+        if (!Params().IsStakeModifierV2(nHeight)) {
+            READWRITE(nStakeModifier);
+        } else {
+            READWRITE(nStakeModifierV2);
+        }
+
+        if (IsProofOfStake()) {
+            READWRITE(prevoutStake);
+            READWRITE(nStakeTime);
+        } else {
+            const_cast<CDiskBlockIndex*>(this)->prevoutStake.SetNull();
+            const_cast<CDiskBlockIndex*>(this)->nStakeTime = 0;
+            const_cast<CDiskBlockIndex*>(this)->hashProofOfStake = uint256();
+        }
+
         // block header
         READWRITE(this->nVersion);
         READWRITE(hashPrev);
