@@ -21,6 +21,17 @@ uint16_t static inline ReadLE16(const unsigned char* ptr)
     return le16toh(x);
 }
 
+uint32_t static inline ReadLE16(const unsigned char* ptr)
+{
+#if HAVE_DECL_LE16TOH == 1
+    return le16toh(*((uint16_t*)ptr));
+#elif !defined(WORDS_BIGENDIAN)
+    return *((uint16_t*)ptr);
+#else
+    return ((uint16_t)ptr[1] << 8 | (uint16_t)ptr[0]);
+#endif
+}
+
 uint32_t static inline ReadLE32(const unsigned char* ptr)
 {
     uint32_t x;
@@ -39,6 +50,18 @@ void static inline WriteLE16(unsigned char* ptr, uint16_t x)
 {
     uint16_t v = htole16(x);
     memcpy(ptr, (char*)&v, 2);
+}
+
+void static inline WriteLE16(unsigned char* ptr, uint16_t x)
+{
+#if HAVE_DECL_HTOLE16 == 1
+    *((uint16_t*)ptr) = htole16(x);
+#elif !defined(WORDS_BIGENDIAN)
+    *((uint16_t*)ptr) = x;
+#else
+    ptr[1] = x >> 8;
+    ptr[0] = x;
+#endif
 }
 
 void static inline WriteLE32(unsigned char* ptr, uint32_t x)
