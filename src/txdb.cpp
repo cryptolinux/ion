@@ -296,8 +296,6 @@ bool CBlockTreeDB::WriteAddressIndex(const std::vector<std::pair<CAddressIndexKe
                 pindexNew->hashProofOfStake = diskindex.hashProofOfStake;
 
                 //Tokens
-                pindexNew->nMagicSupply = diskindex.nMagicSupply;
-                pindexNew->nMagicTransactions = diskindex.nMagicTransactions;
                 pindexNew->nXDMSupply = diskindex.nXDMSupply;
                 pindexNew->nXDMTransactions = diskindex.nXDMTransactions;
 
