@@ -59,6 +59,13 @@ struct CCoin {
     }
 };
 
+extern void TxToJSON(const CTransaction& tx, const uint256 hashBlock, UniValue& entry);
+extern UniValue blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool txDetails = false);
+extern UniValue mempoolInfoToJSON();
+extern UniValue mempoolToJSON(bool fVerbose = false);
+extern void ScriptPubKeyToJSON(const CScript& scriptPubKey, UniValue& out, bool fIncludeHex);
+extern UniValue blockheaderToJSON(const CBlockIndex* blockindex);
+
 static bool RESTERR(HTTPRequest* req, enum HTTPStatusCode status, std::string message)
 {
     req->WriteHeader("Content-Type", "text/plain");
@@ -66,7 +73,7 @@ static bool RESTERR(HTTPRequest* req, enum HTTPStatusCode status, std::string me
     return false;
 }
 
-static enum RetFormat ParseDataFormat(std::string& param, const std::string& strReq)
+static enum RetFormat ParseDataFormat(std::vector<std::string>& params, const std::string& strReq)
 {
     const std::string::size_type pos = strReq.rfind('.');
     if (pos == std::string::npos)
@@ -125,10 +132,10 @@ static bool rest_headers(HTTPRequest* req,
 {
     if (!CheckWarmup(req))
         return false;
-    std::string param;
-    const RetFormat rf = ParseDataFormat(param, strURIPart);
+    std::vector<std::string> params;
+    const RetFormat rf = ParseDataFormat(params, strURIPart);
     std::vector<std::string> path;
-    boost::split(path, param, boost::is_any_of("/"));
+    boost::split(path, params[0], boost::is_any_of("/"));
 
     if (path.size() != 2)
         return RESTERR(req, HTTP_BAD_REQUEST, "No header count specified. Use /rest/headers/<count>/<hash>.<ext>.");
@@ -197,9 +204,10 @@ static bool rest_block(HTTPRequest* req,
 {
     if (!CheckWarmup(req))
         return false;
-    std::string hashStr;
-    const RetFormat rf = ParseDataFormat(hashStr, strURIPart);
+    std::vector<std::string> params;
+    const RetFormat rf = ParseDataFormat(params, strURIPart);
 
+    std::string hashStr = params[0];
     uint256 hash;
     if (!ParseHashStr(hashStr, hash))
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid hash: " + hashStr);
@@ -238,11 +246,7 @@ static bool rest_block(HTTPRequest* req,
     }
 
     case RF_JSON: {
-        UniValue objBlock;
-        {
-            LOCK(cs_main);
-            objBlock = blockToJSON(block, pblockindex, showTxDetails);
-        }
+        UniValue objBlock = blockToJSON(block, pblockindex, showTxDetails);
         std::string strJSON = objBlock.write() + "\n";
         req->WriteHeader("Content-Type", "application/json");
         req->WriteReply(HTTP_OK, strJSON);
@@ -272,14 +276,13 @@ static bool rest_chaininfo(HTTPRequest* req, const std::string& strURIPart)
 {
     if (!CheckWarmup(req))
         return false;
-    std::string param;
-    const RetFormat rf = ParseDataFormat(param, strURIPart);
+    std::vector<std::string> params;
+    const RetFormat rf = ParseDataFormat(params, strURIPart);
 
     switch (rf) {
     case RF_JSON: {
-        JSONRPCRequest jsonRequest;
-        jsonRequest.params = UniValue(UniValue::VARR);
-        UniValue chainInfoObject = getblockchaininfo(jsonRequest);
+        UniValue rpcParams(UniValue::VARR);
+        UniValue chainInfoObject = getblockchaininfo(rpcParams, false);
         std::string strJSON = chainInfoObject.write() + "\n";
         req->WriteHeader("Content-Type", "application/json");
         req->WriteReply(HTTP_OK, strJSON);
@@ -295,8 +298,8 @@ static bool rest_mempool_info(HTTPRequest* req, const std::string& strURIPart)
 {
     if (!CheckWarmup(req))
         return false;
-    std::string param;
-    const RetFormat rf = ParseDataFormat(param, strURIPart);
+    std::vector<std::string> params;
+    const RetFormat rf = ParseDataFormat(params, strURIPart);
 
     switch (rf) {
     case RF_JSON: {
@@ -317,8 +320,8 @@ static bool rest_mempool_contents(HTTPRequest* req, const std::string& strURIPar
 {
     if (!CheckWarmup(req))
         return false;
-    std::string param;
-    const RetFormat rf = ParseDataFormat(param, strURIPart);
+    std::vector<std::string> params;
+    const RetFormat rf = ParseDataFormat(params, strURIPart);
 
     switch (rf) {
     case RF_JSON: {
@@ -339,9 +342,10 @@ static bool rest_tx(HTTPRequest* req, const std::string& strURIPart)
 {
     if (!CheckWarmup(req))
         return false;
-    std::string hashStr;
-    const RetFormat rf = ParseDataFormat(hashStr, strURIPart);
+    std::vector<std::string> params;
+    const RetFormat rf = ParseDataFormat(params, strURIPart);
 
+    std::string hashStr = params[0];
     uint256 hash;
     if (!ParseHashStr(hashStr, hash))
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid hash: " + hashStr);
@@ -371,7 +375,7 @@ static bool rest_tx(HTTPRequest* req, const std::string& strURIPart)
 
     case RF_JSON: {
         UniValue objTx(UniValue::VOBJ);
-        TxToUniv(*tx, hashBlock, objTx);
+        TxToJSON(tx, hashBlock, objTx);
         std::string strJSON = objTx.write() + "\n";
         req->WriteHeader("Content-Type", "application/json");
         req->WriteReply(HTTP_OK, strJSON);
@@ -388,11 +392,11 @@ static bool rest_getutxos(HTTPRequest* req, const std::string& strURIPart)
 {
     if (!CheckWarmup(req))
         return false;
-    std::string param;
-    const RetFormat rf = ParseDataFormat(param, strURIPart);
+    std::vector<std::string> params;
+    enum RetFormat rf = ParseDataFormat(params, strURIPart);
 
     std::vector<std::string> uriParts;
-    if (param.length() > 1)
+    if (params.size() > 0 && params[0].length() > 1)
     {
         std::string strUriParams = param.substr(1);
         boost::split(uriParts, strUriParams, boost::is_any_of("/"));
@@ -476,7 +480,7 @@ static bool rest_getutxos(HTTPRequest* req, const std::string& strURIPart)
     if (vOutPoints.size() > MAX_GETUTXOS_OUTPOINTS)
         return RESTERR(req, HTTP_BAD_REQUEST, strprintf("Error: max outpoints exceeded (max: %d, tried: %d)", MAX_GETUTXOS_OUTPOINTS, vOutPoints.size()));
 
-    // check spentness and form a bitmap (as well as a JSON capable human-readable string representation)
+    // check spentness and form a bitmap (as well as a JSON capable human-readble string representation)
     std::vector<unsigned char> bitmap;
     std::vector<CCoin> outs;
     std::string bitmapStringRepresentation;

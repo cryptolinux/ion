@@ -55,7 +55,18 @@ public:
     const Consensus::Params& GetConsensus() const { return consensus; }
     const CMessageHeader::MessageStartChars& MessageStart() const { return pchMessageStart; }
     int GetDefaultPort() const { return nDefaultPort; }
+    const uint256& ProofOfWorkLimit() const { return bnProofOfWorkLimit; }
+    const uint256& ProofOfStakeLimit() const { return bnProofOfStakeLimit; }
+    int SubsidyHalvingInterval() const { return nSubsidyHalvingInterval; }
+    /** Used to check majorities for block version upgrade */
+    int EnforceBlockUpgradeMajority() const { return nEnforceBlockUpgradeMajority; }
+    int RejectBlockOutdatedMajority() const { return nRejectBlockOutdatedMajority; }
+    int ToCheckBlockUpgradeMajority() const { return nToCheckBlockUpgradeMajority; }
+    int MaxReorganizationDepth() const { return nMaxReorganizationDepth; }
+    int StakeMinAge() const { return nStakeMinAge; }
 
+    /** Used if GenerateBitcoins is called with a negative number of threads */
+    int DefaultMinerThreads() const { return nMinerThreads; }
     const CBlock& GenesisBlock() const { return genesis; }
     const CBlock& DevNetGenesisBlock() const { return devnetGenesis; }
     /** Default value for -checkmempool and -checkblockindex argument */
@@ -153,8 +164,24 @@ protected:
     Consensus::Params consensus;
     CMessageHeader::MessageStartChars pchMessageStart;
     int nDefaultPort;
-    uint64_t nPruneAfterHeight;
-    std::vector<std::string> vSeeds;
+    uint256 bnProofOfWorkLimit;
+    int nStakeMinAge;
+    uint256 bnProofOfStakeLimit;
+    int nMaxReorganizationDepth;
+    int nSubsidyHalvingInterval;
+    int nEnforceBlockUpgradeMajority;
+    int nRejectBlockOutdatedMajority;
+    int nToCheckBlockUpgradeMajority;
+    int64_t nTargetTimespanMidas;
+    int64_t nTargetTimespanDGW;
+    int64_t nTargetSpacing;
+    int nLastPOWBlock;
+    int nMasternodeCountDrift;
+    int nMaturity;
+    int nModifierUpdateBlock;
+    CAmount nMaxMoneyOut;
+    int nMinerThreads;
+    std::vector<CDNSSeedData> vSeeds;
     std::vector<unsigned char> base58Prefixes[MAX_BASE58_TYPES];
     std::string bech32_hrp;
     CBaseChainParams::Network networkID;

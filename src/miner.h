@@ -125,36 +125,21 @@ struct update_for_parent_inclusion
 };
 
 /** Generate a new block, without valid proof-of-work */
-class BlockAssembler
-{
-private:
-    // The constructed block template
-    std::unique_ptr<CBlockTemplate> pblocktemplate;
-    // A convenience pointer that always refers to the CBlock in pblocktemplate
-    CBlock* pblock;
+CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, bool fProofOfStake);
+/** Modify the extranonce in a block */
+void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
+/** Check mined block */
+void UpdateTime(CBlockHeader* block, const CBlockIndex* pindexPrev);
 
-    // Configuration parameters for the block size
-    unsigned int nBlockMaxSize;
-    CFeeRate blockMinFeeRate;
+#ifdef ENABLE_WALLET
+    /** Run the miner threads */
+    void GenerateBitcoins(bool fGenerate, CWallet* pwallet, int nThreads);
+    /** Generate a new block, without valid proof-of-work */
+    CBlockTemplate* CreateNewBlockWithKey(CReserveKey& reservekey, CWallet* pwallet);
 
-    // Information on the current status of the block
-    uint64_t nBlockSize;
-    uint64_t nBlockTx;
-    unsigned int nBlockSigOps;
-    CAmount nFees;
-    CTxMemPool::setEntries inBlock;
-
-    // Chain context for the block
-    int nHeight;
-    int64_t nLockTimeCutoff;
-    const CChainParams& chainparams;
-
-public:
-    struct Options {
-        Options();
-        size_t nBlockMaxSize;
-        CFeeRate blockMinFeeRate;
-    };
+    void BitcoinMiner(CWallet* pwallet, bool fProofOfStake);
+    void ThreadStakeMinter();
+#endif // ENABLE_WALLET
 
     explicit BlockAssembler(const CChainParams& params);
     BlockAssembler(const CChainParams& params, const Options& options);

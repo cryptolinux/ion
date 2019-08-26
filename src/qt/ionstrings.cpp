@@ -49,7 +49,8 @@ QT_TRANSLATE_NOOP("ion-core", ""
 "Cannot obtain a lock on data directory %s. ION Core is probably already "
 "running."),
 QT_TRANSLATE_NOOP("ion-core", ""
-"Cannot obtain a lock on data directory %s. %s is probably already running."),
+"Change automatic finalized budget voting behavior. mode=auto: Vote for only "
+"exact finalized budget match to my generated budget. (std::string, default: auto)"),
 QT_TRANSLATE_NOOP("ion-core", ""
 "Connect only to the specified node(s); -noconnect or -connect=0 alone to "
 "disable automatic connections"),

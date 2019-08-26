@@ -19,6 +19,17 @@
 
 #include <univalue.h>
 
+UniValue createArgs(int nRequired, const char* address1=NULL, const char* address2=NULL)
+{
+    UniValue result(UniValue::VARR);
+    result.push_back(nRequired);
+    UniValue addresses(UniValue::VARR);
+    if (address1) addresses.push_back(address1);
+    if (address2) addresses.push_back(address2);
+    result.push_back(addresses);
+    return result;
+}
+
 UniValue CallRPC(std::string args)
 {
     std::vector<std::string> vArgs;
@@ -57,28 +68,28 @@ BOOST_AUTO_TEST_CASE(rpc_rawparams)
     BOOST_CHECK_THROW(CallRPC("createrawtransaction [] []"), std::runtime_error);
     BOOST_CHECK_THROW(CallRPC("createrawtransaction {} {}"), std::runtime_error);
     BOOST_CHECK_NO_THROW(CallRPC("createrawtransaction [] {}"));
-    BOOST_CHECK_THROW(CallRPC("createrawtransaction [] {} extra"), runtime_error);
+    BOOST_CHECK_THROW(CallRPC("createrawtransaction [] {} extra"), std::runtime_error);
 
-    BOOST_CHECK_THROW(CallRPC("decoderawtransaction"), runtime_error);
-    BOOST_CHECK_THROW(CallRPC("decoderawtransaction null"), runtime_error);
-    BOOST_CHECK_THROW(CallRPC("decoderawtransaction DEADBEEF"), runtime_error);
-    string rawtx = "0100000001a15d57094aa7a21a28cb20b59aab8fc7d1149a3bdbcddba9c622e4f5f6a99ece010000006c493046022100f93bb0e7d8db7bd46e40132d1f8242026e045f03a0efe71bbb8e3f475e970d790221009337cd7f1f929f00cc6ff01f03729b069a7c21b59b1736ddfee5db5946c5da8c0121033b9b137ee87d5a812d6f506efdd37f0affa7ffc310711c06c7f3e097c9447c52ffffffff0100e1f505000000001976a9140389035a9225b3839e2bbf32d826a1e222031fd888ac00000000";
+    BOOST_CHECK_THROW(CallRPC("decoderawtransaction"), std::runtime_error);
+    BOOST_CHECK_THROW(CallRPC("decoderawtransaction null"), std::runtime_error);
+    BOOST_CHECK_THROW(CallRPC("decoderawtransaction DEADBEEF"), std::runtime_error);
+    std::string rawtx = "0100000001a15d57094aa7a21a28cb20b59aab8fc7d1149a3bdbcddba9c622e4f5f6a99ece010000006c493046022100f93bb0e7d8db7bd46e40132d1f8242026e045f03a0efe71bbb8e3f475e970d790221009337cd7f1f929f00cc6ff01f03729b069a7c21b59b1736ddfee5db5946c5da8c0121033b9b137ee87d5a812d6f506efdd37f0affa7ffc310711c06c7f3e097c9447c52ffffffff0100e1f505000000001976a9140389035a9225b3839e2bbf32d826a1e222031fd888ac00000000";
     /* DISABLE AS NOT WORKING - **TODO** - fix it
-    BOOST_CHECK_NO_THROW(r = CallRPC(string("decoderawtransaction ")+rawtx));
+    BOOST_CHECK_NO_THROW(r = CallRPC(std::string("decoderawtransaction ")+rawtx));
     BOOST_CHECK_EQUAL(find_value(r.get_obj(), "version").get_int(), 1);
     BOOST_CHECK_EQUAL(find_value(r.get_obj(), "locktime").get_int(), 0);
     */// DISABLE AS NOT WORKING - **TODO** - fix it
-    BOOST_CHECK_THROW(r = CallRPC(string("decoderawtransaction ")+rawtx+" extra"), runtime_error);
+    BOOST_CHECK_THROW(r = CallRPC(std::string("decoderawtransaction ")+rawtx+" extra"), std::runtime_error);
 
-    BOOST_CHECK_THROW(CallRPC("signrawtransaction"), runtime_error);
-    BOOST_CHECK_THROW(CallRPC("signrawtransaction null"), runtime_error);
-    BOOST_CHECK_THROW(CallRPC("signrawtransaction ff00"), runtime_error);
+    BOOST_CHECK_THROW(CallRPC("signrawtransaction"), std::runtime_error);
+    BOOST_CHECK_THROW(CallRPC("signrawtransaction null"), std::runtime_error);
+    BOOST_CHECK_THROW(CallRPC("signrawtransaction ff00"), std::runtime_error);
     /* DISABLE AS NOT WORKING - **TODO** - fix it
-    BOOST_CHECK_NO_THROW(CallRPC(string("signrawtransaction ")+rawtx));
-    BOOST_CHECK_NO_THROW(CallRPC(string("signrawtransaction ")+rawtx+" null null NONE|ANYONECANPAY"));
-    BOOST_CHECK_NO_THROW(CallRPC(string("signrawtransaction ")+rawtx+" [] [] NONE|ANYONECANPAY"));
+    BOOST_CHECK_NO_THROW(CallRPC(std::string("signrawtransaction ")+rawtx));
+    BOOST_CHECK_NO_THROW(CallRPC(std::string("signrawtransaction ")+rawtx+" null null NONE|ANYONECANPAY"));
+    BOOST_CHECK_NO_THROW(CallRPC(std::string("signrawtransaction ")+rawtx+" [] [] NONE|ANYONECANPAY"));
     */// DISABLE AS NOT WORKING - **TODO** - fix it
-    BOOST_CHECK_THROW(CallRPC(string("signrawtransaction ")+rawtx+" null null badenum"), runtime_error);
+    BOOST_CHECK_THROW(CallRPC(std::string("signrawtransaction ")+rawtx+" null null badenum"), std::runtime_error);
 
     // Only check failure cases for sendrawtransaction, there's no network to send to...
     BOOST_CHECK_THROW(CallRPC("sendrawtransaction"), std::runtime_error);
@@ -87,42 +98,20 @@ BOOST_AUTO_TEST_CASE(rpc_rawparams)
     BOOST_CHECK_THROW(CallRPC(std::string("sendrawtransaction ")+rawtx+" extra"), std::runtime_error);
 }
 
-BOOST_AUTO_TEST_CASE(rpc_togglenetwork)
-{
-    UniValue r;
-
-    r = CallRPC("getnetworkinfo");
-    bool netState = find_value(r.get_obj(), "networkactive").get_bool();
-    BOOST_CHECK_EQUAL(netState, true);
-
-    BOOST_CHECK_NO_THROW(CallRPC("setnetworkactive false"));
-    r = CallRPC("getnetworkinfo");
-    int numConnection = find_value(r.get_obj(), "connections").get_int();
-    BOOST_CHECK_EQUAL(numConnection, 0);
-
-    netState = find_value(r.get_obj(), "networkactive").get_bool();
-    BOOST_CHECK_EQUAL(netState, false);
-
-    BOOST_CHECK_NO_THROW(CallRPC("setnetworkactive true"));
-    r = CallRPC("getnetworkinfo");
-    netState = find_value(r.get_obj(), "networkactive").get_bool();
-    BOOST_CHECK_EQUAL(netState, true);
-}
-
 /* DISABLE AS NOT WORKING - **TODO** - fix it
 BOOST_AUTO_TEST_CASE(rpc_rawsign)
 {
     UniValue r;
     // input is a 1-of-2 multisig (so is output):
     std::string prevout =
-      "[{\"txid\":\"b4cc287e58f87cdae59417329f710f3ecd75a4ee1d2872b7248f50977c8493f3\","
-      "\"vout\":1,\"scriptPubKey\":\"a914b10c9df5f7edf436c697f02f1efdba4cf399615187\","
-      "\"redeemScript\":\"512103debedc17b3df2badbcdd86d5feb4562b86fe182e5998abd8bcd4f122c6155b1b21027e940bb73ab8732bfdf7f9216ecefca5b94d6df834e77e108f68e66f126044c052ae\"}]";
+      "[{\"txid\":\"dd2888870cdc3f6e92661f6b0829667ee4bb07ed086c44205e726bbf3338f726\","
+      "\"vout\":1,\"scriptPubKey\":\"a914f5404a39a4799d8710e15db4c4512c5e06f97fed87\","
+      "\"redeemScript\":\"5121021431a18c7039660cd9e3612a2a47dc53b69cb38ea4ad743b7df8245fd0438f8e21029bbeff390ce736bd396af43b52a1c14ed52c086b1e5585c15931f68725772bac52ae\"}]";
     r = CallRPC(std::string("createrawtransaction ")+prevout+" "+
-      "{\"7iYoULd4BAqRsRt1UbD5qqna88JvKRU3SL\":11}");
+      "{\"6ckcNMWRYgTnPcrTXCdwhDnMLwj3zwseej\":1}");
     std::string notsigned = r.get_str();
-    std::string privkey1 = "\"XEwTRsCX3CiWSQf8YmKMTeb84KyTbibkUv9mDTZHQ5MwuKG2ZzES\"";
-    std::string privkey2 = "\"XDmZ7LjGd94Q81eUBjb2h6uV5Y14s7fmeXWEGYabfBJP8RVpprBu\"";
+    std::string privkey1 = "\"YVobcS47fr6kceZy9LzLJR8WQ6YRpUwYKoJhrnEXepebMxaSpbnn\"";
+    std::string privkey2 = "\"YRyMjG8hbm8jHeDMAfrzSeHq5GgAj7kuHFvJtMudCUH3sCkq1WtA\"";
     r = CallRPC(std::string("signrawtransaction ")+notsigned+" "+prevout+" "+"[]");
     BOOST_CHECK(find_value(r.get_obj(), "complete").get_bool() == false);
     r = CallRPC(std::string("signrawtransaction ")+notsigned+" "+prevout+" "+"["+privkey1+","+privkey2+"]");
@@ -235,12 +224,12 @@ BOOST_AUTO_TEST_CASE(rpc_ban)
     UniValue o1 = ar[0].get_obj();
     UniValue adr = find_value(o1, "address");
     BOOST_CHECK_EQUAL(adr.get_str(), "127.0.0.0/32");
-    BOOST_CHECK_NO_THROW(CallRPC(std::string("setban 127.0.0.0 remove")));
+    BOOST_CHECK_NO_THROW(CallRPC(std::string("setban 127.0.0.0 remove")));;
     BOOST_CHECK_NO_THROW(r = CallRPC(std::string("listbanned")));
     ar = r.get_array();
     BOOST_CHECK_EQUAL(ar.size(), 0);
 
-    BOOST_CHECK_NO_THROW(r = CallRPC(std::string("setban 127.0.0.0/24 add 9907731200 true")));
+    BOOST_CHECK_NO_THROW(r = CallRPC(std::string("setban 127.0.0.0/24 add 1607731200 true")));
     BOOST_CHECK_NO_THROW(r = CallRPC(std::string("listbanned")));
     ar = r.get_array();
     o1 = ar[0].get_obj();
@@ -262,10 +251,10 @@ BOOST_AUTO_TEST_CASE(rpc_ban)
     BOOST_CHECK(banned_until.get_int64() > now);
     BOOST_CHECK(banned_until.get_int64()-now <= 200);
 
-    // must throw an exception because 127.0.0.1 is in already banned subnet range
+    // must throw an exception because 127.0.0.1 is in already banned suubnet range
     BOOST_CHECK_THROW(r = CallRPC(std::string("setban 127.0.0.1 add")), std::runtime_error);
 
-    BOOST_CHECK_NO_THROW(CallRPC(std::string("setban 127.0.0.0/24 remove")));
+    BOOST_CHECK_NO_THROW(CallRPC(std::string("setban 127.0.0.0/24 remove")));;
     BOOST_CHECK_NO_THROW(r = CallRPC(std::string("listbanned")));
     ar = r.get_array();
     BOOST_CHECK_EQUAL(ar.size(), 0);
@@ -277,7 +266,6 @@ BOOST_AUTO_TEST_CASE(rpc_ban)
     BOOST_CHECK_NO_THROW(r = CallRPC(std::string("listbanned")));
     ar = r.get_array();
     BOOST_CHECK_EQUAL(ar.size(), 0);
-
 
     BOOST_CHECK_THROW(r = CallRPC(std::string("setban test add")), std::runtime_error); //invalid IP
 

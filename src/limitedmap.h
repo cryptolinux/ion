@@ -51,16 +51,14 @@ public:
     void insert(const value_type& x)
     {
         std::pair<iterator, bool> ret = map.insert(x);
-        if (ret.second)
-            prune();
-    }
-    void insert_or_update(const value_type& x)
-    {
-        std::pair<iterator, bool> ret = map.insert(x);
-        if (ret.second)
-            prune();
-        else
-            ret.first->second = x.second;
+        if (ret.second) {
+            if (nMaxSize && map.size() == nMaxSize) {
+                map.erase(rmap.begin()->second);
+                rmap.erase(rmap.begin());
+            }
+            rmap.insert(std::make_pair(x.second, ret.first));
+        }
+        return;
     }
     void erase(const key_type& k)
     {
@@ -74,7 +72,16 @@ public:
         iterator itTarget = map.erase(itIn, itIn);
         if (itTarget == map.end())
             return;
-        itTarget->second = v;
+        std::pair<rmap_iterator, rmap_iterator> itPair = rmap.equal_range(itTarget->second);
+        for (rmap_iterator it = itPair.first; it != itPair.second; ++it)
+            if (it->second == itTarget) {
+                rmap.erase(it);
+                itTarget->second = v;
+                rmap.insert(std::make_pair(v, itTarget));
+                return;
+            }
+        // Shouldn't ever get here
+        assert(0);
     }
     size_type max_size() const { return nMaxSize; }
     size_type max_size(size_type nMaxSizeIn, size_type nPruneAfterSizeIn = 0)

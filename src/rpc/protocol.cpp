@@ -14,7 +14,6 @@
 #include <utiltime.h>
 #include <version.h>
 
-#include <fstream>
 
 /**
  * JSON-RPC protocol.  ION speaks version 1.0 for maximum compatibility,
@@ -25,7 +24,7 @@
  * 1.2 spec: http://jsonrpc.org/historical/json-rpc-over-http.html
  */
 
-UniValue JSONRPCRequestObj(const std::string& strMethod, const UniValue& params, const UniValue& id)
+std::string JSONRPCRequest(const std::string& strMethod, const UniValue& params, const UniValue& id)
 {
     UniValue request(UniValue::VOBJ);
     request.push_back(Pair("method", strMethod));

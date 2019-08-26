@@ -246,8 +246,7 @@ bool WalletModel::isFullyMixed(const COutPoint& outpoint) const
     return addressParsed.IsValid();
 }
 
-void WalletModel::updateAddressBook(const QString &address, const QString &label,
-        bool isMine, const QString &purpose, int status)
+void WalletModel::updateAddressBookLabels(const CTxDestination& dest, const std::string& strName, const std::string& strPurpose)
 {
     if(addressTableModel)
         addressTableModel->updateEntry(address, label, isMine, purpose, status);
@@ -424,11 +423,10 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(WalletModelTransaction &tran
                 std::string key("PaymentRequest");
                 std::string value;
                 rcp.paymentRequest.SerializeToString(&value);
-                newTx->vOrderForm.push_back(make_pair(key, value));
-            }
-            else if (!rcp.message.isEmpty()) // Message from normal ion:URI (ion:XyZ...?message=example)
+                newTx->vOrderForm.push_back(std::make_pair(key, value));
+            } else if (!rcp.message.isEmpty()) // Message from normal ion:URI (ion:XyZ...?message=example)
             {
-                newTx->vOrderForm.push_back(make_pair("Message", rcp.message.toStdString()));
+                newTx->vOrderForm.push_back(std::make_pair("Message", rcp.message.toStdString()));
             }
         }
 
@@ -591,11 +589,10 @@ static void NotifyAddressBookChanged(WalletModel *walletmodel, CWallet *wallet,
 
 static void NotifyTransactionChanged(WalletModel *walletmodel, CWallet *wallet, const uint256 &hash, ChangeType status)
 {
-    Q_UNUSED(wallet);
-    Q_UNUSED(hash);
-    Q_UNUSED(status);
-    QMetaObject::invokeMethod(walletmodel, "updateTransaction", Qt::QueuedConnection);
-}
+    if (fQueueNotifications) {
+        vQueueNotifications.push_back(std::make_pair(hash, status));
+        return;
+    }
 
 static void NotifyISLockReceived(WalletModel *walletmodel)
 {
@@ -646,10 +643,10 @@ static void NotifyWalletBacked(WalletModel* model, const bool& fSuccess, const s
                               Q_ARG(unsigned int, (unsigned int)method));
 }
 
-static void NotifyWalletBacked(WalletModel* model, const bool& fSuccess, const string& filename)
+static void NotifyWalletBacked(WalletModel* model, const bool& fSuccess, const std::string& filename)
 {
-    string message;
-    string title = "Backup ";
+    std::string message;
+    std::string title = "Backup ";
     CClientUIInterface::MessageBoxFlags method;
 
     if (fSuccess) {

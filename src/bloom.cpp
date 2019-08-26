@@ -23,34 +23,24 @@
 #define LN2SQUARED 0.4804530139182014246671025263266649717305529515945455
 #define LN2 0.6931471805599453094172321214581765680755001343602552
 
-CBloomFilter::CBloomFilter(const unsigned int nElements, const double nFPRate, const unsigned int nTweakIn, unsigned char nFlagsIn) :
-    /**
-     * The ideal size for a bloom filter with a given number of elements and false positive rate is:
-     * - nElements * log(fp rate) / ln(2)^2
-     * We ignore filter parameters which will create a bloom filter larger than the protocol limits
-     */
-    vData(std::min((unsigned int)(-1  / LN2SQUARED * nElements * log(nFPRate)), MAX_BLOOM_FILTER_SIZE * 8) / 8),
-    /**
-     * The ideal number of hash functions is filter size * ln(2) / number of elements
-     * Again, we ignore filter parameters which will create a bloom filter with more hash functions than the protocol limits
-     * See https://en.wikipedia.org/wiki/Bloom_filter for an explanation of these formulas
-     */
-    isFull(false),
-    isEmpty(true),
-    nHashFuncs(std::min((unsigned int)(vData.size() * 8 / nElements * LN2), MAX_HASH_FUNCS)),
-    nTweak(nTweakIn),
-    nFlags(nFlagsIn)
-{
-}
 
-// Private constructor used by CRollingBloomFilter
-CBloomFilter::CBloomFilter(const unsigned int nElements, const double nFPRate, const unsigned int nTweakIn) :
-    vData((unsigned int)(-1  / LN2SQUARED * nElements * log(nFPRate)) / 8),
+CBloomFilter::CBloomFilter(unsigned int nElements, double nFPRate, unsigned int nTweakIn, unsigned char nFlagsIn) :
+ /**
+ * The ideal size for a bloom filter with a given number of elements and false positive rate is:
+ * - nElements * log(fp rate) / ln(2)^2
+ * We ignore filter parameters which will create a bloom filter larger than the protocol limits
+ */
+    vData(std::min((unsigned int)(-1 / LN2SQUARED * nElements * log(nFPRate)), MAX_BLOOM_FILTER_SIZE * 8) / 8),
+ /**
+ * The ideal number of hash functions is filter size * ln(2) / number of elements
+ * Again, we ignore filter parameters which will create a bloom filter with more hash functions than the protocol limits
+ * See https://en.wikipedia.org/wiki/Bloom_filter for an explanation of these formulas
+ */
     isFull(false),
-    isEmpty(true),
-    nHashFuncs((unsigned int)(vData.size() * 8 / nElements * LN2)),
-    nTweak(nTweakIn),
-    nFlags(BLOOM_UPDATE_NONE)
+    isEmpty(false),
+  nHashFuncs(std::min((unsigned int)(vData.size() * 8 / nElements * LN2), MAX_HASH_FUNCS)),
+  nTweak(nTweakIn),
+  nFlags(nFlagsIn)
 {
 }
 
@@ -65,7 +55,7 @@ void CBloomFilter::setNotFull()
     isFull = false;
 }
 
-void CBloomFilter::insert(const vector<unsigned char>& vKey)
+void CBloomFilter::insert(const std::vector<unsigned char>& vKey)
 {
     if (isFull)
         return;
@@ -118,12 +108,6 @@ bool CBloomFilter::contains(const COutPoint& outpoint) const
 }
 
 bool CBloomFilter::contains(const uint256& hash) const
-{
-    std::vector<unsigned char> data(hash.begin(), hash.end());
-    return contains(data);
-}
-
-bool CBloomFilter::contains(const uint160& hash) const
 {
     std::vector<unsigned char> data(hash.begin(), hash.end());
     return contains(data);
@@ -203,7 +187,7 @@ bool CBloomFilter::IsRelevantAndUpdate(const CTransaction& tx)
         // This means clients don't have to update the filter themselves when a new relevant tx 
         // is discovered in order to find spending transactions, which avoids round-tripping and race conditions.
         CScript::const_iterator pc = txout.scriptPubKey.begin();
-        vector<unsigned char> data;
+        std::vector<unsigned char> data;
         while (pc < txout.scriptPubKey.end()) {
             opcodetype opcode;
             if (!txout.scriptPubKey.GetOp(pc, opcode, data)){
@@ -211,7 +195,7 @@ bool CBloomFilter::IsRelevantAndUpdate(const CTransaction& tx)
             }
 
             if (txout.IsZerocoinMint()){
-                data = vector<unsigned char>(txout.scriptPubKey.begin() + 6, txout.scriptPubKey.begin() + txout.scriptPubKey.size());
+                data = std::vector<unsigned char>(txout.scriptPubKey.begin() + 6, txout.scriptPubKey.begin() + txout.scriptPubKey.size());
             }
 
             if (data.size() != 0 && contains(data)) {
@@ -220,7 +204,7 @@ bool CBloomFilter::IsRelevantAndUpdate(const CTransaction& tx)
                     insert(COutPoint(hash, i));
                 else if ((nFlags & BLOOM_UPDATE_MASK) == BLOOM_UPDATE_P2PUBKEY_ONLY) {
                     txnouttype type;
-                    vector<vector<unsigned char> > vSolutions;
+                    std::vector<std::vector<unsigned char> > vSolutions;
                     if (Solver(txout.scriptPubKey, type, vSolutions) &&
                         (type == TX_PUBKEY || type == TX_MULTISIG))
                     insert(COutPoint(hash, i));
@@ -238,13 +222,13 @@ bool CBloomFilter::IsRelevantAndUpdate(const CTransaction& tx)
 
         // Match if the filter contains any arbitrary script data element in any scriptSig in tx
         CScript::const_iterator pc = txin.scriptSig.begin();
-        vector<unsigned char> data;
+        std::vector<unsigned char> data;
         while (pc < txin.scriptSig.end()) {
             opcodetype opcode;
             if (!txin.scriptSig.GetOp(pc, opcode, data))
                 break;
             if (txin.IsZerocoinSpend()) {
-                CDataStream s(vector<unsigned char>(txin.scriptSig.begin() + 44, txin.scriptSig.end()),
+                CDataStream s(std::vector<unsigned char>(txin.scriptSig.begin() + 44, txin.scriptSig.end()),
                         SER_NETWORK, PROTOCOL_VERSION);
 
                 data = libzerocoin::CoinSpend::ParseSerial(s);

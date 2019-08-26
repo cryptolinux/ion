@@ -7,9 +7,10 @@
 
 #include <addrman.h>
 
-#include <hash.h>
-#include <serialize.h>
-#include <streams.h>
+#include "hash.h"
+#include "serialize.h"
+#include "streams.h"
+
 
 int CAddrInfo::GetTriedBucket(const uint256& nKey) const
 {

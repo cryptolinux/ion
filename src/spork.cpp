@@ -16,7 +16,6 @@
 #include "sporkdb.h"
 #include "util.h"
 
-CSporkManager sporkManager;
 
 CSporkManager::CSporkManager()
 {

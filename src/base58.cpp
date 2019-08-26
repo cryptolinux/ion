@@ -69,6 +69,21 @@ bool DecodeBase58(const char* psz, std::vector<unsigned char>& vch)
     return true;
 }
 
+std::string DecodeBase58(const char* psz)
+{
+    std::vector<unsigned char> vch;
+    DecodeBase58(psz, vch);
+    std::stringstream ss;
+    ss << std::hex;
+
+    for (unsigned int i = 0; i < vch.size(); i++) {
+        unsigned char* c = &vch[i];
+        ss << std::setw(2) << std::setfill('0') << (int)c[0];
+    }
+
+    return ss.str();
+}
+
 std::string EncodeBase58(const unsigned char* pbegin, const unsigned char* pend)
 {
     // Skip & count leading zeroes.

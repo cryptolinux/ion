@@ -31,15 +31,15 @@
 
 #include <univalue.h>
 
-static const char DEFAULT_RPCCONNECT[] = "127.0.0.1";
+#define _(x) std::string(x) /* Keep the _() around in case gettext or such will be used later to translate non-UI */
+
+
 static const int DEFAULT_HTTP_CLIENT_TIMEOUT=900;
 static const bool DEFAULT_NAMED=false;
 static const int CONTINUE_EXECUTION=-1;
 
 std::string HelpMessageCli()
 {
-    const auto defaultBaseParams = CreateBaseChainParams(CBaseChainParams::MAIN);
-    const auto testnetBaseParams = CreateBaseChainParams(CBaseChainParams::TESTNET);
     std::string strUsage;
     strUsage += HelpMessageGroup(_("Options:"));
     strUsage += HelpMessageOpt("-?", _("This help message"));
@@ -203,132 +203,28 @@ static void http_request_done(struct evhttp_request *req, void *ctx)
     }
 }
 
-#if LIBEVENT_VERSION_NUMBER >= 0x02010300
-static void http_error_cb(enum evhttp_request_error err, void *ctx)
+UniValue CallRPC(const std::string& strMethod, const UniValue& params)
 {
     HTTPReply *reply = static_cast<HTTPReply*>(ctx);
     reply->error = err;
 }
 #endif
 
-/** Class that handles the conversion from a command-line to a JSON-RPC request,
- * as well as converting back to a JSON object that can be shown as result.
- */
-class BaseRequestHandler
-{
-public:
-    virtual UniValue PrepareRequest(const std::string& method, const std::vector<std::string>& args) = 0;
-    virtual UniValue ProcessReply(const UniValue &batch_in) = 0;
-};
-
-/** Process getinfo requests */
-class GetinfoRequestHandler: public BaseRequestHandler
-{
-public:
-    const int ID_NETWORKINFO = 0;
-    const int ID_BLOCKCHAININFO = 1;
-    const int ID_WALLETINFO = 2;
-
-    /** Create a simulated `getinfo` request. */
-    UniValue PrepareRequest(const std::string& method, const std::vector<std::string>& args) override
-    {
-        if (!args.empty()) {
-            throw std::runtime_error("-getinfo takes no arguments");
-        }
-        UniValue result(UniValue::VARR);
-        result.push_back(JSONRPCRequestObj("getnetworkinfo", NullUniValue, ID_NETWORKINFO));
-        result.push_back(JSONRPCRequestObj("getblockchaininfo", NullUniValue, ID_BLOCKCHAININFO));
-        result.push_back(JSONRPCRequestObj("getwalletinfo", NullUniValue, ID_WALLETINFO));
-        return result;
-    }
-
-    /** Collect values from the batch and form a simulated `getinfo` reply. */
-    UniValue ProcessReply(const UniValue &batch_in) override
-    {
-        UniValue result(UniValue::VOBJ);
-        std::vector<UniValue> batch = JSONRPCProcessBatchReply(batch_in, 3);
-        // Errors in getnetworkinfo() and getblockchaininfo() are fatal, pass them on
-        // getwalletinfo() is allowed to fail in case there is no wallet.
-        if (!batch[ID_NETWORKINFO]["error"].isNull()) {
-            return batch[ID_NETWORKINFO];
-        }
-        if (!batch[ID_BLOCKCHAININFO]["error"].isNull()) {
-            return batch[ID_BLOCKCHAININFO];
-        }
-        result.pushKV("version", batch[ID_NETWORKINFO]["result"]["version"]);
-        result.pushKV("protocolversion", batch[ID_NETWORKINFO]["result"]["protocolversion"]);
-        if (!batch[ID_WALLETINFO].isNull()) {
-            result.pushKV("walletversion", batch[ID_WALLETINFO]["result"]["walletversion"]);
-            result.pushKV("balance", batch[ID_WALLETINFO]["result"]["balance"]);
-        }
-        result.pushKV("blocks", batch[ID_BLOCKCHAININFO]["result"]["blocks"]);
-        result.pushKV("timeoffset", batch[ID_NETWORKINFO]["result"]["timeoffset"]);
-        result.pushKV("connections", batch[ID_NETWORKINFO]["result"]["connections"]);
-        result.pushKV("proxy", batch[ID_NETWORKINFO]["result"]["networks"][0]["proxy"]);
-        result.pushKV("difficulty", batch[ID_BLOCKCHAININFO]["result"]["difficulty"]);
-        result.pushKV("testnet", UniValue(batch[ID_BLOCKCHAININFO]["result"]["chain"].get_str() == "test"));
-        if (!batch[ID_WALLETINFO].isNull()) {
-            result.pushKV("walletversion", batch[ID_WALLETINFO]["result"]["walletversion"]);
-            result.pushKV("balance", batch[ID_WALLETINFO]["result"]["balance"]);
-            result.pushKV("privatesend_balance", batch[ID_WALLETINFO]["result"]["privatesend_balance"]);
-            result.pushKV("keypoololdest", batch[ID_WALLETINFO]["result"]["keypoololdest"]);
-            result.pushKV("keypoolsize", batch[ID_WALLETINFO]["result"]["keypoolsize"]);
-            if (!batch[ID_WALLETINFO]["result"]["unlocked_until"].isNull()) {
-                result.pushKV("unlocked_until", batch[ID_WALLETINFO]["result"]["unlocked_until"]);
-            }
-            result.pushKV("paytxfee", batch[ID_WALLETINFO]["result"]["paytxfee"]);
-        }
-        result.pushKV("relayfee", batch[ID_NETWORKINFO]["result"]["relayfee"]);
-        result.pushKV("warnings", batch[ID_NETWORKINFO]["result"]["warnings"]);
-        return JSONRPCReplyObj(result, NullUniValue, 1);
-    }
-};
-
-/** Process default single requests */
-class DefaultRequestHandler: public BaseRequestHandler {
-public:
-    UniValue PrepareRequest(const std::string& method, const std::vector<std::string>& args) override
-    {
-        UniValue params;
-        if(gArgs.GetBoolArg("-named", DEFAULT_NAMED)) {
-            params = RPCConvertNamedValues(method, args);
-        } else {
-            params = RPCConvertValues(method, args);
-        }
-        return JSONRPCRequestObj(method, params, 1);
-    }
-
-    UniValue ProcessReply(const UniValue &reply) override
-    {
-        return reply.get_obj();
-    }
-};
-
-static UniValue CallRPC(BaseRequestHandler *rh, const std::string& strMethod, const std::vector<std::string>& args)
-{
-    std::string host;
-    // In preference order, we choose the following for the port:
-    //     1. -rpcport
-    //     2. port in -rpcconnect (ie following : in ipv4 or ]: in ipv6)
-    //     3. default port for chain
-    int port = BaseParams().RPCPort();
-    SplitHostPort(gArgs.GetArg("-rpcconnect", DEFAULT_RPCCONNECT), port, host);
-    port = gArgs.GetArg("-rpcport", port);
-
-    // Obtain event base
-    raii_event_base base = obtain_event_base();
+    // Create event base
+    struct event_base *base = event_base_new(); // TODO RAII
+    if (!base)
+        throw std::runtime_error("cannot create event_base");
 
     // Synchronously look up hostname
-    raii_evhttp_connection evcon = obtain_evhttp_connection_base(base.get(), host, port);
-    evhttp_connection_set_timeout(evcon.get(), gArgs.GetArg("-rpcclienttimeout", DEFAULT_HTTP_CLIENT_TIMEOUT));
+    struct evhttp_connection *evcon = evhttp_connection_base_new(base, NULL, host.c_str(), port); // TODO RAII
+    if (evcon == NULL)
+        throw std::runtime_error("create connection failed");
+    evhttp_connection_set_timeout(evcon, GetArg("-rpcclienttimeout", DEFAULT_HTTP_CLIENT_TIMEOUT));
 
     HTTPReply response;
-    raii_evhttp_request req = obtain_evhttp_request(http_request_done, (void*)&response);
-    if (req == nullptr)
+    struct evhttp_request *req = evhttp_request_new(http_request_done, (void*)&response); // TODO RAII
+    if (req == NULL)
         throw std::runtime_error("create http request failed");
-#if LIBEVENT_VERSION_NUMBER >= 0x02010300
-    evhttp_request_set_error_cb(req.get(), http_error_cb);
-#endif
 
     // Get credentials
     std::string strRPCUserColonPass;
@@ -336,8 +232,8 @@ static UniValue CallRPC(BaseRequestHandler *rh, const std::string& strMethod, co
         // Try fall back to cookie-based authentication if no password is provided
         if (!GetAuthCookie(&strRPCUserColonPass)) {
             throw std::runtime_error(strprintf(
-                _("Could not locate RPC credentials. No authentication cookie could be found, and RPC password is not set.  See -rpcpassword and -stdinrpcpass.  Configuration file: (%s)"),
-                    GetConfigFile(gArgs.GetArg("-conf", BITCOIN_CONF_FILENAME)).string().c_str()));
+                 _("Could not locate RPC credentials. No authentication cookie could be found, and no rpcpassword is set in the configuration file (%s)"),
+                    GetConfigFile().string().c_str()));
 
         }
     } else {
@@ -390,7 +286,7 @@ static UniValue CallRPC(BaseRequestHandler *rh, const std::string& strMethod, co
     UniValue valReply(UniValue::VSTR);
     if (!valReply.read(response.body))
         throw std::runtime_error("couldn't parse reply from server");
-    const UniValue reply = rh->ProcessReply(valReply);
+    const UniValue& reply = valReply.get_obj();
     if (reply.empty())
         throw std::runtime_error("expected reply to have result, error and id properties");
 
@@ -407,34 +303,15 @@ int CommandLineRPC(int argc, char *argv[])
             argc--;
             argv++;
         }
-        std::string rpcPass;
-        if (gArgs.GetBoolArg("-stdinrpcpass", false)) {
-            if (!std::getline(std::cin, rpcPass)) {
-                throw std::runtime_error("-stdinrpcpass specified but failed to read from standard input");
-            }
-            gArgs.ForceSetArg("-rpcpassword", rpcPass);
-        }
-        std::vector<std::string> args = std::vector<std::string>(&argv[1], &argv[argc]);
-        if (gArgs.GetBoolArg("-stdin", false)) {
-            // Read one arg per line from stdin and append
-            std::string line;
-            while (std::getline(std::cin, line)) {
-                args.push_back(line);
-            }
-        }
-        std::unique_ptr<BaseRequestHandler> rh;
-        std::string method;
-        if (gArgs.GetBoolArg("-getinfo", false)) {
-            rh.reset(new GetinfoRequestHandler());
-            method = "";
-        } else {
-            rh.reset(new DefaultRequestHandler());
-            if (args.size() < 1) {
-                throw std::runtime_error("too few parameters (need at least command)");
-            }
-            method = args[0];
-            args.erase(args.begin()); // Remove trailing method name from arguments vector
-        }
+
+        // Method
+        if (argc < 2)
+            throw std::runtime_error("too few parameters");
+        std::string strMethod = argv[1];
+
+        // Parameters default to strings
+        std::vector<std::string> strParams(&argv[2], &argv[argc]);
+        UniValue params = RPCConvertValues(strMethod, strParams);
 
         // Execute and handle connection failures with -rpcwait
         const bool fWait = gArgs.GetBoolArg("-rpcwait", false);
@@ -475,8 +352,7 @@ int CommandLineRPC(int argc, char *argv[])
     }
     catch (const boost::thread_interrupted&) {
         throw;
-    }
-    catch (const std::exception& e) {
+    } catch (std::exception& e) {
         strPrint = std::string("error: ") + e.what();
         nRet = EXIT_FAILURE;
     }

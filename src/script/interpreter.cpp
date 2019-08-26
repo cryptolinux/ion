@@ -57,7 +57,7 @@ bool CastToBool(const valtype& vch)
 static inline void popstack(std::vector<valtype>& stack)
 {
     if (stack.empty())
-        throw std::runtime_error("popstack(): stack empty");
+        throw std::runtime_error("popstack() : stack empty");
     stack.pop_back();
 }
 
@@ -233,7 +233,7 @@ bool static CheckMinimalPush(const valtype& data, opcodetype opcode) {
     return true;
 }
 
-bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, unsigned int flags, unsigned int maxOps, const BaseSignatureChecker& checker, ScriptError* serror)
+bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& script, unsigned int flags, unsigned int maxOps, const BaseSignatureChecker& checker, ScriptError* serror)
 {
     ScriptMachine sm(flags, checker, maxOps);
     sm.setStack(stack);
@@ -1118,7 +1118,7 @@ bool TransactionSignatureChecker::VerifySignature(const std::vector<unsigned cha
     return true;
 }
 
-bool TransactionSignatureChecker::CheckSequence(const CScriptNum& nSequence) const
+bool TransactionSignatureChecker::CheckSig(const std::vector<unsigned char>& vchSigIn, const std::vector<unsigned char>& vchPubKey, const CScript& scriptCode) const
 {
     // Relative lock times are supported by comparing the passed
     // in operand to the sequence number of the input.
@@ -1129,11 +1129,9 @@ bool TransactionSignatureChecker::CheckSequence(const CScriptNum& nSequence) con
     if (static_cast<uint32_t>(txTo->nVersion) < 2)
         return false;
 
-    // Sequence numbers with their most significant bit set are not
-    // consensus constrained. Testing that the transaction's sequence
-    // number do not have this bit set prevents using this property
-    // to get around a CHECKSEQUENCEVERIFY check.
-    if (txToSequence & CTxIn::SEQUENCE_LOCKTIME_DISABLE_FLAG)
+    // Hash type is one byte tacked on to the end of the signature
+    std::vector<unsigned char> vchSig(vchSigIn);
+    if (vchSig.empty())
         return false;
 
     // Mask off any bits that do not have consensus-enforced meaning
@@ -1245,7 +1243,7 @@ bool VerifyScript(const CScript& scriptSig, const CScript& scriptPubKey, unsigne
         return set_error(serror, SCRIPT_ERR_SIG_PUSHONLY);
     }
 
-    vector<vector<unsigned char> > stack, stackCopy;
+    std::vector<std::vector<unsigned char> > stack, stackCopy;
     if (!EvalScript(stack, scriptSig, flags, maxOps, checker, serror))
         // serror is set
         return false;

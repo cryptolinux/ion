@@ -123,10 +123,11 @@ CalculateParams(ZerocoinParams &params, CBigNum N, std::string aux, uint32_t sec
 ///
 /// Returns the hash of the value.
 
-arith_uint256
-calculateGeneratorSeed(arith_uint256 seed, arith_uint256 pSeed, arith_uint256 qSeed, std::string label, uint32_t index, uint32_t count)
+uint256
+calculateGeneratorSeed(uint256 seed, uint256 pSeed, uint256 qSeed, std::string label, uint32_t index, uint32_t count)
 {
     CHashWriter hasher(0,0);
+    uint256     hash;
 
     // Compute the hash of:
     // <modulus>||<securitylevel>||<auxString>||groupName
@@ -142,7 +143,7 @@ calculateGeneratorSeed(arith_uint256 seed, arith_uint256 pSeed, arith_uint256 qS
     hasher << std::string("||");
     hasher << count;
 
-    return UintToArith256(hasher.GetHash());
+    return hasher.GetHash();
 }
 
 /// \brief Format a seed string by hashing several values.
@@ -154,7 +155,7 @@ calculateGeneratorSeed(arith_uint256 seed, arith_uint256 pSeed, arith_uint256 qS
 ///
 /// Returns the hash of the value.
 
-arith_uint256
+uint256
 calculateSeed(CBigNum modulus, std::string auxString, uint32_t securityLevel, std::string groupName)
 {
     CHashWriter hasher(0,0);
@@ -170,7 +171,7 @@ calculateSeed(CBigNum modulus, std::string auxString, uint32_t securityLevel, st
     hasher << std::string("||");
     hasher << groupName;
 
-    return UintToArith256(hasher.GetHash());
+    return hasher.GetHash();
 }
 
 arith_uint256
@@ -181,7 +182,7 @@ calculateHash(arith_uint256 input)
     // Compute the hash of "input"
     hasher << input;
 
-    return UintToArith256(hasher.GetHash());
+    return hasher.GetHash();
 }
 
 /// \brief Calculate field/group parameter sizes based on a security level.
@@ -247,7 +248,7 @@ deriveIntegerGroupParams(arith_uint256 seed, uint32_t pLen, uint32_t qLen)
     IntegerGroupParams result;
     CBigNum p;
     CBigNum q;
-    arith_uint256 pSeed, qSeed;
+    uint256 pSeed, qSeed;
 
     // Calculate "p" and "q" and "domain_parameter_seed" from the
     // "seed" buffer above, using the procedure described in NIST
@@ -311,9 +312,9 @@ deriveIntegerGroupFromOrder(CBigNum &groupOrder)
             // NIST FIPS 186-3, Appendix A.2.3. This algorithm takes ("p", "q",
             // "domain_parameter_seed", "index"). We use "index" value 1
             // to generate "g" and "index" value 2 to generate "h".
-            arith_uint256 seed = calculateSeed(groupOrder, "", 128, "");
-            arith_uint256 pSeed = calculateHash(seed);
-            arith_uint256 qSeed = calculateHash(pSeed);
+            uint256 seed = calculateSeed(groupOrder, "", 128, "");
+            uint256 pSeed = calculateHash(seed);
+            uint256 qSeed = calculateHash(pSeed);
             result.g = calculateGroupGenerator(seed, pSeed, qSeed, result.modulus, result.groupOrder, 1);
             result.h = calculateGroupGenerator(seed, pSeed, qSeed, result.modulus, result.groupOrder, 2);
 
@@ -369,15 +370,15 @@ calculateGroupModulusAndOrder(arith_uint256 seed, uint32_t pLen, uint32_t qLen,
     // Generate a random prime for the group order.
     // This may throw an exception, which we'll pass upwards.
     // Result is the value "resultGroupOrder", "qseed" and "qgen_counter".
-    arith_uint256     qseed;
+    uint256     qseed;
     uint32_t    qgen_counter;
     *resultGroupOrder = generateRandomPrime(qLen, seed, &qseed, &qgen_counter);
 
     // Using ⎡pLen / 2 + 1⎤ as the length and qseed as the input_seed, use the random prime
     // routine to obtain p0 , pseed, and pgen_counter. We pass exceptions upward.
-    uint32_t p0len = ceil((pLen / 2.0) + 1);
-    arith_uint256 pseed;
-    uint32_t pgen_counter;
+    uint32_t    p0len = ceil((pLen / 2.0) + 1);
+    uint256     pseed;
+    uint32_t    pgen_counter;
     CBigNum p0 = generateRandomPrime(p0len, qseed, &pseed, &pgen_counter);
 
     // Set x = 0, old_counter = pgen_counter
@@ -469,7 +470,7 @@ calculateGroupGenerator(arith_uint256 seed, arith_uint256 pSeed, arith_uint256 q
     // Loop until we find a generator
     for (uint32_t count = 1; count < MAX_GENERATOR_ATTEMPTS; count++) {
         // hash = Hash(seed || pSeed || qSeed || “ggen” || index || count
-        arith_uint256 hash = calculateGeneratorSeed(seed, pSeed, qSeed, "ggen", index, count);
+        uint256 hash = calculateGeneratorSeed(seed, pSeed, qSeed, "ggen", index, count);
         CBigNum W(hash);
 
         // Compute result = W^e mod p
@@ -511,7 +512,7 @@ generateRandomPrime(uint32_t primeBitLen, arith_uint256 in_seed, arith_uint256 *
         CBigNum result(0);
 
         // Set prime_seed = in_seed, prime_gen_counter = 0.
-        arith_uint256     prime_seed = in_seed;
+        uint256     prime_seed = in_seed;
         (*prime_gen_counter) = 0;
 
         // Loop up to "4 * primeBitLen" iterations.

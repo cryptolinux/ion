@@ -46,11 +46,6 @@ CTxMemPoolEntry::CTxMemPoolEntry(const CTransactionRef& _tx, const CAmount& _nFe
 
     feeDelta = 0;
 
-    nCountWithAncestors = 1;
-    nSizeWithAncestors = nTxSize;
-    nModFeesWithAncestors = nFee;
-    nSigOpCountWithAncestors = sigOpCount;
-}
 
 void CTxMemPoolEntry::UpdateFeeDelta(int64_t newFeeDelta)
 {
@@ -249,12 +244,23 @@ bool CTxMemPool::CalculateMemPoolAncestors(const CTxMemPoolEntry &entry, setEntr
     return true;
 }
 
-void CTxMemPool::UpdateAncestorsOf(bool add, txiter it, setEntries &setAncestors)
-{
-    setEntries parentIters = GetMemPoolParents(it);
-    // add or remove this tx as a child of each parent
-    for (txiter piter : parentIters) {
-        UpdateChild(piter, it, add);
+    void Read(CAutoFile& filein, const CFeeRate& minRelayFee)
+    {
+        std::vector<CFeeRate> vecFee;
+        filein >> vecFee;
+        if (AreSane(vecFee, minRelayFee))
+            feeSamples.insert(feeSamples.end(), vecFee.begin(), vecFee.end());
+        else
+            throw std::runtime_error("Corrupt fee value in estimates file.");
+        std::vector<double> vecPriority;
+        filein >> vecPriority;
+        if (AreSane(vecPriority))
+            prioritySamples.insert(prioritySamples.end(), vecPriority.begin(), vecPriority.end());
+        else
+            throw std::runtime_error("Corrupt priority value in estimates file.");
+        if (feeSamples.size() + prioritySamples.size() > 0)
+            LogPrint("estimatefee", "Read %d fee samples and %d priority samples\n",
+                feeSamples.size(), prioritySamples.size());
     }
     const int64_t updateCount = (add ? 1 : -1);
     const int64_t updateSize = updateCount * it->GetTxSize();
@@ -266,14 +272,44 @@ void CTxMemPool::UpdateAncestorsOf(bool add, txiter it, setEntries &setAncestors
 
 void CTxMemPool::UpdateEntryForAncestors(txiter it, const setEntries &setAncestors)
 {
-    int64_t updateCount = setAncestors.size();
-    int64_t updateSize = 0;
-    CAmount updateFee = 0;
-    int updateSigOps = 0;
-    for (txiter ancestorIt : setAncestors) {
-        updateSize += ancestorIt->GetTxSize();
-        updateFee += ancestorIt->GetModifiedFee();
-        updateSigOps += ancestorIt->GetSigOpCount();
+private:
+    /**
+     * Records observed averages transactions that confirmed within one block, two blocks,
+     * three blocks etc.
+     */
+    std::vector<CBlockAverage> history;
+    std::vector<CFeeRate> sortedFeeSamples;
+    std::vector<double> sortedPrioritySamples;
+
+    int nBestSeenHeight;
+
+    /**
+     * nBlocksAgo is 0 based, i.e. transactions that confirmed in the highest seen block are
+     * nBlocksAgo == 0, transactions in the block before that are nBlocksAgo == 1 etc.
+     */
+    void seenTxConfirm(const CFeeRate& feeRate, const CFeeRate& minRelayFee, double dPriority, int nBlocksAgo)
+    {
+        // Last entry records "everything else".
+        int nBlocksTruncated = std::min(nBlocksAgo, (int)history.size() - 1);
+        assert(nBlocksTruncated >= 0);
+
+        // We need to guess why the transaction was included in a block-- either
+        // because it is high-priority or because it has sufficient fees.
+        bool sufficientFee = (feeRate > minRelayFee);
+        bool sufficientPriority = AllowFree(dPriority);
+        const char* assignedTo = "unassigned";
+        if (sufficientFee && !sufficientPriority && CBlockAverage::AreSane(feeRate, minRelayFee)) {
+            history[nBlocksTruncated].RecordFee(feeRate);
+            assignedTo = "fee";
+        } else if (sufficientPriority && !sufficientFee && CBlockAverage::AreSane(dPriority)) {
+            history[nBlocksTruncated].RecordPriority(dPriority);
+            assignedTo = "priority";
+        } else {
+            // Neither or both fee and priority sufficient to get confirmed:
+            // don't know why they got confirmed.
+        }
+        LogPrint("estimatefee", "Seen TX confirm: %s : %s fee/%g priority, took %d blocks\n",
+            assignedTo, feeRate.ToString(), dPriority, nBlocksAgo);
     }
     mapTx.modify(it, update_ancestor_state(updateSize, updateFee, updateCount, updateSigOps));
 }
@@ -395,11 +431,20 @@ CTxMemPool::CTxMemPool(CBlockPolicyEstimator* estimator) :
     nCheckFrequency = 0;
 }
 
-bool CTxMemPool::isSpent(const COutPoint& outpoint)
-{
-    LOCK(cs);
-    return mapNextTx.count(outpoint);
-}
+        // Estimates should not increase as number of confirmations goes up,
+        // but the estimates are noisy because confirmations happen discretely
+        // in blocks. To smooth out the estimates, use all samples in the history
+        // and use the nth highest where n is (number of samples in previous bucket +
+        // half the samples in nBlocksToConfirm bucket):
+        size_t nPrevSize = 0;
+        for (int i = 0; i < nBlocksToConfirm; i++)
+            nPrevSize += history.at(i).FeeSamples();
+        size_t index = std::min(nPrevSize + nBucketSize / 2, sortedFeeSamples.size() - 1);
+        return sortedFeeSamples[index];
+    }
+    double estimatePriority(int nBlocksToConfirm)
+    {
+        nBlocksToConfirm--;
 
 unsigned int CTxMemPool::GetTransactionsUpdated() const
 {
@@ -439,11 +484,16 @@ bool CTxMemPool::addUnchecked(const uint256& hash, const CTxMemPoolEntry &entry,
     // further updated.)
     cachedInnerUsage += entry.DynamicMemoryUsage();
 
-    const CTransaction& tx = newit->GetTx();
-    std::set<uint256> setParentTransactions;
-    for (unsigned int i = 0; i < tx.vin.size(); i++) {
-        mapNextTx.insert(std::make_pair(&tx.vin[i].prevout, &tx));
-        setParentTransactions.insert(tx.vin[i].prevout.hash);
+        // Estimates should not increase as number of confirmations needed goes up,
+        // but the estimates are noisy because confirmations happen discretely
+        // in blocks. To smooth out the estimates, use all samples in the history
+        // and use the nth highest where n is (number of samples in previous buckets +
+        // half the samples in nBlocksToConfirm bucket).
+        size_t nPrevSize = 0;
+        for (int i = 0; i < nBlocksToConfirm; i++)
+            nPrevSize += history.at(i).PrioritySamples();
+        size_t index = std::min(nPrevSize + nBucketSize / 2, sortedPrioritySamples.size() - 1);
+        return sortedPrioritySamples[index];
     }
 
     void Write(CAutoFile& fileout) const
@@ -455,8 +505,16 @@ bool CTxMemPool::addUnchecked(const uint256& hash, const CTxMemPoolEntry &entry,
         }
     }
 
-    return true;
-}
+    void Read(CAutoFile& filein, const CFeeRate& minRelayFee)
+    {
+        int nFileBestSeenHeight;
+        filein >> nFileBestSeenHeight;
+        size_t numEntries;
+        filein >> numEntries;
+        if (numEntries <= 0 || numEntries > 10000)
+            throw std::runtime_error("Corrupt estimates file. Must have between 1 and 10k entries.");
+
+        std::vector<CBlockAverage> fileHistory;
 
 void CTxMemPool::addAddressIndex(const CTxMemPoolEntry &entry, const CCoinsViewCache &view)
 {
@@ -750,7 +808,7 @@ void CTxMemPool::removeForReorg(const CCoinsViewCache *pcoins, unsigned int nMem
 {
     // Remove transactions spending a coinbase which are now immature and no-longer-final transactions
     LOCK(cs);
-    list<CTransaction> transactionsToRemove;
+    std::list<CTransaction> transactionsToRemove;
     for (std::map<uint256, CTxMemPoolEntry>::const_iterator it = mapTx.begin(); it != mapTx.end(); it++) {
         const CTransaction& tx = it->second.GetTx();
         for (const CTxIn& txin : tx.vin) {
@@ -769,7 +827,7 @@ void CTxMemPool::removeForReorg(const CCoinsViewCache *pcoins, unsigned int nMem
         }
     }
     for (const CTransaction& tx : transactionsToRemove) {
-        list<CTransaction> removed;
+        std::list<CTransaction> removed;
         remove(tx, removed, true);
     }
     RemoveStaged(setAllRemoves, false, MemPoolRemovalReason::REORG);
@@ -778,6 +836,7 @@ void CTxMemPool::removeForReorg(const CCoinsViewCache *pcoins, unsigned int nMem
 void CTxMemPool::removeConflicts(const CTransaction &tx)
 {
     // Remove transactions which depend on inputs of tx, recursively
+    std::list<CTransaction> result;
     LOCK(cs);
     for (const CTxIn& txin : tx.vin) {
         std::map<COutPoint, CInPoint>::iterator it = mapNextTx.find(txin.prevout);
@@ -1002,7 +1061,7 @@ void CTxMemPool::check(const CCoinsViewCache *pcoins) const
 
     LOCK(cs);
     std::list<const CTxMemPoolEntry*> waitingOnDependants;
-    for (indexed_transaction_set::const_iterator it = mapTx.begin(); it != mapTx.end(); it++) {
+    for (std::map<uint256, CTxMemPoolEntry>::const_iterator it = mapTx.begin(); it != mapTx.end(); it++) {
         unsigned int i = 0;
         checkTotal += it->GetTxSize();
         innerUsage += it->DynamicMemoryUsage();
@@ -1097,10 +1156,10 @@ void CTxMemPool::check(const CCoinsViewCache *pcoins) const
             stepsSinceLastRemove = 0;
         }
     }
-    for (auto it = mapNextTx.cbegin(); it != mapNextTx.cend(); it++) {
-        uint256 hash = it->second->GetHash();
-        indexed_transaction_set::const_iterator it2 = mapTx.find(hash);
-        const CTransaction& tx = it2->GetTx();
+    for (std::map<COutPoint, CInPoint>::const_iterator it = mapNextTx.begin(); it != mapNextTx.end(); it++) {
+        uint256 hash = it->second.ptx->GetHash();
+        std::map<uint256, CTxMemPoolEntry>::const_iterator it2 = mapTx.find(hash);
+        const CTransaction& tx = it2->second.GetTx();
         assert(it2 != mapTx.end());
         assert(&tx == it->second);
     }
@@ -1109,7 +1168,7 @@ void CTxMemPool::check(const CCoinsViewCache *pcoins) const
     assert(innerUsage == cachedInnerUsage);
 }
 
-bool CTxMemPool::CompareDepthAndScore(const uint256& hasha, const uint256& hashb)
+void CTxMemPool::queryHashes(std::vector<uint256>& vtxid)
 {
     LOCK(cs);
     indexed_transaction_set::const_iterator i = mapTx.find(hasha);
@@ -1129,8 +1188,9 @@ void CTxMemPool::getTransactions(std::set<uint256>& setTxid)
     setTxid.clear();
 
     LOCK(cs);
-    for (map<uint256, CTxMemPoolEntry>::iterator mi = mapTx.begin(); mi != mapTx.end(); ++mi)
-        setTxid.insert((*mi).first);
+    vtxid.reserve(mapTx.size());
+    for (std::map<uint256, CTxMemPoolEntry>::iterator mi = mapTx.begin(); mi != mapTx.end(); ++mi)
+        vtxid.push_back((*mi).first);
 }
 
 void CTxMemPool::getTransactions(std::set<uint256>& setTxid)
@@ -1138,37 +1198,17 @@ void CTxMemPool::getTransactions(std::set<uint256>& setTxid)
     setTxid.clear();
 
     LOCK(cs);
-    for (map<uint256, CTxMemPoolEntry>::iterator mi = mapTx.begin(); mi != mapTx.end(); ++mi)
+    for (std::map<uint256, CTxMemPoolEntry>::iterator mi = mapTx.begin(); mi != mapTx.end(); ++mi)
         setTxid.insert((*mi).first);
 }
 
 bool CTxMemPool::lookup(uint256 hash, CTransaction& result) const
 {
-public:
-    bool operator()(const CTxMemPool::indexed_transaction_set::const_iterator& a, const CTxMemPool::indexed_transaction_set::const_iterator& b)
-    {
-        uint64_t counta = a->GetCountWithAncestors();
-        uint64_t countb = b->GetCountWithAncestors();
-        if (counta == countb) {
-            return CompareTxMemPoolEntryByScore()(*a, *b);
-        }
-        return counta < countb;
-    }
-};
-} // namespace
-
-std::vector<CTxMemPool::indexed_transaction_set::const_iterator> CTxMemPool::GetSortedDepthAndScore() const
-{
-    std::vector<indexed_transaction_set::const_iterator> iters;
-    AssertLockHeld(cs);
-
-    iters.reserve(mapTx.size());
-
-    for (indexed_transaction_set::iterator mi = mapTx.begin(); mi != mapTx.end(); ++mi) {
-        iters.push_back(mi);
-    }
-    std::sort(iters.begin(), iters.end(), DepthAndScoreComparator());
-    return iters;
+    LOCK(cs);
+    std::map<uint256, CTxMemPoolEntry>::const_iterator i = mapTx.find(hash);
+    if (i == mapTx.end()) return false;
+    result = i->second.GetTx();
+    return true;
 }
 
 void CTxMemPool::queryHashes(std::vector<uint256>& vtxid)
@@ -1308,7 +1348,7 @@ bool CTxMemPool::existsProviderTxConflict(const CTransaction &tx) const {
     return false;
 }
 
-void CTxMemPool::PrioritiseTransaction(const uint256& hash, const CAmount& nFeeDelta)
+void CTxMemPool::PrioritiseTransaction(const uint256 hash, const std::string strHash, double dPriorityDelta, const CAmount& nFeeDelta)
 {
     {
         LOCK(cs);
