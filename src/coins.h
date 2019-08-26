@@ -18,7 +18,7 @@
 #include <assert.h>
 #include <stdint.h>
 
-#include <unordered_map>
+#include <boost/unordered_map.hpp>
 
 /** 
 
@@ -58,12 +58,13 @@ public:
         return fCoinBase;
     }
 
-    template<typename Stream>
-    void Serialize(Stream &s) const {
-        assert(!IsSpent());
-        uint32_t code = nHeight * 2 + fCoinBase;
-        ::Serialize(s, VARINT(code));
-        ::Serialize(s, CTxOutCompressor(REF(out)));
+    void ClearUnspendable()
+    {
+        for (CTxOut& txout : vout) {
+            if (txout.scriptPubKey.IsUnspendable())
+                txout.SetNull();
+        }
+        Cleanup();
     }
 
     template<typename Stream>
@@ -143,16 +144,18 @@ public:
     template <typename Stream>
     void Unserialize(Stream &s)
     {
-        uint32_t code = 0;
-        ::Unserialize(s, VARINT(code));
-        nHeight = code >> 2;
-        fCoinBase = code & 1;
-        fCoinStake = (code >> 1) & 1;
-        ::Unserialize(s, REF(CTxOutCompressor(out)));
+        return (nPos < vout.size() && !vout[nPos].IsNull() && !vout[nPos].IsZerocoinMint());
     }
 
-    bool IsSpent() const { return out.IsNull(); }
-    size_t DynamicMemoryUsage() const { return memusage::DynamicUsage(out.scriptPubKey); }
+    //! check whether the entire CCoins is spent
+    //! note that only !IsPruned() CCoins can be serialized
+    bool IsPruned() const
+    {
+        for (const CTxOut& out : vout)
+            if (!out.IsNull())
+                return false;
+        return true;
+    }
 };
 
 /**

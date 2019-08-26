@@ -25,6 +25,8 @@
  */
 class CAddrInfo : public CAddress
 {
+
+
 public:
     //! last try whatsoever by us (memory only)
     int64_t nLastTry;
@@ -168,13 +170,8 @@ public:
 //! the maximum number of nodes to return in a getaddr call
 #define ADDRMAN_GETADDR_MAX 2500
 
-//! Convenience
-#define ADDRMAN_TRIED_BUCKET_COUNT (1 << ADDRMAN_TRIED_BUCKET_COUNT_LOG2)
-#define ADDRMAN_NEW_BUCKET_COUNT (1 << ADDRMAN_NEW_BUCKET_COUNT_LOG2)
-#define ADDRMAN_BUCKET_SIZE (1 << ADDRMAN_BUCKET_SIZE_LOG2)
-
-/** 
- * Stochastical (IP) address manager 
+/**
+ * Stochastical (IP) address manager
  */
 class CAddrMan
 {
@@ -216,9 +213,6 @@ protected:
     //! secret key to randomize bucket select with
     uint256 nKey;
 
-    //! Source of random numbers for randomization in inner loops
-    FastRandomContext insecure_rand;
-
     //! Find an entry.
     CAddrInfo* Find(const CService& addr, int *pnId = nullptr);
 
@@ -250,9 +244,11 @@ protected:
     //! Select an address to connect to, if newOnly is set to true, only the new table is selected from.
     CAddrInfo Select_(bool newOnly);
 
-    //! Select an address to connect to.
-    //! nUnkBias determines how much to favor new addresses over tried ones (min=0, max=100)
-    CAddrInfo Select_();
+    //! Select an address to connect to, if newOnly is set to true, only the new table is selected from.
+    CAddrInfo Select_(bool newOnly);
+
+    //! Wraps GetRandInt to allow tests to override RandomInt and make it determinismistic.
+    virtual int RandomInt(int nMax);
 
 #ifdef DEBUG_ADDRMAN
     //! Perform consistency check. Returns an error code or zero.
@@ -562,7 +558,7 @@ public:
     /**
      * Choose an address to connect to.
      */
-    CAddrInfo Select()
+    CAddrInfo Select(bool newOnly = false)
     {
         CAddrInfo addrRet;
         {

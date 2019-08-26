@@ -13,6 +13,7 @@
 #include "util.h"
 #include "utilstrencodings.h"
 #include "version.h"
+#include "test_ion.h"
 
 #include <iostream>
 

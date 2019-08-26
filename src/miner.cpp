@@ -190,11 +190,13 @@ void BlockAssembler::resetBlock()
             CAmount nTotalIn = 0;
             bool fMissingInputs = false;
             uint256 txid = tx.GetHash();
+            bool hasZerocoinSpends = tx.HasZerocoinSpendInputs();
+            if (hasZerocoinSpends)
+                nTotalIn = tx.GetZerocoinSpent();
+
             for (const CTxIn& txin : tx.vin) {
                 //zerocoinspend has special vin
-                if (tx.IsZerocoinSpend()) {
-                    nTotalIn = tx.GetZerocoinSpent();
-
+                if (hasZerocoinSpends) {
                     //Give a high priority to zerocoinspends to get into the next block
                     //Priority = (age^6+100000)*amount - gives higher priority to xions that have been in mempool long
                     //and higher priority to xions that are large in value
@@ -285,8 +287,13 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     assert(pindexPrev != nullptr);
     nHeight = pindexPrev->nHeight + 1;
 
-    bool fDIP0003Active_context = nHeight >= chainparams.GetConsensus().DIP0003Height;
-    bool fDIP0008Active_context = VersionBitsState(chainActive.Tip(), chainparams.GetConsensus(), Consensus::DEPLOYMENT_DIP0008, versionbitscache) == THRESHOLD_ACTIVE;
+            // Skip free transactions if we're past the minimum block size:
+            const uint256& hash = tx.GetHash();
+            double dPriorityDelta = 0;
+            CAmount nFeeDelta = 0;
+            mempool.ApplyDeltas(hash, dPriorityDelta, nFeeDelta);
+            if (!tx.HasZerocoinSpendInputs() && fSortedByFee && (dPriorityDelta <= 0) && (nFeeDelta <= 0) && (feeRate < ::minRelayTxFee) && (nBlockSize + nTxSize >= nBlockMinSize))
+                continue;
 
     pblock->nVersion = ComputeBlockVersion(pindexPrev, chainparams.GetConsensus(), chainparams.BIP9CheckMasternodesUpgraded());
     // -regtest only: allow overriding block.nVersion with
@@ -319,25 +326,39 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     addPackageTxs(nPackagesSelected, nDescendantsUpdated);
 
             // double check that there are no double spent xION spends in this block or tx
-            if (tx.IsZerocoinSpend()) {
+            if (tx.HasZerocoinSpendInputs()) {
                 int nHeightTx = 0;
                 if (IsTransactionInChain(tx.GetHash(), nHeightTx))
                     continue;
 
                 bool fDoubleSerial = false;
                 for (const CTxIn& txIn : tx.vin) {
-                    if (txIn.scriptSig.IsZerocoinSpend()) {
-                        libzerocoin::CoinSpend spend = TxInToZerocoinSpend(txIn);
-                        bool fUseV1Params = libzerocoin::ExtractVersionFromSerial(spend.getCoinSerialNumber()) < libzerocoin::PrivateCoin::PUBKEY_VERSION;
-                        if (!spend.HasValidSerial(Params().Zerocoin_Params(fUseV1Params)))
+                    bool isPublicSpend = txIn.IsZerocoinPublicSpend();
+                    if (txIn.IsZerocoinSpend() || isPublicSpend) {
+                        libzerocoin::CoinSpend* spend;
+                        if (isPublicSpend) {
+                            libzerocoin::ZerocoinParams* params = Params().Zerocoin_Params(false);
+                            PublicCoinSpend publicSpend(params);
+                            CValidationState state;
+                            if (!XIONModule::ParseZerocoinPublicSpend(txIn, tx, state, publicSpend)){
+                                throw std::runtime_error("Invalid public spend parse");
+                            }
+                            spend = &publicSpend;
+                        } else {
+                            libzerocoin::CoinSpend spendObj = TxInToZerocoinSpend(txIn);
+                            spend = &spendObj;
+                        }
+
+                        bool fUseV1Params = libzerocoin::ExtractVersionFromSerial(spend->getCoinSerialNumber()) < libzerocoin::PrivateCoin::PUBKEY_VERSION;
+                        if (!spend->HasValidSerial(Params().Zerocoin_Params(fUseV1Params)))
                             fDoubleSerial = true;
-                        if (count(vBlockSerials.begin(), vBlockSerials.end(), spend.getCoinSerialNumber()))
+                        if (count(vBlockSerials.begin(), vBlockSerials.end(), spend->getCoinSerialNumber()))
                             fDoubleSerial = true;
-                        if (count(vTxSerials.begin(), vTxSerials.end(), spend.getCoinSerialNumber()))
+                        if (count(vTxSerials.begin(), vTxSerials.end(), spend->getCoinSerialNumber()))
                             fDoubleSerial = true;
                         if (fDoubleSerial)
                             break;
-                        vTxSerials.emplace_back(spend.getCoinSerialNumber());
+                        vTxSerials.emplace_back(spend->getCoinSerialNumber());
                     }
                 }
                 //This xION serial has already been included in the block, do not add this tx.
@@ -377,10 +398,18 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
 
         CCbTx cbTx;
 
-        if (fDIP0008Active_context) {
-            cbTx.nVersion = 2;
-        } else {
-            cbTx.nVersion = 1;
+            // Add transactions that depend on this one to the priority queue
+            if (mapDependers.count(hash)) {
+                for (COrphan* porphan : mapDependers[hash]) {
+                    if (!porphan->setDependsOn.empty()) {
+                        porphan->setDependsOn.erase(hash);
+                        if (porphan->setDependsOn.empty()) {
+                            vecPriority.push_back(TxPriority(porphan->dPriority, porphan->feeRate, porphan->ptx));
+                            std::push_heap(vecPriority.begin(), vecPriority.end(), comparer);
+                        }
+                    }
+                }
+            }
         }
 
         if (!fProofOfStake) {

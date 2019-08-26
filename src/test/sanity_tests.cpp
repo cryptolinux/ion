@@ -4,11 +4,11 @@
 
 #include "compat/sanity.h"
 #include "key.h"
-#include "test/test_ion.h"
+#include "test_ion.h"
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_FIXTURE_TEST_SUITE(sanity_tests, BasicTestingSetup)
+BOOST_FIXTURE_TEST_SUITE(sanity_tests, TestingSetup)
 
 BOOST_AUTO_TEST_CASE(basic_sanity)
 {

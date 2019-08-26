@@ -9,8 +9,6 @@
 #include <qt/guiutil.h>
 #include <qt/optionsmodel.h>
 
-#include <clientversion.h>
-#include <streams.h>
 
 
 RecentRequestsTableModel::RecentRequestsTableModel(CWallet *wallet, WalletModel *parent) :

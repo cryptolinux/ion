@@ -652,18 +652,12 @@ public:
      */
     unsigned int GetSigOpCount(const CScript& scriptSig) const;
 
-    bool IsPayToPublicKeyHash() const;
-
-    // if this is a p2sh then the script hash is filled into the passed param if its not null
-    bool IsPayToScriptHash(std::vector<unsigned char> *hashBytes = nullptr) const;
-
+    bool IsNormalPaymentScript() const;
+    bool IsPayToScriptHash() const;
     bool StartsWithOpcode(const opcodetype opcode) const;
     bool IsZerocoinMint() const;
     bool IsZerocoinSpend() const;
     bool IsZerocoinPublicSpend() const;
-
-    /** Used for obsolete pay-to-pubkey addresses indexing. */
-    bool IsPayToPublicKey() const;
 
     /** Called by IsStandardTx and P2SH/BIP62 VerifyScript (which makes it consensus-critical). */
     bool IsPushOnly(const_iterator pc) const;

@@ -6,11 +6,15 @@
 #include "wallet/wallet.h"
 #include "wallet/walletdb.h"
 
+#include "test/test_ion.h"
+
 #include <stdint.h>
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_FIXTURE_TEST_SUITE(accounting_tests, WalletTestingSetup)
+extern CWallet* pwalletMain;
+
+BOOST_FIXTURE_TEST_SUITE(accounting_tests, TestingSetup)
 
 static void
 GetResults(CWallet& wallet, std::map<CAmount, CAccountingEntry>& results)
@@ -18,8 +22,8 @@ GetResults(CWallet& wallet, std::map<CAmount, CAccountingEntry>& results)
     std::list<CAccountingEntry> aes;
 
     results.clear();
-    BOOST_CHECK(wallet.ReorderTransactions() == DB_LOAD_OK);
-    wallet.ListAccountCreditDebit("", aes);
+    BOOST_CHECK(walletdb.ReorderTransactions(pwalletMain) == DB_LOAD_OK);
+    walletdb.ListAccountCreditDebit("", aes);
     for (CAccountingEntry& ae : aes)
     {
         results[ae.nOrderPos] = ae;

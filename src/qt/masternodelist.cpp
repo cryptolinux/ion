@@ -129,8 +129,33 @@ void MasternodeList::showContextMenuDIP3(const QPoint& point)
 
 void MasternodeList::handleMasternodeListChanged()
 {
-    LOCK(cs_dip3list);
-    mnListChanged = true;
+    std::string strStatusHtml;
+    strStatusHtml += "<center>Alias: " + strAlias;
+
+    for (CMasternodeConfig::CMasternodeEntry mne : masternodeConfig.getEntries()) {
+        if (mne.getAlias() == strAlias) {
+            std::string strError;
+            CMasternodeBroadcast mnb;
+
+            bool fSuccess = CMasternodeBroadcast::Create(mne.getIp(), mne.getPrivKey(), mne.getTxHash(), mne.getOutputIndex(), strError, mnb);
+
+            if (fSuccess) {
+                strStatusHtml += "<br>Successfully started masternode.";
+                mnodeman.UpdateMasternodeList(mnb);
+                mnb.Relay();
+            } else {
+                strStatusHtml += "<br>Failed to start masternode.<br>Error: " + strError;
+            }
+            break;
+        }
+    }
+    strStatusHtml += "</center>";
+
+    QMessageBox msg;
+    msg.setText(QString::fromStdString(strStatusHtml));
+    msg.exec();
+
+    updateMyNodeList(true);
 }
 
 void MasternodeList::updateDIP3ListScheduled()
@@ -138,9 +163,18 @@ void MasternodeList::updateDIP3ListScheduled()
     TRY_LOCK(cs_dip3list, fLockAcquired);
     if (!fLockAcquired) return;
 
-    if (!clientModel || ShutdownRequested()) {
-        return;
-    }
+    for (CMasternodeConfig::CMasternodeEntry mne : masternodeConfig.getEntries()) {
+        std::string strError;
+        CMasternodeBroadcast mnb;
+
+        int nIndex;
+        if(!mne.castOutputIndex(nIndex))
+            continue;
+
+        CTxIn txin = CTxIn(uint256S(mne.getTxHash()), uint32_t(nIndex));
+        CMasternode* pmn = mnodeman.Find(txin);
+
+        if (strCommand == "start-missing" && pmn) continue;
 
     // To prevent high cpu usage update only once in MASTERNODELIST_FILTER_COOLDOWN_SECONDS seconds
     // after filter was last changed unless we want to force the update.
@@ -217,7 +251,11 @@ void MasternodeList::updateMyNodeList(bool fForce)
     ui->tableWidgetMasternodesDIP3->clearContents();
     ui->tableWidgetMasternodesDIP3->setRowCount(0);
 
-    nTimeUpdatedDIP3 = GetTime();
+    ui->tableWidgetMyMasternodes->setSortingEnabled(false);
+    for (CMasternodeConfig::CMasternodeEntry mne : masternodeConfig.getEntries()) {
+        int nIndex;
+        if(!mne.castOutputIndex(nIndex))
+            continue;
 
     auto projectedPayees = mnList.GetProjectedMNPayees(mnList.GetValidMNsCount());
     std::map<uint256, int> nextPayments;

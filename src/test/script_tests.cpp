@@ -13,8 +13,7 @@
 #include "script/script_error.h"
 #include "script/sign.h"
 #include "util.h"
-#include "utilstrencodings.h"
-#include "test/test_ion.h"
+#include "test_ion.h"
 
 #if defined(HAVE_CONSENSUS_LIB)
 #include "script/ionconsensus.h"
@@ -25,6 +24,12 @@
 #include <string>
 #include <vector>
 
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/algorithm/string/replace.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <univalue.h>
@@ -50,66 +55,7 @@ read_json(const std::string& jsondata)
     return v.get_array();
 }
 
-struct ScriptErrorDesc
-{
-    ScriptError_t err;
-    const char *name;
-};
-
-static ScriptErrorDesc script_errors[]={
-    {SCRIPT_ERR_OK, "OK"},
-    {SCRIPT_ERR_UNKNOWN_ERROR, "UNKNOWN_ERROR"},
-    {SCRIPT_ERR_EVAL_FALSE, "EVAL_FALSE"},
-    {SCRIPT_ERR_OP_RETURN, "OP_RETURN"},
-    {SCRIPT_ERR_SCRIPT_SIZE, "SCRIPT_SIZE"},
-    {SCRIPT_ERR_PUSH_SIZE, "PUSH_SIZE"},
-    {SCRIPT_ERR_OP_COUNT, "OP_COUNT"},
-    {SCRIPT_ERR_STACK_SIZE, "STACK_SIZE"},
-    {SCRIPT_ERR_SIG_COUNT, "SIG_COUNT"},
-    {SCRIPT_ERR_PUBKEY_COUNT, "PUBKEY_COUNT"},
-    {SCRIPT_ERR_VERIFY, "VERIFY"},
-    {SCRIPT_ERR_EQUALVERIFY, "EQUALVERIFY"},
-    {SCRIPT_ERR_CHECKMULTISIGVERIFY, "CHECKMULTISIGVERIFY"},
-    {SCRIPT_ERR_CHECKSIGVERIFY, "CHECKSIGVERIFY"},
-    {SCRIPT_ERR_NUMEQUALVERIFY, "NUMEQUALVERIFY"},
-    {SCRIPT_ERR_BAD_OPCODE, "BAD_OPCODE"},
-    {SCRIPT_ERR_DISABLED_OPCODE, "DISABLED_OPCODE"},
-    {SCRIPT_ERR_INVALID_STACK_OPERATION, "INVALID_STACK_OPERATION"},
-    {SCRIPT_ERR_INVALID_ALTSTACK_OPERATION, "INVALID_ALTSTACK_OPERATION"},
-    {SCRIPT_ERR_UNBALANCED_CONDITIONAL, "UNBALANCED_CONDITIONAL"},
-    {SCRIPT_ERR_NEGATIVE_LOCKTIME, "NEGATIVE_LOCKTIME"},
-    {SCRIPT_ERR_UNSATISFIED_LOCKTIME, "UNSATISFIED_LOCKTIME"},
-    {SCRIPT_ERR_SIG_HASHTYPE, "SIG_HASHTYPE"},
-    {SCRIPT_ERR_SIG_DER, "SIG_DER"},
-    {SCRIPT_ERR_MINIMALDATA, "MINIMALDATA"},
-    {SCRIPT_ERR_SIG_PUSHONLY, "SIG_PUSHONLY"},
-    {SCRIPT_ERR_SIG_HIGH_S, "SIG_HIGH_S"},
-    {SCRIPT_ERR_SIG_NULLDUMMY, "SIG_NULLDUMMY"},
-    {SCRIPT_ERR_PUBKEYTYPE, "PUBKEYTYPE"},
-    {SCRIPT_ERR_CLEANSTACK, "CLEANSTACK"},
-    {SCRIPT_ERR_SIG_NULLFAIL, "NULLFAIL"},
-    {SCRIPT_ERR_DISCOURAGE_UPGRADABLE_NOPS, "DISCOURAGE_UPGRADABLE_NOPS"}
-};
-
-const char *FormatScriptError(ScriptError_t err)
-{
-    for (unsigned int i=0; i<ARRAYLEN(script_errors); ++i)
-        if (script_errors[i].err == err)
-            return script_errors[i].name;
-    BOOST_ERROR("Unknown scripterror enumeration value, update script_errors in script_tests.cpp.");
-    return "";
-}
-
-ScriptError_t ParseScriptError(const std::string &name)
-{
-    for (unsigned int i=0; i<ARRAYLEN(script_errors); ++i)
-        if (script_errors[i].name == name)
-            return script_errors[i].err;
-    BOOST_ERROR("Unknown scripterror \"" << name << "\" in test description");
-    return SCRIPT_ERR_UNKNOWN_ERROR;
-}
-
-BOOST_FIXTURE_TEST_SUITE(script_tests, BasicTestingSetup)
+BOOST_FIXTURE_TEST_SUITE(script_tests, TestingSetup)
 
 CMutableTransaction BuildCreditingTransaction(const CScript& scriptPubKey)
 {
@@ -651,9 +597,9 @@ BOOST_AUTO_TEST_CASE(script_build)
 
     std::string strGen;
 
-    for (TestBuilder& test : tests) {
-        test.Test();
-        std::string str = JSONPrettyPrint(test.GetJSON());
+    for (TestBuilder& test : good) {
+        test.Test(true);
+        std::string str = test.GetJSON().write();
 #ifndef UPDATE_JSON_TESTS
         if (tests_good.count(str) == 0) {
             BOOST_CHECK_MESSAGE(false, "Missing auto script_valid test: " + test.GetComment());
@@ -661,7 +607,7 @@ BOOST_AUTO_TEST_CASE(script_build)
 #endif
         strGood += str + ",\n";
     }
-    BOOST_FOREACH(TestBuilder& test, bad) {
+    for (TestBuilder& test : bad) {
         test.Test(false);
         std::string str = test.GetJSON().write();
 #ifndef UPDATE_JSON_TESTS

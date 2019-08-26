@@ -9,7 +9,7 @@
 #include "script/script.h"
 #include "script/standard.h"
 #include "uint256.h"
-#include "test/test_ion.h"
+#include "test_ion.h"
 
 #include <vector>
 

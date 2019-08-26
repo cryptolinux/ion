@@ -82,16 +82,18 @@ OptionsDialog::OptionsDialog(QWidget* parent, bool enableWallet) : QDialog(paren
     connect(ui->connectSocksTor, SIGNAL(toggled(bool)), ui->proxyPortTor, SLOT(setEnabled(bool)));
     connect(ui->connectSocksTor, SIGNAL(toggled(bool)), this, SLOT(updateProxyValidationState()));
 
-    pageButtons.addButton(ui->btnMain, pageButtons.buttons().size());
-    /* Remove Wallet/PrivateSend tabs in case of -disablewallet */
+/* Window elements init */
+#ifdef Q_OS_MAC
+    /* remove Window tab on Mac */
+    ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabWindow));
+#endif
+
+    /* remove Wallet tab and xIon options in case of -disablewallet */
     if (!enableWallet) {
-        ui->stackedWidgetOptions->removeWidget(ui->pageWallet);
-        ui->btnWallet->hide();
-        ui->stackedWidgetOptions->removeWidget(ui->pagePrivateSend);
-        ui->btnPrivateSend->hide();
-    } else {
-        pageButtons.addButton(ui->btnWallet, pageButtons.buttons().size());
-        pageButtons.addButton(ui->btnPrivateSend, pageButtons.buttons().size());
+        ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabWallet));
+
+        ui->verticalXionOptionsWidget->hide();
+        ui->verticalXionDisplayWidget->hide();
     }
     pageButtons.addButton(ui->btnNetwork, pageButtons.buttons().size());
     pageButtons.addButton(ui->btnDisplay, pageButtons.buttons().size());
@@ -371,12 +373,7 @@ void OptionsDialog::on_resetButton_clicked()
 void OptionsDialog::on_okButton_clicked()
 {
     mapper->submit();
-    appearance->accept();
-#ifdef ENABLE_WALLET
-    privateSendClient.nCachedNumBlocks = std::numeric_limits<int>::max();
-    if(HasWallets())
-        GetWallets()[0]->MarkDirty();
-#endif // ENABLE_WALLET
+    pwalletMain->MarkDirty();
     accept();
     updateDefaultProxyNets();
 }

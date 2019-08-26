@@ -353,19 +353,21 @@ void CAddrMan::Attempt_(const CService& addr, bool fCountFailure, int64_t nTime)
     }
 }
 
-CAddrInfo CAddrMan::Select_()
+CAddrInfo CAddrMan::Select_(bool newOnly)
 {
     if (size() == 0)
         return CAddrInfo();
 
+    if (newOnly && nNew == 0)
+        return CAddrInfo();
+
     // Use a 50% chance for choosing between tried and new table entries.
-    if (!newOnly &&
-       (nTried > 0 && (nNew == 0 || RandomInt(2) == 0))) { 
+    if (!newOnly && (nTried > 0 && (nNew == 0 || RandomInt(2) == 0))) {
         // use a tried node
         double fChanceFactor = 1.0;
         while (1) {
-            int nKBucket = GetRandInt(ADDRMAN_TRIED_BUCKET_COUNT);
-            int nKBucketPos = GetRandInt(ADDRMAN_BUCKET_SIZE);
+            int nKBucket = RandomInt(ADDRMAN_TRIED_BUCKET_COUNT);
+            int nKBucketPos = RandomInt(ADDRMAN_BUCKET_SIZE);
             while (vvTried[nKBucket][nKBucketPos] == -1) {
                 nKBucket = (nKBucket + insecure_rand()) % ADDRMAN_TRIED_BUCKET_COUNT;
                 nKBucketPos = (nKBucketPos + insecure_rand()) % ADDRMAN_BUCKET_SIZE;
@@ -381,8 +383,8 @@ CAddrInfo CAddrMan::Select_()
         // use a new node
         double fChanceFactor = 1.0;
         while (1) {
-            int nUBucket = GetRandInt(ADDRMAN_NEW_BUCKET_COUNT);
-            int nUBucketPos = GetRandInt(ADDRMAN_BUCKET_SIZE);
+            int nUBucket = RandomInt(ADDRMAN_NEW_BUCKET_COUNT);
+            int nUBucketPos = RandomInt(ADDRMAN_BUCKET_SIZE);
             while (vvNew[nUBucket][nUBucketPos] == -1) {
                 nUBucket = (nUBucket + insecure_rand()) % ADDRMAN_NEW_BUCKET_COUNT;
                 nUBucketPos = (nUBucketPos + insecure_rand()) % ADDRMAN_BUCKET_SIZE;
@@ -514,41 +516,6 @@ void CAddrMan::Connected_(const CService& addr, int64_t nTime)
     int64_t nUpdateInterval = 20 * 60;
     if (nTime - info.nTime > nUpdateInterval)
         info.nTime = nTime;
-}
-
-void CAddrMan::SetServices_(const CService& addr, ServiceFlags nServices)
-{
-    CAddrInfo* pinfo = Find(addr);
-
-    // if not found, bail out
-    if (!pinfo)
-        return;
-
-    CAddrInfo& info = *pinfo;
-
-    // check whether we are talking about the exact same CService (including same port)
-    if (info != addr)
-        return;
-
-    // update info
-    info.nServices = nServices;
-}
-
-CAddrInfo CAddrMan::GetAddressInfo_(const CService& addr)
-{
-    CAddrInfo* pinfo = Find(addr);
-
-    // if not found, bail out
-    if (!pinfo)
-        return CAddrInfo();
-
-    CAddrInfo& info = *pinfo;
-
-    // check whether we are talking about the exact same CService (including same port)
-    if (info != addr)
-        return CAddrInfo();
-
-    return *pinfo;
 }
 
 int CAddrMan::RandomInt(int nMax){

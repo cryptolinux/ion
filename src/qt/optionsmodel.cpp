@@ -126,14 +126,8 @@ void OptionsModel::Init(bool resetSettings)
         addOverriddenOption("-enableprivatesend");
     }
 
-    if (!settings.contains("nAnonymizeIonAmount"))
-        settings.setValue("nAnonymizeIonAmount", 1000);
-
-    nAnonymizeIonAmount = settings.value("nAnonymizeIonAmount").toLongLong();
-
-    if (!settings.contains("fLowKeysWarning"))
-        settings.setValue("fLowKeysWarning", true);
-#endif // ENABLE_WALLET
+    if (!settings.contains("fShowMasternodesTab"))
+        settings.setValue("fShowMasternodesTab", masternodeConfig.getCount());
 
     // These are shared with the core or have a command-line parameter
     // and we want command-line parameters to overwrite the GUI settings.
@@ -414,8 +408,6 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return QVariant(nZeromintPercentage);
         case ZeromintPrefDenom:
             return QVariant(nPreferredDenom);
-        case AnonymizeIonAmount:
-            return QVariant(nAnonymizeIonAmount);
         case Listen:
             return settings.value("fListen");
         default:
@@ -643,11 +635,6 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             fHideOrphans = value.toBool();
             settings.setValue("fHideOrphans", fHideOrphans);
             emit hideOrphansChanged(fHideOrphans);
-            break;
-        case AnonymizeIonAmount:
-            nAnonymizeIonAmount = value.toInt();
-            settings.setValue("nAnonymizeIonAmount", nAnonymizeIonAmount);
-            emit anonymizeIonAmountChanged(nAnonymizeIonAmount);
             break;
         case CoinControlFeatures:
             fCoinControlFeatures = value.toBool();

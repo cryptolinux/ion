@@ -19,6 +19,7 @@
 
 #include <boost/bind.hpp>
 #include <boost/signals2/signal.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/replace.hpp>
@@ -488,7 +489,7 @@ TorController::~TorController()
 void TorController::add_onion_cb(TorControlConnection& _conn, const TorControlReply& reply)
 {
     if (reply.code == 250) {
-        LogPrint(BCLog::TOR, "tor: ADD_ONION successful\n");
+        LogPrint("tor", "tor: ADD_ONION successful\n");
         for (const std::string &s : reply.lines) {
             std::map<std::string,std::string> m = ParseTorReplyMapping(s);
             std::map<std::string,std::string>::iterator i;
@@ -637,7 +638,7 @@ void TorController::protocolinfo_cb(TorControlConnection& _conn, const TorContro
             }
         }
         for (const std::string &s : methods) {
-            LogPrint(BCLog::TOR, "tor: Supported authentication method: %s\n", s);
+            LogPrint("tor", "tor: Supported authentication method: %s\n", s);
         }
         // Prefer NULL, otherwise SAFECOOKIE. If a password is provided, use HASHEDPASSWORD
         /* Authentication:

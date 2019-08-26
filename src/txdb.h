@@ -41,14 +41,10 @@ static const int64_t nMaxBlockDBAndTxIndexCache = 1024;
 //! Max memory allocated to coin DB specific cache (MiB)
 static const int64_t nMaxCoinsDBCache = 8;
 
-<<<<<<< HEAD
-struct CDiskTxPos : public CDiskBlockPos
-=======
 class CCoinsViewDBCursor;
 
 /** CCoinsView backed by the LevelDB coin database (chainstate/) */
 class CCoinsViewDB : public CCoinsView
->>>>>>> txdb: Add Cursor() method to CCoinsView to iterate over UTXO set
 {
     unsigned int nTxOffset; // after header
 
@@ -67,12 +63,6 @@ class CCoinsViewDB : public CCoinsView
         SetNull();
     }
 
-<<<<<<< HEAD
-    void SetNull() {
-        CDiskBlockPos::SetNull();
-        nTxOffset = 0;
-    }
-=======
     bool GetCoins(const uint256& txid, CCoins& coins) const override;
     bool HaveCoins(const uint256& txid) const override;
     uint256 GetBestBlock() const override;
@@ -100,7 +90,6 @@ private:
     std::pair<char, uint256> keyTmp;
 
     friend class CCoinsViewDB;
->>>>>>> txdb: Add Cursor() method to CCoinsView to iterate over UTXO set
 };
 
 /** CCoinsView backed by the coin database (chainstate/) */
@@ -112,16 +101,20 @@ public:
     explicit CCoinsViewDB(size_t nCacheSize, bool fMemory = false, bool fWipe = false);
 
 
-    bool GetCoin(const COutPoint &outpoint, Coin &coin) const override;
-    bool HaveCoin(const COutPoint &outpoint) const override;
-    uint256 GetBestBlock() const override;
-    std::vector<uint256> GetHeadBlocks() const override;
-    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock) override;
-    CCoinsViewCursor *Cursor() const override;
-
-    //! Attempt to update from an older database format. Returns whether an error occurred.
-    bool Upgrade();
-    size_t EstimateSize() const override;
+public:
+    bool WriteBlockIndex(const CDiskBlockIndex& blockindex);
+    bool WriteBatchSync(const std::vector<std::pair<int, const CBlockFileInfo*> >& fileInfo, int nLastFile, const std::vector<const CBlockIndex*>& blockinfo);
+    bool ReadBlockFileInfo(int nFile, CBlockFileInfo& fileinfo);
+    bool ReadLastBlockFile(int& nFile);
+    bool WriteReindexing(bool fReindex);
+    bool ReadReindexing(bool& fReindex);
+    bool ReadTxIndex(const uint256& txid, CDiskTxPos& pos);
+    bool WriteTxIndex(const std::vector<std::pair<uint256, CDiskTxPos> >& list);
+    bool WriteFlag(const std::string& name, bool fValue);
+    bool ReadFlag(const std::string& name, bool& fValue);
+    bool WriteInt(const std::string& name, int nValue);
+    bool ReadInt(const std::string& name, int& nValue);
+    bool LoadBlockIndexGuts();
 };
 
 /** Zerocoin database (zerocoin/) */

@@ -8,8 +8,8 @@
 
 #include <noui.h>
 
-#include <ui_interface.h>
-#include <util.h>
+#include "guiinterface.h"
+#include "util.h"
 
 #include <cstdio>
 #include <stdint.h>

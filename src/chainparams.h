@@ -89,6 +89,7 @@ public:
     int PoolMaxTransactions() const { return nPoolMaxTransactions; }
     /** Return the number of blocks in a budget cycle */
     int GetBudgetCycleBlocks() const { return nBudgetCycleBlocks; }
+    int64_t GetProposalEstablishmentTime() const { return nProposalEstablishmentTime; }
 
     /** Spork key and Masternode Handling **/
     std::string SporkKey() const { return strSporkKey; }
@@ -105,6 +106,7 @@ public:
     std::string Zerocoin_Modulus() const { return zerocoinModulus; }
     libzerocoin::ZerocoinParams* Zerocoin_Params(bool useModulusV1) const;
     int Zerocoin_MaxSpendsPerTransaction() const { return nMaxZerocoinSpendsPerTransaction; }
+    int Zerocoin_MaxPublicSpendsPerTransaction() const { return nMaxZerocoinPublicSpendsPerTransaction; }
     CAmount Zerocoin_MintFee() const { return nMinZerocoinMintFee; }
     int Zerocoin_MintRequiredConfirmations() const { return nMintRequiredConfirmations; }
     int Zerocoin_RequiredAccumulation() const { return nRequiredAccumulation; }
@@ -134,6 +136,8 @@ public:
     int64_t MidasStartTime()   const { return nMidasStartTime;     }
     int DGWStartHeight()   const { return nDGWStartHeight;     }
     int DGWStartTime()     const { return nDGWStartTime;       }
+
+    int Zerocoin_Block_Public_Spend_Enabled() const { return nPublicZCSpends; }
 
 protected:
     CChainParams() {}
@@ -167,6 +171,7 @@ protected:
     int64_t nStartMasternodePayments;
     std::string zerocoinModulus;
     int nMaxZerocoinSpendsPerTransaction;
+    int nMaxZerocoinPublicSpendsPerTransaction;
     CAmount nMinZerocoinMintFee;
     CAmount nInvalidAmountFiltered;
     int nMintRequiredConfirmations;
@@ -177,6 +182,7 @@ protected:
     int nZerocoinStartHeight;
     int nZerocoinStartTime;
     int nZerocoinRequiredStakeDepth;
+    int64_t nProposalEstablishmentTime;
 
     int nBlockEnforceSerialRange;
     int nBlockRecalculateAccumulators;
@@ -184,6 +190,7 @@ protected:
     int nBlockLastGoodCheckpoint;
     int nBlockEnforceInvalidUTXO;
     int nBlockZerocoinV2;
+    int nPublicZCSpends;
 
     // fake serial attack
     int nFakeSerialBlockheightEnd = 0;

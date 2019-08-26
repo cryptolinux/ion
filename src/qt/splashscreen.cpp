@@ -10,8 +10,12 @@
 
 #include <qt/splashscreen.h>
 
-#include <qt/guiutil.h>
-#include <qt/networkstyle.h>
+#include "clientversion.h"
+#include "init.h"
+#include "networkstyle.h"
+#include "guiinterface.h"
+#include "util.h"
+#include "version.h"
 
 #include <chainparams.h>
 #include <clientversion.h>

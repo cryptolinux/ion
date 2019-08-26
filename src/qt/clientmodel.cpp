@@ -6,10 +6,10 @@
 
 #include <qt/clientmodel.h>
 
-#include <qt/bantablemodel.h>
-#include <qt/guiconstants.h>
-#include <qt/guiutil.h>
-#include <qt/peertablemodel.h>
+#include "bantablemodel.h"
+#include "guiconstants.h"
+#include "guiutil.h"
+#include "peertablemodel.h"
 
 #include "alert.h"
 #include "chainparams.h"
@@ -20,7 +20,7 @@
 #include "masternodeman.h"
 #include "net.h"
 #include "netbase.h"
-#include "ui_interface.h"
+#include "guiinterface.h"
 #include "util.h"
 
 #include <stdint.h>
@@ -60,12 +60,10 @@ int ClientModel::getNumConnections(unsigned int flags) const
 {
     CConnman::NumConnections connections = CConnman::CONNECTIONS_NONE;
 
-    if(flags == CONNECTIONS_IN)
-        connections = CConnman::CONNECTIONS_IN;
-    else if (flags == CONNECTIONS_OUT)
-        connections = CConnman::CONNECTIONS_OUT;
-    else if (flags == CONNECTIONS_ALL)
-        connections = CConnman::CONNECTIONS_ALL;
+    int nNum = 0;
+    for (CNode* pnode : vNodes)
+        if (flags & (pnode->fInbound ? CONNECTIONS_IN : CONNECTIONS_OUT))
+            nNum++;
 
     if(g_connman)
          return g_connman->GetNodeCount(connections);
@@ -151,6 +149,15 @@ QDateTime ClientModel::getLastBlockDate() const
 }
 
 QString ClientModel::getLastBlockHash() const
+{
+    LOCK(cs_main);
+    if (chainActive.Tip())
+        return QString::fromStdString(chainActive.Tip()->GetBlockHash().ToString());
+    else
+        return QString::fromStdString(Params().GenesisBlock().GetHash().ToString()); // Genesis block's hash of current network
+}
+
+double ClientModel::getVerificationProgress() const
 {
     LOCK(cs_main);
 
@@ -282,6 +289,11 @@ bool ClientModel::isReleaseVersion() const
 QString ClientModel::formatClientStartupTime() const
 {
     return QDateTime::fromTime_t(GetStartupTime()).toString();
+}
+
+QString ClientModel::dataDir() const
+{
+    return GUIUtil::boostPathToQString(GetDataDir());
 }
 
 QString ClientModel::dataDir() const

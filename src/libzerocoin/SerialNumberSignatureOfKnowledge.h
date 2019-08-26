@@ -34,15 +34,15 @@ namespace libzerocoin {
 class SerialNumberSignatureOfKnowledge {
 public:
     SerialNumberSignatureOfKnowledge(){};
-    SerialNumberSignatureOfKnowledge(const ZerocoinParams* p);
-    /** Creates a Signature of knowledge object that a commitment to a coin contains a coin with serial number x
-     *
-     * @param p params
-     * @param coin the coin we are going to prove the serial number of.
-     * @param commitmentToCoin the commitment to the coin
-     * @param msghash hash of meta data to create a signature of knowledge on.
-     */
-    SerialNumberSignatureOfKnowledge(const ZerocoinParams* p, const PrivateCoin& coin, const Commitment& commitmentToCoin, uint256 msghash);
+	SerialNumberSignatureOfKnowledge(const ZerocoinParams* p);
+	/** Creates a Signature of knowledge object that a commitment to a coin contains a coin with serial number x
+	 *
+	 * @param p params
+	 * @param coin the coin we are going to prove the serial number of.
+	 * @param commitmentToCoin the commitment to the coin
+	 * @param msghash hash of meta data to create a signature of knowledge on.
+	 */
+	SerialNumberSignatureOfKnowledge(const ZerocoinParams* p, const PrivateCoin& coin, const Commitment& commitmentToCoin, uint256 msghash);
 
 	/** Verifies the Signature of knowledge.
 	 *

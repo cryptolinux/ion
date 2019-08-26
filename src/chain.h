@@ -16,7 +16,6 @@
 
 #include <vector>
 
-#include <boost/foreach.hpp>
 
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action) {
@@ -216,10 +215,11 @@ public:
     uint256 nAccumulatorCheckpoint;
 
     //! (memory only) Sequential id assigned to distinguish order in which blocks are received.
-    int32_t nSequenceId;
+    uint32_t nSequenceId;
 
-    //! (memory only) Maximum nTime in the chain up to and including this block.
-    unsigned int nTimeMax;
+    //! zerocoin specific fields
+    std::map<libzerocoin::CoinDenomination, int64_t> mapZerocoinSupply;
+    std::vector<libzerocoin::CoinDenomination> vMintDenominationsInBlock;
 
     void SetNull()
     {
@@ -440,9 +440,9 @@ public:
     }
 
     /**
-     * Total available amount in an specific denom.
-     * @param denom
-     * @return
+     * Returns true if there are nRequired or more blocks of minVersion or above
+     * in the last Params().ToCheckBlockUpgradeMajority() blocks, starting at pstart
+     * and going backwards.
      */
     int64_t GetZcMintsAmount(libzerocoin::CoinDenomination denom) const
     {
@@ -512,9 +512,9 @@ public:
         hashPrev = uint256();
     }
 
-    explicit CDiskBlockIndex(const CBlockIndex* pindex) : CBlockIndex(*pindex) {
-        hash = (hash == uint256() ? pindex->GetBlockHash() : hash);
-        hashPrev = (pprev ? pprev->GetBlockHash() : uint256());
+    explicit CDiskBlockIndex(const CBlockIndex* pindex) : CBlockIndex(*pindex)
+    {
+        hashPrev = (pprev ? pprev->GetBlockHash() : uint256(0));
     }
 
     ADD_SERIALIZE_METHODS;

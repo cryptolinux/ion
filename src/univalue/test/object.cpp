@@ -12,27 +12,9 @@
 #include <univalue.h>
 #include "test/test_ion.h"
 
-#define BOOST_FIXTURE_TEST_SUITE(a, b)
-#define BOOST_AUTO_TEST_CASE(funcName) void funcName()
-#define BOOST_AUTO_TEST_SUITE_END()
-#define BOOST_CHECK(expr) assert(expr)
-#define BOOST_CHECK_EQUAL(v1, v2) assert((v1) == (v2))
-#define BOOST_CHECK_THROW(stmt, excMatch) { \
-        try { \
-            (stmt); \
-            assert(0 && "No exception caught"); \
-        } catch (excMatch & e) { \
-	} catch (...) { \
-	    assert(0 && "Wrong exception caught"); \
-	} \
-    }
-#define BOOST_CHECK_NO_THROW(stmt) { \
-        try { \
-            (stmt); \
-	} catch (...) { \
-	    assert(0); \
-	} \
-    }
+#include <boost/test/unit_test.hpp>
+
+using namespace std;
 
 BOOST_FIXTURE_TEST_SUITE(univalue_tests, BasicTestingSetup)
 

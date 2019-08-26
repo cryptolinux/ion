@@ -22,6 +22,8 @@
 
 #include <boost/test/unit_test.hpp>
 
+using namespace std;
+
 BOOST_FIXTURE_TEST_SUITE(util_tests, BasicTestingSetup)
 
 BOOST_AUTO_TEST_CASE(util_criticalsection)

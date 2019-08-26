@@ -48,8 +48,6 @@ extern int nSwiftTXDepth;
 extern int nZeromintPercentage;
 extern const int64_t AUTOMINT_DELAY;
 extern int nPreferredDenom;
-extern int nAnonymizeIonAmount;
-extern int nLiquidityProvider;
 extern bool fEnableZeromint;
 extern bool fEnableAutoConvert;
 extern int64_t enforceMasternodePaymentsTime;
@@ -161,27 +159,41 @@ std::vector<CLogCategoryActive> ListActiveLogCategories();
 /** Return true if str parses as a log category and set the flags in f */
 bool GetLogCategory(uint64_t *f, const std::string *str);
 
+/** Get format string from VA_ARGS for error reporting */
+template<typename... Args> std::string FormatStringFromLogArgs(const char *fmt, const Args&... args) { return fmt; }
+
 /**
  * Convert string into true/false
  *
  * @param strValue String to parse as a boolean
  * @return true or false
  */
-bool InterpretBool(const std::string &strValue);
-
-/** Send a string to the log output */
-int LogPrintStr(const std::string &str);
-
-/** Formats a string without throwing exceptions. Instead, it'll return an error string instead of formatted string. */
-template<typename... Args>
-std::string SafeStringFormat(const std::string& fmt, const Args&... args)
-{
-    try {
-        return tinyformat::format(fmt, args...);
-    } catch (std::runtime_error& fmterr) {
-        std::string message = tinyformat::format("\n****TINYFORMAT ERROR****\n    err=\"%s\"\n    fmt=\"%s\"\n", fmterr.what(), fmt);
-        fprintf(stderr, "%s", message.c_str());
-        return message;
+#define MAKE_ERROR_AND_LOG_FUNC(n)                                                              \
+    /**   Print to debug.log if -debug=category switch is given OR category is NULL. */         \
+    template <TINYFORMAT_ARGTYPES(n)>                                                           \
+    static inline int LogPrint(const char* category, const char* format, TINYFORMAT_VARARGS(n)) \
+    {                                                                                           \
+        if (!LogAcceptCategory(category)) return 0;                                             \
+        std::string _log_msg_; /* Unlikely name to avoid shadowing variables */                 \
+        try {                                                                                   \
+            _log_msg_ = tfm::format(format, TINYFORMAT_PASSARGS(n));                            \
+        } catch (std::runtime_error &e) {                                                       \
+            _log_msg_ = "Error \"" + std::string(e.what()) + "\" while formatting log message: " + FormatStringFromLogArgs(format, TINYFORMAT_PASSARGS(n));\
+        }                                                                                       \
+        return LogPrintStr(_log_msg_);                                                          \
+    }                                                                                           \
+    /**   Log error and return false */                                                         \
+    template <TINYFORMAT_ARGTYPES(n)>                                                           \
+    static inline bool error(const char* format, TINYFORMAT_VARARGS(n))                         \
+    {                                                                                           \
+        std::string _log_msg_; /* Unlikely name to avoid shadowing variables */                 \
+        try {                                                                                   \
+            _log_msg_ = tfm::format(format, TINYFORMAT_PASSARGS(n));                            \
+        } catch (std::runtime_error &e) {                                                       \
+            _log_msg_ = "Error \"" + std::string(e.what()) + "\" while formatting log message: " + FormatStringFromLogArgs(format, TINYFORMAT_PASSARGS(n));\
+        }                                                                                       \
+        LogPrintStr(std::string("ERROR: ") + _log_msg_ + "\n");                                 \
+        return false;                                                                           \
     }
 }
 
@@ -232,21 +244,14 @@ void PrintExceptionContinue(const std::exception_ptr pex, const char* pszExcepti
 void FileCommit(FILE *file);
 bool TruncateFile(FILE *file, unsigned int length);
 int RaiseFileDescriptorLimit(int nMinFD);
-void AllocateFileRange(FILE *file, unsigned int offset, unsigned int length);
-bool RenameOver(fs::path src, fs::path dest);
-bool LockDirectory(const fs::path& directory, const std::string lockfile_name, bool probe_only=false);
-
-/** Release all directory locks. This is used for unit testing only, at runtime
- * the global destructor will take care of the locks.
- */
-void ReleaseDirectoryLocks();
-
-bool TryCreateDirectories(const fs::path& p);
-fs::path GetDefaultDataDir();
-const fs::path &GetDataDir(bool fNetSpecific = true);
-fs::path GetBackupsDir();
+void AllocateFileRange(FILE* file, unsigned int offset, unsigned int length);
+bool RenameOver(boost::filesystem::path src, boost::filesystem::path dest);
+bool TryCreateDirectory(const boost::filesystem::path& p);
+boost::filesystem::path GetDefaultDataDir();
+const boost::filesystem::path &GetDataDir(bool fNetSpecific = true);
 void ClearDatadirCache();
-fs::path GetConfigFile(const std::string& confPath);
+boost::filesystem::path GetConfigFile();
+boost::filesystem::path GetMasternodeConfigFile();
 #ifndef WIN32
 fs::path GetPidFile();
 void CreatePidFile(const fs::path &path, pid_t pid);

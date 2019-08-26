@@ -5,30 +5,19 @@
 
 #include "test_ion.h"
 
-#include "chainparams.h"
-#include "consensus/consensus.h"
-#include "consensus/validation.h"
-#include "crypto/sha256.h"
-#include "fs.h"
-#include "key.h"
-#include "validation.h"
-#include "miner.h"
-#include "net_processing.h"
-#include "pubkey.h"
+#include "test_ion.h"
+
+#include "main.h"
 #include "random.h"
 #include "txdb.h"
-#include "txmempool.h"
-#include "ui_interface.h"
+#include "guiinterface.h"
 #include "util.h"
 #ifdef ENABLE_WALLET
 #include "wallet/db.h"
 #include "wallet/wallet.h"
 #endif
 
-#include "evo/specialtx.h"
-#include "evo/deterministicmns.h"
-#include "evo/cbtx.h"
-#include "llmq/quorums_init.h"
+#include <boost/test/unit_test.hpp>
 
 #include <memory>
 
@@ -50,12 +39,8 @@ FastRandomContext insecure_rand_ctx(insecure_rand_seed);
 extern bool fPrintToConsole;
 extern void noui_connect();
 
-struct TestingSetup {
-    boost::filesystem::path pathTemp;
-    boost::thread_group threadGroup;
-    ECCVerifyHandle globalVerifyHandle;
-
-    TestingSetup() {
+BasicTestingSetup::BasicTestingSetup()
+{
         ECC_Start();
         BLSInit();
         SetupEnvironment();
@@ -64,13 +49,19 @@ struct TestingSetup {
         InitScriptExecutionCache();
         fPrintToDebugLog = false; // don't want to write to debug.log file
         fCheckBlockIndex = true;
-        SelectParams(chainName);
-        evoDb = new CEvoDB(1 << 20, true, true);
-        deterministicMNManager = new CDeterministicMNManager(*evoDb);
-        noui_connect();
+        SelectParams(CBaseChainParams::UNITTEST);
+}
+BasicTestingSetup::~BasicTestingSetup()
+{
+        ECC_Stop();
+}
+
+TestingSetup::TestingSetup()
+{
 #ifdef ENABLE_WALLET
         bitdb.MakeMock();
 #endif
+        ClearDatadirCache();
         pathTemp = GetTempPath() / strprintf("test_ion_%lu_%i", (unsigned long)GetTime(), (int)(GetRand(100000)));
         boost::filesystem::create_directories(pathTemp);
         mapArgs["-datadir"] = pathTemp.string();
@@ -87,51 +78,28 @@ struct TestingSetup {
         nScriptCheckThreads = 3;
         for (int i=0; i < nScriptCheckThreads-1; i++)
             threadGroup.create_thread(&ThreadScriptCheck);
-        peerLogic.reset(new PeerLogicValidation(connman, scheduler));
+        RegisterNodeSignals(GetNodeSignals());
 }
 
 TestingSetup::~TestingSetup()
 {
-        llmq::InterruptLLMQSystem();
+        UnregisterNodeSignals(GetNodeSignals());
         threadGroup.interrupt_all();
         threadGroup.join_all();
-        UnregisterNodeSignals(GetNodeSignals());
 #ifdef ENABLE_WALLET
+        UnregisterValidationInterface(pwalletMain);
         delete pwalletMain;
         pwalletMain = NULL;
 #endif
+        UnloadBlockIndex();
         pcoinsTip.reset();
         pcoinsdbview.reset();
         pblocktree.reset();
 #ifdef ENABLE_WALLET
         bitdb.Flush(true);
+        bitdb.Reset();
 #endif
         boost::filesystem::remove_all(pathTemp);
-        ECC_Stop();
-    }
-}
-
-//
-// Create a new block with just given transactions, coinbase paying to
-// scriptPubKey, and try to add it to the current chain.
-//
-CBlock
-TestChainSetup::CreateAndProcessBlock(const std::vector<CMutableTransaction>& txns, const CScript& scriptPubKey)
-{
-    const CChainParams& chainparams = Params();
-    auto block = CreateBlock(txns, scriptPubKey);
-
-    std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(block);
-    ProcessNewBlock(chainparams, shared_pblock, true, nullptr);
-
-    CBlock result = block;
-    return result;
-}
-
-CBlock TestChainSetup::CreateAndProcessBlock(const std::vector<CMutableTransaction>& txns, const CKey& scriptKey)
-{
-    CScript scriptPubKey = CScript() <<  ToByteVector(coinbaseKey.GetPubKey()) << OP_CHECKSIG;
-    return CreateAndProcessBlock(txns, scriptPubKey);
 }
 
 CBlock TestChainSetup::CreateBlock(const std::vector<CMutableTransaction>& txns, const CScript& scriptPubKey)

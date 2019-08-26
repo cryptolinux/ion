@@ -706,7 +706,8 @@ void RPCConsole::setClientModel(ClientModel *model)
 
         // Provide initial values
         ui->clientVersion->setText(model->formatFullVersion());
-        ui->clientUserAgent->setText(model->formatSubVersion());
+        ui->clientName->setText(model->clientName());
+        ui->buildDate->setText(model->formatBuildDate());
         ui->dataDir->setText(model->dataDir());
         ui->startupTime->setText(model->formatClientStartupTime());
         ui->networkName->setText(QString::fromStdString(Params().NetworkIDString()));
@@ -932,10 +933,10 @@ void RPCConsole::setNetworkActive(bool networkActive)
 
 void RPCConsole::setNumBlocks(int count, const QDateTime& blockDate, const QString& blockHash, double nVerificationProgress, bool headers)
 {
-    if (!headers) {
-        ui->numberOfBlocks->setText(QString::number(count));
-        ui->lastBlockTime->setText(blockDate.toString());
-        ui->lastBlockHash->setText(blockHash);
+    ui->numberOfBlocks->setText(QString::number(count));
+    if (clientModel) {
+        ui->lastBlockTime->setText(clientModel->getLastBlockDate().toString());
+        ui->lastBlockHash->setText(clientModel->getLastBlockHash());
     }
 }
 

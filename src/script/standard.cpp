@@ -64,7 +64,16 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
     if (scriptPubKey.IsPayToScriptHash())
     {
         typeRet = TX_SCRIPTHASH;
-        std::vector<unsigned char> hashBytes(scriptPubKey.begin()+2, scriptPubKey.begin()+22);
+        vector<unsigned char> hashBytes(scriptPubKey.begin()+2, scriptPubKey.begin()+22);
+        vSolutionsRet.push_back(hashBytes);
+        return true;
+    }
+
+    // Zerocoin
+    if (scriptPubKey.IsZerocoinMint()) {
+        typeRet = TX_ZEROCOINMINT;
+        if(scriptPubKey.size() > 150) return false;
+        vector<unsigned char> hashBytes(scriptPubKey.begin()+2, scriptPubKey.end());
         vSolutionsRet.push_back(hashBytes);
         return true;
     }
@@ -81,7 +90,7 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
 
     // Scan templates
     const CScript& script1 = scriptPubKey;
-    for (const std::pair<txnouttype, CScript>& tplate : mTemplates)
+    for (const PAIRTYPE(txnouttype, CScript)& tplate : mTemplates)
     {
         const CScript& script2 = tplate.second;
         vSolutionsRet.clear();

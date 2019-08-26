@@ -16,7 +16,8 @@
 #include "policy/policy.h"
 #include "script/script.h"
 #include "script/script_error.h"
-#include "utilstrencodings.h"
+#include "core_io.h"
+#include "test_ion.h"
 
 #include <map>
 #include <string>
@@ -52,7 +53,7 @@ unsigned int ParseScriptFlags(string strFlags)
     std::vector<std::string> words;
     boost::algorithm::split(words, strFlags, boost::algorithm::is_any_of(","));
 
-    for (std::string word : words)
+    for (string word : words)
     {
         if (!mapFlagNames.count(word))
             BOOST_ERROR("Bad test: unknown verification flag '" << word << "'");
@@ -78,7 +79,7 @@ std::string FormatScriptFlags(unsigned int flags)
     return ret.substr(0, ret.size() - 1);
 }
 
-BOOST_FIXTURE_TEST_SUITE(transaction_tests, BasicTestingSetup)
+BOOST_FIXTURE_TEST_SUITE(transaction_tests, TestingSetup)
 
 /* DISABLE AS NOT WORKING - **TODO** - fix it
 BOOST_AUTO_TEST_CASE(tx_valid)

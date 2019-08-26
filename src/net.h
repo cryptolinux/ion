@@ -40,6 +40,8 @@
 #include <arpa/inet.h>
 #endif
 
+#include <boost/filesystem/path.hpp>
+#include <boost/signals2/signal.hpp>
 
 #ifndef WIN32
 #define USE_WAKEUP_PIPE
@@ -986,8 +988,10 @@ public:
 
     int GetRefCount() const
     {
-        assert(nRefCount >= 0);
-        return nRefCount;
+        unsigned int total = 0;
+        for (const CNetMessage& msg : vRecvMsg)
+            total += msg.vRecv.size() + 24;
+        return total;
     }
 
     bool ReceiveMsgBytes(const char *pch, unsigned int nBytes, bool& complete);
@@ -995,6 +999,8 @@ public:
     void SetRecvVersion(int nVersionIn)
     {
         nRecvVersion = nVersionIn;
+        for (CNetMessage& msg : vRecvMsg)
+            msg.SetVersion(nVersionIn);
     }
     int GetRecvVersion() const
     {
@@ -1082,7 +1088,13 @@ public:
         vBlockHashesToAnnounce.push_back(hash);
     }
 
-    void CloseSocketDisconnect(CConnman* connman);
+    bool HasFulfilledRequest(std::string strRequest)
+    {
+        for (std::string& type : vecRequestsFulfilled) {
+            if (type == strRequest) return true;
+        }
+        return false;
+    }
 
     void copyStats(CNodeStats &stats);
 

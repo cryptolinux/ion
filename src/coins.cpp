@@ -250,6 +250,10 @@ CAmount CCoinsViewCache::GetValueIn(const CTransaction& tx) const
     if (tx.IsCoinBase())
         return 0;
 
+    //todo are there any security precautions to take here?
+    if (tx.HasZerocoinSpendInputs())
+        return tx.GetZerocoinSpent();
+
     CAmount nResult = 0;
     for (unsigned int i = 0; i < tx.vin.size(); i++)
         nResult += AccessCoin(tx.vin[i].prevout).out.nValue;
@@ -259,7 +263,7 @@ CAmount CCoinsViewCache::GetValueIn(const CTransaction& tx) const
 
 bool CCoinsViewCache::HaveInputs(const CTransaction& tx) const
 {
-    if (!tx.IsCoinBase()) {
+    if (!tx.IsCoinBase() && !tx.HasZerocoinSpendInputs()) {
         for (unsigned int i = 0; i < tx.vin.size(); i++) {
             if (!HaveCoin(tx.vin[i].prevout)) {
                 return false;

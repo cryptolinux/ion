@@ -1,9 +1,9 @@
-// Copyright (c) 2019 The PIVX developers
+// Copyright (c) 2019 The ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 //
-#ifndef PIVX_XIONMODULE_H
-#define PIVX_XIONMODULE_H
+#ifndef ION_XIONMODULE_H
+#define ION_XIONMODULE_H
 
 #include "libzerocoin/bignum.h"
 #include "libzerocoin/Denominations.h"
@@ -53,14 +53,14 @@ public:
     // Members
     CBigNum randomness;
     // prev out values
-    uint256 txHash = ArithToUint256(0);
+    uint256 txHash = 0;
     unsigned int outputIndex = -1;
     libzerocoin::PublicCoin pubCoin;
 
     ADD_SERIALIZE_METHODS;
 
     template <typename Stream, typename Operation>
-    inline void SerializationOp(Stream& s, Operation ser_action) {
+    inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
         READWRITE(version);
         READWRITE(coinSerialNumber);
         READWRITE(randomness);
@@ -73,8 +73,7 @@ public:
 class CValidationState;
 
 namespace XIONModule {
-//    bool createInput(CTxIn &in, CZerocoinMint& mint, uint256 hashTxOut);
-//    PublicCoinSpend parseCoinSpend(const CTxIn &in);
+    bool createInput(CTxIn &in, CZerocoinMint& mint, uint256 hashTxOut);
     bool parseCoinSpend(const CTxIn &in, const CTransaction& tx, const CTxOut &prevOut, PublicCoinSpend& publicCoinSpend);
     bool validateInput(const CTxIn &in, const CTxOut &prevOut, const CTransaction& tx, PublicCoinSpend& ret);
 
@@ -90,4 +89,4 @@ namespace XIONModule {
 };
 
 
-#endif //PIVX_XIONMODULE_H
+#endif //ION_XIONMODULE_H

@@ -13,6 +13,8 @@
 
 BOOST_FIXTURE_TEST_SUITE(scriptnum_tests, BasicTestingSetup)
 
+BOOST_FIXTURE_TEST_SUITE(scriptnum_tests, BasicTestingSetup)
+
 /** A selection of numbers that do not trigger int64_t overflow
  *  when added/subtracted. */
 static const int64_t values[] = { 0, 1, -2, 127, 128, -255, 256, (1LL << 15) - 1, -(1LL << 16), (1LL << 24) - 1, (1LL << 31), 1 - (1LL << 32), 1LL << 40 };

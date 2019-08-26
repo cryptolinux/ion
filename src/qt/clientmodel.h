@@ -7,9 +7,7 @@
 #ifndef BITCOIN_QT_CLIENTMODEL_H
 #define BITCOIN_QT_CLIENTMODEL_H
 
-#include <evo/deterministicmns.h>
-#include <sync.h>
-
+#include "uint256.h"
 #include <QObject>
 #include <QDateTime>
 
@@ -75,6 +73,8 @@ public:
     QDateTime getLastBlockDate() const;
     QString getLastBlockHash() const;
 
+    QString getLastBlockHash() const;
+
     //! Return true if core is doing initial block download
     bool inInitialBlockDownload() const;
     //! Returns enum BlockSource of the current importing/syncing state
@@ -91,12 +91,6 @@ public:
     bool isReleaseVersion() const;
     QString formatClientStartupTime() const;
     QString dataDir() const;
-
-    // caches for the best header
-    mutable std::atomic<int> cachedBestHeaderHeight;
-    mutable std::atomic<int64_t> cachedBestHeaderTime;
-
-    bool getTorInfo(std::string& ip_port) const;
 
     bool getTorInfo(std::string& ip_port) const;
 

@@ -151,14 +151,13 @@ size_t CCoinsViewDB::EstimateSize() const
     return db.EstimateSize(DB_COIN, (char)(DB_COIN+1));
 }
 
-CBlockTreeDB::CBlockTreeDB(size_t nCacheSize, bool fMemory, bool fWipe) : CDBWrapper(GetDataDir() / "blocks" / "index", nCacheSize, fMemory, fWipe), mapHasTxIndexCache(10000, 20000) {
+bool CBlockTreeDB::ReadBlockFileInfo(int nFile, CBlockFileInfo& info)
+{
+    return Read(make_pair('f', nFile), info);
 }
 
-bool CBlockTreeDB::ReadBlockFileInfo(int nFile, CBlockFileInfo &info) {
-    return Read(std::make_pair(DB_BLOCK_FILES, nFile), info);
-}
-
-bool CBlockTreeDB::WriteReindexing(bool fReindexing) {
+bool CBlockTreeDB::WriteReindexing(bool fReindexing)
+{
     if (fReindexing)
         return Write(DB_REINDEX_FLAG, '1');
     else
@@ -176,11 +175,7 @@ bool CBlockTreeDB::ReadLastBlockFile(int &nFile) {
 
 CCoinsViewCursor *CCoinsViewDB::Cursor() const
 {
-<<<<<<< HEAD
-    CCoinsViewDBCursor *i = new CCoinsViewDBCursor(const_cast<CDBWrapper&>(db).NewIterator(), GetBestBlock());
-=======
     CCoinsViewDBCursor *i = new CCoinsViewDBCursor(const_cast<CLevelDBWrapper*>(&db)->NewIterator(), GetBestBlock());
->>>>>>> txdb: Add Cursor() method to CCoinsView to iterate over UTXO set
     /* It seems that there are no "const iterators" for LevelDB.  Since we
        only need read operations on it, use a const-cast to get around
        that restriction.  */
@@ -223,13 +218,21 @@ void CCoinsViewDBCursor::Next()
     } else {
         keyTmp.first = 0; // Invalidate cached key after last record so that Valid() and GetKey() return false
     }
-<<<<<<< HEAD
-    return i;
-=======
->>>>>>> txdb: Add Cursor() method to CCoinsView to iterate over UTXO set
 }
 
-bool CCoinsViewDBCursor::GetKey(COutPoint &key) const
+bool CBlockTreeDB::WriteBatchSync(const std::vector<std::pair<int, const CBlockFileInfo*> >& fileInfo, int nLastFile, const std::vector<const CBlockIndex*>& blockinfo) {
+    CLevelDBBatch batch;
+    for (std::vector<std::pair<int, const CBlockFileInfo*> >::const_iterator it=fileInfo.begin(); it != fileInfo.end(); it++) {
+        batch.Write(make_pair('f', it->first), *it->second);
+    }
+    batch.Write('l', nLastFile);
+    for (std::vector<const CBlockIndex*>::const_iterator it=blockinfo.begin(); it != blockinfo.end(); it++) {
+        batch.Write(make_pair('b', (*it)->GetBlockHash()), CDiskBlockIndex(*it));
+    }
+    return WriteBatch(batch, true);
+}
+
+bool CBlockTreeDB::ReadTxIndex(const uint256& txid, CDiskTxPos& pos)
 {
     // Return cached key
     if (keyTmp.first == DB_COIN) {
@@ -312,12 +315,19 @@ bool CBlockTreeDB::WriteAddressIndex(const std::vector<std::pair<CAddressIndexKe
     return WriteBatch(batch);
 }
 
-bool CBlockTreeDB::EraseAddressIndex(const std::vector<std::pair<CAddressIndexKey, CAmount > >&vect) {
-    CDBBatch batch(*this);
-    for (std::vector<std::pair<CAddressIndexKey, CAmount> >::const_iterator it=vect.begin(); it!=vect.end(); it++)
-        batch.Erase(std::make_pair(DB_ADDRESSINDEX, it->first));
-    return WriteBatch(batch);
-}
+                //Proof Of Stake
+                pindexNew->nMint = diskindex.nMint;
+                pindexNew->nMoneySupply = diskindex.nMoneySupply;
+                pindexNew->nFlags = diskindex.nFlags;
+                pindexNew->nStakeModifier = diskindex.nStakeModifier;
+                pindexNew->prevoutStake = diskindex.prevoutStake;
+                pindexNew->nStakeTime = diskindex.nStakeTime;
+                pindexNew->hashProofOfStake = diskindex.hashProofOfStake;
+
+                if (pindexNew->nHeight <= Params().LAST_POW_BLOCK() && pindexNew->IsProofOfWork()) {
+                    if (!CheckProofOfWork(pindexNew->GetBlockHash(), pindexNew->nBits))
+                        return error("LoadBlockIndex() : CheckProofOfWork failed: %s", pindexNew->ToString());
+                }
 
                 //populate accumulator checksum map in memory
                 if(pindexNew->nAccumulatorCheckpoint != 0 && pindexNew->nAccumulatorCheckpoint != nPreviousCheckpoint) {

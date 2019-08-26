@@ -772,7 +772,7 @@ void CoinControlDialog::updateView()
     std::map<QString, std::vector<COutput> > mapCoins;
     model->listCoins(mapCoins);
 
-    BOOST_FOREACH (PAIRTYPE(QString, vector<COutput>) coins, mapCoins) {
+    for (PAIRTYPE(QString, vector<COutput>) coins : mapCoins) {
         CCoinControlWidgetItem* itemWalletAddress = new CCoinControlWidgetItem();
         itemWalletAddress->setCheckState(COLUMN_CHECKBOX, Qt::Unchecked);
         QString sWalletAddress = coins.first;

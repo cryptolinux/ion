@@ -8,8 +8,7 @@
 #include "key.h"
 #include "uint256.h"
 #include "util.h"
-#include "utilstrencodings.h"
-#include "test/test_ion.h"
+#include "test/test_bitcoin.h"
 
 #include <string>
 #include <vector>

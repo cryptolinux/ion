@@ -6,7 +6,6 @@
 
 #include "netbase.h"
 #include "test/test_ion.h"
-#include "utilstrencodings.h"
 
 #include <string>
 
@@ -14,26 +13,7 @@
 
 BOOST_FIXTURE_TEST_SUITE(netbase_tests, BasicTestingSetup)
 
-static CNetAddr ResolveIP(const char* ip)
-{
-    CNetAddr addr;
-    LookupHost(ip, addr, false);
-    return addr;
-}
-
-static CSubNet ResolveSubNet(const char* subnet)
-{
-    CSubNet ret;
-    LookupSubNet(subnet, ret);
-    return ret;
-}
-
-static CNetAddr CreateInternal(const char* host)
-{
-    CNetAddr addr;
-    addr.SetInternal(host);
-    return addr;
-}
+BOOST_FIXTURE_TEST_SUITE(netbase_tests, BasicTestingSetup)
 
 BOOST_AUTO_TEST_CASE(netbase_networks)
 {

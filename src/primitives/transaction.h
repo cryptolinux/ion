@@ -144,6 +144,9 @@ public:
     bool IsZerocoinSpend() const;
     bool IsZerocoinPublicSpend() const;
 
+    bool IsZerocoinSpend() const;
+    bool IsZerocoinPublicSpend() const;
+
     friend bool operator==(const CTxIn& a, const CTxIn& b)
     {
         return (a.prevout   == b.prevout &&
@@ -232,10 +235,8 @@ public:
         return (nValue < GetDustThreshold(minRelayTxFee));
     }
 
-    bool IsZerocoinMint() const
-    {
-        return !scriptPubKey.empty() && scriptPubKey.IsZerocoinMint();
-    }
+    bool IsZerocoinMint() const;
+    CAmount GetZerocoinMinted() const;
 
     friend bool operator==(const CTxOut& a, const CTxOut& b)
     {
@@ -337,10 +338,8 @@ public:
     unsigned int GetTotalSize() const;
 
 
-    bool IsZerocoinSpend() const
-    {
-        return (vin.size() > 0 && vin[0].prevout.hash == 0 && vin[0].scriptSig[0] == OP_ZEROCOINSPEND);
-    }
+    bool HasZerocoinSpendInputs() const;
+    bool HasZerocoinPublicSpendInputs() const;
 
     bool HasZerocoinMintOutputs() const;
 

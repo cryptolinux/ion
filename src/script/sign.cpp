@@ -190,12 +190,20 @@ bool SignSignature(const CKeyStore &keystore, const CTransaction& txFrom, CMutab
     return SignSignature(keystore, txout.scriptPubKey, txTo, nIn, txout.nValue, nHashType);
 }
 
-static std::vector<valtype> CombineMultisig(const CScript& scriptPubKey, const BaseSignatureChecker& checker,
-                               const std::vector<valtype>& vSolutions,
-                               const std::vector<valtype>& sigs1, const std::vector<valtype>& sigs2, SigVersion sigversion)
+static CScript PushAll(const vector<valtype>& values)
+{
+    CScript result;
+    for (const valtype& v : values)
+        result << v;
+    return result;
+}
+
+static CScript CombineMultisig(const CScript& scriptPubKey, const CTransaction& txTo, unsigned int nIn,
+                               const vector<valtype>& vSolutions,
+                               const vector<valtype>& sigs1, const vector<valtype>& sigs2)
 {
     // Combine all the signatures we've got:
-    std::set<valtype> allsigs;
+    set<valtype> allsigs;
     for (const valtype& v : sigs1)
     {
         if (!v.empty())
@@ -211,7 +219,7 @@ static std::vector<valtype> CombineMultisig(const CScript& scriptPubKey, const B
     assert(vSolutions.size() > 1);
     unsigned int nSigsRequired = vSolutions.front()[0];
     unsigned int nPubKeys = vSolutions.size()-2;
-    std::map<valtype, valtype> sigs;
+    map<valtype, valtype> sigs;
     for (const valtype& sig : allsigs)
     {
         for (unsigned int i = 0; i < nPubKeys; i++)

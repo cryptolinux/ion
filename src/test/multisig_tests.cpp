@@ -11,15 +11,21 @@
 #include "script/sign.h"
 #include "script/ismine.h"
 #include "uint256.h"
-#include "test/test_ion.h"
+#include "test_ion.h"
 
 #ifdef ENABLE_WALLET
 #include "wallet/wallet_ismine.h"
 #endif
 
+#include <boost/assign/std/vector.hpp>
 #include <boost/test/unit_test.hpp>
 
-BOOST_FIXTURE_TEST_SUITE(multisig_tests, BasicTestingSetup)
+using namespace std;
+using namespace boost::assign;
+
+typedef vector<unsigned char> valtype;
+
+BOOST_FIXTURE_TEST_SUITE(multisig_tests, TestingSetup)
 
 CScript
 sign_multisig(CScript scriptPubKey, std::vector<CKey> keys, CTransaction transaction, int whichIn)

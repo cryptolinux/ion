@@ -4,21 +4,20 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <qt/overviewpage.h>
-#include <qt/forms/ui_overviewpage.h>
+#include "overviewpage.h"
+#include "ui_overviewpage.h"
 
-#include <qt/bitcoinunits.h>
-#include <qt/clientmodel.h>
-#include <qt/guiutil.h>
-#include <init.h>
-#include <qt/optionsmodel.h>
-#include <qt/transactionfilterproxy.h>
-#include <qt/transactiontablemodel.h>
-#include <qt/utilitydialog.h>
-#include <qt/walletmodel.h>
-
-#include <masternode/masternode-sync.h>
-#include <privatesend/privatesend-client.h>
+#include "bitcoinunits.h"
+#include "clientmodel.h"
+#include "guiconstants.h"
+#include "guiutil.h"
+#include "init.h"
+#include "obfuscation.h"
+#include "optionsmodel.h"
+#include "transactionfilterproxy.h"
+#include "transactionrecord.h"
+#include "transactiontablemodel.h"
+#include "walletmodel.h"
 
 #include <QAbstractItemDelegate>
 #include <QPainter>

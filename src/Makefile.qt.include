@@ -47,6 +47,7 @@ QT_FORMS_UI = \
   qt/forms/appearancewidget.ui \
   qt/forms/askpassphrasedialog.ui \
   qt/forms/coincontroldialog.ui \
+  qt/forms/blockexplorer.ui \
   qt/forms/editaddressdialog.ui \
   qt/forms/governancepage.ui \
   qt/forms/helpmessagedialog.ui \
