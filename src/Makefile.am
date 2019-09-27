@@ -216,6 +216,7 @@ BITCOIN_CORE_H = \
   tinyformat.h \
   tokens/tokendb.h \
   tokens/tokengroupconfiguration.h \
+  tokens/tokengroupdescription.h \
   tokens/tokengroupmanager.h \
   torcontrol.h \
   txdb.h \
@@ -272,7 +273,6 @@ libion_server_a_SOURCES = \
   blocksignature.cpp \
   chain.cpp \
   checkpoints.cpp \
-  consensus/tokengroups.cpp \
   httprpc.cpp \
   httpserver.cpp \
   init.cpp \
@@ -566,6 +566,7 @@ libbitcoin_common_a_SOURCES = \
   chainparams.cpp \
   coins.cpp \
   compressor.cpp \
+  consensus/tokengroups.cpp \
   dstencode.cpp \
   ionaddrenc.cpp \
   primitives/block.cpp \
@@ -586,12 +587,10 @@ libbitcoin_common_a_SOURCES = \
   scheduler.cpp \
   script/sign.cpp \
   script/standard.cpp \
-  warnings.cpp \
-  xion/accumulators.cpp \
-  xion/accumulatorcheckpoints.cpp \
-  xion/accumulatormap.cpp \
-  xion/deterministicmint.cpp \
-  xion/zerocoin.cpp \
+  script/script_error.cpp \
+  spork.cpp \
+  sporkdb.cpp \
+  tokens/tokengroupdescription.cpp \
   $(BITCOIN_CORE_H)
 
 # util: shared between all executables.
