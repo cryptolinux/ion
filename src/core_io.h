@@ -15,7 +15,7 @@
 class CBlock;
 class CScript;
 class CTransaction;
-struct CMutableTransaction;
+class CTxOut;
 class uint256;
 class UniValue;
 
@@ -31,10 +31,12 @@ uint256 ParseHashStr(const std::string&, const std::string& strName);
 std::vector<unsigned char> ParseHexUV(const UniValue& v, const std::string& strName);
 
 // core_write.cpp
-UniValue ValueFromAmount(const CAmount& amount);
-std::string FormatScript(const CScript& script);
-std::string EncodeHexTx(const CTransaction& tx);
-void ScriptPubKeyToUniv(const CScript& scriptPubKey, UniValue& out, bool fIncludeHex);
-void TxToUniv(const CTransaction& tx, const uint256& hashBlock, UniValue& entry, bool include_hex = true, const CSpentIndexTxInfo* ptxSpentInfo = nullptr);
+extern std::string FormatScript(const CScript& script);
+extern std::string EncodeHexTx(const CTransaction& tx);
+extern void ScriptPubKeyToUniv(const CScript& scriptPubKey,
+    UniValue& out,
+    bool fIncludeHex);
+extern void TxToUniv(const CTransaction& tx, const uint256& hashBlock, UniValue& entry);
+extern void TokenTxnoutToUniv(const CTxOut& txout, UniValue& out, bool& fExpectFirstOpReturn);
 
 #endif // BITCOIN_CORE_IO_H
