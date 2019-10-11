@@ -237,6 +237,7 @@ public:
     inline void Serialize(Stream& s) const {
         int32_t n32bitVersion = this->nVersion | (this->nType << 16);
         s << n32bitVersion;
+        s << nTime;
         s << vin;
         s << vout;
         s << nLockTime;
@@ -310,6 +311,7 @@ struct CMutableTransaction
             this->nVersion = (int16_t) (n32bitVersion & 0xffff);
             this->nType = (int16_t) ((n32bitVersion >> 16) & 0xffff);
         }
+        READWRITE(nTime);
         READWRITE(vin);
         READWRITE(vout);
         READWRITE(nLockTime);
