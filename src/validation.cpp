@@ -68,6 +68,53 @@
 /**
  * Global state
  */
+
+CCriticalSection cs_main;
+
+BlockMap mapBlockIndex;
+PrevBlockMap mapPrevBlockIndex;
+CChain chainActive;
+CBlockIndex *pindexBestHeader = nullptr;
+CWaitableCriticalSection csBestBlock;
+CConditionVariable cvBlockChange;
+int nScriptCheckThreads = 0;
+std::atomic_bool fImporting(false);
+bool fReindex = false;
+bool fTxIndex = true;
+bool fAddressIndex = false;
+bool fTimestampIndex = false;
+bool fSpentIndex = false;
+bool fHavePruned = false;
+bool fPruneMode = false;
+bool fIsBareMultisigStd = DEFAULT_PERMIT_BAREMULTISIG;
+bool fRequireStandard = true;
+unsigned int nBytesPerSigOp = DEFAULT_BYTES_PER_SIGOP;
+bool fCheckBlockIndex = false;
+bool fCheckpointsEnabled = DEFAULT_CHECKPOINTS_ENABLED;
+size_t nCoinCacheUsage = 5000 * 300;
+uint64_t nPruneTarget = 0;
+int64_t nMaxTipAge = DEFAULT_MAX_TIP_AGE;
+
+std::atomic<bool> fDIP0001ActiveAtTip{false};
+std::atomic<bool> fDIP0003ActiveAtTip{false};
+
+uint256 hashAssumeValid;
+arith_uint256 nMinimumChainWork;
+
+CFeeRate minRelayTxFee = CFeeRate(DEFAULT_MIN_RELAY_TX_FEE);
+CAmount maxTxFee = DEFAULT_TRANSACTION_MAXFEE;
+
+CBlockPolicyEstimator feeEstimator;
+CTxMemPool mempool(&feeEstimator);
+
+static void CheckBlockIndex(const Consensus::Params& consensusParams);
+
+/** Constant stuff for coinbase transactions we create: */
+CScript COINBASE_FLAGS;
+
+const std::string strMessageMagic = "Ion Signed Message:\n";
+
+// Internal stuff
 namespace {
     struct CBlockIndexWorkComparator
     {
@@ -3492,7 +3539,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
 
     // Check proof of work
     const Consensus::Params& consensusParams = params.GetConsensus();
-    if(Params().NetworkIDString() == CBaseChainParams::MAIN && nHeight <= 68589){
+    if(Params().NetworkIDString() == CBaseChainParams::MAIN && nHeight <= -1){
         // architecture issues with DGW v1 and v2)
         unsigned int nBitsNext = GetNextWorkRequired(pindexPrev, &block, consensusParams);
         double n1 = ConvertBitsToDouble(block.nBits);
