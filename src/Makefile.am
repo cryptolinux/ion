@@ -205,6 +205,7 @@ BITCOIN_CORE_H = \
   policy/feerate.h \
   policy/fees.h \
   policy/policy.h \
+  pos/blocksignature.h \
   pow.h \
   protocol.h \
   random.h \
@@ -329,6 +330,7 @@ libdash_server_a_SOURCES = \
   noui.cpp \
   policy/fees.cpp \
   policy/policy.cpp \
+  pos/blocksignature.cpp \
   pow.cpp \
   privatesend/privatesend.cpp \
   privatesend/privatesend-server.cpp \
