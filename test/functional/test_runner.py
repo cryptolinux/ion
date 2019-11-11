@@ -144,14 +144,7 @@ BASE_SCRIPTS= [
     'minchainwork.py',
     'p2p-acceptblock.py', # NOTE: needs dash_hash to pass
     'feature_shutdown.py',
-    'privatesend.py',
-    'uacomment.py',
-    'feature_logging.py',
-    'node_network_limited.py',
-    'conf_args.py',
-    'feature_help.py',
-    # Don't append tests at the end to avoid merge conflicts
-    # Put them in a random line within the section that fits their approximate run-time
+    'ionlibtest.py',
 ]
 
 EXTENDED_SCRIPTS = [
