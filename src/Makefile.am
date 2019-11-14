@@ -227,6 +227,8 @@ BITCOIN_CORE_H = \
   rpc/util.h \
   saltedhasher.h \
   scheduler.h \
+  script/interpreter.h \
+  script/script.h \
   script/sigcache.h \
   script/sign.h \
   script/standard.h \
@@ -435,6 +437,10 @@ libioncore_a_SOURCES = \
   pubkey.h \
   random.cpp \
   random.h \
+  script/interpreter.cpp \
+  script/interpreter.h \
+  script/script.cpp \
+  script/script.h \
   support/cleanse.cpp \
   support/cleanse.h \
   uint256.cpp \
