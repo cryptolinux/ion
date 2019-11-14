@@ -448,6 +448,8 @@ public:
         // Dash BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4};
 
+        bech32_hrp = "ion";
+
         // Dash BIP44 coin type is '5'
         nExtCoinType = 7567736;
 
@@ -657,6 +659,8 @@ public:
         // Testnet Dash BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x91};
 
+        bech32_hrp = "tion";
+
         // Testnet Dash BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
 
@@ -835,6 +839,8 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
         // Testnet Dash BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x91};
+
+        bech32_hrp = "iondn";
 
         // Testnet Dash BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
@@ -1038,6 +1044,8 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x35, 0x87, 0xCF};
         // Regtest Dash BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x35, 0x83, 0x91};
+
+        bech32_hrp = "ionrt";
 
         // Regtest Dash BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
