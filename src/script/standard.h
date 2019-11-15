@@ -61,7 +61,9 @@ enum txnouttype
     TX_PUBKEYHASH,
     TX_SCRIPTHASH,
     TX_MULTISIG,
-    TX_NULL_DATA, //!< unspendable OP_RETURN script that carries data
+    TX_NULL_DATA,
+    TX_GRP_PUBKEYHASH,
+    TX_GRP_SCRIPTHASH
 };
 
 class CNoDestination {
@@ -96,22 +98,8 @@ const char* GetTxnOutputType(txnouttype t);
  * @return                     True if script matches standard template
  */
 bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::vector<unsigned char> >& vSolutionsRet);
-
-/**
- * Parse a standard scriptPubKey for the destination address. Assigns result to
- * the addressRet parameter and returns true if successful. For multisig
- * scripts, instead use ExtractDestinations. Currently only works for P2PK,
- * P2PKH, and P2SH scripts.
- */
-bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet);
-
-/**
- * Parse a standard scriptPubKey with one or more destination addresses. For
- * multisig scripts, this populates the addressRet vector with the pubkey IDs
- * and nRequiredRet with the n required to spend. For other destinations,
- * addressRet is populated with a single value and nRequiredRet is set to 1.
- * Returns true if successful.
- */
+bool ExtractDestination(const CScript &scriptPubKey, CTxDestination &addressRet);
+bool ExtractDestinationAndType(const CScript &scriptPubKey, CTxDestination &addressRet, txnouttype &whichType);
 bool ExtractDestinations(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<CTxDestination>& addressRet, int& nRequiredRet);
 
 /**

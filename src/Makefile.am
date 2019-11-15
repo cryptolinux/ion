@@ -140,6 +140,7 @@ BITCOIN_CORE_H = \
   compat/sanity.h \
   compressor.h \
   consensus/consensus.h \
+  consensus/tokengroups.h \
   consensus/tx_verify.h \
   core_io.h \
   core_memusage.h \
@@ -270,7 +271,7 @@ BITCOIN_CORE_H = \
   wallet/rpcwallet.h \
   wallet/wallet.h \
   wallet/walletdb.h \
-  wallet/walletutil.h \
+  wallet/tokengroupwallet.h \
   warnings.h \
   xion/accumulators.h \
   xion/accumulatorcheckpoints.h \
@@ -304,6 +305,7 @@ libdash_server_a_SOURCES = \
   blockencodings.cpp \
   chain.cpp \
   checkpoints.cpp \
+  consensus/tokengroups.cpp \
   consensus/tx_verify.cpp \
   dsnotificationinterface.cpp \
   evo/cbtx.cpp \
@@ -416,6 +418,7 @@ libdash_wallet_a_SOURCES = \
   wallet/init.cpp \
   wallet/rpcdump.cpp \
   wallet/rpcwallet.cpp \
+  wallet/tokengroupwallet.cpp \
   wallet/wallet.cpp \
   wallet/walletdb.cpp \
   wallet/walletutil.cpp \

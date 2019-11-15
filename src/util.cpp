@@ -470,68 +470,8 @@ int LogPrintStr(const std::string &str)
     return ret;
 }
 
-/** A map that contains all the currently held directory locks. After
- * successful locking, these will be held here until the global destructor
- * cleans them up and thus automatically unlocks them, or ReleaseDirectoryLocks
- * is called.
- */
-static std::map<std::string, std::unique_ptr<boost::interprocess::file_lock>> dir_locks;
-/** Mutex to protect dir_locks. */
-static std::mutex cs_dir_locks;
-
-bool LockDirectory(const fs::path& directory, const std::string lockfile_name, bool probe_only)
-{
-    std::lock_guard<std::mutex> ulock(cs_dir_locks);
-    fs::path pathLockFile = directory / lockfile_name;
-
-    // If a lock for this directory already exists in the map, don't try to re-lock it
-    if (dir_locks.count(pathLockFile.string())) {
-        return true;
-    }
-
-    // Create empty lock file if it doesn't exist.
-    FILE* file = fsbridge::fopen(pathLockFile, "a");
-    if (file) fclose(file);
-
-    try {
-        auto lock = MakeUnique<boost::interprocess::file_lock>(pathLockFile.string().c_str());
-        if (!lock->try_lock()) {
-            return false;
-        }
-        if (!probe_only) {
-            // Lock successful and we're not just probing, put it into the map
-            dir_locks.emplace(pathLockFile.string(), std::move(lock));
-        }
-    } catch (const boost::interprocess::interprocess_exception& e) {
-        return error("Error while attempting to lock directory %s: %s", directory.string(), e.what());
-    }
-    return true;
-}
-
-void ReleaseDirectoryLocks()
-{
-    std::lock_guard<std::mutex> ulock(cs_dir_locks);
-    dir_locks.clear();
-}
-
-/**
- * Interpret a string argument as a boolean.
- *
- * The definition of atoi() requires that non-numeric string values like "foo",
- * return 0. This means that if a user unintentionally supplies a non-integer
- * argument here, the return value is always false. This means that -foo=false
- * does what the user probably expects, but -foo=true is well defined but does
- * not do what they probably expected.
- *
- * The return value of atoi() is undefined when given input not representable as
- * an int. On most systems this means string value between "-2147483648" and
- * "2147483647" are well defined (this method will return true). Setting
- * -txindex=2147483648 on most systems, however, is probably undefined.
- *
- * For a more extensive discussion of this topic (and a wide range of opinions
- * on the Right Way to change this code), see PR12713.
- */
-static bool InterpretBool(const std::string& strValue)
+/** Interpret string as boolean, for argument parsing */
+bool InterpretBool(const std::string& strValue)
 {
     if (strValue.empty())
         return true;
