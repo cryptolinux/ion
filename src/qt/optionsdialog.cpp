@@ -100,6 +100,7 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     }
     
     /* Theme selector */
+    ui->theme->addItem(QString("Dark"), QVariant("dark"));
     ui->theme->addItem(QString("Light"), QVariant("light"));
     ui->theme->addItem(QString("Traditional"), QVariant("trad"));
 
@@ -344,7 +345,7 @@ void OptionsDialog::updateProxyValidationState()
     else
     {
         setOkButtonState(false);
-        ui->statusLabel->setStyleSheet("QLabel { color: red; }");
+        ui->statusLabel->setStyleSheet(GUIUtil::getThemedStyleQString(GUIUtil::ThemedStyle::TS_ERROR));
         ui->statusLabel->setText(tr("The supplied proxy address is invalid."));
     }
 }

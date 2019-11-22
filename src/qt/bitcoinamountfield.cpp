@@ -5,7 +5,7 @@
 #include <qt/bitcoinamountfield.h>
 
 #include "bitcoinunits.h"
-#include "guiconstants.h"
+#include "guiutil.h"
 #include "qvaluecombobox.h"
 
 #include <QApplication>
