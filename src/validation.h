@@ -38,6 +38,7 @@ class CBlockTreeDB;
 class CChainParams;
 class CCoinsViewDB;
 class CZerocoinDB;
+class CTokenDB;
 class CInv;
 class CConnman;
 class CScriptCheck;
@@ -463,6 +464,9 @@ extern std::unique_ptr<CBlockTreeDB> pblocktree;
 
 /** Global variable that points to the zerocoin database (protected by cs_main) */
 extern CZerocoinDB *zerocoinDB;
+
+/** Global variable that points to the active block tree (protected by cs_main) */
+extern CTokenDB *pTokenDB;
 
 /**
  * Return the spend height, which is one more than the inputs.GetBestBlock().

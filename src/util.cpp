@@ -289,6 +289,7 @@ const CLogCategoryDesc LogCategories[] =
     //Start ION
     {BCLog::ZEROCOIN, "zerocoin"},
     {BCLog::STAKING, "staking"},
+    {BCLog::TOKEN, "tokens"},
     //End ION
 
 };
