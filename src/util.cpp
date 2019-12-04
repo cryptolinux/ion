@@ -286,6 +286,10 @@ const CLogCategoryDesc LogCategories[] =
     {BCLog::NETCONN, "netconn"},
     //End Dash
 
+    //Start ION
+    {BCLog::STAKING, "staking"},
+    //End ION
+
 };
 
 bool GetLogCategory(uint64_t *f, const std::string *str)
