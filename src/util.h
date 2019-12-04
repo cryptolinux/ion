@@ -149,9 +149,14 @@ namespace BCLog {
 
 =======
         //Start ION
+        ZEROCOIN    = ((uint64_t)1 << 61),
         STAKING     = ((uint64_t)1 << 62),
         //End ION
+<<<<<<< HEAD
 >>>>>>> Update POS
+=======
+
+>>>>>>> Update Zerocoin
         ALL         = ~(uint64_t)0,
     };
 }

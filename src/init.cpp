@@ -8,63 +8,73 @@
 #include <config/dash-config.h>
 #endif
 
-#include <init.h>
+#include "init.h"
 
-#include <addrman.h>
-#include <amount.h>
-#include <base58.h>
-#include <chain.h>
-#include <chainparams.h>
-#include <checkpoints.h>
-#include <compat/sanity.h>
-#include <consensus/validation.h>
-#include <fs.h>
-#include <httpserver.h>
-#include <httprpc.h>
-#include <key.h>
-#include <validation.h>
-#include <miner.h>
-#include <netbase.h>
-#include <net.h>
-#include <net_processing.h>
-#include <policy/feerate.h>
-#include <policy/fees.h>
-#include <policy/policy.h>
-#include <rpc/server.h>
-#include <rpc/register.h>
-#include <rpc/safemode.h>
-#include <rpc/blockchain.h>
-#include <script/standard.h>
-#include <script/sigcache.h>
-#include <scheduler.h>
-#include <timedata.h>
-#include <txdb.h>
-#include <txmempool.h>
-#include <torcontrol.h>
-#include <ui_interface.h>
-#include <util.h>
-#include <utilmoneystr.h>
-#include <validationinterface.h>
+#include "addrman.h"
+#include "amount.h"
+#include "base58.h"
+#include "chain.h"
+#include "chainparams.h"
+#include "checkpoints.h"
+#include "compat/sanity.h"
+#include "consensus/validation.h"
+#include "fs.h"
+#include "httpserver.h"
+#include "httprpc.h"
+#include "key.h"
+#include "validation.h"
+#include "miner.h"
+#include "netbase.h"
+#include "net.h"
+#include "net_processing.h"
+#include "policy/feerate.h"
+#include "policy/fees.h"
+#include "policy/policy.h"
+#include "rpc/server.h"
+#include "rpc/register.h"
+#include "rpc/blockchain.h"
+#include "script/standard.h"
+#include "script/sigcache.h"
+#include "scheduler.h"
+#include "timedata.h"
+#include "txdb.h"
+#include "txmempool.h"
+#include "torcontrol.h"
+#include "ui_interface.h"
+#include "util.h"
+#include "utilmoneystr.h"
+#include "validationinterface.h"
+#ifdef ENABLE_WALLET
+#include "wallet/wallet.h"
+#endif
 
-#include <masternode/activemasternode.h>
-#include <dsnotificationinterface.h>
-#include <flat-database.h>
-#include <governance/governance.h>
-#include <masternode/masternode-meta.h>
-#include <masternode/masternode-payments.h>
-#include <masternode/masternode-sync.h>
-#include <masternode/masternode-utils.h>
-#include <messagesigner.h>
-#include <netfulfilledman.h>
-#include <privatesend/privatesend-server.h>
-#include <spork.h>
-#include <warnings.h>
-#include <walletinitinterface.h>
+#include "masternode/activemasternode.h"
+#include "dsnotificationinterface.h"
+#include "flat-database.h"
+#include "governance/governance.h"
+#ifdef ENABLE_WALLET
+#include "keepass.h"
+#endif
+#include "masternode/masternode-meta.h"
+#include "masternode/masternode-payments.h"
+#include "masternode/masternode-sync.h"
+#include "masternode/masternode-utils.h"
+#include "messagesigner.h"
+#include "netfulfilledman.h"
+#ifdef ENABLE_WALLET
+#include "privatesend/privatesend-client.h"
+#endif // ENABLE_WALLET
+#include "privatesend/privatesend-server.h"
+#include "spork.h"
+#include "warnings.h"
 
-#include <evo/deterministicmns.h>
-#include <llmq/quorums_init.h>
+#include "xion/accumulatorcheckpoints.h"
+#include "xion/zerocoindb.h"
 
-#include <llmq/quorums_init.h>
+#include "evo/deterministicmns.h"
+#include "llmq/quorums_init.h"
+
+#include "llmq/quorums_init.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -325,8 +335,16 @@ void PrepareShutdown()
         pcoinsdbview.reset();
         pblocktree.reset();
         llmq::DestroyLLMQSystem();
-        deterministicMNManager.reset();
-        evoDb.reset();
+        delete deterministicMNManager;
+        deterministicMNManager = nullptr;
+        delete evoDb;
+        evoDb = nullptr;
+        delete zerocoinDB;
+        zerocoinDB = nullptr;
+    }
+#ifdef ENABLE_WALLET
+    for (CWalletRef pwallet : vpwallets) {
+        pwallet->Flush(true);
     }
     g_wallet_init_interface->Stop();
 
@@ -1858,13 +1876,15 @@ bool AppInitMain()
                 pblocktree.reset();
                 pblocktree.reset(new CBlockTreeDB(nBlockTreeDBCache, false, fReset));
                 llmq::DestroyLLMQSystem();
-                // Same logic as above with pblocktree
-                evoDb.reset();
-                evoDb.reset(new CEvoDB(nEvoDbCache, false, fReset || fReindexChainState));
-                deterministicMNManager.reset();
-                deterministicMNManager.reset(new CDeterministicMNManager(*evoDb));
+                delete deterministicMNManager;
+                delete evoDb;
+                delete zerocoinDB;
 
-                llmq::InitLLMQSystem(*evoDb, false, fReset || fReindexChainState);
+                evoDb = new CEvoDB(nEvoDbCache, false, fReset || fReindexChainState);
+                deterministicMNManager = new CDeterministicMNManager(*evoDb);
+                pblocktree = new CBlockTreeDB(nBlockTreeDBCache, false, fReset);
+                llmq::InitLLMQSystem(*evoDb, &scheduler, false, fReset || fReindexChainState);
+                zerocoinDB = new CZerocoinDB(0, false, fReset || fReindexChainState);
 
                 if (fReset) {
                     pblocktree->WriteReindexing(true);
@@ -1941,8 +1961,11 @@ bool AppInitMain()
                 // At this point we're either in reindex or we've loaded a useful
                 // block tree into mapBlockIndex!
 
-                pcoinsdbview.reset(new CCoinsViewDB(nCoinDBCache, false, fReset || fReindexChainState));
-                pcoinscatcher.reset(new CCoinsViewErrorCatcher(pcoinsdbview.get()));
+                //ION: Load Accumulator Checkpoints according to network (main/test/regtest)
+                assert(AccumulatorCheckpoints::LoadCheckpoints(Params().NetworkIDString()));
+
+                pcoinsdbview = new CCoinsViewDB(nCoinDBCache, false, fReset || fReindexChainState);
+                pcoinscatcher = new CCoinsViewErrorCatcher(pcoinsdbview);
 
                 // If necessary, upgrade from older database format.
                 // This is a no-op if we cleared the coinsviewdb with -reindex or -reindex-chainstate
