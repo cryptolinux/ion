@@ -90,13 +90,13 @@
     </message>
     <message>
         <location line="+7"/>
-        <source>These are your Dash addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>These are your Dash addresses for sending payments. Always check the amount and the receiving address before sending coins.</translation>
+        <source>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>These are your Ion addresses for sending payments. Always check the amount and the receiving address before sending coins.</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>These are your Dash addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>These are your Dash addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</translation>
+        <source>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>These are your Ion addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -292,8 +292,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR DASH&lt;/b&gt;!</source>
-        <translation>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR DASH&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ION&lt;/b&gt;!</source>
+        <translation>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR ION&lt;/b&gt;!</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -395,14 +395,14 @@
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <location filename="../dash.cpp" line="+556"/>
-        <source>A fatal error occurred. Dash Core can no longer continue safely and will quit.</source>
-        <translation>A fatal error occurred. Dash Core can no longer continue safely and will quit.</translation>
+        <location filename="../ion.cpp" line="+551"/>
+        <source>A fatal error occurred. Ion Core can no longer continue safely and will quit.</source>
+        <translation>A fatal error occurred. Ion Core can no longer continue safely and will quit.</translation>
     </message>
     <message>
-        <location filename="../bitcoingui.cpp" line="+1355"/>
-        <source>Dash Core</source>
-        <translation>Dash Core</translation>
+        <location filename="../bitcoingui.cpp" line="+1119"/>
+        <source>Ion Core</source>
+        <translation>Ion Core</translation>
     </message>
     <message>
         <location line="-1210"/>
@@ -431,8 +431,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Send coins to a Dash address</source>
-        <translation>Send coins to a Dash address</translation>
+        <source>Send coins to a Ion address</source>
+        <translation>Send coins to a Ion address</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -441,8 +441,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Request payments (generates QR codes and dash: URIs)</source>
-        <translation>Request payments (generates QR codes and dash: URIs)</translation>
+        <source>Request payments (generates QR codes and ion: URIs)</source>
+        <translation>Request payments (generates QR codes and ion: URIs)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -476,8 +476,8 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about Dash Core</source>
-        <translation>Show information about Dash Core</translation>
+        <source>Show information about Ion Core</source>
+        <translation>Show information about Ion Core</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -571,8 +571,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Sign messages with your Dash addresses to prove you own them</source>
-        <translation>Sign messages with your Dash addresses to prove you own them</translation>
+        <source>Sign messages with your Ion addresses to prove you own them</source>
+        <translation>Sign messages with your Ion addresses to prove you own them</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -581,8 +581,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Verify messages to ensure they were signed with specified Dash addresses</source>
-        <translation>Verify messages to ensure they were signed with specified Dash addresses</translation>
+        <source>Verify messages to ensure they were signed with specified Ion addresses</source>
+        <translation>Verify messages to ensure they were signed with specified Ion addresses</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -681,8 +681,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Open a dash: URI or payment request</source>
-        <translation>Open a dash: URI or payment request</translation>
+        <source>Open a ion: URI or payment request</source>
+        <translation>Open a ion: URI or payment request</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -691,8 +691,8 @@
     </message>
     <message>
         <location line="+2"/>
-        <source>Show the %1 help message to get a list with possible Dash command-line options</source>
-        <translation>Show the %1 help message to get a list with possible Dash command-line options</translation>
+        <source>Show the %1 help message to get a list with possible Ion command-line options</source>
+        <translation>Show the %1 help message to get a list with possible Ion command-line options</translation>
     </message>
     <message>
         <location line="+318"/>
@@ -740,11 +740,11 @@
         <translation>Tabs toolbar</translation>
     </message>
     <message numerus="yes">
-        <location line="+442"/>
-        <source>%n active connection(s) to Dash network</source>
+        <location line="+366"/>
+        <source>%n active connection(s) to Ion network</source>
         <translation>
-            <numerusform>%n active connection to Dash network</numerusform>
-            <numerusform>%n active connections to Dash network</numerusform>
+            <numerusform>%n active connection to Ion network</numerusform>
+            <numerusform>%n active connections to Ion network</numerusform>
         </translation>
     </message>
     <message>
@@ -1224,8 +1224,8 @@
     </message>
     <message>
         <location line="+71"/>
-        <source>The entered address &quot;%1&quot; is not a valid Dash address.</source>
-        <translation>The entered address &quot;%1&quot; is not a valid Dash address.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid Ion address.</source>
+        <translation>The entered address &quot;%1&quot; is not a valid Ion address.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1366,8 +1366,8 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Dash in your wallet is comprised of different &quot;inputs&quot; which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two or more other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type=&quot;1&quot;&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 DASH, 0.01 DASH, 0.1 DASH, 1 DASH and 10 DASH -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called &quot;masternodes.&quot; These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know &quot;who&quot; you are.&lt;/li&gt; &lt;li&gt;When two or more other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users&apos; wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it&apos;s called a &quot;round.&quot; Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be mixed. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these &quot;change addresses.&quot; Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more information, see the &lt;a style=&quot;%1&quot; href=&quot;https://docs.dash.org/en/stable/wallets/dashcore/privatesend-instantsend.html&quot;&gt;PrivateSend documentation&lt;/a&gt;.</source>
-        <translation>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Dash in your wallet is comprised of different &quot;inputs&quot; which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two or more other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type=&quot;1&quot;&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 DASH, 0.01 DASH, 0.1 DASH, 1 DASH and 10 DASH -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called &quot;masternodes.&quot; These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know &quot;who&quot; you are.&lt;/li&gt; &lt;li&gt;When two or more other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users&apos; wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it&apos;s called a &quot;round.&quot; Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be mixed. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these &quot;change addresses.&quot; Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more information, see the &lt;a style=&quot;%1&quot; href=&quot;https://docs.dash.org/en/stable/wallets/dashcore/privatesend-instantsend.html&quot;&gt;PrivateSend documentation&lt;/a&gt;.</translation>
+        <source>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Ion in your wallet is comprised of different &quot;inputs&quot; which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type=&quot;1&quot;&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 ION, 0.01 ION, 0.1 ION, 1 ION and 10 ION -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called &quot;masternodes.&quot; These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know &quot;who&quot; you are.&lt;/li&gt; &lt;li&gt;When two other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users&apos; wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it&apos;s called a &quot;round.&quot; Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be anonymized. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these &quot;change addresses.&quot; Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more information, see the &lt;a href=&quot;https://docs.ionomy.com/en/latest/wallets/ioncoin/privatesend-instantsend.html&quot;&gt;PrivateSend documentation&lt;/a&gt;.</source>
+        <translation>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Ion in your wallet is comprised of different &quot;inputs&quot; which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type=&quot;1&quot;&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 ION, 0.01 ION, 0.1 ION, 1 ION and 10 ION -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called &quot;masternodes.&quot; These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know &quot;who&quot; you are.&lt;/li&gt; &lt;li&gt;When two other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users&apos; wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it&apos;s called a &quot;round.&quot; Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be anonymized. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these &quot;change addresses.&quot; Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more information, see the &lt;a href=&quot;https://docs.ionomy.com/en/latest/wallets/ioncoin/privatesend-instantsend.html&quot;&gt;PrivateSend documentation&lt;/a&gt;.</translation>
     </message>
 </context>
 <context>
@@ -1424,8 +1424,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <source>%1 will download and store a copy of the Dash block chain.</source>
-        <translation>%1 will download and store a copy of the Dash block chain.</translation>
+        <source>%1 will download and store a copy of the Ion block chain.</source>
+        <translation>%1 will download and store a copy of the Ion block chain.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -1623,14 +1623,14 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location line="+100"/>
-        <source>Recent transactions may not yet be visible, and therefore your wallet&apos;s balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the Dash network, as detailed below.</source>
-        <translation>Recent transactions may not yet be visible, and therefore your wallet&apos;s balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the Dash network, as detailed below.</translation>
+        <location line="+117"/>
+        <source>Recent transactions may not yet be visible, and therefore your wallet&apos;s balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the Ion network, as detailed below.</source>
+        <translation>Recent transactions may not yet be visible, and therefore your wallet&apos;s balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the Ion network, as detailed below.</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Attempting to spend Dash that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation>Attempting to spend Dash that are affected by not-yet-displayed transactions will not be accepted by the network.</translation>
+        <location line="+19"/>
+        <source>Attempting to spend Ion that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
+        <translation>Attempting to spend Ion that are affected by not-yet-displayed transactions will not be accepted by the network.</translation>
     </message>
     <message>
         <location line="+60"/>
@@ -1742,7 +1742,12 @@
         <translation>(0 = auto, &lt;0 = leave that many cores free)</translation>
     </message>
     <message>
-        <location line="-153"/>
+        <location line="+165"/>
+        <source>Amount of Ion to keep anonymized</source>
+        <translation>Amount of Ion to keep anonymized</translation>
+    </message>
+    <message>
+        <location line="-129"/>
         <source>W&amp;allet</source>
         <translation>W&amp;allet</translation>
     </message>
@@ -1807,14 +1812,9 @@
         <translation>This amount acts as a threshold to turn off PrivateSend once it&apos;s reached.</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Target PrivateSend balance</source>
-        <translation>Target PrivateSend balance</translation>
-    </message>
-    <message>
-        <location line="+42"/>
-        <source>Automatically open the Dash Core client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automatically open the Dash Core client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
+        <location line="+60"/>
+        <source>Automatically open the Ion Core client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automatically open the Ion Core client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1828,8 +1828,8 @@
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the Dash network through a SOCKS5 proxy.</source>
-        <translation>Connect to the Dash network through a SOCKS5 proxy.</translation>
+        <source>Connect to the Ion network through a SOCKS5 proxy.</source>
+        <translation>Connect to the Ion network through a SOCKS5 proxy.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1969,9 +1969,9 @@
         <translation>Tor</translation>
     </message>
     <message>
-        <location line="+22"/>
-        <source>Connect to the Dash network through a separate SOCKS5 proxy for Tor hidden services.</source>
-        <translation>Connect to the Dash network through a separate SOCKS5 proxy for Tor hidden services.</translation>
+        <location line="+25"/>
+        <source>Connect to the Ion network through a separate SOCKS5 proxy for Tor hidden services.</source>
+        <translation>Connect to the Ion network through a separate SOCKS5 proxy for Tor hidden services.</translation>
     </message>
     <message>
         <location line="-450"/>
@@ -2006,9 +2006,9 @@
     <message>
         <location line="+21"/>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/dash/</source>
+https://www.transifex.com/ioncoincore/ioncore/</source>
         <translation>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/dash/</translation>
+https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -2090,11 +2090,11 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>Form</translation>
     </message>
     <message>
-        <location line="+60"/>
-        <location line="+298"/>
-        <location line="+237"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Dash network after a connection is established, but this process has not completed yet.</source>
-        <translation>The displayed information may be out of date. Your wallet automatically synchronizes with the Dash network after a connection is established, but this process has not completed yet.</translation>
+        <location line="+53"/>
+        <location line="+355"/>
+        <location line="+258"/>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</source>
+        <translation>The displayed information may be out of date. Your wallet automatically synchronizes with the Ion network after a connection is established, but this process has not completed yet.</translation>
     </message>
     <message>
         <location line="-325"/>
@@ -2198,8 +2198,8 @@ https://www.transifex.com/projects/p/dash/</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>0 DASH / 0 Rounds</source>
-        <translation>0 DASH / 0 Rounds</translation>
+        <source>0 ION / 0 Rounds</source>
+        <translation>0 ION / 0 Rounds</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -2399,9 +2399,9 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>Payment request error</translation>
     </message>
     <message>
-        <location line="-400"/>
-        <source>Cannot start dash: click-to-pay handler</source>
-        <translation>Cannot start dash: click-to-pay handler</translation>
+        <location line="-402"/>
+        <source>Cannot start ion: click-to-pay handler</source>
+        <translation>Cannot start ion: click-to-pay handler</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -2422,8 +2422,8 @@ https://www.transifex.com/projects/p/dash/</translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>URI cannot be parsed! This can be caused by an invalid Dash address or malformed URI parameters.</source>
-        <translation>URI cannot be parsed! This can be caused by an invalid Dash address or malformed URI parameters.</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters.</source>
+        <translation>URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -2548,7 +2548,7 @@ https://www.transifex.com/projects/p/dash/</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../dash.cpp" line="+272"/>
+        <location filename="../ion.cpp" line="+176"/>
         <source>%1 didn&apos;t yet exit safely...</source>
         <translation>%1 didn&apos;t yet exit safely...</translation>
     </message>
@@ -2558,9 +2558,9 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>Amount</translation>
     </message>
     <message>
-        <location filename="../guiutil.cpp" line="+317"/>
-        <source>Enter a Dash address (e.g. %1)</source>
-        <translation>Enter a Dash address (e.g. %1)</translation>
+        <location filename="../guiutil.cpp" line="+133"/>
+        <source>Enter a Ion address (e.g. %1)</source>
+        <translation>Enter a Ion address (e.g. %1)</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -2696,7 +2696,7 @@ https://www.transifex.com/projects/p/dash/</translation>
 <context>
     <name>QObject::QObject</name>
     <message>
-        <location filename="../dash.cpp" line="-176"/>
+        <location filename="../ion.cpp" line="-81"/>
         <source>Error: Specified data directory &quot;%1&quot; does not exist.</source>
         <translation>Error: Specified data directory &quot;%1&quot; does not exist.</translation>
     </message>
@@ -3316,8 +3316,18 @@ https://www.transifex.com/projects/p/dash/</translation>
     <name>ReceiveCoinsDialog</name>
     <message>
         <location filename="../forms/receivecoinsdialog.ui" line="+34"/>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Dash network.</source>
-        <translation>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Dash network.</translation>
+        <source>Reuse one of the previously used receiving addresses.&lt;br&gt;Reusing addresses has security and privacy issues.&lt;br&gt;Do not use this unless re-generating a payment request made before.</source>
+        <translation>Reuse one of the previously used receiving addresses.&lt;br&gt;Reusing addresses has security and privacy issues.&lt;br&gt;Do not use this unless re-generating a payment request made before.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>R&amp;euse an existing receiving address (not recommended)</source>
+        <translation>R&amp;euse an existing receiving address (not recommended)</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</source>
+        <translation>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3332,8 +3342,8 @@ https://www.transifex.com/projects/p/dash/</translation>
     </message>
     <message>
         <location line="-14"/>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Dash network.</source>
-        <translation>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Dash network.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Ion network.</source>
+        <translation>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Ion network.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -3634,8 +3644,8 @@ https://www.transifex.com/projects/p/dash/</translation>
     <message>
         <location line="+30"/>
         <location line="+13"/>
-        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for dash transactions than the network can process.</source>
-        <translation>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for dash transactions than the network can process.</translation>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for ion transactions than the network can process.</source>
+        <translation>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for ion transactions than the network can process.</translation>
     </message>
     <message>
         <location line="-40"/>
@@ -3895,9 +3905,9 @@ https://www.transifex.com/projects/p/dash/</translation>
         </translation>
     </message>
     <message>
-        <location line="+101"/>
-        <source>Warning: Invalid Dash address</source>
-        <translation>Warning: Invalid Dash address</translation>
+        <location line="+103"/>
+        <source>Warning: Invalid Ion address</source>
+        <translation>Warning: Invalid Ion address</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -3934,8 +3944,8 @@ https://www.transifex.com/projects/p/dash/</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>The Dash address to send the payment to</source>
-        <translation>The Dash address to send the payment to</translation>
+        <source>The Ion address to send the payment to</source>
+        <translation>The Ion address to send the payment to</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -3982,9 +3992,9 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>A&amp;mount:</translation>
     </message>
     <message>
-        <location line="-1053"/>
-        <source>The fee will be deducted from the amount being sent. The recipient will receive a lower amount of Dash than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
-        <translation>The fee will be deducted from the amount being sent. The recipient will receive a lower amount of Dash than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</translation>
+        <location line="-1046"/>
+        <source>The fee will be deducted from the amount being sent. The recipient will receive a lower amount of Ion than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
+        <translation>The fee will be deducted from the amount being sent. The recipient will receive a lower amount of Ion than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4003,8 +4013,8 @@ https://www.transifex.com/projects/p/dash/</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>A message that was attached to the dash: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Dash network.</source>
-        <translation>A message that was attached to the dash: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Dash network.</translation>
+        <source>A message that was attached to the ion: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</source>
+        <translation>A message that was attached to the ion: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Ion network.</translation>
     </message>
     <message>
         <location line="+433"/>
@@ -4069,14 +4079,14 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>&amp;Sign Message</translation>
     </message>
     <message>
-        <location line="+35"/>
-        <source>You can sign messages/agreements with your addresses to prove you can receive Dash sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
-        <translation>You can sign messages/agreements with your addresses to prove you can receive Dash sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</translation>
+        <location line="+6"/>
+        <source>You can sign messages/agreements with your addresses to prove you can receive Ion sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
+        <translation>You can sign messages/agreements with your addresses to prove you can receive Ion sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>The Dash address to sign the message with</source>
-        <translation>The Dash address to sign the message with</translation>
+        <source>The Ion address to sign the message with</source>
+        <translation>The Ion address to sign the message with</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -4116,9 +4126,9 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>Copy the current signature to the system clipboard</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Sign the message to prove you own this Dash address</source>
-        <translation>Sign the message to prove you own this Dash address</translation>
+        <location line="+17"/>
+        <source>Sign the message to prove you own this Ion address</source>
+        <translation>Sign the message to prove you own this Ion address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4148,13 +4158,13 @@ https://www.transifex.com/projects/p/dash/</translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>The Dash address the message was signed with</source>
-        <translation>The Dash address the message was signed with</translation>
+        <source>The Ion address the message was signed with</source>
+        <translation>The Ion address the message was signed with</translation>
     </message>
     <message>
-        <location line="+30"/>
-        <source>Verify the message to ensure it was signed with the specified Dash address</source>
-        <translation>Verify the message to ensure it was signed with the specified Dash address</translation>
+        <location line="+33"/>
+        <source>Verify the message to ensure it was signed with the specified Ion address</source>
+        <translation>Verify the message to ensure it was signed with the specified Ion address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4953,6 +4963,17 @@ https://www.transifex.com/projects/p/dash/</translation>
         <source>Send Coins</source>
         <translation>Send Coins</translation>
     </message>
+    <message>
+        <location line="-47"/>
+        <location line="+31"/>
+        <source>InstantSend doesn&apos;t support sending values that high yet. Transactions are currently limited to %1 ION.</source>
+        <translation>InstantSend doesn&apos;t support sending values that high yet. Transactions are currently limited to %1 ION.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Used way too many inputs (&gt;%1) for this InstantSend transaction, fees could be huge.</source>
+        <translation>Used way too many inputs (&gt;%1) for this InstantSend transaction, fees could be huge.</translation>
+    </message>
 </context>
 <context>
     <name>WalletView</name>
@@ -5003,9 +5024,9 @@ https://www.transifex.com/projects/p/dash/</translation>
     </message>
 </context>
 <context>
-    <name>dash-core</name>
+    <name>ion-core</name>
     <message>
-        <location filename="../dashstrings.cpp" line="+40"/>
+        <location filename="../ionstrings.cpp" line="+36"/>
         <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
         <translation>Bind to given address and always listen on it. Use [host]:port notation for IPv6</translation>
     </message>
@@ -5725,7 +5746,17 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>KeePassHttp key for AES encrypted communication with KeePass</translation>
     </message>
     <message>
-        <location line="-481"/>
+        <location line="+2"/>
+        <source>Keep at most &lt;n&gt; unconnectable transactions in memory (default: %u)</source>
+        <translation>Keep at most &lt;n&gt; unconnectable transactions in memory (default: %u)</translation>
+    </message>
+    <message>
+        <location line="-385"/>
+        <source>Disable all Ion specific functionality (Masternodes, PrivateSend, InstantSend, Governance) (0-1, default: %u)</source>
+        <translation>Disable all Ion specific functionality (Masternodes, PrivateSend, InstantSend, Governance) (0-1, default: %u)</translation>
+    </message>
+    <message>
+        <location line="-45"/>
         <source>%s file contains all private keys from this wallet. Do not share it with anyone!</source>
         <translation>%s file contains all private keys from this wallet. Do not share it with anyone!</translation>
     </message>
@@ -5780,7 +5811,17 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>If &lt;category&gt; is not supplied or if &lt;category&gt; = 1, output all debugging information.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+13"/>
+        <source>InstantSend doesn&apos;t support sending values that high yet. Transactions are currently limited to %1 ION.</source>
+        <translation>InstantSend doesn&apos;t support sending values that high yet. Transactions are currently limited to %1 ION.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>InstantSend requires inputs with at least %d confirmations, you might need to wait a few minutes and try again.</source>
+        <translation>InstantSend requires inputs with at least %d confirmations, you might need to wait a few minutes and try again.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Maintain a full address index, used to query for the balance, txids and unspent outputs for addresses (default: %u)</source>
         <translation>Maintain a full address index, used to query for the balance, txids and unspent outputs for addresses (default: %u)</translation>
     </message>
@@ -5915,9 +5956,9 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>Warning: Unknown block versions being mined! It&apos;s possible unknown rules are in effect</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <source>You need to rebuild the database using -reindex to change -timestampindex</source>
-        <translation>You need to rebuild the database using -reindex to change -timestampindex</translation>
+        <location line="+16"/>
+        <source>You are starting in lite mode, all Ion-specific functionality is disabled.</source>
+        <translation>You are starting in lite mode, all Ion-specific functionality is disabled.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -6440,9 +6481,9 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>RPC server options:</translation>
     </message>
     <message>
-        <location line="-533"/>
-        <source>Dash Core</source>
-        <translation>Dash Core</translation>
+        <location line="-486"/>
+        <source>Ion Core</source>
+        <translation>Ion Core</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6725,7 +6766,12 @@ https://www.transifex.com/projects/p/dash/</translation>
         <translation>Invalid spork address specified with -sporkaddr</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+3"/>
+        <source>Keep N ION anonymized (%u-%u, default: %u)</source>
+        <translation>Keep N ION anonymized (%u-%u, default: %u)</translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Loading P2P addresses...</source>
         <translation>Loading P2P addresses...</translation>
     </message>
