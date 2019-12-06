@@ -164,8 +164,7 @@ bool CGovernanceVote::Sign(const CKey& key, const CKeyID& keyID)
 {
     std::string strError;
 
-    // Harden Spork6 so that it is active on testnet and no other networks
-    if (Params().NetworkIDString() == CBaseChainParams::TESTNET) {
+    if (sporkManager.IsSporkActive(SPORK_14_NEW_SIGS)) {
         uint256 hash = GetSignatureHash();
 
         if (!CHashSigner::SignHash(hash, key, vchSig)) {
@@ -199,8 +198,7 @@ bool CGovernanceVote::CheckSignature(const CKeyID& keyID) const
 {
     std::string strError;
 
-    // Harden Spork6 so that it is active on testnet and no other networks
-    if (Params().NetworkIDString() == CBaseChainParams::TESTNET) {
+    if (sporkManager.IsSporkActive(SPORK_14_NEW_SIGS)) {
         uint256 hash = GetSignatureHash();
 
         if (!CHashSigner::VerifyHash(hash, keyID, vchSig, strError)) {
