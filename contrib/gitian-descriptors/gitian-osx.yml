@@ -30,7 +30,7 @@ packages:
 - "fonts-tuffy"
 - "ccache"
 remotes:
-- "url": "https://github.com/ioncoincore/ion.git"
+- "url": "https://bitbucket.org/ioncoin/ion.git"
   "dir": "ion"
 files:
 - "MacOSX10.11.sdk.tar.xz"
