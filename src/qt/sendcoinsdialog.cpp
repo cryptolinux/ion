@@ -98,7 +98,7 @@ SendCoinsDialog::SendCoinsDialog(bool _fPrivateSend, QWidget* parent) :
 
     // Ion specific
     QSettings settings;
-    //TODO remove Darksend sometime after 0.14.1
+    //TODO remove Darksend sometime after 5.0.99
     if (settings.contains("bUseDarkSend")) {
         settings.setValue("bUsePrivateSend", settings.value("bUseDarkSend").toBool());
         settings.remove("bUseDarkSend");
@@ -106,7 +106,7 @@ SendCoinsDialog::SendCoinsDialog(bool _fPrivateSend, QWidget* parent) :
     if (!settings.contains("bUsePrivateSend"))
         settings.setValue("bUsePrivateSend", false);
 
-    //TODO remove InstantX sometime after 0.14.1
+    //TODO remove InstantX sometime after 5.0.99
     if (settings.contains("bUseInstantX")) {
         settings.remove("bUseInstantX");
     }
