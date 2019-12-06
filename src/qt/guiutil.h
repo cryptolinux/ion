@@ -178,7 +178,7 @@ namespace GUIUtil
     // Open debug.log
     void openDebugLogfile();
 	
-    // Open ion.conf
+    // Open ioncoin.conf
     void openConfigfile();	
 
     // Browse backup folder

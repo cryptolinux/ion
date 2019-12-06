@@ -44,7 +44,7 @@ This allows for running iond without having to do any manual configuration.
 relative to the data directory. `wallet` *only* supports relative paths.
 
 For an example configuration file that describes the configuration settings,
-see `contrib/debian/examples/ion.conf`.
+see `contrib/debian/examples/ioncoin.conf`.
 
 Paths
 ---------------------------------
@@ -54,7 +54,7 @@ Paths
 All three configurations assume several paths that might need to be adjusted.
 
 Binary:              `/usr/bin/iond`  
-Configuration file:  `/etc/ioncore/ion.conf`  
+Configuration file:  `/etc/ioncore/ioncoin.conf`  
 Data directory:      `/var/lib/iond`  
 PID file:            `/var/run/iond/iond.pid` (OpenRC and Upstart) or `/var/lib/iond/iond.pid` (systemd)  
 Lock file:           `/var/lock/subsys/iond` (CentOS)  
@@ -68,9 +68,9 @@ can then be controlled by group membership.
 ### Mac OS X
 
 Binary:              `/usr/local/bin/iond`  
-Configuration file:  `~/Library/Application Support/IonCore/ion.conf`  
-Data directory:      `~/Library/Application Support/IonCore`
-Lock file:           `~/Library/Application Support/IonCore/.lock`
+Configuration file:  `~/Library/Application Support/ioncoin/ioncoin.conf`  
+Data directory:      `~/Library/Application Support/ioncoin`
+Lock file:           `~/Library/Application Support/ioncoin/.lock`
 
 Installing Service Configuration
 -----------------------------------
