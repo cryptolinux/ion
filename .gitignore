@@ -121,6 +121,8 @@ qa/cache/*
 
 !src/leveldb*/Makefile
 
+test/config.ini
+
 .cproject
 .project
 .autotools
