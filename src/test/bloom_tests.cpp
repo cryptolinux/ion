@@ -2,20 +2,19 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <bloom.h>
+#include "bloom.h"
 
-#include <base58.h>
-#include <clientversion.h>
-#include <key.h>
-#include <merkleblock.h>
-#include <primitives/block.h>
-#include <random.h>
-#include <serialize.h>
-#include <streams.h>
-#include <uint256.h>
-#include <util.h>
-#include <utilstrencodings.h>
-#include <test/test_dash.h>
+#include "base58.h"
+#include "clientversion.h"
+#include "key.h"
+#include "merkleblock.h"
+#include "random.h"
+#include "serialize.h"
+#include "streams.h"
+#include "uint256.h"
+#include "util.h"
+#include "utilstrencodings.h"
+#include "test/test_ion.h"
 
 #include <vector>
 
@@ -591,8 +590,12 @@ BOOST_AUTO_TEST_CASE(rolling_bloom)
         if (rb1.contains(RandomData()))
             ++nHits;
     }
-    // Expect about 100 hits
-    BOOST_CHECK_EQUAL(nHits, 75);
+    // Run test_ion with --log_level=message to see BOOST_TEST_MESSAGEs:
+    BOOST_TEST_MESSAGE("RollingBloomFilter got " << nHits << " false positives (~100 expected)");
+
+    // Insanely unlikely to get a fp count outside this range:
+    BOOST_CHECK(nHits > 25);
+    BOOST_CHECK(nHits < 175);
 
     BOOST_CHECK(rb1.contains(data[DATASIZE-1]));
     rb1.reset();

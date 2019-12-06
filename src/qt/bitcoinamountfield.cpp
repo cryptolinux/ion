@@ -20,9 +20,13 @@
  */
 static CAmount parse(const QString &text, int nUnit, bool *valid_out=0)
 {
-    CAmount val = 0;
-    bool valid = BitcoinUnits::parse(nUnit, text, &val);
-    if(valid)
+    Q_OBJECT
+
+public:
+    explicit AmountSpinBox(QWidget *parent):
+        QAbstractSpinBox(parent),
+        currentUnit(BitcoinUnits::ION),
+        singleStep(100000) // satoshis
     {
         if(val < 0 || val > BitcoinUnits::maxMoney())
             valid = false;
@@ -114,13 +118,35 @@ public:
 
     QSize minimumSizeHint() const
     {
-        ensurePolished();
-        const QFontMetrics fm(fontMetrics());
-        int h = 0;
-        int w = fm.width(BitcoinUnits::format(BitcoinUnits::DASH, BitcoinUnits::maxMoney(), false, BitcoinUnits::separatorAlways));
-        w += 2; // cursor blinking space
-        w += GUIUtil::dashThemeActive() ? 24 : 0; // counteract padding from css
-        return QSize(w, h);
+        if(cachedMinimumSizeHint.isEmpty())
+        {
+            ensurePolished();
+
+            const QFontMetrics fm(fontMetrics());
+            int h = lineEdit()->minimumSizeHint().height();
+            int w = fm.width(BitcoinUnits::format(BitcoinUnits::ION, BitcoinUnits::maxMoney(), false, BitcoinUnits::separatorAlways));
+            w += 2; // cursor blinking space
+
+            QStyleOptionSpinBox opt;
+            initStyleOption(&opt);
+            QSize hint(w, h);
+            QSize extra(35, 6);
+            opt.rect.setSize(hint + extra);
+            extra += hint - style()->subControlRect(QStyle::CC_SpinBox, &opt,
+                                                    QStyle::SC_SpinBoxEditField, this).size();
+            // get closer to final result by repeating the calculation
+            opt.rect.setSize(hint + extra);
+            extra += hint - style()->subControlRect(QStyle::CC_SpinBox, &opt,
+                                                    QStyle::SC_SpinBoxEditField, this).size();
+            hint += extra;
+            hint.setHeight(h);
+
+            opt.rect = rect();
+
+            cachedMinimumSizeHint = style()->sizeFromContents(QStyle::CT_SpinBox, &opt, hint, this)
+                                    .expandedTo(QApplication::globalStrut());
+        }
+        return cachedMinimumSizeHint;
     }
 
 private:

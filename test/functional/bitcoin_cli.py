@@ -2,7 +2,7 @@
 # Copyright (c) 2017 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test dash-cli"""
+"""Test ion-cli"""
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_equal, assert_raises_process_error, get_auth_cookie
 
@@ -15,34 +15,15 @@ class TestBitcoinCli(BitcoinTestFramework):
     def run_test(self):
         """Main test logic"""
 
-        self.log.info("Compare responses from gewalletinfo RPC and `dash-cli getwalletinfo`")
-        cli_response = self.nodes[0].cli.getwalletinfo()
-        rpc_response = self.nodes[0].getwalletinfo()
-        assert_equal(cli_response, rpc_response)
+        self.log.info("Compare responses from gewalletinfo RPC and `ion-cli getwalletinfo`")
+        cli_get_info = self.nodes[0].cli.getwalletinfo()
+        rpc_get_info = self.nodes[0].getwalletinfo()
 
-        self.log.info("Compare responses from getblockchaininfo RPC and `dash-cli getblockchaininfo`")
-        cli_response = self.nodes[0].cli.getblockchaininfo()
-        rpc_response = self.nodes[0].getblockchaininfo()
-        assert_equal(cli_response, rpc_response)
+        assert_equal(cli_get_info, rpc_get_info)
 
-        user, password = get_auth_cookie(self.nodes[0].datadir)
-
-        self.log.info("Test -stdinrpcpass option")
-        assert_equal(0, self.nodes[0].cli('-rpcuser=%s' % user, '-stdinrpcpass', input=password).getblockcount())
-        assert_raises_process_error(1, "incorrect rpcuser or rpcpassword", self.nodes[0].cli('-rpcuser=%s' % user, '-stdinrpcpass', input="foo").echo)
-
-        self.log.info("Test -stdin and -stdinrpcpass")
-        assert_equal(["foo", "bar"], self.nodes[0].cli('-rpcuser=%s' % user, '-stdin', '-stdinrpcpass', input=password + "\nfoo\nbar").echo())
-        assert_raises_process_error(1, "incorrect rpcuser or rpcpassword", self.nodes[0].cli('-rpcuser=%s' % user, '-stdin', '-stdinrpcpass', input="foo").echo)
-
-        self.log.info("Make sure that -getinfo with arguments fails")
-        assert_raises_process_error(1, "-getinfo takes no arguments", self.nodes[0].cli('-getinfo').help)
-
-        self.log.info("Compare responses from `dash-cli -getinfo` and the RPCs data is retrieved from.")
-        cli_get_info = self.nodes[0].cli('-getinfo').send_cli()
-        wallet_info = self.nodes[0].getwalletinfo()
-        network_info = self.nodes[0].getnetworkinfo()
-        blockchain_info = self.nodes[0].getblockchaininfo()
+        self.log.info("Compare responses from getblockchaininfo RPC and `ion-cli getblockchaininfo`")
+        cli_get_info = self.nodes[0].cli.getblockchaininfo()
+        rpc_get_info = self.nodes[0].getblockchaininfo()
 
         assert_equal(cli_get_info['version'], network_info['version'])
         assert_equal(cli_get_info['protocolversion'], network_info['protocolversion'])

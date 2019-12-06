@@ -4,7 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/dash-config.h>
+#include "config/ion-config.h"
 #endif
 
 #include <qt/optionsmodel.h>
@@ -75,7 +75,7 @@ void OptionsModel::Init(bool resetSettings)
 
     // Display
     if (!settings.contains("nDisplayUnit"))
-        settings.setValue("nDisplayUnit", BitcoinUnits::DASH);
+        settings.setValue("nDisplayUnit", BitcoinUnits::ION);
     nDisplayUnit = settings.value("nDisplayUnit").toInt();
 
     if (!settings.contains("strThirdPartyTxUrls"))
@@ -166,10 +166,10 @@ void OptionsModel::Init(bool resetSettings)
 
     if (!settings.contains("nPrivateSendAmount")) {
         // for migration from old settings
-        if (!settings.contains("nAnonymizeDashAmount"))
+        if (!settings.contains("nAnonymizeIonAmount"))
             settings.setValue("nPrivateSendAmount", DEFAULT_PRIVATESEND_AMOUNT);
         else
-            settings.setValue("nPrivateSendAmount", settings.value("nAnonymizeDashAmount").toInt());
+            settings.setValue("nPrivateSendAmount", settings.value("nAnonymizeIonAmount").toInt());
     }
     if (!gArgs.SoftSetArg("-privatesendamount", settings.value("nPrivateSendAmount").toString().toStdString()))
         addOverriddenOption("-privatesendamount");
@@ -250,6 +250,7 @@ void OptionsModel::Reset()
 
     // Remove all entries from our QSettings object
     settings.clear();
+    resetSettings = true; // Needed in ion.cpp during shotdown to also remove the window positions
 
     // default setting for OptionsModel::StartAtStartup - disabled
     if (GUIUtil::GetStartOnSystemStartup())

@@ -3,7 +3,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <netbase.h>
+#ifdef HAVE_CONFIG_H
+#include "config/ion-config.h"
+#endif
+
+#include "netbase.h"
 
 #include <hash.h>
 #include <sync.h>

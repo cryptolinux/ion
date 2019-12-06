@@ -8,12 +8,12 @@
 #include <test/data/base58_keys_invalid.json.h>
 #include <test/data/base58_keys_valid.json.h>
 
-#include <key.h>
-#include <script/script.h>
-#include <uint256.h>
-#include <util.h>
-#include <utilstrencodings.h>
-#include <test/test_dash.h>
+#include "key.h"
+#include "script/script.h"
+#include "uint256.h"
+#include "util.h"
+#include "utilstrencodings.h"
+#include "test/test_ion.h"
 
 #include <boost/test/unit_test.hpp>
 

@@ -3,20 +3,25 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <qt/bitcoingui.h>
+#if defined(HAVE_CONFIG_H)
+#include "config/ion-config.h"
+#endif
 
-#include <qt/bitcoinunits.h>
-#include <qt/clientmodel.h>
-#include <qt/guiconstants.h>
-#include <qt/guiutil.h>
-#include <qt/modaloverlay.h>
-#include <qt/networkstyle.h>
-#include <qt/notificator.h>
-#include <qt/openuridialog.h>
-#include <qt/optionsdialog.h>
-#include <qt/optionsmodel.h>
-#include <qt/rpcconsole.h>
-#include <qt/utilitydialog.h>
+#include "bitcoingui.h"
+
+#include "bitcoinunits.h"
+#include "clientmodel.h"
+#include "guiconstants.h"
+#include "guiutil.h"
+#include "modaloverlay.h"
+#include "networkstyle.h"
+#include "notificator.h"
+#include "openuridialog.h"
+#include "optionsdialog.h"
+#include "optionsmodel.h"
+#include "platformstyle.h"
+#include "rpcconsole.h"
+#include "utilitydialog.h"
 
 #ifdef ENABLE_WALLET
 #include <privatesend/privatesend-client.h>
@@ -391,9 +396,8 @@ void BitcoinGUI::createActions()
     overviewAction->setCheckable(true);
     tabGroup->addButton(overviewAction);
 
-    sendCoinsAction = new QToolButton(this);
-    sendCoinsAction->setText(tr("&Send"));
-    sendCoinsAction->setStatusTip(tr("Send coins to a Dash address"));
+    sendCoinsAction = new QAction(tr("&Send"), this);
+    sendCoinsAction->setStatusTip(tr("Send coins to a Ion address"));
     sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
     sendCoinsAction->setCheckable(true);
     tabGroup->addButton(sendCoinsAction);
@@ -402,20 +406,8 @@ void BitcoinGUI::createActions()
     sendCoinsMenuAction->setStatusTip(sendCoinsAction->statusTip());
     sendCoinsMenuAction->setToolTip(sendCoinsMenuAction->statusTip());
 
-    privateSendCoinsAction = new QToolButton(this);
-    privateSendCoinsAction->setText("&PrivateSend");
-    privateSendCoinsAction->setStatusTip(tr("PrivateSend coins to a Dash address"));
-    privateSendCoinsAction->setToolTip(privateSendCoinsAction->statusTip());
-    privateSendCoinsAction->setCheckable(true);
-    tabGroup->addButton(privateSendCoinsAction);
-
-    privateSendCoinsMenuAction = new QAction(privateSendCoinsAction->text(), this);
-    privateSendCoinsMenuAction->setStatusTip(privateSendCoinsAction->statusTip());
-    privateSendCoinsMenuAction->setToolTip(privateSendCoinsMenuAction->statusTip());
-
-    receiveCoinsAction = new QToolButton(this);
-    receiveCoinsAction->setText(tr("&Receive"));
-    receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and dash: URIs)"));
+    receiveCoinsAction = new QAction(tr("&Receive"), this);
+    receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and ion: URIs)"));
     receiveCoinsAction->setToolTip(receiveCoinsAction->statusTip());
     receiveCoinsAction->setCheckable(true);
     tabGroup->addButton(receiveCoinsAction);
@@ -480,8 +472,8 @@ void BitcoinGUI::createActions()
     quitAction->setStatusTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
-    aboutAction = new QAction(tr("&About %1").arg(tr(PACKAGE_NAME)), this);
-    aboutAction->setStatusTip(tr("Show information about Dash Core"));
+    aboutAction = new QAction(QIcon(":/icons/about"), tr("&About %1").arg(tr(PACKAGE_NAME)), this);
+    aboutAction->setStatusTip(tr("Show information about Ion Core"));
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutAction->setEnabled(false);
     aboutQtAction = new QAction(tr("About &Qt"), this);
@@ -503,10 +495,10 @@ void BitcoinGUI::createActions()
     unlockWalletAction = new QAction(tr("&Unlock Wallet..."), this);
     unlockWalletAction->setToolTip(tr("Unlock wallet"));
     lockWalletAction = new QAction(tr("&Lock Wallet"), this);
-    signMessageAction = new QAction(tr("Sign &message..."), this);
-    signMessageAction->setStatusTip(tr("Sign messages with your Dash addresses to prove you own them"));
-    verifyMessageAction = new QAction(tr("&Verify message..."), this);
-    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified Dash addresses"));
+    signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
+    signMessageAction->setStatusTip(tr("Sign messages with your Ion addresses to prove you own them"));
+    verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
+    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified Ion addresses"));
 
     openInfoAction = new QAction(tr("&Information"), this);
     openInfoAction->setStatusTip(tr("Show diagnostic information"));
@@ -536,12 +528,12 @@ void BitcoinGUI::createActions()
     usedReceivingAddressesAction = new QAction(tr("&Receiving addresses..."), this);
     usedReceivingAddressesAction->setStatusTip(tr("Show the list of used receiving addresses and labels"));
 
-    openAction = new QAction(tr("Open &URI..."), this);
-    openAction->setStatusTip(tr("Open a dash: URI or payment request"));
+    openAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_DirOpenIcon), tr("Open &URI..."), this);
+    openAction->setStatusTip(tr("Open a ion: URI or payment request"));
 
     showHelpMessageAction = new QAction(tr("&Command-line options"), this);
     showHelpMessageAction->setMenuRole(QAction::NoRole);
-    showHelpMessageAction->setStatusTip(tr("Show the %1 help message to get a list with possible Dash command-line options").arg(tr(PACKAGE_NAME)));
+    showHelpMessageAction->setStatusTip(tr("Show the %1 help message to get a list with possible Ion command-line options").arg(tr(PACKAGE_NAME)));
 
     showPrivateSendHelpAction = new QAction(tr("&PrivateSend information"), this);
     showPrivateSendHelpAction->setMenuRole(QAction::NoRole);
@@ -684,10 +676,14 @@ void BitcoinGUI::createToolBars()
         toolbar->setMovable(false); // remove unused icon in upper left corner
         overviewAction->setChecked(true);
 
-        QLabel *logoLabel = new QLabel();
-        logoLabel->setObjectName("lblToolbarLogo");
-        logoLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        // Add Ion logo on the right side
+        QWidget* spacer = new QWidget();
+        spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        toolbar->addWidget(spacer);
 
+        QLabel *logoLabel = new QLabel();
+        QPixmap logoPixmap(":/images/ion_logo_toolbar");
+        logoLabel->setPixmap(logoPixmap);
         toolbar->addWidget(logoLabel);
 
         /** Create additional container for toolbar and walletFrame and make it the central widget.
@@ -1103,11 +1099,8 @@ void BitcoinGUI::updateNetworkState()
         setNumBlocks(clientModel->getNumBlocks(), clientModel->getLastBlockDate(), clientModel->getLastBlockHash(), clientModel->getVerificationProgress(nullptr), false);
     }
 
-    nCountPrev = count;
-    fNetworkActivePrev = fNetworkActive;
-
-    if (fNetworkActive) {
-        labelConnectionsIcon->setToolTip(tr("%n active connection(s) to Dash network", "", count));
+    if (clientModel->getNetworkActive()) {
+        labelConnectionsIcon->setToolTip(tr("%n active connection(s) to Ion network", "", count));
     } else {
         labelConnectionsIcon->setToolTip(tr("Network activity disabled"));
         icon = "connect_4";
@@ -1394,7 +1387,7 @@ void BitcoinGUI::setAdditionalDataSyncProgress(double nSyncProgress)
 
 void BitcoinGUI::message(const QString &title, const QString &message, unsigned int style, bool *ret)
 {
-    QString strTitle = tr("Dash Core"); // default title
+    QString strTitle = tr("Ion Core"); // default title
     // Default to information icon
     int nMBoxIcon = QMessageBox::Information;
     int nNotifyIcon = Notificator::Information;
@@ -1420,7 +1413,7 @@ void BitcoinGUI::message(const QString &title, const QString &message, unsigned 
             break;
         }
     }
-    // Append title to "Dash Core - "
+    // Append title to "Ion Core - "
     if (!msgType.isEmpty())
         strTitle += " - " + msgType;
 

@@ -1247,8 +1247,8 @@ UniValue gettxout(const JSONRPCRequest& request)
             "     \"hex\" : \"hex\",        (string) \n"
             "     \"reqSigs\" : n,          (numeric) Number of required signatures\n"
             "     \"type\" : \"pubkeyhash\", (string) The type, eg pubkeyhash\n"
-            "     \"addresses\" : [          (array of string) array of dash addresses\n"
-            "        \"address\"     (string) dash address\n"
+            "     \"addresses\" : [          (array of string) array of ion addresses\n"
+            "        \"address\"     (string) ion address\n"
             "        ,...\n"
             "     ]\n"
             "  },\n"
@@ -2492,37 +2492,6 @@ UniValue scantxoutset(const JSONRPCRequest& request)
 }
 
 static const CRPCCommand commands[] =
-<<<<<<< HEAD
-{ //  category              name                      actor (function)         argNames
-  //  --------------------- ------------------------  -----------------------  ----------
-    { "blockchain",         "getblockchaininfo",      &getblockchaininfo,      {} },
-    { "blockchain",         "getchaintxstats",        &getchaintxstats,        {"nblocks", "blockhash"} },
-    { "blockchain",         "getblockstats",          &getblockstats,          {"hash_or_height", "stats"} },
-    { "blockchain",         "getbestblockhash",       &getbestblockhash,       {} },
-    { "blockchain",         "getbestchainlock",       &getbestchainlock,       {} },
-    { "blockchain",         "getblockcount",          &getblockcount,          {} },
-    { "blockchain",         "getblock",               &getblock,               {"blockhash","verbosity|verbose"} },
-    { "blockchain",         "getblockhashes",         &getblockhashes,         {"high","low"} },
-    { "blockchain",         "getblockhash",           &getblockhash,           {"height"} },
-    { "blockchain",         "getblockheader",         &getblockheader,         {"blockhash","verbose"} },
-    { "blockchain",         "getblockheaders",        &getblockheaders,        {"blockhash","count","verbose"} },
-    { "blockchain",         "getmerkleblocks",        &getmerkleblocks,        {"filter","blockhash","count"} },
-    { "blockchain",         "getchaintips",           &getchaintips,           {"count","branchlen"} },
-    { "blockchain",         "getdifficulty",          &getdifficulty,          {} },
-    { "blockchain",         "getmempoolancestors",    &getmempoolancestors,    {"txid","verbose"} },
-    { "blockchain",         "getmempooldescendants",  &getmempooldescendants,  {"txid","verbose"} },
-    { "blockchain",         "getmempoolentry",        &getmempoolentry,        {"txid"} },
-    { "blockchain",         "getmempoolinfo",         &getmempoolinfo,         {} },
-    { "blockchain",         "getrawmempool",          &getrawmempool,          {"verbose"} },
-    { "blockchain",         "getspecialtxes",         &getspecialtxes,         {"blockhash", "type", "count", "skip", "verbosity"} },
-    { "blockchain",         "gettxout",               &gettxout,               {"txid","n","include_mempool"} },
-    { "blockchain",         "gettxoutsetinfo",        &gettxoutsetinfo,        {} },
-    { "blockchain",         "pruneblockchain",        &pruneblockchain,        {"height"} },
-    { "blockchain",         "savemempool",            &savemempool,            {} },
-    { "blockchain",         "verifychain",            &verifychain,            {"checklevel","nblocks"} },
-
-    { "blockchain",         "preciousblock",          &preciousblock,          {"blockhash"} },
-=======
 { //  category              name                      actor (function)         okSafe argNames
   //  --------------------- ------------------------  -----------------------  ------ ----------
     { "blockchain",         "getblockchaininfo",      &getblockchaininfo,      true,  {} },
@@ -2552,7 +2521,6 @@ static const CRPCCommand commands[] =
 
     { "blockchain",         "preciousblock",          &preciousblock,          true,  {"blockhash"} },
     { "blockchain",         "scantxoutset",           &scantxoutset,           true,  {"action", "scanobjects"} },
->>>>>>> Blockchain/RPC: Add scantxoutset method to scan UTXO set
 
     /* Not shown in help */
     { "hidden",             "invalidateblock",        &invalidateblock,        {"blockhash"} },

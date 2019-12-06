@@ -29,17 +29,17 @@ SendCoinsEntry::SendCoinsEntry(QWidget* parent) :
     ui->addAsLabel->setPlaceholderText(tr("Enter a label for this address to add it to your address book"));
 #endif
 
-    setButtonIcons();
-
-    // normal dash address field
-    GUIUtil::setupAddressWidget(ui->payTo, this, true);
-
-    GUIUtil::setFont({ui->payToLabel,
-                     ui->labellLabel,
-                     ui->amountLabel,
-                     ui->messageLabel}, GUIUtil::FontWeight::Normal, 15);
-
-    GUIUtil::updateFonts();
+    // These icons are needed on Mac also!
+    ui->addressBookButton->setIcon(QIcon(":/icons/address-book"));
+    ui->pasteButton->setIcon(QIcon(":/icons/editpaste"));
+    ui->deleteButton->setIcon(QIcon(":/icons/remove"));
+    ui->deleteButton_is->setIcon(QIcon(":/icons/remove"));
+    ui->deleteButton_s->setIcon(QIcon(":/icons/remove"));
+      
+    // normal ion address field
+    GUIUtil::setupAddressWidget(ui->payTo, this);
+    // just a label for displaying ion address(es)
+    ui->payTo_is->setFont(GUIUtil::fixedPitchFont());
 
     // Connect signals
     connect(ui->payAmount, SIGNAL(valueChanged()), this, SIGNAL(payAmountChanged()));

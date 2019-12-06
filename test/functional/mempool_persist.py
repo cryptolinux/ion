@@ -68,8 +68,7 @@ class MempoolPersistTest(BitcoinTestFramework):
         self.stop_nodes()
         self.start_node(0)
         self.start_node(1)
-        self.start_node(2)
-        # Give dashd a second to reload the mempool
+        # Give iond a second to reload the mempool
         time.sleep(1)
         wait_until(lambda: len(self.nodes[0].getrawmempool()) == 5)
         wait_until(lambda: len(self.nodes[2].getrawmempool()) == 5)
@@ -81,7 +80,7 @@ class MempoolPersistTest(BitcoinTestFramework):
         self.log.debug("Stop-start node0 with -persistmempool=0. Verify that it doesn't load its mempool.dat file.")
         self.stop_nodes()
         self.start_node(0, extra_args=["-persistmempool=0"])
-        # Give dashd a second to reload the mempool
+        # Give iond a second to reload the mempool
         time.sleep(1)
         assert_equal(len(self.nodes[0].getrawmempool()), 0)
 

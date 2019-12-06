@@ -84,11 +84,11 @@ class BitcoinTestFramework():
 
         parser = optparse.OptionParser(usage="%prog [options]")
         parser.add_option("--nocleanup", dest="nocleanup", default=False, action="store_true",
-                          help="Leave dashds and test.* datadir on exit or error")
+                          help="Leave ionds and test.* datadir on exit or error")
         parser.add_option("--noshutdown", dest="noshutdown", default=False, action="store_true",
-                          help="Don't stop dashds after the test execution")
+                          help="Don't stop ionds after the test execution")
         parser.add_option("--srcdir", dest="srcdir", default=os.path.normpath(os.path.dirname(os.path.realpath(__file__)) + "/../../../src"),
-                          help="Source directory containing dashd/dash-cli (default: %default)")
+                          help="Source directory containing iond/ion-cli (default: %default)")
         parser.add_option("--cachedir", dest="cachedir", default=os.path.normpath(os.path.dirname(os.path.realpath(__file__)) + "/../../cache"),
                           help="Directory for caching pregenerated datadirs")
         parser.add_option("--tmpdir", dest="tmpdir", help="Root directory for datadirs")
@@ -165,9 +165,7 @@ class BitcoinTestFramework():
                 success = False
                 self.log.exception("Unexpected exception caught during shutdown")
         else:
-            for node in self.nodes:
-                node.cleanup_on_exit = False
-            self.log.info("Note: dashds were not stopped and may still be running")
+            self.log.info("Note: ionds were not stopped and may still be running")
 
         if not self.options.nocleanup and not self.options.noshutdown and success != TestStatus.FAILED:
             self.log.info("Cleaning up")
@@ -261,8 +259,8 @@ class BitcoinTestFramework():
         for i in range(num_nodes):
             self.nodes.append(TestNode(old_num_nodes + i, self.options.tmpdir, extra_args[i], self.extra_args_from_options, rpchost, timewait=timewait, binary=binary[i], stderr=stderr, mocktime=self.mocktime, coverage_dir=self.options.coveragedir, use_cli=self.options.usecli))
 
-    def start_node(self, i, *args, **kwargs):
-        """Start a dashd"""
+    def start_node(self, i, extra_args=None, stderr=None):
+        """Start a iond"""
 
         node = self.nodes[i]
 
@@ -272,8 +270,8 @@ class BitcoinTestFramework():
         if self.options.coveragedir is not None:
             coverage.write_all_rpc_commands(self.options.coveragedir, node.rpc)
 
-    def start_nodes(self, extra_args=None, stderr=None, *args, **kwargs):
-        """Start multiple dashds"""
+    def start_nodes(self, extra_args=None, stderr=None):
+        """Start multiple ionds"""
 
         if extra_args is None:
             extra_args = [None] * self.num_nodes
@@ -293,12 +291,12 @@ class BitcoinTestFramework():
                 coverage.write_all_rpc_commands(self.options.coveragedir, node.rpc)
 
     def stop_node(self, i, wait=0):
-        """Stop a dashd test node"""
+        """Stop a iond test node"""
         self.nodes[i].stop_node(wait=wait)
         self.nodes[i].wait_until_stopped()
 
     def stop_nodes(self, wait=0):
-        """Stop multiple dashd test nodes"""
+        """Stop multiple iond test nodes"""
         for node in self.nodes:
             # Issue RPC to stop nodes
             node.stop_node(wait=wait)
@@ -318,7 +316,7 @@ class BitcoinTestFramework():
                 self.start_node(i, extra_args, stderr=log_stderr, *args, **kwargs)
                 self.stop_node(i)
             except Exception as e:
-                assert 'dashd exited' in str(e)  # node must have shutdown
+                assert 'iond exited' in str(e)  # node must have shutdown
                 self.nodes[i].running = False
                 self.nodes[i].process = None
                 if expected_msg is not None:
@@ -328,9 +326,9 @@ class BitcoinTestFramework():
                         raise AssertionError("Expected error \"" + expected_msg + "\" not found in:\n" + stderr)
             else:
                 if expected_msg is None:
-                    assert_msg = "dashd should have exited with an error"
+                    assert_msg = "iond should have exited with an error"
                 else:
-                    assert_msg = "dashd should have exited with expected error " + expected_msg
+                    assert_msg = "iond should have exited with expected error " + expected_msg
                 raise AssertionError(assert_msg)
 
     def wait_for_node_exit(self, i, timeout):
@@ -405,7 +403,7 @@ class BitcoinTestFramework():
         # User can provide log level as a number or string (eg DEBUG). loglevel was caught as a string, so try to convert it to an int
         ll = int(self.options.loglevel) if self.options.loglevel.isdigit() else self.options.loglevel.upper()
         ch.setLevel(ll)
-        # Format logs the same as dashd's debug.log with microprecision (so log files can be concatenated and sorted)
+        # Format logs the same as iond's debug.log with microprecision (so log files can be concatenated and sorted)
         formatter = logging.Formatter(fmt='%(asctime)s.%(msecs)03d000 %(name)s (%(levelname)s): %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         formatter.converter = time.gmtime
         fh.setFormatter(formatter)
@@ -442,11 +440,11 @@ class BitcoinTestFramework():
                 if os.path.isdir(get_datadir_path(self.options.cachedir, i)):
                     shutil.rmtree(get_datadir_path(self.options.cachedir, i))
 
-            # Create cache directories, run dashds:
+            # Create cache directories, run ionds:
             self.set_genesis_mocktime()
             for i in range(MAX_NODES):
                 datadir = initialize_datadir(self.options.cachedir, i)
-                args = [os.getenv("DASHD", "dashd"), "-server", "-keypool=1", "-datadir=" + datadir, "-discover=0", "-mocktime="+str(GENESISTIME)]
+                args = [os.getenv("IOND", "iond"), "-server", "-keypool=1", "-datadir=" + datadir, "-discover=0", "-mocktime="+str(GENESISTIME)]
                 if i > 0:
                     args.append("-connect=127.0.0.1:" + str(p2p_port(0)))
                 if extra_args is not None:
@@ -493,7 +491,7 @@ class BitcoinTestFramework():
             from_dir = get_datadir_path(self.options.cachedir, i)
             to_dir = get_datadir_path(self.options.tmpdir, i)
             shutil.copytree(from_dir, to_dir)
-            initialize_datadir(self.options.tmpdir, i)  # Overwrite port/rpcport in dash.conf
+            initialize_datadir(self.options.tmpdir, i)  # Overwrite port/rpcport in ion.conf
 
     def _initialize_chain_clean(self):
         """Initialize empty blockchain for use by the test.
@@ -518,8 +516,8 @@ class MasternodeInfo:
         self.collateral_vout = collateral_vout
 
 
-class DashTestFramework(BitcoinTestFramework):
-    def set_dash_test_params(self, num_nodes, masterodes_count, extra_args=None, fast_dip3_enforcement=False):
+class IonTestFramework(BitcoinTestFramework):
+    def set_ion_test_params(self, num_nodes, masterodes_count, extra_args, fast_dip3_enforcement=False):
         self.mn_count = masterodes_count
         self.num_nodes = num_nodes
         self.mninfo = []
@@ -987,28 +985,25 @@ class DashTestFramework(BitcoinTestFramework):
 
         return new_quorum
 
-    def get_quorum_masternodes(self, q):
-        qi = self.nodes[0].quorum('info', 100, q)
-        result = []
-        for m in qi['members']:
-            result.append(self.get_mninfo(m['proTxHash']))
-        return result
+class ComparisonTestFramework(BitcoinTestFramework):
+    """Test framework for doing p2p comparison testing
 
-    def get_mninfo(self, proTxHash):
-        for mn in self.mninfo:
-            if mn.proTxHash == proTxHash:
-                return mn
-        return None
+    Sets up some iond binaries:
+    - 1 binary: test binary
+    - 2 binaries: 1 test binary, 1 ref binary
+    - n>2 binaries: 1 test binary, n-1 ref binaries"""
 
-    def wait_for_mnauth(self, node, count, timeout=10):
-        def test():
-            pi = node.getpeerinfo()
-            c = 0
-            for p in pi:
-                if "verified_proregtx_hash" in p and p["verified_proregtx_hash"] != "":
-                    c += 1
-            return c >= count
-        wait_until(test, timeout=timeout)
+    def set_test_params(self):
+        self.num_nodes = 2
+        self.setup_clean_chain = True
+
+    def add_options(self, parser):
+        parser.add_option("--testbinary", dest="testbinary",
+                          default=os.getenv("BITCOIND", "iond"),
+                          help="iond binary to test")
+        parser.add_option("--refbinary", dest="refbinary",
+                          default=os.getenv("BITCOIND", "iond"),
+                          help="iond binary to use for reference nodes (if any)")
 
 
 class SkipTest(Exception):

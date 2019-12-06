@@ -1,8 +1,8 @@
-Cross-compiliation of Dash Core
+Cross-compiliation of Ion Core
 ===============================
 
-Dash Core can be cross-compiled on Linux to all other supported host systems. This is done by changing
-the `HOST` parameter when building the dependencies and then specifying another `--prefix` directory when building Dash.
+Ion Core can be cross-compiled on Linux to all other supported host systems. This is done by changing
+the `HOST` parameter when building the dependencies and then specifying another `--prefix` directory when building Ion.
 
 The following instructions are only tested on Debian Stretch and Ubuntu Bionic.
 
@@ -29,7 +29,7 @@ When building the dependencies, as described in [build-generic](build-generic.md
 $ make HOST=x86_64-apple-darwin11 -j4
 ```
 
-When building Dash Core, use
+When building Ion Core, use
 
 ```bash
 $ ./configure --prefix=`pwd`/depends/x86_64-apple-darwin11
@@ -63,7 +63,7 @@ Acquire the source in the usual way:
 
 ### Building for 64-bit Windows
 
-The first step is to install the mingw-w64 cross-compilation tool chain:
+When building Ion Core, use
 
     sudo apt install g++-mingw-w64-x86-64
 
@@ -105,7 +105,7 @@ When building the dependencies, as described in [build-generic](build-generic.md
 $ make HOST=arm-linux-gnueabihf -j4
 ```
 
-When building Dash Core, use
+When building Ion Core, use
 
 ```bash
 $ ./configure --prefix=`pwd`/depends/arm-linux-gnueabihf

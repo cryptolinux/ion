@@ -39,6 +39,96 @@
 
 #include <univalue.h>
 
+/**
+ * @note Do not add or change anything in the information returned by this
+ * method. `getinfo` exists for backwards-compatibility only. It combines
+ * information from wildly different sources in the program, which is a mess,
+ * and is thus planned to be deprecated eventually.
+ *
+ * Based on the source of the information, new information should be added to:
+ * - `getblockchaininfo`,
+ * - `getnetworkinfo` or
+ * - `getwalletinfo`
+ *
+ * Or alternatively, create a specific query method for the information.
+ **/
+UniValue getinfo(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "getinfo\n"
+            "\nDEPRECATED. Returns an object containing various state info.\n"
+            "\nResult:\n"
+            "{\n"
+            "  \"deprecation-warning\": \"...\" (string) warning that the getinfo command is deprecated and will be removed in a future version\n"
+            "  \"version\": xxxxx,           (numeric) the server version\n"
+            "  \"protocolversion\": xxxxx,   (numeric) the protocol version\n"
+            "  \"walletversion\": xxxxx,     (numeric) the wallet version\n"
+            "  \"balance\": xxxxxxx,         (numeric) the total ion balance of the wallet\n"
+            "  \"privatesend_balance\": xxxxxx, (numeric) the anonymized ion balance of the wallet\n"
+            "  \"blocks\": xxxxxx,           (numeric) the current number of blocks processed in the server\n"
+            "  \"timeoffset\": xxxxx,        (numeric) the time offset\n"
+            "  \"connections\": xxxxx,       (numeric) the number of connections\n"
+            "  \"proxy\": \"host:port\",       (string, optional) the proxy used by the server\n"
+            "  \"difficulty\": xxxxxx,       (numeric) the current difficulty\n"
+            "  \"testnet\": true|false,      (boolean) if the server is using testnet or not\n"
+            "  \"keypoololdest\": xxxxxx,    (numeric) the timestamp (seconds since Unix epoch) of the oldest pre-generated key in the key pool\n"
+            "  \"keypoolsize\": xxxx,        (numeric) how many new keys are pre-generated\n"
+            "  \"unlocked_until\": ttt,      (numeric) the timestamp in seconds since epoch (midnight Jan 1 1970 GMT) that the wallet is unlocked for transfers, or 0 if the wallet is locked\n"
+            "  \"paytxfee\": x.xxxx,         (numeric) the transaction fee set in " + CURRENCY_UNIT + "/kB\n"
+            "  \"relayfee\": x.xxxx,         (numeric) minimum relay fee for transactions in " + CURRENCY_UNIT + "/kB\n"
+            "  \"errors\": \"...\"             (string) any error messages\n"
+            "}\n"
+            "\nExamples:\n"
+            + HelpExampleCli("getinfo", "")
+            + HelpExampleRpc("getinfo", "")
+        );
+
+#ifdef ENABLE_WALLET
+    CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
+
+    LOCK2(cs_main, pwallet ? &pwallet->cs_wallet : nullptr);
+#else
+    LOCK(cs_main);
+#endif
+
+    proxyType proxy;
+    GetProxy(NET_IPV4, proxy);
+
+    UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("deprecation-warning", "WARNING: getinfo is deprecated and will be fully removed in a future version."
+        " Projects should transition to using getblockchaininfo, getnetworkinfo, and getwalletinfo."));
+    obj.push_back(Pair("version", CLIENT_VERSION));
+    obj.push_back(Pair("protocolversion", PROTOCOL_VERSION));
+#ifdef ENABLE_WALLET
+    if (pwallet) {
+        obj.push_back(Pair("walletversion", pwallet->GetVersion()));
+        obj.push_back(Pair("balance",       ValueFromAmount(pwallet->GetBalance())));
+        obj.push_back(Pair("privatesend_balance",       ValueFromAmount(pwallet->GetAnonymizedBalance())));
+    }
+#endif
+    obj.push_back(Pair("blocks",        (int)chainActive.Height()));
+    obj.push_back(Pair("timeoffset",    GetTimeOffset()));
+    if(g_connman)
+        obj.push_back(Pair("connections",   (int)g_connman->GetNodeCount(CConnman::CONNECTIONS_ALL)));
+    obj.push_back(Pair("proxy",         (proxy.IsValid() ? proxy.proxy.ToStringIPPort() : std::string())));
+    obj.push_back(Pair("difficulty",    (double)GetDifficulty()));
+    obj.push_back(Pair("testnet",       Params().NetworkIDString() == CBaseChainParams::TESTNET));
+#ifdef ENABLE_WALLET
+    if (pwallet) {
+        obj.push_back(Pair("keypoololdest", pwallet->GetOldestKeyPoolTime()));
+        obj.push_back(Pair("keypoolsize",   (int)pwallet->GetKeyPoolSize()));
+    }
+    if (pwallet && pwallet->IsCrypted()) {
+        obj.push_back(Pair("unlocked_until", pwallet->nRelockTime));
+    }
+    obj.push_back(Pair("paytxfee",      ValueFromAmount(payTxFee.GetFeePerK())));
+#endif
+    obj.push_back(Pair("relayfee",      ValueFromAmount(::minRelayTxFee.GetFeePerK())));
+    obj.push_back(Pair("errors",        GetWarnings("statusbar")));
+    return obj;
+}
+
 UniValue debug(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() != 1)
@@ -49,7 +139,7 @@ UniValue debug(const JSONRPCRequest& request)
             "libevent logging is configured on startup and cannot be modified by this RPC during runtime.\n"
             "There are also a few meta-categories:\n"
             " - \"all\", \"1\" and \"\" activate all categories at once;\n"
-            " - \"dash\" activates all Dash-specific categories at once;\n"
+            " - \"ion\" activates all Ion-specific categories at once;\n"
             " - \"none\" (or \"0\") deactivates all categories at once.\n"
             "Note: If specified category doesn't match any of the above, no error is thrown.\n"
             "\nArguments:\n"
@@ -57,8 +147,8 @@ UniValue debug(const JSONRPCRequest& request)
             "\nResult:\n"
             "  result               (string) \"Debug mode: \" followed by the specified category.\n"
             "\nExamples:\n"
-            + HelpExampleCli("debug", "dash")
-            + HelpExampleRpc("debug", "dash+net")
+            + HelpExampleCli("debug", "ion")
+            + HelpExampleRpc("debug", "ion+net")
         );
 
     std::string strMode = request.params[0].get_str();
@@ -240,13 +330,13 @@ UniValue validateaddress(const JSONRPCRequest& request)
     if (request.fHelp || request.params.size() != 1)
         throw std::runtime_error(
             "validateaddress \"address\"\n"
-            "\nReturn information about the given dash address.\n"
+            "\nReturn information about the given ion address.\n"
             "\nArguments:\n"
-            "1. \"address\"     (string, required) The dash address to validate\n"
+            "1. \"address\"     (string, required) The ion address to validate\n"
             "\nResult:\n"
             "{\n"
             "  \"isvalid\" : true|false,       (boolean) If the address is valid or not. If not, this is the only property returned.\n"
-            "  \"address\" : \"address\", (string) The dash address validated\n"
+            "  \"address\" : \"address\", (string) The ion address validated\n"
             "  \"scriptPubKey\" : \"hex\",       (string) The hex encoded scriptPubKey generated by the address\n"
             "  \"ismine\" : true|false,        (boolean) If the address is yours or not\n"
             "  \"iswatchonly\" : true|false,   (boolean) If the address is watchonly\n"
@@ -334,6 +424,70 @@ UniValue validateaddress(const JSONRPCRequest& request)
 // Needed even with !ENABLE_WALLET, to pass (ignored) pointers around
 class CWallet;
 
+/**
+ * Used by addmultisigaddress / createmultisig:
+ */
+CScript _createmultisig_redeemScript(CWallet * const pwallet, const UniValue& params)
+{
+    int nRequired = params[0].get_int();
+    const UniValue& keys = params[1].get_array();
+
+    // Gather public keys
+    if (nRequired < 1)
+        throw std::runtime_error("a multisignature address must require at least one key to redeem");
+    if ((int)keys.size() < nRequired)
+        throw std::runtime_error(
+            strprintf("not enough keys supplied "
+                      "(got %u keys, but need at least %d to redeem)", keys.size(), nRequired));
+    if (keys.size() > 16)
+        throw std::runtime_error("Number of addresses involved in the multisignature address creation > 16\nReduce the number");
+    std::vector<CPubKey> pubkeys;
+    pubkeys.resize(keys.size());
+    for (unsigned int i = 0; i < keys.size(); i++)
+    {
+        const std::string& ks = keys[i].get_str();
+#ifdef ENABLE_WALLET
+        // Case 1: Ion address and we have full public key:
+        CBitcoinAddress address(ks);
+        if (pwallet && address.IsValid()) {
+            CKeyID keyID;
+            if (!address.GetKeyID(keyID))
+                throw std::runtime_error(
+                    strprintf("%s does not refer to a key",ks));
+            CPubKey vchPubKey;
+            if (!pwallet->GetPubKey(keyID, vchPubKey)) {
+                throw std::runtime_error(
+                    strprintf("no full public key for address %s",ks));
+            }
+            if (!vchPubKey.IsFullyValid())
+                throw std::runtime_error(" Invalid public key: "+ks);
+            pubkeys[i] = vchPubKey;
+        }
+
+        // Case 2: hex public key
+        else
+#endif
+        if (IsHex(ks))
+        {
+            CPubKey vchPubKey(ParseHex(ks));
+            if (!vchPubKey.IsFullyValid())
+                throw std::runtime_error(" Invalid public key: "+ks);
+            pubkeys[i] = vchPubKey;
+        }
+        else
+        {
+            throw std::runtime_error(" Invalid public key: "+ks);
+        }
+    }
+    CScript result = GetScriptForMultisig(nRequired, pubkeys);
+
+    if (result.size() > MAX_SCRIPT_ELEMENT_SIZE)
+        throw std::runtime_error(
+                strprintf("redeemScript exceeds size limit: %d > %d", result.size(), MAX_SCRIPT_ELEMENT_SIZE));
+
+    return result;
+}
+
 UniValue createmultisig(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() < 2 || request.params.size() > 2)
@@ -345,10 +499,10 @@ UniValue createmultisig(const JSONRPCRequest& request)
             "transition to using addmultisigaddress to create multisig addresses with addresses known\n"
             "to the wallet before upgrading to v0.17. To use the deprecated functionality, start dashd with -deprecatedrpc=createmultisig\n"
             "\nArguments:\n"
-            "1. nrequired                    (numeric, required) The number of required signatures out of the n keys or addresses.\n"
-            "2. \"keys\"                       (string, required) A json array of hex-encoded public keys\n"
+            "1. nrequired      (numeric, required) The number of required signatures out of the n keys or addresses.\n"
+            "2. \"keys\"       (string, required) A json array of keys which are ion addresses or hex-encoded public keys\n"
             "     [\n"
-            "       \"key\"                    (string) The hex-encoded public key\n"
+            "       \"key\"    (string) ion address or hex-encoded public key\n"
             "       ,...\n"
             "     ]\n"
 
@@ -406,7 +560,7 @@ UniValue verifymessage(const JSONRPCRequest& request)
             "verifymessage \"address\" \"signature\" \"message\"\n"
             "\nVerify a signed message\n"
             "\nArguments:\n"
-            "1. \"address\"         (string, required) The dash address to use for the signature.\n"
+            "1. \"address\"         (string, required) The ion address to use for the signature.\n"
             "2. \"signature\"       (string, required) The signature provided by the signer in base 64 encoding (see signmessage).\n"
             "3. \"message\"         (string, required) The message that was signed.\n"
             "\nResult:\n"
@@ -1108,14 +1262,13 @@ UniValue logging(const JSONRPCRequest& request)
         throw std::runtime_error(
             "logging ( <include> <exclude> )\n"
             "Gets and sets the logging configuration.\n"
-            "When called without an argument, returns the list of categories with status that are currently being debug logged or not.\n"
-            "When called with arguments, adds or removes categories from debug logging and return the lists above.\n"
-            "The arguments are evaluated in order \"include\", \"exclude\".\n"
-            "If an item is both included and excluded, it will thus end up being excluded.\n"
-            "The valid logging categories are: " + ListLogCategories() + "\n"
-            "In addition, the following are available as category names with special meanings:\n"
-            "  - \"all\",  \"1\" : represent all logging categories.\n"
-            "  - \"dash\" activates all Dash-specific categories at once.\n"
+            "When called without an argument, returns the list of categories that are currently being debug logged.\n"
+            "When called with arguments, adds or removes categories from debug logging.\n"
+            "The valid logging categories are: " + ListLogCategories() + ".\n"
+            "libevent logging is configured on startup and cannot be modified by this RPC during runtime.\n"
+            "There are also a few meta-categories:\n"
+            " - \"all\", \"1\" and \"\" activate all categories at once;\n"
+            " - \"ion\" activates all Ion-specific categories at once.\n"
             "To deactivate all categories at once you can specify \"all\" in <exclude>.\n"
             "  - \"none\", \"0\" : even if other logging categories are specified, ignore all of them.\n"
             "\nArguments:\n"
@@ -1217,9 +1370,9 @@ static const CRPCCommand commands[] =
     { "addressindex",       "getaddresstxids",        &getaddresstxids,        {"addresses"} },
     { "addressindex",       "getaddressbalance",      &getaddressbalance,      {"addresses"} },
 
-    /* Dash features */
-    { "dash",               "mnsync",                 &mnsync,                 {} },
-    { "dash",               "spork",                  &spork,                  {"arg0","value"} },
+    /* Ion features */
+    { "ion",               "mnsync",                 &mnsync,                 true,  {} },
+    { "ion",               "spork",                  &spork,                  true,  {"value"} },
 
     /* Not shown in help */
     { "hidden",             "setmocktime",            &setmocktime,            {"timestamp"}},

@@ -430,10 +430,20 @@ CAmount CPrivateSend::DenominationToAmount(int nDenom)
         return -1;
     }
 
-    if ((nDenom & (nDenom - 1)) != 0) {
-        // non-denom
-        return -2;
-    }
+    return nDenom;
+}
+
+bool CPrivateSend::GetDenominationsBits(int nDenom, std::vector<int>& vecBitsRet)
+{
+    // ( bit on if present, 4 denominations example )
+    // bit 0 - 100ION+1
+    // bit 1 - 10ION+1
+    // bit 2 - 1ION+1
+    // bit 3 - .1ION+1
+
+    int nMaxDenoms = vecStandardDenominations.size();
+
+    if (nDenom >= (1 << nMaxDenoms)) return false;
 
     CAmount nDenomAmount{-3};
 

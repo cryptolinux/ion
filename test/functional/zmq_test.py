@@ -9,15 +9,15 @@ import struct
 
 from codecs import encode
 
-from test_framework.mininode import dashhash
+from test_framework.mininode import ionhash
 from test_framework.test_framework import BitcoinTestFramework, SkipTest
 from test_framework.util import (assert_equal,
                                  bytes_to_hex_str,
                                  hash256,
                                 )
 
-def dashhash_helper(b):
-    return encode(dashhash(b)[::-1], 'hex_codec').decode('ascii')
+def ionhash_helper(b):
+    return encode(ionhash(b)[::-1], 'hex_codec').decode('ascii')
 
 class ZMQSubscriber:
     def __init__(self, socket, topic):
@@ -49,14 +49,14 @@ class ZMQTest (BitcoinTestFramework):
         except ImportError:
             raise SkipTest("python3-zmq module not available.")
 
-        # Check that dash has been built with ZMQ enabled.
+        # Check that ion has been built with ZMQ enabled
         config = configparser.ConfigParser()
         if not self.options.configfile:
             self.options.configfile = os.path.abspath(os.path.join(os.path.dirname(__file__), "../config.ini"))
         config.read_file(open(self.options.configfile))
 
         if not config["components"].getboolean("ENABLE_ZMQ"):
-            raise SkipTest("dashd has not been built with zmq enabled.")
+            raise SkipTest("iond has not been built with zmq enabled.")
 
         # Initialize ZMQ context and socket.
         # All messages are received in the same socket which means
@@ -93,23 +93,71 @@ class ZMQTest (BitcoinTestFramework):
         genhashes = self.nodes[0].generate(num_blocks)
         self.sync_all()
 
-        for x in range(num_blocks):
-            # Should receive the coinbase txid.
-            txid = self.hashtx.receive()
+        self.log.info("Wait for tx")
+        msg = self.zmqSubSocket.recv_multipart()
+        topic = msg[0]
+        assert_equal(topic, b"hashtx")
+        txhash = msg[1]
+        msgSequence = struct.unpack('<I', msg[-1])[-1]
+        assert_equal(msgSequence, 0)  # must be sequence 0 on hashtx
 
-            # Should receive the coinbase raw transaction.
-            hex = self.rawtx.receive()
-            assert_equal(hash256(hex), txid)
+        # rawtx
+        msg = self.zmqSubSocket.recv_multipart()
+        topic = msg[0]
+        assert_equal(topic, b"rawtx")
+        body = msg[1]
+        msgSequence = struct.unpack('<I', msg[-1])[-1]
+        assert_equal(msgSequence, 0) # must be sequence 0 on rawtx
 
-            # Should receive the generated block hash.
-            hash = bytes_to_hex_str(self.hashblock.receive())
-            assert_equal(genhashes[x], hash)
-            # The block should only have the coinbase txid.
-            assert_equal([bytes_to_hex_str(txid)], self.nodes[1].getblock(hash)["tx"])
+        # Check that the rawtx hashes to the hashtx
+        assert_equal(hash256(body), txhash)
 
-            # Should receive the generated raw block.
-            block = self.rawblock.receive()
-            assert_equal(genhashes[x], dashhash_helper(block[:80]))
+        self.log.info("Wait for block")
+        msg = self.zmqSubSocket.recv_multipart()
+        topic = msg[0]
+        assert_equal(topic, b"hashblock")
+        body = msg[1]
+        msgSequence = struct.unpack('<I', msg[-1])[-1]
+        assert_equal(msgSequence, 0)  # must be sequence 0 on hashblock
+        blkhash = bytes_to_hex_str(body)
+        assert_equal(genhashes[0], blkhash)  # blockhash from generate must be equal to the hash received over zmq
+
+        # rawblock
+        msg = self.zmqSubSocket.recv_multipart()
+        topic = msg[0]
+        assert_equal(topic, b"rawblock")
+        body = msg[1]
+        msgSequence = struct.unpack('<I', msg[-1])[-1]
+        assert_equal(msgSequence, 0) #must be sequence 0 on rawblock
+
+        # Check the hash of the rawblock's header matches generate
+        assert_equal(genhashes[0], ionhash_helper(body[:80]))
+
+        self.log.info("Generate 10 blocks (and 10 coinbase txes)")
+        n = 10
+        genhashes = self.nodes[1].generate(n)
+        self.sync_all()
+
+        zmqHashes = []
+        zmqRawHashed = []
+        blockcount = 0
+        for x in range(n * 4):
+            msg = self.zmqSubSocket.recv_multipart()
+            topic = msg[0]
+            body = msg[1]
+            if topic == b"hashblock":
+                zmqHashes.append(bytes_to_hex_str(body))
+                msgSequence = struct.unpack('<I', msg[-1])[-1]
+                assert_equal(msgSequence, blockcount + 1)
+                blockcount += 1
+            if topic == b"rawblock":
+                zmqRawHashed.append(ionhash_helper(body[:80]))
+                msgSequence = struct.unpack('<I', msg[-1])[-1]
+                assert_equal(msgSequence, blockcount)
+
+        for x in range(n):
+            assert_equal(genhashes[x], zmqHashes[x])  # blockhash from generate must be equal to the hash received over zmq
+            assert_equal(genhashes[x], zmqRawHashed[x])
 
         self.log.info("Wait for tx from second node")
         payment_txid = self.nodes[1].sendtoaddress(self.nodes[0].getnewaddress(), 1.0)

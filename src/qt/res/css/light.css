@@ -609,20 +609,17 @@ QTableView::item { /* Table Item */
     border-color: #c7c7c7;
 }
 
-QTableView::item:selected { /* Table Item Selected */
-    background-color: #d2d2d2;
-    border-color: #d2d2d2;
-    color: #555;
+/* About Ion Dialog */
+QDialog#AboutDialog {
+background-color:#F8F6F6;
 }
 
-/******************************************************
-QTableWidget
-******************************************************/
+QDialog#AboutDialog QLabel#label, QDialog#AboutDialog QLabel#copyrightLabel, QDialog#AboutDialog QLabel#label_2 { /* About Ion Contents */
+margin-left:10px;
+}
 
-.QTableWidget {
-    background-color: #eaeaec;
-    border-color: #dcdcdc;
-    color: #555;
+QDialog#AboutDialog QLabel#label_2 { /* Margin for About Ion text */
+margin-right:10px;
 }
 
 /******************************************************

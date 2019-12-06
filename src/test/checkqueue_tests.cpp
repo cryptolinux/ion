@@ -6,8 +6,8 @@
 #include <utiltime.h>
 #include <validation.h>
 
-#include <test/test_dash.h>
-#include <checkqueue.h>
+#include "test/test_ion.h"
+#include "checkqueue.h"
 #include <boost/test/unit_test.hpp>
 #include <boost/thread.hpp>
 #include <atomic>

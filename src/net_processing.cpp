@@ -56,7 +56,7 @@
 #include <llmq/quorums_signing_shares.h>
 
 #if defined(NDEBUG)
-# error "Dash Core cannot be compiled without assertions."
+# error "Ion Core cannot be compiled without assertions."
 #endif
 
 /** Maximum number of in-flight objects from a peer */
@@ -1303,7 +1303,7 @@ bool static AlreadyHave(const CInv& inv) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
         return mapBlockIndex.count(inv.hash);
 
     /*
-        Dash Related Inventory Messages
+        Ion Related Inventory Messages
 
         --
 

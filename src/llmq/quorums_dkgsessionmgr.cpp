@@ -41,6 +41,9 @@ void CDKGSessionManager::StartThreads()
     for (auto& it : dkgSessionHandlers) {
         it.second.StartThread();
     }
+
+    messageHandlerPool.resize(2);
+    RenameThreadPool(messageHandlerPool, "ion-q-msg");
 }
 
 void CDKGSessionManager::StopThreads()

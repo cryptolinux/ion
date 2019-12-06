@@ -91,9 +91,24 @@ builder-image:
     - echo PULL_REQUEST=$PULL_REQUEST COMMIT_RANGE=$COMMIT_RANGE HOST_SRC_DIR=$HOST_SRC_DIR CACHE_DIR=$CACHE_DIR
     - echo "Commit log:" && git log --format=fuller -1
 
-.build-template:
-  stage: build
-  extends: .base-template
+    # Build ion_hash
+    - git clone https://github.com/ionpay/ion_hash
+    - cd ion_hash && python3 setup.py install
+
+    # Install build target specific packages
+    - echo PACKAGES=$PACKAGES
+    - if [ -n "$DPKG_ADD_ARCH" ]; then dpkg --add-architecture "$DPKG_ADD_ARCH" ; fi
+    - if [ -n "$PACKAGES" ]; then apt-get update && apt-get install -y --no-install-recommends --no-upgrade $PACKAGES; fi
+
+    # Move apt packages into cache
+    - mv /var/cache/apt/archives/* $CACHE_DIR/apt/ || true
+
+    # Make mingw use correct threading libraries
+    - update-alternatives --set i686-w64-mingw32-gcc /usr/bin/i686-w64-mingw32-gcc-posix || true
+    - update-alternatives --set i686-w64-mingw32-g++  /usr/bin/i686-w64-mingw32-g++-posix || true
+    - update-alternatives --set x86_64-w64-mingw32-gcc  /usr/bin/x86_64-w64-mingw32-gcc-posix || true
+    - update-alternatives --set x86_64-w64-mingw32-g++  /usr/bin/x86_64-w64-mingw32-g++-posix || true
+
   script:
     - ./ci/build_src.sh
     - ./ci/test_unittests.sh # Run unit tests in build stage to avoid creating too many parallel jobs

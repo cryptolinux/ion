@@ -108,7 +108,7 @@ EXPECTED_HOLDER_NAMES = [
     "Jan-Klaas Kollhof\n",
     "Sam Rushing\n",
     "ArtForz -- public domain half-a-node\n",
-    "The Dash Core developers\n",
+    "The Ion Core developers\n",
 ]
 
 DOMINANT_STYLE_COMPILED = {}
@@ -281,7 +281,7 @@ Usage:
     $ ./copyright_header.py report <base_directory> [verbose]
 
 Arguments:
-    <base_directory> - The base directory of a Dash Core source code repository.
+    <base_directory> - The base directory of a Ion Core source code repository.
     [verbose] - Includes a list of every file of each subcategory in the report.
 """
 
@@ -344,7 +344,7 @@ def write_file_lines(filename, file_lines):
 COPYRIGHT = 'Copyright \(c\)'
 YEAR = "20[0-9][0-9]"
 YEAR_RANGE = '(%s)(-%s)?' % (YEAR, YEAR)
-HOLDER = 'The Dash Core developers'
+HOLDER = 'The Ion Core developers'
 UPDATEABLE_LINE_COMPILED = re.compile(' '.join([COPYRIGHT, YEAR_RANGE, HOLDER]))
 
 def get_updatable_copyright_line(file_lines):
@@ -412,7 +412,7 @@ def exec_update_header_year(base_directory):
 ################################################################################
 
 UPDATE_USAGE = """
-Updates all the copyright headers of "The Dash Core developers" which were
+Updates all the copyright headers of "The Ion Core developers" which were
 changed in a year more recent than is listed. For example:
 
 // Copyright (c) <firstYear>-<lastYear> The Dash Core developers
@@ -437,7 +437,7 @@ Usage:
     $ ./copyright_header.py update <base_directory>
 
 Arguments:
-    <base_directory> - The base directory of Dash Core source code repository.
+    <base_directory> - The base directory of Ion Core source code repository.
 """
 
 def print_file_action_message(filename, action):
@@ -525,7 +525,7 @@ def insert_cpp_header(filename, file_lines, start_year, end_year):
 def exec_insert_header(filename, style):
     file_lines = read_file_lines(filename)
     if file_already_has_core_copyright(file_lines):
-        sys.exit('*** %s already has a copyright by The Dash Core developers'
+        sys.exit('*** %s already has a copyright by The Ion Core developers'
                  % (filename))
     start_year, end_year = get_git_change_year_range(filename)
     if style == 'python':
@@ -538,7 +538,7 @@ def exec_insert_header(filename, style):
 ################################################################################
 
 INSERT_USAGE = """
-Inserts a copyright header for "The Dash Core developers" at the top of the
+Inserts a copyright header for "The Ion Core developers" at the top of the
 file in either Python or C++ style as determined by the file extension. If the
 file is a Python file and it has a '#!' starting the first line, the header is
 inserted in the line below it.
@@ -552,14 +552,14 @@ where <year_introduced> is according to the 'git log' history. If
 
 "<current_year>"
 
-If the file already has a copyright for "The Dash Core developers", the
+If the file already has a copyright for "The Ion Core developers", the
 script will exit.
 
 Usage:
     $ ./copyright_header.py insert <file>
 
 Arguments:
-    <file> - A source file in the Dash Core repository.
+    <file> - A source file in the Ion Core repository.
 """
 
 def insert_cmd(argv):
@@ -584,7 +584,7 @@ def insert_cmd(argv):
 ################################################################################
 
 USAGE = """
-copyright_header.py - utilities for managing copyright headers of 'The Dash
+copyright_header.py - utilities for managing copyright headers of 'The Ion
 Core developers' in repository source files.
 
 Usage:
