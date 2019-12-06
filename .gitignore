@@ -81,8 +81,14 @@ libconftest.dylib*
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
+<<<<<<< HEAD
+dash-qt
+Dash-Qt.app
+background.tiff*
+=======
 ion-qt
 Ion-Qt.app
+>>>>>>> update .gitignore
 !/depends/Makefile
 
 # Unit-tests
