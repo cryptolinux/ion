@@ -11,7 +11,7 @@ packages:
 - "libtool"
 - "pkg-config"
 remotes:
-- "url": "https://github.com/ionpay/ion-detached-sigs.git"
+- "url": "https://bitbucket.org/ioncoin/ion-detached-sigs.git"
   "dir": "signature"
 files:
 - "osslsigncode-1.7.1.tar.gz"

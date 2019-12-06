@@ -704,7 +704,7 @@ std::string HelpMessage(HelpMessageMode mode)
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/ionpay/ion>";
+    const std::string URL_SOURCE_CODE = "<https://bitbucket.org/ioncoin/ion>";
     const std::string URL_WEBSITE = "<https://ion.org>";
 
     return CopyrightHolders(_("Copyright (C)"), 2014, COPYRIGHT_YEAR) + "\n" +
@@ -1866,7 +1866,7 @@ bool AppInitMain()
     }
 
     if((!fLiteMode && fTxIndex == false)
-       && chainparams.NetworkIDString() != CBaseChainParams::REGTEST) { // TODO remove this when pruning is fixed. See https://github.com/ionpay/ion/pull/1817 and https://github.com/ionpay/ion/pull/1743
+       && chainparams.NetworkIDString() != CBaseChainParams::REGTEST) { // TODO remove this when pruning is fixed. See https://bitbucket.org/ioncoin/ion/pull/1817 and https://bitbucket.org/ioncoin/ion/pull/1743
         return InitError(_("Transaction index can't be disabled in full mode. Either start with -litemode command line switch or enable transaction index."));
     }
 

@@ -32,7 +32,7 @@ packages:
 - "libxkbcommon0"
 - "ccache"
 remotes:
-- "url": "https://github.com/ionpay/ion.git"
+- "url": "https://bitbucket.org/ioncoin/ion.git"
   "dir": "ion"
 files: []
 script: |
