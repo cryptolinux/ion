@@ -33,6 +33,8 @@
 
 #include <atomic>
 
+#include "xion/zerocoindb.h"
+
 class CBlockIndex;
 class CBlockTreeDB;
 class CChainParams;
