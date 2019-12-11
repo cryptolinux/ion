@@ -1,6 +1,21 @@
-.deps/
-INSTALL
-Makefile
+*.sublime-project
+*.sublime-workspace
+todo.txt
+reset-files.bash
+
+*.tar.gz
+
+*.exe
+src/ion
+src/iond
+src/ion-cli
+src/ion-tx
+src/test/test_ion
+src/test/test_ion_fuzzy
+src/qt/test/test_ion-qt
+src/bench/bench_ion
+
+# autoreconf
 Makefile.in
 aclocal.m4
 autom4te.cache/
