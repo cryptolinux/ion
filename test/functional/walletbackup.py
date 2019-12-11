@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-<<<<<<< HEAD
-# Copyright (c) 2014-2017 The Bitcoin Core developers
-=======
 # Copyright (c) 2014-2016 The Bitcoin Core developers
->>>>>>> merge fix old ion with new
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test the wallet backup features.
@@ -58,11 +54,7 @@ class WalletBackupTest(BitcoinTestFramework):
     def one_send(self, from_node, to_address):
         if (randint(1,2) == 1):
             amount = Decimal(randint(1,10)) / Decimal(10)
-<<<<<<< HEAD
-            self.nodes[from_node].sendtoaddress(to_address, float(amount))
-=======
             self.nodes[from_node].sendtoaddress(to_address, amount)
->>>>>>> merge fix old ion with new
 
     def do_one_round(self):
         a0 = self.nodes[0].getnewaddress()
@@ -113,15 +105,9 @@ class WalletBackupTest(BitcoinTestFramework):
         self.nodes[3].generate(100)
         sync_blocks(self.nodes)
 
-<<<<<<< HEAD
-        assert_equal(self.nodes[0].getbalance(), 23)
-        assert_equal(self.nodes[1].getbalance(), 23)
-        assert_equal(self.nodes[2].getbalance(), 23)
-=======
         assert_equal(self.nodes[0].getbalance(), 500)
         assert_equal(self.nodes[1].getbalance(), 500)
         assert_equal(self.nodes[2].getbalance(), 500)
->>>>>>> merge fix old ion with new
         assert_equal(self.nodes[3].getbalance(), 0)
 
         self.log.info("Creating transactions")
@@ -153,13 +139,8 @@ class WalletBackupTest(BitcoinTestFramework):
         total = balance0 + balance1 + balance2 + balance3
 
         # At this point, there are 214 blocks (103 for setup, then 10 rounds, then 101.)
-<<<<<<< HEAD
-        # 114 are mature, so the sum of all wallets should be 114 * 250 = 28500.
-        assert_equal(total, 16401656)
-=======
         # 114 are mature, so the sum of all wallets should be 114 * 500 = 57000.
         assert_equal(total, 57000)
->>>>>>> merge fix old ion with new
 
         ##
         # Test restoring spender wallets from backups

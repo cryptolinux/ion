@@ -2,13 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-<<<<<<< HEAD
-#include <chainparams.h>
-#include <validation.h>
-=======
 #include "chainparams.h"
 #include "validation.h"
->>>>>>> merge fix old ion with new
 
 #include "test/test_ion.h"
 

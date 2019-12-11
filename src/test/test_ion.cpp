@@ -2,11 +2,6 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-<<<<<<< HEAD
-#include "test_ion.h"
-
-=======
->>>>>>> merge fix old ion with new
 #include "test_ion.h"
 
 #include "chainparams.h"
@@ -145,52 +140,6 @@ TestChainSetup::TestChainSetup(int blockCount) : TestingSetup(CBaseChainParams::
     }
 }
 
-<<<<<<< HEAD
-CBlock TestChainSetup::CreateBlock(const std::vector<CMutableTransaction>& txns, const CScript& scriptPubKey)
-{
-    const CChainParams& chainparams = Params();
-    std::unique_ptr<CBlockTemplate> pblocktemplate = BlockAssembler(chainparams).CreateNewBlock(scriptPubKey);
-    CBlock& block = pblocktemplate->block;
-
-    std::vector<CTransactionRef> llmqCommitments;
-    for (const auto& tx : block.vtx) {
-        if (tx->nVersion == 3 && tx->nType == TRANSACTION_QUORUM_COMMITMENT) {
-            llmqCommitments.emplace_back(tx);
-        }
-    }
-
-    // Replace mempool-selected txns with just coinbase plus passed-in txns:
-    block.vtx.resize(1);
-    // Re-add quorum commitments
-    block.vtx.insert(block.vtx.end(), llmqCommitments.begin(), llmqCommitments.end());
-    for (const CMutableTransaction& tx : txns)
-        block.vtx.push_back(MakeTransactionRef(tx));
-
-    // Manually update CbTx as we modified the block here
-    if (block.vtx[0]->nType == TRANSACTION_COINBASE) {
-        LOCK(cs_main);
-        CCbTx cbTx;
-        if (!GetTxPayload(*block.vtx[0], cbTx)) {
-            BOOST_ASSERT(false);
-        }
-        CValidationState state;
-        if (!CalcCbTxMerkleRootMNList(block, chainActive.Tip(), cbTx.merkleRootMNList, state)) {
-            BOOST_ASSERT(false);
-        }
-        if (!CalcCbTxMerkleRootQuorums(block, chainActive.Tip(), cbTx.merkleRootQuorums, state)) {
-            BOOST_ASSERT(false);
-        }
-        CMutableTransaction tmpTx = *block.vtx[0];
-        SetTxPayload(tmpTx, cbTx);
-        block.vtx[0] = MakeTransactionRef(tmpTx);
-    }
-
-    // IncrementExtraNonce creates a valid coinbase and merkleRoot
-    unsigned int extraNonce = 0;
-    IncrementExtraNonce(&block, chainActive.Tip(), extraNonce);
-
-    while (!CheckProofOfWork(block.GetHash(), block.nBits, chainparams.GetConsensus())) ++block.nNonce;
-=======
 //
 // Create a new block with just given transactions, coinbase paying to
 // scriptPubKey, and try to add it to the current chain.
@@ -203,22 +152,11 @@ TestChainSetup::CreateAndProcessBlock(const std::vector<CMutableTransaction>& tx
 
     std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(block);
     ProcessNewBlock(chainparams, shared_pblock, true, nullptr);
->>>>>>> merge fix old ion with new
 
     CBlock result = block;
     return result;
 }
 
-<<<<<<< HEAD
-CBlock TestChainSetup::CreateBlock(const std::vector<CMutableTransaction>& txns, const CKey& scriptKey)
-{
-    CScript scriptPubKey = CScript() <<  ToByteVector(coinbaseKey.GetPubKey()) << OP_CHECKSIG;
-    return CreateBlock(txns, scriptPubKey);
-}
-
-TestChainSetup::~TestChainSetup()
-{
-=======
 CBlock TestChainSetup::CreateAndProcessBlock(const std::vector<CMutableTransaction>& txns, const CKey& scriptKey)
 {
     CScript scriptPubKey = CScript() <<  ToByteVector(coinbaseKey.GetPubKey()) << OP_CHECKSIG;
@@ -282,7 +220,6 @@ CBlock TestChainSetup::CreateBlock(const std::vector<CMutableTransaction>& txns,
 
 TestChainSetup::~TestChainSetup()
 {
->>>>>>> merge fix old ion with new
 }
 
 
@@ -293,9 +230,5 @@ CTxMemPoolEntry TestMemPoolEntryHelper::FromTx(const CMutableTransaction &tx) {
 
 CTxMemPoolEntry TestMemPoolEntryHelper::FromTx(const CTransaction &txn) {
     return CTxMemPoolEntry(MakeTransactionRef(txn), nFee, nTime, nHeight,
-<<<<<<< HEAD
-                           spendsGenerated, sigOpCount, lp);
-=======
                            spendsCoinbase, sigOpCount, lp);
->>>>>>> merge fix old ion with new
 }

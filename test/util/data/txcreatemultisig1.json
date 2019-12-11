@@ -17,13 +17,8 @@
                 "reqSigs": 2,
                 "type": "multisig",
                 "addresses": [
-<<<<<<< HEAD
-                    "XqV6rHmzCyFUKF2jSVg8ZkZ7oRhGLVxifK",
-                    "XqDjpPyN61bMZAZsVbYyvouVzgV59oSmWp",
-=======
                     "XqV6rHmzCyFUKF2jSVg8ZkZ7oRhGLVxifK", 
                     "XqDjpPyN61bMZAZsVbYyvouVzgV59oSmWp", 
->>>>>>> merge fix old ion with new
                     "Xe2kRBG5ZEn8T34TqvvPKwQwHEzVL9WvxH"
                 ]
             }

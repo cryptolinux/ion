@@ -6,16 +6,11 @@
 #include "support/allocators/zeroafterfree.h"
 #include "test/test_ion.h"
 
-<<<<<<< HEAD
-#include <boost/test/unit_test.hpp>
-
-=======
 #include <boost/assign/std/vector.hpp> // for 'operator+=()'
 #include <boost/test/unit_test.hpp>
 
 using namespace boost::assign; // bring 'operator+=()' into scope
 
->>>>>>> merge fix old ion with new
 BOOST_FIXTURE_TEST_SUITE(streams_tests, BasicTestingSetup)
 
 BOOST_AUTO_TEST_CASE(streams_vector_writer)
@@ -85,26 +80,14 @@ BOOST_AUTO_TEST_CASE(streams_serializedata_xor)
 
     // Degenerate case
     
-<<<<<<< HEAD
-    key.push_back('\x00');
-    key.push_back('\x00');
-=======
     key += '\x00','\x00';
->>>>>>> merge fix old ion with new
     ds.Xor(key);
     BOOST_CHECK_EQUAL(
             std::string(expected_xor.begin(), expected_xor.end()), 
             std::string(ds.begin(), ds.end()));
 
-<<<<<<< HEAD
-    in.push_back('\x0f');
-    in.push_back('\xf0');
-    expected_xor.push_back('\xf0');
-    expected_xor.push_back('\x0f');
-=======
     in += '\x0f','\xf0';
     expected_xor += '\xf0','\x0f';
->>>>>>> merge fix old ion with new
     
     // Single character key
 
@@ -112,11 +95,7 @@ BOOST_AUTO_TEST_CASE(streams_serializedata_xor)
     ds.insert(ds.begin(), in.begin(), in.end());
     key.clear();
 
-<<<<<<< HEAD
-    key.push_back('\xff');
-=======
     key += '\xff';
->>>>>>> merge fix old ion with new
     ds.Xor(key);
     BOOST_CHECK_EQUAL(
             std::string(expected_xor.begin(), expected_xor.end()), 
@@ -126,26 +105,14 @@ BOOST_AUTO_TEST_CASE(streams_serializedata_xor)
 
     in.clear();
     expected_xor.clear();
-<<<<<<< HEAD
-    in.push_back('\xf0');
-    in.push_back('\x0f');
-    expected_xor.push_back('\x0f');
-    expected_xor.push_back('\x00');
-=======
     in += '\xf0','\x0f';
     expected_xor += '\x0f','\x00';
->>>>>>> merge fix old ion with new
                         
     ds.clear();
     ds.insert(ds.begin(), in.begin(), in.end());
 
     key.clear();
-<<<<<<< HEAD
-    key.push_back('\xff');
-    key.push_back('\x0f');
-=======
     key += '\xff','\x0f';
->>>>>>> merge fix old ion with new
 
     ds.Xor(key);
     BOOST_CHECK_EQUAL(
