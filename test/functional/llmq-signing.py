@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2020 The Dash Core developers
+# Copyright (c) 2015-2018 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -32,12 +32,12 @@ class LLMQSigningTest(IonTestFramework):
         msgHashConflict = "0000000000000000000000000000000000000000000000000000000000000003"
 
         def check_sigs(hasrecsigs, isconflicting1, isconflicting2):
-            for node in self.nodes:
-                if node.quorum("hasrecsig", 100, id, msgHash) != hasrecsigs:
+            for mn in self.mninfo:
+                if mn.node.quorum("hasrecsig", 100, id, msgHash) != hasrecsigs:
                     return False
-                if node.quorum("isconflicting", 100, id, msgHash) != isconflicting1:
+                if mn.node.quorum("isconflicting", 100, id, msgHash) != isconflicting1:
                     return False
-                if node.quorum("isconflicting", 100, id, msgHashConflict) != isconflicting2:
+                if mn.node.quorum("isconflicting", 100, id, msgHashConflict) != isconflicting2:
                     return False
             return True
 
@@ -67,8 +67,6 @@ class LLMQSigningTest(IonTestFramework):
         self.mninfo[2].node.quorum("sign", 100, id, msgHash)
         wait_for_sigs(True, False, True, 15)
 
-        recsig_time = self.mocktime
-
         # Mine one more quorum, so that we have 2 active ones, nothing should change
         self.mine_quorum()
         assert_sigs_nochange(True, False, True, 3)
@@ -78,12 +76,14 @@ class LLMQSigningTest(IonTestFramework):
         self.mine_quorum()
         assert_sigs_nochange(True, False, True, 3)
 
-        # fast forward until 0.5 days before cleanup is expected, recovered sig should still be valid
-        self.bump_mocktime(recsig_time + int(60 * 60 * 24 * 6.5) - self.mocktime)
+        # fast forward 6.5 days, recovered sig should still be valid
+        self.bump_mocktime(int(60 * 60 * 24 * 6.5))
+        set_node_times(self.nodes, self.mocktime)
         # Cleanup starts every 5 seconds
         wait_for_sigs(True, False, True, 15)
         # fast forward 1 day, recovered sig should not be valid anymore
         self.bump_mocktime(int(60 * 60 * 24 * 1))
+        set_node_times(self.nodes, self.mocktime)
         # Cleanup starts every 5 seconds
         wait_for_sigs(False, False, False, 15)
 
@@ -92,27 +92,6 @@ class LLMQSigningTest(IonTestFramework):
         for i in range(2, 5):
             self.mninfo[i].node.quorum("sign", 100, id, msgHash)
         wait_for_sigs(True, False, True, 15)
-
-        if self.options.spork21:
-            id = "0000000000000000000000000000000000000000000000000000000000000002"
-
-            # Isolate the node that is responsible for the recovery of a signature and assert that recovery fails
-            q = self.nodes[0].quorum('selectquorum', 100, id)
-            mn = self.get_mninfo(q['recoveryMembers'][0])
-            mn.node.setnetworkactive(False)
-            wait_until(lambda: mn.node.getconnectioncount() == 0)
-            for i in range(4):
-                self.mninfo[i].node.quorum("sign", 100, id, msgHash)
-            assert_sigs_nochange(False, False, False, 3)
-            # Need to re-connect so that it later gets the recovered sig
-            mn.node.setnetworkactive(True)
-            connect_nodes(mn.node, 0)
-            # Make sure node0 has received qsendrecsigs from the previously isolated node
-            mn.node.ping()
-            wait_until(lambda: all('pingwait' not in peer for peer in mn.node.getpeerinfo()))
-            # Let 2 seconds pass so that the next node is used for recovery, which should succeed
-            self.bump_mocktime(2)
-            wait_for_sigs(True, False, True, 2)
 
 if __name__ == '__main__':
     LLMQSigningTest().main()

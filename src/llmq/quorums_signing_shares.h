@@ -5,17 +5,17 @@
 #ifndef ION_QUORUMS_SIGNING_SHARES_H
 #define ION_QUORUMS_SIGNING_SHARES_H
 
-#include <bls/bls.h>
-#include <chainparams.h>
-#include <net.h>
-#include <random.h>
-#include <saltedhasher.h>
-#include <serialize.h>
-#include <sync.h>
-#include <tinyformat.h>
-#include <uint256.h>
+#include "bls/bls.h"
+#include "chainparams.h"
+#include "net.h"
+#include "random.h"
+#include "saltedhasher.h"
+#include "serialize.h"
+#include "sync.h"
+#include "tinyformat.h"
+#include "uint256.h"
 
-#include <llmq/quorums.h>
+#include "llmq/quorums.h"
 
 #include <thread>
 #include <mutex>
@@ -30,6 +30,7 @@ namespace llmq
 // <signHash, quorumMember>
 typedef std::pair<uint256, uint16_t> SigShareKey;
 
+// this one does not get transmitted over the wire as it is batched inside CBatchedSigShares
 class CSigShare
 {
 public:
@@ -52,22 +53,6 @@ public:
     {
         assert(!key.first.IsNull());
         return key.first;
-    }
-
-    ADD_SERIALIZE_METHODS
-
-    template<typename Stream, typename Operation>
-    inline void SerializationOp(Stream& s, Operation ser_action) {
-        READWRITE(llmqType);
-        READWRITE(quorumHash);
-        READWRITE(quorumMember);
-        READWRITE(id);
-        READWRITE(msgHash);
-        READWRITE(sigShare);
-
-        if (ser_action.ForRead()) {
-            UpdateKey();
-        }
     }
 };
 
@@ -119,7 +104,6 @@ public:
     void Init(size_t size);
     bool IsSet(uint16_t quorumMember) const;
     void Set(uint16_t quorumMember, bool v);
-    void SetAll(bool v);
     void Merge(const CSigSharesInv& inv2);
 
     size_t CountSet() const;
@@ -342,20 +326,10 @@ public:
     void RemoveSession(const uint256& signHash);
 };
 
-class CSignedSession
-{
-public:
-    CSigShare sigShare;
-    CQuorumCPtr quorum;
-
-    int64_t nextAttemptTime{0};
-    int attempt{0};
-};
-
 class CSigSharesManager : public CRecoveredSigsListener
 {
-    static const int64_t SESSION_NEW_SHARES_TIMEOUT = 60;
-    static const int64_t SIG_SHARE_REQUEST_TIMEOUT = 5;
+    static const int64_t SESSION_NEW_SHARES_TIMEOUT = 60 * 1000;
+    static const int64_t SIG_SHARE_REQUEST_TIMEOUT = 5 * 1000;
 
     // we try to keep total message size below 10k
     const size_t MAX_MSGS_CNT_QSIGSESANN = 100;
@@ -364,10 +338,6 @@ class CSigSharesManager : public CRecoveredSigsListener
     // 400 is the maximum quorum size, so this is also the maximum number of sigs we need to support
     const size_t MAX_MSGS_TOTAL_BATCHED_SIGS = 400;
 
-    const int64_t EXP_SEND_FOR_RECOVERY_TIMEOUT = 2000;
-    const int64_t MAX_SEND_FOR_RECOVERY_TIMEOUT = 10000;
-    const size_t MAX_MSGS_SIG_SHARES = 32;
-
 private:
     CCriticalSection cs;
 
@@ -375,7 +345,6 @@ private:
     CThreadInterrupt workInterrupt;
 
     SigShareMap<CSigShare> sigShares;
-    std::unordered_map<uint256, CSignedSession, StaticSaltedHasher> signedSessions;
 
     // stores time of last receivedSigShare. Used to detect timeouts
     std::unordered_map<uint256, int64_t, StaticSaltedHasher> timeSeenForSessions;
@@ -407,11 +376,8 @@ public:
 
     void AsyncSign(const CQuorumCPtr& quorum, const uint256& id, const uint256& msgHash);
     void Sign(const CQuorumCPtr& quorum, const uint256& id, const uint256& msgHash);
-    void ForceReAnnouncement(const CQuorumCPtr& quorum, Consensus::LLMQType llmqType, const uint256& id, const uint256& msgHash);
 
     void HandleNewRecoveredSig(const CRecoveredSig& recoveredSig);
-
-    static CDeterministicMNCPtr SelectMemberForRecovery(const CQuorumCPtr& quorum, const uint256& id, int attempt);
 
 private:
     // all of these return false when the currently processed message should be aborted (as each message actually contains multiple messages)
@@ -419,7 +385,6 @@ private:
     bool ProcessMessageSigSharesInv(CNode* pfrom, const CSigSharesInv& inv, CConnman& connman);
     bool ProcessMessageGetSigShares(CNode* pfrom, const CSigSharesInv& inv, CConnman& connman);
     bool ProcessMessageBatchedSigShares(CNode* pfrom, const CBatchedSigShares& batchedSigShares, CConnman& connman);
-    void ProcessMessageSigShare(NodeId fromId, const CSigShare& sigShare, CConnman& connman);
 
     bool VerifySigSharesInv(NodeId from, Consensus::LLMQType llmqType, const CSigSharesInv& inv);
     bool PreVerifyBatchedSigShares(NodeId nodeId, const CSigSharesNodeState::SessionInfo& session, const CBatchedSigShares& batchedSigShares, bool& retBan);
@@ -450,7 +415,6 @@ private:
     bool SendMessages();
     void CollectSigSharesToRequest(std::unordered_map<NodeId, std::unordered_map<uint256, CSigSharesInv, StaticSaltedHasher>>& sigSharesToRequest);
     void CollectSigSharesToSend(std::unordered_map<NodeId, std::unordered_map<uint256, CBatchedSigShares, StaticSaltedHasher>>& sigSharesToSend);
-    void CollectSigSharesToSendConcentrated(std::unordered_map<NodeId, std::vector<CSigShare>>& sigSharesToSend, const std::vector<CNode*>& vNodes);
     void CollectSigSharesToAnnounce(std::unordered_map<NodeId, std::unordered_map<uint256, CSigSharesInv, StaticSaltedHasher>>& sigSharesToAnnounce);
     bool SignPendingSigShares();
     void WorkThreadMain();

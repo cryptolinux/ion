@@ -5,13 +5,13 @@
 
 #include <script/sigcache.h>
 
-#include <memusage.h>
-#include <pubkey.h>
-#include <random.h>
-#include <uint256.h>
-#include <util.h>
+#include "memusage.h"
+#include "pubkey.h"
+#include "random.h"
+#include "uint256.h"
+#include "util.h"
 
-#include <cuckoocache.h>
+#include "cuckoocache.h"
 #include <boost/thread.hpp>
 
 namespace {
@@ -51,22 +51,11 @@ public:
     void Set(uint256& entry)
     {
         boost::unique_lock<boost::shared_mutex> lock(cs_sigcache);
-
-        while (static_cast<int64_t>(setValid.size()) > nMaxCacheSize)
-        {
-            // Evict a random entry. Random because that helps
-            // foil would-be DoS attackers who might try to pre-generate
-            // and re-use a set of valid signatures just-slightly-greater
-            // than our cache size.
-            uint256 randomHash = GetRandHash();
-            std::set<sigdata_type>::iterator it = setValid.lower_bound(sigdata_type(randomHash));
-            if (it == setValid.end())
-                it = setValid.begin();
-            setValid.erase(*it);
-        }
-
-        sigdata_type k(hash, vchSig, pubKey);
-        setValid.insert(k);
+        setValid.insert(entry);
+    }
+    uint32_t setup_bytes(size_t n)
+    {
+        return setValid.setup_bytes(n);
     }
 };
 

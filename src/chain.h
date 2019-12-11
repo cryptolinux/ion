@@ -1,23 +1,45 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_CHAIN_H
 #define BITCOIN_CHAIN_H
 
-#include "chainparams.h"
-#include "pow.h"
+#include "arith_uint256.h"
 #include "primitives/block.h"
+#include "pow.h"
 #include "tinyformat.h"
 #include "uint256.h"
-#include "util.h"
-#include "libzerocoin/Denominations.h"
 
 #include <vector>
 
+/**
+ * Maximum amount of time that a block timestamp is allowed to exceed the
+ * current network-adjusted time before the block will be accepted.
+ */
+static const int64_t MAX_FUTURE_BLOCK_TIME = 2 * 60 * 60;
+
+/**
+ * Timestamp window used as a grace period by code that compares external
+ * timestamps (such as timestamps passed to RPCs, or wallet key creation times)
+ * to block timestamps. This should be set at least as high as
+ * MAX_FUTURE_BLOCK_TIME.
+ */
+static const int64_t TIMESTAMP_WINDOW = MAX_FUTURE_BLOCK_TIME;
+
+class CBlockFileInfo
+{
+public:
+    unsigned int nBlocks;      //!< number of blocks stored in file
+    unsigned int nSize;        //!< number of used bytes of block file
+    unsigned int nUndoSize;    //!< number of used bytes in the undo file
+    unsigned int nHeightFirst; //!< lowest height of block in file
+    unsigned int nHeightLast;  //!< highest height of block in file
+    uint64_t nTimeFirst;       //!< earliest time of block in file
+    uint64_t nTimeLast;        //!< latest time of block in file
+
+    ADD_SERIALIZE_METHODS;
 
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action) {
@@ -181,12 +203,6 @@ public:
     //! Change to 64-bit type when necessary; won't happen before 2030
     unsigned int nChainTx;
 
-    //! Number of XDM transactions in this block.
-    //! Note: in a potential headers-first mode, this number cannot be relied upon until after full block validation
-    unsigned int nXDMTransactions;
-    //! (memory only) Number of XDM transactions in the chain up to and including this block.
-    unsigned int nChainXDMTransactions;
-
     //! Verification status of this block. See enum BlockStatus
     uint32_t nStatus;
 
@@ -200,13 +216,18 @@ public:
     uint64_t nStakeModifier;             // hash modifier for proof-of-stake
     uint256 nStakeModifierV2;
     unsigned int nStakeModifierChecksum; // checksum of index; in-memeory only
-    COutPoint prevoutStake;
-    unsigned int nStakeTime;
-    uint256 hashProofOfStake;
-    int64_t nMint;
-    int64_t nMoneySupply;
-    uint256 nStakeModifierV2;
 
+    //! zerocoin specific fields
+    std::map<libzerocoin::CoinDenomination, int64_t> mapZerocoinSupply;
+    std::vector<libzerocoin::CoinDenomination> vMintDenominationsInBlock;
+
+    //! ATP specific fields
+    //! Number of XDM transactions in this block.
+    //! Note: in a potential headers-first mode, this number cannot be relied upon until after full block validation
+    unsigned int nXDMTransactions;
+
+    //! (memory only) Number of XDM transactions in the chain up to and including this block.
+    unsigned int nChainXDMTransactions;
     int64_t nXDMSupply;
 
     //! block header
@@ -218,11 +239,10 @@ public:
     uint256 nAccumulatorCheckpoint;
 
     //! (memory only) Sequential id assigned to distinguish order in which blocks are received.
-    uint32_t nSequenceId;
+    int32_t nSequenceId;
 
-    //! zerocoin specific fields
-    std::map<libzerocoin::CoinDenomination, int64_t> mapZerocoinSupply;
-    std::vector<libzerocoin::CoinDenomination> vMintDenominationsInBlock;
+    //! (memory only) Maximum nTime in the chain upto and including this block.
+    unsigned int nTimeMax;
 
     void SetNull()
     {
@@ -236,15 +256,10 @@ public:
         nChainWork = arith_uint256();
         nTx = 0;
         nChainTx = 0;
-        nXDMTransactions = 0;
-        nChainXDMTransactions = 0;
         nStatus = 0;
         nSequenceId = 0;
         nTimeMax = 0;
 
-        nMint = 0;
-        nMoneySupply = 0;
-        nXDMSupply = 0;
         nFlags = 0;
 
         nStakeModifier = 0;
@@ -274,23 +289,17 @@ public:
         SetNull();
     }
 
-    explicit CBlockIndex(const CBlockHeader& block)
+    CBlockIndex(const CBlockHeader& block)
     {
         SetNull();
 
         nVersion       = block.nVersion;
         hashMerkleRoot = block.hashMerkleRoot;
-        nTime = block.nTime;
-        nBits = block.nBits;
-        nNonce = block.nNonce;
+        nTime          = block.nTime;
+        nBits          = block.nBits;
+        nNonce         = block.nNonce;
         if(block.nVersion > 7)
             nAccumulatorCheckpoint = block.nAccumulatorCheckpoint;
-
-        if (block.IsProofOfStake()) {
-            SetProofOfStake();
-            prevoutStake = block.vtx[1].vin[0].prevout;
-            nStakeTime = block.nTime;
-        }
     }
 
     CDiskBlockPos GetBlockPos() const {
@@ -325,40 +334,6 @@ public:
         return block;
     }
 
-    int64_t GetZerocoinSupply() const
-    {
-        int64_t nTotal = 0;
-        for (auto& denom : libzerocoin::zerocoinDenomList) {
-            nTotal += GetZcMintsAmount(denom);
-        }
-        return nTotal;
-    }
-
-    /**
-     * Total of mints added to the specific accumulator.
-     * @param denom
-     * @return
-     */
-    int64_t GetZcMints(libzerocoin::CoinDenomination denom) const
-    {
-        return mapZerocoinSupply.at(denom);
-    }
-
-    /**
-     * Total available amount in an specific denom.
-     * @param denom
-     * @return
-     */
-    int64_t GetZcMintsAmount(libzerocoin::CoinDenomination denom) const
-    {
-        return libzerocoin::ZerocoinDenominationToAmount(denom) * GetZcMints(denom);
-    }
-
-    bool MintedDenomination(libzerocoin::CoinDenomination denom) const
-    {
-        return std::find(vMintDenominationsInBlock.begin(), vMintDenominationsInBlock.end(), denom) != vMintDenominationsInBlock.end();
-    }
-
     uint256 GetBlockHash() const
     {
         return *phashBlock;
@@ -374,7 +349,7 @@ public:
         return (int64_t)nTimeMax;
     }
 
-    static constexpr int nMedianTimeSpan = 11;
+    enum { nMedianTimeSpan=11 };
 
     int64_t GetMedianTimePast() const
     {
@@ -405,14 +380,7 @@ public:
         nFlags |= BLOCK_PROOF_OF_STAKE;
     }
 
-    unsigned int GetStakeEntropyBit() const
-    {
-        unsigned int nEntropyBit = ((GetBlockHash().Get64()) & 1);
-        if (GetBoolArg("-printstakemodifier", false))
-            LogPrintf("GetStakeEntropyBit: nHeight=%u hashBlock=%s nEntropyBit=%u\n", nHeight, GetBlockHash().ToString().c_str(), nEntropyBit);
-
-        return nEntropyBit;
-    }
+    unsigned int GetStakeEntropyBit() const;
 
     bool SetStakeEntropyBit(unsigned int nEntropyBit)
     {
@@ -454,9 +422,9 @@ public:
     }
 
     /**
-     * Returns true if there are nRequired or more blocks of minVersion or above
-     * in the last Params().ToCheckBlockUpgradeMajority() blocks, starting at pstart
-     * and going backwards.
+     * Total available amount in an specific denom.
+     * @param denom
+     * @return
      */
     int64_t GetZcMintsAmount(libzerocoin::CoinDenomination denom) const
     {
@@ -526,9 +494,9 @@ public:
         hashPrev = uint256();
     }
 
-    explicit CDiskBlockIndex(const CBlockIndex* pindex) : CBlockIndex(*pindex)
-    {
-        hashPrev = (pprev ? pprev->GetBlockHash() : uint256(0));
+    explicit CDiskBlockIndex(const CBlockIndex* pindex) : CBlockIndex(*pindex) {
+        hash = (hash == uint256() ? pindex->GetBlockHash() : hash);
+        hashPrev = (pprev ? pprev->GetBlockHash() : uint256());
     }
 
     ADD_SERIALIZE_METHODS;
@@ -549,27 +517,8 @@ public:
         if (nStatus & BLOCK_HAVE_UNDO)
             READWRITE(VARINT(nUndoPos));
 
-
-        READWRITE(nMint);
-        READWRITE(nMoneySupply);
-        READWRITE(nFlags);
-
-        // v1/v2 modifier selection.
-        if (!Params().IsStakeModifierV2(nHeight)) {
-            READWRITE(nStakeModifier);
-        } else {
-            READWRITE(nStakeModifierV2);
-        }
-
-        if (IsProofOfStake()) {
-            READWRITE(prevoutStake);
-            READWRITE(nStakeTime);
-        } else {
-            const_cast<CDiskBlockIndex*>(this)->prevoutStake.SetNull();
-            const_cast<CDiskBlockIndex*>(this)->nStakeTime = 0;
-            const_cast<CDiskBlockIndex*>(this)->hashProofOfStake = uint256();
-        }
-
+        // block hash
+        READWRITE(hash);
         // block header
         READWRITE(this->nVersion);
         READWRITE(hashPrev);
@@ -577,16 +526,21 @@ public:
         READWRITE(nTime);
         READWRITE(nBits);
         READWRITE(nNonce);
+
+        READWRITE(VARINT(nFlags));
         if(this->nVersion > 7) {
             READWRITE(nAccumulatorCheckpoint);
             READWRITE(mapZerocoinSupply);
             READWRITE(vMintDenominationsInBlock);
         }
-        if(this->nVersion > 10) {
-            READWRITE(VARINT(nXDMTransactions));
-            READWRITE(VARINT(nXDMSupply));
+        // v1/v2 modifier selection.
+        if (this->nVersion > 10) {
+            READWRITE(nStakeModifierV2);
+        } else {
+            READWRITE(nStakeModifier);
         }
-
+        READWRITE(VARINT(nXDMTransactions));
+        READWRITE(VARINT(nXDMSupply));
     }
 
     uint256 GetBlockHash() const

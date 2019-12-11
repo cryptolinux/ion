@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <support/lockedpool.h>
-#include <support/cleanse.h>
+#include "support/lockedpool.h"
+#include "support/cleanse.h"
 
 #if defined(HAVE_CONFIG_H)
 #include "config/ion-config.h"
@@ -27,7 +27,6 @@
 #endif
 
 #include <algorithm>
-#include <memory>
 
 LockedPoolManager* LockedPoolManager::_instance = nullptr;
 std::once_flag LockedPoolManager::init_flag;

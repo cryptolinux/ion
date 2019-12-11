@@ -12,24 +12,13 @@
 #include <stdint.h>
 #include <string.h>
 
-#include <compat/endian.h>
+#include "compat/endian.h"
 
 uint16_t static inline ReadLE16(const unsigned char* ptr)
 {
     uint16_t x;
     memcpy((char*)&x, ptr, 2);
     return le16toh(x);
-}
-
-uint32_t static inline ReadLE16(const unsigned char* ptr)
-{
-#if HAVE_DECL_LE16TOH == 1
-    return le16toh(*((uint16_t*)ptr));
-#elif !defined(WORDS_BIGENDIAN)
-    return *((uint16_t*)ptr);
-#else
-    return ((uint16_t)ptr[1] << 8 | (uint16_t)ptr[0]);
-#endif
 }
 
 uint32_t static inline ReadLE32(const unsigned char* ptr)
@@ -50,18 +39,6 @@ void static inline WriteLE16(unsigned char* ptr, uint16_t x)
 {
     uint16_t v = htole16(x);
     memcpy(ptr, (char*)&v, 2);
-}
-
-void static inline WriteLE16(unsigned char* ptr, uint16_t x)
-{
-#if HAVE_DECL_HTOLE16 == 1
-    *((uint16_t*)ptr) = htole16(x);
-#elif !defined(WORDS_BIGENDIAN)
-    *((uint16_t*)ptr) = x;
-#else
-    ptr[1] = x >> 8;
-    ptr[0] = x;
-#endif
 }
 
 void static inline WriteLE32(unsigned char* ptr, uint32_t x)
@@ -105,12 +82,12 @@ void static inline WriteBE64(unsigned char* ptr, uint64_t x)
 /** Return the smallest number n such that (x >> n) == 0 (or 64 if the highest bit in x is set. */
 uint64_t static inline CountBits(uint64_t x)
 {
-#if HAVE_DECL___BUILTIN_CLZL
+#ifdef HAVE_DECL___BUILTIN_CLZL
     if (sizeof(unsigned long) >= sizeof(uint64_t)) {
         return x ? 8 * sizeof(unsigned long) - __builtin_clzl(x) : 0;
     }
 #endif
-#if HAVE_DECL___BUILTIN_CLZLL
+#ifdef HAVE_DECL___BUILTIN_CLZLL
     if (sizeof(unsigned long long) >= sizeof(uint64_t)) {
         return x ? 8 * sizeof(unsigned long long) - __builtin_clzll(x) : 0;
     }

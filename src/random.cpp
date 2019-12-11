@@ -5,9 +5,10 @@
 
 #include <random.h>
 
+#include "crypto/sha512.h"
 #include "support/cleanse.h"
 #ifdef WIN32
-#include <compat.h> // for Windows API
+#include "compat.h" // for Windows API
 #include <wincrypt.h>
 #endif
 #include "util.h"             // for LogPrint()
@@ -22,13 +23,33 @@
 #include <sys/time.h>
 #endif
 
+#ifdef HAVE_SYS_GETRANDOM
+#include <sys/syscall.h>
+#include <linux/random.h>
+#endif
+#if defined(HAVE_GETENTROPY) || (defined(HAVE_GETENTROPY_RAND) && defined(MAC_OSX))
+#include <unistd.h>
+#endif
+#if defined(HAVE_GETENTROPY_RAND) && defined(MAC_OSX)
+#include <sys/random.h>
+#endif
+#ifdef HAVE_SYSCTL_ARND
+#include <sys/sysctl.h>
+#endif
+
+#include <mutex>
+
+#if defined(__x86_64__) || defined(__amd64__) || defined(__i386__)
+#include <cpuid.h>
+#endif
+
 #include <openssl/err.h>
 #include <openssl/rand.h>
 
-[[noreturn]] static void RandFailure()
+static void RandFailure()
 {
     LogPrintf("Failed to read randomness, aborting\n");
-    std::abort();
+    abort();
 }
 
 static inline int64_t GetPerformanceCounter()
@@ -134,7 +155,7 @@ static void RandAddSeedPerfmon()
     const size_t nMaxSize = 10000000; // Bail out at more than 10MB of performance data
     while (true) {
         nSize = vData.size();
-        ret = RegQueryValueExA(HKEY_PERFORMANCE_DATA, "Global", NULL, NULL, vData.data(), &nSize);
+        ret = RegQueryValueExA(HKEY_PERFORMANCE_DATA, "Global", nullptr, nullptr, vData.data(), &nSize);
         if (ret != ERROR_MORE_DATA || vData.size() >= nMaxSize)
             break;
         vData.resize(std::max((vData.size() * 3) / 2, nMaxSize)); // Grow size of buffer exponentially
@@ -143,7 +164,7 @@ static void RandAddSeedPerfmon()
     if (ret == ERROR_SUCCESS) {
         RAND_add(vData.data(), nSize, nSize / 100.0);
         memory_cleanse(vData.data(), nSize);
-        LogPrint("rand", "%s: %lu bytes\n", __func__, nSize);
+        LogPrint(BCLog::RANDOM, "%s: %lu bytes\n", __func__, nSize);
     } else {
         static bool warned = false; // Warn only once
         if (!warned) {
@@ -327,8 +348,6 @@ void GetStrongRandBytes(unsigned char* out, int num)
     memcpy(out, buf, num);
     memory_cleanse(buf, 64);
 }
-
-bool g_mock_deterministic_tests{false};
 
 uint64_t GetRand(uint64_t nMax)
 {

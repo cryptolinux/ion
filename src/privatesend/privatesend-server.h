@@ -1,12 +1,12 @@
-// Copyright (c) 2014-2020 The Dash Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef PRIVATESENDSERVER_H
 #define PRIVATESENDSERVER_H
 
-#include <net.h>
-#include <privatesend/privatesend.h>
+#include "net.h"
+#include "privatesend.h"
 
 class CPrivateSendServer;
 class UniValue;
@@ -23,10 +23,13 @@ private:
     // to behave honestly. If they don't it takes their money.
     std::vector<CTransactionRef> vecSessionCollaterals;
 
+    // Maximum number of participants in a certain session, random between min and max.
+    int nSessionMaxParticipants;
+
     bool fUnitTest;
 
     /// Add a clients entry to the pool
-    bool AddEntry(CConnman& connman, const CPrivateSendEntry& entry, PoolMessage& nMessageIDRet);
+    bool AddEntry(const CPrivateSendEntry& entryNew, PoolMessage& nMessageIDRet);
     /// Add signature to a txin
     bool AddScriptSig(const CTxIn& txin);
 
@@ -54,6 +57,8 @@ private:
     bool IsSignaturesComplete();
     /// Check to make sure a given input matches an input in the pool and its scriptSig is valid
     bool IsInputScriptSigValid(const CTxIn& txin);
+    /// Are these outputs compatible with other client in the pool?
+    bool IsOutputsCompatibleWithSessionDenom(const std::vector<CTxOut>& vecTxOut);
 
     // Set the 'state' value, with some logging and capturing when the state changed
     void SetState(PoolState nStateNew);
@@ -69,11 +74,11 @@ private:
 public:
     CPrivateSendServer() :
         vecSessionCollaterals(),
+        nSessionMaxParticipants(0),
         fUnitTest(false) {}
 
     void ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman);
 
-    bool HasTimedOut();
     void CheckTimeout(CConnman& connman);
     void CheckForCompleteQueue(CConnman& connman);
 

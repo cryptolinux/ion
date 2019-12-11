@@ -1,4 +1,5 @@
 # Copyright (c) 2013-2016 The Bitcoin Core developers
+# Copyright (c) 2014-2018 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -9,47 +10,32 @@ EXTRA_LIBRARIES += qt/libionqt.a
 QT_TS = \
   qt/locale/ion_ar.ts \
   qt/locale/ion_bg.ts \
-   qt/locale/ion_ca.ts \
-   qt/locale/ion_cs.ts \
-   qt/locale/ion_da.ts \
-   qt/locale/ion_de.ts \
-   qt/locale/ion_en.ts \
-   qt/locale/ion_en_GB.ts \
-   qt/locale/ion_en_US.ts \
-   qt/locale/ion_eo.ts \
-   qt/locale/ion_es.ts \
-   qt/locale/ion_es_ES.ts \
-   qt/locale/ion_fi.ts \
-   qt/locale/ion_fr_FR.ts \
-   qt/locale/ion_hi_IN.ts \
-   qt/locale/ion_hr.ts \
-   qt/locale/ion_hr_HR.ts \
-   qt/locale/ion_it.ts \
-   qt/locale/ion_ja.ts \
-   qt/locale/ion_ko_KR.ts \
-   qt/locale/ion_lt_LT.ts \
-   qt/locale/ion_nl.ts \
-   qt/locale/ion_pl.ts \
-   qt/locale/ion_pt.ts \
-   qt/locale/ion_pt_BR.ts \
-   qt/locale/ion_ro_RO.ts \
-   qt/locale/ion_ru.ts \
-   qt/locale/ion_sk.ts \
-   qt/locale/ion_sv.ts \
-   qt/locale/ion_tr.ts \
-   qt/locale/ion_uk.ts \
-   qt/locale/ion_vi.ts \
-   qt/locale/ion_zh_CN.ts \
-   qt/locale/ion_zh_TW.ts
+  qt/locale/ion_de.ts \
+  qt/locale/ion_en.ts \
+  qt/locale/ion_es.ts \
+  qt/locale/ion_fi.ts \
+  qt/locale/ion_fr.ts \
+  qt/locale/ion_it.ts \
+  qt/locale/ion_ja.ts \
+  qt/locale/ion_ko.ts \
+  qt/locale/ion_nl.ts \
+  qt/locale/ion_pl.ts \
+  qt/locale/ion_pt.ts \
+  qt/locale/ion_ru.ts \
+  qt/locale/ion_sk.ts \
+  qt/locale/ion_sv.ts \
+  qt/locale/ion_th.ts \
+  qt/locale/ion_tr.ts \
+  qt/locale/ion_vi.ts \
+  qt/locale/ion_zh_CN.ts \
+  qt/locale/ion_zh_TW.ts
 
 QT_FORMS_UI = \
   qt/forms/addressbookpage.ui \
   qt/forms/appearancewidget.ui \
   qt/forms/askpassphrasedialog.ui \
   qt/forms/coincontroldialog.ui \
-  qt/forms/blockexplorer.ui \
   qt/forms/editaddressdialog.ui \
-  qt/forms/governancepage.ui \
   qt/forms/helpmessagedialog.ui \
   qt/forms/intro.ui \
   qt/forms/modaloverlay.ui \
@@ -82,7 +68,6 @@ QT_MOC_CPP = \
   qt/moc_coincontroltreewidget.cpp \
   qt/moc_csvmodelwriter.cpp \
   qt/moc_editaddressdialog.cpp \
-  qt/moc_governancepage.cpp \
   qt/moc_guiutil.cpp \
   qt/moc_intro.cpp \
   qt/moc_macdockiconhandler.cpp \
@@ -96,11 +81,10 @@ QT_MOC_CPP = \
   qt/moc_overviewpage.cpp \
   qt/moc_peertablemodel.cpp \
   qt/moc_paymentserver.cpp \
+  qt/moc_qrdialog.cpp \
   qt/moc_qvalidatedlineedit.cpp \
   qt/moc_qvaluecombobox.cpp \
   qt/moc_receivecoinsdialog.cpp \
-  qt/moc_privacydialog.cpp \
-  qt/moc_proposalframe.cpp \
   qt/moc_receiverequestdialog.cpp \
   qt/moc_recentrequeststablemodel.cpp \
   qt/moc_rpcconsole.cpp \
@@ -157,7 +141,6 @@ BITCOIN_QT_H = \
   qt/coincontroltreewidget.h \
   qt/csvmodelwriter.h \
   qt/editaddressdialog.h \
-  qt/governancepage.h \
   qt/guiconstants.h \
   qt/guiutil.h \
   qt/intro.h \
@@ -176,7 +159,7 @@ BITCOIN_QT_H = \
   qt/paymentserver.h \
   qt/peertablemodel.h \
   qt/platformstyle.h \
-  qt/proposalframe.h \
+  qt/qrdialog.h \
   qt/qvalidatedlineedit.h \
   qt/qvaluecombobox.h \
   qt/receivecoinsdialog.h \
@@ -192,6 +175,7 @@ BITCOIN_QT_H = \
   qt/transactiondesc.h \
   qt/transactiondescdialog.h \
   qt/transactionfilterproxy.h \
+  qt/transactionrecord.h \
   qt/transactiontablemodel.h \
   qt/transactionview.h \
   qt/utilitydialog.h \
@@ -204,9 +188,14 @@ BITCOIN_QT_H = \
 RES_ICONS = \
   qt/res/icons/ion.ico \
   qt/res/icons/ion_testnet.ico \
-  qt/res/icons/ion_testnet.png \
   qt/res/icons/ion_regtest.ico \
+  qt/res/icons/ion.png \
+  qt/res/icons/ion_testnet.png \
   qt/res/icons/ion_regtest.png \
+  qt/res/icons/chevron.png \
+  qt/res/icons/warning.png \
+  qt/res/icons/add.png \
+  qt/res/icons/address-book.png \
   qt/res/icons/browse.png \
   qt/res/icons/clock1.png \
   qt/res/icons/clock2.png \
@@ -217,66 +206,39 @@ RES_ICONS = \
   qt/res/icons/connect2_16.png \
   qt/res/icons/connect3_16.png \
   qt/res/icons/connect4_16.png \
+  qt/res/icons/console_remove.png \
+  qt/res/icons/debugwindow.png \
+  qt/res/icons/edit.png \
   qt/res/icons/editcopy.png \
   qt/res/icons/editpaste.png \
+  qt/res/icons/export.png \
   qt/res/icons/eye.png \
   qt/res/icons/eye_minus.png \
   qt/res/icons/eye_plus.png \
   qt/res/icons/filesave.png \
-  qt/res/icons/history.png \
-  qt/res/icons/history_regtest.png \
-  qt/res/icons/history_testnet.png \
+  qt/res/icons/hd_disabled.png \
+  qt/res/icons/hd_enabled.png \
   qt/res/icons/key.png \
   qt/res/icons/lock_closed.png \
   qt/res/icons/lock_open.png \
-  qt/res/icons/masternodes.png \
-  qt/res/icons/onion.png \
-  qt/res/icons/overview.png \
-  qt/res/icons/overview_testnet.png \
-  qt/res/icons/overview_regtest.png \
-  qt/res/icons/qrcode.png \
   qt/res/icons/quit.png \
   qt/res/icons/receive.png \
-  qt/res/icons/receive_dark.png \
-  qt/res/icons/privacy.png \
   qt/res/icons/remove.png \
   qt/res/icons/send.png \
-  qt/res/icons/send_dark.png \
-  qt/res/icons/governance.png \
-  qt/res/icons/governance_dark.png \
-  qt/res/icons/governance_testnet.png \
-  qt/res/icons/governance_regtest.png \
-  qt/res/icons/governance_dark_testnet.png \
-  qt/res/icons/governance_dark_regtest.png \
-  qt/res/icons/staking_active.png \
-  qt/res/icons/staking_inactive.png \
   qt/res/icons/synced.png \
-  qt/res/icons/notsynced.png \
-  qt/res/icons/notsynced_testnet.png \
-  qt/res/icons/notsynced_regtest.png \
   qt/res/icons/transaction0.png \
   qt/res/icons/transaction2.png \
-  qt/res/icons/transaction2_testnet.png \
-  qt/res/icons/transaction2_regtest.png \
   qt/res/icons/transaction_conflicted.png \
-  qt/res/icons/transaction_conflicted_testnet.png \
-  qt/res/icons/transaction_conflicted_regtest.png \
   qt/res/icons/tx_inout.png \
   qt/res/icons/tx_input.png \
   qt/res/icons/tx_output.png \
   qt/res/icons/tx_mined.png \
-  qt/res/icons/unit_ion.png \
-  qt/res/icons/unit_mion.png \
-  qt/res/icons/unit_uion.png \
-  qt/res/icons/unit_tion.png \
-  qt/res/icons/unit_tmion.png \
-  qt/res/icons/unit_tuion.png \
-  qt/res/icons/unit_rion.png \
-  qt/res/icons/unit_rmion.png \
-  qt/res/icons/unit_ruion.png \
-  qt/res/icons/yesvote.png \
-  qt/res/icons/novote.png \
-  qt/res/icons/abstainvote.png
+  qt/res/icons/about_qt.png \
+  qt/res/icons/verify.png \
+  qt/res/icons/fontbigger.png \
+  qt/res/icons/fontsmaller.png \
+  qt/res/icons/transaction_abandoned.png \
+  qt/res/icons/network_disabled.png
 
 BITCOIN_QT_BASE_CPP = \
   qt/bantablemodel.cpp \
@@ -311,15 +273,13 @@ BITCOIN_QT_WALLET_CPP = \
   qt/coincontroldialog.cpp \
   qt/coincontroltreewidget.cpp \
   qt/editaddressdialog.cpp \
-  qt/governancepage.cpp \
   qt/masternodelist.cpp \
   qt/openuridialog.cpp \
   qt/overviewpage.cpp \
   qt/paymentrequestplus.cpp \
   qt/paymentserver.cpp \
+  qt/qrdialog.cpp \
   qt/receivecoinsdialog.cpp \
-  qt/privacydialog.cpp \
-  qt/proposalframe.cpp \
   qt/receiverequestdialog.cpp \
   qt/recentrequeststablemodel.cpp \
   qt/sendcoinsdialog.cpp \
@@ -328,6 +288,7 @@ BITCOIN_QT_WALLET_CPP = \
   qt/transactiondesc.cpp \
   qt/transactiondescdialog.cpp \
   qt/transactionfilterproxy.cpp \
+  qt/transactionrecord.cpp \
   qt/transactiontablemodel.cpp \
   qt/transactionview.cpp \
   qt/walletframe.cpp \
@@ -344,53 +305,33 @@ BITCOIN_QT_CPP += $(BITCOIN_QT_WALLET_CPP)
 endif
 
 RES_IMAGES = \
-  qt/res/images/about.png \
+  qt/res/images/arrow_down.png \
+  qt/res/images/arrow_down_small.png \
+  qt/res/images/arrow_left_small.png \
+  qt/res/images/arrow_right_small.png \
+  qt/res/images/arrow_up_small.png \
+  qt/res/images/checked.png \
+  qt/res/images/ion_logo_horizontal.png \
+  qt/res/images/ion_logo_toolbar.png \
+  qt/res/images/qtreeview_selected.png \
   qt/res/images/splash.png \
   qt/res/images/splash_testnet.png \
   qt/res/images/splash_regtest.png \
-  qt/res/images/ion_logo_horizontal.png \
-  qt/res/images/ion_logo_horizontal_regtest.png \
-  qt/res/images/ion_logo_horizontal_testnet.png \
-  qt/res/images/downArrow_dark.png \
-  qt/res/images/downArrow_small_dark.png \
-  qt/res/images/downArrow_small.png \
-  qt/res/images/upArrow_small_dark.png \
-  qt/res/images/upArrow_small.png \
-  qt/res/images/leftArrow_small_dark.png \
-  qt/res/images/rightArrow_small_dark.png \
-  qt/res/images/qtreeview_selected.png
+  qt/res/images/unchecked.png \
+  qt/res/images/walletframe_background.png
 
 RES_CSS = \
-  qt/res/css/dark.css \
-  qt/res/css/general.css \
   qt/res/css/light.css \
-  qt/res/css/traditional.css
-
-RES_FONTS = \
-  qt/res/fonts/Montserrat/Montserrat-Black.otf \
-  qt/res/fonts/Montserrat/Montserrat-BlackItalic.otf \
-  qt/res/fonts/Montserrat/Montserrat-Bold.otf \
-  qt/res/fonts/Montserrat/Montserrat-BoldItalic.otf \
-  qt/res/fonts/Montserrat/Montserrat-ExtraBold.otf \
-  qt/res/fonts/Montserrat/Montserrat-ExtraBoldItalic.otf \
-  qt/res/fonts/Montserrat/Montserrat-ExtraLight.otf \
-  qt/res/fonts/Montserrat/Montserrat-ExtraLightItalic.otf \
-  qt/res/fonts/Montserrat/Montserrat-Italic.otf \
-  qt/res/fonts/Montserrat/Montserrat-Light.otf \
-  qt/res/fonts/Montserrat/Montserrat-LightItalic.otf \
-  qt/res/fonts/Montserrat/Montserrat-Medium.otf \
-  qt/res/fonts/Montserrat/Montserrat-MediumItalic.otf \
-  qt/res/fonts/Montserrat/Montserrat-Regular.otf \
-  qt/res/fonts/Montserrat/Montserrat-SemiBold.otf \
-  qt/res/fonts/Montserrat/Montserrat-SemiBoldItalic.otf \
-  qt/res/fonts/Montserrat/Montserrat-Thin.otf \
-  qt/res/fonts/Montserrat/Montserrat-ThinItalic.otf
+  qt/res/css/light-hires.css \
+  qt/res/css/scrollbars.css \
+  qt/res/css/trad.css
 
 RES_MOVIES = $(wildcard $(srcdir)/qt/res/movies/spinner-*.png)
 
 BITCOIN_RC = qt/res/ion-qt-res.rc
 
-BITCOIN_QT_INCLUDES = -DQT_NO_KEYWORDS
+BITCOIN_QT_INCLUDES = -I$(builddir)/qt -I$(srcdir)/qt -I$(srcdir)/qt/forms \
+  -I$(builddir)/qt/forms -DQT_NO_KEYWORDS
 
 qt_libionqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
   $(QT_INCLUDES) $(QT_DBUS_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS)
@@ -434,11 +375,11 @@ endif
 if ENABLE_ZMQ
 qt_ion_qt_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
 endif
-qt_ion_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_CONSENSUS) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBBITCOIN_ZEROCOIN) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
-  $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(LIBSECP256K1) \
-  $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
-qt_ion_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
-qt_ion_qt_LIBTOOLFLAGS = $(AM_LIBTOOLFLAGS) --tag CXX
+qt_ion_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CONSENSUS) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBBITCOIN_ZEROCOIN) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
+  $(BACKTRACE_LIB) $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(LIBSECP256K1) \
+  $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(BLS_LIBS)
+qt_ion_qt_LDFLAGS = $(LDFLAGS_WRAP_EXCEPTIONS) $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+qt_ion_qt_LIBTOOLFLAGS = --tag CXX
 
 #locale/foo.ts -> locale/foo.qm
 QT_QM=$(QT_TS:.ts=.qm)

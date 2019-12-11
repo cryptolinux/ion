@@ -1,12 +1,12 @@
-// Copyright (c) 2018-2020 The Dash Core developers
+// Copyright (c) 2018 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "test/test_ion.h"
 
-#include <bls/bls.h>
-#include <evo/simplifiedmns.h>
-#include <netbase.h>
+#include "bls/bls.h"
+#include "evo/simplifiedmns.h"
+#include "netbase.h"
 
 #include <boost/test/unit_test.hpp>
 

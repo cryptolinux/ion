@@ -1,16 +1,16 @@
-// Copyright (c) 2014-2020 The Dash Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef FLAT_DATABASE_H
 #define FLAT_DATABASE_H
 
-#include <chainparams.h>
-#include <clientversion.h>
-#include <fs.h>
-#include <hash.h>
-#include <streams.h>
-#include <util.h>
+#include "chainparams.h"
+#include "clientversion.h"
+#include "fs.h"
+#include "hash.h"
+#include "streams.h"
+#include "util.h"
 
 /** 
 *   Generic Dumping and Loading
@@ -97,7 +97,7 @@ private:
 
         // read data and checksum from file
         try {
-            filein.read((char *)vchData.data(), dataSize);
+            filein.read((char *)&vchData[0], dataSize);
             filein >> hashIn;
         }
         catch (std::exception &e) {

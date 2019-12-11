@@ -1,41 +1,32 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
 #include "config/ion-config.h"
 #endif
 
-#include <qt/askpassphrasedialog.h>
-#include <qt/forms/ui_askpassphrasedialog.h>
+#include "askpassphrasedialog.h"
+#include "ui_askpassphrasedialog.h"
 
-#include <qt/guiconstants.h>
-#include <qt/guiutil.h>
-#include <qt/walletmodel.h>
+#include "guiconstants.h"
+#include "walletmodel.h"
 
-#include <support/allocators/secure.h>
+#include "support/allocators/secure.h"
 
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QWidget>
 
-AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget* parent, WalletModel* model, Context context) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
-                                                                                                            ui(new Ui::AskPassphraseDialog),
-                                                                                                            mode(mode),
-                                                                                                            model(model),
-                                                                                                            context(context),
-                                                                                                            fCapsLock(false)
+AskPassphraseDialog::AskPassphraseDialog(Mode _mode, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::AskPassphraseDialog),
+    mode(_mode),
+    model(0),
+    fCapsLock(false)
 {
     ui->setupUi(this);
-
-    GUIUtil::setFont({ui->capsLabel}, GUIUtil::FontWeight::Bold);
-
-    GUIUtil::updateFonts();
-
-    GUIUtil::disableMacFocusRect(this);
 
     ui->passEdit1->setMinimumSize(ui->passEdit1->sizeHint());
     ui->passEdit2->setMinimumSize(ui->passEdit2->sizeHint());
@@ -50,50 +41,42 @@ AskPassphraseDialog::AskPassphraseDialog(Mode mode, QWidget* parent, WalletModel
     ui->passEdit2->installEventFilter(this);
     ui->passEdit3->installEventFilter(this);
 
-    this->model = model;
-
-    switch (mode) {
-    case Mode::Encrypt: // Ask passphrase x2
-        ui->warningLabel->setText(tr("Enter the new passphrase to the wallet.<br/>Please use a passphrase of <b>ten or more random characters</b>, or <b>eight or more words</b>."));
-        ui->passLabel1->hide();
-        ui->passEdit1->hide();
-        setWindowTitle(tr("Encrypt wallet"));
-        break;
-    case Mode::UnlockAnonymize:
-        ui->anonymizationCheckBox->show();
-    case Mode::Unlock: // Ask passphrase
-        ui->warningLabel->setText(tr("This operation needs your wallet passphrase to unlock the wallet."));
-        ui->passLabel2->hide();
-        ui->passEdit2->hide();
-        ui->passLabel3->hide();
-        ui->passEdit3->hide();
-        setWindowTitle(tr("Unlock wallet"));
-        break;
-    case Mode::Decrypt: // Ask passphrase
-        ui->warningLabel->setText(tr("This operation needs your wallet passphrase to decrypt the wallet."));
-        ui->passLabel2->hide();
-        ui->passEdit2->hide();
-        ui->passLabel3->hide();
-        ui->passEdit3->hide();
-        setWindowTitle(tr("Decrypt wallet"));
-        break;
-    case Mode::ChangePass: // Ask old passphrase + new passphrase x2
-        setWindowTitle(tr("Change passphrase"));
-        ui->warningLabel->setText(tr("Enter the old and new passphrase to the wallet."));
-        break;
-    }
-
-    // Set checkbox "For anonymization, automint, and staking only" depending on from where we were called
-    if (context == Context::Unlock_Menu || context == Context::Mint_xION || context == Context::BIP_38 || context == Context::UI_Vote) {
-        ui->anonymizationCheckBox->setChecked(true);
-    }
-    else {
-        ui->anonymizationCheckBox->setChecked(false);
-    }
-
-    // It doesn't make sense to show the checkbox for sending ION because you wouldn't check it anyway.
-    if (context == Context::Send_ION || context == Context::Send_xION) {
-        ui->anonymizationCheckBox->hide();
+    switch(mode)
+    {
+        case Encrypt: // Ask passphrase x2
+            ui->warningLabel->setText(tr("Enter the new passphrase to the wallet.<br/>Please use a passphrase of <b>ten or more random characters</b>, or <b>eight or more words</b>."));
+            ui->passLabel1->hide();
+            ui->passEdit1->hide();
+            setWindowTitle(tr("Encrypt wallet"));
+            break;
+        case UnlockMixing:
+            ui->warningLabel->setText(tr("This operation needs your wallet passphrase to unlock the wallet."));
+            ui->passLabel2->hide();
+            ui->passEdit2->hide();
+            ui->passLabel3->hide();
+            ui->passEdit3->hide();
+            setWindowTitle(tr("Unlock wallet for mixing only"));
+            break;
+        case Unlock: // Ask passphrase
+            ui->warningLabel->setText(tr("This operation needs your wallet passphrase to unlock the wallet."));
+            ui->passLabel2->hide();
+            ui->passEdit2->hide();
+            ui->passLabel3->hide();
+            ui->passEdit3->hide();
+            setWindowTitle(tr("Unlock wallet"));
+            break;
+        case Decrypt:   // Ask passphrase
+            ui->warningLabel->setText(tr("This operation needs your wallet passphrase to decrypt the wallet."));
+            ui->passLabel2->hide();
+            ui->passEdit2->hide();
+            ui->passLabel3->hide();
+            ui->passEdit3->hide();
+            setWindowTitle(tr("Decrypt wallet"));
+            break;
+        case ChangePass: // Ask old passphrase + new passphrase x2
+            setWindowTitle(tr("Change passphrase"));
+            ui->warningLabel->setText(tr("Enter the old passphrase and new passphrase to the wallet."));
+            break;
     }
     textChanged();
     connect(ui->toggleShowPasswordButton, SIGNAL(toggled(bool)), this, SLOT(toggleShowPassword(bool)));
@@ -275,15 +258,6 @@ bool AskPassphraseDialog::event(QEvent *event)
         }
     }
     return QWidget::event(event);
-}
-
-void AskPassphraseDialog::toggleShowPassword(bool show)
-{
-    ui->toggleShowPasswordButton->setDown(show);
-    const auto mode = show ? QLineEdit::Normal : QLineEdit::Password;
-    ui->passEdit1->setEchoMode(mode);
-    ui->passEdit2->setEchoMode(mode);
-    ui->passEdit3->setEchoMode(mode);
 }
 
 bool AskPassphraseDialog::eventFilter(QObject *object, QEvent *event)

@@ -5,10 +5,10 @@
 #include <zmq/zmqnotificationinterface.h>
 #include <zmq/zmqpublishnotifier.h>
 
-#include <version.h>
-#include <validation.h>
-#include <streams.h>
-#include <util.h>
+#include "version.h"
+#include "validation.h"
+#include "streams.h"
+#include "util.h"
 
 void zmqError(const char *str)
 {
@@ -54,10 +54,10 @@ CZMQNotificationInterface* CZMQNotificationInterface::Create()
 
     for (const auto& entry : factories)
     {
-        std::string arg("-zmq" + entry.first);
+        std::string arg("-zmq" + i->first);
         if (gArgs.IsArgSet(arg))
         {
-            CZMQNotifierFactory factory = entry.second;
+            CZMQNotifierFactory factory = i->second;
             std::string address = gArgs.GetArg(arg, "");
             CZMQAbstractNotifier *notifier = factory();
             notifier->SetType(entry.first);
@@ -173,7 +173,7 @@ void CZMQNotificationInterface::NotifyChainLock(const CBlockIndex *pindex, const
     }
 }
 
-void CZMQNotificationInterface::TransactionAddedToMempool(const CTransactionRef& ptx, int64_t nAcceptTime)
+void CZMQNotificationInterface::TransactionAddedToMempool(const CTransactionRef& ptx)
 {
     // Used by BlockConnected and BlockDisconnected as well, because they're
     // all the same external callback.
@@ -198,7 +198,7 @@ void CZMQNotificationInterface::BlockConnected(const std::shared_ptr<const CBloc
 {
     for (const CTransactionRef& ptx : pblock->vtx) {
         // Do a normal notify for each transaction added in the block
-        TransactionAddedToMempool(ptx, 0);
+        TransactionAddedToMempool(ptx);
     }
 }
 
@@ -206,7 +206,7 @@ void CZMQNotificationInterface::BlockDisconnected(const std::shared_ptr<const CB
 {
     for (const CTransactionRef& ptx : pblock->vtx) {
         // Do a normal notify for each transaction removed in block disconnection
-        TransactionAddedToMempool(ptx, 0);
+        TransactionAddedToMempool(ptx);
     }
 }
 

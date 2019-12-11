@@ -126,6 +126,12 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
           <string>Dust:</string>
          </property>
@@ -392,7 +398,7 @@
       <bool>false</bool>
      </property>
      <property name="columnCount">
-      <number>10</number>
+      <number>11</number>
      </property>
      <attribute name="headerShowSortIndicator" stdset="0">
       <bool>true</bool>
@@ -422,7 +428,7 @@
      </column>
      <column>
       <property name="text">
-       <string>Mixing Rounds</string>
+       <string>PS Rounds</string>
       </property>
      </column>
      <column>
@@ -440,7 +446,12 @@
      </column>
      <column>
       <property name="text">
-       <string>Priority</string>
+       <string/>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
       </property>
      </column>
      <column>

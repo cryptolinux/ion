@@ -1,6 +1,4 @@
-// Copyright (c) 2015-2019 The Bitcoin Core developers
-// Copyright (c) 2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -15,7 +13,9 @@
 #include "sync.h"
 #include "util.h"
 #include "utilstrencodings.h"
-#include "guiinterface.h"
+#include "ui_interface.h"
+#include "crypto/hmac_sha256.h"
+#include <stdio.h>
 
 #include <boost/algorithm/string.hpp> // boost::trim
 
@@ -43,7 +43,7 @@ private:
 class HTTPRPCTimerInterface : public RPCTimerInterface
 {
 public:
-    explicit HTTPRPCTimerInterface(struct event_base* _base) : base(_base)
+    HTTPRPCTimerInterface(struct event_base* _base) : base(_base)
     {
     }
     const char* Name() override
@@ -85,11 +85,11 @@ static void JSONErrorReply(HTTPRequest* req, const UniValue& objError, const Uni
 //entries from config file.
 static bool multiUserAuthorized(std::string strUserPass)
 {    
-    if (strUserPass.find(':') == std::string::npos) {
+    if (strUserPass.find(":") == std::string::npos) {
         return false;
     }
-    std::string strUser = strUserPass.substr(0, strUserPass.find(':'));
-    std::string strPass = strUserPass.substr(strUserPass.find(':') + 1);
+    std::string strUser = strUserPass.substr(0, strUserPass.find(":"));
+    std::string strPass = strUserPass.substr(strUserPass.find(":") + 1);
 
     for (const std::string& strRPCAuth : gArgs.GetArgs("-rpcauth")) {
         //Search for multi-user login/pass "rpcauth" from config
@@ -132,8 +132,8 @@ static bool RPCAuthorized(const std::string& strAuth, std::string& strAuthUserna
     boost::trim(strUserPass64);
     std::string strUserPass = DecodeBase64(strUserPass64);
 
-    if (strUserPass.find(':') != std::string::npos)
-        strAuthUsernameOut = strUserPass.substr(0, strUserPass.find(':'));
+    if (strUserPass.find(":") != std::string::npos)
+        strAuthUsernameOut = strUserPass.substr(0, strUserPass.find(":"));
 
     //Check if authorized under single-user field
     if (TimingResistantEqual(strUserPass, strRPCUserColonPass)) {

@@ -2,8 +2,8 @@
 #
 # linearize-hashes.py:  List blocks in a linear, no-fork version of the chain.
 #
-# Copyright (c) 2013-2014 The Bitcoin developers
-# Distributed under the MIT/X11 software license, see the accompanying
+# Copyright (c) 2013-2014 The Bitcoin Core developers
+# Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
 
@@ -129,13 +129,18 @@ if __name__ == '__main__':
 	if 'min_height' not in settings:
 		settings['min_height'] = 0
 	if 'max_height' not in settings:
-		settings['max_height'] = 1073836
+		settings['max_height'] = 313000
+	if 'rev_hash_bytes' not in settings:
+		settings['rev_hash_bytes'] = 'false'
+
+	use_userpass = True
+	use_datadir = False
 	if 'rpcuser' not in settings or 'rpcpassword' not in settings:
 		use_userpass = False
 	if 'datadir' in settings and not use_userpass:
 		use_datadir = True
 	if not use_userpass and not use_datadir:
-		print("Missing datadir or username and/or password in cfg file", file=sys.stderr)
+		print("Missing datadir or username and/or password in cfg file", file=stderr)
 		sys.exit(1)
 
 	settings['port'] = int(settings['port'])

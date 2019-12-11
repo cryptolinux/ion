@@ -1,7 +1,5 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2016-2017 The PIVX developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -9,8 +7,9 @@
 #define BITCOIN_SCRIPT_SCRIPT_H
 
 #include "crypto/common.h"
-#include "pubkey.h"
-#include "script_error.h"
+#include "prevector.h"
+#include "script/script_error.h"
+#include "serialize.h"
 
 #include <assert.h>
 #include <climits>
@@ -35,20 +34,6 @@ static const int MAX_SCRIPT_SIZE = 10000;
 
 // Maximum number of values on script interpreter stack
 static const int MAX_STACK_SIZE = 1000;
-
-// Threshold for nLockTime: below this value it is interpreted as block number,
-// otherwise as UNIX timestamp.
-static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
-
-// Threshold for nLockTime: below this value it is interpreted as block number,
-// otherwise as UNIX timestamp.
-static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
-
-// Maximum number of non-push operations per script
-static const int MAX_OPS_PER_SCRIPT = 201;
-
-// Maximum script length in bytes
-static const int MAX_SCRIPT_SIZE = 10000;
 
 // Threshold for nLockTime: below this value it is interpreted as block number,
 // otherwise as UNIX timestamp.
@@ -185,9 +170,10 @@ enum opcodetype
 
     // expansion
     OP_NOP1 = 0xb0,
-    OP_NOP2 = 0xb1,
-    OP_CHECKLOCKTIMEVERIFY = OP_NOP2,
-    OP_NOP3 = 0xb2,
+    OP_CHECKLOCKTIMEVERIFY = 0xb1,
+    OP_NOP2 = OP_CHECKLOCKTIMEVERIFY,
+    OP_CHECKSEQUENCEVERIFY = 0xb2,
+    OP_NOP3 = OP_CHECKSEQUENCEVERIFY,
     OP_NOP4 = 0xb3,
     OP_NOP5 = 0xb4,
     OP_NOP6 = 0xb5,
@@ -244,7 +230,7 @@ public:
     static const size_t nDefaultMaxNumSize = 4;
 
     explicit CScriptNum(const std::vector<unsigned char>& vch, bool fRequireMinimal,
-            const size_t nMaxNumSize = nDefaultMaxNumSize)
+                        const size_t nMaxNumSize = nDefaultMaxNumSize)
     {
         if (vch.size() > nMaxNumSize) {
             throw scriptnum_error(SCRIPT_ERR_NUMBER_OVERFLOW, "script number overflow");
@@ -291,6 +277,11 @@ public:
 
     inline CScriptNum& operator+=( const CScriptNum& rhs)       { return operator+=(rhs.m_value);  }
     inline CScriptNum& operator-=( const CScriptNum& rhs)       { return operator-=(rhs.m_value);  }
+
+    inline CScriptNum operator&(   const int64_t& rhs)    const { return CScriptNum(m_value & rhs);}
+    inline CScriptNum operator&(   const CScriptNum& rhs) const { return operator&(rhs.m_value);   }
+
+    inline CScriptNum& operator&=( const CScriptNum& rhs)       { return operator&=(rhs.m_value);  }
 
     inline CScriptNum operator-()                         const
     {
@@ -394,13 +385,7 @@ private:
     int64_t m_value;
 };
 
-/** wrapper class that serializes in an older way that is incompatible with current rules, but is used by the genesis
-block */
-class LegacyCScriptNum : public CScriptNum
-{
-public:
-    explicit LegacyCScriptNum(const int64_t &n) : CScriptNum(n) {}
-};
+typedef prevector<28, unsigned char> CScriptBase;
 
 /** Serialized script, used inside transaction inputs and outputs */
 class CScript : public CScriptBase
@@ -472,10 +457,8 @@ public:
         return *this;
     }
 
-    CScript &operator<<(const LegacyCScriptNum &a)
+    CScript& operator<<(const std::vector<unsigned char>& b)
     {
-        auto b = a.getvch();
-
         if (b.size() < OP_PUSHDATA1)
         {
             insert(end(), (unsigned char)b.size());
@@ -511,50 +494,6 @@ public:
         return *this;
     }
 
-
-    CScript &operator<<(const std::vector<unsigned char> &b)
-    {
-        if (b.size() == 0)
-        {
-            insert(end(), OP_0);
-            return *this;
-        }
-        if ((b.size() == 1) && (b[0] >= 1 && b[0] <= 16))
-        {
-            insert(end(), OP_1 - 1 + b[0]);
-            return *this;
-        }
-        else if ((b.size() == 1) && (b[0] == 0x81))
-        {
-            insert(end(), OP_1NEGATE);
-            return *this;
-        }
-        else if (b.size() < OP_PUSHDATA1)
-        {
-            insert(end(), (unsigned char)b.size());
-        }
-        else if (b.size() <= 0xff)
-        {
-            insert(end(), OP_PUSHDATA1);
-            insert(end(), (unsigned char)b.size());
-        }
-        else if (b.size() <= 0xffff)
-        {
-            insert(end(), OP_PUSHDATA2);
-            uint8_t data[2];
-            WriteLE16(data, b.size());
-            insert(end(), data, data + sizeof(data));
-        }
-        else
-        {
-            insert(end(), OP_PUSHDATA4);
-            uint8_t data[4];
-            WriteLE32(data, b.size());
-            insert(end(), data, data + sizeof(data));
-        }
-        insert(end(), b.begin(), b.end());
-        return *this;
-    }
 
     bool GetOp(iterator& pc, opcodetype& opcodeRet, std::vector<unsigned char>& vchRet)
     {
@@ -703,13 +642,18 @@ public:
      */
     unsigned int GetSigOpCount(const CScript& scriptSig) const;
 
-    bool IsNormalPaymentScript() const;
+    bool IsPayToPublicKeyHash() const;
+
     // if this is a p2sh then the script hash is filled into the passed param if its not null
     bool IsPayToScriptHash(std::vector<unsigned char> *hashBytes = nullptr) const;
+
     bool StartsWithOpcode(const opcodetype opcode) const;
     bool IsZerocoinMint() const;
     bool IsZerocoinSpend() const;
     bool IsZerocoinPublicSpend() const;
+
+    /** Used for obsolete pay-to-pubkey addresses indexing. */
+    bool IsPayToPublicKey() const;
 
     /** Called by IsStandardTx and P2SH/BIP62 VerifyScript (which makes it consensus-critical). */
     bool IsPushOnly(const_iterator pc) const;
@@ -724,7 +668,6 @@ public:
     {
         return (size() > 0 && *begin() == OP_RETURN) || (size() > MAX_SCRIPT_SIZE);
     }
-	/** Remove all instructions in this script. */
 
     void clear()
     {

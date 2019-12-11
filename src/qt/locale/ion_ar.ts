@@ -22,14 +22,6 @@
         <translation>نسخ </translation>
     </message>
     <message>
-        <source>Show QR code for the currently selected address</source>
-        <translation>إظهار رمز الاستجابة السريعة للعنوان المحدد حاليًا</translation>
-    </message>
-    <message>
-        <source>&amp;Show QR code</source>
-        <translation>&amp; إظهار رمز الاستجابة السريعة</translation>
-    </message>
-    <message>
         <source>Delete the currently selected address from the list</source>
         <translation>حذف العنوان المحدد من القائمة </translation>
     </message>
@@ -90,14 +82,6 @@
         <translation>تعديل </translation>
     </message>
     <message>
-        <source>&amp;Show address QR code</source>
-        <translation>&amp; إظهار رمز الاستجابة السريعة العنوان</translation>
-    </message>
-    <message>
-        <source>QR code</source>
-        <translation>رمز الاستجابة السريعة</translation>
-    </message>
-    <message>
         <source>Export Address List</source>
         <translation>تصدير قائمة العناوين</translation>
     </message>
@@ -130,45 +114,6 @@
     </message>
 </context>
 <context>
-    <name>AppearanceWidget</name>
-    <message>
-        <source>Lighter</source>
-        <translation>اخف</translation>
-    </message>
-    <message>
-        <source>Bolder</source>
-        <translation>أكثر جرأة</translation>
-    </message>
-    <message>
-        <source>Font Weight Normal:</source>
-        <translation>وزن الخط عادي:</translation>
-    </message>
-    <message>
-        <source>Smaller</source>
-        <translation>اصغر</translation>
-    </message>
-    <message>
-        <source>Bigger</source>
-        <translation>اكبر</translation>
-    </message>
-    <message>
-        <source>Font Scale:</source>
-        <translation>مقياس الخط:</translation>
-    </message>
-    <message>
-        <source>Font Family:</source>
-        <translation>عائلة الخط:</translation>
-    </message>
-    <message>
-        <source>Theme:</source>
-        <translation>موضوع:</translation>
-    </message>
-    <message>
-        <source>Font Weight Bold:</source>
-        <translation>وزن الخط غامق:</translation>
-    </message>
-</context>
-<context>
     <name>AskPassphraseDialog</name>
     <message>
         <source>Passphrase Dialog</source>
@@ -187,12 +132,8 @@
         <translation>اعد كتابة جملة السر الجديدة</translation>
     </message>
     <message>
-        <source>Show password</source>
-        <translation>عرض كلمة المرور</translation>
-    </message>
-    <message>
         <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation>أدخل عبارة مرور جديدة إلى المحفظة. &lt;br/&gt;الرجاء استخدام عبارة مرور تتكون من&lt;b&gt;10 حروف عشوائية&lt;/b&gt; على الاقل, أو&lt;b&gt; ثمانية كلمات على الاقل&lt;/b&gt;</translation>
+        <translation>أدخل عبارة مرور جديدة إلى المحفظة. الرجاء استخدام عبارة مرور تتكون من10 حروف عشوائية على الاقل, أو ثمانية كلمات على الاقل</translation>
     </message>
     <message>
         <source>Encrypt wallet</source>
@@ -299,13 +240,6 @@
     </message>
 </context>
 <context>
-    <name>BitcoinAmountField</name>
-    <message>
-        <source>Amount in %1</source>
-        <translation>المبلغ في %1</translation>
-    </message>
-</context>
-<context>
     <name>BitcoinGUI</name>
     <message>
         <source>A fatal error occurred. Ion Core can no longer continue safely and will quit.</source>
@@ -392,12 +326,8 @@
         <translation>حوالي %1</translation>
     </message>
     <message>
-        <source>PrivateSend coins to a Dash address</source>
-        <translation>أرسل العملات المعدنية إلى عنوان داش</translation>
-    </message>
-    <message>
         <source>Modify configuration options for %1</source>
-        <translation>تغيير خيارات الإعداد لأساس ل %1</translation>
+        <translation>تغيير خيارات الإعداد لأساس ل%1</translation>
     </message>
     <message>
         <source>&amp;Show / Hide</source>
@@ -552,10 +482,6 @@
         <translation>الزبون %1</translation>
     </message>
     <message>
-        <source>Wallet is &lt;b&gt;unencrypted&lt;/b&gt;</source>
-        <translation>المحفظة &lt;b&gt; غير مشفرة&lt;/b&gt;</translation>
-    </message>
-    <message>
         <source>&amp;PrivateSend information</source>
         <translation> المعلومات إرسال خاص </translation>
     </message>
@@ -656,30 +582,6 @@
         <translation>معلومات</translation>
     </message>
     <message>
-        <source>Received and sent multiple transactions</source>
-        <translation>استلام وإرسال معاملات متعددة</translation>
-    </message>
-    <message>
-        <source>Sent multiple transactions</source>
-        <translation>أرسل معاملات متعددة</translation>
-    </message>
-    <message>
-        <source>Received multiple transactions</source>
-        <translation>استلم معاملات متعددة</translation>
-    </message>
-    <message>
-        <source>Sent Amount: %1
-</source>
-        <translation>المبلغ المرسل:%1
-</translation>
-    </message>
-    <message>
-        <source>Received Amount: %1
-</source>
-        <translation>المبلغ المتلقى:%1
-</translation>
-    </message>
-    <message>
         <source>Date: %1
 </source>
         <translation>التاريخ:%1
@@ -719,19 +621,30 @@
     </message>
     <message>
         <source>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</source>
-        <translation>توليد مفتاح HD &lt;b&gt;متاح&lt;/b&gt; </translation>
+        <translation>الجيل مفتاح هد هو 1 تمكين 1</translation>
+    </message>
+    <message>
+        <source>HD key generation is &lt;b&gt;disabled&lt;/b&gt;</source>
+        <translation>الجيل مفتاح هد هو 1 تعطيل 1</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation>المحفظة هي &lt;b&gt; مشفرة &lt;/b&gt; وحاليا &lt;b&gt;مقفلة&lt;/b&gt;</translation>
+        <translation>المحفظة هي 1 مشفرة 1 وحاليا 2 مقفلة 2</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for mixing only</source>
-        <translation>المحفظة &lt;b&gt; مشفرة&lt;/b&gt; وحاليا &lt;b&gt;غير مقفلة&lt;/b&gt; للخلط فقط</translation>
+        <translation>المحفظة هو 1 مشفرة 1 وحاليا 2 مقفلة 2 للخلط فقط</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation>المحفظة هي &lt;b&gt;مشفرة&lt;/b&gt; وحاليا &lt;b&gt;مؤمنة&lt;/b&gt;</translation>
+        <translation>المحفظة هي 1 مشفرة 1 وحاليا 2 مؤمن 2</translation>
+    </message>
+</context>
+<context>
+    <name>ClientModel</name>
+    <message>
+        <source>Network Alert</source>
+        <translation>تنبيه الشبكة</translation>
     </message>
 </context>
 <context>
@@ -801,6 +714,10 @@
         <translation>تلقى مع عنوان</translation>
     </message>
     <message>
+        <source>PS Rounds</source>
+        <translation>بس جولة</translation>
+    </message>
+    <message>
         <source>Date</source>
         <translation>تاريخ</translation>
     </message>
@@ -865,6 +782,10 @@
         <translation>يرجى التبديل إلى "وضع قائمة" لاستخدام هذه الوظيفة.</translation>
     </message>
     <message>
+        <source>Non-anonymized input selected. &lt;b&gt;PrivateSend will be disabled.&lt;/b&gt;&lt;br&gt;&lt;br&gt;If you still want to use PrivateSend, please deselect all non-anonymized inputs first and then check the PrivateSend checkbox again.</source>
+        <translation>الإدخال غير المجهول المحدد. &lt;b&gt;سيتم تعطيل الإرسال المخفي . &lt;/b&gt;&lt;br&gt;&lt;br&gt;إذا كنت لا تزال ترغب في استخدام الإرسال المخفي ، فيرجى إلغاء تحديد كافة مدخلات غير المجهولة أولاً ثم تحقق من خانة الاختيار الإرسال المخفي مرة أخرى.</translation>
+    </message>
+    <message>
         <source>(%1 locked)</source>
         <translation>(%1 مقفل)</translation>
     </message>
@@ -883,14 +804,6 @@
     <message>
         <source>Can vary +/- %1 duff(s) per input.</source>
         <translation>يمكن أن تختلف +/-%1 داف (ق) لكل مدخلات.</translation>
-    </message>
-    <message>
-        <source>Some coins were unselected because they were spent.</source>
-        <translation>تم إلغاء تحديد بعض العملات المعدنية لأنها تم إنفاقها.</translation>
-    </message>
-    <message>
-        <source>Some coins were unselected because they do not have enough mixing rounds.</source>
-        <translation>لم يتم تحديد بعض العملات المعدنية لأنها لا تحتوي على دورات خلط كافية.</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -930,6 +843,10 @@
     <message>
         <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
         <translation>العنوان المرتبط بقائمة العناوين المدخلة. و التي يمكن تعديلها فقط بواسطة ارسال العناوين</translation>
+    </message>
+    <message>
+        <source>New receiving address</source>
+        <translation>عنوان أستلام جديد</translation>
     </message>
     <message>
         <source>New sending address</source>
@@ -1016,22 +933,6 @@
     <message>
         <source>Choose data directory on startup (default: %u)</source>
         <translation>اختر دليل البيانات عند بدء التشغير (افتراضي: %u)</translation>
-    </message>
-    <message>
-        <source>Set the font family. Possible values: %1. (default: %2)</source>
-        <translation>عيّن عائلة الخط. القيم الممكنة:%1. (الافتراضي:%2)</translation>
-    </message>
-    <message>
-        <source>Set a scale factor which gets applied to the base font size. Possible range %1 (smallest fonts) to %2 (largest fonts). (default: %3)</source>
-        <translation>قم بتعيين عامل مقياس يتم تطبيقه على حجم الخط الأساسي. النطاق المحتمل %1 (أصغر الخطوط) إلى %2 (الخطوط الأكبر). (الافتراضي: %3)</translation>
-    </message>
-    <message>
-        <source>Set the font weight for bold texts. Possible range %1 to %2 (default: %3)</source>
-        <translation>اضبط وزن الخط للنصوص الغامقة. النطاق المحتمل %1 إلى %2 (الافتراضي: %3)</translation>
-    </message>
-    <message>
-        <source>Set the font weight for normal texts. Possible range %1 to %2 (default: %3)</source>
-        <translation>اضبط وزن الخط للنصوص العادية. النطاق المحتمل %1 إلى %2 (الافتراضي: %3)</translation>
     </message>
     <message>
         <source>Set language, for example "de_DE" (default: system locale)</source>
@@ -1136,8 +1037,16 @@
         <translation>نمودج</translation>
     </message>
     <message>
+        <source>Address</source>
+        <translation>عنوان</translation>
+    </message>
+    <message>
         <source>Status</source>
         <translation>الحالة.</translation>
+    </message>
+    <message>
+        <source>Payee</source>
+        <translation>المستفيد</translation>
     </message>
     <message>
         <source>0</source>
@@ -1156,16 +1065,8 @@
         <translation>عدد نود</translation>
     </message>
     <message>
-        <source>Show only masternodes this wallet has keys for.</source>
-        <translation>إظهار الرموز الرئيسية فقط تحتوي هذه المحفظة على مفاتيح.</translation>
-    </message>
-    <message>
-        <source>My masternodes only</source>
-        <translation>ماسترنوداتي فقط</translation>
-    </message>
-    <message>
-        <source>Service</source>
-        <translation>الخدمات</translation>
+        <source>DIP3 Masternodes</source>
+        <translation>DIP3 ماسترنود</translation>
     </message>
     <message>
         <source>PoSe Score</source>
@@ -1184,24 +1085,8 @@
         <translation>الدفع المقبل</translation>
     </message>
     <message>
-        <source>Payout Address</source>
-        <translation>عنوان الدفع</translation>
-    </message>
-    <message>
         <source>Operator Reward</source>
         <translation>مكافأة المشغل</translation>
-    </message>
-    <message>
-        <source>Collateral Address</source>
-        <translation>عنوان الضمان</translation>
-    </message>
-    <message>
-        <source>Owner Address</source>
-        <translation>عنوان المالك</translation>
-    </message>
-    <message>
-        <source>Voting Address</source>
-        <translation>عنوان التصويت</translation>
     </message>
     <message>
         <source>Copy ProTx Hash</source>
@@ -1210,10 +1095,6 @@
     <message>
         <source>Copy Collateral Outpoint</source>
         <translation>نسخ نقطة خارجية</translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation>جارٍ التحديث ...</translation>
     </message>
     <message>
         <source>ENABLED</source>
@@ -1242,14 +1123,6 @@
     <message>
         <source>NONE</source>
         <translation>لا شيء</translation>
-    </message>
-    <message>
-        <source>Filter by any property (e.g. address or protx hash)</source>
-        <translation>تصفية حسب أي خاصية (مثل العنوان أو تجزئة البروتكس)</translation>
-    </message>
-    <message>
-        <source>Please wait...</source>
-        <translation>ارجوك انتظر...</translation>
     </message>
     <message>
         <source>Additional information for DIP3 Masternode %1</source>
@@ -1365,10 +1238,6 @@
         <translation>&amp;محفظة</translation>
     </message>
     <message>
-        <source>&amp;Appearance</source>
-        <translation>&amp;مظهر خارجي</translation>
-    </message>
-    <message>
         <source>Show additional tab listing all your masternodes in first sub-tab&lt;br/&gt;and all masternodes on the network in second sub-tab.</source>
         <translation>عرض علامة تبويب إضافية تسرد جميع رموزك في أول علامة تبويب فرعية &lt;br/&gt;وجميع ماسترنود على الشبكة في علامة التبويب الفرعية الثانية.</translation>
     </message>
@@ -1417,11 +1286,11 @@
         <translation>فتح منفذ عميل داش كور تلقائيًا على جهاز التوجيه. هذا يعمل فقط عندما يدعم جهاز التوجيه الخاص بك UPnP وتمكينه.</translation>
     </message>
     <message>
-        <source>Accept connections from outside.</source>
-        <translation>اقبل الاتصالات من الخارج.</translation>
+        <source>Accept connections from outside</source>
+        <translation>اقبل الاتصالات من الخارج</translation>
     </message>
     <message>
-        <source>Allow incomin&amp;g connections</source>
+        <source>Allow incoming connections</source>
         <translation>السماح بالاتصالات الواردة</translation>
     </message>
     <message>
@@ -1433,22 +1302,6 @@
         <translation>الاتصال من خلال وكيل SOCKS5 (الوكيل الافتراضي):</translation>
     </message>
     <message>
-        <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
-        <translation>يظهر ما إذا كان وكيل SOCKS5 الافتراضي المقدم مستخدمًا للوصول إلى الأقران عبر هذا النوع من الشبكة.</translation>
-    </message>
-    <message>
-        <source>Use separate SOCKS&amp;5 proxy to reach peers via Tor hidden services:</source>
-        <translation>استخدم بروكسي SOCKS5 منفصل للوصول إلى الأقران عبر خدمات Tor المخفية:</translation>
-    </message>
-    <message>
-        <source>Hide the icon from the system tray.</source>
-        <translation>إخفاء الرمز من علبة النظام.</translation>
-    </message>
-    <message>
-        <source>&amp;Hide tray icon</source>
-        <translation>رمز علبة اخفاء</translation>
-    </message>
-    <message>
         <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
         <translation>التصغير بدلاً من الخروج من التطبيق عند إغلاق النافذة. عند تفعيل هذا الخيار، سيتم إغلاق التطبيق فقط بعد اختيار الخروج من القائمة.</translation>
     </message>
@@ -1457,8 +1310,12 @@
         <translation>عناوين التابعة لجهات خارجية (مثل مستكشف كتلة) التي تظهر في علامة شريط المعاملات كعناصر قائمة السياق &lt;br/&gt; يتم استبدال %s في عنوان بتجزئة المعاملة. عناوين متعددة مفصولة بشريط عمودي.</translation>
     </message>
     <message>
-        <source>&amp;Third party transaction URLs</source>
-        <translation>&amp; عناوين URL لمعاملات الطرف الثالث</translation>
+        <source>Expert</source>
+        <translation>تصدير</translation>
+    </message>
+    <message>
+        <source>This setting determines the amount of individual masternodes that an input will be anonymized through.&lt;br/&gt;More rounds of anonymization gives a higher degree of privacy, but also costs more in fees.</source>
+        <translation>يحدد هذا الإعداد مقدار ماسترنود الفردية التي سيتم جعل مدخلات مجهولة المصدر.&lt;br/&gt;تعطي المزيد من جولات إخفاء الهوية درجة أعلى من الخصوصية ، ولكنها أيضًا تكلف أكثر في الرسوم.</translation>
     </message>
     <message>
         <source>Whether to show coin control features or not.</source>
@@ -1489,10 +1346,6 @@
         <translation>اقضي على تغيير غير مؤكد</translation>
     </message>
     <message>
-        <source>This setting determines the amount of individual masternodes that an input will be mixed through.&lt;br/&gt;More rounds of mixing gives a higher degree of privacy, but also costs more in fees.</source>
-        <translation>يحدد هذا الإعداد مقدار ماسترنود الفردية التي سيتم خلط المدخلات من خلالها.&lt;br/&gt; توفر المزيد من جولات الاختلاط درجة أعلى من الخصوصية ، ولكنها أيضًا تكلف رسومًا أكبر.</translation>
-    </message>
-    <message>
         <source>&amp;Network</source>
         <translation>&amp;الشبكة</translation>
     </message>
@@ -1521,6 +1374,10 @@
         <translation>مستخدم للاتصال بالاصدقاء من خلال:</translation>
     </message>
     <message>
+        <source>Shows, if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
+        <translation>يظهر ، إذا تم استخدام بروكسي SOCKS5 الافتراضي الموفر للوصول إلى الأقران عبر نوع الشبكة هذا.</translation>
+    </message>
+    <message>
         <source>IPv4</source>
         <translation>IPv4</translation>
     </message>
@@ -1535,6 +1392,22 @@
     <message>
         <source>Connect to the Ion network through a separate SOCKS5 proxy for Tor hidden services.</source>
         <translation>اتصل بشبكة داش من خلال وكيل SOCKS5 منفصل لخدمات المخفية.</translation>
+    </message>
+    <message>
+        <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services:</source>
+        <translation>استخدم بروكسي SOCKS5 منفصل للوصول إلى الأقران عبر خدمات المخفية:</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>نافذه</translation>
+    </message>
+    <message>
+        <source>&amp;Hide the icon from the system tray.</source>
+        <translation>إإخفاء الأيقونة من علبة النظام</translation>
+    </message>
+    <message>
+        <source>Hide tray icon</source>
+        <translation>إخفاء الأيقونة</translation>
     </message>
     <message>
         <source>Show only a tray icon after minimizing the window.</source>
@@ -1558,13 +1431,17 @@
     </message>
     <message>
         <source>The user interface language can be set here. This setting will take effect after restarting %1.</source>
-        <translation>يمكن تعيين لغة واجهة للمستخدم هنا. سيتم تفعيل هذا الإعداد بعد إعادة تشغيل %1.</translation>
+        <translation>يمكن تعيين لغة واجهة للمستخدم هنا. سيتم تفعيل هذا الإعداد بعد إعادة تشغيل%1.</translation>
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
 https://www.transifex.com/ioncoincore/ioncore/</source>
         <translation>لغة مفقودة أو ترجمة غير مكتملة؟ مساعدة في المساهمة بالترجمات هنا:
 https://www.transifex.com/ioncoincore/ioncore/</translation>
+    </message>
+    <message>
+        <source>User Interface Theme:</source>
+        <translation>موضوع جهة التعامل للمستخدم:</translation>
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
@@ -1577,6 +1454,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Decimal digits</source>
         <translation>أرقام عشرية</translation>
+    </message>
+    <message>
+        <source>Third party transaction URLs</source>
+        <translation>عناوين لجهات خارجية</translation>
     </message>
     <message>
         <source>Active command-line options that override above options:</source>
@@ -1601,6 +1482,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>default</source>
         <translation>الافتراضي</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>لا شيء</translation>
     </message>
     <message>
         <source>Confirm options reset</source>
@@ -1710,6 +1595,22 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>إكمال:</translation>
     </message>
     <message>
+        <source>Try to manually submit a PrivateSend request.</source>
+        <translation>حاول تقديم طلب الإرسال المخفي يدويًا.</translation>
+    </message>
+    <message>
+        <source>Reset the current status of PrivateSend (can interrupt PrivateSend if it's in the process of Mixing, which can cost you money!)</source>
+        <translation>إعادة تعيين الحالة الحالية لـ الإرسال المخفي (يمكن مقاطعة الإرسال المخفي إذا كانت في عملية خلط ، مما قد يكلفك المال!)</translation>
+    </message>
+    <message>
+        <source>Information about PrivateSend and Mixing</source>
+        <translation>معلومات حول الإرسال المخفي والدمج</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>معلومات</translation>
+    </message>
+    <message>
         <source>Amount and Rounds:</source>
         <translation>الكمية و الجولات</translation>
     </message>
@@ -1742,6 +1643,18 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>الفئات التي قدمتها إلى ماسترنود &lt;br&gt; لدمج ، يجب على المستخدمين الآخرين تقديم نفس الفئات نفسها.</translation>
     </message>
     <message>
+        <source>(Last Message)</source>
+        <translation>( آخر رسالة )</translation>
+    </message>
+    <message>
+        <source>Try Mix</source>
+        <translation>محاولة الدمج</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>إعادة تعيين</translation>
+    </message>
+    <message>
         <source>out of sync</source>
         <translation>خارج المزامنه</translation>
     </message>
@@ -1766,12 +1679,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation><numerusform>%n جولات</numerusform><numerusform>%n جولات</numerusform><numerusform>%n جولات</numerusform><numerusform>%n جولات</numerusform><numerusform>%n جولات</numerusform><numerusform>%n جولات</numerusform></translation>
     </message>
     <message>
-        <source>Found enough compatible inputs to mix %1</source>
-        <translation>تم العثور على مدخلات متوافقة كافية لمزج %1</translation>
+        <source>Found enough compatible inputs to anonymize %1</source>
+        <translation>تم العثور على مدخلات متوافقة كافية لإخفاء الهوية%1</translation>
     </message>
     <message>
-        <source>Not enough compatible inputs to mix &lt;span style='%1'&gt;%2&lt;/span&gt;,&lt;br&gt;will mix &lt;span style='%1'&gt;%3&lt;/span&gt; instead</source>
-        <translation>لا توجد إدخالات متوافقة كافية لخلط&lt;span style='%1'&gt;%2&lt;/span&gt; ، &lt;br&gt;سيتم خلط&lt;span style='%1'&gt;%3&lt;/span&gt; بدلاً من ذلك</translation>
+        <source>Not enough compatible inputs to anonymize &lt;span style='color:red;'&gt;%1&lt;/span&gt;,&lt;br&gt;will anonymize &lt;span style='color:red;'&gt;%2&lt;/span&gt; instead</source>
+        <translation>لا توجد مدخلات متوافقة كافية لإخفاء الهوية &lt;span style='color:red;'&gt; %1 &lt;/span&gt;. &lt;br&gt;سوف مجهول &lt;span style='color:red;'&gt;%2&lt;/span&gt; بدلا من </translation>
     </message>
     <message>
         <source>Overall progress</source>
@@ -1782,12 +1695,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>المقومة</translation>
     </message>
     <message>
-        <source>Partially mixed</source>
-        <translation>مختلطة جزئيا</translation>
-    </message>
-    <message>
         <source>Mixed</source>
         <translation>دمج</translation>
+    </message>
+    <message>
+        <source>Anonymized</source>
+        <translation>مجهول</translation>
     </message>
     <message numerus="yes">
         <source>Denominated inputs have %5 of %n rounds on average</source>
@@ -1795,7 +1708,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>keys left: %1</source>
-        <translation>المفاتيح المتبقية: %1</translation>
+        <translation>المفاتيح المتبقية:%1</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -1806,8 +1719,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>عدد قليل جدا من مفاتيح اليسار منذ آخر النسخ الاحتياطي التلقائي!</translation>
     </message>
     <message>
-        <source>We are about to create a new automatic backup for you, however &lt;span style='%1'&gt; you should always make sure you have backups saved in some safe place&lt;/span&gt;!</source>
-        <translation>نحن على وشك إنشاء نسخة احتياطية تلقائية جديدة لك &lt;span style='%1'&gt;يجب عليك دائمًا التأكد من الاحتفاظ بنسخ احتياطية في مكان آمن &lt;/span&gt;!</translation>
+        <source>We are about to create a new automatic backup for you, however &lt;span style='color:red;'&gt; you should always make sure you have backups saved in some safe place&lt;/span&gt;!</source>
+        <translation>نحن على وشك إنشاء نسخة احتياطية تلقائية جديدة لك &lt;span style='color:red;'&gt;يجب عليك دائمًا التأكد من الاحتفاظ بنسخ احتياطية في مكان آمن &lt;/span&gt;!</translation>
     </message>
     <message>
         <source>Note: You can turn this message off in options.</source>
@@ -1838,6 +1751,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>تحذير! تعذّر تجديد مفتاح ، يرجى إلغاء قفل محفظتك للقيام بذلك.</translation>
     </message>
     <message>
+        <source>Last PrivateSend message:
+</source>
+        <translation>آخر رسالة ابإرسال المخفي
+</translation>
+    </message>
+    <message>
+        <source>PrivateSend was successfully reset.</source>
+        <translation>تم اعادة ضبط الإرسال المخفي بنجاح ..</translation>
+    </message>
+    <message>
         <source>If you don't want to see internal PrivateSend fees/transactions select "Most Common" as Type on the "Transactions" tab.</source>
         <translation>إذا كنت لا ترغب في رؤية رسوم / معاملات الإرسال المخفي الداخلي حدد "الأكثر شيوعًا" كأنواع في علامة شريط "المعاملات".</translation>
     </message>
@@ -1866,7 +1789,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Payment request fetch URL is invalid: %1</source>
-        <translation>عنوان الخاص بجلب طلب الدفع غير صالح: %1</translation>
+        <translation>عنوان الخاص بجلب طلب الدفع غير صالح:%1</translation>
     </message>
     <message>
         <source>Invalid payment address %1</source>
@@ -1959,14 +1882,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>Ping</source>
         <translation>رنين</translation>
     </message>
-    <message>
-        <source>Sent</source>
-        <translation>أرسلت</translation>
-    </message>
-    <message>
-        <source>Received</source>
-        <translation>وصلت</translation>
-    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2039,22 +1954,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%1 و %2</translation>
     </message>
     <message>
-        <source>%1 B</source>
-        <translation>%1 B</translation>
-    </message>
-    <message>
-        <source>%1 KB</source>
-        <translation>%1 KB</translation>
-    </message>
-    <message>
-        <source>%1 MB</source>
-        <translation>%1 MB</translation>
-    </message>
-    <message>
-        <source>%1 GB</source>
-        <translation>%1 GB</translation>
-    </message>
-    <message>
         <source>unknown</source>
         <translation>غير معروف</translation>
     </message>
@@ -2067,39 +1966,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Error: Cannot parse configuration file: %1. Only use key=value syntax.</source>
-        <translation>خطأ: لا يمكن تحليل ملف التهيئة: %1. استخدم فقط بناء الجملة = القيمة الأساسية.</translation>
+        <translation>خطأ: لا يمكن تحليل ملف التهيئة:%1. استخدم فقط بناء الجملة = القيمة الأساسية.</translation>
     </message>
     <message>
         <source>Error: %1</source>
         <translation>خطأ: %1</translation>
-    </message>
-    <message>
-        <source>Error: Failed to load application fonts.</source>
-        <translation>خطأ: فشل تحميل خطوط التطبيق.</translation>
-    </message>
-    <message>
-        <source>Error: Specified font-family invalid. Valid values: %1.</source>
-        <translation>خطأ: مجموعة الخطوط المحددة غير صالحة. القيم الصالحة: %1.</translation>
-    </message>
-    <message>
-        <source>Error: Specified font-weight-normal invalid. Valid range %1 to %2.</source>
-        <translation>خطأ: خط الوزن العادي المحدد غير صالح. النطاق الصالح %1 إلى %2.</translation>
-    </message>
-    <message>
-        <source>Error: Specified font-weight-bold invalid. Valid range %1 to %2.</source>
-        <translation>خطأ: خط غامق محدد غير صالح. النطاق الصالح %1 إلى %2.</translation>
-    </message>
-    <message>
-        <source>Error: Specified font-scale invalid. Valid range %1 to %2.</source>
-        <translation>خطأ: مقياس الخط المحدد غير صالح. النطاق الصالح %1 إلى %2.</translation>
-    </message>
-    <message>
-        <source>Error: Invalid -custom-css-dir path.</source>
-        <translation>خطأ: مسار -custom-css-dir غير صالح.</translation>
-    </message>
-    <message>
-        <source>Error: %1 CSS file(s) missing in -custom-css-dir path.</source>
-        <translation>خطأ: يفتقد %1 ملف (ملفات) CSS في المسار -custom-css-dir.</translation>
     </message>
 </context>
 <context>
@@ -2250,6 +2121,14 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>&amp;حركة مرور الشبكة</translation>
     </message>
     <message>
+        <source>&amp;Clear</source>
+        <translation>&amp;مسح</translation>
+    </message>
+    <message>
+        <source>Totals</source>
+        <translation>المجموع</translation>
+    </message>
+    <message>
         <source>Received</source>
         <translation>إستقبل</translation>
     </message>
@@ -2306,16 +2185,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>دليل البيانات</translation>
     </message>
     <message>
-        <source>Last block hash</source>
-        <translation>آخر تجزئة كتلة</translation>
-    </message>
-    <message>
         <source>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation>افتح ملف سجل تصحيح %1 من دليل البيانات الحالي. قد يستغرق هذا بضع ثوانٍ لملفات السجل الكبيرة.</translation>
-    </message>
-    <message>
-        <source>InstantSend locks</source>
-        <translation>أقفال InstantSend</translation>
     </message>
     <message>
         <source>Decrease font size</source>
@@ -2324,10 +2195,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Increase font size</source>
         <translation>تكبير حجم الخط</translation>
-    </message>
-    <message>
-        <source>&amp;Reset</source>
-        <translation>&amp;إعادة تعيين</translation>
     </message>
     <message>
         <source>Services</source>
@@ -2462,20 +2329,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>مرحبًا بك في وحدة التحكم %1 RPC.</translation>
     </message>
     <message>
-        <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
-        <translation>استخدم السهمين لأعلى ولأسفل للتنقل في المحفوظات ، و%1 لمسح الشاشة.</translation>
+        <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
+        <translation>استخدم اسهم الاعلى و الاسفل للتنقل بين السجلات و &lt;b&gt;Ctrl-L&lt;/b&gt;  لمسح الشاشة</translation>
     </message>
     <message>
-        <source>Type %1 for an overview of available commands.</source>
-        <translation>اكتب %1 للحصول على نظرة عامة حول الأوامر المتوفرة.</translation>
+        <source>Type &lt;b&gt;help&lt;/b&gt; for an overview of available commands.</source>
+        <translation>نوع &lt;b&gt;مساعدة&lt;/b&gt;للحصول على نظرة عامة على الأوامر متاح.</translation>
     </message>
     <message>
-        <source>For more information on using this console type %1.</source>
-        <translation>لمزيد من المعلومات حول استخدام نوع وحدة التحكم هذه %1.</translation>
-    </message>
-    <message>
-        <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.</source>
-        <translation>تحذير: كان المحتالون نشطين ، ويخبرون المستخدمين بكتابة الأوامر هنا ، وسرقة محتويات محفظتهم. لا تستخدم وحدة التحكم هذه دون فهم تداعيات الأمر بشكل كامل.</translation>
+        <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.</source>
+        <translation>تحذير: المخادعون نشطون ، ويطلبون من المستخدمين كتابة الأوامر هنا ، وسرقة محتويات محفظتهم. لا تستخدم وحدة التحكم هذه بدون فهم تباين أمر ما تمامًا</translation>
     </message>
     <message>
         <source>In:</source>
@@ -2490,8 +2353,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>تم إلغاء تفعيل الشبكه</translation>
     </message>
     <message>
-        <source>Total: %1 (Enabled: %2)</source>
-        <translation>الإجمالي: %1 (ممكّن: %2)</translation>
+        <source>%1 B</source>
+        <translation>%1 بايت</translation>
+    </message>
+    <message>
+        <source>%1 KB</source>
+        <translation>%1 كيلو بايت</translation>
+    </message>
+    <message>
+        <source>%1 MB</source>
+        <translation>%1 ميقا بايت</translation>
+    </message>
+    <message>
+        <source>%1 GB</source>
+        <translation>%1 قيقا بايت</translation>
     </message>
     <message>
         <source>(node id: %1)</source>
@@ -2581,6 +2456,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>مسح</translation>
     </message>
     <message>
+        <source>Request InstantSend</source>
+        <translation>طلب الإرسال الفوري</translation>
+    </message>
+    <message>
         <source>Requested payments history</source>
         <translation>سجل طلبات الدفع</translation>
     </message>
@@ -2599,14 +2478,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Remove</source>
         <translation>ازل</translation>
-    </message>
-    <message>
-        <source>Enter a label to associate with the new receiving address</source>
-        <translation>أدخل تصنيفًا لربطه بعنوان الاستلام الجديد</translation>
-    </message>
-    <message>
-        <source>Enter a message to attach to the payment request</source>
-        <translation>أدخل رسالة لإرفاقها بطلب الدفع</translation>
     </message>
     <message>
         <source>Copy URI</source>
@@ -2670,6 +2541,18 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Message</source>
         <translation>رسالة </translation>
+    </message>
+    <message>
+        <source>InstantSend</source>
+        <translation>الإرسال الفوري</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>نعم</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>لا</translation>
     </message>
     <message>
         <source>Resulting URI too long, try to reduce the text for label / message.</source>
@@ -2778,12 +2661,28 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>إختر …</translation>
     </message>
     <message>
+        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until your have validated the complete chain.</source>
+        <translation>قد يؤدي استخدام fallbackfee إلى إرسال معاملة تستغرق عدة ساعات أو أيام (أو أبداً) للتأكيد. فكر في اختيار الرسوم يدويًا أو انتظر حتى يتم التحقق من صحة السلسلة الكاملة.</translation>
+    </message>
+    <message>
+        <source>Warning: Fee estimation is currently not possible.</source>
+        <translation>تحذير: تقدير الرسوم غير ممكن في الوقت الحالي.</translation>
+    </message>
+    <message>
         <source>collapse fee-settings</source>
         <translation>خفض الإعدادات الرسوم</translation>
     </message>
     <message>
         <source>Confirmation time target:</source>
         <translation>هدف وقت التأكيد:</translation>
+    </message>
+    <message>
+        <source>PrivateSend</source>
+        <translation>الإرسال المخفي</translation>
+    </message>
+    <message>
+        <source>InstantSend</source>
+        <translation>الإسال الفوري</translation>
     </message>
     <message>
         <source>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then "per kilobyte" only pays 250 duffs in fee,&lt;br /&gt;while "at least" pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
@@ -2802,16 +2701,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>لكل كيلوبايت</translation>
     </message>
     <message>
-        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</source>
-        <translation>قد يؤدي استخدام fallbackfee إلى إرسال معاملة تستغرق عدة ساعات أو أيام (أو أبداً) للتأكيد. فكر في اختيار الرسوم يدويًا أو انتظر حتى يتم التحقق من صحة السلسلة الكاملة.</translation>
-    </message>
-    <message>
-        <source>Note: Not enough data for fee estimation, using the fallback fee instead.</source>
-        <translation>ملاحظة: لا توجد بيانات كافية لتقدير الرسوم ، باستخدام الرسوم الاحتياطية بدلاً من ذلك.</translation>
-    </message>
-    <message>
         <source>Hide</source>
         <translation>إخفاء</translation>
+    </message>
+    <message>
+        <source>total at least</source>
+        <translation>المجموع على الأقل</translation>
     </message>
     <message>
         <source>(read the tooltip)</source>
@@ -2828,6 +2723,14 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>(Smart fee not initialized yet. This usually takes a few blocks...)</source>
         <translation>(الرسوم الذكية لم يتم تهيئتها بعد. عادة ما يستغرق ذلك بضع كتل ...)</translation>
+    </message>
+    <message>
+        <source>normal</source>
+        <translation>طبيعي</translation>
+    </message>
+    <message>
+        <source>fast</source>
+        <translation>سريع</translation>
     </message>
     <message>
         <source>Confirm the send action</source>
@@ -2886,12 +2789,24 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>نسخ التعديل</translation>
     </message>
     <message>
-        <source>%1 (%2 blocks)</source>
-        <translation>%1 (%2 كتل)</translation>
-    </message>
-    <message>
         <source>using</source>
         <translation>إستخدام</translation>
+    </message>
+    <message>
+        <source>anonymous funds</source>
+        <translation>مدفوعات مجهولة</translation>
+    </message>
+    <message>
+        <source>(privatesend requires this amount to be rounded up to the nearest %1).</source>
+        <translation>(يتطلب الإرسال المخفي تقريب هذا المبلغ إلى أقرب%1).</translation>
+    </message>
+    <message>
+        <source>any available funds (not anonymous)</source>
+        <translation>أي أموال متاح (غير مجهولة)</translation>
+    </message>
+    <message>
+        <source>and InstantSend</source>
+        <translation>و الإرسال الفوري</translation>
     </message>
     <message>
         <source>%1 to %2</source>
@@ -2912,38 +2827,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>&lt;b&gt;(%1 of %2 entries displayed)&lt;/b&gt;</source>
         <translation>&lt;b&gt;( %1 على %2 المداخلات المعروضة)&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>Confirm the PrivateSend action</source>
-        <translation>قم بتأكيد إجراء PrivateSend</translation>
-    </message>
-    <message>
-        <source>PrivateSend funds only</source>
-        <translation>أموال PrivateSend فقط</translation>
-    </message>
-    <message>
-        <source>any available funds</source>
-        <translation>أي أموال متاحة</translation>
-    </message>
-    <message>
-        <source>(PrivateSend transactions have higher fees usually due to no change output being allowed)</source>
-        <translation>(معاملات الإرسال الخاص لها رسوم أعلى عادة بسبب عدم السماح بإخراج التغيير)</translation>
-    </message>
-    <message>
-        <source>Transaction size: %1</source>
-        <translation>حجم العملية: %1</translation>
-    </message>
-    <message>
-        <source>Fee rate: %1</source>
-        <translation>معدل الرسوم: %1</translation>
-    </message>
-    <message numerus="yes">
-        <source>This transaction will consume %n input(s)</source>
-        <translation><numerusform>ستستهلك هذه المعاملة إدخال٪ n</numerusform><numerusform>ستستهلك هذه المعاملة إدخال٪ n</numerusform><numerusform>ستستهلك هذه المعاملة إدخال٪ n</numerusform><numerusform>ستستهلك هذه المعاملة إدخال٪ n</numerusform><numerusform>ستستهلك هذه المعاملة إدخال٪ n</numerusform><numerusform>ستستهلك هذه المعاملة مدخلات %n</numerusform></translation>
-    </message>
-    <message>
-        <source>Warning: Using PrivateSend with %1 or more inputs can harm your privacy and is not recommended</source>
-        <translation>تحذير: قد يؤدي استخدام PrivateSend مع %1 أو أكثر من الإدخالات إلى الإضرار بالخصوصية ولا يوصى بذلك</translation>
     </message>
     <message>
         <source>Confirm send coins</source>
@@ -2984,6 +2867,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Payment request expired.</source>
         <translation>انتهاء صلاحية طلب الدفع.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n block(s)</source>
+        <translation><numerusform>%n كتل</numerusform><numerusform>%n كتل</numerusform><numerusform>%n كتل</numerusform><numerusform>%n كتل</numerusform><numerusform>%n كتل</numerusform><numerusform>%n كتل</numerusform></translation>
     </message>
     <message>
         <source>Pay only the required fee of %1</source>
@@ -3067,10 +2954,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>S&amp;ubtract fee from amount</source>
         <translation>طرح الرسوم من المبلغ</translation>
-    </message>
-    <message>
-        <source>Use available balance</source>
-        <translation>استخدم الرصيد المتاح</translation>
     </message>
     <message>
         <source>Message:</source>
@@ -3206,20 +3089,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>إعادة تعيين جميع حقول التحقق من الرسالة</translation>
     </message>
     <message>
-        <source>Enter a message to be signed</source>
-        <translation>أدخل رسالة ليتم التوقيع عليها</translation>
-    </message>
-    <message>
         <source>Click "Sign Message" to generate signature</source>
         <translation>اضغط  "توقيع الرسالة" لتوليد التوقيع</translation>
-    </message>
-    <message>
-        <source>Enter a message to be verified</source>
-        <translation>أدخل رسالة ليتم التحقق منها</translation>
-    </message>
-    <message>
-        <source>Enter a signature for the message to be verified</source>
-        <translation>أدخل توقيعًا للرسالة ليتم التحقق منها</translation>
     </message>
     <message>
         <source>The entered address is invalid.</source>
@@ -3276,6 +3147,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>[testnet]</source>
         <translation>[testnet]</translation>
     </message>
+    <message>
+        <source>Version %1</source>
+        <translation>نسخة %1</translation>
+    </message>
 </context>
 <context>
     <name>TrafficGraphWidget</name>
@@ -3283,7 +3158,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>KB/s</source>
         <translation>كيلوبايت/ث</translation>
     </message>
-    </context>
+</context>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
@@ -3297,6 +3172,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>conflicted</source>
         <translation>يتعارض</translation>
+    </message>
+    <message>
+        <source>%1/offline</source>
+        <translation>%1 غير متواجد</translation>
     </message>
     <message>
         <source>0/unconfirmed, %1</source>
@@ -3323,8 +3202,28 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>تأكيد %1</translation>
     </message>
     <message>
+        <source>verified via InstantSend</source>
+        <translation>محقق من فبل الإرسال الفوري</translation>
+    </message>
+    <message>
+        <source>InstantSend verification in progress - %1 of %2 signatures</source>
+        <translation>الإرسال الغوري التحقق قيد التقدم - %1 على %2 إمضاءات</translation>
+    </message>
+    <message>
+        <source>InstantSend verification failed</source>
+        <translation>فشل التحقق من الإرسال الفوري</translation>
+    </message>
+    <message>
         <source>Status</source>
         <translation>الحالة.</translation>
+    </message>
+    <message>
+        <source>, has not been successfully broadcast yet</source>
+        <translation>,  لم يتم حتى الآن البث بنجاح</translation>
+    </message>
+    <message numerus="yes">
+        <source>, broadcast through %n node(s)</source>
+        <translation><numerusform>البث من خلال عقد %n</numerusform><numerusform>البث من خلال عقد %n</numerusform><numerusform>البث من خلال عقد %n</numerusform><numerusform>البث من خلال عقد %n</numerusform><numerusform>البث من خلال عقد %n</numerusform><numerusform>البث من خلال عقد %n</numerusform></translation>
     </message>
     <message>
         <source>Date</source>
@@ -3420,7 +3319,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Generated coins must mature %1 blocks before they can be spent. When you generated this block, it was broadcast to the network to be added to the block chain. If it fails to get into the chain, its state will change to "not accepted" and it won't be spendable. This may occasionally happen if another node generates a block within a few seconds of yours.</source>
-        <translation>يجب أن تنضج العملات المولدة %1 قبل أن يتم إنفاقها. عند إنشاء هذا الحظر ، تم بثه إلى الشبكة ليتم إضافته إلى سلسلة الحظر. إذا فشلت في الدخول إلى السلسلة ، ستتغير حالتها إلى "غير مقبولة" ولن تكون قابلة للانفاق. قد يحدث هذا أحيانًا إذا أدت عقدة أخرى إلى إنشاء كتلة في غضون ثوانٍ قليلة من حسابك.</translation>
+        <translation>يجب أن تنضج العملات المولدة%1 قبل أن يتم إنفاقها. عند إنشاء هذا الحظر ، تم بثه إلى الشبكة ليتم إضافته إلى سلسلة الحظر. إذا فشلت في الدخول إلى السلسلة ، ستتغير حالتها إلى "غير مقبولة" ولن تكون قابلة للانفاق. قد يحدث هذا أحيانًا إذا أدت عقدة أخرى إلى إنشاء كتلة في غضون ثوانٍ قليلة من حسابك.</translation>
     </message>
     <message>
         <source>Debug information</source>
@@ -3481,6 +3380,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>مفتوح حتى %1</translation>
     </message>
     <message>
+        <source>Offline</source>
+        <translation>غير متصل</translation>
+    </message>
+    <message>
         <source>Unconfirmed</source>
         <translation>غير مؤكد</translation>
     </message>
@@ -3494,7 +3397,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Confirmed (%1 confirmations)</source>
-        <translation>مؤكد (%1 تأكيد)</translation>
+        <translation>تأكيد %1 الإرسال</translation>
     </message>
     <message>
         <source>Conflicted</source>
@@ -3503,6 +3406,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Immature (%1 confirmations, will be available after %2)</source>
         <translation>غير متاح (تأكيدات %1 ، ستكون متوفرة بعد %2)</translation>
+    </message>
+    <message>
+        <source>This block was not received by any other nodes and will probably not be accepted!</source>
+        <translation>لم يتم تلقى هذه الكتلة (Block) من قبل أي العقد الأخرى وربما لن تكون مقبولة!</translation>
     </message>
     <message>
         <source>Generated but not accepted</source>
@@ -3549,6 +3456,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>الإرسال المخفي إنشاء الطوائف</translation>
     </message>
     <message>
+        <source>PrivateSend</source>
+        <translation>لإرسال المخفي</translation>
+    </message>
+    <message>
         <source>watch-only</source>
         <translation>مشاهدة فقط</translation>
     </message>
@@ -3577,6 +3488,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ما إذا كان العنوان المشاهدة فقط متضمنًا في هذه المعاملة أم لا.</translation>
     </message>
     <message>
+        <source>Whether or not this transaction was locked by InstantSend.</source>
+        <translation>ما إذا كانت هذه المعاملة مقفلة بواسطة الإرسال الفوري أم لا.</translation>
+    </message>
+    <message>
         <source>User-defined intent/purpose of the transaction.</source>
         <translation>هدف / غرض محدد من قبل المستخدم للمعاملات.</translation>
     </message>
@@ -3590,6 +3505,14 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>All</source>
         <translation>الكل</translation>
+    </message>
+    <message>
+        <source>Locked by InstantSend</source>
+        <translation>مغلق من الإرسال الفوري</translation>
+    </message>
+    <message>
+        <source>Not locked by InstantSend</source>
+        <translation>غير مغلق من الإرسال الفوري</translation>
     </message>
     <message>
         <source>Today</source>
@@ -3628,6 +3551,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>أرسل إلى</translation>
     </message>
     <message>
+        <source>PrivateSend</source>
+        <translation>الإرسال المخفي</translation>
+    </message>
+    <message>
         <source>PrivateSend Make Collateral Inputs</source>
         <translation>الإرسال المخفي جعل مدخلات الجانبية</translation>
     </message>
@@ -3656,8 +3583,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>اخرى</translation>
     </message>
     <message>
-        <source>Enter address, transaction id, or label to search</source>
-        <translation>أدخل العنوان أو معرف المعاملة أو التسمية للبحث</translation>
+        <source>Enter address or label to search</source>
+        <translation>ادخل عنوان أووصف للبحث</translation>
     </message>
     <message>
         <source>Min amount</source>
@@ -3698,10 +3625,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Show transaction details</source>
         <translation>عرض تفاصيل المعاملة</translation>
-    </message>
-    <message>
-        <source>Show address QR code</source>
-        <translation>إظهار رمز الاستجابة السريعة العنوان</translation>
     </message>
     <message>
         <source>Export Transaction History</source>
@@ -3754,10 +3677,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>The transaction history was successfully saved to %1.</source>
         <translation>تم حفظ محفوظات المعاملة بنجاح إلى %1.</translation>
-    </message>
-    <message>
-        <source>QR code</source>
-        <translation>رمز الاستجابة السريعة</translation>
     </message>
     <message>
         <source>Range:</source>
@@ -3825,7 +3744,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>There was an error trying to save the wallet data to %1.</source>
-        <translation>حدث خطأ أثناء محاولة حفظ بيانات المحفظة إلى %1.</translation>
+        <translation>حدث خطأ أثناء محاولة حفظ بيانات المحفظة إلى%1.</translation>
     </message>
     <message>
         <source>Backup Successful</source>
@@ -3863,8 +3782,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>اسم لإنشاء عنوان لإدخال KeePass الذي يخزن عبارة مرور المحفظة</translation>
     </message>
     <message>
+        <source>Set maximum size of high-priority/low-fee transactions in bytes (default: %d)</source>
+        <translation>تعيين الحد الأقصى لحجم المعاملات عالية الأولوية / منخفضة الرسوم بالبايت (الافتراضي: %d)</translation>
+    </message>
+    <message>
         <source>Set the number of script verification threads (%u to %d, 0 = auto, &lt;0 = leave that many cores free, default: %d)</source>
-        <translation>عدد مؤشرات التحقق من البرنامج النصي (%u إلى %d ، 0 = auto ، &amp;lt;0 = ترك العديد من النوى خالية ، الافتراضي: %d)</translation>
+        <translation>عدد مؤشرات التحقق من البرنامج النصي (%u إلى %d ، 0 = auto ، &lt;0 = ترك العديد من النوى خالية ، الافتراضي: %d)</translation>
     </message>
     <message>
         <source>This is a pre-release test build - use at your own risk - do not use for mining or merchant applications</source>
@@ -3883,6 +3806,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>قبول أوامر وحدة التحكم وأوامر JSON-RPC</translation>
     </message>
     <message>
+        <source>Add a node to connect to and attempt to keep the connection open</source>
+        <translation>أضف عقدة للاتصال بها ومحاولة للحفاظ على اتصال مفتوح</translation>
+    </message>
+    <message>
         <source>Allow DNS lookups for -addnode, -seednode and -connect</source>
         <translation>السماح بعمليات البحث عن DNS لـ -ddnode و -seednode و -connect</translation>
     </message>
@@ -3899,8 +3826,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>لا يمكن تخفيض قيمة المحفظة</translation>
     </message>
     <message>
+        <source>Cannot write default address</source>
+        <translation> لا يمكن كتابة العنوان الافتراضي</translation>
+    </message>
+    <message>
         <source>Collateral not valid.</source>
         <translation>ضمانات غير صالحة.</translation>
+    </message>
+    <message>
+        <source>Connect to a node to retrieve peer addresses, and disconnect</source>
+        <translation>الاتصال بعقدة لاسترداد عناوين النظير ، وقطع الاتصال</translation>
     </message>
     <message>
         <source>Connection options:</source>
@@ -3972,15 +3907,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>A fee rate (in %s/kB) that will be used when fee estimation has insufficient data (default: %s)</source>
-        <translation>سعر الرسوم (بالكيلو %s/kB) الذي سيتم استخدامه عندما يكون تقدير الرسوم غير كافٍ للبيانات (الافتراضي: %s)</translation>
+        <translation>سعر الرسوم (بالكيلو %s / kB) الذي سيتم استخدامه عندما يكون تقدير الرسوم غير كافٍ للبيانات (الافتراضي: %s)</translation>
     </message>
     <message>
         <source>Accept relayed transactions received from whitelisted peers even when not relaying transactions (default: %d)</source>
         <translation>قبول المعاملات المرحّلة التي تم استلامها من أقران القائمة البيضاء حتى عند عدم ترحيل المعاملات (القيمة الافتراضية: %d)</translation>
-    </message>
-    <message>
-        <source>Add a node to connect to and attempt to keep the connection open (see the `addnode` RPC command help for more info). This option can be specified multiple times to add multiple nodes.</source>
-        <translation>أضف عقدة للاتصال بها وحاول الإبقاء على الاتصال مفتوحًا (راجع تعليمات أمر RPC `addnode` لمزيد من المعلومات). يمكن تحديد هذا الخيار عدة مرات لإضافة عدة عقد.</translation>
     </message>
     <message>
         <source>Allow JSON-RPC connections from specified source. Valid for &lt;ip&gt; are a single IP (e.g. 1.2.3.4), a network/netmask (e.g. 1.2.3.4/255.255.255.0) or a network/CIDR (e.g. 1.2.3.4/24). This option can be specified multiple times</source>
@@ -3989,22 +3920,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Bind to given address and whitelist peers connecting to it. Use [host]:port notation for IPv6</source>
         <translation>ربط العنوان المعطى وأقرانه في القائمة البيضاء بالاتصال به. استخدم [host]: تدوين المنفذ لـ IPv6</translation>
-    </message>
-    <message>
-        <source>Bind to given address to listen for JSON-RPC connections. Do not expose the RPC server to untrusted networks such as the public internet! This option is ignored unless -rpcallowip is also passed. Port is optional and overrides -rpcport. Use [host]:port notation for IPv6. This option can be specified multiple times (default: 127.0.0.1 and ::1 i.e., localhost, or if -rpcallowip has been specified, 0.0.0.0 and :: i.e., all addresses)</source>
-        <translation>الارتباط بالعنوان المحدد للاستماع إلى اتصالات JSON-RPC. لا تعرض خادم RPC لشبكات غير موثوق بها مثل الإنترنت العام! يتم تجاهل هذا الخيار ما لم يتم تمرير -rpcallowip أيضًا. المنفذ اختياري ويتجاوز -rpcport. استخدم [مضيف]: تدوين المنفذ لـ IPv6. يمكن تحديد هذا الخيار عدة مرات (الافتراضي: 127.0.0.1 و :: 1 ، أي المضيف المحلي ، أو إذا تم تحديد -rpcallowip ، 0.0.0.0 و :: أي ، جميع العناوين)</translation>
-    </message>
-    <message>
-        <source>Cannot provide specific connections and have addrman find outgoing connections at the same.</source>
-        <translation>لا يمكن توفير اتصالات محددة ولديك addrman يجد الاتصالات الصادرة في نفس الوقت.</translation>
-    </message>
-    <message>
-        <source>Connect only to the specified node; -connect=0 disables automatic connections (the rules for this peer are the same as for -addnode). This option can be specified multiple times to connect to multiple nodes.</source>
-        <translation>الاتصال فقط بالعقدة المحددة ؛ -connect = 0 يعطل الاتصالات التلقائية (قواعد هذا النظير هي نفسها لقواعد -addnode). يمكن تحديد هذا الخيار عدة مرات للاتصال بالعقد المتعددة.</translation>
-    </message>
-    <message>
-        <source>Connect to a node to retrieve peer addresses, and disconnect. This option can be specified multiple times to connect to multiple nodes.</source>
-        <translation>اتصل بعقدة لاسترداد عناوين الأقران ، وقطع الاتصال. يمكن تحديد هذا الخيار عدة مرات للاتصال بالعقد المتعددة.</translation>
     </message>
     <message>
         <source>Create new files with system default permissions, instead of umask 077 (only effective with disabled wallet functionality)</source>
@@ -4023,6 +3938,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>تمكين تجزئات عمليات النشر لمحاولة الإرسال الفوري ومضاعفة إنفاق فيها &lt;address&gt;</translation>
     </message>
     <message>
+        <source>Error loading %s: You can't enable HD on a already existing non-HD wallet</source>
+        <translation>حدث خطأ أثناء تحميل %s: لا يمكنك تمكين HD في محفظة غير عالية موجودة بالفعل</translation>
+    </message>
+    <message>
         <source>Found unconfirmed denominated outputs, will wait till they confirm to continue.</source>
         <translation>العثور على نتائج مقومة غير مؤكدة ، سوف تنتظر حتى تؤكد استمرارها.</translation>
     </message>
@@ -4039,24 +3958,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>إذا كانت هذه المجموعة في السلسلة تفترض أنها وأصولها صالحة ، ومن المحتمل أن تتخطى التحقق من البرنامج النصي (0 للتحقق من الكل ، الافتراضي: %s ، testnet: %s)</translation>
     </message>
     <message>
-        <source>Invalid -socketevents ('%s') specified. Only these modes are supported: %s</source>
-        <translation>تم تحديد أحداث مأخذ توصيل غير صالحة ('%s'). يتم دعم هذه الأوضاع فقط: %s</translation>
-    </message>
-    <message>
         <source>Invalid amount for -maxtxfee=&lt;amount&gt;: '%s' (must be at least the minrelay fee of %s to prevent stuck transactions)</source>
         <translation>كمية غير صالحة لـ -maxtxfee = : '%s' &lt;amount&gt; (يجب أن تكون على الأقل رسوم minrelay %s لمنع المعاملات عالقة)</translation>
-    </message>
-    <message>
-        <source>Location of the auth cookie. Relative paths will be prefixed by a net-specific datadir location. (default: data dir)</source>
-        <translation>موقع ملف تعريف ارتباط المصادقة. المسارات النسبية ستكون مسبوقة بموقع بيانات الشبكة المعين. (افتراضي: Data dir)</translation>
     </message>
     <message>
         <source>Maintain a full transaction index, used by the getrawtransaction rpc call (default: %u)</source>
         <translation>احتفظ بفهرس للمعاملات كامل ، يستخدم من قبل استدعاء getrawtransaction (الافتراضي: %u)</translation>
     </message>
     <message>
-        <source>Make outgoing connections only through network &lt;net&gt; (ipv4, ipv6 or onion). Incoming connections are not affected by this option. This option can be specified multiple times to allow multiple networks.</source>
-        <translation>قم بإجراء اتصالات صادرة فقط من خلال الشبكة&lt;net&gt; (ipv4 أو ipv6 أو onion). لا تتأثر الاتصالات الواردة بهذا الخيار. يمكن تحديد هذا الخيار عدة مرات للسماح بشبكات متعددة.</translation>
+        <source>Make sure to encrypt your wallet and delete all non-encrypted backups after you verified that wallet works!</source>
+        <translation>تأكد من تشفير محفظتك وحذف جميع النسخ الاحتياطية غير المشفرة بعد التحقق من أن هذه المحفظة تعمل!</translation>
     </message>
     <message>
         <source>Maximum size of data in data carrier transactions we relay and mine (default: %u)</source>
@@ -4067,48 +3978,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>عدد الثواني للاحتفاظ بسوء تصرف الأقران من إعادة الاتصال (الإعداد الافتراضي: %u)</translation>
     </message>
     <message>
-        <source>Output debugging information (default: %u, supplying &lt;category&gt; is optional)</source>
-        <translation>معلومات تصحيح الخرج  &lt;category&gt;ا(الافتراضي: %u)</translation>
-    </message>
-    <message>
         <source>Overrides minimum spork signers to change spork value. Only useful for regtest and devnet. Using this on mainnet or testnet will ban you.</source>
         <translation>يلغي الحد الأدنى من مواقع السبات لتغيير قيمة السِلك. مفيدة فقط ل regtest و devnet. استخدام هذا على mainnet أو testnet سيحظر لك.</translation>
-    </message>
-    <message>
-        <source>PrivateSend uses exact denominated amounts to send funds, you might simply need to mix some more coins.</source>
-        <translation>يستخدم PrivateSend مبالغ محددة بدقة لإرسال الأموال ، قد تحتاج ببساطة إلى خلط بعض العملات المعدنية.</translation>
-    </message>
-    <message>
-        <source>Reduce storage requirements by enabling pruning (deleting) of old blocks. This allows the pruneblockchain RPC to be called to delete specific blocks, and enables automatic pruning of old blocks if a target size in MiB is provided. This mode is incompatible with -txindex, -rescan and -disablegovernance=false. Warning: Reverting this setting requires re-downloading the entire blockchain. (default: 0 = disable pruning blocks, 1 = allow manual pruning via RPC, &gt;=%u = automatically prune block files to stay under the specified target size in MiB)</source>
-        <translation>تقليل متطلبات التخزين عن طريق تمكين التقليم (حذف) الكتل القديمة. يسمح هذا باستدعاء RPC pruneblockchain لحذف كتل معينة ، وتمكين التقليم التلقائي للكتل القديمة إذا تم توفير حجم الهدف في MiB. هذا الوضع غير متوافق مع -txindex- rescan و -disablegovernance=false. تحذير: يتطلب إعادة هذا الإعداد إعادة تنزيل blockchain بالكامل. (افتراضي: 0 = تعطيل كتل التشذيب ، 1 = السماح بالتقليم اليدوي عن طريق RPC ،&gt;=%u = ملفات التجميع تلقائياً للتخفيض تحت حجم الهدف المحدد في MiB)</translation>
-    </message>
-    <message>
-        <source>Send trace/debug info to console (default: 1 when no -daemon. To disable logging to file, set debuglogfile=0)</source>
-        <translation>إرسال معلومات التتبع / تصحيح الأخطاء إلى وحدة التحكم (الافتراضي: 1 عندما لا يكون -ديمون. لتعطيل التسجيل إلى الملف ، عيّن debuglogfile = 0)</translation>
-    </message>
-    <message>
-        <source>Specify configuration file. Relative paths will be prefixed by datadir location. (default: %s)</source>
-        <translation>حدد ملف التكوين. المسارات النسبية ستكون مسبوقة بموقع datadir. (الافتراضي: %s)</translation>
-    </message>
-    <message>
-        <source>Specify directory to hold wallets (default: &lt;datadir&gt;/wallets if it exists, otherwise &lt;datadir&gt;)</source>
-        <translation>حدد دليلًا للاحتفاظ بالمحافظ (افتراضي:&lt;datadir&gt; / wallets إذا كان موجودًا ، وإلا&lt;datadir&gt;)</translation>
-    </message>
-    <message>
-        <source>Specify location of debug log file. Relative paths will be prefixed by a net-specific datadir location. (0 to disable; default: %s)</source>
-        <translation>حدد موقع ملف سجل التصحيح. المسارات النسبية ستكون مسبوقة بموقع بيانات الشبكة المعين. (0 للتعطيل ؛ الافتراضي: %s)</translation>
-    </message>
-    <message>
-        <source>Specify pid file. Relative paths will be prefixed by a net-specific datadir location. (default: %s)</source>
-        <translation>حدد ملف pid. المسارات النسبية ستكون مسبوقة بموقع بيانات الشبكة المعين. (الافتراضي: %s)</translation>
-    </message>
-    <message>
-        <source>Specify wallet database path. Can be specified multiple times to load multiple wallets. Path is interpreted relative to &lt;walletdir&gt; if it is not absolute, and will be created if it does not exist (as a directory containing a wallet.dat file and log files). For backwards compatibility this will also accept names of existing data files in &lt;walletdir&gt;.)</source>
-        <translation>حدد مسار قاعدة بيانات المحفظة. يمكن تحديدها عدة مرات لتحميل محافظ متعددة. يتم تفسير المسار بالنسبة إلى&lt;walletdir&gt; إذا لم يكن مطلقًا ، وسيتم إنشاؤه إذا لم يكن موجودًا (كدليل يحتوي على ملف wallet.dat وملفات السجل). للتوافق مع الإصدارات السابقة ، سيقبل هذا أيضًا أسماء ملفات البيانات الموجودة بتنسيق&lt;walletdir&gt;.)</translation>
-    </message>
-    <message>
-        <source>Transaction index can't be disabled with governance validation enabled. Either start with -disablegovernance command line switch or enable transaction index.</source>
-        <translation>لا يمكن تعطيل فهرس المعاملات مع تمكين التحقق من صحة الحوكمة. إما أن تبدأ بمفتاح سطر الأوامر -disablegovernance أو تمكين فهرس المعاملات.</translation>
     </message>
     <message>
         <source>Use N separate masternodes in parallel to mix funds (%u-%u, default: %u)</source>
@@ -4129,6 +4000,18 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Whitelisted peers cannot be DoS banned and their transactions are always relayed, even if they are already in the mempool, useful e.g. for a gateway</source>
         <translation>لا يمكن حظر الزملاء في القائمة البيضاء في DoS ويتم ترحيل معاملاتهم دائمًا ، حتى إذا كانت موجودة بالفعل في mempool ، على سبيل المثال ، على سبيل المثال ، لبوابة</translation>
+    </message>
+    <message>
+        <source>You need to rebuild the database using -reindex-chainstate to change -txindex</source>
+        <translation>تحتاج إلى إعادة بناء قاعدة البيانات باستخدام -reindex-chainstate لتغيير -txindex</translation>
+    </message>
+    <message>
+        <source>You should specify a masternodeblsprivkey in the configuration. Please see documentation for help.</source>
+        <translation>يجب عليك تحديد مفتاح ماسترنود في التكوين. يرجى الاطلاع على الوثائق للمساعدة.</translation>
+    </message>
+    <message>
+        <source>(default: %s)</source>
+        <translation>(القيمة الافتراضية: %s)</translation>
     </message>
     <message>
         <source>Accept public REST requests (default: %u)</source>
@@ -4155,8 +4038,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>الاتصال KeePassHttp على المنفذ&lt;port&gt; ( الافتراضي: %u ) </translation>
     </message>
     <message>
+        <source>Enable the client to act as a masternode (0-1, default: %u)</source>
+        <translation>تمكين العميل ليكون بمثابة ماسترنود (0-1 ، الافتراضي: %u)</translation>
+    </message>
+    <message>
         <source>Entry exceeds maximum size.</source>
         <translation>يتجاوز الدخول الحد الأقصى للحجم.</translation>
+    </message>
+    <message>
+        <source>Error loading %s: You can't disable HD on a already existing HD wallet</source>
+        <translation>حدث خطأ أثناء تحميل %s: لا يمكنك تعطيل HD في محفظة HD موجودة بالفعل</translation>
     </message>
     <message>
         <source>Failed to load fulfilled requests cache from</source>
@@ -4215,12 +4106,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>رصيد غير كاف.</translation>
     </message>
     <message>
-        <source>Invalid amount for -discardfee=&lt;amount&gt;: '%s'</source>
-        <translation>مبلغ غير صالح لـ -discardfee =&lt;amount&gt;: '%s'</translation>
-    </message>
-    <message>
         <source>Invalid amount for -paytxfee=&lt;amount&gt;: '%s' (must be at least %s)</source>
         <translation>مبلغ غير صالح لـ -paytxfee = : '%s' &lt;amount&gt; (يجب أن يكون على الأقل %s)</translation>
+    </message>
+    <message>
+        <source>Invalid masternodeblsprivkey. Please see documenation.</source>
+        <translation>غير صالحة ماسترنود. يرجى الاطلاع على الوثائق.</translation>
     </message>
     <message>
         <source>Invalid minimum number of spork signers specified with -minsporkkeys</source>
@@ -4283,12 +4174,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>لم يتم العثور على متسترنود متوافق.</translation>
     </message>
     <message>
-        <source>Not enough funds to mix.</source>
-        <translation>لا توجد أموال كافية للاختلاط.</translation>
-    </message>
-    <message>
         <source>Not in the Masternode list.</source>
         <translation>ليس في قائمة ماسترنود.</translation>
+    </message>
+    <message>
+        <source>Only connect to nodes in network &lt;net&gt; (ipv4, ipv6 or onion)</source>
+        <translation>فقط الاتصال بالعقد في الشبكة &lt;net&gt;  (ipv4, ipv6 or onion)</translation>
     </message>
     <message>
         <source>Prepend debug output with timestamp (default: %u)</source>
@@ -4307,16 +4198,32 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>إرسال معلومات التتبع / التصحيح إلى ملف debug.log (الافتراضي: %u)</translation>
     </message>
     <message>
+        <source>Send transactions as zero-fee transactions if possible (default: %u)</source>
+        <translation>إرسال المعاملات بصفقات صفرية إن أمكن (الافتراضي: %u)</translation>
+    </message>
+    <message>
         <source>Set key pool size to &lt;n&gt; (default: %u)</source>
         <translation>تعيين حجم تجمع مفتاح &lt;n&gt; (افتراضي: %u)</translation>
+    </message>
+    <message>
+        <source>Set the masternode BLS private key</source>
+        <translation>تعيين المفتاح الخاص ماسترنود الخاص</translation>
     </message>
     <message>
         <source>Set the number of threads to service RPC calls (default: %d)</source>
         <translation>تعيين عدد مؤشرات الترابط لخدمة المكالمات RPC (الافتراضي: %d)</translation>
     </message>
     <message>
+        <source>Specify configuration file (default: %s)</source>
+        <translation>تحديد ملف التهيئة (افتراضي: %s)</translation>
+    </message>
+    <message>
         <source>Specify connection timeout in milliseconds (minimum: 1, default: %d)</source>
         <translation>تحديد مهلة الاتصال بالمللي ثانية (الحد الأدنى: 1 ، القيمة الافتراضية: %d)</translation>
+    </message>
+    <message>
+        <source>Specify pid file (default: %s)</source>
+        <translation>تحديد ملف pid (الافتراضي: %s)</translation>
     </message>
     <message>
         <source>Spend unconfirmed change when sending transactions (default: %u)</source>
@@ -4327,12 +4234,28 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>تم إرساله إلى ماسترنود ، في الانتظار في قائمة الانتظار %s</translation>
     </message>
     <message>
+        <source>Synchronization failed</source>
+        <translation>فشل التزامن</translation>
+    </message>
+    <message>
         <source>Synchronization finished</source>
         <translation>انتهى التزامن</translation>
     </message>
     <message>
+        <source>This is not a Masternode.</source>
+        <translation>هذه ليست ماسترنود.</translation>
+    </message>
+    <message>
         <source>Threshold for disconnecting misbehaving peers (default: %u)</source>
         <translation>الحد الأدنى لفصل أقران سوء السلوك (الافتراضي: %u)</translation>
+    </message>
+    <message>
+        <source>Too many %f denominations, removing.</source>
+        <translation>عدد كبير جدًا من %f فئة ، إزالة.</translation>
+    </message>
+    <message>
+        <source>Too many %f denominations, skipping.</source>
+        <translation>عدد أكبر من %f من الطوائف ، تخطي.</translation>
     </message>
     <message>
         <source>Tor control port password (default: empty)</source>
@@ -4383,10 +4306,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>يحتوي تعليق وكيل المستخدم (%s) على أحرف غير آمنة.</translation>
     </message>
     <message>
-        <source>Verifying wallet(s)...</source>
-        <translation>التحقق من المحفظة (المحافظ) ...</translation>
-    </message>
-    <message>
         <source>Will retry...</source>
         <translation>سيعيد المحاولة ...</translation>
     </message>
@@ -4427,10 +4346,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>يحتوي ملف %s على جميع المفاتيح الخاصة من هذه المحفظة. لا تشاركه مع أي شخص!</translation>
     </message>
     <message>
-        <source>-masternode option is deprecated and ignored, specifying -masternodeblsprivkey is enough to start this node as a masternode.</source>
-        <translation>تم إهمال خيار -masternode وتجاهله ، مع تحديد -masternodeblsprivkey يكفي لبدء هذه العقدة كعقدة رئيسية.</translation>
-    </message>
-    <message>
         <source>Discover own IP addresses (default: 1 when listening and no -externalip or -proxy)</source>
         <translation>اكتشاف عناوين IP الخاصة (الافتراضي: 1 عند الاستماع وعدم وجود - أو "خضوع")</translation>
     </message>
@@ -4439,8 +4354,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>لا تحتفظ بالمعاملات في الذاكرة أكثر من &lt;n&gt; ساعات (الافتراضي: %u)</translation>
     </message>
     <message>
+        <source>Enable InstantSend, show confirmations for locked transactions (0-1, default: %u)</source>
+        <translation>تمكين الإرسال الفوري ، عرض التأكيدات للمعاملات المقفلة (0-1 ، القيمة الافتراضية: %u)</translation>
+    </message>
+    <message>
         <source>Enable multiple PrivateSend mixing sessions per block, experimental (0-1, default: %u)</source>
         <translation>تمكين جلسات دمج الإرسال المحمي متعددة لكل كتلة ، تجريبية (0-1 ، القيمة الافتراضية: %u)</translation>
+    </message>
+    <message>
+        <source>Enable use of automated PrivateSend for funds stored in this wallet (0-1, default: %u)</source>
+        <translation>تمكين استخدام الإرسال المخفي التلقائي للأموال المخزنة في هذه المحفظة (0-1 ، القيمة الافتراضية: %u)</translation>
     </message>
     <message>
         <source>Execute command when a wallet InstantSend transaction is successfully locked (%s in cmd is replaced by TxID)</source>
@@ -4456,11 +4379,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Fees (in %s/kB) smaller than this are considered zero fee for relaying, mining and transaction creation (default: %s)</source>
-        <translation>الرسوم (بالكيلو %s/kB) الأصغر من ذلك تعتبر رسومًا صفرًا في حالة الترحيل والتعدين وإنشاء المعاملات (الافتراضي: %s)</translation>
+        <translation>الرسوم (بالكيلو %s / kB) الأصغر من ذلك تعتبر رسومًا صفرًا في حالة الترحيل والتعدين وإنشاء المعاملات (الافتراضي: %s)</translation>
     </message>
     <message>
         <source>Fees (in %s/kB) smaller than this are considered zero fee for transaction creation (default: %s)</source>
-        <translation>الرسوم (بـ %s/kB) الأصغر من ذلك تعتبر رسومًا صفرًا لإنشاء المعاملات (الافتراضي: %s)</translation>
+        <translation>الرسوم (بـ %s / kB) الأصغر من ذلك تعتبر رسومًا صفرًا لإنشاء المعاملات (الافتراضي: %s)</translation>
     </message>
     <message>
         <source>If &lt;category&gt; is not supplied or if &lt;category&gt; = 1, output all debugging information.</source>
@@ -4491,12 +4414,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>الحفاظ على الأكثر  &lt;n&gt; اتصالات للأقران (باستثناء اتصالات الخدمة المؤقتة) (الافتراضي: %u)</translation>
     </message>
     <message>
-        <source>Make sure to encrypt your wallet and delete all non-encrypted backups after you have verified that the wallet works!</source>
-        <translation>تأكد من تشفير محفظتك وحذف جميع النسخ الاحتياطية غير المشفرة بعد التحقق من عمل المحفظة!</translation>
-    </message>
-    <message>
-        <source>Maximum total size of all orphan transactions in megabytes (default: %u)</source>
-        <translation>الحجم الإجمالي الأقصى لكافة المعاملات الوحيدة بالميغابايت (الافتراضي: %u)</translation>
+        <source>PrivateSend uses exact denominated amounts to send funds, you might simply need to anonymize some more coins.</source>
+        <translation>تستخدم الإرسال المخفي مبالغ محددة بدقة لإرسال الأموال ، قد تحتاج ببساطة إلى إخفاء بعض العملات الأخرى.</translation>
     </message>
     <message>
         <source>Prune configured below the minimum of %d MiB.  Please use a higher number.</source>
@@ -4507,20 +4426,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>تقليم: آخر تزامن المحفظة يتجاوز البيانات المحصورة. تحتاج إلى -reindex (قم بتنزيل بلوكشين بأكمله مرة أخرى في حالة عقدة مقشرة)</translation>
     </message>
     <message>
-        <source>Query for peer addresses via DNS lookup, if low on addresses (default: 1 unless -connect used)</source>
-        <translation>الاستعلام عن عناوين الأقران عبر بحث DNS ، إذا كانت العناوين منخفضة (الافتراضي: 1 ما لم يتم استخدام الاتصال)</translation>
-    </message>
-    <message>
         <source>Randomize credentials for every proxy connection. This enables Tor stream isolation (default: %u)</source>
         <translation>عشوائية وثائق الاعتماد لكل اتصال عبر وكيل. يتيح ذلك عزل تيار تور (القيمة الافتراضية: %u)</translation>
     </message>
     <message>
         <source>Rescans are not possible in pruned mode. You will need to use -reindex which will download the whole blockchain again.</source>
         <translation>إعادة المسح ليست ممكنة في وضع مجسم. سوف تحتاج إلى استخدام -reindex التي ستقوم بتنزيل بلوكشين كله مرة أخرى.</translation>
-    </message>
-    <message>
-        <source>Set the masternode BLS private key and enable the client to act as a masternode</source>
-        <translation>قم بتعيين المفتاح الخاص لـ Masternode BLS وتمكين العميل من العمل كرمز رئيسي</translation>
     </message>
     <message>
         <source>Specify full path to directory for automatic wallet backups (must exist)</source>
@@ -4543,12 +4454,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>المجموع طول سلسلة إصدار الشبكة (%i) يتجاوز الحد الأقصى للطول (%i). تقليل عدد أو حجم </translation>
     </message>
     <message>
-        <source>Tries to keep outbound traffic under the given target (in MiB per 24h), 0 = no limit (default: %d)</source>
-        <translation>يحاول الحفاظ على حركة المرور الصادرة تحت الهدف المحدد (في MiB لكل 24 ساعة) ، 0 = بلا حدود (الافتراضي: %d)</translation>
+        <source>Transaction index can't be disabled in full mode. Either start with -litemode command line switch or enable transaction index.</source>
+        <translation>لا يمكن تعطيل فهرس المعاملات في الوضع الكامل. إما أن تبدأ مع مفتاح تبديل سطر الأوامر أو تمكين فهرس المعاملة.</translation>
     </message>
     <message>
-        <source>Try to create at least N inputs of each denominated amount (%u-%u, default: %u)</source>
-        <translation>حاول إنشاء مدخلات N على الأقل لكل مبلغ فئة (%u-%u ، الافتراضي: %u)</translation>
+        <source>Tries to keep outbound traffic under the given target (in MiB per 24h), 0 = no limit (default: %d)</source>
+        <translation>يحاول الحفاظ على حركة المرور الصادرة تحت الهدف المحدد (في MiB لكل 24 ساعة) ، 0 = بلا حدود (الافتراضي: %d)</translation>
     </message>
     <message>
         <source>Unable to locate enough PrivateSend denominated funds for this transaction.</source>
@@ -4565,10 +4476,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Use UPnP to map the listening port (default: 1 when listening and no -proxy)</source>
         <translation>استخدام UPnP لتعيين منفذ الاستماع (الافتراضي: 1 عند الاستماع و no -proxy)</translation>
-    </message>
-    <message>
-        <source>Username and hashed password for JSON-RPC connections. The field &lt;userpw&gt; comes in the format: &lt;USERNAME&gt;:&lt;SALT&gt;$&lt;HASH&gt;. A canonical python script is included in share/rpcauth. The client then connects normally using the rpcuser=&lt;USERNAME&gt;/rpcpassword=&lt;PASSWORD&gt; pair of arguments. This option can be specified multiple times</source>
-        <translation>اسم المستخدم وكلمة المرور المجزأة لاتصالات JSON-RPC. الميدان&lt;userpw&gt; يأتي في الشكل:&lt;USERNAME&gt; : &lt;SALT&gt; $&lt;HASH&gt; يتم تضمين النصي بيثون الكنسي في المشاركة / rpcauth. ثم يتصل العميل عادة باستخدام rpcuser = &lt;USERNAME&gt; /rpcpassword&lt;PASSWORD&gt;  زوج من الحجج. يمكن تحديد هذا الخيار عدة مرات</translation>
     </message>
     <message>
         <source>WARNING! Failed to replenish keypool, please unlock your wallet to do so.</source>
@@ -4595,10 +4502,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>(القيمة الافتراضية: %u)</translation>
     </message>
     <message>
-        <source>-litemode is deprecated.</source>
-        <translation>تم إهمال الوضع -litemode.</translation>
-    </message>
-    <message>
         <source>-maxmempool must be at least %d MB</source>
         <translation>يجب أن يكون maxmempool على الأقل %d ميغابايت</translation>
     </message>
@@ -4617,10 +4520,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Automatically create Tor hidden service (default: %d)</source>
         <translation>إنشاء خدمة تور المخفية تلقائيًا (القيمة الافتراضية: %d)</translation>
-    </message>
-    <message>
-        <source>Disable governance validation (0-1, default: %u)</source>
-        <translation>تعطيل التحقق من صحة الحوكمة (0-1 ، الافتراضي: %u)</translation>
     </message>
     <message>
         <source>ERROR! Failed to create automatic backup</source>
@@ -4659,36 +4558,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>تمكين نشر المعاملة الأولية في &lt;address&gt;</translation>
     </message>
     <message>
-        <source>Error upgrading evo database</source>
-        <translation>خطأ في ترقية قاعدة بيانات evo</translation>
-    </message>
-    <message>
         <source>Error: A fatal internal error occurred, see debug.log for details</source>
         <translation>خطأ: حدث خطأ داخلي فادح، راجع debug.log للحصول على التفاصيل</translation>
-    </message>
-    <message>
-        <source>Error: failed to add socket to epollfd (epoll_ctl returned error %s)</source>
-        <translation>خطأ: فشل في إضافة مأخذ التوصيل إلى epollfd (أرجع epoll_ctl الخطأ %s)</translation>
-    </message>
-    <message>
-        <source>Exceeded max tries.</source>
-        <translation>تم تجاوز الحد الأقصى من المحاولات.</translation>
-    </message>
-    <message>
-        <source>Failed to clear fulfilled requests cache at</source>
-        <translation>فشل مسح ذاكرة التخزين المؤقت للطلبات التي تم الوفاء بها في</translation>
-    </message>
-    <message>
-        <source>Failed to clear governance cache at</source>
-        <translation>فشل مسح ذاكرة التخزين المؤقت للحوكمة في</translation>
-    </message>
-    <message>
-        <source>Failed to clear masternode cache at</source>
-        <translation>فشل مسح ذاكرة التخزين المؤقت للرمز الرئيسي في</translation>
-    </message>
-    <message>
-        <source>Failed to commit EvoDB</source>
-        <translation>فشل الالتزام بـ EvoDB</translation>
     </message>
     <message>
         <source>Failed to create backup %s!</source>
@@ -4703,16 +4574,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>أخفق حذف النسخة الاحتياطية ، الخطأ: %s</translation>
     </message>
     <message>
+        <source>Failed to load InstantSend data cache from</source>
+        <translation>أخفق تحميل ذاكرة التخزين المؤقت لبيانات الإرسال الفوري</translation>
+    </message>
+    <message>
         <source>Failed to load sporks cache from</source>
         <translation>فشل تحميل ذاكرة التخزين المؤقت</translation>
     </message>
     <message>
-        <source>Failed to rescan the wallet during initialization</source>
-        <translation>فشل في إعادة فحص المحفظة أثناء التهيئة</translation>
-    </message>
-    <message>
         <source>Fee (in %s/kB) to add to transactions you send (default: %s)</source>
-        <translation>الرسوم (في %s/kB) لإضافتها إلى المعاملات التي ترسلها (الافتراضي: %s)</translation>
+        <translation>الرسوم (في %s / kB) لإضافتها إلى المعاملات التي ترسلها (الافتراضي: %s)</translation>
     </message>
     <message>
         <source>Imports blocks from external blk000??.dat file on startup</source>
@@ -4724,19 +4595,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Invalid amount for -fallbackfee=&lt;amount&gt;: '%s'</source>
-        <translation>المبلغ غير صالح fallbackfee = &lt;amount&gt; :'%s-</translation>
-    </message>
-    <message>
-        <source>Invalid masternodeblsprivkey. Please see documentation.</source>
-        <translation>masternodeblsprivkey غير صالح. يرجى الاطلاع على الوثائق.</translation>
-    </message>
-    <message>
-        <source>It has been replaced by -disablegovernance.</source>
-        <translation>تم استبدالها بـ -disablegovernance.</translation>
-    </message>
-    <message>
-        <source>Its replacement -disablegovernance has been forced instead.</source>
-        <translation>وبدلاً من ذلك ، تم إجبار نظام الحكم البديل المعطل.</translation>
+        <translation>المبلغ غير صالح forfallbackfee = &lt;amount&gt; :'%s</translation>
     </message>
     <message>
         <source>Keep the transaction memory pool below &lt;n&gt; megabytes (default: %u)</source>
@@ -4749,6 +4608,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Last successful PrivateSend action was too recent.</source>
         <translation>آخر إجراء الإرسال المخفي ناجح كان حديث للغاية.</translation>
+    </message>
+    <message>
+        <source>Loading InstantSend data cache...</source>
+        <translation>جارٍ تحميل ذاكرة التخزين المؤقت لبيانات الإرسال الفوري ...</translation>
     </message>
     <message>
         <source>Loading block index...</source>
@@ -4769,6 +4632,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Loading wallet...</source>
         <translation>تحميل المحفظه</translation>
+    </message>
+    <message>
+        <source>Location of the auth cookie (default: data dir)</source>
+        <translation>موقع ملف تعريف ارتباط المصادقة (القيمة الافتراضية: دليل البيانات)</translation>
     </message>
     <message>
         <source>Make the wallet broadcast transactions</source>
@@ -4807,12 +4674,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>خيارات ترحيل العقد:</translation>
     </message>
     <message>
+        <source>Non-standard public key detected.</source>
+        <translation>تم اكتشاف مفتاح عام غير قياسي.</translation>
+    </message>
+    <message>
         <source>Not compatible with existing transactions.</source>
         <translation>غير متوافق مع المعاملات الحالية.</translation>
     </message>
     <message>
         <source>Not enough file descriptors available.</source>
         <translation>لا تتوفر واصفات ملف متاح.</translation>
+    </message>
+    <message>
+        <source>Not enough funds to anonymize.</source>
+        <translation>لا توجد أموال كافية لإخفاء الهوية.</translation>
     </message>
     <message>
         <source>Number of automatic wallet backups (default: %u)</source>
@@ -4839,16 +4714,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>خيارات الإرسال المخفي:</translation>
     </message>
     <message>
+        <source>PrivateSend request complete:</source>
+        <translation>اكتمل طلب الإرسال المخفي:</translation>
+    </message>
+    <message>
         <source>PrivateSend request incomplete:</source>
         <translation>طلب الإرسال المخفي غير مكتمل:</translation>
     </message>
     <message>
         <source>Prune cannot be configured with a negative value.</source>
         <translation>لا يمكن تهيئة التجريد بقيمة سالبة.</translation>
-    </message>
-    <message>
-        <source>Prune mode is incompatible with -disablegovernance=false.</source>
-        <translation>وضع التقليم غير متوافق مع -disablegovernance = false.</translation>
     </message>
     <message>
         <source>Prune mode is incompatible with -txindex.</source>
@@ -4863,44 +4738,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>إعادة فحص سلسلة كتلة معاملات المحفظة المفقودة عند بدء التشغيل</translation>
     </message>
     <message>
-        <source>Send reject messages per BIP61 (default: %u)</source>
-        <translation>إرسال رسائل رفض لكل BIP61 (الافتراضي: %u)</translation>
-    </message>
-    <message>
-        <source>Socket events mode, which must be one of: %s (default: %s)</source>
-        <translation>وضع أحداث مأخذ التوصيل ، الذي يجب أن يكون واحدًا مما يلي: %s (الافتراضي: %s)</translation>
-    </message>
-    <message>
-        <source>Specified -walletdir "%s" does not exist</source>
-        <translation>- المحفظة المحددة "%s" غير موجودة</translation>
-    </message>
-    <message>
-        <source>Specified -walletdir "%s" is a relative path</source>
-        <translation>- المحفظة المحددة "%s" هي مسار نسبي</translation>
-    </message>
-    <message>
-        <source>Specified -walletdir "%s" is not a directory</source>
-        <translation>-walletdir المحدد "%s" ليس دليلاً</translation>
-    </message>
-    <message>
-        <source>Sync mempool from other nodes on start (default: %u)</source>
-        <translation>مزامنة mempool من العقد الأخرى عند البدء (الافتراضي: %u)</translation>
-    </message>
-    <message>
-        <source>Synchronizing blockchain...</source>
-        <translation>مزامنة بلوكشين...</translation>
-    </message>
-    <message>
-        <source>Target PrivateSend balance (%u-%u, default: %u)</source>
-        <translation>رصيد PrivateSend المستهدف (%u-%u ، الافتراضي: %u)</translation>
-    </message>
-    <message>
         <source>The wallet will avoid paying less than the minimum relay fee.</source>
         <translation>سوف تتجنب المحفظة دفع أقل من الحد الأدنى لرسوم التتابع.</translation>
-    </message>
-    <message>
-        <source>This is expected because you are running a pruned node.</source>
-        <translation>هذا متوقع لأنك تقوم بتشغيل عقدة مشذبة.</translation>
     </message>
     <message>
         <source>This is the minimum transaction fee you pay on every transaction.</source>
@@ -4935,10 +4774,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>يتعذر الربط مع %s على هذا الكمبيوتر. من المحتمل أن %s قيد التشغيل بالفعل.</translation>
     </message>
     <message>
-        <source>Unable to generate initial keys</source>
-        <translation>تعذر إنشاء المفاتيح الأولية</translation>
-    </message>
-    <message>
         <source>Upgrading UTXO database</source>
         <translation>ترقية قاعدة بيانات UTXO</translation>
     </message>
@@ -4947,12 +4782,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>استخدم سلسلة devnet بالاسم المقدم</translation>
     </message>
     <message>
-        <source>Wallet %s resides outside wallet directory %s</source>
-        <translation>توجد المحفظة %s خارج دليل الحافظة %s</translation>
-    </message>
-    <message>
         <source>Wallet debugging/testing options:</source>
         <translation>خيارات تصحيح / اختبار المحفظة:</translation>
+    </message>
+    <message>
+        <source>Wallet is not initialized</source>
+        <translation>لم تتم تهيئة المحفظة</translation>
     </message>
     <message>
         <source>Wallet needed to be rewritten: restart %s to complete</source>
@@ -4971,20 +4806,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ما إذا كان سيتم العمل في وضع الكتل فقط (الإعداد الافتراضي: %u)</translation>
     </message>
     <message>
-        <source>You can not start a masternode with wallet enabled.</source>
-        <translation>لا يمكنك بدء Masternode مع محفظة ممكنة.</translation>
-    </message>
-    <message>
-        <source>You need to rebuild the database using -reindex to change -addressindex</source>
-        <translation>تحتاج إلى إعادة بناء قاعدة البيانات باستخدام -reindex لتغيير -addressindex</translation>
-    </message>
-    <message>
-        <source>You need to rebuild the database using -reindex to change -spentindex</source>
-        <translation>تحتاج إلى إعادة بناء قاعدة البيانات باستخدام -reindex لتغيير -spentindex</translation>
-    </message>
-    <message>
-        <source>You need to rebuild the database using -reindex to change -txindex</source>
-        <translation>تحتاج إلى إعادة بناء قاعدة البيانات باستخدام -reindex لتغيير -txindex</translation>
+        <source>You can not start a masternode in lite mode.</source>
+        <translation>لا يمكنك بدء تشغيل ماسترنود في الوضع البسيط.</translation>
     </message>
     <message>
         <source>ZeroMQ notification options:</source>
@@ -5011,28 +4834,24 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%s المبرمجون</translation>
     </message>
     <message>
+        <source>Accept connections from outside (default: 1 if no -proxy or -connect/-noconnect)</source>
+        <translation>قبول الاتصالات من الخارج (الافتراضي: 1 إذا لم يكن هناك أي -proxy أو -connect / -noconnect)</translation>
+    </message>
+    <message>
         <source>Cannot obtain a lock on data directory %s. %s is probably already running.</source>
         <translation>لا يمكن الحصول على قفل على دليل البيانات %s. من المحتمل أن %s يعمل بالفعل.</translation>
+    </message>
+    <message>
+        <source>Connect only to the specified node(s); -noconnect or -connect=0 alone to disable automatic connections</source>
+        <translation>الاتصال فقط (بالعقدة) المحددة ؛ -اتصال أو اتصال = 0 فقط لتعطيل الاتصالات التلقائية</translation>
     </message>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file %s or %s</source>
         <translation>موزعة تحت ترخيص برنامج MIT ، راجع ملف المرافق %s أو %s</translation>
     </message>
     <message>
-        <source>Enable use of PrivateSend for funds stored in this wallet (0-1, default: %u)</source>
-        <translation>تفعيل استخدام PrivateSend للأموال المخزنة في هذه المحفظة (0-1 ، الافتراضي: %u)</translation>
-    </message>
-    <message>
-        <source>Error loading %s: You can't enable HD on an already existing non-HD wallet</source>
-        <translation>خطأ في تحميل %s: لا يمكنك تمكين HD في محفظة موجودة بالفعل بخلاف HD</translation>
-    </message>
-    <message>
         <source>Error reading %s! All keys read correctly, but transaction data or address book entries might be missing or incorrect.</source>
         <translation>خطأ في قراءة %s! قراءة كافة المفاتيح بشكل صحيح ، ولكن قد تكون بيانات المعاملة أو إدخالات دفتر العناوين مفقودة أو غير صحيحة.</translation>
-    </message>
-    <message>
-        <source>Exclude debugging information for a category. Can be used in conjunction with -debug=1 to output debug logs for all categories except one or more specified categories.</source>
-        <translation>استبعاد معلومات التصحيح لفئة. يمكن استخدامه مع -debug = 1 لإخراج سجلات تصحيح الأخطاء لجميع الفئات باستثناء فئة محددة واحدة أو أكثر.</translation>
     </message>
     <message>
         <source>Force relay of transactions from whitelisted peers even if they violate local relay policy (default: %d)</source>
@@ -5063,16 +4882,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>يرجى المساهمة إذا وجدت %s مفيداً. تفضل بزيارة %s لمزيد من المعلومات حول البرنامج.</translation>
     </message>
     <message>
+        <source>Provide liquidity to PrivateSend by infrequently mixing coins on a continual basis (%u-%u, default: %u, 1=very frequent, high fees, %u=very infrequent, low fees)</source>
+        <translation>توفير السيولة إلى الإرسال المخفي عن طريق خلط العملات المعدنية بشكل متكرر على أساس مستمر (%u-%u ، القيمة الافتراضية: %u ، 1 = متكررة للغاية ، رسوم عالية ، %u = نادر جداً ، رسوم منخفضة)</translation>
+    </message>
+    <message>
+        <source>Query for peer addresses via DNS lookup, if low on addresses (default: 1 unless -connect/-noconnect)</source>
+        <translation>الاستعلام عن عناوين النظير عبر البحث عن DNS ، إذا كان منخفضًا في العناوين (افتراضي: 1 ، ما لم يتم الاتصال / الاتصال)</translation>
+    </message>
+    <message>
+        <source>Reduce storage requirements by enabling pruning (deleting) of old blocks. This allows the pruneblockchain RPC to be called to delete specific blocks, and enables automatic pruning of old blocks if a target size in MiB is provided. This mode is incompatible with -txindex and -rescan. Warning: Reverting this setting requires re-downloading the entire blockchain. (default: 0 = disable pruning blocks, 1 = allow manual pruning via RPC, &gt;%u = automatically prune block files to stay under the specified target size in MiB)</source>
+        <translation>تقليل متطلبات التخزين عن طريق تمكين التقليم (حذف) الكتل القديمة. يسمح هذا باستدعاء RUN pruneblockchain لحذف كتل معينة ، وتمكين التقليم التلقائي للكتل القديمة إذا تم توفير حجم الهدف في MiB. هذا الوضع غير متوافق مع -txindex و -rescan. تحذير: يتطلب إعادة هذا الإعداد إعادة تنزيل blockchain بالكامل. (افتراضي: 0 = تعطيل كتل التشذيب ، 1 = السماح بالتقليم اليدوي عن طريق RPC ،&gt; %u = ملفات التجميع تلقائياً للتخفيض تحت حجم الهدف المحدد في MiB)</translation>
+    </message>
+    <message>
         <source>Set lowest fee rate (in %s/kB) for transactions to be included in block creation. (default: %s)</source>
-        <translation>تعيين أدنى معدل رسوم (في %s/kB) للمعاملات ليتم تضمينها في إنشاء كتلة. (افتراضي: %s)</translation>
-    </message>
-    <message>
-        <source>The fee rate (in %s/kB) that indicates your tolerance for discarding change by adding it to the fee (default: %s). Note: An output is discarded if it is dust at this rate, but we will always discard up to the dust relay fee and a discard fee above that is limited by the fee estimate for the longest target</source>
-        <translation>معدل الرسوم (في %s/kB) الذي يشير إلى تفاوتك في تجاهل التغيير بإضافته إلى الرسوم (الافتراضي: %s). ملاحظة: يتم تجاهل الإخراج إذا كان غبارًا بهذا المعدل ، ولكننا سنتجاهل دائمًا ما يصل إلى رسوم ترحيل الغبار ورسوم التخلص أعلاه التي تكون محدودة بتقدير الرسوم للهدف الأطول</translation>
-    </message>
-    <message>
-        <source>This is the transaction fee you may discard if change is smaller than dust at this level</source>
-        <translation>هذه هي رسوم المعاملة التي يمكنك تجاهلها إذا كان التغيير أصغر من الغبار عند هذا المستوى</translation>
+        <translation>تعيين أدنى معدل رسوم (في %s / kB) للمعاملات ليتم تضمينها في إنشاء كتلة. (افتراضي: %s)</translation>
     </message>
     <message>
         <source>This is the transaction fee you may pay when fee estimates are not available.</source>
@@ -5087,10 +4910,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>غير قادر على تحديد ما يكفي من الأموال المخصصة غير المقومة الإرسال المخفي لهذه الصفقة.</translation>
     </message>
     <message>
-        <source>Unable to replay blocks. You will need to rebuild the database using -reindex-chainstate.</source>
-        <translation>غير قادر على إعادة الكتل. ستحتاج إلى إعادة بناء قاعدة البيانات باستخدام -reindex-chainstate.</translation>
-    </message>
-    <message>
         <source>Use N separate masternodes for each denominated input to mix funds (%u-%u, default: %u)</source>
         <translation>استخدم N ماسترنود منفصلة لكل إدخال مقنن لخلط الصناديق (%u-%u ، القيمة الافتراضية: %u)</translation>
     </message>
@@ -5103,6 +4922,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>تعريف المستخدم عبارة مرور ذاكري لمحفظة HD (BIP39). يكون تأثيره فقط أثناء إنشاء المحفظة / البدء الأول (افتراضي: سلسلة فارغة)</translation>
     </message>
     <message>
+        <source>Username and hashed password for JSON-RPC connections. The field &lt;userpw&gt; comes in the format: &lt;USERNAME&gt;:&lt;SALT&gt;$&lt;HASH&gt;. A canonical python script is included in share/rpcuser. The client then connects normally using the rpcuser=&lt;USERNAME&gt;/rpcpassword=&lt;PASSWORD&gt; pair of arguments. This option can be specified multiple times</source>
+        <translation>اسم المستخدم وكلمة المرور المجزأة لاتصالات JSON-RPC. الميدان&lt;userpw&gt; يأتي في الشكل:&lt;USERNAME&gt; : &lt;SALT&gt; $&lt;HASH&gt; يتم تضمين النصي بيثون الكنسي في المشاركة / rpcuser. ثم يتصل العميل عادة باستخدام rpcuser = &lt;USERNAME&gt; /rpcpassword&lt;PASSWORD&gt;  زوج من الحجج. يمكن تحديد هذا الخيار عدة مرات</translation>
+    </message>
+    <message>
         <source>Wallet will not create transactions that violate mempool chain limits (default: %u)</source>
         <translation>لن تنشئ المحفظة المعاملات التي تنتهك حدود سلسلة mempool (القيمة الافتراضية: %u)</translation>
     </message>
@@ -5111,16 +4934,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>تحذير: ملف المحفظة فاسد ، تم انقاذ البيانات! تم حفظ %s الأصلي ك %s في %s؛ إذا كان رصيدك أو كانت معاملاتك غير صحيحة، فيجب عليك الإستعادة من نسخة احتياطية.</translation>
     </message>
     <message>
-        <source>Whether to save the mempool on shutdown and load on restart (default: %u)</source>
-        <translation>ما إذا كان سيتم حفظ mempool عند إيقاف التشغيل والتحميل عند إعادة التشغيل (الافتراضي: %u)</translation>
-    </message>
-    <message>
         <source>Whitelist peers connecting from the given IP address (e.g. 1.2.3.4) or CIDR notated network (e.g. 1.2.3.0/24). Can be specified multiple times.</source>
         <translation>أقران القائمة البيضاء المتصلين من عنوان IP المحدد (مثل 1.2.3.4) أو شبكة CIDR Notated (على سبيل المثال 1.2.3.0/24). يمكن تحديده عدة مرات.</translation>
-    </message>
-    <message>
-        <source>%d of last 100 blocks have unexpected version</source>
-        <translation>%d من الـ 100 كتلة الأخيرة بها إصدار غير متوقع</translation>
     </message>
     <message>
         <source>%s corrupt, salvage failed</source>
@@ -5135,6 +4950,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%s عالٍ جداً</translation>
     </message>
     <message>
+        <source>(press q to shutdown and continue later)</source>
+        <translation>(اضغط على q للإيقاف والاستمرار في وقت لاحق)</translation>
+    </message>
+    <message>
         <source>-devnet can only be specified once</source>
         <translation>لا يمكن تحديد -devnet إلا مرة واحدة</translation>
     </message>
@@ -5147,12 +4966,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>يجب تحديد -ppcport عند تحديد -devnet و -server </translation>
     </message>
     <message>
-        <source>Accept connections from outside (default: 1 if no -proxy or -connect)</source>
-        <translation>قبول الاتصالات من الخارج (الافتراضي: 1 إذا لم يكن هناك - بروكسي أو - اتصال)</translation>
-    </message>
-    <message>
         <source>Allow RFC1918 addresses to be relayed and connected to (default: %u)</source>
-        <translation>السماح بعناوين RFC1918 والتواصل معها (الإعداد الافتراضي: %u)</translation>
+        <translation>السماح بعناوين RFC1918 والتواصل معها (الإعداد الافتراضي:%u)</translation>
     </message>
     <message>
         <source>Attempt to recover private keys from a corrupt wallet on startup</source>
@@ -5171,10 +4986,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>حقوق الطبع والنشر (C)</translation>
     </message>
     <message>
-        <source>Create up to N inputs of each denominated amount (%u-%u, default: %u)</source>
-        <translation>إنشاء ما يصل إلى N من المدخلات لكل مبلغ محدد (%u-%u ، الافتراضي: %u)</translation>
-    </message>
-    <message>
         <source>Error loading %s</source>
         <translation>خطأ في تحميل %s</translation>
     </message>
@@ -5184,15 +4995,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Error loading %s: Wallet requires newer version of %s</source>
-        <translation>حدث خطأ أثناء تحميل %s: تتطلب المحفظة إصدارًا أحدث من %s</translation>
-    </message>
-    <message>
-        <source>Error loading %s: You can't disable HD on an already existing HD wallet</source>
-        <translation>حدث خطأ أثناء تحميل %s: لا يمكنك تعطيل HD في محفظة HD موجودة بالفعل</translation>
-    </message>
-    <message>
-        <source>Error loading wallet %s. Duplicate -wallet filename specified.</source>
-        <translation>خطأ في تحميل المحفظة %s. تم تحديد اسم ملف مكرر -wallet.</translation>
+        <translation>حدث خطأ أثناء تحميل%s: تتطلب المحفظة إصدارًا أحدث من%s</translation>
     </message>
     <message>
         <source>Error upgrading chainstate database</source>
@@ -5209,18 +5012,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Initialization sanity check failed. %s is shutting down.</source>
         <translation>فشل بالتحقق في اختبار التعقل. تم إيقاف %s.</translation>
-    </message>
-    <message>
-        <source>Inputs vs outputs size mismatch.</source>
-        <translation>عدم تطابق حجم المدخلات مقابل المخرجات.</translation>
-    </message>
-    <message>
-        <source>Invalid -onion address or hostname: '%s'</source>
-        <translation>عنوان أو اسم مضيف غير صالح: '%s'</translation>
-    </message>
-    <message>
-        <source>Invalid -proxy address or hostname: '%s'</source>
-        <translation>عنوان -proxy أو اسم مضيف غير صالح: '%s'</translation>
     </message>
     <message>
         <source>Invalid amount for -%s=&lt;amount&gt;: '%s'</source>
@@ -5243,6 +5034,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>اطبع رسالة مساعدة هذه واخرج منها</translation>
     </message>
     <message>
+        <source>Receive and display P2P network alerts (default: %u)</source>
+        <translation>تلقي تنبيهات شبكة P2P وعرضها (الافتراضي: %u)</translation>
+    </message>
+    <message>
         <source>Reducing -maxconnections from %d to %d, because of system limitations.</source>
         <translation>تقليل -maxconnections من %d إلى %d ، بسبب قيود النظام.</translation>
     </message>
@@ -5255,16 +5050,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Relay non-P2SH multisig (default: %u)</translation>
     </message>
     <message>
-        <source>Replaying blocks...</source>
-        <translation>إعادة الكتل ...</translation>
-    </message>
-    <message>
         <source>Rescanning...</source>
         <translation>إعادة مسح</translation>
     </message>
     <message>
         <source>Run in the background as a daemon and accept commands</source>
         <translation>تشغيل في الخلفية بشكل مخفي لقبول الأوامر</translation>
+    </message>
+    <message>
+        <source>Send trace/debug info to console instead of debug.log file</source>
+        <translation>إرسال معلومات التتبع / التصحيح إلى وحدة التحكم بدلاً من ملف debug.log</translation>
     </message>
     <message>
         <source>Session not complete!</source>
@@ -5299,16 +5094,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>حدد مجلد المعلومات</translation>
     </message>
     <message>
+        <source>Specify wallet file (within data directory)</source>
+        <translation>تحديد ملف المحفظة (داخل دليل البيانات)</translation>
+    </message>
+    <message>
         <source>Specify your own public address</source>
         <translation>حدد عنوانك العام هنا</translation>
     </message>
     <message>
-        <source>Start PrivateSend automatically (0-1, default: %u)</source>
-        <translation>بدء PrivateSend تلقائيًا (0-1 ، الافتراضي: %u)</translation>
-    </message>
-    <message>
         <source>Starting network threads...</source>
         <translation>بدء مؤشرات شبكة الاتصال...</translation>
+    </message>
+    <message>
+        <source>Synchronization pending...</source>
+        <translation>التزامن في طور الإنجاز...</translation>
     </message>
     <message>
         <source>Synchronizing governance objects...</source>
@@ -5363,10 +5162,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>حالة غير معروفة: id = %u</translation>
     </message>
     <message>
-        <source>Unsupported logging category %s=%s.</source>
-        <translation>فئة التسجيل غير المعتمدة%s=%s.</translation>
-    </message>
-    <message>
         <source>Username for JSON-RPC connections</source>
         <translation>اسم المستخدم لاتصالات JSON-RPC</translation>
     </message>
@@ -5375,8 +5170,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>التحقق من الكتل...</translation>
     </message>
     <message>
+        <source>Verifying wallet...</source>
+        <translation>التحقق من المحفظة ...</translation>
+    </message>
+    <message>
         <source>Very low number of keys left: %d</source>
         <translation>عدد منخفض جدًا من المفاتيح المتبقية: %d</translation>
+    </message>
+    <message>
+        <source>Wallet %s resides outside data directory %s</source>
+        <translation>تتواجد المحفظة %s خارج دليل البيانات %s</translation>
     </message>
     <message>
         <source>Wallet is locked.</source>
@@ -5387,20 +5190,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>خيارات المحفظة :</translation>
     </message>
     <message>
+        <source>Wallet window title</source>
+        <translation>عنوان نافذة المحفظة</translation>
+    </message>
+    <message>
         <source>Warning</source>
         <translation>تحذير</translation>
     </message>
     <message>
-        <source>You are starting with governance validation disabled.</source>
-        <translation>أنت تبدأ مع تعطيل التحقق من صحة الحكم.</translation>
-    </message>
-    <message>
-        <source>You can not disable governance validation on a masternode.</source>
-        <translation>لا يمكنك تعطيل التحقق من الحوكمة على Masternode.</translation>
-    </message>
-    <message>
         <source>Your entries added successfully.</source>
         <translation>تمت إضافة إدخالاتك بنجاح.</translation>
+    </message>
+    <message>
+        <source>Your transaction was accepted into the pool!</source>
+        <translation>تم قبول معاملتك!</translation>
     </message>
     <message>
         <source>Zapping all transactions from wallet...</source>

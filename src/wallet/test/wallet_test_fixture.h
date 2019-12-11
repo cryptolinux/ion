@@ -10,10 +10,8 @@
 /** Testing setup and teardown for wallet.
  */
 struct WalletTestingSetup: public TestingSetup {
-    explicit WalletTestingSetup(const std::string& chainName = CBaseChainParams::MAIN);
+    WalletTestingSetup(const std::string& chainName = CBaseChainParams::MAIN);
     ~WalletTestingSetup();
-
-    CWallet m_wallet;
 };
 
 #endif

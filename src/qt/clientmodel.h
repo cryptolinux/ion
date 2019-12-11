@@ -1,13 +1,14 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_CLIENTMODEL_H
 #define BITCOIN_QT_CLIENTMODEL_H
 
-#include "uint256.h"
+#include "evo/deterministicmns.h"
+#include "sync.h"
+
 #include <QObject>
 #include <QDateTime>
 
@@ -37,7 +38,7 @@ enum NumConnections {
     CONNECTIONS_ALL  = (CONNECTIONS_IN | CONNECTIONS_OUT),
 };
 
-/** Model for ION network client. */
+/** Model for Ion network client. */
 class ClientModel : public QObject
 {
     Q_OBJECT
@@ -73,8 +74,6 @@ public:
     QDateTime getLastBlockDate() const;
     QString getLastBlockHash() const;
 
-    QString getLastBlockHash() const;
-
     //! Return true if core is doing initial block download
     bool inInitialBlockDownload() const;
     //! Returns enum BlockSource of the current importing/syncing state
@@ -92,7 +91,9 @@ public:
     QString formatClientStartupTime() const;
     QString dataDir() const;
 
-    bool getTorInfo(std::string& ip_port) const;
+    // caches for the best header
+    mutable std::atomic<int> cachedBestHeaderHeight;
+    mutable std::atomic<int64_t> cachedBestHeaderTime;
 
 private:
     OptionsModel *optionsModel;
@@ -113,12 +114,13 @@ private:
 Q_SIGNALS:
     void numConnectionsChanged(int count);
     void masternodeListChanged() const;
-    void numBlocksChanged(int count, const QDateTime& blockDate, const QString& blockHash, double nVerificationProgress, bool header);
+    void numBlocksChanged(int count, const QDateTime& blockDate, double nVerificationProgress, bool header);
     void additionalDataSyncProgressChanged(double nSyncProgress);
     void mempoolSizeChanged(long count, size_t mempoolSizeInBytes);
     void islockCountChanged(size_t count);
     void networkActiveChanged(bool networkActive);
     void alertsChanged(const QString &warnings);
+    void bytesChanged(quint64 totalBytesIn, quint64 totalBytesOut);
 
     //! Fired when a message should be reported to the user
     void message(const QString &title, const QString &message, unsigned int style);

@@ -1,27 +1,23 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <qt/guiutil.h>
+#include "guiutil.h"
 
-#include <qt/appearancewidget.h>
-#include <qt/bitcoinaddressvalidator.h>
-#include <qt/bitcoingui.h>
-#include <qt/bitcoinunits.h>
-#include <qt/optionsdialog.h>
-#include <qt/qvalidatedlineedit.h>
-#include <qt/walletmodel.h>
+#include "bitcoinaddressvalidator.h"
+#include "bitcoinunits.h"
+#include "qvalidatedlineedit.h"
+#include "walletmodel.h"
 
-#include <primitives/transaction.h>
-#include <init.h>
-#include <policy/policy.h>
-#include <protocol.h>
-#include <script/script.h>
-#include <script/standard.h>
-#include <ui_interface.h>
-#include <util.h>
+#include "fs.h"
+#include "primitives/transaction.h"
+#include "init.h"
+#include "policy/policy.h"
+#include "protocol.h"
+#include "script/script.h"
+#include "script/standard.h"
+#include "util.h"
 
 #ifdef WIN32
 #ifdef _WIN32_WINNT
@@ -60,9 +56,13 @@
 #include <QSettings>
 #include <QTextDocument> // for Qt::mightBeRichText
 #include <QThread>
-#include <QUrlQuery>
 #include <QMouseEvent>
 
+#if QT_VERSION < 0x050000
+#include <QUrl>
+#else
+#include <QUrlQuery>
+#endif
 
 #if QT_VERSION >= 0x50200
 #include <QFontDatabase>
@@ -125,131 +125,7 @@ static const QFont::Weight defaultFontWeightBold = QFont::Medium;
 static const int defaultFontScale = 0;
 #endif
 
-/** Font related variables. */
-// Application font family. May be overwritten by -font-family.
-static FontFamily fontFamily = defaultFontFamily;
-// Application font scale value. May be overwritten by -font-scale.
-static int fontScale = defaultFontScale;
-// Application font weight for normal text. May be overwritten by -font-weight-normal.
-static QFont::Weight fontWeightNormal = defaultFontWeightNormal;
-// Application font weight for bold text. May be overwritten by -font-weight-bold.
-static QFont::Weight fontWeightBold = defaultFontWeightBold;
-
-// Contains all widgets and its font attributes (weight, italic, size) with font changes due to GUIUtil::setFont
-static std::map<QPointer<QWidget>, std::tuple<FontWeight, bool, int>> mapFontUpdates;
-// Contains a list of supported font weights for all members of GUIUtil::FontFamily
-static std::map<FontFamily, std::vector<QFont::Weight>> mapSupportedWeights;
-
-#ifdef Q_OS_MAC
-// Contains all widgets where the macOS focus rect has been disabled.
-static std::set<QWidget*> setRectsDisabled;
-#endif
-
-static const std::map<ThemedColor, QColor> themedColors = {
-    { ThemedColor::DEFAULT, QColor(85, 85, 85) },
-    { ThemedColor::UNCONFIRMED, QColor(128, 128, 128) },
-    { ThemedColor::BLUE, QColor(0, 141, 228) },
-    { ThemedColor::ORANGE, QColor(199, 147, 4) },
-    { ThemedColor::RED, QColor(168, 72, 50) },
-    { ThemedColor::GREEN, QColor(94, 140, 65) },
-    { ThemedColor::BAREADDRESS, QColor(140, 140, 140) },
-    { ThemedColor::TX_STATUS_OPENUNTILDATE, QColor(64, 64, 255) },
-    { ThemedColor::BACKGROUND_WIDGET, QColor(234, 234, 236) },
-    { ThemedColor::BORDER_WIDGET, QColor(220, 220, 220) },
-    { ThemedColor::BACKGROUND_NETSTATS, QColor(210, 210, 210, 230) },
-    { ThemedColor::BORDER_NETSTATS, QColor(180, 180, 180) },
-    { ThemedColor::QR_PIXEL, QColor(85, 85, 85) },
-    { ThemedColor::ICON_ALTERNATIVE_COLOR, QColor(167, 167, 167) },
-};
-
-static const std::map<ThemedColor, QColor> themedDarkColors = {
-    { ThemedColor::DEFAULT, QColor(199, 199, 199) },
-    { ThemedColor::UNCONFIRMED, QColor(170, 170, 170) },
-    { ThemedColor::BLUE, QColor(0, 89, 154) },
-    { ThemedColor::ORANGE, QColor(199, 147, 4) },
-    { ThemedColor::RED, QColor(168, 72, 50) },
-    { ThemedColor::GREEN, QColor(94, 140, 65) },
-    { ThemedColor::BAREADDRESS, QColor(140, 140, 140) },
-    { ThemedColor::TX_STATUS_OPENUNTILDATE, QColor(64, 64, 255) },
-    { ThemedColor::BACKGROUND_WIDGET, QColor(45, 45, 46) },
-    { ThemedColor::BORDER_WIDGET, QColor(74, 74, 75) },
-    { ThemedColor::BACKGROUND_NETSTATS, QColor(45, 45, 46, 230) },
-    { ThemedColor::BORDER_NETSTATS, QColor(74, 74, 75) },
-    { ThemedColor::QR_PIXEL, QColor(199, 199, 199) },
-    { ThemedColor::ICON_ALTERNATIVE_COLOR, QColor(74, 74, 75) },
-};
-
-static const std::map<ThemedStyle, QString> themedStyles = {
-    { ThemedStyle::TS_INVALID, "background:#a84832;" },
-    { ThemedStyle::TS_ERROR, "color:#a84832;" },
-    { ThemedStyle::TS_SUCCESS, "color:#5e8c41;" },
-    { ThemedStyle::TS_COMMAND, "color:#008de4;" },
-    { ThemedStyle::TS_PRIMARY, "color:#333;" },
-    { ThemedStyle::TS_SECONDARY, "color:#444;" },
-};
-
-static const std::map<ThemedStyle, QString> themedDarkStyles = {
-    { ThemedStyle::TS_INVALID, "background:#a84832;" },
-    { ThemedStyle::TS_ERROR, "color:#a84832;" },
-    { ThemedStyle::TS_SUCCESS, "color:#5e8c41;" },
-    { ThemedStyle::TS_COMMAND, "color:#00599a;" },
-    { ThemedStyle::TS_PRIMARY, "color:#c7c7c7;" },
-    { ThemedStyle::TS_SECONDARY, "color:#aaa;" },
-};
-
-QColor getThemedQColor(ThemedColor color)
-{
-    QString theme = QSettings().value("theme", "").toString();
-    return theme.startsWith(darkThemePrefix) ? themedDarkColors.at(color) : themedColors.at(color);
-}
-
-QString getThemedStyleQString(ThemedStyle style)
-{
-    QString theme = QSettings().value("theme", "").toString();
-    return theme.startsWith(darkThemePrefix) ? themedDarkStyles.at(style) : themedStyles.at(style);
-}
-
-QIcon getIcon(const QString& strIcon, const ThemedColor color, const ThemedColor colorAlternative, const QString& strIconPath)
-{
-    QColor qcolor = getThemedQColor(color);
-    QColor qcolorAlternative = getThemedQColor(colorAlternative);
-    QIcon icon(strIconPath + strIcon);
-    QIcon themedIcon;
-    for (const QSize& size : icon.availableSizes()) {
-        QImage image(icon.pixmap(size).toImage());
-        image = image.convertToFormat(QImage::Format_ARGB32);
-        for (int x = 0; x < image.width(); ++x) {
-            for (int y = 0; y < image.height(); ++y) {
-                const QRgb rgb = image.pixel(x, y);
-                QColor* pColor;
-                if ((rgb & RGB_MASK) < RGB_HALF) {
-                    pColor = &qcolor;
-                } else {
-                    pColor = &qcolorAlternative;
-                }
-                image.setPixel(x, y, qRgba(pColor->red(), pColor->green(), pColor->blue(), qAlpha(rgb)));
-            }
-        }
-        themedIcon.addPixmap(QPixmap::fromImage(image));
-    }
-    return themedIcon;
-}
-
-QIcon getIcon(const QString& strIcon, const ThemedColor color, const QString& strIconPath)
-{
-    return getIcon(strIcon, color, ThemedColor::ICON_ALTERNATIVE_COLOR, strIconPath);
-}
-
-void setIcon(QAbstractButton* button, const QString& strIcon, const ThemedColor color, const ThemedColor colorAlternative, const QSize& size)
-{
-    button->setIcon(getIcon(strIcon, color, colorAlternative));
-    button->setIconSize(size);
-}
-
-void setIcon(QAbstractButton* button, const QString& strIcon, const ThemedColor color, const QSize& size)
-{
-    setIcon(button, strIcon, color, ThemedColor::ICON_ALTERNATIVE_COLOR, size);
-}
+namespace GUIUtil {
 
 QString dateTimeStr(const QDateTime &date)
 {
@@ -261,25 +137,49 @@ QString dateTimeStr(qint64 nTime)
     return dateTimeStr(QDateTime::fromTime_t((qint32)nTime));
 }
 
+QFont fixedPitchFont()
+{
+#if QT_VERSION >= 0x50200
+    return QFontDatabase::systemFont(QFontDatabase::FixedFont);
+#else
+    QFont font("Monospace");
+#if QT_VERSION >= 0x040800
+    font.setStyleHint(QFont::Monospace);
+#else
+    font.setStyleHint(QFont::TypeWriter);
+#endif
+    return font;
+#endif
+}
+
 // Just some dummy data to generate an convincing random-looking (but consistent) address
 static const uint8_t dummydata[] = {0xeb,0x15,0x23,0x1d,0xfc,0xeb,0x60,0x92,0x58,0x86,0xb6,0x7d,0x06,0x52,0x99,0x92,0x59,0x15,0xae,0xb1,0x72,0xc0,0x66,0x47};
 
 // Generate a dummy address with invalid CRC, starting with the network prefix.
 static std::string DummyAddress(const CChainParams &params)
 {
-    QFont font("Monospace");
-    font.setStyleHint(QFont::Monospace);
-    return font;
+    std::vector<unsigned char> sourcedata = params.Base58Prefix(CChainParams::PUBKEY_ADDRESS);
+    sourcedata.insert(sourcedata.end(), dummydata, dummydata + sizeof(dummydata));
+    for(int i=0; i<256; ++i) { // Try every trailing byte
+        std::string s = EncodeBase58(sourcedata.data(), sourcedata.data() + sourcedata.size());
+        if (!CBitcoinAddress(s).IsValid())
+            return s;
+        sourcedata[sourcedata.size()-1] += 1;
+    }
+    return "";
 }
 
-void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent, bool fAllowURI)
+void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
 {
     parent->setFocusProxy(widget);
 
-    widget->setFont(bitcoinAddressFont());
+    widget->setFont(fixedPitchFont());
+#if QT_VERSION >= 0x040700
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter a ION address (e.g. %1)").arg("idaeAtzaCGnJ5SUPXKoFxtgzbvv5nfBSDn"));
+    widget->setPlaceholderText(QObject::tr("Enter a Ion address (e.g. %1)").arg(
+        QString::fromStdString(DummyAddress(Params()))));
+#endif
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
     widget->setCheckValidator(new BitcoinAddressCheckValidator(parent));
 }
@@ -291,55 +191,6 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
     amountValidator->setBottom(0.0);
     widget->setValidator(amountValidator);
     widget->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
-}
-
-void setupAppearance(QWidget* parent, OptionsModel* model)
-{
-    if (!QSettings().value("fAppearanceSetupDone", false).toBool()) {
-        // First make sure SystemDefault has reasonable default values if it does not support the full range of weights.
-        if (fontFamily == FontFamily::SystemDefault && getSupportedWeights().size() < 4) {
-            fontWeightNormal = mapSupportedWeights[FontFamily::SystemDefault].front();
-            fontWeightBold = mapSupportedWeights[FontFamily::SystemDefault].back();
-            QSettings().setValue("fontWeightNormal", weightToArg(fontWeightNormal));
-            QSettings().setValue("fontWeightBold", weightToArg(fontWeightBold));
-        }
-        // Create the dialog
-        QDialog dlg(parent);
-        dlg.setObjectName("AppearanceSetup");
-        dlg.setWindowTitle(QObject::tr("Appearance Setup"));
-        dlg.setWindowIcon(QIcon(":icons/bitcoin"));
-        // And the widgets we add to it
-        QLabel lblHeading(QObject::tr("Please choose your preferred settings for the appearance of %1").arg(QObject::tr(PACKAGE_NAME)), &dlg);
-        lblHeading.setObjectName("lblHeading");
-        lblHeading.setWordWrap(true);
-        QLabel lblSubHeading(QObject::tr("This can also be adjusted later in the \"Appearance\" tab of the preferences."), &dlg);
-        lblSubHeading.setObjectName("lblSubHeading");
-        lblSubHeading.setWordWrap(true);
-        AppearanceWidget appearance(&dlg);
-        appearance.setModel(model);
-        QFrame line(&dlg);
-        line.setFrameShape(QFrame::HLine);
-        QDialogButtonBox buttonBox(QDialogButtonBox::Save);
-        // Put them into a vbox and add the vbox to the dialog
-        QVBoxLayout layout;
-        layout.addWidget(&lblHeading);
-        layout.addWidget(&lblSubHeading);
-        layout.addWidget(&line);
-        layout.addWidget(&appearance);
-        layout.addWidget(&buttonBox);
-        dlg.setLayout(&layout);
-        // Adjust the headings
-        setFont({&lblHeading}, FontWeight::Bold, 16);
-        setFont({&lblSubHeading}, FontWeight::Normal, 14, true);
-        // Make sure the dialog closes and accepts the settings if save has been pressed
-        QObject::connect(&buttonBox, &QDialogButtonBox::accepted, [&]() {
-            QSettings().setValue("fAppearanceSetupDone", true);
-            appearance.accept();
-            dlg.accept();
-        });
-        // And fire it!
-        dlg.exec();
-    }
 }
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
@@ -356,8 +207,13 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
     }
     rv.amount = 0;
 
+#if QT_VERSION < 0x050000
+    QList<QPair<QString, QString> > items = uri.queryItems();
+#else
     QUrlQuery uriQuery(uri);
     QList<QPair<QString, QString> > items = uriQuery.queryItems();
+#endif
+
     for (QList<QPair<QString, QString> >::iterator i = items.begin(); i != items.end(); i++)
     {
         bool fShouldReturnFalse = false;
@@ -418,12 +274,6 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
     return parseBitcoinURI(uriInstance, out);
 }
 
-bool validateBitcoinURI(const QString& uri)
-{
-    SendCoinsRecipient rcp;
-    return parseBitcoinURI(uri, &rcp);
-}
-
 QString formatBitcoinURI(const SendCoinsRecipient &info)
 {
     QString ret = QString("ion:%1").arg(info.address);
@@ -462,7 +312,11 @@ bool isDust(const QString& address, const CAmount& amount)
 
 QString HtmlEscape(const QString& str, bool fMultiLine)
 {
+#if QT_VERSION < 0x050000
+    QString escaped = Qt::escape(str);
+#else
     QString escaped = str.toHtmlEscaped();
+#endif
     escaped = escaped.replace(" ", "&nbsp;");
     if(fMultiLine)
     {
@@ -504,7 +358,11 @@ QString getSaveFileName(QWidget *parent, const QString &caption, const QString &
     QString myDir;
     if(dir.isEmpty()) // Default to user documents location
     {
+#if QT_VERSION < 0x050000
+        myDir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+#else
         myDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#endif
     }
     else
     {
@@ -550,7 +408,11 @@ QString getOpenFileName(QWidget *parent, const QString &caption, const QString &
     QString myDir;
     if(dir.isEmpty()) // Default to user documents location
     {
+#if QT_VERSION < 0x050000
+        myDir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+#else
         myDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#endif
     }
     else
     {
@@ -599,24 +461,6 @@ bool isObscured(QWidget *w)
         && checkPoint(QPoint(0, w->height() - 1), w)
         && checkPoint(QPoint(w->width() - 1, w->height() - 1), w)
         && checkPoint(QPoint(w->width() / 2, w->height() / 2), w));
-}
-
-void bringToFront(QWidget* w)
-{
-#ifdef Q_OS_MAC
-    ForceActivation();
-#endif
-
-    if (w) {
-        // activateWindow() (sometimes) helps with keyboard focus on Windows
-        if (w->isMinimized()) {
-            w->showNormal();
-        } else {
-            w->show();
-        }
-        w->activateWindow();
-        w->raise();
-    }
 }
 
 void openDebugLogfile()
@@ -727,7 +571,11 @@ void TableViewLastColumnResizingFixer::disconnectViewHeadersSignals()
 // Refactored here for readability.
 void TableViewLastColumnResizingFixer::setViewHeaderResizeMode(int logicalIndex, QHeaderView::ResizeMode resizeMode)
 {
+#if QT_VERSION < 0x050000
+    tableView->horizontalHeader()->setResizeMode(logicalIndex, resizeMode);
+#else
     tableView->horizontalHeader()->setSectionResizeMode(logicalIndex, resizeMode);
+#endif
 }
 
 void TableViewLastColumnResizingFixer::resizeColumn(int nColumnIndex, int width)
@@ -827,7 +675,7 @@ TableViewLastColumnResizingFixer::TableViewLastColumnResizingFixer(QTableView* t
 #ifdef WIN32
 fs::path static StartupShortcutPath()
 {
-    std::string chain = gArgs.GetChainName();
+    std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
         return GetSpecialFolderPath(CSIDL_STARTUP) / "Ion Core.lnk";
     if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
@@ -925,7 +773,7 @@ fs::path static GetAutostartDir()
 
 fs::path static GetAutostartFilePath()
 {
-    std::string chain = gArgs.GetChainName();
+    std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
         return GetAutostartDir() / "ioncore.desktop";
     return GetAutostartDir() / strprintf("ioncore-%s.lnk", chain);
@@ -957,8 +805,8 @@ bool SetStartOnSystemStartup(bool fAutoStart)
     else
     {
         char pszExePath[MAX_PATH+1];
-        ssize_t r = readlink("/proc/self/exe", pszExePath, sizeof(pszExePath) - 1);
-        if (r == -1)
+        memset(pszExePath, 0, sizeof(pszExePath));
+        if (readlink("/proc/self/exe", pszExePath, sizeof(pszExePath)-1) == -1)
             return false;
         pszExePath[r] = '\0';
 
@@ -992,49 +840,37 @@ LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef
 {
     // loop through the list of startup items and try to find the Ion Core app
     CFArrayRef listSnapshot = LSSharedFileListCopySnapshot(list, nullptr);
-    if (listSnapshot == nullptr) {
-        return nullptr;
-    }
-
-    // loop through the list of startup items and try to find the Dash Core app
     for(int i = 0; i < CFArrayGetCount(listSnapshot); i++) {
         LSSharedFileListItemRef item = (LSSharedFileListItemRef)CFArrayGetValueAtIndex(listSnapshot, i);
         UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
         CFURLRef currentItemURL = nullptr;
 
 #if defined(MAC_OS_X_VERSION_MAX_ALLOWED) && MAC_OS_X_VERSION_MAX_ALLOWED >= 10100
-        if(&LSSharedFileListItemCopyResolvedURL)
-            currentItemURL = LSSharedFileListItemCopyResolvedURL(item, resolutionFlags, nullptr);
+    if(&LSSharedFileListItemCopyResolvedURL)
+        currentItemURL = LSSharedFileListItemCopyResolvedURL(item, resolutionFlags, nullptr);
 #if defined(MAC_OS_X_VERSION_MIN_REQUIRED) && MAC_OS_X_VERSION_MIN_REQUIRED < 10100
-        else
-            LSSharedFileListItemResolve(item, resolutionFlags, &currentItemURL, nullptr);
-#endif
-#else
+    else
         LSSharedFileListItemResolve(item, resolutionFlags, &currentItemURL, nullptr);
 #endif
+#else
+    LSSharedFileListItemResolve(item, resolutionFlags, &currentItemURL, nullptr);
+#endif
 
+        if(currentItemURL && CFEqual(currentItemURL, findUrl)) {
+            // found
+            CFRelease(currentItemURL);
+            return item;
+        }
         if(currentItemURL) {
-            if (CFEqual(currentItemURL, findUrl)) {
-                // found
-                CFRelease(listSnapshot);
-                CFRelease(currentItemURL);
-                return item;
-            }
             CFRelease(currentItemURL);
         }
     }
-
-    CFRelease(listSnapshot);
     return nullptr;
 }
 
 bool GetStartOnSystemStartup()
 {
     CFURLRef bitcoinAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    if (bitcoinAppUrl == nullptr) {
-        return false;
-    }
-
     LSSharedFileListRef loginItems = LSSharedFileListCreate(nullptr, kLSSharedFileListSessionLoginItems, nullptr);
     LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, bitcoinAppUrl);
 
@@ -1045,10 +881,6 @@ bool GetStartOnSystemStartup()
 bool SetStartOnSystemStartup(bool fAutoStart)
 {
     CFURLRef bitcoinAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    if (bitcoinAppUrl == nullptr) {
-        return false;
-    }
-
     LSSharedFileListRef loginItems = LSSharedFileListCreate(nullptr, kLSSharedFileListSessionLoginItems, nullptr);
     LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, bitcoinAppUrl);
 
@@ -1082,289 +914,6 @@ void migrateQtSettings()
         settings.remove("nWindowSize");
         settings.setValue("fMigrationDone121", true);
     }
-}
-
-void setStyleSheetDirectory(const QString& path)
-{
-    stylesheetDirectory = path;
-}
-
-bool isStyleSheetDirectoryCustom()
-{
-    return stylesheetDirectory != defaultStylesheetDirectory;
-}
-
-const std::vector<QString> listStyleSheets()
-{
-    std::vector<QString> vecStylesheets;
-    for (const auto& it : mapStyleToTheme) {
-        vecStylesheets.push_back(it.first);
-    }
-    return vecStylesheets;
-}
-
-const std::vector<QString> listThemes()
-{
-    std::vector<QString> vecThemes;
-    for (const auto& it : mapStyleToTheme) {
-        if (!it.second.isEmpty()) {
-            vecThemes.push_back(it.second);
-        }
-    }
-    return vecThemes;
-}
-
-const QString getDefaultTheme()
-{
-    return defaultTheme;
-}
-
-const bool isValidTheme(const QString& strTheme)
-{
-    return strTheme == defaultTheme || strTheme == darkThemePrefix || strTheme == traditionalTheme;
-}
-
-void loadStyleSheet(QWidget* widget, bool fForceUpdate)
-{
-    AssertLockNotHeld(cs_css);
-    LOCK(cs_css);
-
-    static std::unique_ptr<QString> stylesheet;
-    static std::set<QWidget*> setWidgets;
-
-    bool fDebugCustomStyleSheets = gArgs.GetBoolArg("-debug-ui", false) && isStyleSheetDirectoryCustom();
-    bool fStyleSheetChanged = false;
-
-    if (stylesheet == nullptr || fForceUpdate || fDebugCustomStyleSheets) {
-        auto hasModified = [](const std::vector<QString>& vecFiles) -> bool {
-            static std::map<const QString, QDateTime> mapLastModified;
-
-            bool fModified = false;
-            for (auto file = vecFiles.begin(); file != vecFiles.end() && !fModified; ++file) {
-                QFileInfo info(*file);
-                QDateTime lastModified = info.lastModified(), prevLastModified;
-                auto it = mapLastModified.emplace(std::make_pair(*file, lastModified));
-                prevLastModified = it.second ? QDateTime() : it.first->second;
-                it.first->second = lastModified;
-                fModified = prevLastModified != lastModified;
-            }
-            return fModified;
-        };
-
-        auto loadFiles = [&](const std::vector<QString>& vecFiles) -> bool {
-            if (!fForceUpdate && fDebugCustomStyleSheets && !hasModified(vecFiles)) {
-                return false;
-            }
-
-            std::string platformName = gArgs.GetArg("-uiplatform", BitcoinGUI::DEFAULT_UIPLATFORM);
-            stylesheet = std::make_unique<QString>();
-
-            for (const auto& file : vecFiles) {
-                QFile qFile(file);
-                if (!qFile.open(QFile::ReadOnly)) {
-                    throw std::runtime_error(strprintf("%s: Failed to open file: %s", __func__, file.toStdString()));
-                }
-
-                QString strStyle = QLatin1String(qFile.readAll());
-                // Process all <os=...></os> groups in the stylesheet first
-                QRegularExpressionMatch osStyleMatch;
-                QRegularExpression osStyleExp(
-                        "^"
-                        "(<os=(?:'|\").+(?:'|\")>)" // group 1
-                        "((?:.|\n)+?)"              // group 2
-                        "(</os>?)"                  // group 3
-                        "$");
-                osStyleExp.setPatternOptions(QRegularExpression::MultilineOption);
-                QRegularExpressionMatchIterator it = osStyleExp.globalMatch(strStyle);
-
-                // For all <os=...></os> sections
-                while (it.hasNext() && (osStyleMatch = it.next()).isValid()) {
-                    QStringList listMatches = osStyleMatch.capturedTexts();
-
-                    // Full match + 3 group matches
-                    if (listMatches.size() % 4) {
-                        throw std::runtime_error(strprintf("%s: Invalid <os=...></os> section in file %s", __func__, file.toStdString()));
-                    }
-
-                    for (int i = 0; i < listMatches.size(); i += 4) {
-                        if (!listMatches[i + 1].contains(QString::fromStdString(platformName))) {
-                            // If os is not supported for this styles
-                            // just remove the full match
-                            strStyle.replace(listMatches[i], "");
-                        } else {
-                            // If its supported remove the <os=...></os> tags
-                            strStyle.replace(listMatches[i + 1], "");
-                            strStyle.replace(listMatches[i + 3], "");
-                        }
-                    }
-                }
-                stylesheet->append(strStyle);
-            }
-            return true;
-        };
-
-        auto pathToFile = [&](const QString& file) -> QString {
-            return stylesheetDirectory + "/" + file + (isStyleSheetDirectoryCustom() ? ".css" : "");
-        };
-
-        std::vector<QString> vecFiles;
-        // If light/dark theme is used load general styles first
-        if (dashThemeActive()) {
-            vecFiles.push_back(pathToFile("general"));
-        }
-        vecFiles.push_back(pathToFile(getActiveTheme()));
-
-        fStyleSheetChanged = loadFiles(vecFiles);
-    }
-
-    bool fUpdateStyleSheet = fForceUpdate || (fDebugCustomStyleSheets && fStyleSheetChanged);
-
-    if (widget) {
-        setWidgets.insert(widget);
-        widget->setStyleSheet(*stylesheet);
-    }
-
-    QWidgetList allWidgets = QApplication::allWidgets();
-    auto it = setWidgets.begin();
-    while (it != setWidgets.end()) {
-        if (!allWidgets.contains(*it)) {
-            it = setWidgets.erase(it);
-            continue;
-        }
-        if (fUpdateStyleSheet && *it != widget) {
-            (*it)->setStyleSheet(*stylesheet);
-        }
-        ++it;
-    }
-
-    if (!ShutdownRequested() && fDebugCustomStyleSheets && !fForceUpdate) {
-        QTimer::singleShot(200, [] { loadStyleSheet(); });
-    }
-}
-
-FontFamily fontFamilyFromString(const QString& strFamily)
-{
-    if (strFamily == "SystemDefault") {
-        return FontFamily::SystemDefault;
-    }
-    if (strFamily == "Montserrat") {
-        return FontFamily::Montserrat;
-    }
-    throw std::invalid_argument(strprintf("Invalid font-family: %s", strFamily.toStdString()));
-}
-
-QString fontFamilyToString(FontFamily family)
-{
-    switch (family) {
-    case FontFamily::SystemDefault:
-        return "SystemDefault";
-    case FontFamily::Montserrat:
-        return "Montserrat";
-    default:
-        assert(false);
-    }
-}
-
-void setFontFamily(FontFamily family)
-{
-    fontFamily = family;
-    setApplicationFont();
-    updateFonts();
-}
-
-FontFamily getFontFamilyDefault()
-{
-    return defaultFontFamily;
-}
-
-FontFamily getFontFamily()
-{
-    return fontFamily;
-}
-
-bool weightFromArg(int nArg, QFont::Weight& weight)
-{
-    const std::map<int, QFont::Weight> mapWeight{
-        {0, QFont::Thin},
-        {1, QFont::ExtraLight},
-        {2, QFont::Light},
-        {3, QFont::Normal},
-        {4, QFont::Medium},
-        {5, QFont::DemiBold},
-        {6, QFont::Bold},
-        {7, QFont::ExtraBold},
-        {8, QFont::Black}
-    };
-    auto it = mapWeight.find(nArg);
-    if (it == mapWeight.end()) {
-        return false;
-    }
-    weight = it->second;
-    return true;
-}
-
-int weightToArg(const QFont::Weight weight)
-{
-    const std::map<QFont::Weight, int> mapWeight{
-        {QFont::Thin, 0},
-        {QFont::ExtraLight, 1},
-        {QFont::Light, 2},
-        {QFont::Normal, 3},
-        {QFont::Medium, 4},
-        {QFont::DemiBold, 5},
-        {QFont::Bold, 6},
-        {QFont::ExtraBold, 7},
-        {QFont::Black, 8}
-    };
-    assert(mapWeight.count(weight));
-    return mapWeight.find(weight)->second;
-}
-
-QFont::Weight getFontWeightNormalDefault()
-{
-    return defaultFontWeightNormal;
-}
-
-QFont::Weight toQFontWeight(FontWeight weight)
-{
-    return weight == FontWeight::Bold ? getFontWeightBold() : getFontWeightNormal();
-}
-
-QFont::Weight getFontWeightNormal()
-{
-    return fontWeightNormal;
-}
-
-void setFontWeightNormal(QFont::Weight weight)
-{
-    fontWeightNormal = weight;
-    updateFonts();
-}
-
-QFont::Weight getFontWeightBoldDefault()
-{
-    return defaultFontWeightBold;
-}
-
-QFont::Weight getFontWeightBold()
-{
-    return fontWeightBold;
-}
-
-void setFontWeightBold(QFont::Weight weight)
-{
-    fontWeightBold = weight;
-    updateFonts();
-}
-
-int getFontScaleDefault()
-{
-    return defaultFontScale;
-}
-
-int getFontScale()
-{
-    return fontScale;
 }
 
 void setFontScale(int nScale)
@@ -1491,68 +1040,12 @@ bool loadFonts()
     return true;
 }
 
-void setApplicationFont()
-{
-    std::unique_ptr<QFont> font;
-
-    if (fontFamily == FontFamily::Montserrat) {
-        QString family = fontFamilyToString(FontFamily::Montserrat);
-#ifdef Q_OS_MAC
-        if (getFontWeightNormal() != getFontWeightNormalDefault()) {
-            font = std::make_unique<QFont>(getFontNormal());
-        } else {
-            font = std::make_unique<QFont>(family);
-            font->setWeight(getFontWeightNormalDefault());
-        }
-#else
-        font = std::make_unique<QFont>(family);
-        font->setWeight(getFontWeightNormal());
-#endif
-    } else {
-        font = std::make_unique<QFont>(*osDefaultFont);
+    if(!theme.isEmpty()){
+        cssName = QString(":/css/") + theme;
     }
-
-    font->setPointSizeF(defaultFontSize);
-    qApp->setFont(*font);
-
-    qDebug() << __func__ << ": " << qApp->font().toString() <<
-                " family: " << qApp->font().family() <<
-                ", style: " << qApp->font().styleName() <<
-                " match: " << qApp->font().exactMatch();
-}
-
-void setFont(const std::vector<QWidget*>& vecWidgets, FontWeight weight, int nPointSize, bool fItalic)
-{
-    for (auto it : vecWidgets) {
-        auto fontAttributes = std::make_tuple(weight, fItalic, nPointSize);
-        auto itFontUpdate = mapFontUpdates.emplace(std::make_pair(it, fontAttributes));
-        if (!itFontUpdate.second) {
-            itFontUpdate.first->second = fontAttributes;
-        }
-    }
-}
-
-void updateFonts()
-{
-    // Fonts need to be loaded by GUIIUtil::loadFonts(), if not just return.
-    if (!osDefaultFont) {
-        return;
-    }
-
-    static std::map<QPointer<QWidget>, int> mapWidgetDefaultFontSizes;
-
-    // QPointer becomes nullptr for objects that were deleted.
-    // Remove them from mapDefaultFontSize and mapFontUpdates
-    // before proceeding any further.
-    size_t nRemovedDefaultFonts{0};
-    auto itd = mapWidgetDefaultFontSizes.begin();
-    while (itd != mapWidgetDefaultFontSizes.end()) {
-        if (itd->first.isNull()) {
-            itd = mapWidgetDefaultFontSizes.erase(itd);
-            ++nRemovedDefaultFonts;
-        } else {
-            ++itd;
-        }
+    else {
+        cssName = QString(":/css/light");
+        settings.setValue("theme", "light");
     }
 
     size_t nRemovedFontUpdates{0};
@@ -1694,103 +1187,6 @@ QFont getFont(FontFamily family, QFont::Weight qWeight, bool fItalic, int nPoint
     return font;
 }
 
-QFont getFont(QFont::Weight qWeight, bool fItalic, int nPointSize)
-{
-    return getFont(fontFamily, qWeight, fItalic, nPointSize);
-}
-QFont getFont(FontWeight weight, bool fItalic, int nPointSize)
-{
-    return getFont(toQFontWeight(weight), fItalic, nPointSize);
-}
-
-QFont getFontNormal()
-{
-    return getFont(FontWeight::Normal);
-}
-
-QFont getFontBold()
-{
-    return getFont(FontWeight::Bold);
-}
-
-std::vector<QFont::Weight> getSupportedWeights()
-{
-    assert(mapSupportedWeights.count(fontFamily));
-    return mapSupportedWeights[fontFamily];
-}
-
-QFont::Weight supportedWeightFromIndex(int nIndex)
-{
-    auto vecWeights = getSupportedWeights();
-    assert(vecWeights.size() > nIndex);
-    return vecWeights[nIndex];
-}
-
-int supportedWeightToIndex(QFont::Weight weight)
-{
-    auto vecWeights = getSupportedWeights();
-    for (int index = 0; index < vecWeights.size(); ++index) {
-        if (weight == vecWeights[index]) {
-            return index;
-        }
-    }
-    assert(false);
-}
-
-QString getActiveTheme()
-{
-    QSettings settings;
-    return settings.value("theme", defaultTheme).toString();
-}
-
-bool dashThemeActive()
-{
-    QSettings settings;
-    QString theme = settings.value("theme", "").toString();
-    return theme != traditionalTheme;
-}
-
-void loadTheme(QWidget* widget, bool fForce)
-{
-    loadStyleSheet(widget, fForce);
-    updateFonts();
-    updateMacFocusRects();
-}
-
-void disableMacFocusRect(const QWidget* w)
-{
-#ifdef Q_OS_MAC
-    for (const auto& c : w->findChildren<QWidget*>()) {
-        if (c->testAttribute(Qt::WA_MacShowFocusRect)) {
-            c->setAttribute(Qt::WA_MacShowFocusRect, !dashThemeActive());
-            setRectsDisabled.emplace(c);
-        }
-    }
-#endif
-}
-
-void updateMacFocusRects()
-{
-#ifdef Q_OS_MAC
-    QWidgetList allWidgets = QApplication::allWidgets();
-    auto it = setRectsDisabled.begin();
-    while (it != setRectsDisabled.end()) {
-        if (allWidgets.contains(*it)) {
-            (*it)->setAttribute(Qt::WA_MacShowFocusRect, !dashThemeActive());
-            ++it;
-        } else {
-            it = setRectsDisabled.erase(it);
-        }
-    }
-#endif
-}
-
-void setClipboard(const QString& str)
-{
-    QApplication::clipboard()->setText(str, QClipboard::Clipboard);
-    QApplication::clipboard()->setText(str, QClipboard::Selection);
-}
-
 fs::path qstringToBoostPath(const QString &path)
 {
     return fs::path(path.toStdString(), utf8);
@@ -1798,7 +1194,7 @@ fs::path qstringToBoostPath(const QString &path)
 
 QString boostPathToQString(const fs::path &path)
 {
-    return QString::fromStdString(path.string(utf8));
+    return getFont(FontWeight::Normal);
 }
 
 QString formatDurationStr(int secs)
@@ -1843,9 +1239,6 @@ QString formatServicesStr(quint64 mask)
                 break;
             case NODE_XTHIN:
                 strList.append("XTHIN");
-                break;
-            case NODE_BLOOM_LIGHT_ZC:
-                strList.append(QObject::tr("ZK_BLOOM"));
                 break;
             default:
                 strList.append(QString("%1[%2]").arg("UNKNOWN").arg(check));
@@ -1906,35 +1299,11 @@ QString formatNiceTimeOffset(qint64 secs)
     return timeBehindText;
 }
 
-QString formatBytes(uint64_t bytes)
-{
-    if(bytes < 1024)
-        return QString(QObject::tr("%1 B")).arg(bytes);
-    if(bytes < 1024 * 1024)
-        return QString(QObject::tr("%1 KB")).arg(bytes / 1024);
-    if(bytes < 1024 * 1024 * 1024)
-        return QString(QObject::tr("%1 MB")).arg(bytes / 1024 / 1024);
-
-    return QString(QObject::tr("%1 GB")).arg(bytes / 1024 / 1024 / 1024);
-}
-
-qreal calculateIdealFontSize(int width, const QString& text, QFont font, qreal minPointSize, qreal font_size) {
-    while(font_size >= minPointSize) {
-        font.setPointSizeF(font_size);
-        QFontMetrics fm(font);
-        if (fm.width(text) < width) {
-            break;
-        }
-        font_size -= 0.5;
-    }
-    return font_size;
-}
-
 void ClickableLabel::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_EMIT clicked(event->pos());
 }
-
+    
 void ClickableProgressBar::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_EMIT clicked(event->pos());

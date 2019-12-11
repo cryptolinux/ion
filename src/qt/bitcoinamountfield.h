@@ -63,10 +63,12 @@ protected:
     bool eventFilter(QObject *object, QEvent *event);
 
 private:
-    AmountLineEdit *amount;
-    BitcoinUnits *units;
+    AmountSpinBox *amount;
+    QValueComboBox *unit;
 
+private Q_SLOTS:
     void unitChanged(int idx);
+
 };
 
 #endif // BITCOIN_QT_BITCOINAMOUNTFIELD_H

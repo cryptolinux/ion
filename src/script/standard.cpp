@@ -1,6 +1,5 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,7 +9,6 @@
 #include <script/script.h>
 #include <util.h>
 #include <utilstrencodings.h>
-
 
 typedef std::vector<unsigned char> valtype;
 
@@ -29,7 +27,6 @@ const char* GetTxnOutputType(txnouttype t)
     case TX_SCRIPTHASH: return "scripthash";
     case TX_MULTISIG: return "multisig";
     case TX_NULL_DATA: return "nulldata";
-    case TX_ZEROCOINMINT: return "zerocoinmint";
     case TX_GRP_PUBKEYHASH: return "grouppubkeyhash";
     case TX_GRP_SCRIPTHASH: return "groupscripthash";
     }
@@ -65,20 +62,10 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
 
     // Shortcut for pay-to-script-hash, which are more constrained than the other types:
     // it is always OP_HASH160 20 [20 byte hash] OP_EQUAL
-    // or [data] OP_GROUP OP_DROP OP_HASH160 20 [20 byte hash] OP_EQUAL
-    std::vector<unsigned char> hashBytes;
-    if (scriptPubKey.IsPayToScriptHash(&hashBytes))
+    if (scriptPubKey.IsPayToScriptHash())
     {
         typeRet = TX_SCRIPTHASH;
-        vSolutionsRet.push_back(hashBytes);
-        return true;
-    }
-
-    // Zerocoin
-    if (scriptPubKey.IsZerocoinMint()) {
-        typeRet = TX_ZEROCOINMINT;
-        if(scriptPubKey.size() > 150) return false;
-        std::vector<unsigned char> hashBytes(scriptPubKey.begin()+2, scriptPubKey.end());
+        std::vector<unsigned char> hashBytes(scriptPubKey.begin()+2, scriptPubKey.begin()+22);
         vSolutionsRet.push_back(hashBytes);
         return true;
     }
@@ -95,7 +82,7 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
 
     // Scan templates
     const CScript& script1 = scriptPubKey;
-    for (const PAIRTYPE(txnouttype, CScript)& tplate : mTemplates)
+    for (const std::pair<txnouttype, CScript>& tplate : mTemplates)
     {
         const CScript& script2 = tplate.second;
         vSolutionsRet.clear();
@@ -178,15 +165,7 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
             {
                 // Expect that there is some data in the script at this point
                 if (vch1.size() == 0)
-                {
-                    /* this exception for MINIMAL_DATA encodings is commented out because all group
-                       data encodings must be > 1 byte to avoid the MINIMAL_DATA parsing insanity
-                    // These opcodes ARE data (disallowed in group)
-                    if (!(((opcode1>=OP_1)&&(opcode1<=OP_16))||(opcode1==OP_1NEGATE)))
-                        break;
-                    */
                     break;
-                }
                 if (group.empty())
                     group = vch1; // group id is first
                 else
@@ -203,52 +182,6 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
     vSolutionsRet.clear();
     typeRet = TX_NONSTANDARD;
     return false;
-}
-
-bool ExtractDestinationAndType(const CScript &scriptPubKey, CTxDestination &addressRet, txnouttype &whichType)
-{
-    switch (t)
-    {
-    case TX_NONSTANDARD:
-    case TX_NULL_DATA:
-    case TX_ZEROCOINMINT:
-        return -1;
-    case TX_PUBKEY:
-        return 1;
-    case TX_PUBKEYHASH:
-    case TX_GRP_PUBKEYHASH:
-        return 2;
-    case TX_MULTISIG:
-        if (vSolutions.size() < 1 || vSolutions[0].size() < 1)
-            return -1;
-        return vSolutions[0][0] + 1;
-    case TX_SCRIPTHASH:
-    case TX_GRP_SCRIPTHASH:
-        return 1; // doesn't include args needed by the script
-    }
-    return -1;
-}
-
-bool IsStandard(const CScript& scriptPubKey, txnouttype& whichType)
-{
-    std::vector<valtype> vSolutions;
-    if (!Solver(scriptPubKey, whichType, vSolutions))
-        return false;
-
-    if (whichType == TX_MULTISIG)
-    {
-        unsigned char m = vSolutions.front()[0];
-        unsigned char n = vSolutions.back()[0];
-        // Support up to x-of-3 multisig txns as standard
-        if (n < 1 || n > 3)
-            return false;
-        if (m < 1 || m > n)
-            return false;
-    } else if (whichType == TX_NULL_DATA &&
-                (!GetBoolArg("-datacarrier", true) || scriptPubKey.size() > nMaxDatacarrierBytes))
-        return false;
-
-    return whichType != TX_NONSTANDARD;
 }
 
 bool ExtractDestinationAndType(const CScript &scriptPubKey, CTxDestination &addressRet, txnouttype &whichType)
@@ -285,7 +218,6 @@ bool ExtractDestination(const CScript &scriptPubKey, CTxDestination &addressRet)
     txnouttype whichType;
     return ExtractDestinationAndType(scriptPubKey, addressRet, whichType);
 }
-
 bool ExtractDestinations(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<CTxDestination>& addressRet, int& nRequiredRet)
 {
     addressRet.clear();

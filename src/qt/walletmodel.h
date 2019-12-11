@@ -1,18 +1,17 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2014-2016 The Dash developers
-// Copyright (c) 2017-2018 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_WALLETMODEL_H
 #define BITCOIN_QT_WALLETMODEL_H
 
-#include <qt/paymentrequestplus.h>
-#include <qt/walletmodeltransaction.h>
+#include "paymentrequestplus.h"
+#include "walletmodeltransaction.h"
 
-#include "allocators.h" /* for SecureString */
-#include "swifttx.h"
+#ifdef ENABLE_WALLET
 #include "wallet/wallet.h"
+#endif // ENABLE_WALLET
+#include "support/allocators/secure.h"
 
 #include <map>
 #include <vector>
@@ -21,6 +20,7 @@
 
 class AddressTableModel;
 class OptionsModel;
+class PlatformStyle;
 class RecentRequestsTableModel;
 class TransactionTableModel;
 class WalletModelTransaction;
@@ -40,8 +40,9 @@ QT_END_NAMESPACE
 class SendCoinsRecipient
 {
 public:
-    explicit SendCoinsRecipient() : amount(0), fSubtractFeeFromAmount(false), nVersion(SendCoinsRecipient::CURRENT_VERSION) {}
-    explicit SendCoinsRecipient(const QString& addr, const QString& label, const CAmount& amount, const QString& message) : address(addr), label(label), amount(amount), message(message), fSubtractFeeFromAmount(false), nVersion(SendCoinsRecipient::CURRENT_VERSION) {}
+    explicit SendCoinsRecipient() : amount(0), fSubtractFeeFromAmount(false), nVersion(SendCoinsRecipient::CURRENT_VERSION) { }
+    explicit SendCoinsRecipient(const QString &addr, const QString &_label, const CAmount& _amount, const QString &_message):
+        address(addr), label(_label), amount(_amount), message(_message), fSubtractFeeFromAmount(false), nVersion(SendCoinsRecipient::CURRENT_VERSION) {}
 
     // If from an unauthenticated payment request, this is used for storing
     // the addresses, e.g. address-A<br />address-B<br />address-C.
@@ -102,7 +103,7 @@ class WalletModel : public QObject
     Q_OBJECT
 
 public:
-    explicit WalletModel(CWallet* wallet, OptionsModel* optionsModel, QObject* parent = 0);
+    explicit WalletModel(const PlatformStyle *platformStyle, CWallet *wallet, OptionsModel *optionsModel, QObject *parent = 0);
     ~WalletModel();
 
     enum StatusCode // Returned by sendCoins
@@ -135,21 +136,12 @@ public:
     CAmount getBalance(const CCoinControl *coinControl = nullptr) const;
     CAmount getUnconfirmedBalance() const;
     CAmount getImmatureBalance() const;
-    CAmount getAnonymizableBalance(bool fSkipDenominated, bool fSkipUnconfirmed) const;
-    CAmount getAnonymizedBalance(const CCoinControl* coinControl = nullptr) const;
-    CAmount getDenominatedBalance(bool unconfirmed) const;
-    CAmount getNormalizedAnonymizedBalance() const;
-    CAmount getAverageAnonymizedRounds() const;
+    CAmount getAnonymizedBalance() const;
     bool haveWatchOnly() const;
     CAmount getWatchBalance() const;
     CAmount getWatchUnconfirmedBalance() const;
     CAmount getWatchImmatureBalance() const;
     EncryptionStatus getEncryptionStatus() const;
-    CKey generateNewKey() const; //for temporary paper wallet key generation
-    bool setAddressBook(const CTxDestination& address, const std::string& strName, const std::string& strPurpose);
-    void encryptKey(const CKey key, const std::string& pwd, const std::string& slt, std::vector<unsigned char>& crypted);
-    void decryptKey(const std::vector<unsigned char>& crypted, const std::string& slt, const std::string& pwd, CKey& key);
-    void emitBalanceChanged(); // Force update of UI-elements even when no values have changed
 
     // Check address for validity
     bool validateAddress(const QString &address);
@@ -180,8 +172,6 @@ public:
 
     // Wallet backup
     bool backupWallet(const QString &filename);
-    bool autoBackupWallet(QString& strBackupWarningRet, QString& strBackupErrorRet);
-    int64_t getKeysLeftSinceAutoBackup() const;
 
     // RAI object for unlocking wallet, returned by requestUnlock()
     class UnlockContext
@@ -206,9 +196,10 @@ public:
 
     UnlockContext requestUnlock(bool fForMixingOnly=false);
 
-    bool getPubKey(const CKeyID& address, CPubKey& vchPubKeyOut) const;
-    bool isMine(CBitcoinAddress address);
-    bool isUsed(CBitcoinAddress address);
+    bool getPubKey(const CKeyID &address, CPubKey& vchPubKeyOut) const;
+    bool IsSpendable(const CTxDestination& dest) const;
+    bool IsSpendable(const CScript& script) const;
+    bool getPrivKey(const CKeyID &address, CKey& vchPrivKeyOut) const;
     void getOutputs(const std::vector<COutPoint>& vOutpoints, std::vector<COutput>& vOutputs);
     bool isSpent(const COutPoint& outpoint) const;
     void listCoins(std::map<QString, std::vector<COutput> >& mapCoins) const;
@@ -218,9 +209,8 @@ public:
     void unlockCoin(COutPoint& output);
     void listLockedCoins(std::vector<COutPoint>& vOutpts);
 
-    void listZerocoinMints(std::set<CMintMeta>& setMints, bool fUnusedOnly = false, bool fMaturedOnly = false, bool fUpdateStatus = false, bool fWrongSeed = false);
+    void listProTxCoins(std::vector<COutPoint>& vOutpts);
 
-    std::string GetUniqueWalletBackupName();
     void loadReceiveRequests(std::vector<std::string>& vReceiveRequests);
     bool saveReceiveRequest(const std::string &sAddress, const int64_t nId, const std::string &sRequest);
 
@@ -233,9 +223,6 @@ public:
 
     int getDefaultConfirmTarget() const;
     int getNumISLocks() const;
-
-    int getRealOutpointPrivateSendRounds(const COutPoint& outpoint) const;
-    bool isFullyMixed(const COutPoint& outpoint) const;
 
 private:
     CWallet *wallet;
@@ -294,13 +281,7 @@ Q_SIGNALS:
     // Watch-only address added
     void notifyWatchonlyChanged(bool fHaveWatchonly);
 
-    // MultiSig address added
-    void notifyMultiSigChanged(bool fHaveMultiSig);
-
-    // Receive tab address may have changed
-    void notifyReceiveAddressChanged();
-
-public slots:
+public Q_SLOTS:
     /* Wallet status might have changed */
     void updateStatus();
     /* New transaction, or transaction changed status */
@@ -315,8 +296,6 @@ public slots:
     void updateWatchOnlyFlag(bool fHaveWatchonly);
     /* Current, immature or unconfirmed balance might have changed - emit 'balanceChanged' if so */
     void pollBalanceChanged();
-    /* Update address book labels in the database */
-    void updateAddressBookLabels(const CTxDestination& address, const std::string& strName, const std::string& strPurpose);
 };
 
 #endif // BITCOIN_QT_WALLETMODEL_H

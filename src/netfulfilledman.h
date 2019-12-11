@@ -5,9 +5,9 @@
 #ifndef NETFULFILLEDMAN_H
 #define NETFULFILLEDMAN_H
 
-#include <netaddress.h>
-#include <serialize.h>
-#include <sync.h>
+#include "netaddress.h"
+#include "serialize.h"
+#include "sync.h"
 
 class CNetFulfilledRequestManager;
 extern CNetFulfilledRequestManager netfulfilledman;
@@ -39,8 +39,6 @@ public:
 
     void AddFulfilledRequest(const CService& addr, const std::string& strRequest);
     bool HasFulfilledRequest(const CService& addr, const std::string& strRequest);
-
-    void RemoveAllFulfilledRequests(const CService& addr);
 
     void CheckAndRemove();
     void Clear();

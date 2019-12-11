@@ -1,16 +1,12 @@
-// Copyright (c) 2014-2016 The Dash Developers
-// Copyright (c) 2016-2017 The PIVX developers
-// Distributed under the MIT software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
 #ifndef MASTERNODELIST_H
 #define MASTERNODELIST_H
 
-#include <primitives/transaction.h>
-#include <sync.h>
-#include <util.h>
+#include "platformstyle.h"
+#include "primitives/transaction.h"
+#include "sync.h"
+#include "util.h"
 
-#include <evo/deterministicmns.h>
+#include "evo/deterministicmns.h"
 
 #include <QMenu>
 #include <QTimer>
@@ -37,7 +33,7 @@ class MasternodeList : public QWidget
     Q_OBJECT
 
 public:
-    explicit MasternodeList(QWidget* parent = 0);
+    explicit MasternodeList(const PlatformStyle* platformStyle, QWidget* parent = 0);
     ~MasternodeList();
 
     void setClientModel(ClientModel* clientModel);

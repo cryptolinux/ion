@@ -1,10 +1,10 @@
-// Copyright (c) 2012-2013 The Bitcoin Core developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2012-2015 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <util.h>
 
-#include "allocators.h"
+#include "support/allocators/secure.h"
 #include "test/test_ion.h"
 
 #include <boost/test/unit_test.hpp>

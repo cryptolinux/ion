@@ -32,10 +32,7 @@ JSON-RPC server. Running `iond` or `ion-qt -server` will be sufficient.
     $ ./linearize-data.py linearize.cfg
 
 Required configuration file settings:
-* "input": iond blocks/ directory containing blkNNNNN.dat
-* "hashlist": text file containing list of block hashes, linearized-hashes.py
-output.
-* "output_file": bootstrap.dat
+* `output_file`: The file that will contain the final blockchain.
       or
 * `output`: Output directory for linearized `blocks/blkNNNNN.dat` output.
 
@@ -53,7 +50,7 @@ linearize-hashes.py.
 (Default: `1000*1000*1000 bytes`)
 * `netmagic`: Network magic number. (default is 'bf0c6bbd', mainnet)
 * `out_of_order_cache_sz`: If out-of-order blocks are being read, the block can
-be written to a cache so that the blockchain doesn't have to be sought again.
+be written to a cache so that the blockchain doesn't have to be seeked again.
 This option specifies the cache size. (Default: `100*1000*1000 bytes`)
 * `rev_hash_bytes`: If true, the block hash list written by linearize-hashes.py
 will be byte-reversed when read by linearize-data.py. See the linearize-hashes

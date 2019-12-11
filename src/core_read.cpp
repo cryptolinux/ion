@@ -1,7 +1,5 @@
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <core_io.h>
@@ -21,8 +19,7 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/algorithm/string/split.hpp>
 
-
-CScript ParseScript(std::string s)
+CScript ParseScript(const std::string& s)
 {
     CScript result;
 
@@ -55,16 +52,22 @@ CScript ParseScript(std::string s)
         if (w->empty())
         {
             // Empty string, ignore. (boost::split given '' will return one word)
-        } else if (all(*w, boost::algorithm::is_digit()) ||
-                   (boost::algorithm::starts_with(*w, "-") && all(std::string(w->begin() + 1, w->end()), boost::algorithm::is_digit()))) {
+        }
+        else if (all(*w, boost::algorithm::is_digit()) ||
+            (boost::algorithm::starts_with(*w, "-") && all(std::string(w->begin()+1, w->end()), boost::algorithm::is_digit())))
+        {
             // Number
             int64_t n = atoi64(*w);
             result << n;
-        } else if (boost::algorithm::starts_with(*w, "0x") && (w->begin() + 2 != w->end()) && IsHex(std::string(w->begin() + 2, w->end()))) {
+        }
+        else if (boost::algorithm::starts_with(*w, "0x") && (w->begin()+2 != w->end()) && IsHex(std::string(w->begin()+2, w->end())))
+        {
             // Raw hex data, inserted NOT pushed onto stack:
-            std::vector<unsigned char> raw = ParseHex(std::string(w->begin() + 2, w->end()));
+            std::vector<unsigned char> raw = ParseHex(std::string(w->begin()+2, w->end()));
             result.insert(result.end(), raw.begin(), raw.end());
-        } else if (w->size() >= 2 && boost::algorithm::starts_with(*w, "'") && boost::algorithm::ends_with(*w, "'")) {
+        }
+        else if (w->size() >= 2 && boost::algorithm::starts_with(*w, "'") && boost::algorithm::ends_with(*w, "'"))
+        {
             // Single-quoted string, pushed as data. NOTE: this is poor-man's
             // parsing, spaces/tabs/newlines in single-quoted strings won't work.
             std::vector<unsigned char> value(w->begin()+1, w->end()-1);
@@ -74,7 +77,9 @@ CScript ParseScript(std::string s)
         {
             // opcode, e.g. OP_ADD or ADD:
             result << mapOpNames[*w];
-        } else {
+        }
+        else
+        {
             throw std::runtime_error("script parse error");
         }
     }
@@ -123,7 +128,7 @@ uint256 ParseHashUV(const UniValue& v, const std::string& strName)
     std::string strHex;
     if (v.isStr())
         strHex = v.getValStr();
-    return ParseHashStr(strHex, strName); // Note: ParseHashStr("") throws a std::runtime_error
+    return ParseHashStr(strHex, strName);  // Note: ParseHashStr("") throws a runtime_error
 }
 
 uint256 ParseHashStr(const std::string& strHex, const std::string& strName)

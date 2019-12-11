@@ -1,7 +1,10 @@
 <!--- Remove sections that do not apply -->
 
 This issue tracker is only for technical issues related to Ion Core.
-General ION questions and/or support requests and are best directed to the [ION Discord](https://discord.ioncoin.org).
+
+General Ion questions and/or support requests and are best directed to the [Ionpay Reddit](https://www.reddit.com/r/ionpay/).
+
+To report critical security issues, email support@ionomy.com and/or see the ION bug bounty program on [Bugcrowd](https://bugcrowd.com/iondigitalcash) instead of creating Github issues.
 
 ### Describe the issue
 

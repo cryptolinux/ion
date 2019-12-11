@@ -6,6 +6,7 @@
 #include "config/ion-config.h"
 #endif
 
+<<<<<<< HEAD
 #include <consensus/merkle.h>
 #include <primitives/block.h>
 #include <script/script.h>
@@ -20,12 +21,30 @@
 #include <version.h>
 #include <pubkey.h>
 #include <blockencodings.h>
+=======
+#include "consensus/merkle.h"
+#include "primitives/block.h"
+#include "script/script.h"
+#include "addrman.h"
+#include "chain.h"
+#include "coins.h"
+#include "compressor.h"
+#include "net.h"
+#include "protocol.h"
+#include "streams.h"
+#include "undo.h"
+#include "version.h"
+#include "pubkey.h"
+>>>>>>> merge fix old ion with new
 
 #include <stdint.h>
 #include <unistd.h>
 
 #include <algorithm>
+<<<<<<< HEAD
 #include <memory>
+=======
+>>>>>>> merge fix old ion with new
 #include <vector>
 
 enum TEST_ID {
@@ -47,6 +66,7 @@ enum TEST_ID {
     CBLOOMFILTER_DESERIALIZE,
     CDISKBLOCKINDEX_DESERIALIZE,
     CTXOUTCOMPRESSOR_DESERIALIZE,
+<<<<<<< HEAD
     BLOCKTRANSACTIONS_DESERIALIZE,
     BLOCKTRANSACTIONSREQUEST_DESERIALIZE,
     TEST_ID_END
@@ -54,6 +74,13 @@ enum TEST_ID {
 
 bool read_stdin(std::vector<uint8_t> &data) {
     uint8_t buffer[1024];
+=======
+    TEST_ID_END
+};
+
+bool read_stdin(std::vector<char> &data) {
+    char buffer[1024];
+>>>>>>> merge fix old ion with new
     ssize_t length=0;
     while((length = read(STDIN_FILENO, buffer, 1024)) > 0) {
         data.insert(data.end(), buffer, buffer+length);
@@ -63,11 +90,23 @@ bool read_stdin(std::vector<uint8_t> &data) {
     return length==0;
 }
 
+<<<<<<< HEAD
 int test_one_input(std::vector<uint8_t> buffer) {
     if (buffer.size() < sizeof(uint32_t)) return 0;
 
     uint32_t test_id = 0xffffffff;
     memcpy(&test_id, buffer.data(), sizeof(uint32_t));
+=======
+int do_fuzz()
+{
+    std::vector<char> buffer;
+    if (!read_stdin(buffer)) return 0;
+
+    if (buffer.size() < sizeof(uint32_t)) return 0;
+
+    uint32_t test_id = 0xffffffff;
+    memcpy(&test_id, &buffer[0], sizeof(uint32_t));
+>>>>>>> merge fix old ion with new
     buffer.erase(buffer.begin(), buffer.begin() + sizeof(uint32_t));
 
     if (test_id >= TEST_ID_END) return 0;
@@ -249,6 +288,7 @@ int test_one_input(std::vector<uint8_t> buffer) {
 
             break;
         }
+<<<<<<< HEAD
         case BLOCKTRANSACTIONS_DESERIALIZE:
         {
             try
@@ -269,12 +309,15 @@ int test_one_input(std::vector<uint8_t> buffer) {
 
             break;
         }
+=======
+>>>>>>> merge fix old ion with new
         default:
             return 0;
     }
     return 0;
 }
 
+<<<<<<< HEAD
 static std::unique_ptr<ECCVerifyHandle> globalVerifyHandle;
 void initialize() {
     globalVerifyHandle = std::unique_ptr<ECCVerifyHandle>(new ECCVerifyHandle());
@@ -301,6 +344,11 @@ __attribute__((weak))
 int main(int argc, char **argv)
 {
     initialize();
+=======
+int main(int argc, char **argv)
+{
+    ECCVerifyHandle globalVerifyHandle;
+>>>>>>> merge fix old ion with new
 #ifdef __AFL_INIT
     // Enable AFL deferred forkserver mode. Requires compilation using
     // afl-clang-fast++. See fuzzing.md for details.
@@ -310,6 +358,7 @@ int main(int argc, char **argv)
 #ifdef __AFL_LOOP
     // Enable AFL persistent mode. Requires compilation using afl-clang-fast++.
     // See fuzzing.md for details.
+<<<<<<< HEAD
     int ret = 0;
     while (__AFL_LOOP(1000)) {
         std::vector<uint8_t> buffer;
@@ -325,5 +374,13 @@ int main(int argc, char **argv)
         return 0;
     }
     return test_one_input(buffer);
+=======
+    while (__AFL_LOOP(1000)) {
+        do_fuzz();
+    }
+    return 0;
+#else
+    return do_fuzz();
+>>>>>>> merge fix old ion with new
 #endif
 }

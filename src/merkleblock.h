@@ -1,17 +1,15 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_MERKLEBLOCK_H
 #define BITCOIN_MERKLEBLOCK_H
 
-#include <serialize.h>
-#include <uint256.h>
-#include <primitives/block.h>
-#include <bloom.h>
+#include "serialize.h"
+#include "uint256.h"
+#include "primitives/block.h"
+#include "bloom.h"
 
 #include <vector>
 
@@ -65,7 +63,7 @@ protected:
     bool fBad;
 
     /** helper function to efficiently calculate the number of nodes at given height in the merkle tree */
-    unsigned int CalcTreeWidth(int height) const {
+    unsigned int CalcTreeWidth(int height) {
         return (nTransactions+(1 << height)-1) >> height;
     }
 
@@ -150,6 +148,11 @@ public:
 
     // Create from a CBlock, matching the txids in the set
     CMerkleBlock(const CBlock& block, const std::set<uint256>& txids) : CMerkleBlock(block, nullptr, &txids) { }
+
+    CMerkleBlock() {}
+
+    // Create from a CBlock, matching the txids in the set
+    CMerkleBlock(const CBlock& block, const std::set<uint256>& txids);
 
     CMerkleBlock() {}
 

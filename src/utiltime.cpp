@@ -1,7 +1,5 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2016-2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,9 +12,10 @@
 
 #include <atomic>
 
+#include <atomic>
+
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/thread.hpp>
-
 
 static std::atomic<int64_t> nMockTime(0); //!< For unit testing
 
@@ -28,17 +27,6 @@ int64_t GetTime()
     time_t now = time(nullptr);
     assert(now > 0);
     return now;
-}
-
-template <typename T>
-T GetTime()
-{
-    const std::chrono::seconds mocktime{nMockTime.load(std::memory_order_relaxed)};
-
-    return std::chrono::duration_cast<T>(
-        mocktime.count() ?
-            mocktime :
-            std::chrono::microseconds{GetTimeMicros()});
 }
 template std::chrono::seconds GetTime();
 template std::chrono::milliseconds GetTime();
@@ -56,14 +44,16 @@ int64_t GetMockTime()
 
 int64_t GetTimeMillis()
 {
-    int64_t now = std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()).time_since_epoch().count();
+    int64_t now = (boost::posix_time::microsec_clock::universal_time() -
+                   boost::posix_time::ptime(boost::gregorian::date(1970,1,1))).total_milliseconds();
     assert(now > 0);
     return now;
 }
 
 int64_t GetTimeMicros()
 {
-    int64_t now = std::chrono::time_point_cast<std::chrono::microseconds>(std::chrono::system_clock::now()).time_since_epoch().count();
+    int64_t now = (boost::posix_time::microsec_clock::universal_time() -
+                   boost::posix_time::ptime(boost::gregorian::date(1970,1,1))).total_microseconds();
     assert(now > 0);
     return now;
 }

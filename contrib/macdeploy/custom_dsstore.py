@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2013-2019 The Bitcoin Core developers
+# Copyright (c) 2013-2015 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 import biplist
@@ -13,7 +13,7 @@ package_name_ns = sys.argv[2]
 ds = DSStore.open(output_file, 'w+')
 ds['.']['bwsp'] = {
     'ShowStatusBar': False,
-    'WindowBounds': '{{300, 280}, {500, 343}}',
+    'WindowBounds': b'{{300, 280}, {500, 343}}',
     'ContainerShowSidebar': False,
     'SidebarWidth': 0,
     'ShowTabView': False,
@@ -53,7 +53,7 @@ ds['.']['icvp'] = icvp
 ds['.']['vSrn'] = ('long', 1)
 
 ds['Applications']['Iloc'] = (370, 156)
-ds['ION-Qt.app']['Iloc'] = (128, 156)
+ds['Ion-Qt.app']['Iloc'] = (128, 156)
 
 ds.flush()
 ds.close()

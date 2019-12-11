@@ -9,7 +9,7 @@
 * @copyright  Copyright 2013 Ian Miers, Christina Garman and Matthew Green
 * @license    This project is released under the MIT license.
 **/
-// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2017-2019 The PIVX developers
 
 #include <streams.h>
 #include "SerialNumberSignatureOfKnowledge.h"
@@ -170,7 +170,7 @@ bool SerialNumberSignatureOfKnowledge::Verify(const CBigNum& coinSerialNumber, c
             hasher << tprime[i];
         }
         return hasher.GetHash() == hash;
-    }catch (std::range_error e){
+    } catch (const std::range_error& e) {
         return error("SoK Verify() :: sprime invalid range.");
     }
 }

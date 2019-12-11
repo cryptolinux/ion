@@ -1,19 +1,19 @@
-// Copyright (c) 2013 The Bitcoin Core developers
-// Copyright (c) 2017 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2013-2015 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#include "consensus/tx_verify.h"
 #include "consensus/validation.h"
 #include "data/sighash.json.h"
-#include "main.h"
-#include "random.h"
+#include "hash.h"
 #include "script/interpreter.h"
 #include "script/script.h"
 #include "serialize.h"
+#include "streams.h"
+#include "test/test_ion.h"
 #include "util.h"
 #include "utilstrencodings.h"
 #include "version.h"
-#include "test_ion.h"
 
 #include <iostream>
 
@@ -154,9 +154,7 @@ BOOST_AUTO_TEST_CASE(sighash_test)
         }
         std::cout << "\n";
         #endif
-        /* DISABLE AS NOT WORKING - **TODO** - fix it
         BOOST_CHECK(sh == sho);
-        */// DISABLE AS NOT WORKING - **TODO** - fix it
     }
     #if defined(PRINT_SIGHASH_JSON)
     std::cout << "]\n";
@@ -202,15 +200,12 @@ BOOST_AUTO_TEST_CASE(sighash_from_data)
           std::vector<unsigned char> raw = ParseHex(raw_script);
           scriptCode.insert(scriptCode.end(), raw.begin(), raw.end());
         } catch (...) {
-          // BOOST_ERROR("Bad test, couldn't deserialize data: " << strTest);
+          BOOST_ERROR("Bad test, couldn't deserialize data: " << strTest);
           continue;
         }
 
-        sh = SignatureHash(scriptCode, tx, nIn, nHashType);
-        /* DISABLE AS NOT WORKING - **TODO** - fix it
+        sh = SignatureHash(scriptCode, *tx, nIn, nHashType, 0, SIGVERSION_BASE);
         BOOST_CHECK_MESSAGE(sh.GetHex() == sigHashHex, strTest);
-        */// DISABLE AS NOT WORKING - **TODO** - fix it
     }
 }
-
 BOOST_AUTO_TEST_SUITE_END()

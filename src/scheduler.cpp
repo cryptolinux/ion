@@ -1,13 +1,11 @@
-// Copyright (c) 2015-2019 The Bitcoin Core developers
-// Copyright (c) 2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <scheduler.h>
 
-#include <random.h>
-#include <reverselock.h>
+#include "random.h"
+#include "reverselock.h"
 
 #include <assert.h>
 #include <boost/bind.hpp>
@@ -176,7 +174,7 @@ void SingleThreadedSchedulerClient::ProcessQueue() {
     // to ensure both happen safely even if callback() throws.
     struct RAIICallbacksRunning {
         SingleThreadedSchedulerClient* instance;
-        explicit RAIICallbacksRunning(SingleThreadedSchedulerClient* _instance) : instance(_instance) {}
+        RAIICallbacksRunning(SingleThreadedSchedulerClient* _instance) : instance(_instance) {}
         ~RAIICallbacksRunning() {
             {
                 LOCK(instance->m_cs_callbacks_pending);
@@ -207,9 +205,4 @@ void SingleThreadedSchedulerClient::EmptyQueue() {
         LOCK(m_cs_callbacks_pending);
         should_continue = !m_callbacks_pending.empty();
     }
-}
-
-size_t SingleThreadedSchedulerClient::CallbacksPending() {
-    LOCK(m_cs_callbacks_pending);
-    return m_callbacks_pending.size();
 }

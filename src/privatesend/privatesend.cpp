@@ -1,23 +1,23 @@
-// Copyright (c) 2014-2020 The Dash Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <privatesend/privatesend.h>
+#include "privatesend.h"
 
-#include <masternode/activemasternode.h>
-#include <consensus/validation.h>
-#include <masternode/masternode-payments.h>
-#include <masternode/masternode-sync.h>
-#include <messagesigner.h>
-#include <netmessagemaker.h>
-#include <script/sign.h>
-#include <txmempool.h>
-#include <util.h>
-#include <utilmoneystr.h>
-#include <validation.h>
+#include "masternode/activemasternode.h"
+#include "consensus/validation.h"
+#include "masternode/masternode-payments.h"
+#include "masternode/masternode-sync.h"
+#include "messagesigner.h"
+#include "netmessagemaker.h"
+#include "script/sign.h"
+#include "txmempool.h"
+#include "util.h"
+#include "utilmoneystr.h"
+#include "validation.h"
 
-#include <llmq/quorums_instantsend.h>
-#include <llmq/quorums_chainlocks.h>
+#include "llmq/quorums_instantsend.h"
+#include "llmq/quorums_chainlocks.h"
 
 #include <string>
 
@@ -217,95 +217,11 @@ std::string CPrivateSendBaseSession::GetStateString() const
         return "SIGNING";
     case POOL_STATE_ERROR:
         return "ERROR";
+    case POOL_STATE_SUCCESS:
+        return "SUCCESS";
     default:
         return "UNKNOWN";
     }
-}
-
-bool CPrivateSendBaseSession::IsValidInOuts(const std::vector<CTxIn>& vin, const std::vector<CTxOut>& vout, PoolMessage& nMessageIDRet, bool* fConsumeCollateralRet) const
-{
-    std::set<CScript> setScripPubKeys;
-    nMessageIDRet = MSG_NOERR;
-    if (fConsumeCollateralRet) *fConsumeCollateralRet = false;
-
-    if (vin.size() != vout.size()) {
-        LogPrint(BCLog::PRIVATESEND, "CPrivateSendBaseSession::%s -- ERROR: inputs vs outputs size mismatch! %d vs %d\n", __func__, vin.size(), vout.size());
-        nMessageIDRet = ERR_SIZE_MISMATCH;
-        if (fConsumeCollateralRet) *fConsumeCollateralRet = true;
-        return false;
-    }
-
-    auto checkTxOut = [&](const CTxOut& txout) {
-        int nDenom = CPrivateSend::AmountToDenomination(txout.nValue);
-        if (nDenom != nSessionDenom) {
-            LogPrint(BCLog::PRIVATESEND, "CPrivateSendBaseSession::IsValidInOuts -- ERROR: incompatible denom %d (%s) != nSessionDenom %d (%s)\n",
-                    nDenom, CPrivateSend::DenominationToString(nDenom), nSessionDenom, CPrivateSend::DenominationToString(nSessionDenom));
-            nMessageIDRet = ERR_DENOM;
-            if (fConsumeCollateralRet) *fConsumeCollateralRet = true;
-            return false;
-        }
-        if (!txout.scriptPubKey.IsPayToPublicKeyHash()) {
-            LogPrint(BCLog::PRIVATESEND, "CPrivateSendBaseSession::IsValidInOuts -- ERROR: invalid script! scriptPubKey=%s\n", ScriptToAsmStr(txout.scriptPubKey));
-            nMessageIDRet = ERR_INVALID_SCRIPT;
-            if (fConsumeCollateralRet) *fConsumeCollateralRet = true;
-            return false;
-        }
-        if (!setScripPubKeys.insert(txout.scriptPubKey).second) {
-            LogPrint(BCLog::PRIVATESEND, "CPrivateSendBaseSession::IsValidInOuts -- ERROR: already have this script! scriptPubKey=%s\n", ScriptToAsmStr(txout.scriptPubKey));
-            nMessageIDRet = ERR_ALREADY_HAVE;
-            if (fConsumeCollateralRet) *fConsumeCollateralRet = true;
-            return false;
-        }
-        // IsPayToPublicKeyHash() above already checks for scriptPubKey size,
-        // no need to double check, hence no usage of ERR_NON_STANDARD_PUBKEY
-        return true;
-    };
-
-    CAmount nFees{0};
-
-    for (const auto& txout : vout) {
-        if (!checkTxOut(txout)) {
-            return false;
-        }
-        nFees -= txout.nValue;
-    }
-
-    CCoinsViewMemPool viewMemPool(pcoinsTip.get(), mempool);
-
-    for (const auto& txin : vin) {
-        LogPrint(BCLog::PRIVATESEND, "CPrivateSendBaseSession::%s -- txin=%s\n", __func__, txin.ToString());
-
-        if (txin.prevout.IsNull()) {
-            LogPrint(BCLog::PRIVATESEND, "CPrivateSendBaseSession::%s -- ERROR: invalid input!\n", __func__);
-            nMessageIDRet = ERR_INVALID_INPUT;
-            if (fConsumeCollateralRet) *fConsumeCollateralRet = true;
-            return false;
-        }
-
-        Coin coin;
-        if (!viewMemPool.GetCoin(txin.prevout, coin) || coin.IsSpent() ||
-            (coin.nHeight == MEMPOOL_HEIGHT && !llmq::quorumInstantSendManager->IsLocked(txin.prevout.hash))) {
-            LogPrint(BCLog::PRIVATESEND, "CPrivateSendBaseSession::%s -- ERROR: missing, spent or non-locked mempool input! txin=%s\n", __func__, txin.ToString());
-            nMessageIDRet = ERR_MISSING_TX;
-            return false;
-        }
-
-        if (!checkTxOut(coin.out)) {
-            return false;
-        }
-
-        nFees += coin.out.nValue;
-    }
-
-    // The same size and denom for inputs and outputs ensures their total value is also the same,
-    // no need to double check. If not, we are doing something wrong, bail out.
-    if (nFees != 0) {
-        LogPrint(BCLog::PRIVATESEND, "CPrivateSendBaseSession::%s -- ERROR: non-zero fees! fees: %lld\n", __func__, nFees);
-        nMessageIDRet = ERR_FEES;
-        return false;
-    }
-
-    return true;
 }
 
 // Definitions for static data members
@@ -381,7 +297,7 @@ bool CPrivateSend::IsCollateralValid(const CTransaction& txCollateral)
     {
         LOCK(cs_main);
         CValidationState validationState;
-        if (!AcceptToMemoryPool(mempool, validationState, MakeTransactionRef(txCollateral), nullptr /* pfMissingInputs */, false /* bypass_limits */, maxTxFee /* nAbsurdFee */, true /* fDryRun */)) {
+        if (!AcceptToMemoryPool(mempool, validationState, MakeTransactionRef(txCollateral), false, nullptr, false, maxTxFee, true)) {
             LogPrint(BCLog::PRIVATESEND, "CPrivateSend::IsCollateralValid -- didn't pass AcceptToMemoryPool()\n");
             return false;
         }
@@ -396,38 +312,75 @@ bool CPrivateSend::IsCollateralAmount(CAmount nInputAmount)
     return (nInputAmount >= GetCollateralAmount() && nInputAmount <= GetMaxCollateralAmount());
 }
 
-/*
-    Return a bitshifted integer representing a denomination in vecStandardDenominations
-    or 0 if none was found
+/*  Create a nice string to show the denominations
+    Function returns as follows (for 4 denominations):
+        ( bit on if present )
+        bit 0           - 10
+        bit 1           - 1
+        bit 2           - .1
+        bit 3           - .01
+        bit 4 and so on - out-of-bounds
+        none of above   - non-denom
 */
-int CPrivateSend::AmountToDenomination(CAmount nInputAmount)
+std::string CPrivateSend::GetDenominationsToString(int nDenom)
 {
-    for (size_t i = 0; i < vecStandardDenominations.size(); ++i) {
-        if (nInputAmount == vecStandardDenominations[i]) {
-            return 1 << i;
+    std::string strDenom = "";
+    int nMaxDenoms = vecStandardDenominations.size();
+
+    if (nDenom >= (1 << nMaxDenoms)) {
+        return "out-of-bounds";
+    }
+
+    for (int i = 0; i < nMaxDenoms; ++i) {
+        if (nDenom & (1 << i)) {
+            strDenom += (strDenom.empty() ? "" : "+") + FormatMoney(vecStandardDenominations[i]);
         }
     }
-    return 0;
-}
 
-/*
-    Returns:
-    - one of standard denominations from vecStandardDenominations based on the provided bitshifted integer
-    - 0 for non-initialized sessions (nDenom = 0)
-    - a value below 0 if an error occured while converting from one to another
-*/
-CAmount CPrivateSend::DenominationToAmount(int nDenom)
-{
-    if (nDenom == 0) {
-        // not initialized
-        return 0;
+    if (strDenom.empty()) {
+        return "non-denom";
     }
 
-    size_t nMaxDenoms = vecStandardDenominations.size();
+    return strDenom;
+}
 
-    if (nDenom >= (1 << nMaxDenoms) || nDenom < 0) {
-        // out of bounds
-        return -1;
+/*  Return a bitshifted integer representing the denominations in this list
+    Function returns as follows (for 4 denominations):
+        ( bit on if present )
+        10        - bit 0
+        1         - bit 1
+        .1        - bit 2
+        .01       - bit 3
+        non-denom - 0, all bits off
+*/
+int CPrivateSend::GetDenominations(const std::vector<CTxOut>& vecTxOut, bool fSingleRandomDenom)
+{
+    std::vector<std::pair<CAmount, int> > vecDenomUsed;
+
+    // make a list of denominations, with zero uses
+    for (const auto& nDenomValue : vecStandardDenominations) {
+        vecDenomUsed.push_back(std::make_pair(nDenomValue, 0));
+    }
+
+    // look for denominations and update uses to 1
+    for (const auto& txout : vecTxOut) {
+        bool found = false;
+        for (auto& s : vecDenomUsed) {
+            if (txout.nValue == s.first) {
+                s.second = 1;
+                found = true;
+            }
+        }
+        if (!found) return 0;
+    }
+
+    int nDenom = 0;
+    int c = 0;
+    // if the denomination is used, shift the bit on
+    for (const auto& s : vecDenomUsed) {
+        int bit = (fSingleRandomDenom ? GetRandInt(2) : 1) & s.second;
+        nDenom |= bit << c++;
+        if (fSingleRandomDenom && bit) break; // use just one random denomination
     }
 
     return nDenom;
@@ -445,45 +398,36 @@ bool CPrivateSend::GetDenominationsBits(int nDenom, std::vector<int>& vecBitsRet
 
     if (nDenom >= (1 << nMaxDenoms)) return false;
 
-    CAmount nDenomAmount{-3};
+    vecBitsRet.clear();
 
-    for (size_t i = 0; i < nMaxDenoms; ++i) {
+    for (int i = 0; i < nMaxDenoms; ++i) {
         if (nDenom & (1 << i)) {
-            nDenomAmount = vecStandardDenominations[i];
-            break;
+            vecBitsRet.push_back(i);
         }
     }
 
-    return nDenomAmount;
+    return !vecBitsRet.empty();
 }
 
-/*
-    Same as DenominationToAmount but returns a string representation
-*/
-std::string CPrivateSend::DenominationToString(int nDenom)
+int CPrivateSend::GetDenominationsByAmounts(const std::vector<CAmount>& vecAmount)
 {
-    CAmount nDenomAmount = DenominationToAmount(nDenom);
+    CScript scriptTmp = CScript();
+    std::vector<CTxOut> vecTxOut;
 
-    switch (nDenomAmount) {
-        case  0: return "N/A";
-        case -1: return "out-of-bounds";
-        case -2: return "non-denom";
-        case -3: return "to-amount-error";
-        default: return ValueFromAmount(nDenomAmount).getValStr();
+    for (auto it = vecAmount.rbegin(); it != vecAmount.rend(); ++it) {
+        CTxOut txout((*it), scriptTmp);
+        vecTxOut.push_back(txout);
     }
 
-    // shouldn't happen
-    return "to-string-error";
+    return GetDenominations(vecTxOut, true);
 }
 
 bool CPrivateSend::IsDenominatedAmount(CAmount nInputAmount)
 {
-    return AmountToDenomination(nInputAmount) > 0;
-}
-
-bool CPrivateSend::IsValidDenomination(int nDenom)
-{
-    return DenominationToAmount(nDenom) > 0;
+    for (const auto& nDenomValue : vecStandardDenominations) {
+        if (nInputAmount == nDenomValue) return true;
+    }
+    return false;
 }
 
 std::string CPrivateSend::GetMessageByID(PoolMessage nMessageID)
@@ -513,6 +457,8 @@ std::string CPrivateSend::GetMessageByID(PoolMessage nMessageID)
         return _("Not in the Masternode list.");
     case ERR_MODE:
         return _("Incompatible mode.");
+    case ERR_NON_STANDARD_PUBKEY:
+        return _("Non-standard public key detected.");
     case ERR_QUEUE_FULL:
         return _("Masternode queue is full.");
     case ERR_RECENT:
@@ -531,8 +477,6 @@ std::string CPrivateSend::GetMessageByID(PoolMessage nMessageID)
         return _("Your entries added successfully.");
     case ERR_SIZE_MISMATCH:
         return _("Inputs vs outputs size mismatch.");
-    case ERR_NON_STANDARD_PUBKEY:
-    case ERR_NOT_A_MN:
     default:
         return _("Unknown response.");
     }
@@ -566,13 +510,6 @@ void CPrivateSend::CheckDSTXes(const CBlockIndex* pindex)
 }
 
 void CPrivateSend::UpdatedBlockTip(const CBlockIndex* pindex)
-{
-    if (pindex && masternodeSync.IsBlockchainSynced()) {
-        CheckDSTXes(pindex);
-    }
-}
-
-void CPrivateSend::NotifyChainLock(const CBlockIndex* pindex)
 {
     if (pindex && masternodeSync.IsBlockchainSynced()) {
         CheckDSTXes(pindex);

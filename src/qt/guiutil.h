@@ -1,14 +1,12 @@
-// Copyright (c) 2011-2013 The Bitcoin developers
-// Copyright (c) 2017-2018 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_GUIUTIL_H
 #define BITCOIN_QT_GUIUTIL_H
 
-#include <amount.h>
-#include <fs.h>
-#include <qt/guiconstants.h>
+#include "amount.h"
+#include "fs.h"
 
 #include <QEvent>
 #include <QHeaderView>
@@ -33,34 +31,34 @@ class QUrl;
 class QWidget;
 QT_END_NAMESPACE
 
-/** Utility functions used by the ION Qt UI.
+/** Utility functions used by the Ion Qt UI.
  */
 namespace GUIUtil
 {
-// Create human-readable string from date
-QString dateTimeStr(const QDateTime& datetime);
-QString dateTimeStr(qint64 nTime);
+    // Create human-readable string from date
+    QString dateTimeStr(const QDateTime &datetime);
+    QString dateTimeStr(qint64 nTime);
 
-// Render ION addresses in monospace font
-QFont bitcoinAddressFont();
+    // Return a monospace font
+    QFont fixedPitchFont();
 
-// Set up widgets for address and amounts
-void setupAddressWidget(QValidatedLineEdit* widget, QWidget* parent);
-void setupAmountWidget(QLineEdit* widget, QWidget* parent);
+    // Set up widgets for address and amounts
+    void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent);
+    void setupAmountWidget(QLineEdit *widget, QWidget *parent);
 
-// Parse "ion:" URI into recipient object, return true on successful parsing
-bool parseBitcoinURI(const QUrl& uri, SendCoinsRecipient* out);
-bool parseBitcoinURI(QString uri, SendCoinsRecipient* out);
-QString formatBitcoinURI(const SendCoinsRecipient& info);
+    // Parse "ion:" URI into recipient object, return true on successful parsing
+    bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out);
+    bool parseBitcoinURI(QString uri, SendCoinsRecipient *out);
+    QString formatBitcoinURI(const SendCoinsRecipient &info);
 
-// Returns true if given address+amount meets "dust" definition
-bool isDust(const QString& address, const CAmount& amount);
+    // Returns true if given address+amount meets "dust" definition
+    bool isDust(const QString& address, const CAmount& amount);
 
-// HTML escaping for rich text controls
-QString HtmlEscape(const QString& str, bool fMultiLine = false);
-QString HtmlEscape(const std::string& str, bool fMultiLine = false);
+    // HTML escaping for rich text controls
+    QString HtmlEscape(const QString& str, bool fMultiLine=false);
+    QString HtmlEscape(const std::string& str, bool fMultiLine=false);
 
-/** Copy a field of the currently selected entry of a view to the clipboard. Does nothing if nothing
+    /** Copy a field of the currently selected entry of a view to the clipboard. Does nothing if nothing
         is selected.
        @param[in] column  Data column to extract from the model
        @param[in] role    Data role to extract from the model
@@ -113,9 +111,6 @@ QString HtmlEscape(const std::string& str, bool fMultiLine = false);
 
     // Determine whether a widget is hidden behind other windows
     bool isObscured(QWidget *w);
-
-    // Activate, show and raise the widget
-    void bringToFront(QWidget* w);
 
     // Open debug.log
     void openDebugLogfile();
@@ -192,96 +187,67 @@ QString HtmlEscape(const std::string& str, bool fMultiLine = false);
     /** Modify Qt network specific settings on migration */
     void migrateQtSettings();
 
-    /** Change the stylesheet directory. This is used by
-        the parameter -custom-css-dir.*/
-    void setStyleSheetDirectory(const QString& path);
+    /** Load global CSS theme */
+    QString loadStyleSheet();
 
-    /** Check if a custom css directory has been set with -custom-css-dir */
-    bool isStyleSheetDirectoryCustom();
+    /* Convert QString to OS specific boost path through UTF-8 */
+    fs::path qstringToBoostPath(const QString &path);
 
-    /** Return a list of all required css files */
-    const std::vector<QString> listStyleSheets();
+    /* Convert OS specific boost path to QString through UTF-8 */
+    QString boostPathToQString(const fs::path &path);
 
-    /** Return a list of all theme css files */
-    const std::vector<QString> listThemes();
+    /* Convert seconds into a QString with days, hours, mins, secs */
+    QString formatDurationStr(int secs);
 
-    /** Return the name of the default theme `*/
-    const QString getDefaultTheme();
+    /* Format CNodeStats.nServices bitmask into a user-readable string */
+    QString formatServicesStr(quint64 mask);
 
-    /** Check if the given theme name is valid or not */
-    const bool isValidTheme(const QString& strTheme);
+    /* Format a CNodeCombinedStats.dPingTime into a user-readable string or display N/A, if 0*/
+    QString formatPingTime(double dPingTime);
 
-    /** Updates the widgets stylesheet and adds it to the list of ui debug elements.
-    Beeing on that list means the stylesheet of the widget gets updated if the
-    related css files has been changed if -debug-ui mode is active. */
-    void loadStyleSheet(QWidget* widget = nullptr, bool fForceUpdate = false);
+    /* Format a CNodeCombinedStats.nTimeOffset into a user-readable string. */
+    QString formatTimeOffset(int64_t nTimeOffset);
 
-    enum class FontFamily {
-        SystemDefault,
-        Montserrat,
+    QString formatNiceTimeOffset(qint64 secs);
+
+    class ClickableLabel : public QLabel
+    {
+        Q_OBJECT
+
+    Q_SIGNALS:
+        /** Emitted when the label is clicked. The relative mouse coordinates of the click are
+         * passed to the signal.
+         */
+        void clicked(const QPoint& point);
+    protected:
+        void mouseReleaseEvent(QMouseEvent *event);
+    };
+    
+    class ClickableProgressBar : public QProgressBar
+    {
+        Q_OBJECT
+        
+    Q_SIGNALS:
+        /** Emitted when the progressbar is clicked. The relative mouse coordinates of the click are
+         * passed to the signal.
+         */
+        void clicked(const QPoint& point);
+    protected:
+        void mouseReleaseEvent(QMouseEvent *event);
     };
 
-    FontFamily fontFamilyFromString(const QString& strFamily);
-    QString fontFamilyToString(FontFamily family);
-
-    /** set/get font family: GUIUtil::fontFamily */
-    FontFamily getFontFamilyDefault();
-    FontFamily getFontFamily();
-    void setFontFamily(FontFamily family);
-
-    enum class FontWeight {
-        Normal, // Font weight for normal text
-        Bold,   // Font weight for bold text
-    };
-
-    /** Convert weight value from args (0-8) to QFont::Weight */
-    bool weightFromArg(int nArg, QFont::Weight& weight);
-    /** Convert QFont::Weight to an arg value (0-8) */
-    int weightToArg(const QFont::Weight weight);
-    /** Convert GUIUtil::FontWeight to QFont::Weight */
-    QFont::Weight toQFontWeight(FontWeight weight);
-
-    /** set/get normal font weight: GUIUtil::fontWeightNormal */
-    QFont::Weight getFontWeightNormalDefault();
-    QFont::Weight getFontWeightNormal();
-    void setFontWeightNormal(QFont::Weight weight);
-
-    /** set/get bold font weight: GUIUtil::fontWeightBold */
-    QFont::Weight getFontWeightBoldDefault();
-    QFont::Weight getFontWeightBold();
-    void setFontWeightBold(QFont::Weight weight);
-
-    /** set/get font scale: GUIUtil::fontScale */
-    int getFontScaleDefault();
-    int getFontScale();
-    void setFontScale(int nScale);
-
-    /** get font size with GUIUtil::fontScale applied */
-    double getScaledFontSize(int nSize);
-
-    /** Load dash specific appliciation fonts */
-    bool loadFonts();
-
-    /** Set an application wide default font, depends on the selected theme */
-    void setApplicationFont();
-
-    /** Workaround to set correct font styles in all themes since there is a bug in macOS which leads to
-        issues loading variations of montserrat in css it also keeps track of the set fonts to update on
-        theme changes. */
-    void setFont(const std::vector<QWidget*>& vecWidgets, FontWeight weight, int nPointSize = -1, bool fItalic = false);
-
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MAC) && QT_VERSION >= 0x050000
     // workaround for Qt OSX Bug:
     // https://bugreports.qt-project.org/browse/QTBUG-15631
     // QProgressBar uses around 10% CPU even when app is in background
-    class ProgressBar : public QProgressBar
+    class ProgressBar : public ClickableProgressBar
     {
         bool event(QEvent *e) {
             return (e->type() != QEvent::StyleAnimationUpdate) ? QProgressBar::event(e) : false;
         }
     };
 #else
-    typedef QProgressBar ProgressBar;
+    typedef ClickableProgressBar ProgressBar;
 #endif
 
 } // namespace GUIUtil

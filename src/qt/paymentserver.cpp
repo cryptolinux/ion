@@ -1,6 +1,5 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2017 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,7 +11,8 @@
 
 #include "base58.h"
 #include "chainparams.h"
-#include "guiinterface.h"
+#include "policy/policy.h"
+#include "ui_interface.h"
 #include "util.h"
 #include "wallet/wallet.h"
 
@@ -41,8 +41,12 @@
 #include <QSslSocket>
 #include <QStringList>
 #include <QTextDocument>
-#include <QUrlQuery>
 
+#if QT_VERSION < 0x050000
+#include <QUrl>
+#else
+#include <QUrlQuery>
+#endif
 
 const int BITCOIN_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
 const QString BITCOIN_IPC_PREFIX("ion:");
@@ -96,7 +100,11 @@ static QList<QString> savedPaymentRequests;
 
 static void ReportInvalidCertificate(const QSslCertificate& cert)
 {
+#if QT_VERSION < 0x050000
+    qDebug() << QString("%1: Payment server found an invalid certificate: ").arg(__func__) << cert.serialNumber() << cert.subjectInfo(QSslCertificate::CommonName) << cert.subjectInfo(QSslCertificate::OrganizationalUnitName);
+#else
     qDebug() << QString("%1: Payment server found an invalid certificate: ").arg(__func__) << cert.serialNumber() << cert.subjectInfo(QSslCertificate::CommonName) << cert.subjectInfo(QSslCertificate::DistinguishedNameQualifier) << cert.subjectInfo(QSslCertificate::OrganizationalUnitName);
+#endif
 }
 
 //
@@ -149,11 +157,13 @@ void PaymentServer::LoadRootCAs(X509_STORE* _store)
             continue;
         }
 
+#if QT_VERSION >= 0x050000
         // Blacklisted certificate
         if (cert.isBlacklisted()) {
             ReportInvalidCertificate(cert);
             continue;
         }
+#endif
         QByteArray certData = cert.toDer();
         const unsigned char *data = (const unsigned char *)certData.data();
 
@@ -208,13 +218,19 @@ void PaymentServer::ipcParseCommandLine(int argc, char* argv[])
             savedPaymentRequests.append(arg);
 
             SendCoinsRecipient r;
-            if (GUIUtil::parseBitcoinURI(arg, &r) && !r.address.isEmpty()) {
+            if (GUIUtil::parseBitcoinURI(arg, &r) && !r.address.isEmpty())
+            {
                 CBitcoinAddress address(r.address.toStdString());
+                auto tempChainParams = CreateChainParams(CBaseChainParams::MAIN);
 
-                if (address.IsValid(Params(CBaseChainParams::MAIN))) {
+                if (address.IsValid(*tempChainParams))
+                {
                     SelectParams(CBaseChainParams::MAIN);
-                } else if (address.IsValid(Params(CBaseChainParams::TESTNET))) {
-                    SelectParams(CBaseChainParams::TESTNET);
+                }
+                else {
+                    tempChainParams = CreateChainParams(CBaseChainParams::TESTNET);
+                    if (address.IsValid(*tempChainParams))
+                        SelectParams(CBaseChainParams::TESTNET);
                 }
             }
         }
@@ -350,7 +366,8 @@ void PaymentServer::initNetManager()
 {
     if (!optionsModel)
         return;
-    delete netManager;
+    if (netManager != nullptr)
+        delete netManager;
 
     // netManager is used to fetch paymentrequests given in ion: URIs
     netManager = new QNetworkAccessManager(this);
@@ -394,7 +411,11 @@ void PaymentServer::handleURIOrFile(const QString& s)
 
     if (s.startsWith(BITCOIN_IPC_PREFIX, Qt::CaseInsensitive)) // ion: URI
     {
+#if QT_VERSION < 0x050000
+        QUrl uri(s);
+#else
         QUrlQuery uri((QUrl(s)));
+#endif
         if (uri.hasQueryItem("r")) // payment request URI
         {
             QByteArray temp;
@@ -420,16 +441,19 @@ void PaymentServer::handleURIOrFile(const QString& s)
         else // normal URI
         {
             SendCoinsRecipient recipient;
-            if (GUIUtil::parseBitcoinURI(s, &recipient)) {
+            if (GUIUtil::parseBitcoinURI(s, &recipient))
+            {
                 CBitcoinAddress address(recipient.address.toStdString());
                 if (!address.IsValid()) {
-                    emit message(tr("URI handling"), tr("Invalid payment address %1").arg(recipient.address),
+                    Q_EMIT message(tr("URI handling"), tr("Invalid payment address %1").arg(recipient.address),
                         CClientUIInterface::MSG_ERROR);
-                } else
-                    emit receivedPaymentRequest(recipient);
-            } else
-                emit message(tr("URI handling"),
-                    tr("URI cannot be parsed! This can be caused by an invalid ION address or malformed URI parameters."),
+                }
+                else
+                    Q_EMIT receivedPaymentRequest(recipient);
+            }
+            else
+                Q_EMIT message(tr("URI handling"),
+                    tr("URI cannot be parsed! This can be caused by an invalid Ion address or malformed URI parameters."),
                     CClientUIInterface::ICON_WARNING);
 
             return;
@@ -539,11 +563,12 @@ bool PaymentServer::processPaymentRequest(const PaymentRequestPlus& request, Sen
         if (ExtractDestination(sendingTo.first, dest)) {
             // Append destination address
             addresses.append(QString::fromStdString(CBitcoinAddress(dest).ToString()));
-        } else if (!recipient.authenticatedMerchant.isEmpty()) {
-            // Insecure payments to custom ion addresses are not supported
-            // (there is no good way to tell the user where they are paying in a way
-            // they'd have a chance of understanding).
-            emit message(tr("Payment request rejected"),
+        }
+        else if (!recipient.authenticatedMerchant.isEmpty()) {
+            // Unauthenticated payment requests to custom ion addresses are not supported
+            // (there is no good way to tell the user where they are paying in a way they'd
+            // have a chance of understanding).
+            Q_EMIT message(tr("Payment request rejected"),
                 tr("Unverified payment requests to custom payment scripts are unsupported."),
                 CClientUIInterface::MSG_ERROR);
             return false;

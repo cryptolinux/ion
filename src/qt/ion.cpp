@@ -1,27 +1,27 @@
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
 #include "config/ion-config.h"
 #endif
 
-#include <qt/bitcoingui.h>
+#include "bitcoingui.h"
 
-#include <chainparams.h>
-#include <qt/clientmodel.h>
-#include <fs.h>
-#include <qt/guiconstants.h>
-#include <qt/guiutil.h>
-#include <qt/intro.h>
-#include <net.h>
-#include <qt/networkstyle.h>
-#include <qt/optionsmodel.h>
-#include <qt/splashscreen.h>
-#include <qt/utilitydialog.h>
-#include <qt/winshutdownmonitor.h>
+#include "chainparams.h"
+#include "clientmodel.h"
+#include "fs.h"
+#include "guiconstants.h"
+#include "guiutil.h"
+#include "intro.h"
+#include "net.h"
+#include "networkstyle.h"
+#include "optionsmodel.h"
+#include "platformstyle.h"
+#include "splashscreen.h"
+#include "utilitydialog.h"
+#include "winshutdownmonitor.h"
 
 #ifdef ENABLE_WALLET
 #include <qt/paymentserver.h>
@@ -29,10 +29,12 @@
 #endif
 
 #include "init.h"
-#include "main.h"
 #include "rpc/server.h"
-#include "guiinterface.h"
+#include "scheduler.h"
+#include "stacktraces.h"
+#include "ui_interface.h"
 #include "util.h"
+#include "warnings.h"
 
 #ifdef ENABLE_WALLET
 #include "wallet/wallet.h"
@@ -57,6 +59,13 @@
 
 #if defined(QT_STATICPLUGIN)
 #include <QtPlugin>
+#if QT_VERSION < 0x050000
+Q_IMPORT_PLUGIN(qcncodecs)
+Q_IMPORT_PLUGIN(qjpcodecs)
+Q_IMPORT_PLUGIN(qtwcodecs)
+Q_IMPORT_PLUGIN(qkrcodecs)
+Q_IMPORT_PLUGIN(qtaccessiblewidgets)
+#else
 #if QT_VERSION < 0x050400
 Q_IMPORT_PLUGIN(AccessibleFactory)
 #endif
@@ -67,6 +76,11 @@ Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
 #elif defined(QT_QPA_PLATFORM_COCOA)
 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin);
 #endif
+#endif
+#endif
+
+#if QT_VERSION < 0x050000
+#include <QTextCodec>
 #endif
 
 // Declare meta types used for QMetaObject::invokeMethod
@@ -140,7 +154,17 @@ static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTrans
 }
 
 /* qDebug() message handler --> debug.log */
-void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+#if QT_VERSION < 0x050000
+void DebugMessageHandler(QtMsgType type, const char *msg)
+{
+    if (type == QtDebugMsg) {
+        LogPrint(BCLog::QT, "GUI: %s\n", msg);
+    } else {
+        LogPrintf("GUI: %s\n", msg);
+    }
+}
+#else
+void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, const QString &msg)
 {
     Q_UNUSED(context);
     if (type == QtDebugMsg) {
@@ -149,8 +173,9 @@ void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, cons
         LogPrintf("GUI: %s\n", msg.toStdString());
     }
 }
+#endif
 
-/** Class encapsulating ION Core startup and shutdown.
+/** Class encapsulating Ion Core startup and shutdown.
  * Allows running startup and shutdown in a different thread from the UI thread.
  */
 class BitcoinCore: public QObject
@@ -174,15 +199,15 @@ Q_SIGNALS:
     void runawayException(const QString &message);
 
 private:
-    /// Flag indicating a restart
-    bool execute_restart;
+    boost::thread_group threadGroup;
+    CScheduler scheduler;
 
     /// Pass fatal exception message to UI thread
     void handleRunawayException(const std::exception_ptr e);
 };
 
-/** Main ION application object */
-class BitcoinApplication : public QApplication
+/** Main Ion application object */
+class BitcoinApplication: public QApplication
 {
     Q_OBJECT
 public:
@@ -237,6 +262,7 @@ private:
     WalletModel *walletModel;
 #endif
     int returnValue;
+    const PlatformStyle *platformStyle;
     std::unique_ptr<QWidget> shutdownWindow;
 
     void startThread();
@@ -276,12 +302,13 @@ bool BitcoinCore::baseInitialize()
     return true;
 }
 
-    try {
-        qDebug() << __func__ << ": Running AppInit2 in thread";
-        int rv = AppInit2();
-        emit initializeResult(rv);
-    } catch (std::exception& e) {
-        handleRunawayException(&e);
+void BitcoinCore::initialize()
+{
+    try
+    {
+        qDebug() << __func__ << ": Running initialization in thread";
+        bool rv = AppInitMain(threadGroup, scheduler);
+        Q_EMIT initializeResult(rv);
     } catch (...) {
         handleRunawayException(std::current_exception());
     }
@@ -296,7 +323,9 @@ void BitcoinCore::restart(QStringList args)
         try
         {
             qDebug() << __func__ << ": Running Restart in thread";
-            Interrupt();
+            Interrupt(threadGroup);
+            threadGroup.join_all();
+            StartRestart();
             PrepareShutdown();
             qDebug() << __func__ << ": Shutdown finished";
             Q_EMIT shutdownResult();
@@ -315,7 +344,8 @@ void BitcoinCore::shutdown()
     try
     {
         qDebug() << __func__ << ": Running Shutdown in thread";
-        Interrupt();
+        Interrupt(threadGroup);
+        threadGroup.join_all();
         Shutdown();
         qDebug() << __func__ << ": Shutdown finished";
         Q_EMIT shutdownResult();
@@ -338,6 +368,16 @@ BitcoinApplication::BitcoinApplication(int &argc, char **argv):
     returnValue(0)
 {
     setQuitOnLastWindowClosed(false);
+
+    // UI per-platform customization
+    // This must be done inside the BitcoinApplication constructor, or after it, because
+    // PlatformStyle::instantiate requires a QApplication
+    std::string platformName;
+    platformName = gArgs.GetArg("-uiplatform", BitcoinGUI::DEFAULT_UIPLATFORM);
+    platformStyle = PlatformStyle::instantiate(QString::fromStdString(platformName));
+    if (!platformStyle) // Fall back to "other" if specified name not found
+        platformStyle = PlatformStyle::instantiate("other");
+    assert(platformStyle);
 }
 
 BitcoinApplication::~BitcoinApplication()
@@ -358,12 +398,14 @@ BitcoinApplication::~BitcoinApplication()
 #endif
     // Delete Qt-settings if user clicked on "Reset Options"
     QSettings settings;
-    if(optionsModel && optionsModel->resetSettingsOnShutdown){
+    if(optionsModel && optionsModel->resetSettings){
         settings.clear();
         settings.sync();
     }
     delete optionsModel;
     optionsModel = 0;
+    delete platformStyle;
+    platformStyle = 0;
 }
 
 #ifdef ENABLE_WALLET
@@ -380,7 +422,7 @@ void BitcoinApplication::createOptionsModel(bool resetSettings)
 
 void BitcoinApplication::createWindow(const NetworkStyle *networkStyle)
 {
-    window = new BitcoinGUI(networkStyle, 0);
+    window = new BitcoinGUI(platformStyle, networkStyle, 0);
 
     GUIUtil::loadTheme(window);
 
@@ -468,7 +510,7 @@ void BitcoinApplication::initializeResult(bool success)
     if(success)
     {
         // Log this only after AppInitMain finishes, as then logging setup is guaranteed complete
-        qWarning() << "Platform customization:" << gArgs.GetArg("-uiplatform", BitcoinGUI::DEFAULT_UIPLATFORM).c_str();
+        qWarning() << "Platform customization:" << platformStyle->getName();
 #ifdef ENABLE_WALLET
         PaymentServer::LoadRootCAs();
         paymentServer->setOptionsModel(optionsModel);
@@ -479,9 +521,9 @@ void BitcoinApplication::initializeResult(bool success)
 
 #ifdef ENABLE_WALLET
         // TODO: Expose secondary wallets
-        if (HasWallets())
+        if (!vpwallets.empty())
         {
-            walletModel = new WalletModel(GetWallets()[0], optionsModel);
+            walletModel = new WalletModel(platformStyle, vpwallets[0], optionsModel);
 
             window->addWallet(BitcoinGUI::DEFAULT_WALLET, walletModel);
             window->setCurrentWallet(BitcoinGUI::DEFAULT_WALLET);
@@ -501,9 +543,6 @@ void BitcoinApplication::initializeResult(bool success)
             window->show();
         }
         Q_EMIT splashFinished(window);
-
-        // Let the users setup their prefered appearance if there are no settings for it defined yet.
-        GUIUtil::setupAppearance(window, clientModel->getOptionsModel());
 
 #ifdef ENABLE_WALLET
         // Now that initialization/startup is done, process any command-line
@@ -525,13 +564,13 @@ void BitcoinApplication::initializeResult(bool success)
 
 void BitcoinApplication::shutdownResult()
 {
-    quit(); // Exit second main loop invocation after shutdown finished
+    quit(); // Exit main loop after shutdown finished
 }
 
 void BitcoinApplication::handleRunawayException(const QString &message)
 {
-    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occurred. ION can no longer continue safely and will quit.") + QString("\n\n") + message);
-    ::exit(1);
+    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occurred. Ion Core can no longer continue safely and will quit.") + QString("\n\n") + message);
+    ::exit(EXIT_FAILURE);
 }
 
 WId BitcoinApplication::getMainWinId() const
@@ -556,8 +595,13 @@ int main(int argc, char *argv[])
 
     // Do not refer to data directory yet, this can be overridden by Intro::pickDataDirectory
 
-/// 2. Basic Qt initialization (not dependent on parameters or configuration)
-    Q_INIT_RESOURCE(ion_locale);
+    /// 2. Basic Qt initialization (not dependent on parameters or configuration)
+#if QT_VERSION < 0x050000
+    // Internal string conversion is all UTF-8
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForTr());
+#endif
+
     Q_INIT_RESOURCE(ion);
     Q_INIT_RESOURCE(ion_locale);
 
@@ -618,17 +662,18 @@ int main(int argc, char *argv[])
 
     /// 6. Determine availability of data directory and parse ioncoin.conf
     /// - Do not call GetDataDir(true) before this step finishes
-    if (!boost::filesystem::is_directory(GetDataDir(false))) {
-        QMessageBox::critical(0, QObject::tr("ION Core"),
-            QObject::tr("Error: Specified data directory \"%1\" does not exist.").arg(QString::fromStdString(mapArgs["-datadir"])));
-        return 1;
+    if (!fs::is_directory(GetDataDir(false)))
+    {
+        QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
+                              QObject::tr("Error: Specified data directory \"%1\" does not exist.").arg(QString::fromStdString(gArgs.GetArg("-datadir", ""))));
+        return EXIT_FAILURE;
     }
     try {
-        ReadConfigFile(mapArgs, mapMultiArgs);
-    } catch (std::exception& e) {
-        QMessageBox::critical(0, QObject::tr("ION Core"),
-            QObject::tr("Error: Cannot parse configuration file: %1. Only use key=value syntax.").arg(e.what()));
-        return 0;
+        gArgs.ReadConfigFile(gArgs.GetArg("-conf", BITCOIN_CONF_FILENAME));
+    } catch (const std::exception& e) {
+        QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
+                              QObject::tr("Error: Cannot parse configuration file: %1. Only use key=value syntax.").arg(e.what()));
+        return EXIT_FAILURE;
     }
 
     /// 7. Determine network (and switch to network specific options)
@@ -638,9 +683,11 @@ int main(int argc, char *argv[])
     // - Needs to be done before createOptionsModel
 
     // Check for -testnet or -regtest parameter (Params() calls are only valid after this clause)
-    if (!SelectParamsFromCommandLine()) {
-        QMessageBox::critical(0, QObject::tr("ION Core"), QObject::tr("Error: Invalid combination of -regtest and -testnet."));
-        return 1;
+    try {
+        SelectParams(ChainNameFromCommandLine());
+    } catch(std::exception &e) {
+        QMessageBox::critical(0, QObject::tr(PACKAGE_NAME), QObject::tr("Error: %1").arg(e.what()));
+        return EXIT_FAILURE;
     }
 #ifdef ENABLE_WALLET
     // Parse URIs on command line -- this can affect Params()
@@ -655,14 +702,6 @@ int main(int argc, char *argv[])
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
 
 #ifdef ENABLE_WALLET
-    /// 7a. parse masternode.conf
-    std::string strErr;
-    if (!masternodeConfig.read(strErr)) {
-        QMessageBox::critical(0, QObject::tr("ION Core"),
-            QObject::tr("Error reading masternode configuration file: %1").arg(strErr.c_str()));
-        return 0;
-    }
-
     /// 8. URI IPC sending
     // - Do this early as we don't want to bother initializing if we are just calling IPC
     // - Do this *after* setting up the data directory, as the data directory hash is used in the name
@@ -680,104 +719,21 @@ int main(int argc, char *argv[])
     /// 9. Main GUI initialization
     // Install global event filter that makes sure that long tooltips can be word-wrapped
     app.installEventFilter(new GUIUtil::ToolTipToRichTextFilter(TOOLTIP_WRAP_THRESHOLD, &app));
+#if QT_VERSION < 0x050000
+    // Install qDebug() message handler to route to debug.log
+    qInstallMsgHandler(DebugMessageHandler);
+#else
 #if defined(Q_OS_WIN)
     // Install global event filter for processing Windows session related Windows messages (WM_QUERYENDSESSION and WM_ENDSESSION)
     qApp->installNativeEventFilter(new WinShutdownMonitor());
 #endif
     // Install qDebug() message handler to route to debug.log
     qInstallMessageHandler(DebugMessageHandler);
+#endif
+    // Allow parameter interaction before we create the options model
+    app.parameterSetup();
     // Load GUI settings from QSettings
-    app.createOptionsModel(gArgs.GetBoolArg("-resetguisettings", false));
-    // Load custom application fonts and setup font management
-    if (!GUIUtil::loadFonts()) {
-        QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
-                              QObject::tr("Error: Failed to load application fonts."));
-        return EXIT_FAILURE;
-    }
-    // Validate/set font family
-    if (gArgs.IsArgSet("-font-family")) {
-        GUIUtil::FontFamily family;
-        QString strFamily = gArgs.GetArg("-font-family", GUIUtil::fontFamilyToString(GUIUtil::getFontFamilyDefault()).toStdString()).c_str();
-        try {
-            family = GUIUtil::fontFamilyFromString(strFamily);
-        } catch (const std::exception& e) {
-            QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
-                                  QObject::tr("Error: Specified font-family invalid. Valid values: %1.").arg("SystemDefault, Montserrat"));
-            return EXIT_FAILURE;
-        }
-        GUIUtil::setFontFamily(family);
-    }
-    // Validate/set normal font weight
-    if (gArgs.IsArgSet("-font-weight-normal")) {
-        QFont::Weight weight;
-        if (!GUIUtil::weightFromArg(gArgs.GetArg("-font-weight-normal", GUIUtil::weightToArg(GUIUtil::getFontWeightNormal())), weight)) {
-            QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
-                                  QObject::tr("Error: Specified font-weight-normal invalid. Valid range %1 to %2.").arg(0).arg(8));
-            return EXIT_FAILURE;
-        }
-        GUIUtil::setFontWeightNormal(weight);
-    }
-    // Validate/set bold font weight
-    if (gArgs.IsArgSet("-font-weight-bold")) {
-        QFont::Weight weight;
-        if (!GUIUtil::weightFromArg(gArgs.GetArg("-font-weight-bold", GUIUtil::weightToArg(GUIUtil::getFontWeightBold())), weight)) {
-            QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
-                                  QObject::tr("Error: Specified font-weight-bold invalid. Valid range %1 to %2.").arg(0).arg(8));
-            return EXIT_FAILURE;
-        }
-        GUIUtil::setFontWeightBold(weight);
-    }
-    // Validate/set font scale
-    if (gArgs.IsArgSet("-font-scale")) {
-        const int nScaleMin = -100, nScaleMax = 100;
-        int nScale = gArgs.GetArg("-font-scale", GUIUtil::getFontScale());
-        if (nScale < nScaleMin || nScale > nScaleMax) {
-            QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
-                                  QObject::tr("Error: Specified font-scale invalid. Valid range %1 to %2.").arg(nScaleMin).arg(nScaleMax));
-            return EXIT_FAILURE;
-        }
-        GUIUtil::setFontScale(nScale);
-    }
-    // Validate/set custom css directory
-    if (gArgs.IsArgSet("-custom-css-dir")) {
-        fs::path customDir = fs::path(gArgs.GetArg("-custom-css-dir", ""));
-        QString strCustomDir = QString::fromStdString(customDir.string());
-        std::vector<QString> vecRequiredFiles = GUIUtil::listStyleSheets();
-        QString strFile;
-
-        if (!fs::is_directory(customDir)) {
-            QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
-                                  QObject::tr("Error: Invalid -custom-css-dir path.") + "\n\n" + strCustomDir);
-            return EXIT_FAILURE;
-        }
-
-        for (auto itCustomDir = fs::directory_iterator(customDir); itCustomDir != fs::directory_iterator(); ++itCustomDir) {
-            if (fs::is_regular_file(*itCustomDir) && itCustomDir->path().extension() == ".css") {
-                strFile = QString::fromStdString(itCustomDir->path().filename().string());
-                auto itFile = std::find(vecRequiredFiles.begin(), vecRequiredFiles.end(), strFile);
-                if (itFile != vecRequiredFiles.end()) {
-                    vecRequiredFiles.erase(itFile);
-                }
-            }
-        }
-
-        if (vecRequiredFiles.size()) {
-            QString strMissingFiles;
-            for (const auto& strMissingFile : vecRequiredFiles) {
-                strMissingFiles += strMissingFile + "\n";
-            }
-            QMessageBox::critical(0, QObject::tr(PACKAGE_NAME),
-                                  QObject::tr("Error: %1 CSS file(s) missing in -custom-css-dir path.").arg(vecRequiredFiles.size()) + "\n\n" + strMissingFiles);
-            return EXIT_FAILURE;
-        }
-
-        GUIUtil::setStyleSheetDirectory(strCustomDir);
-    }
-    // Validate -debug-ui
-    if (gArgs.GetBoolArg("-debug-ui", false)) {
-        QMessageBox::warning(0, QObject::tr(PACKAGE_NAME),
-                                "Warning: UI debug mode (-debug-ui) enabled" + QString(gArgs.IsArgSet("-custom-css-dir") ? "." : " without a custom css directory set with -custom-css-dir."));
-    }
+    app.createOptionsModel(gArgs.IsArgSet("-resetguisettings"));
 
     // Subscribe to global signals from core
     uiInterface.InitMessage.connect(InitMessage);
@@ -789,9 +745,13 @@ int main(int argc, char *argv[])
     try
     {
         app.createWindow(networkStyle.data());
-        app.requestInitialize();
-#if defined(Q_OS_WIN)
-        WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("ION Core didn't yet exit safely..."), (HWND)app.getMainWinId());
+        // Perform base initialization before spinning up initialization/shutdown thread
+        // This is acceptable because this function only contains steps that are quick to execute,
+        // so the GUI thread won't be held up.
+        if (BitcoinCore::baseInitialize()) {
+            app.requestInitialize();
+#if defined(Q_OS_WIN) && QT_VERSION >= 0x050000
+            WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("%1 didn't yet exit safely...").arg(QObject::tr(PACKAGE_NAME)), (HWND)app.getMainWinId());
 #endif
             app.exec();
             app.requestShutdown();

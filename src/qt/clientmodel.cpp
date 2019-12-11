@@ -1,7 +1,6 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <qt/clientmodel.h>
@@ -11,17 +10,21 @@
 #include "guiutil.h"
 #include "peertablemodel.h"
 
-#include "alert.h"
+#include "chain.h"
 #include "chainparams.h"
 #include "checkpoints.h"
 #include "clientversion.h"
-#include "main.h"
-#include "masternode-sync.h"
-#include "masternodeman.h"
+#include "validation.h"
 #include "net.h"
-#include "netbase.h"
-#include "guiinterface.h"
+#include "txmempool.h"
+#include "ui_interface.h"
 #include "util.h"
+#include "warnings.h"
+
+#include "masternode/masternode-sync.h"
+#include "privatesend/privatesend.h"
+
+#include "llmq/quorums_instantsend.h"
 
 #include <stdint.h>
 
@@ -60,10 +63,12 @@ int ClientModel::getNumConnections(unsigned int flags) const
 {
     CConnman::NumConnections connections = CConnman::CONNECTIONS_NONE;
 
-    int nNum = 0;
-    for (CNode* pnode : vNodes)
-        if (flags & (pnode->fInbound ? CONNECTIONS_IN : CONNECTIONS_OUT))
-            nNum++;
+    if(flags == CONNECTIONS_IN)
+        connections = CConnman::CONNECTIONS_IN;
+    else if (flags == CONNECTIONS_OUT)
+        connections = CConnman::CONNECTIONS_OUT;
+    else if (flags == CONNECTIONS_ALL)
+        connections = CConnman::CONNECTIONS_ALL;
 
     if(g_connman)
          return g_connman->GetNodeCount(connections);
@@ -148,25 +153,6 @@ QDateTime ClientModel::getLastBlockDate() const
     return QDateTime::fromTime_t(Params().GenesisBlock().GetBlockTime()); // Genesis block's time of current network
 }
 
-QString ClientModel::getLastBlockHash() const
-{
-    LOCK(cs_main);
-    if (chainActive.Tip())
-        return QString::fromStdString(chainActive.Tip()->GetBlockHash().ToString());
-    else
-        return QString::fromStdString(Params().GenesisBlock().GetHash().ToString()); // Genesis block's hash of current network
-}
-
-double ClientModel::getVerificationProgress() const
-{
-    LOCK(cs_main);
-
-    if (chainActive.Tip())
-        return QString::fromStdString(chainActive.Tip()->GetBlockHash().ToString());
-
-    return QString::fromStdString(Params().GenesisBlock().GetHash().ToString()); // Genesis block's hash of current network
-}
-
 long ClientModel::getMempoolSize() const
 {
     return mempool.size();
@@ -202,6 +188,7 @@ void ClientModel::updateTimer()
     // the following calls will acquire the required lock
     Q_EMIT mempoolSizeChanged(getMempoolSize(), getMempoolDynamicUsage());
     Q_EMIT islockCountChanged(getInstantSentLockCount());
+    Q_EMIT bytesChanged(getTotalBytesRecv(), getTotalBytesSent());
 }
 
 void ClientModel::updateNumConnections(int numConnections)
@@ -296,11 +283,6 @@ QString ClientModel::dataDir() const
     return GUIUtil::boostPathToQString(GetDataDir());
 }
 
-QString ClientModel::dataDir() const
-{
-    return GUIUtil::boostPathToQString(GetDataDir());
-}
-
 void ClientModel::updateBanlist()
 {
     banTableModel->refresh();
@@ -362,7 +344,6 @@ static void BlockTipChanged(ClientModel *clientmodel, bool initialSync, const CB
         QMetaObject::invokeMethod(clientmodel, "numBlocksChanged", Qt::QueuedConnection,
                                   Q_ARG(int, pIndex->nHeight),
                                   Q_ARG(QDateTime, QDateTime::fromTime_t(pIndex->GetBlockTime())),
-                                  Q_ARG(QString, QString::fromStdString(pIndex->GetBlockHash().ToString())),
                                   Q_ARG(double, clientmodel->getVerificationProgress(pIndex)),
                                   Q_ARG(bool, fHeader));
         nLastUpdateNotification = now;
@@ -406,40 +387,4 @@ void ClientModel::unsubscribeFromCoreSignals()
     uiInterface.NotifyHeaderTip.disconnect(boost::bind(BlockTipChanged, this, _1, _2, true));
     uiInterface.NotifyMasternodeListChanged.disconnect(boost::bind(NotifyMasternodeListChanged, this, _1));
     uiInterface.NotifyAdditionalDataSyncProgressChanged.disconnect(boost::bind(NotifyAdditionalDataSyncProgressChanged, this, _1));
-}
-
-bool ClientModel::getTorInfo(std::string& ip_port) const
-{
-    proxyType onion;
-    if (GetProxy((Network) 3, onion) && IsReachable((Network) 3)) {
-        {
-            LOCK(cs_mapLocalHost);
-            for (const std::pair<const CNetAddr, LocalServiceInfo>& item : mapLocalHost) {
-                if (item.first.IsTor()) {
-                     CService addrOnion = CService(item.first.ToString(), item.second.nPort);
-                     ip_port = addrOnion.ToStringIPPort();
-                     return true;
-                }
-            }
-        }
-    }
-    return false;
-}
-
-bool ClientModel::getTorInfo(std::string& ip_port) const
-{
-    proxyType onion;
-    if (GetProxy((Network) 3, onion) && IsReachable((Network) 3)) {
-        {
-            LOCK(cs_mapLocalHost);
-            for (const std::pair<const CNetAddr, LocalServiceInfo>& item : mapLocalHost) {
-                if (item.first.IsTor()) {
-                     CService addrOnion = CService(item.first.ToString(), item.second.nPort);
-                     ip_port = addrOnion.ToStringIPPort();
-                     return true;
-                }
-            }
-        }
-    }
-    return false;
 }

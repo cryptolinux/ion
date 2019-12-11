@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2020 The Dash Core developers
+# Copyright (c) 2015-2018 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 from collections import namedtuple
@@ -15,22 +15,22 @@ Checks DIP4 merkle roots in coinbases
 
 '''
 
-class TestNode(P2PInterface):
+class TestNode(NodeConnCB):
     def __init__(self):
         super().__init__()
         self.last_mnlistdiff = None
 
-    def on_mnlistdiff(self, message):
+    def on_mnlistdiff(self, conn, message):
         self.last_mnlistdiff = message
 
     def wait_for_mnlistdiff(self, timeout=30):
+        self.last_mnlistdiff = None
         def received_mnlistdiff():
             return self.last_mnlistdiff is not None
         return wait_until(received_mnlistdiff, timeout=timeout)
 
     def getmnlistdiff(self, baseBlockHash, blockHash):
         msg = msg_getmnlistd(baseBlockHash, blockHash)
-        self.last_mnlistdiff = None
         self.send_message(msg)
         self.wait_for_mnlistdiff()
         return self.last_mnlistdiff
@@ -41,9 +41,10 @@ class LLMQCoinbaseCommitmentsTest(IonTestFramework):
         self.set_ion_test_params(6, 5, [], fast_dip3_enforcement=True)
 
     def run_test(self):
-        self.test_node = self.nodes[0].add_p2p_connection(TestNode())
-        network_thread_start()
-        self.nodes[0].p2p.wait_for_verack()
+        self.test_node = TestNode()
+        self.test_node.add_connection(NodeConn('127.0.0.1', p2p_port(0), self.nodes[0], self.test_node))
+        NetworkThread().start()  # Start up network handling in another thread
+        self.test_node.wait_for_verack()
 
         self.confirm_mns()
 
@@ -254,7 +255,7 @@ class LLMQCoinbaseCommitmentsTest(IonTestFramework):
             self.nodes[0].generate(4)
             self.sync_all()
         self.nodes[0].generate(1)
-        self.sync_blocks()
+        sync_blocks(self.nodes)
 
         # Assert that merkleRootQuorums is present and 0 (we have no quorums yet)
         cbtx = self.nodes[0].getblock(self.nodes[0].getbestblockhash(), 2)["tx"][0]
@@ -290,7 +291,7 @@ class LLMQCoinbaseCommitmentsTest(IonTestFramework):
             if not found_unconfirmed:
                 break
             self.nodes[0].generate(1)
-        self.sync_blocks()
+        sync_blocks(self.nodes)
 
 if __name__ == '__main__':
     LLMQCoinbaseCommitmentsTest().main()

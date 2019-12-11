@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-# Copyright (c) 2013-2017 The Bitcoin Core developers
+# Copyright (c) 2013-2016 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
-# Generate seeds.txt from "protx list valid 1"
+# Generate seeds.txt from masternode list
 #
 
 NSEEDS=512
 
 MAX_SEEDS_PER_ASN=4
+
+MIN_PROTOCOL_VERSION = 70213
+MAX_LAST_SEEN_DIFF = 60 * 60 * 24 * 1 # 1 day
+MAX_LAST_PAID_DIFF = 60 * 60 * 24 * 30 # 1 month
 
 # These are hosts that have been observed to be behaving strangely (e.g.
 # aggressively connecting to every node).
@@ -26,16 +30,18 @@ import multiprocessing
 PATTERN_IPV4 = re.compile(r"^((\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})):(\d+)$")
 PATTERN_IPV6 = re.compile(r"^\[([0-9a-z:]+)\]:(\d+)$")
 PATTERN_ONION = re.compile(r"^([abcdefghijklmnopqrstuvwxyz234567]{16}\.onion):(\d+)$")
-PATTERN_AGENT = re.compile(r"^(/Helium:3.1.(0|1|99)/)$")
 
-def parseip(ip):
-    m = PATTERN_IPV4.match(ip)
+def parseline(line):
+    # line format: status protocol payee lastseen activeseconds lastpaidtime lastpaidblock IP
+    sline = line.split()
+
+    m = PATTERN_IPV4.match(sline[7])
     sortkey = None
     ip = None
     if m is None:
-        m = PATTERN_IPV6.match(ip)
+        m = PATTERN_IPV6.match(sline[7])
         if m is None:
-            m = PATTERN_ONION.match(ip)
+            m = PATTERN_ONION.match(sline[7])
             if m is None:
                 return None
             else:
@@ -64,6 +70,13 @@ def parseip(ip):
         port = int(m.group(6))
 
     return {
+        "status": sline[0],
+        "protocol": int(sline[1]),
+        "payee": sline[2],
+        "lastseen": int(sline[3]),
+        "activeseconds": int(sline[4]),
+        "lastpaidtime": int(sline[5]),
+        "lastpaidblock": int(sline[6]),
         "net": net,
         "ip": ipstr,
         "port": port,
@@ -71,26 +84,12 @@ def parseip(ip):
         "sortkey": sortkey
     }
 
-def filtermulticollateralhash(mns):
-    '''Filter out MNs sharing the same collateral hash'''
+def filtermultiport(ips):
+    '''Filter out hosts with more nodes per IP'''
     hist = collections.defaultdict(list)
-    for mn in mns:
-        hist[mn['collateralHash']].append(mn)
-    return [mn for mn in mns if len(hist[mn['collateralHash']]) == 1]
-
-def filtermulticollateraladdress(mns):
-    '''Filter out MNs sharing the same collateral address'''
-    hist = collections.defaultdict(list)
-    for mn in mns:
-        hist[mn['collateralAddress']].append(mn)
-    return [mn for mn in mns if len(hist[mn['collateralAddress']]) == 1]
-
-def filtermultipayoutaddress(mns):
-    '''Filter out MNs sharing the same payout address'''
-    hist = collections.defaultdict(list)
-    for mn in mns:
-        hist[mn['state']['payoutAddress']].append(mn)
-    return [mn for mn in mns if len(hist[mn['state']['payoutAddress']]) == 1]
+    for ip in ips:
+        hist[ip['sortkey']].append(ip)
+    return [value[0] for (key,value) in list(hist.items()) if len(value)==1]
 
 def resolveasn(resolver, ip):
     asn = int([x.to_text() for x in resolver.query('.'.join(reversed(ip.split('.'))) + '.origin.asn.cymru.com', 'TXT').response.answer][0].split('\"')[1].split(' ')[0])
@@ -139,23 +138,29 @@ def filterbyasn(ips, max_per_asn, max_total):
     return result
 
 def main():
-    # This expects a json as outputted by "protx list valid 1"
     if len(sys.argv) > 1:
         with open(sys.argv[1], 'r') as f:
-            mns = json.load(f)
+            js = json.load(f)
     else:
-        mns = json.load(sys.stdin)
+        js = json.load(sys.stdin)
+    ips = [parseline(line) for collateral, line in js.items()]
 
-    # Skip PoSe banned MNs
-    mns = [mn for mn in mns if mn['state']['PoSeBanHeight'] == -1]
-    # Skip MNs with < 10000 confirmations
-    mns = [mn for mn in mns if mn['confirmations'] >= 10000]
-    # Filter out MNs which are definitely from the same person/operator
-    mns = filtermulticollateralhash(mns)
-    mns = filtermulticollateraladdress(mns)
-    mns = filtermultipayoutaddress(mns)
-    # Extract IPs
-    ips = [parseip(mn['state']['service']) for mn in mns]
+    cur_time = int(time.time())
+
+    # Skip entries with valid address.
+    ips = [ip for ip in ips if ip is not None]
+    # Enforce ENABLED state
+    ips = [ip for ip in ips if ip['status'] == "ENABLED"]
+    # Enforce minimum protocol version
+    ips = [ip for ip in ips if ip['protocol'] >= MIN_PROTOCOL_VERSION]
+    # Require at least 2 week uptime
+    ips = [ip for ip in ips if cur_time - ip['lastseen'] < MAX_LAST_SEEN_DIFF]
+    # Require to be paid recently
+    ips = [ip for ip in ips if cur_time - ip['lastpaidtime'] < MAX_LAST_PAID_DIFF]
+    # Sort by availability (and use lastpaidtime as tie breaker)
+    ips.sort(key=lambda x: (x['activeseconds'], x['lastpaidtime'], x['ip']), reverse=True)
+    # Filter out hosts with multiple ports, these are likely abusive
+    ips = filtermultiport(ips)
     # Look up ASNs and limit results, both per ASN and globally.
     ips = filterbyasn(ips, MAX_SEEDS_PER_ASN, NSEEDS)
     # Sort the results by IP address (for deterministic output).

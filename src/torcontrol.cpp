@@ -1,7 +1,5 @@
-// Copyright (c) 2015-2019 The Bitcoin Core developers
+// Copyright (c) 2015 The Bitcoin Core developers
 // Copyright (c) 2017 The Zcash developers
-// Copyright (c) 2017-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,7 +17,6 @@
 
 #include <boost/bind.hpp>
 #include <boost/signals2/signal.hpp>
-#include <boost/algorithm/string/predicate.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/replace.hpp>
@@ -252,7 +249,7 @@ bool TorControlConnection::Command(const std::string &cmd, const ReplyHandlerCB&
 /* Split reply line in the form 'AUTH METHODS=...' into a type
  * 'AUTH' and arguments 'METHODS=...'.
  * Grammar is implicitly defined in https://spec.torproject.org/control-spec by
- * the server reply formats for PROTOCOLINFO (S3.11) and AUTHCHALLENGE (S3.14).
+ * the server reply formats for PROTOCOLINFO (S3.21) and AUTHCHALLENGE (S3.24).
  */
 static std::pair<std::string,std::string> SplitTorReplyLine(const std::string &s)
 {
@@ -270,8 +267,8 @@ static std::pair<std::string,std::string> SplitTorReplyLine(const std::string &s
 /** Parse reply arguments in the form 'METHODS=COOKIE,SAFECOOKIE COOKIEFILE=".../control_auth_cookie"'.
  * Returns a map of keys to values, or an empty map if there was an error.
  * Grammar is implicitly defined in https://spec.torproject.org/control-spec by
- * the server reply formats for PROTOCOLINFO (S3.11), AUTHCHALLENGE (S3.14),
- * and ADD_ONION (S3.17). See also sections 2.1 and 2.3.
+ * the server reply formats for PROTOCOLINFO (S3.21), AUTHCHALLENGE (S3.24),
+ * and ADD_ONION (S3.27). See also sections 2.1 and 2.3.
  */
 static std::map<std::string,std::string> ParseTorReplyMapping(const std::string &s)
 {
@@ -361,7 +358,7 @@ static std::map<std::string,std::string> ParseTorReplyMapping(const std::string 
 }
 
 /** Read full contents of a file and return them in a std::string.
- * Returns a pair <status, std::string>.
+ * Returns a pair <status, string>.
  * If an error occurred, status will be false, otherwise status will be true and the data will be returned in string.
  *
  * @param maxsize Puts a maximum size limit on the file that is read. If the file is larger than this, truncated data
@@ -489,7 +486,7 @@ TorController::~TorController()
 void TorController::add_onion_cb(TorControlConnection& _conn, const TorControlReply& reply)
 {
     if (reply.code == 250) {
-        LogPrint("tor", "tor: ADD_ONION successful\n");
+        LogPrint(BCLog::TOR, "tor: ADD_ONION successful\n");
         for (const std::string &s : reply.lines) {
             std::map<std::string,std::string> m = ParseTorReplyMapping(s);
             std::map<std::string,std::string>::iterator i;
@@ -638,7 +635,7 @@ void TorController::protocolinfo_cb(TorControlConnection& _conn, const TorContro
             }
         }
         for (const std::string &s : methods) {
-            LogPrint("tor", "tor: Supported authentication method: %s\n", s);
+            LogPrint(BCLog::TOR, "tor: Supported authentication method: %s\n", s);
         }
         // Prefer NULL, otherwise SAFECOOKIE. If a password is provided, use HASHEDPASSWORD
         /* Authentication:

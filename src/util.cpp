@@ -1,8 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,20 +10,22 @@
 
 #include "util.h"
 
-#include "allocators.h"
+#include "support/allocators/secure.h"
 #include "chainparamsbase.h"
+#include "ctpl.h"
+#include "fs.h"
 #include "random.h"
-#include "sync.h"
+#include "serialize.h"
+#include "stacktraces.h"
 #include "utilstrencodings.h"
 #include "utiltime.h"
 
 #include <stdarg.h>
 
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <openssl/bio.h>
-#include <openssl/buffer.h>
-#include <openssl/evp.h>
-
+#if (defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__DragonFly__))
+#include <pthread.h>
+#include <pthread_np.h>
+#endif
 
 #ifndef WIN32
 // for posix_fallocate
@@ -80,10 +80,11 @@
 #include <malloc.h>
 #endif
 
+#include <boost/algorithm/string/case_conv.hpp> // for to_lower()
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/predicate.hpp> // for startswith() and endswith()
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/classification.hpp>
 #include <boost/program_options/detail/config_file.hpp>
 #include <boost/program_options/parsers.hpp>
 #include <boost/thread.hpp>
@@ -94,44 +95,37 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-
-// ION only features
-// Masternode
-bool fMasterNode = false;
-std::string strMasterNodePrivKey = "";
-std::string strMasterNodeAddr = "";
+//Ion only features
+bool fMasternodeMode = false;
 bool fLiteMode = false;
-// SwiftX
-bool fEnableSwiftTX = true;
-int nSwiftTXDepth = 5;
-// Automatic Zerocoin minting
-bool fEnableZeromint = true;
-bool fEnableAutoConvert = true;
-int nZeromintPercentage = 10;
-int nPreferredDenom = 0;
-const int64_t AUTOMINT_DELAY = (60 * 5); // Wait at least 5 minutes until Automint starts
+/**
+    nWalletBackups:
+        1..10   - number of automatic backups to keep
+        0       - disabled by command-line
+        -1      - disabled because of some error during run-time
+        -2      - disabled because wallet was locked and we were not able to replenish keypool
+*/
+int nWalletBackups = 10;
 
-/** Spork enforcement enabled time */
-int64_t enforceMasternodePaymentsTime = 4085657524;
-bool fSucessfullyLoaded = false;
-/** All denominations used by obfuscation */
-std::vector<int64_t> obfuScationDenominations;
-std::string strBudgetMode = "";
+const char * const BITCOIN_CONF_FILENAME = "ioncoin.conf";
+const char * const BITCOIN_PID_FILENAME = "iond.pid";
 
-std::map<std::string, std::string> mapArgs;
-std::map<std::string, std::vector<std::string> > mapMultiArgs;
-bool fDebug = false;
+ArgsManager gArgs;
 bool fPrintToConsole = false;
 bool fPrintToDebugLog = true;
-bool fDaemon = false;
-bool fServer = false;
-std::string strMiscWarning;
-bool fLogTimestamps = false;
-bool fLogIPs = false;
-volatile bool fReopenDebugLog = false;
+
+bool fLogTimestamps = DEFAULT_LOGTIMESTAMPS;
+bool fLogTimeMicros = DEFAULT_LOGTIMEMICROS;
+bool fLogThreadNames = DEFAULT_LOGTHREADNAMES;
+bool fLogIPs = DEFAULT_LOGIPS;
+std::atomic<bool> fReopenDebugLog(false);
+CTranslationInterface translationInterface;
+
+/** Log categories bitfield. */
+std::atomic<uint64_t> logCategories(0);
 
 /** Init OpenSSL library multithreading support */
-static CCriticalSection** ppmutexOpenSSL;
+static std::unique_ptr<CCriticalSection[]> ppmutexOpenSSL;
 void locking_callback(int mode, int i, const char* file, int line) NO_THREAD_SAFETY_ANALYSIS
 {
     if (mode & CRYPTO_LOCK) {
@@ -216,36 +210,26 @@ static void DebugPrintInit()
     vMsgsBeforeOpenLog = new std::list<std::string>;
 }
 
-fs::path GetDebugLogPath()
-{
-    fs::path logfile(gArgs.GetArg("-debuglogfile", DEFAULT_DEBUGLOGFILE));
-    return AbsPathForConfigVal(logfile);
-}
-
-bool OpenDebugLog()
+void OpenDebugLog()
 {
     boost::call_once(&DebugPrintInit, debugPrintInitFlag);
     boost::mutex::scoped_lock scoped_lock(*mutexDebugLog);
 
     assert(fileout == nullptr);
     assert(vMsgsBeforeOpenLog);
-    fs::path pathDebug = GetDebugLogPath();
-
+    fs::path pathDebug = GetDataDir() / "debug.log";
     fileout = fsbridge::fopen(pathDebug, "a");
-    if (!fileout) {
-        return false;
-    }
-
-    setbuf(fileout, nullptr); // unbuffered
-    // dump buffered messages from before we opened the log
-    while (!vMsgsBeforeOpenLog->empty()) {
-        FileWriteStr(vMsgsBeforeOpenLog->front(), fileout);
-        vMsgsBeforeOpenLog->pop_front();
+    if (fileout) {
+        setbuf(fileout, nullptr); // unbuffered
+        // dump buffered messages from before we opened the log
+        while (!vMsgsBeforeOpenLog->empty()) {
+            FileWriteStr(vMsgsBeforeOpenLog->front(), fileout);
+            vMsgsBeforeOpenLog->pop_front();
+        }
     }
 
     delete vMsgsBeforeOpenLog;
     vMsgsBeforeOpenLog = nullptr;
-    return true;
 }
 
 struct CLogCategoryDesc
@@ -254,34 +238,97 @@ struct CLogCategoryDesc
     std::string category;
 };
 
-        // Give each thread quick access to -debug settings.
-        // This helps prevent issues debugging global destructors,
-        // where mapMultiArgs might be deleted before another
-        // global destructor calls LogPrint()
-        static boost::thread_specific_ptr<std::set<std::string> > ptrCategory;
-        if (ptrCategory.get() == NULL) {
-            const std::vector<std::string>& categories = mapMultiArgs["-debug"];
-            ptrCategory.reset(new std::set<std::string>(categories.begin(), categories.end()));
-            // thread_specific_ptr automatically deletes the set when the thread ends.
-            // "ion" is a composite category enabling all ION-related debug output
-            if (ptrCategory->count(std::string("ion"))) {
-                ptrCategory->insert(std::string("obfuscation"));
-                ptrCategory->insert(std::string("swiftx"));
-                ptrCategory->insert(std::string("masternode"));
-                ptrCategory->insert(std::string("mnpayments"));
-                ptrCategory->insert(std::string("zero"));
-                ptrCategory->insert(std::string("mnbudget"));
-                ptrCategory->insert(std::string("precompute"));
-                ptrCategory->insert(std::string("staking"));
-                ptrCategory->insert(std::string("token"));
+const CLogCategoryDesc LogCategories[] =
+{
+    {BCLog::NONE, "0"},
+    {BCLog::NET, "net"},
+    {BCLog::TOR, "tor"},
+    {BCLog::MEMPOOL, "mempool"},
+    {BCLog::HTTP, "http"},
+    {BCLog::BENCHMARK, "bench"},
+    {BCLog::ZMQ, "zmq"},
+    {BCLog::DB, "db"},
+    {BCLog::RPC, "rpc"},
+    {BCLog::ESTIMATEFEE, "estimatefee"},
+    {BCLog::ADDRMAN, "addrman"},
+    {BCLog::SELECTCOINS, "selectcoins"},
+    {BCLog::REINDEX, "reindex"},
+    {BCLog::CMPCTBLOCK, "cmpctblock"},
+    {BCLog::RANDOM, "rand"},
+    {BCLog::PRUNE, "prune"},
+    {BCLog::PROXY, "proxy"},
+    {BCLog::MEMPOOLREJ, "mempoolrej"},
+    {BCLog::LIBEVENT, "libevent"},
+    {BCLog::COINDB, "coindb"},
+    {BCLog::QT, "qt"},
+    {BCLog::LEVELDB, "leveldb"},
+    {BCLog::ALL, "1"},
+    {BCLog::ALL, "all"},
+
+    //Start Ion
+    {BCLog::CHAINLOCKS, "chainlocks"},
+    {BCLog::GOBJECT, "gobject"},
+    {BCLog::INSTANTSEND, "instantsend"},
+    {BCLog::KEEPASS, "keepass"},
+    {BCLog::LLMQ, "llmq"},
+    {BCLog::LLMQ_DKG, "llmq-dkg"},
+    {BCLog::LLMQ_SIGS, "llmq-sigs"},
+    {BCLog::MNPAYMENTS, "mnpayments"},
+    {BCLog::MNSYNC, "mnsync"},
+    {BCLog::PRIVATESEND, "privatesend"},
+    {BCLog::SPORK, "spork"},
+    //End Ion
+
+    //Start ION
+    {BCLog::ZEROCOIN, "zerocoin"},
+    {BCLog::STAKING, "staking"},
+    {BCLog::TOKEN, "tokens"},
+    //End ION
+
+};
+
+bool GetLogCategory(uint64_t *f, const std::string *str)
+{
+    if (f && str) {
+        if (*str == "") {
+            *f = BCLog::ALL;
+            return true;
+        }
+        if (*str == "ion") {
+            *f = BCLog::CHAINLOCKS
+                | BCLog::GOBJECT
+                | BCLog::INSTANTSEND
+                | BCLog::KEEPASS
+                | BCLog::LLMQ
+                | BCLog::LLMQ_DKG
+                | BCLog::LLMQ_SIGS
+                | BCLog::MNPAYMENTS
+                | BCLog::MNSYNC
+                | BCLog::PRIVATESEND
+                | BCLog::SPORK;
+            return true;
+        }
+        for (unsigned int i = 0; i < ARRAYLEN(LogCategories); i++) {
+            if (LogCategories[i].category == *str) {
+                *f = LogCategories[i].flag;
+                return true;
             }
         }
-        const std::set<std::string>& setCategories = *ptrCategory.get();
+    }
+    return false;
+}
 
-        // if not debugging everything and not debugging specific category, LogPrint does nothing.
-        if (setCategories.count(std::string("")) == 0 &&
-            setCategories.count(std::string(category)) == 0)
-            return false;
+std::string ListLogCategories()
+{
+    std::string ret;
+    int outcount = 0;
+    for (unsigned int i = 0; i < ARRAYLEN(LogCategories); i++) {
+        // Omit the special cases.
+        if (LogCategories[i].flag != BCLog::NONE && LogCategories[i].flag != BCLog::ALL) {
+            if (outcount != 0) ret += ", ";
+            ret += LogCategories[i].category;
+            outcount++;
+        }
     }
     return ret;
 }
@@ -406,7 +453,7 @@ int LogPrintStr(const std::string &str)
             // reopen the log file, if requested
             if (fReopenDebugLog) {
                 fReopenDebugLog = false;
-                fs::path pathDebug = GetDebugLogPath();
+                fs::path pathDebug = GetDataDir() / "debug.log";
                 if (fsbridge::freopen(pathDebug,"a",fileout) != nullptr)
                     setbuf(fileout, nullptr); // unbuffered
             }
@@ -588,49 +635,28 @@ ArgsManager::ArgsManager() :
 
 void ArgsManager::WarnForSectionOnlyArgs()
 {
-    // if there's no section selected, don't worry
-    if (m_network.empty()) return;
-
-    // if it's okay to use the default section for this network, don't worry
-    if (m_network == CBaseChainParams::MAIN) return;
-
-    for (const auto& arg : m_network_only_args) {
-        std::pair<bool, std::string> found_result;
-
-        // if this option is overridden it's fine
-        found_result = ArgsManagerHelper::GetArgHelper(m_override_args, arg);
-        if (found_result.first) continue;
-
-        // if there's a network-specific value for this option, it's fine
-        found_result = ArgsManagerHelper::GetArgHelper(m_config_args, ArgsManagerHelper::NetworkArg(*this, arg));
-        if (found_result.first) continue;
-
-        // if there isn't a default value for this option, it's fine
-        found_result = ArgsManagerHelper::GetArgHelper(m_config_args, arg);
-        if (!found_result.first) continue;
-
-        // otherwise, issue a warning
-        LogPrintf("Warning: Config setting for %s only applied on %s network when in [%s] section.\n", arg, m_network, m_network);
+    if (strKey.length()>3 && strKey[0]=='-' && strKey[1]=='n' && strKey[2]=='o')
+    {
+        strKey = "-" + strKey.substr(3);
+        strValue = InterpretBool(strValue) ? "0" : "1";
     }
-}
-
-void ArgsManager::SelectConfigNetwork(const std::string& network)
-{
-    m_network = network;
 }
 
 void ArgsManager::ParseParameters(int argc, const char* const argv[])
 {
     LOCK(cs_args);
-    m_override_args.clear();
+    mapArgs.clear();
+    mapMultiArgs.clear();
 
-    for (int i = 1; i < argc; i++) {
-        std::string key(argv[i]);
-        std::string val;
-        size_t is_index = key.find('=');
-        if (is_index != std::string::npos) {
-            val = key.substr(is_index + 1);
-            key.erase(is_index);
+    for (int i = 1; i < argc; i++)
+    {
+        std::string str(argv[i]);
+        std::string strValue;
+        size_t is_index = str.find('=');
+        if (is_index != std::string::npos)
+        {
+            strValue = str.substr(is_index+1);
+            str = str.substr(0, is_index);
         }
 #ifdef WIN32
         std::transform(key.begin(), key.end(), key.begin(), ::tolower);
@@ -697,34 +723,49 @@ bool ArgsManager::IsArgNegated(const std::string& strArg) const
     return false;
 }
 
-std::string ArgsManager::GetArg(const std::string& strArg, const std::string& strDefault) const
+std::vector<std::string> ArgsManager::GetArgs(const std::string& strArg)
 {
-    if (IsArgNegated(strArg)) return "0";
-    std::pair<bool,std::string> found_res = ArgsManagerHelper::GetArg(*this, strArg);
-    if (found_res.first) return found_res.second;
+    LOCK(cs_args);
+    if (IsArgSet(strArg))
+        return mapMultiArgs.at(strArg);
+    return {};
+}
+
+bool ArgsManager::IsArgSet(const std::string& strArg)
+{
+    LOCK(cs_args);
+    return mapArgs.count(strArg);
+}
+
+std::string ArgsManager::GetArg(const std::string& strArg, const std::string& strDefault)
+{
+    LOCK(cs_args);
+    if (mapArgs.count(strArg))
+        return mapArgs[strArg];
     return strDefault;
 }
 
-int64_t ArgsManager::GetArg(const std::string& strArg, int64_t nDefault) const
+int64_t ArgsManager::GetArg(const std::string& strArg, int64_t nDefault)
 {
-    if (IsArgNegated(strArg)) return 0;
-    std::pair<bool,std::string> found_res = ArgsManagerHelper::GetArg(*this, strArg);
-    if (found_res.first) return atoi64(found_res.second);
+    LOCK(cs_args);
+    if (mapArgs.count(strArg))
+        return atoi64(mapArgs[strArg]);
     return nDefault;
 }
 
-bool ArgsManager::GetBoolArg(const std::string& strArg, bool fDefault) const
+bool ArgsManager::GetBoolArg(const std::string& strArg, bool fDefault)
 {
-    if (IsArgNegated(strArg)) return false;
-    std::pair<bool,std::string> found_res = ArgsManagerHelper::GetArg(*this, strArg);
-    if (found_res.first) return InterpretBool(found_res.second);
+    LOCK(cs_args);
+    if (mapArgs.count(strArg))
+        return InterpretBool(mapArgs[strArg]);
     return fDefault;
 }
 
 bool ArgsManager::SoftSetArg(const std::string& strArg, const std::string& strValue)
 {
     LOCK(cs_args);
-    if (IsArgSet(strArg)) return false;
+    if (mapArgs.count(strArg))
+        return false;
     ForceSetArg(strArg, strValue);
     return true;
 }
@@ -740,29 +781,22 @@ bool ArgsManager::SoftSetBoolArg(const std::string& strArg, bool fValue)
 void ArgsManager::ForceSetArg(const std::string& strArg, const std::string& strValue)
 {
     LOCK(cs_args);
-    m_override_args[strArg] = {strValue};
+    mapArgs[strArg] = strValue;
+    mapMultiArgs[strArg].clear();
+    mapMultiArgs[strArg].push_back(strValue);
+}
+
+void ArgsManager::ForceSetMultiArgs(const std::string& strArg, const std::vector<std::string>& values)
+{
+    LOCK(cs_args);
+    mapMultiArgs[strArg] = values;
 }
 
 void ArgsManager::ForceRemoveArg(const std::string& strArg)
 {
     LOCK(cs_args);
-
-    const auto& ov = m_override_args.find(strArg);
-    if (ov != m_override_args.end()) {
-        m_override_args.erase(ov);
-    }
-
-    if (!m_network.empty()) {
-        const auto& cfs = m_config_args.find(ArgsManagerHelper::NetworkArg(*this, strArg));
-        if (cfs != m_config_args.end()) {
-            m_config_args.erase(cfs);
-        }
-    }
-
-    const auto& cf = m_config_args.find(strArg);
-    if (cf != m_config_args.end()) {
-        m_config_args.erase(cf);
-    }
+    mapArgs.erase(strArg);
+    mapMultiArgs.erase(strArg);
 }
 
 static const int screenWidth = 79;
@@ -780,7 +814,12 @@ std::string HelpMessageOpt(const std::string &option, const std::string &message
            std::string("\n\n");
 }
 
-void PrintExceptionContinue(const std::exception_ptr pex, const char* pszExceptionOrigin)
+static std::string FormatException(const std::exception_ptr pex, const char* pszThread)
+{
+    return GetPrettyExceptionStr(pex);
+}
+
+void PrintExceptionContinue(const std::exception_ptr pex, const char* pszThread)
 {
     std::string message = strprintf("\"%s\" raised an exception\n%s", pszExceptionOrigin, GetPrettyExceptionStr(pex));
     LogPrintf("\n\n************************\n%s\n", message);
@@ -789,11 +828,10 @@ void PrintExceptionContinue(const std::exception_ptr pex, const char* pszExcepti
 
 fs::path GetDefaultDataDir()
 {
-    namespace fs = boost::filesystem;
-// Windows < Vista: C:\Documents and Settings\Username\Application Data\ION
-// Windows >= Vista: C:\Users\Username\AppData\Roaming\ioncoin
-// Mac: ~/Library/Application Support/ioncoin
-// Unix: ~/.ion
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\ioncoin
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\ioncoin
+    // Mac: ~/Library/Application Support/ioncoin
+    // Unix: ~/.ioncoin
 #ifdef WIN32
     // Windows
     return GetSpecialFolderPath(CSIDL_APPDATA) / "ioncoin";
@@ -806,9 +844,7 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    pathRet /= "Library/Application Support";
-    TryCreateDirectory(pathRet);
-    return pathRet / "Ioncoin";
+    return pathRet / "Library/Application Support/ioncoin";
 #else
     // Unix
     return pathRet / ".ioncoin";
@@ -870,27 +906,11 @@ void ClearDatadirCache()
 
 fs::path GetConfigFile(const std::string& confPath)
 {
-    return AbsPathForConfigVal(fs::path(confPath), false);
-}
+    fs::path pathConfigFile(confPath);
+    if (!pathConfigFile.is_complete())
+        pathConfigFile = GetDataDir(false) / pathConfigFile;
 
-void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
-    std::map<std::string, std::vector<std::string> >& mapMultiSettingsRet)
-{
-    LOCK(cs_args);
-
-    std::set<std::string> setOptions;
-    setOptions.insert("*");
-
-    for (boost::program_options::detail::config_file_iterator it(stream, setOptions), end; it != end; ++it)
-    {
-        std::string strKey = std::string("-") + it->string_key;
-        std::string strValue = it->value[0];
-        if (InterpretNegatedOption(strKey, strValue)) {
-            m_config_args[strKey].clear();
-        } else {
-            m_config_args[strKey].push_back(strValue);
-        }
-    }
+    return pathConfigFile;
 }
 
 void ArgsManager::ReadConfigFile(const std::string& confPath)
@@ -904,17 +924,21 @@ void ArgsManager::ReadConfigFile(const std::string& confPath)
         return; // Nothing to read, so just return
     }
 
-    std::set<std::string> setOptions;
-    setOptions.insert("*");
+    {
+        LOCK(cs_args);
+        std::set<std::string> setOptions;
+        setOptions.insert("*");
 
-    for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it) {
-        // Don't overwrite existing settings so command line settings override ioncoin.conf
-        std::string strKey = std::string("-") + it->string_key;
-        std::string strValue = it->value[0];
-        InterpretNegativeSetting(strKey, strValue);
-        if (mapSettingsRet.count(strKey) == 0)
-            mapSettingsRet[strKey] = strValue;
-        mapMultiSettingsRet[strKey].push_back(strValue);
+        for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it)
+        {
+            // Don't overwrite existing settings so command line settings override ioncoin.conf
+            std::string strKey = std::string("-") + it->string_key;
+            std::string strValue = it->value[0];
+            InterpretNegativeSetting(strKey, strValue);
+            if (mapArgs.count(strKey) == 0)
+                mapArgs[strKey] = strValue;
+            mapMultiArgs[strKey].push_back(strValue);
+        }
     }
     // If datadir is changed in .conf file:
     ClearDatadirCache();
@@ -952,7 +976,9 @@ std::string ArgsManager::GetDevNetName() const
 #ifndef WIN32
 fs::path GetPidFile()
 {
-    return AbsPathForConfigVal(fs::path(gArgs.GetArg("-pid", BITCOIN_PID_FILENAME)));
+    fs::path pathPidFile(gArgs.GetArg("-pid", BITCOIN_PID_FILENAME));
+    if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
+    return pathPidFile;
 }
 
 void CreatePidFile(const fs::path &path, pid_t pid)
@@ -1095,7 +1121,7 @@ void ShrinkDebugFile()
     // Amount of debug.log to save at end when shrinking (must fit in memory)
     constexpr size_t RECENT_DEBUG_HISTORY_SIZE = 10 * 1000000;
     // Scroll debug.log if it's getting too big
-    fs::path pathLog = GetDebugLogPath();
+    fs::path pathLog = GetDataDir() / "debug.log";
     FILE* file = fsbridge::fopen(pathLog, "r");
     // If debug.log file is more than 10% bigger the RECENT_DEBUG_HISTORY_SIZE
     // trim it down by saving only the last RECENT_DEBUG_HISTORY_SIZE bytes
@@ -1107,8 +1133,9 @@ void ShrinkDebugFile()
         int nBytes = fread(vch.data(), 1, vch.size(), file);
         fclose(file);
 
-        file = fopen(pathLog.string().c_str(), "w");
-        if (file) {
+        file = fsbridge::fopen(pathLog, "w");
+        if (file)
+        {
             fwrite(vch.data(), 1, nBytes, file);
             fclose(file);
         }
@@ -1264,10 +1291,6 @@ std::string CopyrightHolders(const std::string& strPrefix, unsigned int nStartYe
 {
     std::string strCopyrightHolders = strPrefix + strprintf(" %u-%u ", nStartYear, nEndYear) + strprintf(_(COPYRIGHT_HOLDERS), _(COPYRIGHT_HOLDERS_SUBSTITUTION));
 
-    // Check for untranslated substitution to make sure Dash Core copyright is not removed by accident
-    if (strprintf(COPYRIGHT_HOLDERS, COPYRIGHT_HOLDERS_SUBSTITUTION).find("Dash Core") == std::string::npos) {
-        strCopyrightHolders += "\n" + strPrefix + strprintf(" %u-%u ", 2014, nEndYear) + "The Dash Core developers";
-    }
     // Check for untranslated substitution to make sure Bitcoin Core copyright is not removed by accident
     if (strprintf(COPYRIGHT_HOLDERS, COPYRIGHT_HOLDERS_SUBSTITUTION).find("Bitcoin Core") == std::string::npos) {
         strCopyrightHolders += "\n" + strPrefix + strprintf(" %u-%u ", 2009, nEndYear) + "The Bitcoin Core developers";
@@ -1328,9 +1351,4 @@ std::string SafeIntVersionToString(uint32_t nVersion)
 int64_t GetStartupTime()
 {
     return nStartupTime;
-}
-
-fs::path AbsPathForConfigVal(const fs::path& path, bool net_specific)
-{
-    return fs::absolute(path, GetDataDir(net_specific));
 }

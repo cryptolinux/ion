@@ -1,7 +1,6 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
@@ -13,25 +12,23 @@
 #include <qt/bitcoinunits.h>
 #include <qt/guiutil.h>
 
-#include <init.h>
-#include <validation.h> // For DEFAULT_SCRIPTCHECK_THREADS
-#include <net.h>
-#include <netbase.h>
-#include <txdb.h> // for -dbcache defaults
+#include "amount.h"
+#include "init.h"
+#include "validation.h" // For DEFAULT_SCRIPTCHECK_THREADS
+#include "net.h"
+#include "netbase.h"
+#include "txdb.h" // for -dbcache defaults
 
 #ifdef ENABLE_WALLET
-#include "masternodeconfig.h"
 #include "wallet/wallet.h"
 #include "wallet/walletdb.h"
+
+#include "privatesend/privatesend-client.h"
 #endif
 
 #include <QNetworkProxy>
 #include <QSettings>
 #include <QStringList>
-
-const char *DEFAULT_GUI_PROXY_HOST = "127.0.0.1";
-
-static const QString GetDefaultProxyAddress();
 
 OptionsModel::OptionsModel(QObject *parent, bool resetSettings) :
     QAbstractListModel(parent)
@@ -51,6 +48,8 @@ void OptionsModel::Init(bool resetSettings)
         Reset();
 
     checkAndMigrate();
+
+    this->resetSettings = resetSettings;
 
     QSettings settings;
 
@@ -82,52 +81,28 @@ void OptionsModel::Init(bool resetSettings)
         settings.setValue("strThirdPartyTxUrls", "");
     strThirdPartyTxUrls = settings.value("strThirdPartyTxUrls", "").toString();
 
-    // Appearance
     if (!settings.contains("theme"))
-        settings.setValue("theme", GUIUtil::getDefaultTheme());
+        settings.setValue("theme", "");
 
-    if (!settings.contains("fontFamily"))
-        settings.setValue("fontFamily", GUIUtil::fontFamilyToString(GUIUtil::getFontFamilyDefault()));
-
-    if (!settings.contains("fontScale"))
-        settings.setValue("fontScale", GUIUtil::getFontScaleDefault());
-    if (!gArgs.SoftSetArg("-font-scale", settings.value("fontScale").toString().toStdString()))
-        addOverriddenOption("-font-scale");
-
-    if (!settings.contains("fHideOrphans"))
-        settings.setValue("fHideOrphans", false);
-    fHideOrphans = settings.value("fHideOrphans").toBool();
-
-    if (!settings.contains("fHideOrphans"))
-        settings.setValue("fHideOrphans", false);
-    fHideOrphans = settings.value("fHideOrphans").toBool();
-
+#ifdef ENABLE_WALLET
     if (!settings.contains("fCoinControlFeatures"))
         settings.setValue("fCoinControlFeatures", false);
     fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
 
-    if (!settings.contains("fZeromintEnable"))
-        settings.setValue("fZeromintEnable", true);
-    fEnableZeromint = settings.value("fZeromintEnable").toBool();
-
-    if (!settings.contains("fEnableAutoConvert"))
-        settings.setValue("fEnableAutoConvert", true);
-    fEnableAutoConvert = settings.value("fEnableAutoConvert").toBool();
-
-    if (!settings.contains("nZeromintPercentage"))
-        settings.setValue("nZeromintPercentage", 10);
-    nZeromintPercentage = settings.value("nZeromintPercentage").toLongLong();
+    if (!settings.contains("digits"))
+        settings.setValue("digits", "2");
 
     // PrivateSend
-    if (!settings.contains("fPrivateSendEnabled")) {
-        settings.setValue("fPrivateSendEnabled", true);
-    }
-    if (!gArgs.SoftSetBoolArg("-enableprivatesend", settings.value("fPrivateSendEnabled").toBool())) {
-        addOverriddenOption("-enableprivatesend");
-    }
+    if (!settings.contains("fShowAdvancedPSUI"))
+        settings.setValue("fShowAdvancedPSUI", false);
+    fShowAdvancedPSUI = settings.value("fShowAdvancedPSUI", false).toBool();
 
-    if (!settings.contains("fShowMasternodesTab"))
-        settings.setValue("fShowMasternodesTab", masternodeConfig.getCount());
+    if (!settings.contains("fShowPrivateSendPopups"))
+        settings.setValue("fShowPrivateSendPopups", true);
+
+    if (!settings.contains("fLowKeysWarning"))
+        settings.setValue("fLowKeysWarning", true);
+#endif // ENABLE_WALLET
 
     // These are shared with the core or have a command-line parameter
     // and we want command-line parameters to overwrite the GUI settings.
@@ -204,7 +179,7 @@ void OptionsModel::Init(bool resetSettings)
     if (!settings.contains("fUseSeparateProxyTor"))
         settings.setValue("fUseSeparateProxyTor", false);
     if (!settings.contains("addrSeparateProxyTor"))
-        settings.setValue("addrSeparateProxyTor", GetDefaultProxyAddress());
+        settings.setValue("addrSeparateProxyTor", "127.0.0.1:9050");
     // Only try to set -onion, if user has enabled fUseSeparateProxyTor
     if (settings.value("fUseSeparateProxyTor").toBool() && !gArgs.SoftSetArg("-onion", settings.value("addrSeparateProxyTor").toString().toStdString()))
         addOverriddenOption("-onion");
@@ -216,17 +191,6 @@ void OptionsModel::Init(bool resetSettings)
         settings.setValue("language", "");
     if (!gArgs.SoftSetArg("-lang", settings.value("language").toString().toStdString()))
         addOverriddenOption("-lang");
-
-    if (settings.contains("fZeromintEnable"))
-        SoftSetBoolArg("-enablezeromint", settings.value("fZeromintEnable").toBool());
-    if (settings.contains("fEnableAutoConvert"))
-        SoftSetBoolArg("-enableautoconvertaddress", settings.value("fEnableAutoConvert").toBool());
-    if (settings.contains("nZeromintPercentage"))
-        SoftSetArg("-zeromintpercentage", settings.value("nZeromintPercentage").toString().toStdString());
-    if (settings.contains("nPreferredDenom"))
-        SoftSetArg("-preferredDenom", settings.value("nPreferredDenom").toString().toStdString());
-    if (settings.contains("nAnonymizeIonAmount"))
-        SoftSetArg("-anonymizeionamount", settings.value("nAnonymizeIonAmount").toString().toStdString());
 
     language = settings.value("language").toString();
 }
@@ -342,13 +306,25 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
         case ProxyPortTor:
             return GetProxySetting(settings, "addrSeparateProxyTor").port;
 
+        // separate Tor proxy
+        case ProxyUseTor:
+            return settings.value("fUseSeparateProxyTor", false);
+        case ProxyIPTor: {
+            // contains IP at index 0 and port at index 1
+            QStringList strlIpPort = settings.value("addrSeparateProxyTor").toString().split(":", QString::SkipEmptyParts);
+            return strlIpPort.at(0);
+        }
+        case ProxyPortTor: {
+            // contains IP at index 0 and port at index 1
+            QStringList strlIpPort = settings.value("addrSeparateProxyTor").toString().split(":", QString::SkipEmptyParts);
+            return strlIpPort.at(1);
+        }
+
 #ifdef ENABLE_WALLET
         case SpendZeroConfChange:
             return settings.value("bSpendZeroConfChange");
         case ShowMasternodesTab:
             return settings.value("fShowMasternodesTab");
-        case PrivateSendEnabled:
-            return settings.value("fPrivateSendEnabled");
         case ShowAdvancedPSUI:
             return fShowAdvancedPSUI;
         case ShowPrivateSendPopups:
@@ -396,18 +372,6 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return settings.value("nDatabaseCache");
         case ThreadsScriptVerif:
             return settings.value("nThreadsScriptVerif");
-        case HideZeroBalances:
-            return settings.value("fHideZeroBalances");
-        case HideOrphans:
-            return settings.value("fHideOrphans");
-        case ZeromintEnable:
-            return QVariant(fEnableZeromint);
-        case ZeromintAddresses:
-            return QVariant(fEnableAutoConvert);
-        case ZeromintPercentage:
-            return QVariant(nZeromintPercentage);
-        case ZeromintPrefDenom:
-            return QVariant(nPreferredDenom);
         case Listen:
             return settings.value("fListen");
         default:
@@ -479,21 +443,36 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
                 settings.setValue("fUseSeparateProxyTor", value.toBool());
                 setRestartRequired(true);
             }
+        }
+        break;
+
+        // separate Tor proxy
+        case ProxyUseTor:
+            if (settings.value("fUseSeparateProxyTor") != value) {
+                settings.setValue("fUseSeparateProxyTor", value.toBool());
+                setRestartRequired(true);
+            }
             break;
         case ProxyIPTor: {
-            auto ip_port = GetProxySetting(settings, "addrSeparateProxyTor");
-            if (!ip_port.is_set || ip_port.ip != value.toString()) {
-                ip_port.ip = value.toString();
-                SetProxySetting(settings, "addrSeparateProxyTor", ip_port);
+            // contains current IP at index 0 and current port at index 1
+            QStringList strlIpPort = settings.value("addrSeparateProxyTor").toString().split(":", QString::SkipEmptyParts);
+            // if that key doesn't exist or has a changed IP
+            if (!settings.contains("addrSeparateProxyTor") || strlIpPort.at(0) != value.toString()) {
+                // construct new value from new IP and current port
+                QString strNewValue = value.toString() + ":" + strlIpPort.at(1);
+                settings.setValue("addrSeparateProxyTor", strNewValue);
                 setRestartRequired(true);
             }
         }
         break;
         case ProxyPortTor: {
-            auto ip_port = GetProxySetting(settings, "addrSeparateProxyTor");
-            if (!ip_port.is_set || ip_port.port != value.toString()) {
-                ip_port.port = value.toString();
-                SetProxySetting(settings, "addrSeparateProxyTor", ip_port);
+            // contains current IP at index 0 and current port at index 1
+            QStringList strlIpPort = settings.value("addrSeparateProxyTor").toString().split(":", QString::SkipEmptyParts);
+            // if that key doesn't exist or has a changed port
+            if (!settings.contains("addrSeparateProxyTor") || strlIpPort.at(1) != value.toString()) {
+                // construct new value from current IP and new port
+                QString strNewValue = strlIpPort.at(0) + ":" + value.toString();
+                settings.setValue("addrSeparateProxyTor", strNewValue);
                 setRestartRequired(true);
             }
         }
@@ -512,18 +491,10 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
                 setRestartRequired(true);
             }
             break;
-        case PrivateSendEnabled:
-            if (settings.value("fPrivateSendEnabled") != value) {
-                settings.setValue("fPrivateSendEnabled", value.toBool());
-                Q_EMIT privateSendEnabledChanged();
-            }
-            break;
         case ShowAdvancedPSUI:
-            if (settings.value("fShowAdvancedPSUI") != value) {
-                fShowAdvancedPSUI = value.toBool();
-                settings.setValue("fShowAdvancedPSUI", fShowAdvancedPSUI);
-                Q_EMIT advancedPSUIChanged(fShowAdvancedPSUI);
-            }
+            fShowAdvancedPSUI = value.toBool();
+            settings.setValue("fShowAdvancedPSUI", fShowAdvancedPSUI);
+            Q_EMIT advancedPSUIChanged(fShowAdvancedPSUI);
             break;
         case ShowPrivateSendPopups:
             settings.setValue("fShowPrivateSendPopups", value);
@@ -571,7 +542,7 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
                 settings.setValue("digits", value);
                 setRestartRequired(true);
             }
-            break;
+            break;            
 #endif // ENABLE_WALLET
         case Theme:
             // Set in AppearanceWidget::updateTheme slot now
@@ -592,50 +563,14 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
             if (settings.value("fontWeightNormal") != nWeight) {
                 settings.setValue("fontWeightNormal", nWeight);
             }
-            break;
-        }
-        case FontWeightBold: {
-            int nWeight = GUIUtil::weightToArg(GUIUtil::supportedWeightFromIndex(value.toInt()));
-            if (settings.value("fontWeightBold") != nWeight) {
-                settings.setValue("fontWeightBold", nWeight);
-            }
-            break;
-        }
+            break;            
         case Language:
             if (settings.value("language") != value) {
                 settings.setValue("language", value);
                 setRestartRequired(true);
             }
             break;
-        case ZeromintEnable:
-            fEnableZeromint = value.toBool();
-            settings.setValue("fZeromintEnable", fEnableZeromint);
-            emit zeromintEnableChanged(fEnableZeromint);
-            break;
-        case ZeromintAddresses:
-            fEnableAutoConvert = value.toBool();
-            settings.setValue("fEnableAutoConvert", fEnableAutoConvert);
-            emit zeromintAddressesChanged(fEnableAutoConvert);
-        case ZeromintPercentage:
-            nZeromintPercentage = value.toInt();
-            settings.setValue("nZeromintPercentage", nZeromintPercentage);
-            emit zeromintPercentageChanged(nZeromintPercentage);
-            break;
-        case ZeromintPrefDenom:
-            nPreferredDenom = value.toInt();
-            settings.setValue("nPreferredDenom", nPreferredDenom);
-            emit preferredDenomChanged(nPreferredDenom);
-            break;
-        case HideZeroBalances:
-            fHideZeroBalances = value.toBool();
-            settings.setValue("fHideZeroBalances", fHideZeroBalances);
-            emit hideZeroBalancesChanged(fHideZeroBalances);
-            break;
-        case HideOrphans:
-            fHideOrphans = value.toBool();
-            settings.setValue("fHideOrphans", fHideOrphans);
-            emit hideOrphansChanged(fHideOrphans);
-            break;
+#ifdef ENABLE_WALLET
         case CoinControlFeatures:
             fCoinControlFeatures = value.toBool();
             settings.setValue("fCoinControlFeatures", fCoinControlFeatures);
@@ -733,23 +668,5 @@ void OptionsModel::checkAndMigrate()
             settings.setValue("nDatabaseCache", (qint64)nDefaultDbCache);
 
         settings.setValue(strSettingsVersionKey, CLIENT_VERSION);
-    }
-
-    // Overwrite the 'addrProxy' setting in case it has been set to an illegal
-    // default value (see issue #12623; PR #12650).
-    if (settings.contains("addrProxy") && settings.value("addrProxy").toString().endsWith("%2")) {
-        settings.setValue("addrProxy", GetDefaultProxyAddress());
-    }
-
-    // Overwrite the 'addrSeparateProxyTor' setting in case it has been set to an illegal
-    // default value (see issue #12623; PR #12650).
-    if (settings.contains("addrSeparateProxyTor") && settings.value("addrSeparateProxyTor").toString().endsWith("%2")) {
-        settings.setValue("addrSeparateProxyTor", GetDefaultProxyAddress());
-    }
-
-    // Make sure there is a valid theme set in the options.
-    QString strActiveTheme = settings.value("theme", GUIUtil::getDefaultTheme()).toString();
-    if (!GUIUtil::isValidTheme(strActiveTheme)) {
-        settings.setValue("theme", GUIUtil::getDefaultTheme());
     }
 }

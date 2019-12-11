@@ -1,20 +1,21 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
 #include "config/ion-config.h"
 #endif
 
+#include "fs.h"
+#include "intro.h"
+#include "ui_intro.h"
+
 #include <fs.h>
 #include <qt/intro.h>
 #include <qt/forms/ui_intro.h>
 
 #include <qt/guiutil.h>
-
-#include <util.h>
 
 #include <QFileDialog>
 #include <QSettings>
@@ -24,7 +25,7 @@
 
 static const uint64_t GB_BYTES = 1000000000LL;
 /* Minimum free space (in GB) needed for data directory */
-static const uint64_t BLOCK_CHAIN_SIZE = 30;
+static const uint64_t BLOCK_CHAIN_SIZE = 10;
 /* Minimum free space (in GB) needed for data directory when pruned; Does not include prune target */
 static const uint64_t CHAIN_STATE_SIZE = 1;
 /* Total required space (in GB) depending on user choice (prune, not prune) */
@@ -45,7 +46,7 @@ class FreespaceChecker : public QObject
     Q_OBJECT
 
 public:
-    explicit FreespaceChecker(Intro *intro);
+    FreespaceChecker(Intro *intro);
 
     enum Status {
         ST_OK,
@@ -115,10 +116,11 @@ void FreespaceChecker::check()
 }
 
 
-Intro::Intro(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
-                                ui(new Ui::Intro),
-                                thread(0),
-                                signalled(false)
+Intro::Intro(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::Intro),
+    thread(0),
+    signalled(false)
 {
     ui->setupUi(this);
     ui->welcomeLabel->setText(ui->welcomeLabel->text().arg(tr(PACKAGE_NAME)));
@@ -205,8 +207,6 @@ bool Intro::pickDataDirectory()
     {
         /* Let the user choose one */
         Intro intro;
-        GUIUtil::disableMacFocusRect(&intro);
-        GUIUtil::loadStyleSheet(&intro);
         intro.setDataDirectory(dataDirDefaultCurrent);
         intro.setWindowIcon(QIcon(":icons/bitcoin"));
 
@@ -219,13 +219,10 @@ bool Intro::pickDataDirectory()
             }
             dataDir = intro.getDataDirectory();
             try {
-                if (TryCreateDirectories(GUIUtil::qstringToBoostPath(dataDir))) {
-                    // If a new data directory has been created, make wallets subdirectory too
-                    TryCreateDirectories(GUIUtil::qstringToBoostPath(dataDir) / "wallets");
-                }
+                TryCreateDirectories(GUIUtil::qstringToBoostPath(dataDir));
                 break;
-            } catch (fs::filesystem_error& e) {
-                QMessageBox::critical(0, tr("ION Core"),
+            } catch (const fs::filesystem_error&) {
+                QMessageBox::critical(0, tr(PACKAGE_NAME),
                     tr("Error: Specified data directory \"%1\" cannot be created.").arg(dataDir));
                 /* fall through, back to choosing screen */
             }
@@ -265,7 +262,7 @@ void Intro::setStatus(int status, const QString &message, quint64 bytesAvailable
         if(bytesAvailable < requiredSpace * GB_BYTES)
         {
             freeString += " " + tr("(of %1 GB needed)").arg(requiredSpace);
-            ui->freeSpace->setStyleSheet(GUIUtil::getThemedStyleQString(GUIUtil::ThemedStyle::TS_ERROR));
+            ui->freeSpace->setStyleSheet("QLabel { color: #800000 }");
         } else {
             ui->freeSpace->setStyleSheet("");
         }

@@ -1,19 +1,17 @@
 // Copyright (c) 2012 Pieter Wuille
-// Copyright (c) 2012-2014 The Bitcoin developers
-// Copyright (c) 2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2012-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_ADDRMAN_H
 #define BITCOIN_ADDRMAN_H
 
-#include <netaddress.h>
-#include <protocol.h>
-#include <random.h>
-#include <sync.h>
-#include <timedata.h>
-#include <util.h>
+#include "netaddress.h"
+#include "protocol.h"
+#include "random.h"
+#include "sync.h"
+#include "timedata.h"
+#include "util.h"
 
 #include <map>
 #include <set>
@@ -30,6 +28,9 @@ class CAddrInfo : public CAddress
 public:
     //! last try whatsoever by us (memory only)
     int64_t nLastTry;
+
+    //! last counted attempt (memory only)
+    int64_t nLastCountAttempt;
 
 private:
     //! where knowledge about this address first came from
@@ -170,8 +171,13 @@ public:
 //! the maximum number of nodes to return in a getaddr call
 #define ADDRMAN_GETADDR_MAX 2500
 
-/**
- * Stochastical (IP) address manager
+//! Convenience
+#define ADDRMAN_TRIED_BUCKET_COUNT (1 << ADDRMAN_TRIED_BUCKET_COUNT_LOG2)
+#define ADDRMAN_NEW_BUCKET_COUNT (1 << ADDRMAN_NEW_BUCKET_COUNT_LOG2)
+#define ADDRMAN_BUCKET_SIZE (1 << ADDRMAN_BUCKET_SIZE_LOG2)
+
+/** 
+ * Stochastical (IP) address manager 
  */
 class CAddrMan
 {
@@ -213,6 +219,9 @@ protected:
     //! secret key to randomize bucket select with
     uint256 nKey;
 
+    //! Source of random numbers for randomization in inner loops
+    FastRandomContext insecure_rand;
+
     //! Find an entry.
     CAddrInfo* Find(const CService& addr, int *pnId = nullptr);
 
@@ -240,9 +249,6 @@ protected:
 
     //! Mark an entry as attempted to connect.
     void Attempt_(const CService &addr, bool fCountFailure, int64_t nTime);
-
-    //! Select an address to connect to, if newOnly is set to true, only the new table is selected from.
-    CAddrInfo Select_(bool newOnly);
 
     //! Select an address to connect to, if newOnly is set to true, only the new table is selected from.
     CAddrInfo Select_(bool newOnly);
@@ -313,9 +319,9 @@ public:
         s << nUBuckets;
         std::map<int, int> mapUnkIds;
         int nIds = 0;
-        for (const auto& entry : mapInfo) {
-            mapUnkIds[entry.first] = nIds;
-            const CAddrInfo &info = entry.second;
+        for (std::map<int, CAddrInfo>::const_iterator it = mapInfo.begin(); it != mapInfo.end(); it++) {
+            mapUnkIds[(*it).first] = nIds;
+            const CAddrInfo &info = (*it).second;
             if (info.nRefCount) {
                 assert(nIds != nNew); // this means nNew was wrong, oh ow
                 s << info;
@@ -323,8 +329,8 @@ public:
             }
         }
         nIds = 0;
-        for (const auto& entry : mapInfo) {
-            const CAddrInfo &info = entry.second;
+        for (std::map<int, CAddrInfo>::const_iterator it = mapInfo.begin(); it != mapInfo.end(); it++) {
+            const CAddrInfo &info = (*it).second;
             if (info.fInTried) {
                 assert(nIds != nTried); // this means nTried was wrong, oh ow
                 s << info;

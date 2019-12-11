@@ -41,7 +41,7 @@ static bool validNumStr(const string& s)
 {
     string tokenVal;
     unsigned int consumed;
-    enum jtokentype tt = getJsonToken(tokenVal, consumed, s.data(), s.data() + s.size());
+    enum jtokentype tt = getJsonToken(tokenVal, consumed, s.c_str());
     return (tt == JTOK_NUMBER);
 }
 
@@ -156,26 +156,14 @@ bool UniValue::pushKVs(const UniValue& obj)
     return true;
 }
 
-void UniValue::getObjMap(std::map<std::string,UniValue>& kv) const
+int UniValue::findKey(const std::string& key) const
 {
-    if (typ != VOBJ)
-        return;
-
-    kv.clear();
-    for (size_t i = 0; i < keys.size(); i++)
-        kv[keys[i]] = values[i];
-}
-
-bool UniValue::findKey(const std::string& key, size_t& retIdx) const
-{
-    for (size_t i = 0; i < keys.size(); i++) {
-        if (keys[i] == key) {
-            retIdx = i;
-            return true;
-        }
+    for (unsigned int i = 0; i < keys.size(); i++) {
+        if (keys[i] == key)
+            return (int) i;
     }
 
-    return false;
+    return -1;
 }
 
 bool UniValue::checkObject(const std::map<std::string,UniValue::VType>& t) const
@@ -185,8 +173,8 @@ bool UniValue::checkObject(const std::map<std::string,UniValue::VType>& t) const
 
     for (std::map<std::string,UniValue::VType>::const_iterator it = t.begin();
          it != t.end(); ++it) {
-        size_t idx = 0;
-        if (!findKey(it->first, idx))
+        int idx = findKey(it->first);
+        if (idx < 0)
             return false;
 
         if (values.at(idx).getType() != it->second)
@@ -201,14 +189,14 @@ const UniValue& UniValue::operator[](const std::string& key) const
     if (typ != VOBJ)
         return NullUniValue;
 
-    size_t index = 0;
-    if (!findKey(key, index))
+    int index = findKey(key);
+    if (index < 0)
         return NullUniValue;
 
     return values.at(index);
 }
 
-const UniValue& UniValue::operator[](size_t index) const
+const UniValue& UniValue::operator[](unsigned int index) const
 {
     if (typ != VOBJ && typ != VARR)
         return NullUniValue;

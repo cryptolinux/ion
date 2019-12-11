@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2020 The Dash Core developers
+# Copyright (c) 2015-2018 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 import time
@@ -18,7 +18,7 @@ Checks conflict handling between ChainLocks and InstantSend
 
 '''
 
-class TestNode(P2PInterface):
+class TestNode(NodeConnCB):
     def __init__(self):
         super().__init__()
         self.clsigs = {}
@@ -38,7 +38,7 @@ class TestNode(P2PInterface):
         inv = msg_inv([CInv(30, hash)])
         self.send_message(inv)
 
-    def on_getdata(self, message):
+    def on_getdata(self, conn, message):
         for inv in message.inv:
             if inv.hash in self.clsigs:
                 self.send_message(self.clsigs[inv.hash])
@@ -55,11 +55,12 @@ class LLMQ_IS_CL_Conflicts(IonTestFramework):
 
         while self.nodes[0].getblockchaininfo()["bip9_softforks"]["dip0008"]["status"] != "active":
             self.nodes[0].generate(10)
-        self.sync_blocks(self.nodes, timeout=60*5)
+        sync_blocks(self.nodes, timeout=60*5)
 
-        self.test_node = self.nodes[0].add_p2p_connection(TestNode())
-        network_thread_start()
-        self.nodes[0].p2p.wait_for_verack()
+        self.test_node = TestNode()
+        self.test_node.add_connection(NodeConn('127.0.0.1', p2p_port(0), self.nodes[0], self.test_node))
+        NetworkThread().start()  # Start up network handling in another thread
+        self.test_node.wait_for_verack()
 
         self.nodes[0].spork("SPORK_18_QUORUM_DKG_ENABLED", 0)
         self.nodes[0].spork("SPORK_19_CHAINLOCKS_ENABLED", 0)
@@ -102,7 +103,7 @@ class LLMQ_IS_CL_Conflicts(IonTestFramework):
         rawtx4_txid = self.nodes[0].sendrawtransaction(rawtx4)
 
         # wait for transactions to propagate
-        self.sync_mempools()
+        sync_mempools(self.nodes)
         for node in self.nodes:
             self.wait_for_instantlock(rawtx1_txid, node)
             self.wait_for_instantlock(rawtx4_txid, node)
@@ -119,7 +120,7 @@ class LLMQ_IS_CL_Conflicts(IonTestFramework):
         for node in self.nodes:
             self.wait_for_best_chainlock(node, "%064x" % block.sha256)
 
-        self.sync_blocks()
+        sync_blocks(self.nodes)
 
         # At this point all nodes should be in sync and have the same "best chainlock"
 
@@ -145,7 +146,7 @@ class LLMQ_IS_CL_Conflicts(IonTestFramework):
         rawtx5 = self.nodes[0].signrawtransaction(rawtx5)['hex']
         rawtx5_txid = self.nodes[0].sendrawtransaction(rawtx5)
         # wait for the transaction to propagate
-        self.sync_mempools()
+        sync_mempools(self.nodes)
         for node in self.nodes:
             self.wait_for_instantlock(rawtx5_txid, node)
 
@@ -170,7 +171,7 @@ class LLMQ_IS_CL_Conflicts(IonTestFramework):
         islock = self.create_islock(rawtx2)
 
         # Stop enough MNs so that ChainLocks don't work anymore
-        for i in range(2):
+        for i in range(3):
             self.stop_node(len(self.nodes) - 1)
             self.nodes.pop(len(self.nodes) - 1)
             self.mninfo.pop(len(self.mninfo) - 1)
@@ -180,6 +181,7 @@ class LLMQ_IS_CL_Conflicts(IonTestFramework):
 
         # fast forward 11 minutes, so that the TX is considered safe and included in the next block
         self.bump_mocktime(int(60 * 11))
+        set_node_times(self.nodes, self.mocktime)
 
         # Mine the conflicting TX into a block
         good_tip = self.nodes[0].getbestblockhash()
@@ -240,11 +242,7 @@ class LLMQ_IS_CL_Conflicts(IonTestFramework):
         coinbasevalue -= bt_fees
         coinbasevalue += new_fees
 
-        realloc_info = get_bip9_status(self.nodes[0], 'realloc')
-        realloc_height = 99999999
-        if realloc_info['status'] == 'active':
-            realloc_height = realloc_info['since']
-        mn_amount = get_masternode_payment(height, coinbasevalue, realloc_height)
+        mn_amount = get_masternode_payment(height, coinbasevalue)
         miner_amount = coinbasevalue - mn_amount
 
         outputs = {miner_address: str(Decimal(miner_amount) / COIN)}

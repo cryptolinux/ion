@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2018-2020 The Dash Core developers
+# Copyright (c) 2018 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -43,6 +43,7 @@ class InstantSendTest(IonTestFramework):
         sender_addr = sender.getnewaddress()
         self.nodes[0].sendtoaddress(sender_addr, 1)
         self.bump_mocktime(1)
+        set_node_times(self.nodes, self.mocktime)
         self.nodes[0].generate(2)
         self.sync_all()
 
@@ -56,13 +57,14 @@ class InstantSendTest(IonTestFramework):
         # wait for the transaction to propagate
         connected_nodes = self.nodes.copy()
         del connected_nodes[self.isolated_idx]
-        self.sync_mempools(connected_nodes)
+        sync_mempools(connected_nodes)
         for node in connected_nodes:
             self.wait_for_instantlock(is_id, node)
         # send doublespend transaction to isolated node
         isolated.sendrawtransaction(dblspnd_tx['hex'])
         # generate block on isolated node with doublespend transaction
         self.bump_mocktime(1)
+        set_node_times(self.nodes, self.mocktime)
         isolated.generate(1)
         wrong_block = isolated.getbestblockhash()
         # connect isolated block to network
@@ -82,8 +84,7 @@ class InstantSendTest(IonTestFramework):
         # mine more blocks
         # TODO: mine these blocks on an isolated node
         self.bump_mocktime(1)
-        # make sure the above TX is on node0
-        self.sync_mempools([n for n in self.nodes if n is not isolated])
+        set_node_times(self.nodes, self.mocktime)
         self.nodes[0].generate(2)
         self.sync_all()
 
@@ -96,6 +97,7 @@ class InstantSendTest(IonTestFramework):
         sender_addr = sender.getnewaddress()
         self.nodes[0].sendtoaddress(sender_addr, 1)
         self.bump_mocktime(1)
+        set_node_times(self.nodes, self.mocktime)
         self.nodes[0].generate(2)
         self.sync_all()
 
@@ -117,7 +119,7 @@ class InstantSendTest(IonTestFramework):
         receiver_addr = receiver.getnewaddress()
         is_id = sender.sendtoaddress(receiver_addr, 0.9)
         # wait for the transaction to propagate
-        self.sync_mempools()
+        sync_mempools(self.nodes)
         for node in self.nodes:
             self.wait_for_instantlock(is_id, node)
         assert_raises_rpc_error(-5, "No such mempool or blockchain transaction", isolated.getrawtransaction, dblspnd_txid)
@@ -126,6 +128,7 @@ class InstantSendTest(IonTestFramework):
         assert_equal(receiver.getwalletinfo()["balance"], 0)
         # mine more blocks
         self.bump_mocktime(1)
+        set_node_times(self.nodes, self.mocktime)
         self.nodes[0].generate(2)
         self.sync_all()
 

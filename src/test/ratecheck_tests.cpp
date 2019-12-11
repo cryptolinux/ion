@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2019 The Dash Core developers
 
-#include <governance/governance.h>
+#include "governance/governance.h"
 
 #include "test/test_ion.h"
 

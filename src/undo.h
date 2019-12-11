@@ -1,17 +1,15 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2013 The Bitcoin developers
-// Copyright (c) 2016-2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2009-2014 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_UNDO_H
 #define BITCOIN_UNDO_H
 
-#include <compressor.h>
-#include <consensus/consensus.h>
-#include <primitives/transaction.h>
-#include <serialize.h>
+#include "compressor.h" 
+#include "consensus/consensus.h"
+#include "primitives/transaction.h"
+#include "serialize.h"
 
 /** Undo information for a CTxIn
  *
@@ -35,7 +33,7 @@ public:
         ::Serialize(s, CTxOutCompressor(REF(txout->out)));
     }
 
-    explicit TxInUndoSerializer(const Coin* coin) : txout(coin) {}
+    TxInUndoSerializer(const Coin* coin) : txout(coin) {}
 };
 
 class TxInUndoDeserializer
@@ -59,7 +57,7 @@ public:
         ::Unserialize(s, REF(CTxOutCompressor(REF(txout->out))));
     }
 
-    explicit TxInUndoDeserializer(Coin* coin) : txout(coin) {}
+    TxInUndoDeserializer(Coin* coin) : txout(coin) {}
 };
 
 static const size_t MAX_INPUTS_PER_BLOCK = MaxBlockSize(true) / ::GetSerializeSize(CTxIn(), SER_NETWORK, PROTOCOL_VERSION);

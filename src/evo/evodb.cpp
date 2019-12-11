@@ -2,34 +2,9 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <evo/evodb.h>
+#include "evodb.h"
 
-std::unique_ptr<CEvoDB> evoDb;
-
-CEvoDBScopedCommitter::CEvoDBScopedCommitter(CEvoDB &_evoDB) :
-    evoDB(_evoDB)
-{
-}
-
-CEvoDBScopedCommitter::~CEvoDBScopedCommitter()
-{
-    if (!didCommitOrRollback)
-        Rollback();
-}
-
-void CEvoDBScopedCommitter::Commit()
-{
-    assert(!didCommitOrRollback);
-    didCommitOrRollback = true;
-    evoDB.CommitCurTransaction();
-}
-
-void CEvoDBScopedCommitter::Rollback()
-{
-    assert(!didCommitOrRollback);
-    didCommitOrRollback = true;
-    evoDB.RollbackCurTransaction();
-}
+CEvoDB* evoDb;
 
 CEvoDB::CEvoDB(size_t nCacheSize, bool fMemory, bool fWipe) :
     db(fMemory ? "" : (GetDataDir() / "evodb"), nCacheSize, fMemory, fWipe),
@@ -37,18 +12,6 @@ CEvoDB::CEvoDB(size_t nCacheSize, bool fMemory, bool fWipe) :
     rootDBTransaction(db, rootBatch),
     curDBTransaction(rootDBTransaction, rootDBTransaction)
 {
-}
-
-void CEvoDB::CommitCurTransaction()
-{
-    LOCK(cs);
-    curDBTransaction.Commit();
-}
-
-void CEvoDB::RollbackCurTransaction()
-{
-    LOCK(cs);
-    curDBTransaction.Clear();
 }
 
 bool CEvoDB::CommitRootTransaction()

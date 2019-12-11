@@ -16,9 +16,6 @@
   <key>CFBundlePackageType</key>
   <string>APPL</string>
 
-  <key>CFBundleGetInfoString</key>
-  <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@, Copyright © 2009-@COPYRIGHT_YEAR@ The Bitcoin Core developers, 2014-@COPYRIGHT_YEAR@ The Dash Core developers, 2015-@COPYRIGHT_YEAR@ The PIVX Core developers, 2018-@COPYRIGHT_YEAR@ The ION Core Developers</string>
-
   <key>CFBundleShortVersionString</key>
   <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@.@CLIENT_VERSION_BUILD@</string>
 
@@ -29,10 +26,10 @@
   <string>????</string>
 
   <key>CFBundleExecutable</key>
-  <string>ION-Qt</string>
+  <string>Ion-Qt</string>
 
   <key>CFBundleName</key>
-  <string>ION-Qt</string>
+  <string>Ion-Qt</string>
 
   <key>LSHasLocalizedDisplayName</key>
   <true/>
@@ -46,7 +43,7 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>io.ion.IonPayment</string>
+      <string>org.ion.IonPayment</string>
       <key>CFBundleURLSchemes</key>
       <array>
         <string>ion</string>

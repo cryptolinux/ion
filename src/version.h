@@ -1,7 +1,5 @@
-// Copyright (c) 2012-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2012-2014 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,7 +10,8 @@
  * network protocol versioning
  */
 
-static const int PROTOCOL_VERSION = 95705;
+
+static const int PROTOCOL_VERSION = 96000;
 
 //! initial proto version, to be increased after version/verack negotiation
 static const int INIT_PROTO_VERSION = 901;
@@ -21,11 +20,7 @@ static const int INIT_PROTO_VERSION = 901;
 static const int GETHEADERS_VERSION = 96000;
 
 //! disconnect from peers older than this proto version
-static const int MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT = 95702;
-static const int MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT = 95705;
-
-//! masternodes older than this proto version use old strMessage format for mnannounce
-static const int MIN_PEER_MNANNOUNCE = 95700;
+static const int MIN_PEER_PROTO_VERSION = 95705;
 
 //! nTime field added to CAddress, starting with this version;
 //! if possible, avoid requesting addresses nodes older than this
@@ -55,8 +50,5 @@ static const int LLMQS_PROTO_VERSION = 96000;
 //! introduction of SENDDSQUEUE
 //! TODO we can remove this in 0.15.0.0
 static const int SENDDSQUEUE_PROTO_VERSION = 96000;
-
-//! protocol version is included in MNAUTH starting with this version
-static const int MNAUTH_NODE_VER_VERSION = 70218;
 
 #endif // BITCOIN_VERSION_H

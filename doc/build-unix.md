@@ -1,10 +1,3 @@
-# UNIX BUILD NOTES
-Some notes on how to build ION Core in Unix.
-
-# UNIX BUILD NOTES
-Some notes on how to build ION in Unix.
-
-=======
 Table of Contents
 ------------------
 - [UNIX BUILD NOTES](#UNIX-BUILD-NOTES)
@@ -145,72 +138,55 @@ built by default.
 ### Fedora
 
 #### Dependency Build Instructions
+=======
+UNIX BUILD NOTES
+====================
+Some notes on how to build Ion Core in Unix.
 
-Build requirements:
+(for OpenBSD specific instructions, see [build-openbsd.md](build-openbsd.md))
 
-    sudo dnf install which gcc-c++ libtool make autoconf automake compat-openssl10-devel libevent-devel boost-devel libdb4-devel libdb4-cxx-devel gmp-devel python3
+Base build dependencies
+-----------------------
+Building the dependencies and Ion Core requires some essential build tools and libraries to be installed before.
 
-Optional:
+Run the following commands to install required packages:
 
-    sudo dnf install miniupnpc-devel zeromq-devel
-
-To build with Qt 5 you need the following:
-
-    sudo dnf install qt5-qttools-devel qt5-qtbase-devel protobuf-devel
-
-libqrencode (optional) can be installed with:
-
-    sudo dnf install qrencode-devel
-
-
-## Notes
-The release is built with GCC and then "strip iond" to strip the debug
-symbols, which reduces the executable size by about 90%.
-
-
-## miniupnpc
-
-[miniupnpc](http://miniupnp.free.fr/) may be used for UPnP port mapping.  It can be downloaded from [here](
-http://miniupnp.tuxfamily.org/files/).  UPnP support is compiled in and
-turned off by default.  See the configure options for upnp behavior desired:
-
-	--without-miniupnpc      No UPnP support miniupnp not required
-	--disable-upnp-default   (the default) UPnP support turned off by default at runtime
-	--enable-upnp-default    UPnP support turned on by default at runtime
-
-To build:
-
-    tar -xzvf miniupnpc-1.6.tar.gz
-    cd miniupnpc-1.6
-    make
-    sudo su
-    make install
-
-
-## Berkeley DB
-
-It is recommended to use Berkeley DB 4.8. If you have to build it yourself,
-you can use [the installation script included in contrib/](/contrib/install_db4.sh)
-like so:
-
-```shell
-./contrib/install_db4.sh `pwd`
+##### Debian/Ubuntu:
+```bash
+$ sudo apt-get install curl build-essential libtool autotools-dev automake pkg-config python3 bsdmainutils cmake
 ```
 
-from the root of the repository.
+##### Fedora:
+```bash
+$ sudo dnf install gcc-c++ libtool make autoconf automake python3 cmake libstdc++-static patch
+```
 
-**Note**: You only need Berkeley DB if the wallet is enabled (see [*Disable-wallet mode*](/doc/build-unix.md#disable-wallet-mode)).
+##### Arch Linux:
+```bash
+$ pacman -S base-devel python3 cmake
+```
 
-## Boost
-If you need to build Boost yourself:
+##### Alpine Linux:
+```sh
+$ sudo apk --update --no-cache add autoconf automake cmake curl g++ gcc libexecinfo-dev libexecinfo-static libtool make perl pkgconfig python3 patch linux-headers
+```
+
+##### FreeBSD/OpenBSD:
+```bash
+pkg_add gmake cmake libtool
+pkg_add autoconf # (select highest version, e.g. 2.69)
+pkg_add automake # (select highest version, e.g. 1.15)
+pkg_add python # (select highest version, e.g. 3.5)
+```
 
 Building
 --------
 
 Follow the instructions in [build-generic](build-generic.md)
 
-## Security
-To help make your ION Core installation more secure by making certain attacks impossible to
+Security
+--------
+To help make your Ion installation more secure by making certain attacks impossible to
 exploit even if a vulnerability is found, binaries are hardened by default.
 This can be disabled with:
 
@@ -221,10 +197,12 @@ Hardening Flags:
 
 
 Hardening enables the following features:
-* _Position Independent Executable_: Build position independent code to take advantage of Address Space Layout Randomization
+
+* Position Independent Executable
+    Build position independent code to take advantage of Address Space Layout Randomization
     offered by some kernels. Attackers who can cause execution of code at an arbitrary memory
     location are thwarted if they don't know where anything useful is located.
-    The stack and heap are randomly located by default, but this allows the code section to be
+    The stack and heap are randomly located by default but this allows the code section to be
     randomly located as well.
 
     On an AMD64 processor where a library was not compiled with -fPIC, this will cause an error
@@ -239,8 +217,9 @@ Hardening enables the following features:
      TYPE
     ET_DYN
 
-* _Non-executable Stack_: If the stack is executable then trivial stack-based buffer overflow exploits are possible if
-    vulnerable buffers are found. By default, ION Core should be built with a non-executable stack
+* Non-executable Stack
+    If the stack is executable then trivial stack based buffer overflow exploits are possible if
+    vulnerable buffers are found. By default, Ion Core should be built with a non-executable stack
     but if one of the libraries it uses asks for an executable stack or someone makes a mistake
     and uses a compiler extension which requires an executable stack, it will silently build an
     executable without the non-executable stack protection.
@@ -248,8 +227,7 @@ Hardening enables the following features:
     To verify that the stack is non-executable after compiling use:
     `scanelf -e ./iond`
 
-    The output should contain:
-
+    the output should contain:
 	STK/REL/PTL
 	RW- R-- RW-
 
@@ -257,14 +235,15 @@ Hardening enables the following features:
 
 Disable-wallet mode
 --------------------
-**Note:** This functionality is not yet completely implemented, and compilation using the below option will currently fail.
-
-When the intention is to run only a P2P node without a wallet, ION Core may be compiled in
+When the intention is to run only a P2P node without a wallet, Ion Core may be compiled in
 disable-wallet mode with:
 
-    ./configure --disable-wallet
+    ./configure --prefix=<prefix> --disable-wallet
 
 In this case there is no dependency on Berkeley DB 4.8.
+
+Mining is also possible in disable-wallet mode, but only using the `getblocktemplate` RPC
+call not `getwork`.
 
 Additional Configure Flags
 --------------------------
@@ -272,25 +251,55 @@ A list of additional configure flags can be displayed with:
 
     ./configure --help
 
-ARM Cross-compilation
+Building on FreeBSD
+--------------------
+
+(TODO, this is untested, please report if it works and if changes to this documentation are needed)
+
+Building on FreeBSD is basically the same as on Linux based systems, with the difference that you have to use `gmake`
+instead of `make`.
+
+*Note on debugging*: The version of `gdb` installed by default is [ancient and considered harmful](https://wiki.freebsd.org/GdbRetirement).
+It is not suitable for debugging a multi-threaded C++ program, not even for getting backtraces. Please install the package `gdb` and
+use the versioned gdb command e.g. `gdb7111`.
+
+Building on OpenBSD
 -------------------
-These steps can be performed on, for example, an Ubuntu VM. The depends system
-will also work on other Linux distributions, however the commands for
-installing the toolchain will be different.
 
-Make sure you install the build requirements mentioned above.
-Then, install the toolchain and curl:
+(TODO, this is untested, please report if it works and if changes to this documentation are needed)
 
-    sudo apt-get install g++-arm-linux-gnueabihf curl
+**Important**: From OpenBSD 6.2 onwards a C++11-supporting clang compiler is
+part of the base image, and while building it is necessary to make sure that this
+compiler is used and not ancient g++ 4.2.1. This is done by appending
+`CC=cc CXX=c++` to configuration commands. Mixing different compilers
+within the same executable will result in linker errors.
 
-To build executables for ARM:
+```bash
+$ cd depends
+$ make CC=cc CXX=c++
+$ cd ..
+$ export AUTOCONF_VERSION=2.69 # replace this with the autoconf version that you installed
+$ export AUTOMAKE_VERSION=1.15 # replace this with the automake version that you installed
+$ ./autogen.sh
+$ ./configure --prefix=<prefix> CC=cc CXX=c++
+$ gmake # use -jX here for parallelism
+```
 
-    cd depends
-    make HOST=arm-linux-gnueabihf NO_QT=1
-    cd ..
-    ./autogen.sh
-    ./configure --prefix=$PWD/depends/arm-linux-gnueabihf --enable-glibc-back-compat --enable-reduce-exports LDFLAGS=-static-libstdc++
-    make
+OpenBSD Resource limits
+-------------------
+If the build runs into out-of-memory errors, the instructions in this section
+might help.
 
+The standard ulimit restrictions in OpenBSD are very strict:
 
-For further documentation on the depends system see [README.md](../depends/README.md) in the depends directory.
+    data(kbytes)         1572864
+
+This, unfortunately, in some cases not enough to compile some `.cpp` files in the project,
+(see issue [#6658](https://github.com/bitcoin/bitcoin/issues/6658)).
+If your user is in the `staff` group the limit can be raised with:
+
+    ulimit -d 3000000
+
+The change will only affect the current shell and processes spawned by it. To
+make the change system-wide, change `datasize-cur` and `datasize-max` in
+`/etc/login.conf`, and reboot.

@@ -1,5 +1,4 @@
-// Copyright (c) 2014 The Bitcoin developers
-// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2014-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -67,21 +66,6 @@ bool DecodeBase58(const char* psz, std::vector<unsigned char>& vch)
     while (it != b256.end())
         vch.push_back(*(it++));
     return true;
-}
-
-std::string DecodeBase58(const char* psz)
-{
-    std::vector<unsigned char> vch;
-    DecodeBase58(psz, vch);
-    std::stringstream ss;
-    ss << std::hex;
-
-    for (unsigned int i = 0; i < vch.size(); i++) {
-        unsigned char* c = &vch[i];
-        ss << std::setw(2) << std::setfill('0') << (int)c[0];
-    }
-
-    return ss.str();
 }
 
 std::string EncodeBase58(const unsigned char* pbegin, const unsigned char* pend)
@@ -196,8 +180,8 @@ bool CBase58Data::SetString(const char* psz, unsigned int nVersionBytes)
     vchVersion.assign(vchTemp.begin(), vchTemp.begin() + nVersionBytes);
     vchData.resize(vchTemp.size() - nVersionBytes);
     if (!vchData.empty())
-        memcpy(&vchData[0], &vchTemp[nVersionBytes], vchData.size());
-    memory_cleanse(&vchTemp[0], vchData.size());
+        memcpy(vchData.data(), vchTemp.data() + nVersionBytes, vchData.size());
+    memory_cleanse(vchTemp.data(), vchTemp.size());
     return true;
 }
 
@@ -241,7 +225,7 @@ public:
     bool operator()(const CNoDestination& no) const { return false; }
 };
 
-} // anon namespace
+} // namespace
 
 bool CBitcoinAddress::Set(const CKeyID& id)
 {
@@ -278,7 +262,7 @@ CTxDestination CBitcoinAddress::Get() const
     if (!IsValid())
         return CNoDestination();
     uint160 id;
-    memcpy(&id, &vchData[0], 20);
+    memcpy(&id, vchData.data(), 20);
     if (vchVersion == Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS))
         return CKeyID(id);
     else if (vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS))
@@ -287,12 +271,29 @@ CTxDestination CBitcoinAddress::Get() const
         return CNoDestination();
 }
 
+bool CBitcoinAddress::GetIndexKey(uint160& hashBytes, int& type) const
+{
+    if (!IsValid()) {
+        return false;
+    } else if (vchVersion == Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS)) {
+        memcpy(&hashBytes, &vchData[0], 20);
+        type = 1;
+        return true;
+    } else if (vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS)) {
+        memcpy(&hashBytes, &vchData[0], 20);
+        type = 2;
+        return true;
+    }
+
+    return false;
+}
+
 bool CBitcoinAddress::GetKeyID(CKeyID& keyID) const
 {
     if (!IsValid() || vchVersion != Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS))
         return false;
     uint160 id;
-    memcpy(&id, &vchData[0], 20);
+    memcpy(&id, vchData.data(), 20);
     keyID = CKeyID(id);
     return true;
 }
@@ -359,31 +360,6 @@ public:
         return EncodeBase58Check(data);
     }
 
-/*
-    std::string operator()(const WitnessV0KeyHash& id) const
-    {
-        std::vector<unsigned char> data = {0};
-        ConvertBits<8, 5, true>(data, id.begin(), id.end());
-        return bech32::Encode(m_params.Bech32HRP(), data);
-    }
-
-    std::string operator()(const WitnessV0ScriptHash& id) const
-    {
-        std::vector<unsigned char> data = {0};
-        ConvertBits<8, 5, true>(data, id.begin(), id.end());
-        return bech32::Encode(m_params.Bech32HRP(), data);
-    }
-
-    std::string operator()(const WitnessUnknown& id) const
-    {
-        if (id.version < 1 || id.version > 16 || id.length < 2 || id.length > 40) {
-            return {};
-        }
-        std::vector<unsigned char> data = {(unsigned char)id.version};
-        ConvertBits<8, 5, true>(data, id.program, id.program + id.length);
-        return bech32::Encode(m_params.Bech32HRP(), data);
-    }
-*/
     std::string operator()(const CNoDestination& no) const { return {}; }
 };
 

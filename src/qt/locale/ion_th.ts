@@ -22,14 +22,6 @@
         <translation>&amp;คัดลอก</translation>
     </message>
     <message>
-        <source>Show QR code for the currently selected address</source>
-        <translation>แสดง QR code สำหรับที่อยู่ที่ถูกเลือกในขณะนี้</translation>
-    </message>
-    <message>
-        <source>&amp;Show QR code</source>
-        <translation>&amp;แสดง QR code</translation>
-    </message>
-    <message>
         <source>Delete the currently selected address from the list</source>
         <translation>ลบที่อยู่ที่เลือกไว้ในขณะนี้จากรายการ</translation>
     </message>
@@ -51,11 +43,11 @@
     </message>
     <message>
         <source>Choose the address to send coins to</source>
-        <translation>เลือกที่อยู่เพื่อส่งเหรียญ</translation>
+        <translation>เลือกที่อยู่เพื่อส่งเหรียญไปไว้</translation>
     </message>
     <message>
         <source>Choose the address to receive coins with</source>
-        <translation>เลือกที่อยู่เพื่อรับเหรียญ</translation>
+        <translation>เลือกที่อยู่เพื่อส่งเหรียญไปไว้</translation>
     </message>
     <message>
         <source>C&amp;hoose</source>
@@ -79,23 +71,15 @@
     </message>
     <message>
         <source>&amp;Copy Address</source>
-        <translation>&amp;คัดลอกที่อยู่</translation>
+        <translation>คัดลอกที่อยู่</translation>
     </message>
     <message>
         <source>Copy &amp;Label</source>
-        <translation>คัดลอก&amp;ป้ายชื่อ</translation>
+        <translation>คัดลอกป้ายชื่อ</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;แก้ไข</translation>
-    </message>
-    <message>
-        <source>&amp;Show address QR code</source>
-        <translation>&amp;แสดง ที่อยู่ QR code</translation>
-    </message>
-    <message>
-        <source>QR code</source>
-        <translation>โค้ด QR</translation>
+        <translation>แก้ไข</translation>
     </message>
     <message>
         <source>Export Address List</source>
@@ -103,7 +87,7 @@
     </message>
     <message>
         <source>Comma separated file (*.csv)</source>
-        <translation>รูปแบบการเก็บข้อมูลตัวเลข และตัวอักษร (*.csv)</translation>
+        <translation>Comma separated file (*.csv)</translation>
     </message>
     <message>
         <source>Exporting Failed</source>
@@ -130,45 +114,6 @@
     </message>
 </context>
 <context>
-    <name>AppearanceWidget</name>
-    <message>
-        <source>Lighter</source>
-        <translation>เบาลง</translation>
-    </message>
-    <message>
-        <source>Bolder</source>
-        <translation>โดดเด่นยิ่งขึ้น</translation>
-    </message>
-    <message>
-        <source>Font Weight Normal:</source>
-        <translation>ค่าอักษรปกติ:</translation>
-    </message>
-    <message>
-        <source>Smaller</source>
-        <translation>เล็กลง</translation>
-    </message>
-    <message>
-        <source>Bigger</source>
-        <translation>ใหญ่ขึ้น</translation>
-    </message>
-    <message>
-        <source>Font Scale:</source>
-        <translation>ค่าตัวอักษร:</translation>
-    </message>
-    <message>
-        <source>Font Family:</source>
-        <translation>รูปแบบตัวอักษร:</translation>
-    </message>
-    <message>
-        <source>Theme:</source>
-        <translation>ธีม</translation>
-    </message>
-    <message>
-        <source>Font Weight Bold:</source>
-        <translation>ค่าอักษรตัวหนา:</translation>
-    </message>
-</context>
-<context>
     <name>AskPassphraseDialog</name>
     <message>
         <source>Passphrase Dialog</source>
@@ -180,19 +125,15 @@
     </message>
     <message>
         <source>New passphrase</source>
-        <translation>รหัสผ่านใหม่</translation>
+        <translation>รหัสผา่นใหม่</translation>
     </message>
     <message>
         <source>Repeat new passphrase</source>
         <translation>กรุณากรอกรหัสผ่านใหม่อีกครั้งหนึ่ง</translation>
     </message>
     <message>
-        <source>Show password</source>
-        <translation>แสดงรหัสผ่าน</translation>
-    </message>
-    <message>
         <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation>ใส่วลีรหัสผ่านใหม่ลงในกระเป๋าสตางค์ &lt;br/&gt; โปรดใช้วลีรหัสผ่านที่มี&lt;b&gt;อักขระสุ่ม 10 ตัวขึ้นไป&lt;/b&gt;, หรือ&lt;b&gt;มากกว่าหรือมากกว่า 8 คำ&lt;/b&gt;</translation>
+        <translation>ใส่วลีรหัสผ่านใหม่ลงใน Wallet &lt;br/&gt; โปรดใช้วลีรหัสผ่านที่มี&lt;b&gt;อักขระสุ่ม 10 ตัวขึ้นไป&lt;/b&gt;, หรือ&lt;b&gt;มากกว่าหรือมากกว่า 8 คำ&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Encrypt wallet</source>
@@ -200,23 +141,23 @@
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation>การดำเนินการนี้ต้องการรหัสวลีของคุณเพื่อปลดล็อคกระเป๋าสตางค์ของคุณ</translation>
+        <translation>การดำเนินการนี้ต้องการรหัสวลีของคุณเพื่อปลดล็อค Wallet ของคุณ</translation>
     </message>
     <message>
         <source>Unlock wallet for mixing only</source>
-        <translation>ปลดล็อคกระเป๋าสตางค์สำหรับการผสมเท่านั้น</translation>
+        <translation>ปลดล็อค Wallet สำหรับการผสมเท่านั้น</translation>
     </message>
     <message>
         <source>Unlock wallet</source>
-        <translation>ปลดล็อคกระเป๋าสตางค์</translation>
+        <translation>ปลดล็อค Wallet</translation>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to decrypt the wallet.</source>
-        <translation>การดำเนินการนี้ต้องการรหัสวลีของคุณเพื่อถอดรหัสกระเป๋าสตางค์</translation>
+        <translation>การดำเนินการนี้ต้องการรหัสวลีของคุณเพื่อถอดรหัส wallet </translation>
     </message>
     <message>
         <source>Decrypt wallet</source>
-        <translation>ถอดรหัสกระเป๋าสตางค์</translation>
+        <translation>ถอดรหัส Wallet</translation>
     </message>
     <message>
         <source>Change passphrase</source>
@@ -224,7 +165,7 @@
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase to the wallet.</source>
-        <translation>ใส่รหัสผ่านเก่าและรหัสวลีใหม่ไปยังกระเป๋าสตางค์</translation>
+        <translation>ใส่รหัสผ่านเก่าและรหัสวลีใหม่ไปยัง wallet </translation>
     </message>
     <message>
         <source>Confirm wallet encryption</source>
@@ -236,23 +177,23 @@
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
-        <translation>คุณแน่ใจหรือไม่ว่าต้องการเข้ารหัสข้อมูลกระเป๋าสตางค์ของคุณ?</translation>
+        <translation>คุณแน่ใจหรือไม่ว่าต้องการเข้ารหัสข้อมูล Wallet ของคุณ?</translation>
     </message>
     <message>
         <source>Wallet encrypted</source>
-        <translation>กระเป๋าสตางค์ถูกเข้ารหัสเรียบร้อยแล้ว</translation>
+        <translation>Wallet ถูกเข้ารหัสเรียบร้อยแล้ว</translation>
     </message>
     <message>
         <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your funds from being stolen by malware infecting your computer.</source>
-        <translation>%1 จะปิดตอนนี้เพื่อสิ้นสุดขั้นตอนการเข้ารหัส โปรดทราบว่าการเข้ารหัสข้อมูลกระเป๋าสตางค์ของคุณไม่สามารถป้องกันเงินจากการถูกโจรกรรมจากคอมพิวเตอร์ของคุณได้อย่างเต็มที่</translation>
+        <translation>%1 จะปิดตอนนี้เพื่อสิ้นสุดขั้นตอนการเข้ารหัส โปรดทราบว่าการเข้ารหัสข้อมูล Wallet ของคุณไม่สามารถป้องกันเงินจากการถูกโจรกรรมจากคอมพิวเตอร์ของคุณได้อย่างเต็มที่</translation>
     </message>
     <message>
         <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. Previous backups of the unencrypted wallet file contain the same HD seed and still have full access to all your funds just like the new, encrypted wallet.</source>
-        <translation>ข้อมูลสำคัญ: การสำรองข้อมูลใดๆก่อนหน้านี้ในไฟล์กระเป๋าสตางค์ควรจะถูกแทนที่โดยใช้ไฟล์กระเป๋าสตางค์ที่เข้ารหัสลับใหม่ที่สร้างขึ้น การสำรองข้อมูลก่อนหน้าของไฟล์กระเป๋าสตางค์ที่ไม่ได้เข้ารหัสด้วย HD Seed เดียวกันจะยังคงสามารถเข้าถึงกองทุนของคุณได้อย่างเต็มที่เช่นเดียวกับกระเป๋าสตางค์ใหม่ที่มีการเข้ารหัสลับใหม่</translation>
+        <translation>ข้อมูลสำคัญ: การสำรองข้อมูลใดๆที่คุณได้สำรองจากไฟล์ Wallet จะถูกแทนที่ด้วยไฟล์ Wallet ที่เข้ารหัสที่สร้างใหม่ การสำรองข้อมูลก่อนหน้าของไฟล์ Wallet ที่ไม่ได้เข้ารหัสมี HD Seed เดียวกันและยังคงสามารถเข้าถึงกองทุนของคุณได้อย่างเต็มที่เช่นเดียวกับ Wallet ใหม่ที่มีการเข้ารหัส</translation>
     </message>
     <message>
         <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation>ข้อมูลสำคัญ: การสำรองข้อมูลใดๆก่อนหน้านี้ในไฟล์กระเป๋าสตางค์ควรจะถูกแทนที่โดยใช้ไฟล์กระเป๋าสตางค์ที่เข้ารหัสลับใหม่ที่สร้างขึ้น  เพื่อความปลอดภัยการสำรองข้อมูลก่อนหน้านี้ในกระเป๋าสตางค์จะใช้งานไม่ได้เมื่อทันทีเมื่อคุณเริ่มใช้กระเป๋าสตางค์ที่เข้ารหัสลับใหม่</translation>
+        <translation>ข้อมูลสำคัญ: การสำรองข้อมูลก่อนหน้าใด ๆ ที่คุณทำจากกระเป๋าสตางค์ของคุณควรถูกแทนที่โดยใช้ไฟล์กระเป๋าสตางค์ที่เข้ารหัสลับใหม่ที่สร้างขึ้น เพื่อความปลอดภัยการสำรองข้อมูลก่อนหน้าของไฟล์ Wallet ที่ไม่ได้เข้ารหัสจะใช้งานไม่ได้เมื่อคุณเริ่มใช้ Wallet ที่เข้ารหัสใหม่</translation>
     </message>
     <message>
         <source>Wallet encryption failed</source>
@@ -260,7 +201,7 @@
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation>การเข้ารหัสกระเป๋าสตางค์ล้มเหลวเนื่องจากข้อผิดพลาดภายใน กระเป็าสตางค์ของคุณไม่ได้รับการเข้ารหัส</translation>
+        <translation>การเข้ารหัส Wallet ล้มเหลวเนื่องจากข้อผิดพลาดภายใน Wallet ของคุณไม่ได้รับการเข้ารหัส</translation>
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -268,23 +209,23 @@
     </message>
     <message>
         <source>Wallet unlock failed</source>
-        <translation>ปลดล็อคกระเป๋าสตางค์ล้มเหลว</translation>
+        <translation>ปลดล็อค Wallet ล้มเหลว</translation>
     </message>
     <message>
         <source>The passphrase entered for the wallet decryption was incorrect.</source>
-        <translation>รหัสผ่านของวลีสำหรับการเข้าถึงกระเป๋าสตางค์ไม่ถูกต้อง </translation>
+        <translation>รหัสผ่านวลีสำหรับเข้าถึง Wallet ไม่ถูกต้อง </translation>
     </message>
     <message>
         <source>Wallet decryption failed</source>
-        <translation>การเข้าถึงกระเป๋าสตางค์ล้มเหลว</translation>
+        <translation>การเข้าถึง Wallet ล้มเหลว</translation>
     </message>
     <message>
         <source>Wallet passphrase was successfully changed.</source>
-        <translation>เปลี่ยนวลีรหัสผ่านเรียบร้อยแล้ว</translation>
+        <translation>เปลี่ยนรหัสผ่านวลีเรียบร้อยแล้ว</translation>
     </message>
     <message>
         <source>Warning: The Caps Lock key is on!</source>
-        <translation>คำเตือน: ปุ่มแป้นตรึงตัวอักษรใหญ่เปิดอยู่</translation>
+        <translation>คำเตือน: ปุ่ม Caps Lock เปิดอยู่</translation>
     </message>
 </context>
 <context>
@@ -299,13 +240,6 @@
     </message>
 </context>
 <context>
-    <name>BitcoinAmountField</name>
-    <message>
-        <source>Amount in %1</source>
-        <translation>จำนวนเงินใน %1</translation>
-    </message>
-</context>
-<context>
     <name>BitcoinGUI</name>
     <message>
         <source>A fatal error occurred. Ion Core can no longer continue safely and will quit.</source>
@@ -317,11 +251,11 @@
     </message>
     <message>
         <source>Wallet</source>
-        <translation>กระเป๋าสตางค์</translation>
+        <translation>Wallet </translation>
     </message>
     <message>
         <source>Node</source>
-        <translation>ปุ่ม</translation>
+        <translation>Node/โหนด</translation>
     </message>
     <message>
         <source>&amp;Overview</source>
@@ -329,7 +263,7 @@
     </message>
     <message>
         <source>Show general overview of wallet</source>
-        <translation>แสดงภาพรวมทั่วไปของกระเป๋าสตางค์</translation>
+        <translation>แสดงภาพรวมทั่วไปของกระเป๋าเงิน</translation>
     </message>
     <message>
         <source>&amp;Send</source>
@@ -349,7 +283,7 @@
     </message>
     <message>
         <source>&amp;Transactions</source>
-        <translation>&amp;การทำธุรกรรม</translation>
+        <translation>การทำธุรกรรม</translation>
     </message>
     <message>
         <source>Browse transaction history</source>
@@ -357,11 +291,11 @@
     </message>
     <message>
         <source>&amp;Masternodes</source>
-        <translation>&amp;Masternodes</translation>
+        <translation>Masternodes</translation>
     </message>
     <message>
         <source>Browse masternodes</source>
-        <translation>เรียกดูบัญชี masternodes</translation>
+        <translation>Browse masternodes</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
@@ -392,10 +326,6 @@
         <translation>&amp;เกี่ยวกับ %1</translation>
     </message>
     <message>
-        <source>PrivateSend coins to a Dash address</source>
-        <translation>PrivateSend เหรียญไปที่ที่อยู่ Dash</translation>
-    </message>
-    <message>
         <source>Modify configuration options for %1</source>
         <translation>ปรับปรุง ข้อมูลการตั้งค่าตัวเลือก สำหรับ %1</translation>
     </message>
@@ -409,43 +339,43 @@
     </message>
     <message>
         <source>&amp;Encrypt Wallet...</source>
-        <translation>&amp;เข้ารหัสกระเป๋าสตางค์</translation>
+        <translation>เข้ารหัส  Wallet </translation>
     </message>
     <message>
         <source>Encrypt the private keys that belong to your wallet</source>
-        <translation>เข้ารหัส private keys สำหรับกระเป๋าสตางค์ของท่าน</translation>
+        <translation>เข้ารหัส private keys สำหรับ Wallet ของท่าน</translation>
     </message>
     <message>
         <source>&amp;Backup Wallet...</source>
-        <translation>&amp;สำรองกระเป๋าสตางค์...</translation>
+        <translation>&amp;สำรอง Wallet ...</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
-        <translation>สำรองกระเป๋าเงินไปยังที่เก็บอื่น</translation>
+        <translation>สำรอง กระเป๋าเงินไปยัง ที่เก็บอื่น</translation>
     </message>
     <message>
         <source>&amp;Change Passphrase...</source>
-        <translation>&amp;เปลี่ยนวลีรหัสผ่าน...</translation>
+        <translation>&amp;เปลี่ยนรหัสผ่าน...</translation>
     </message>
     <message>
         <source>Change the passphrase used for wallet encryption</source>
-        <translation>เปลี่ยนรหัสผ่านที่ใช้สำหรับการเข้าถึงรหัสลับของกระเป๋าสตางค์</translation>
+        <translation>เปลี่ยนรหัสผ่านที่ใช้สำหรับการเข้ารหัสกระเป๋าเงิน</translation>
     </message>
     <message>
         <source>&amp;Unlock Wallet...</source>
-        <translation>&amp;ปลดล็อคกระเป๋าสตางค์</translation>
+        <translation>ปลดล็อค Wallet</translation>
     </message>
     <message>
         <source>Unlock wallet</source>
-        <translation>ปลดล็อคกระเป๋าสตางค์</translation>
+        <translation>ปลดล็อค Wallet </translation>
     </message>
     <message>
         <source>&amp;Lock Wallet</source>
-        <translation>ล็อคกระเป๋าสตางค์</translation>
+        <translation>ล็อค Wallet</translation>
     </message>
     <message>
         <source>Sign &amp;message...</source>
-        <translation>การลงนาม &amp;ข้อความ...</translation>
+        <translation>เซ็นต์ชื่อด้วย &amp;ข้อความ...</translation>
     </message>
     <message>
         <source>Sign messages with your Ion addresses to prove you own them</source>
@@ -461,15 +391,15 @@
     </message>
     <message>
         <source>&amp;Information</source>
-        <translation>&amp;ข้อมูล</translation>
+        <translation>ข้อมูล</translation>
     </message>
     <message>
         <source>Show diagnostic information</source>
-        <translation>แสดงข้อมูลการวิเคราะห์</translation>
+        <translation>แสดงข้อมูลการวินิจฉัย</translation>
     </message>
     <message>
         <source>&amp;Debug console</source>
-        <translation>&amp;การแก้ไขจุดบกพร่อง</translation>
+        <translation>คอนโซลการแก้ไขจุดบกพร่อง</translation>
     </message>
     <message>
         <source>Open debugging console</source>
@@ -477,7 +407,7 @@
     </message>
     <message>
         <source>&amp;Network Monitor</source>
-        <translation>&amp;ตรวจสอบเครือข่าย</translation>
+        <translation>ตัวตรวจสอบเครือข่าย</translation>
     </message>
     <message>
         <source>Show network monitor</source>
@@ -485,7 +415,7 @@
     </message>
     <message>
         <source>&amp;Peers list</source>
-        <translation>&amp;รายชื่อ Peers</translation>
+        <translation>รายชื่อ Peers</translation>
     </message>
     <message>
         <source>Show peers info</source>
@@ -493,15 +423,15 @@
     </message>
     <message>
         <source>Wallet &amp;Repair</source>
-        <translation>กระเป๋าสตางค์ &amp;การซ่อมแซม</translation>
+        <translation>ซ่อมแซม Wallet</translation>
     </message>
     <message>
         <source>Show wallet repair options</source>
-        <translation>แสดงตัวเลือกการซ่อมแซมกระเป๋าสตางค์</translation>
+        <translation>แสดงตัวเลือกการซ่อมแซม Wallet </translation>
     </message>
     <message>
         <source>Open Wallet &amp;Configuration File</source>
-        <translation>เปิดกระเป๋าสตางค์  &amp;การกำหนดค่าไฟล์</translation>
+        <translation>เปิดไฟล์การกำหนดค่า Wallet </translation>
     </message>
     <message>
         <source>Open configuration file</source>
@@ -509,15 +439,15 @@
     </message>
     <message>
         <source>Show Automatic &amp;Backups</source>
-        <translation>แสดงอัตโนมัติ &amp;การสำรองข้อมูล</translation>
+        <translation>แสดงการสำรองข้อมูลอัตโนมัติ</translation>
     </message>
     <message>
         <source>Show automatically created wallet backups</source>
-        <translation>แสดงการสำรองข้อมูลกระเป๋าสตางค์ที่สร้างขึ้นโดยอัตโนมัติ</translation>
+        <translation>แสดงการสำรองข้อมูล Wallet ที่สร้างขึ้นโดยอัตโนมัติ</translation>
     </message>
     <message>
         <source>&amp;Sending addresses...</source>
-        <translation>&amp;กำลังส่งข้อมูลที่อยู่...</translation>
+        <translation>&amp;ที่เก็บเงิน ที่จะส่ง bitcoin</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -525,7 +455,7 @@
     </message>
     <message>
         <source>&amp;Receiving addresses...</source>
-        <translation>&amp;ที่อยู่ผู้รับ</translation>
+        <translation>ที่อยู่ผู้รับ</translation>
     </message>
     <message>
         <source>Show the list of used receiving addresses and labels</source>
@@ -533,7 +463,7 @@
     </message>
     <message>
         <source>Open &amp;URI...</source>
-        <translation>เปิด &amp;URI...</translation>
+        <translation>เปิด URI</translation>
     </message>
     <message>
         <source>Open a ion: URI or payment request</source>
@@ -541,7 +471,7 @@
     </message>
     <message>
         <source>&amp;Command-line options</source>
-        <translation>&amp;ตัวเลือก Command-line</translation>
+        <translation>ตัวเลือก Command-line</translation>
     </message>
     <message>
         <source>Show the %1 help message to get a list with possible Ion command-line options</source>
@@ -552,12 +482,8 @@
         <translation>%1 ไคลเอนต์</translation>
     </message>
     <message>
-        <source>Wallet is &lt;b&gt;unencrypted&lt;/b&gt;</source>
-        <translation>กระเป๋าสตางค์ &lt;b&gt;ไม่ได้ถูกเข้ารหัส&lt;/b&gt;</translation>
-    </message>
-    <message>
         <source>&amp;PrivateSend information</source>
-        <translation>&amp;ข้อมูล PrivateSend</translation>
+        <translation>ข้อมูล PrivateSend</translation>
     </message>
     <message>
         <source>Show the PrivateSend basic information</source>
@@ -565,19 +491,19 @@
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;ไฟล์</translation>
+        <translation>ไฟล์</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;การตั้งค่า</translation>
+        <translation>การตั้งค่า</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>&amp;เครื่องมือ</translation>
+        <translation>เครื่องมือ</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;ช่วยเหลือ</translation>
+        <translation>ช่วยเหลือ</translation>
     </message>
     <message>
         <source>Tabs toolbar</source>
@@ -656,30 +582,6 @@
         <translation>ข้อมูล</translation>
     </message>
     <message>
-        <source>Received and sent multiple transactions</source>
-        <translation>การรับและส่งแบบหลากหลายธุรกรรม</translation>
-    </message>
-    <message>
-        <source>Sent multiple transactions</source>
-        <translation>ส่งแบบหลากหลายธุรกรรม</translation>
-    </message>
-    <message>
-        <source>Received multiple transactions</source>
-        <translation>รับแบบหลากหลายธุรกรรม</translation>
-    </message>
-    <message>
-        <source>Sent Amount: %1
-</source>
-        <translation>ส่งเป็นจำนวน %1
-</translation>
-    </message>
-    <message>
-        <source>Received Amount: %1
-</source>
-        <translation>รับเป็นจำนวน %1
-</translation>
-    </message>
-    <message>
         <source>Date: %1
 </source>
         <translation>วันที่: %1
@@ -722,16 +624,27 @@
         <translation>&lt;b&gt;เปิดใช้งาน&lt;/b&gt;การสร้างคีย์ HD แล้ว</translation>
     </message>
     <message>
+        <source>HD key generation is &lt;b&gt;disabled&lt;/b&gt;</source>
+        <translation>การสร้างคีย์ HD ถูก&lt;b&gt;ปิดใช้งาน&lt;/b&gt;</translation>
+    </message>
+    <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
         <translation>ระเป๋าเงินถูก &lt;b&gt;เข้ารหัส&lt;/b&gt; และในขณะนี้ &lt;b&gt;ปลดล็อคแล้ว&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for mixing only</source>
-        <translation>กระเป๋าสตางค์ &lt;b&gt;เข้ารหัสแล้ว&lt;/b&gt;และขณะนี้&lt;b&gt;ปลดล็อก&lt;/b&gt;สำหรับการผสมเท่านั้น</translation>
+        <translation>Wallet &lt;b&gt;เข้ารหัสแล้ว&lt;/b&gt;และขณะนี้&lt;b&gt;ปลดล็อก&lt;/b&gt;สำหรับการผสมเท่านั้น</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>กระเป๋าเงินถูก &lt;b&gt;เข้ารหัส&lt;/b&gt; และในปัจจุบัน &lt;b&gt;ล็อค &lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>ClientModel</name>
+    <message>
+        <source>Network Alert</source>
+        <translation>การแจ้งเตือนเครือข่าย</translation>
     </message>
 </context>
 <context>
@@ -801,6 +714,10 @@
         <translation>รับโดยที่เก็บ</translation>
     </message>
     <message>
+        <source>PS Rounds</source>
+        <translation>PS รอบ</translation>
+    </message>
+    <message>
         <source>Date</source>
         <translation>วันที่</translation>
     </message>
@@ -850,7 +767,7 @@
     </message>
     <message>
         <source>Copy bytes</source>
-        <translation>คัดลอกหน่วยของข้อมูลคอมพิวเตอร์</translation>
+        <translation>คัดลอกไบต์</translation>
     </message>
     <message>
         <source>Copy dust</source>
@@ -862,7 +779,11 @@
     </message>
     <message>
         <source>Please switch to "List mode" to use this function.</source>
-        <translation>กรุณาเปลี่ยนเป็น "List mode" เพื่อใช้ฟังก์ชั่นนี้</translation>
+        <translation>โปรดเปลี่ยนเป็น List mode เพื่อใช้ฟังก์ชั่นนี้</translation>
+    </message>
+    <message>
+        <source>Non-anonymized input selected. &lt;b&gt;PrivateSend will be disabled.&lt;/b&gt;&lt;br&gt;&lt;br&gt;If you still want to use PrivateSend, please deselect all non-anonymized inputs first and then check the PrivateSend checkbox again.</source>
+        <translation>อินพุตแบบไม่ระบุตัวตนอินที่ถูกเลือก &lt;b&gt; PrivateSend จะถูกปิดการใช้งาน &lt;/b&gt;&lt;br&gt;&lt;br&gt; หากคุณยังต้องการใช้ PrivateSend โปรดยกเลิกการเลือกอินพุตที่ไม่ระบุตัวตนทั้งหมดก่อนแล้วจึงเช็คในช่อง PrivateSend อีกครั้ง</translation>
     </message>
     <message>
         <source>(%1 locked)</source>
@@ -883,14 +804,6 @@
     <message>
         <source>Can vary +/- %1 duff(s) per input.</source>
         <translation>สามารถเปลี่ยนแปลงได้ + / - %1 duff (s) ต่อรายการ</translation>
-    </message>
-    <message>
-        <source>Some coins were unselected because they were spent.</source>
-        <translation>บางเหรียญถูกยกเลิกการเลือกเพราะถูกใช้ไปแล้ว</translation>
-    </message>
-    <message>
-        <source>Some coins were unselected because they do not have enough mixing rounds.</source>
-        <translation>บางเหรียญถูกยกเลิกการเลือกเพราะมีจำนวนไม่พอให้ผสม</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -925,11 +838,15 @@
     </message>
     <message>
         <source>&amp;Address</source>
-        <translation>&amp;ที่อยู่</translation>
+        <translation>&amp;ที่เก็บ</translation>
     </message>
     <message>
         <source>The address associated with this address list entry. This can only be modified for sending addresses.</source>
         <translation>ที่เก็บที่เกี่ยวข้องกับ ที่เก็บที่แสดงรายการนี้ การปรับปรุงนี้ทำได้สำหรับ ที่เก็บเงินที่จะใช่ส่งเงิน เท่านั้น</translation>
+    </message>
+    <message>
+        <source>New receiving address</source>
+        <translation>ที่อยู่ผู้รับใหม่</translation>
     </message>
     <message>
         <source>New sending address</source>
@@ -953,7 +870,7 @@
     </message>
     <message>
         <source>Could not unlock wallet.</source>
-        <translation>ไม่สามารถปลดล็อคกระเป๋าสตางค์ได้</translation>
+        <translation>ไม่สามารถปลดล็อค Wallet  ได้</translation>
     </message>
     <message>
         <source>New key generation failed.</source>
@@ -1018,22 +935,6 @@
         <translation>เลือกไดเร็กทอรี่ข้อมูลตั้งแต่เริ่มต้นสตาร์ทอัพ (ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
-        <source>Set the font family. Possible values: %1. (default: %2)</source>
-        <translation>ตั้งค่าแบบอักษร ค่าที่เป็นไปได้: %1. (ค่าเริ่มต้น: %2)</translation>
-    </message>
-    <message>
-        <source>Set a scale factor which gets applied to the base font size. Possible range %1 (smallest fonts) to %2 (largest fonts). (default: %3)</source>
-        <translation>ตั้งค่าระดับที่ได้รับเพื่อนำไปใช้กับขนาดตัวอักษรฐาน ระดับเป็นไปได้ %1 (แบบอักษรที่มีขนาดเล็กที่สุด) ถึง %2 (แบบอักษรที่ใหญ่ที่สุด). (ค่าเริ่มต้น: %3)</translation>
-    </message>
-    <message>
-        <source>Set the font weight for bold texts. Possible range %1 to %2 (default: %3)</source>
-        <translation>ตั้งค่าของตัวอักษรสำหรับข้อความที่เป็นตัวหนา ช่วงที่เป็นไปได้ %1 ถึง %2 (เริ่มต้น: %3)</translation>
-    </message>
-    <message>
-        <source>Set the font weight for normal texts. Possible range %1 to %2 (default: %3)</source>
-        <translation>ตั้งค่าของตัวอักษรสำหรับข้อความปกติ ช่วงที่เป็นไปได้ %1 ถึง %2 (เริ่มต้น: %3)</translation>
-    </message>
-    <message>
         <source>Set language, for example "de_DE" (default: system locale)</source>
         <translation>ตั้งค่าภาษา ยกตัวอย่าง "de_DE" (ค่าเริ่มต้น: ภาษาท้องถิ่นของระบบ)</translation>
     </message>
@@ -1077,40 +978,12 @@
         <translation>นี่เป็นการรันโปรแกรมครั้งแรก ท่านสามารถเลือก ว่าจะเก็บข้อมูลไว้ที่ %1</translation>
     </message>
     <message>
-        <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2GB) starting with the earliest transactions in %3 when %4 initially launched.</source>
-        <translation>เมื่อคุณกด OK %1 จะเริ่มดาวน์โหลดและดำเนินการเต็ม %4 ของ block chain (%2GB) เริ่มต้นด้วยการทำธุรกรรมแรกสุดใน %3 เมื่อ %4 เริ่มดำเนินการในขั้นต้น</translation>
-    </message>
-    <message>
-        <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation>การซิงโครไนซ์ในขั้นต้นนี้เป็นที่ต้องการอย่างมาก และอาจจะปรากฏปัญหาของฮ​าร์ดแวร์กับคอมพิวเตอร์ของคุณที่อาจจะไม่ได้สังเกตมาก่อน ในแต่ละครั้งคุณดำเนินการ %1 มันจะดำเนินการดาวน์โหลดที่ค้างไว้</translation>
-    </message>
-    <message>
-        <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation>ถ้าคุณได้เลือกที่จะจำกัดตัวเก็บข้อมูลของ block chain (การตัดแต่ง) ข้อมูลในอดีตจะยังคงถูกดาวน์โหลดและดำเนินการ แต่จะถูกลบหลังจากนั้นเพื่อที่จะทำให้การใช้งานดิสก์ของคุณต่ำ</translation>
-    </message>
-    <message>
         <source>Use the default data directory</source>
         <translation>ใช้ไดเร็กทอรี่ข้อมูล ที่เป็นค่าเริ่มต้น</translation>
     </message>
     <message>
         <source>Use a custom data directory:</source>
         <translation>ใช้ไดเร็กทอรี่ข้อมูลที่ตั้งค่าเอง:</translation>
-    </message>
-    <message>
-        <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>
-        <translation>อย่างน้อย %1 GB ของข้อมูลจะถูกเก็บในแฟ้มข้อมูล และมันจะเติบโตขึ้นเมื่อเวลาผ่านไป</translation>
-    </message>
-    <message>
-        <source>Approximately %1 GB of data will be stored in this directory.</source>
-        <translation>ประมาณ %1 GB ของข้อมูลจะถูกเก็บอยู่ในแฟ้มเอกสารนี้</translation>
-    </message>
-    <message>
-        <source>%1 will download and store a copy of the Dash block chain.</source>
-        <translation>%1 จะกดาวน์โหลดและเก็บสำเนาของ Dash block chain</translation>
-    </message>
-    <message>
-        <source>The wallet will also be stored in this directory.</source>
-        <translation>กรเป๋าสตางค์จะถูกเก็บในแฟ้มข้อมูลนี้เช่นกัน</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1136,36 +1009,36 @@
         <translation>รูป</translation>
     </message>
     <message>
+        <source>Address</source>
+        <translation>ที่อยู่</translation>
+    </message>
+    <message>
         <source>Status</source>
         <translation>สถานะ</translation>
     </message>
     <message>
+        <source>Payee</source>
+        <translation>ผู้รับเงิน</translation>
+    </message>
+    <message>
         <source>0</source>
-        <translation>ศูนย์</translation>
+        <translation>0</translation>
     </message>
     <message>
         <source>Filter List:</source>
-        <translation>ตัวกรองบัญชีรายชื่อ</translation>
+        <translation>Filter List:</translation>
     </message>
     <message>
         <source>Filter masternode list</source>
-        <translation>ตัวกรองบัญชีรายชื่อ masternode</translation>
+        <translation>Filter masternode list</translation>
     </message>
     <message>
         <source>Node Count:</source>
         <translation>จำนวนโหนด:</translation>
     </message>
     <message>
-        <source>Show only masternodes this wallet has keys for.</source>
-        <translation>แสดงเพียงแค่ masternodes ที่กระเป๋าสตางค์นี้มีจำนวนคีย์</translation>
-    </message>
-    <message>
-        <source>My masternodes only</source>
-        <translation>บัญชี Masternodes ของฉันเท่านั้น</translation>
-    </message>
-    <message>
-        <source>Service</source>
-        <translation>การให้บริการ</translation>
+        <source>DIP3 Masternodes</source>
+        <translation>DIP3 Masternodes</translation>
     </message>
     <message>
         <source>PoSe Score</source>
@@ -1184,24 +1057,8 @@
         <translation>การชำระครั้งถัดไป</translation>
     </message>
     <message>
-        <source>Payout Address</source>
-        <translation>ที่อยู่การจ่ายเงิน</translation>
-    </message>
-    <message>
         <source>Operator Reward</source>
         <translation>รางวัลผู้ดำเนินการ</translation>
-    </message>
-    <message>
-        <source>Collateral Address</source>
-        <translation>ที่อยู่หลักประกัน</translation>
-    </message>
-    <message>
-        <source>Owner Address</source>
-        <translation>ที่อยู่เจ้าของบัญชี</translation>
-    </message>
-    <message>
-        <source>Voting Address</source>
-        <translation>ที่อยู่การลงคะแนนเสียง</translation>
     </message>
     <message>
         <source>Copy ProTx Hash</source>
@@ -1210,10 +1067,6 @@
     <message>
         <source>Copy Collateral Outpoint</source>
         <translation>Copy Collateral Outpoint</translation>
-    </message>
-    <message>
-        <source>Updating...</source>
-        <translation>กำลังอัพเดต...</translation>
     </message>
     <message>
         <source>ENABLED</source>
@@ -1242,14 +1095,6 @@
     <message>
         <source>NONE</source>
         <translation>ไม่มี</translation>
-    </message>
-    <message>
-        <source>Filter by any property (e.g. address or protx hash)</source>
-        <translation>กรองตามทรัพย์สินต่าง ๆ  (เช่นที่อยู่หรือ protx hash)</translation>
-    </message>
-    <message>
-        <source>Please wait...</source>
-        <translation>กรุณารอสักครู่...</translation>
     </message>
     <message>
         <source>Additional information for DIP3 Masternode %1</source>
@@ -1342,7 +1187,7 @@
     </message>
     <message>
         <source>Size of &amp;database cache</source>
-        <translation>ขนาดของ &amp;ฐานข้อมูล cache</translation>
+        <translation>ขนาดของ &amp;database cache</translation>
     </message>
     <message>
         <source>MB</source>
@@ -1350,7 +1195,7 @@
     </message>
     <message>
         <source>Number of script &amp;verification threads</source>
-        <translation>จำนวนของสคริปท์ &amp;หัวข้อการตรวจสอบ</translation>
+        <translation>จำนวนของสคริปท์ &amp;verification threads</translation>
     </message>
     <message>
         <source>(0 = auto, &lt;0 = leave that many cores free)</source>
@@ -1361,8 +1206,8 @@
         <translation>จำนวน Ion เพื่อไม่ระบุชื่อ</translation>
     </message>
     <message>
-        <source>&amp;Appearance</source>
-        <translation>&amp;ลักษณะ</translation>
+        <source>W&amp;allet</source>
+        <translation>Wallet</translation>
     </message>
     <message>
         <source>Show additional tab listing all your masternodes in first sub-tab&lt;br/&gt;and all masternodes on the network in second sub-tab.</source>
@@ -1382,7 +1227,7 @@
     </message>
     <message>
         <source>Show warning dialog when PrivateSend detects that wallet has very low number of keys left.</source>
-        <translation>แสดงข้อความแจ้งเตือนเมื่อ PrivateSend ตรวจพบว่ากระเป๋าสตางค์มีจำนวนคีย์ที่เหลืออยู่ต่ำมาก</translation>
+        <translation>แสดงข้อความแจ้งเตือนเมื่อ PrivateSend ตรวจพบว่า Wallet มีจำนวนคีย์ที่เหลืออยู่ต่ำมาก</translation>
     </message>
     <message>
         <source>Warn if PrivateSend is running out of keys</source>
@@ -1394,7 +1239,7 @@
     </message>
     <message>
         <source>Enable PrivateSend &amp;multi-session</source>
-        <translation>เปิดใช้งาน PrivateSend &amp;multi-session</translation>
+        <translation>เปิดใช้งาน PrivateSend และหลายเซสชัน</translation>
     </message>
     <message>
         <source>If you disable the spending of unconfirmed change, the change from a transaction&lt;br/&gt;cannot be used until that transaction has at least one confirmation.&lt;br/&gt;This also affects how your balance is computed.</source>
@@ -1413,12 +1258,12 @@
         <translation>เปิดพอร์ต Ion Core client บนเราเตอร์โดยอัตโนมัติ การทำงานนี้ใช้ได้เฉพาะเมื่อเราเตอร์ของคุณรองรับ UPnP และเปิดใช้งานแล้ว</translation>
     </message>
     <message>
-        <source>Accept connections from outside.</source>
+        <source>Accept connections from outside</source>
         <translation>ยอมรับการเชื่อมต่อจากภายนอก</translation>
     </message>
     <message>
-        <source>Allow incomin&amp;g connections</source>
-        <translation>อนุญาติการเชื่อมต่อ</translation>
+        <source>Allow incoming connections</source>
+        <translation>อนุญาตการเชื่อมต่อขาเข้า</translation>
     </message>
     <message>
         <source>Connect to the Ion network through a SOCKS5 proxy.</source>
@@ -1429,22 +1274,6 @@
         <translation>&amp;เชื่อมต่อผ่าน พร็อกซี่ SOCKS5 (พร็อกซี่เริ่มต้น):</translation>
     </message>
     <message>
-        <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
-        <translation>แสดง หากพร็อกซี SOCKS5 เป็นค่าเริ่มต้นที่ใช้เพื่อเข้าถึง Peers ผ่านเครือข่ายประเภทนี้</translation>
-    </message>
-    <message>
-        <source>Use separate SOCKS&amp;5 proxy to reach peers via Tor hidden services:</source>
-        <translation>ใช้พร็อกซี SOCKS&amp;5 แยกเพื่อเข้าถึงเพื่อนร่วมทางผ่านบริการที่ซ่อนไว้ของ Tor:</translation>
-    </message>
-    <message>
-        <source>Hide the icon from the system tray.</source>
-        <translation>ซ่อนไอคอนจาก System tray</translation>
-    </message>
-    <message>
-        <source>&amp;Hide tray icon</source>
-        <translation>&amp;ซ่อนไอคอน tray </translation>
-    </message>
-    <message>
         <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
         <translation>มินิไมซ์แอพ แทนการออกจากแอพพลิเคชั่น เมื่อวินโดว์ได้รับการปิด เมื่อเลือกตัวเลือกนี้ แอพพลิเคชั่น จะถูกปิด ก็ต่อเมื่อ มีการเลือกเมนู Exit/ออกจากระบบ เท่านั้น</translation>
     </message>
@@ -1453,8 +1282,12 @@
         <translation>URL ของบุคคลที่สาม (เช่น explorer บล็อก) ที่ปรากฏในแท็บธุรกรรมเป็นรายการในเมนู&lt;br/&gt; %s ใน URL ถูกแทนที่ด้วย hash การทำธุรกรรม หลาย URL ถูกแยกด้วยแถบแนวตั้ง </translation>
     </message>
     <message>
-        <source>&amp;Third party transaction URLs</source>
-        <translation>&amp;URL ธุรกรรมของบุคคลที่สาม</translation>
+        <source>Expert</source>
+        <translation>ผู้เชี่ยวชาญ</translation>
+    </message>
+    <message>
+        <source>This setting determines the amount of individual masternodes that an input will be anonymized through.&lt;br/&gt;More rounds of anonymization gives a higher degree of privacy, but also costs more in fees.</source>
+        <translation>การกำหนดค่านี้จะกำหนดจำนวนของ masternodes แต่ละตัวที่จะสามารถระบุได้โดยไม่ระบุตัวตน.&lt;br/&gt;การเก็บข้อมูลแบบไม่ระบุตัวตนทำให้มีระดับความเป็นส่วนตัวสูงขึ้น แต่ยังมีค่าใช้จ่ายเพิ่มขึ้นด้วย </translation>
     </message>
     <message>
         <source>Whether to show coin control features or not.</source>
@@ -1470,7 +1303,7 @@
     </message>
     <message>
         <source>Enable coin &amp;control features</source>
-        <translation>เปิดใช้เหรียญ &amp;รูปแบบการควบคุม</translation>
+        <translation>เปิดใช้ coin &amp; รูปแบบการควบคุม</translation>
     </message>
     <message>
         <source>Show system popups for PrivateSend mixing transactions&lt;br/&gt;just like for all other transaction types.</source>
@@ -1485,20 +1318,16 @@
         <translation>&amp;ใช้เงินทอนที่ยังไม่ยืนยัน</translation>
     </message>
     <message>
-        <source>This setting determines the amount of individual masternodes that an input will be mixed through.&lt;br/&gt;More rounds of mixing gives a higher degree of privacy, but also costs more in fees.</source>
-        <translation>การกำหนดค่านี้จะกำหนดจำนวนของ masternodes แต่ละตัวซึ่งจะถูกป้อนเข้าไปรวมกันทั้งหมด &lt;br/&gt;การรวมทั้งหมดเข้าด้วยกันนี้ทำให้มีระดับความเป็นส่วนตัวสูงขึ้น แต่ยังมีค่าใช้จ่ายเพิ่มขึ้นด้วย</translation>
-    </message>
-    <message>
         <source>&amp;Network</source>
         <translation>&amp;เน็ตเวิร์ก</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
-        <translation>แผนที่ port โดยใช้ &amp;UPnP</translation>
+        <translation>จองพอร์ต โดยใช้ &amp;UPnP</translation>
     </message>
     <message>
         <source>Proxy &amp;IP:</source>
-        <translation>Proxy &amp;IP:</translation>
+        <translation>พร็อกซี่ &amp;IP:</translation>
     </message>
     <message>
         <source>IP address of the proxy (e.g. IPv4: 127.0.0.1 / IPv6: ::1)</source>
@@ -1506,15 +1335,19 @@
     </message>
     <message>
         <source>&amp;Port:</source>
-        <translation>&amp;Port:</translation>
+        <translation>&amp;พอร์ต</translation>
     </message>
     <message>
         <source>Port of the proxy (e.g. 9050)</source>
-        <translation>Port ของพร็อกซี่ (ตัวอย่าง 9050)</translation>
+        <translation>พอร์ตของพร็อกซี่ (ตัวอย่าง 9050)</translation>
     </message>
     <message>
         <source>Used for reaching peers via:</source>
         <translation>ใช้ในการเข้าถึงอีกฝ่ายหนึ่ง peer โดย:</translation>
+    </message>
+    <message>
+        <source>Shows, if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
+        <translation>แสดง หากพร็อกซี SOCKS5 เป็นค่าเริ่มต้นที่ใช้เพื่อเข้าถึง Peers ผ่านเครือข่ายประเภทนี้</translation>
     </message>
     <message>
         <source>IPv4</source>
@@ -1533,12 +1366,28 @@
         <translation>เชื่อมต่อกับ เครือข่าย Ion ผ่านทาง พร้อกซี่ SOCKS5 แยกต่างหาก สำหรับ Tor เซอร์วิส</translation>
     </message>
     <message>
+        <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services:</source>
+        <translation>ใช้พร็อกซี SOCKS5 แยกเพื่อเข้าถึงเพื่อนร่วมทางผ่านบริการที่ซ่อนไว้ของ Tor:</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;วันโดว์</translation>
+    </message>
+    <message>
+        <source>&amp;Hide the icon from the system tray.</source>
+        <translation>ซ่อนไอคอนจาก  System tray</translation>
+    </message>
+    <message>
+        <source>Hide tray icon</source>
+        <translation>ซ่อนไอคอน tray </translation>
+    </message>
+    <message>
         <source>Show only a tray icon after minimizing the window.</source>
         <translation>แสดงเทรย์ไอคอน หลังมืนิไมส์วินโดว์ เท่านั้น</translation>
     </message>
     <message>
         <source>&amp;Minimize to the tray instead of the taskbar</source>
-        <translation>&amp;ลดขนาด Tray ลงไปยังแถบ taskbar</translation>
+        <translation>ลดขนาด Tray ลงไปยังแถบ taskbar</translation>
     </message>
     <message>
         <source>M&amp;inimize on close</source>
@@ -1546,11 +1395,11 @@
     </message>
     <message>
         <source>&amp;Display</source>
-        <translation>&amp;แสดง</translation>
+        <translation>แสดง</translation>
     </message>
     <message>
         <source>User Interface &amp;language:</source>
-        <translation>หน้าจอผู้ใช้ &amp;ภาษา:</translation>
+        <translation>User Interface language</translation>
     </message>
     <message>
         <source>The user interface language can be set here. This setting will take effect after restarting %1.</source>
@@ -1563,8 +1412,12 @@ https://www.transifex.com/ioncoincore/ioncore/</source>
 https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
+        <source>User Interface Theme:</source>
+        <translation>User Interface Theme: </translation>
+    </message>
+    <message>
         <source>&amp;Unit to show amounts in:</source>
-        <translation>&amp;หน่วยที่จะแสดงจำนวนเงินใน:</translation>
+        <translation>หน่วยที่จะแสดงจำนวนเงิน:</translation>
     </message>
     <message>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
@@ -1573,6 +1426,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Decimal digits</source>
         <translation>ตัวเลขทศนิยม</translation>
+    </message>
+    <message>
+        <source>Third party transaction URLs</source>
+        <translation>URL ธุรกรรมของบุคคลที่สาม</translation>
     </message>
     <message>
         <source>Active command-line options that override above options:</source>
@@ -1584,19 +1441,23 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Reset Options</source>
-        <translation>&amp;ตัวเลือกการตั้งค่าใหม่</translation>
+        <translation>&amp;รีเซต ออพชั่น</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;ตกลง</translation>
+        <translation>โอเค</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;ยกเลิก</translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>default</source>
         <translation>ค่าเริ่มต้น</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>ไม่มี</translation>
     </message>
     <message>
         <source>Confirm options reset</source>
@@ -1691,7 +1552,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>PrivateSend</source>
-        <translation>การส่งแบบส่วนตัว</translation>
+        <translation>PrivateSend</translation>
     </message>
     <message>
         <source>Status:</source>
@@ -1704,6 +1565,22 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Completion:</source>
         <translation>เสร็จสิ้น:</translation>
+    </message>
+    <message>
+        <source>Try to manually submit a PrivateSend request.</source>
+        <translation>พยายามส่งคำขอ PrivateSend ด้วยตนเอง</translation>
+    </message>
+    <message>
+        <source>Reset the current status of PrivateSend (can interrupt PrivateSend if it's in the process of Mixing, which can cost you money!)</source>
+        <translation>รีเซ็ตสถานะปัจจุบันของ PrivateSend (สามารถขัดจังหวะการทำงานของ PrivateSend หากอยู่ในระหว่างการผสม ซึ่งสามารถทำให้คุณเสียเงินได้!)</translation>
+    </message>
+    <message>
+        <source>Information about PrivateSend and Mixing</source>
+        <translation>ข้อมูลเกี่ยวกับ PrivateSend และการผสม</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>ข้อมูล</translation>
     </message>
     <message>
         <source>Amount and Rounds:</source>
@@ -1719,7 +1596,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>ไม่ปรากฏ</translation>
+        <translation>n / a</translation>
     </message>
     <message>
         <source>Recent transactions</source>
@@ -1735,7 +1612,19 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>The denominations you submitted to the Masternode.&lt;br&gt;To mix, other users must submit the exact same denominations.</source>
-        <translation> หน่วยเงินที่คุณส่งไปยัง Masternode &lt;br&gt; ในการผสมนั้นผู้ใช้อื่นจะต้องส่งหน่วยเงินที่เหมือนกัน</translation>
+        <translation> หน่วยเงินที่คุณส่งไปยัง Masternode. &lt;br&gt; ในการผสมนั้นผู้ใช้อื่นจะต้องส่งหน่วยเงินที่เหมือนกัน</translation>
+    </message>
+    <message>
+        <source>(Last Message)</source>
+        <translation>(ข้อความล่าสุด)</translation>
+    </message>
+    <message>
+        <source>Try Mix</source>
+        <translation>ลอง Mix</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>รีเซ็ต</translation>
     </message>
     <message>
         <source>out of sync</source>
@@ -1762,12 +1651,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation><numerusform>%n รอบ</numerusform></translation>
     </message>
     <message>
-        <source>Found enough compatible inputs to mix %1</source>
-        <translation>พบปัจจัยที่เข้ากันได้มากพอที่จะผสม %1</translation>
+        <source>Found enough compatible inputs to anonymize %1</source>
+        <translation>พบข้อมูลที่เข้ากันได้มากพอที่จะไม่ระบุชื่อ %1</translation>
     </message>
     <message>
-        <source>Not enough compatible inputs to mix &lt;span style='%1'&gt;%2&lt;/span&gt;,&lt;br&gt;will mix &lt;span style='%1'&gt;%3&lt;/span&gt; instead</source>
-        <translation>ปัจจัยที่เข้ากันได้ไม่มากพอที่จะนำมาผสม &lt;span style='%1'&gt;%2&lt;/span&gt;,&lt;br&gt;จะผสม &lt;span style='%1'&gt;%3&lt;/span&gt; แทน</translation>
+        <source>Not enough compatible inputs to anonymize &lt;span style='color:red;'&gt;%1&lt;/span&gt;,&lt;br&gt;will anonymize &lt;span style='color:red;'&gt;%2&lt;/span&gt; instead</source>
+        <translation>ข้อมูลไม่เพียงพอที่จะไม่ระบุชื่อ &lt;span style='color:red;'&gt;%1&lt;/span&gt; &lt;br&gt;จะไม่ระบุชื่อ&lt;span style='color:red;'&gt;%2&lt;/span&gt; แทน</translation>
     </message>
     <message>
         <source>Overall progress</source>
@@ -1778,12 +1667,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>สกุลเงิน</translation>
     </message>
     <message>
-        <source>Partially mixed</source>
-        <translation>การประสมสัญลักษณ์ที่มีลักษณะหลายอย่างรวมกัน</translation>
-    </message>
-    <message>
         <source>Mixed</source>
         <translation>ผสม</translation>
+    </message>
+    <message>
+        <source>Anonymized</source>
+        <translation>ไม่ระบุชื่อ</translation>
     </message>
     <message numerus="yes">
         <source>Denominated inputs have %5 of %n rounds on average</source>
@@ -1802,8 +1691,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>จำนวนคีย์ที่เหลือต่ำมากตั้งแต่การสำรองข้อมูลอัตโนมัติครั้งล่าสุด!</translation>
     </message>
     <message>
-        <source>We are about to create a new automatic backup for you, however &lt;span style='%1'&gt; you should always make sure you have backups saved in some safe place&lt;/span&gt;!</source>
-        <translation>เรากำลังจะสร้างการสำรองข้อมูลอัตโนมัติใหม่ให้กับคุณ แต่อย่างไรก็ตาม&lt;span style='%1'&gt;คุณควรตรวจสอบให้แน่ใจเสมอว่าคุณได้สำรองข้อมูลไว้ในที่ปลอดภัยแล้ว&lt;/span&gt;!</translation>
+        <source>We are about to create a new automatic backup for you, however &lt;span style='color:red;'&gt; you should always make sure you have backups saved in some safe place&lt;/span&gt;!</source>
+        <translation>เรากำลังจะสร้างการสำรองข้อมูลอัตโนมัติใหม่ให้กับคุณ แต่อย่างไรก็ตาม&lt;span style='color:red;'&gt;คุณควรตรวจสอบให้แน่ใจเสมอว่าคุณได้สำรองข้อมูลไว้ในที่ปลอดภัยแล้ว&lt;/span&gt;!</translation>
     </message>
     <message>
         <source>Note: You can turn this message off in options.</source>
@@ -1819,7 +1708,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Mixing is disabled, please close your wallet and fix the issue!</source>
-        <translation>ปิดใช้งานการผสม โปรดปิดกระเป๋าสตางค์ของคุณและแก้ไขปัญหา!</translation>
+        <translation>ปิดใช้งานการผสม โปรดปิด Wallet ของคุณและแก้ไขปัญหา!</translation>
     </message>
     <message>
         <source>Enabled</source>
@@ -1831,7 +1720,17 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>WARNING! Failed to replenish keypool, please unlock your wallet to do so.</source>
-        <translation>คำเตือน! ไม่สามารถเติม keypool ได้ โปรดปลดล็อกกระเป๋าสตางค์ของคุณ</translation>
+        <translation>คำเตือน! ไม่สามารถเติม keypool ได้ โปรดปลดล็อก Wallet ของคุณ</translation>
+    </message>
+    <message>
+        <source>Last PrivateSend message:
+</source>
+        <translation>ข้อความ PrivateSend ล่าสุด:
+</translation>
+    </message>
+    <message>
+        <source>PrivateSend was successfully reset.</source>
+        <translation>รีเซ็ต PrivateSend สำเร็จแล้ว</translation>
     </message>
     <message>
         <source>If you don't want to see internal PrivateSend fees/transactions select "Most Common" as Type on the "Transactions" tab.</source>
@@ -1843,7 +1742,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Wallet is locked and user declined to unlock. Disabling PrivateSend.</source>
-        <translation>กระเป๋าสตางค์ถูกล็อกและผู้ใช้ปฏิเสธที่จะปลดล็อก กำลังปิดใช้งาน PrivateSend</translation>
+        <translation>Wallet ถูกล็อกและผู้ใช้ปฏิเสธที่จะปลดล็อก กำลังปิดใช้งาน PrivateSend</translation>
     </message>
 </context>
 <context>
@@ -1955,14 +1854,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>Ping</source>
         <translation>Ping</translation>
     </message>
-    <message>
-        <source>Sent</source>
-        <translation>ส่ง</translation>
-    </message>
-    <message>
-        <source>Received</source>
-        <translation>ได้รับ</translation>
-    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1977,14 +1868,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Enter a Ion address (e.g. %1)</source>
         <translation>ป้อนที่อยู่ Ion (เช่น %1)</translation>
-    </message>
-    <message>
-        <source>Appearance Setup</source>
-        <translation>การติดตั้งลักษณะ</translation>
-    </message>
-    <message>
-        <source>This can also be adjusted later in the "Appearance" tab of the preferences.</source>
-        <translation>นอกจากนี้ยังสามารถปรับเปลี่ยนได้ภายหลังในแท็บ "ลักษณะ" ของการตั้งค่า</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -2043,22 +1926,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%1 และ %2</translation>
     </message>
     <message>
-        <source>%1 B</source>
-        <translation>%1 B</translation>
-    </message>
-    <message>
-        <source>%1 KB</source>
-        <translation>%1 KB</translation>
-    </message>
-    <message>
-        <source>%1 MB</source>
-        <translation>%1 MB</translation>
-    </message>
-    <message>
-        <source>%1 GB</source>
-        <translation>%1 GB</translation>
-    </message>
-    <message>
         <source>unknown</source>
         <translation>ไม่ทราบ</translation>
     </message>
@@ -2077,34 +1944,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>Error: %1</source>
         <translation>ข้อผิดพลาด: %1</translation>
     </message>
-    <message>
-        <source>Error: Failed to load application fonts.</source>
-        <translation>ข้อผิดพลาด: ไม่สามารถโหลดแอพพลิเคชั่นแบบอักษร</translation>
-    </message>
-    <message>
-        <source>Error: Specified font-family invalid. Valid values: %1.</source>
-        <translation>ข้อผิดพลาด: ระบุรูปแบบตัวอักษรไม่ถูกต้อง ค่าที่ถูกต้อง: %1</translation>
-    </message>
-    <message>
-        <source>Error: Specified font-weight-normal invalid. Valid range %1 to %2.</source>
-        <translation>ข้อผิดพลาด: ระบุค่าตัวอักษรปกติไม่ถูกต้อง ช่วงที่ถูกต้อง %1 ถึง %2</translation>
-    </message>
-    <message>
-        <source>Error: Specified font-weight-bold invalid. Valid range %1 to %2.</source>
-        <translation>ข้อผิดพลาด: ระบุค่าตัวอักษรที่เป็นตัวหนาไม่ถูกต้อง ช่วงที่ถูกต้อง %1 ถึง %2 </translation>
-    </message>
-    <message>
-        <source>Error: Specified font-scale invalid. Valid range %1 to %2.</source>
-        <translation>ข้อผิดพลาด: ระบุแบบอักษรขนาดตัวอักษรไม่ถูกต้อง ช่วงที่ถูกต้อง %1 ถึง %2</translation>
-    </message>
-    <message>
-        <source>Error: Invalid -custom-css-dir path.</source>
-        <translation>ข้อผิดพลาด: Invalid -custom-css-dir path</translation>
-    </message>
-    <message>
-        <source>Error: %1 CSS file(s) missing in -custom-css-dir path.</source>
-        <translation>ข้อผิดพลาด: %1 CSS file(s) missing in -custom-css-dir path</translation>
-    </message>
 </context>
 <context>
     <name>QRDialog</name>
@@ -2118,7 +1957,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Save Image...</source>
-        <translation>&amp;บันทึกรูปภาพ...</translation>
+        <translation>บันทึกรูปภาพ</translation>
     </message>
     <message>
         <source>Error creating QR Code.</source>
@@ -2129,11 +1968,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <name>QRGeneralImageWidget</name>
     <message>
         <source>&amp;Save Image...</source>
-        <translation>&amp;บันทึกรูปภาพ...</translation>
+        <translation>บันทึกรูปภาพ</translation>
     </message>
     <message>
         <source>&amp;Copy Image</source>
-        <translation>&amp;คัดลอกรูปภาพ</translation>
+        <translation>คัดลอกรูปภาพ</translation>
     </message>
     <message>
         <source>Save QR Code</source>
@@ -2148,11 +1987,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <name>QRImageWidget</name>
     <message>
         <source>&amp;Save Image...</source>
-        <translation>&amp;บันทึกรูปภาพ...</translation>
+        <translation>บันทึกรูปภาพ</translation>
     </message>
     <message>
         <source>&amp;Copy Image</source>
-        <translation>&amp;คัดลอกรูปภาพ</translation>
+        <translation>คัดลอกรูปภาพ</translation>
     </message>
     <message>
         <source>Save QR Code</source>
@@ -2171,7 +2010,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Information</source>
-        <translation>&amp;ข้อมูล</translation>
+        <translation>ข้อมูล</translation>
     </message>
     <message>
         <source>General</source>
@@ -2191,7 +2030,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Open</source>
-        <translation>&amp;เปิด</translation>
+        <translation>เปิด</translation>
     </message>
     <message>
         <source>Startup time</source>
@@ -2243,7 +2082,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Console</source>
-        <translation>&amp;ส่วนเฝ้าคุม</translation>
+        <translation>คอนโซล</translation>
     </message>
     <message>
         <source>Clear console</source>
@@ -2251,7 +2090,15 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Network Traffic</source>
-        <translation>&amp;การรับส่งข้อมูลเครือข่าย</translation>
+        <translation>&amp;Network Traffic</translation>
+    </message>
+    <message>
+        <source>&amp;Clear</source>
+        <translation>ลบล้าง</translation>
+    </message>
+    <message>
+        <source>Totals</source>
+        <translation>ทั้งหมด</translation>
     </message>
     <message>
         <source>Received</source>
@@ -2263,7 +2110,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Peers</source>
-        <translation>&amp;เพียร์</translation>
+        <translation>Peers</translation>
     </message>
     <message>
         <source>Banned peers</source>
@@ -2299,7 +2146,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Wallet Path</source>
-        <translation>เส้นทางกระเป๋าสตางค์</translation>
+        <translation>เส้นทาง wallet</translation>
     </message>
     <message>
         <source>User Agent</source>
@@ -2310,16 +2157,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Datadir</translation>
     </message>
     <message>
-        <source>Last block hash</source>
-        <translation>hash บล็อกล่าสุด</translation>
-    </message>
-    <message>
         <source>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>เปิดแฟ้มบันทึกข้อผิดพลาด %1 จากไดเร็กทอรี่ข้อมูลปัจจุบัน อาจใช้เวลาสักครู่สำหรับไฟล์บันทึกขนาดใหญ่</translation>
-    </message>
-    <message>
-        <source>InstantSend locks</source>
-        <translation>InstantSend ล็อค</translation>
+        <translation>เปิดแฟ้มบันทึกข้อผิดพลาด %1 จากไดเร็กทอรีข้อมูลปัจจุบัน อาจใช้เวลาสักครู่สำหรับไฟล์บันทึกขนาดใหญ่</translation>
     </message>
     <message>
         <source>Decrease font size</source>
@@ -2328,10 +2167,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Increase font size</source>
         <translation>เพิ่มขนาดตัวอักษร</translation>
-    </message>
-    <message>
-        <source>&amp;Reset</source>
-        <translation>&amp;ตั้งค่าใหม่</translation>
     </message>
     <message>
         <source>Services</source>
@@ -2375,11 +2210,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Wallet Repair</source>
-        <translation>&amp;ซ่อมกระเป๋าสตางค์</translation>
+        <translation>ซ่อม Wallet</translation>
     </message>
     <message>
         <source>Salvage wallet</source>
-        <translation>กู้คืนกระเป๋าสตางค์</translation>
+        <translation>กู้คืน Wallet</translation>
     </message>
     <message>
         <source>Rescan blockchain files</source>
@@ -2395,11 +2230,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Upgrade wallet format</source>
-        <translation>อัพเกรดรูปแบบกระเป๋าสตางค์</translation>
+        <translation>อัพเกรดรูปแบบ wallet</translation>
     </message>
     <message>
         <source>The buttons below will restart the wallet with command-line options to repair the wallet, fix issues with corrupt blockhain files or missing/obsolete transactions.</source>
-        <translation>ปุ่มด้านล่างจะเริ่มต้นกระเป๋าสตางค์ด้วยตัวเลือก command-line เพื่อซ่อมแซมกระเป๋าสตางค์และแก้ไขปัญหาเกี่ยวกับไฟล์ blockhain ที่เสียหายหรือการทำธุรกรรมที่ขาดหายไป/ล้าสมัย</translation>
+        <translation>ปุ่มด้านล่างจะเริ่มต้น wallet ด้วยตัวเลือก command-line เพื่อซ่อมแซม wallet และแก้ไขปัญหาเกี่ยวกับไฟล์ blockhain ที่เสียหายหรือการทำธุรกรรมที่ขาดหายไป / ล้าสมัย</translation>
     </message>
     <message>
         <source>-salvagewallet: Attempt to recover private keys from a corrupt wallet.dat.</source>
@@ -2419,11 +2254,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>-upgradewallet: Upgrade wallet to latest format on startup. (Note: this is NOT an update of the wallet itself!)</source>
-        <translation>-upgradewallet: อัปเดตกระเป๋าสตางค์เป็นรูปแบบสุดท้ายเมื่อเริ่มต้น (หมายเหตุ: นี่ไม่ใช่การปรับปรุงตัวกระเป๋าสตางค์เอง!)</translation>
+        <translation>-upgradewallet: อัปเดต wallet เป็นรูปแบบสุดท้ายเมื่อเริ่มต้น (หมายเหตุ: นี่ไม่ใช่การปรับปรุงตัว wallet เอง!)</translation>
     </message>
     <message>
         <source>Wallet repair options.</source>
-        <translation>ตัวเลือกการซ่อมแซมกระเป๋าสตางค์</translation>
+        <translation>ตัวเลือกการซ่อมแซม Wallet</translation>
     </message>
     <message>
         <source>Rebuild index</source>
@@ -2435,7 +2270,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Disconnect</source>
-        <translation>&amp;ยกเลิกการเชื่อมต่อ</translation>
+        <translation>ยกเลิกการเชื่อมต่อ</translation>
     </message>
     <message>
         <source>Ban for</source>
@@ -2443,11 +2278,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>1 &amp;hour</source>
-        <translation>1 &amp;ชั่วโมง</translation>
+        <translation>1 &amp; ชั่วโมง</translation>
     </message>
     <message>
         <source>1 &amp;day</source>
-        <translation>1 &amp;วัน</translation>
+        <translation>1 &amp; วัน</translation>
     </message>
     <message>
         <source>1 &amp;week</source>
@@ -2455,7 +2290,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>1 &amp;year</source>
-        <translation>1 &amp;ปี</translation>
+        <translation>1 &amp; ปี</translation>
     </message>
     <message>
         <source>&amp;Unban</source>
@@ -2466,20 +2301,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ยินดีต้อนรับสู่คอนโซล %1 RPC</translation>
     </message>
     <message>
-        <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
-        <translation>ใช้ลูกศรขึ้นและลงเพื่อเลื่อนดูประวัติ และ %1 เพื่อเคลียร์หน้าจอ</translation>
+        <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
+        <translation>ใช้ลูกศรขึ้นและลงเพื่อเลื่อนดูประวัติ, และ &lt;b&gt;Ctrl-L&lt;/b&gt;เพื่อเคลียร์หน้าจอ</translation>
     </message>
     <message>
-        <source>Type %1 for an overview of available commands.</source>
-        <translation>พิมพ์ %1 สำหรับภาพรวมของคำสั่งที่ใช้ได้</translation>
+        <source>Type &lt;b&gt;help&lt;/b&gt; for an overview of available commands.</source>
+        <translation>พิมพ์ &lt;b&gt;help&lt;/b&gt;สำหรับภาพรวมของคำสั่งที่พร้อมใช้งาน </translation>
     </message>
     <message>
-        <source>For more information on using this console type %1.</source>
-        <translation>สำหรับข้อมูลเพิ่มเติมเกี่ยวกับการใช้คอนโซลประเภทนี้พิมพ์ %1</translation>
-    </message>
-    <message>
-        <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.</source>
-        <translation>คำเตือน: สแกมเมอร์กำลังใช้งานอยู่, กำลังบอกให้ผู้ใช้พิมพ์คำสั่งที่นี่, ขโมยเนื้อหาใน wallet ได้ ห้ามใช้คอนโซลนี้โดยไม่เข้าใจส่วนย่อยของคำสั่ง</translation>
+        <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramification of a command.</source>
+        <translation>คำเตือน: สแกมเมอร์กำลังใช้งานอยู่, กำลังบอกให้ผู้ใช้พิมพ์คำสั่งที่นี่, ขโมยเนื้อหาใน wallet ได้  ห้ามใช้คอนโซลนี้โดยไม่เข้าใจส่วนย่อยของคำสั่ง</translation>
     </message>
     <message>
         <source>In:</source>
@@ -2494,8 +2325,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ปิดการใช้งานเครือข่ายแล้ว</translation>
     </message>
     <message>
-        <source>Total: %1 (Enabled: %2)</source>
-        <translation>ทั้งหมด: %1 (เปิดใช้งาน: %2)</translation>
+        <source>%1 B</source>
+        <translation>%1 B</translation>
+    </message>
+    <message>
+        <source>%1 KB</source>
+        <translation>%1 KB</translation>
+    </message>
+    <message>
+        <source>%1 MB</source>
+        <translation>%1 MB</translation>
+    </message>
+    <message>
+        <source>%1 GB</source>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>(node id: %1)</source>
@@ -2546,7 +2389,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Message:</source>
-        <translation>&amp;ข้อความ:</translation>
+        <translation>ข้อความ:</translation>
     </message>
     <message>
         <source>An optional label to associate with the new receiving address.</source>
@@ -2570,11 +2413,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Amount:</source>
-        <translation>&amp;จำนวน:</translation>
+        <translation>จำนวน:</translation>
     </message>
     <message>
         <source>&amp;Request payment</source>
-        <translation>&amp;การขอชำระเงิน</translation>
+        <translation>ขอชำระเงิน</translation>
     </message>
     <message>
         <source>Clear all fields of the form.</source>
@@ -2583,6 +2426,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Clear</source>
         <translation>ลบล้าง</translation>
+    </message>
+    <message>
+        <source>Request InstantSend</source>
+        <translation>ขอ InstantSend</translation>
     </message>
     <message>
         <source>Requested payments history</source>
@@ -2603,14 +2450,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Remove</source>
         <translation>ลบออก</translation>
-    </message>
-    <message>
-        <source>Enter a label to associate with the new receiving address</source>
-        <translation>ใส่ป้ายกำกับเพื่อเชื่อมโยงกับที่อยู่ใหม่ที่ได้รับ</translation>
-    </message>
-    <message>
-        <source>Enter a message to attach to the payment request</source>
-        <translation>ป้อนข้อความที่จะแนบไปร้องขอการชำระเงิน</translation>
     </message>
     <message>
         <source>Copy URI</source>
@@ -2637,15 +2476,15 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Copy &amp;URI</source>
-        <translation>คัดลอก &amp;URI</translation>
+        <translation>คัดลอก URI</translation>
     </message>
     <message>
         <source>Copy &amp;Address</source>
-        <translation>คัดลอก &amp;ที่อยู่</translation>
+        <translation>คัดลอกที่อยู่</translation>
     </message>
     <message>
         <source>&amp;Save Image...</source>
-        <translation>&amp;บันทึกรูปภาพ...</translation>
+        <translation>บันทึกรูปภาพ</translation>
     </message>
     <message>
         <source>Request payment to %1</source>
@@ -2674,6 +2513,18 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Message</source>
         <translation>ข้อความ</translation>
+    </message>
+    <message>
+        <source>InstantSend</source>
+        <translation>InstantSend</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>ใช่</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>ไม่</translation>
     </message>
     <message>
         <source>Resulting URI too long, try to reduce the text for label / message.</source>
@@ -2782,12 +2633,28 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>เลือก...</translation>
     </message>
     <message>
+        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until your have validated the complete chain.</source>
+        <translation>การใช้ fallbackfee อาจส่งผลให้การส่งธุรกรรมที่ต้องใช้เวลาหลายชั่วโมงหรือหลายวัน (หรือไม่) เพื่อยืนยัน  พิจารณาเลือกค่าธรรมเนียมด้วยตนเองหรือรอจนกว่าคุณจะได้ตรวจสอบความสมบูรณ์ของสายโซ่</translation>
+    </message>
+    <message>
+        <source>Warning: Fee estimation is currently not possible.</source>
+        <translation>คำเตือน: ปัจจุบันการประมาณค่าใช้จ่ายไม่สามารถทำได้</translation>
+    </message>
+    <message>
         <source>collapse fee-settings</source>
         <translation>ยุบค่าธรรมเนียมการตั้งค่า</translation>
     </message>
     <message>
         <source>Confirmation time target:</source>
         <translation>การยืนยันเวลาเป้าหมาย</translation>
+    </message>
+    <message>
+        <source>PrivateSend</source>
+        <translation>PrivateSend</translation>
+    </message>
+    <message>
+        <source>InstantSend</source>
+        <translation>InstantSend</translation>
     </message>
     <message>
         <source>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then "per kilobyte" only pays 250 duffs in fee,&lt;br /&gt;while "at least" pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
@@ -2806,16 +2673,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ต่อกิโลไบต์</translation>
     </message>
     <message>
-        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</source>
-        <translation>การใช้ fallbackfee อาจส่งผลให้การส่งธุรกรรมที่ต้องใช้เวลาหลายชั่วโมงหรือหลายวัน (หรือไม่) เพื่อยืนยัน พิจารณาเลือกค่าธรรมเนียมด้วยตนเองหรือรอจนกว่าคุณจะได้ตรวจสอบความสมบูรณ์ของสายโซ่</translation>
-    </message>
-    <message>
-        <source>Note: Not enough data for fee estimation, using the fallback fee instead.</source>
-        <translation>หมายเหตุ: ข้อมูลไม่เพียงพอสำหรับการประมาณการค่าบริการ โปรดใช้ค่าบริการ fallback แทน</translation>
-    </message>
-    <message>
         <source>Hide</source>
         <translation>ซ่อน</translation>
+    </message>
+    <message>
+        <source>total at least</source>
+        <translation>รวมอย่างน้อย</translation>
     </message>
     <message>
         <source>(read the tooltip)</source>
@@ -2834,12 +2697,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>(ค่าธรรมเนียมยังไม่ถูกเก็บ โดยปกติจะใช้สองสามบล็อค ... )</translation>
     </message>
     <message>
+        <source>normal</source>
+        <translation>ปกติ</translation>
+    </message>
+    <message>
+        <source>fast</source>
+        <translation>เร็ว</translation>
+    </message>
+    <message>
         <source>Confirm the send action</source>
         <translation>ยืนยันการส่ง</translation>
     </message>
     <message>
         <source>S&amp;end</source>
-        <translation>&amp;ส่ง</translation>
+        <translation>ส่ง</translation>
     </message>
     <message>
         <source>Clear all fields of the form.</source>
@@ -2847,7 +2718,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Clear &amp;All</source>
-        <translation>ลบ &amp;ทั้งหมด</translation>
+        <translation>ล้างทั้งหมด</translation>
     </message>
     <message>
         <source>Send to multiple recipients at once</source>
@@ -2855,7 +2726,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Add &amp;Recipient</source>
-        <translation>เพิ่ม &amp;ผู้รับ</translation>
+        <translation>เพิ่มผู้รับ</translation>
     </message>
     <message>
         <source>Balance:</source>
@@ -2890,12 +2761,24 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>คัดลอกการเปลี่ยนแปลง</translation>
     </message>
     <message>
-        <source>%1 (%2 blocks)</source>
-        <translation>%1 (%2 blocks)</translation>
-    </message>
-    <message>
         <source>using</source>
         <translation>การใช้</translation>
+    </message>
+    <message>
+        <source>anonymous funds</source>
+        <translation>กองทุนที่ไม่ระบุตัวตน</translation>
+    </message>
+    <message>
+        <source>(privatesend requires this amount to be rounded up to the nearest %1).</source>
+        <translation>(privatesend ต้องใช้จำนวนเงินนี้เพื่อปัดเศษขึ้นให้อยู่ใกล้ที่สุด %1)</translation>
+    </message>
+    <message>
+        <source>any available funds (not anonymous)</source>
+        <translation>เงินทุนที่มีอยู่ (ไม่ระบุชื่อ)</translation>
+    </message>
+    <message>
+        <source>and InstantSend</source>
+        <translation>และ InstantSend</translation>
     </message>
     <message>
         <source>%1 to %2</source>
@@ -2916,38 +2799,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>&lt;b&gt;(%1 of %2 entries displayed)&lt;/b&gt;</source>
         <translation>&lt;b&gt;(%1 of %2 รายการที่แสดง)&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>Confirm the PrivateSend action</source>
-        <translation>ยืนยันการดำเนินการ PrivateSend</translation>
-    </message>
-    <message>
-        <source>PrivateSend funds only</source>
-        <translation>ทำธุรกรรมแบบ PrivateSend เฉพาะในกองทุนเท่านั้น</translation>
-    </message>
-    <message>
-        <source>any available funds</source>
-        <translation>เงินทุนที่มีอยู่</translation>
-    </message>
-    <message>
-        <source>(PrivateSend transactions have higher fees usually due to no change output being allowed)</source>
-        <translation>(การทำธุรกรรมแบบปกปิดข้อมูล PrivateSend มีค่าธรรมเนียมสูงขึ้นเนื่องมาจากไม่มีการให้ผลลัพธ์ที่เปลี่ยนแปลง)</translation>
-    </message>
-    <message>
-        <source>Transaction size: %1</source>
-        <translation>ขนาดของการทำธุกรรม: %1</translation>
-    </message>
-    <message>
-        <source>Fee rate: %1</source>
-        <translation>ค่าธรรมเนียม: %1</translation>
-    </message>
-    <message numerus="yes">
-        <source>This transaction will consume %n input(s)</source>
-        <translation><numerusform>ธุรกรรมนี้จะถูกป้อนเข้าไป %n</numerusform></translation>
-    </message>
-    <message>
-        <source>Warning: Using PrivateSend with %1 or more inputs can harm your privacy and is not recommended</source>
-        <translation>คำเตือน: การใช้ธุรกรรมแบบบปกปิดข้อมูล PrivateSend ด้วยการนำเข้าข้อมูล %1 หรือมากกว่า สามารถสร้างความเสียหายต่อความเป็นส่วนตัวของคุณได้ ไม่แนะนำ</translation>
     </message>
     <message>
         <source>Confirm send coins</source>
@@ -2989,6 +2840,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>Payment request expired.</source>
         <translation>คำขอชำระเงินหมดอายุแล้ว</translation>
     </message>
+    <message numerus="yes">
+        <source>%n block(s)</source>
+        <translation><numerusform>%n  บล็อค</numerusform></translation>
+    </message>
     <message>
         <source>Pay only the required fee of %1</source>
         <translation>จ่ายเฉพาะค่าธรรมเนียมที่ต้องการจาก %1</translation>
@@ -3011,7 +2866,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>The address you selected for change is not part of this wallet. Any or all funds in your wallet may be sent to this address. Are you sure?</source>
-        <translation>ที่อยู่ที่คุณเลือกสำหรับการเปลี่ยนแปลงไม่ใช่ส่วนหนึ่งของกระเป๋าสตางค์นี้ เงินบางส่วนหรือทั้งหมดในกระเป๋าสตางค์ของคุณอาจจะถูกส่งไปยังที่อยู่นี้  คุณแน่ใจหรือไม่?</translation>
+        <translation>ที่อยู่ที่คุณเลือกสำหรับการเปลี่ยนแปลงไม่ใช่ส่วนหนึ่งของ wallet  เงินบางส่วนหรือทั้งหมดใน wallet ของคุณอาจจะถูกส่งไปยังที่อยู่นี้  คุณแน่ใจหรือไม่?</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -3026,7 +2881,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Pay &amp;To:</source>
-        <translation>จ่าย &amp;ไปยัง:</translation>
+        <translation>จ่ายไปยัง:</translation>
     </message>
     <message>
         <source>The Ion address to send the payment to</source>
@@ -3071,10 +2926,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>S&amp;ubtract fee from amount</source>
         <translation>หักค่าบริการจากจำนวนเงิน</translation>
-    </message>
-    <message>
-        <source>Use available balance</source>
-        <translation>ใช้ยอดเงินคงเหลือ</translation>
     </message>
     <message>
         <source>Message:</source>
@@ -3131,7 +2982,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>&amp;Sign Message</source>
-        <translation>&amp;ลงนามข้อความ</translation>
+        <translation>ลงนามข้อความ</translation>
     </message>
     <message>
         <source>You can sign messages/agreements with your addresses to prove you can receive Ion sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
@@ -3175,7 +3026,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Sign &amp;Message</source>
-        <translation>ลงนาม &amp;ข้อความ</translation>
+        <translation>ลงนามข้อความ</translation>
     </message>
     <message>
         <source>Reset all sign message fields</source>
@@ -3183,11 +3034,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Clear &amp;All</source>
-        <translation>ลบ &amp;ทั้งหมด</translation>
+        <translation>ลบทั้งหมด</translation>
     </message>
     <message>
         <source>&amp;Verify Message</source>
-        <translation>&amp;ยืนยันข้อความ</translation>
+        <translation>ยืนยันข้อความ</translation>
     </message>
     <message>
         <source>Enter the receiver's address, message (ensure you copy line breaks, spaces, tabs, etc. exactly) and signature below to verify the message. Be careful not to read more into the signature than what is in the signed message itself, to avoid being tricked by a man-in-the-middle attack. Note that this only proves the signing party receives with the address, it cannot prove sendership of any transaction!</source>
@@ -3203,27 +3054,15 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Verify &amp;Message</source>
-        <translation>ยืนยัน &amp;ข้อความ</translation>
+        <translation>ยืนยันข้อความ</translation>
     </message>
     <message>
         <source>Reset all verify message fields</source>
         <translation>รีเซ็ตข้อความยืนยันทั้งหมด</translation>
     </message>
     <message>
-        <source>Enter a message to be signed</source>
-        <translation>ป้อนข้อความที่จะลงนาม</translation>
-    </message>
-    <message>
         <source>Click "Sign Message" to generate signature</source>
         <translation>คลิก "ลงนามข้อความ" เพื่อสร้างลายเซ็น</translation>
-    </message>
-    <message>
-        <source>Enter a message to be verified</source>
-        <translation>ป้อนข้อความได้รับการยืนยัน</translation>
-    </message>
-    <message>
-        <source>Enter a signature for the message to be verified</source>
-        <translation>ใส่ลายเซ็นให้กับข้อความที่จะได้รับการตรวจสอบแล้ว</translation>
     </message>
     <message>
         <source>The entered address is invalid.</source>
@@ -3239,7 +3078,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Wallet unlock was cancelled.</source>
-        <translation>ยกเลิกการปลดล็อกกระเป๋าสตางค์แล้ว</translation>
+        <translation>ยกเลิกการปลดล็อก Wallet แล้ว</translation>
     </message>
     <message>
         <source>Private key for the entered address is not available.</source>
@@ -3280,6 +3119,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>[testnet]</source>
         <translation>[testnet]</translation>
     </message>
+    <message>
+        <source>Version %1</source>
+        <translation>เวอร์ชั่น %1</translation>
+    </message>
 </context>
 <context>
     <name>TrafficGraphWidget</name>
@@ -3287,7 +3130,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>KB/s</source>
         <translation>KB/s</translation>
     </message>
-    </context>
+</context>
 <context>
     <name>TransactionDesc</name>
     <message numerus="yes">
@@ -3301,6 +3144,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>conflicted</source>
         <translation>ขัดแย้ง</translation>
+    </message>
+    <message>
+        <source>%1/offline</source>
+        <translation>%1 / ออฟไลน์</translation>
     </message>
     <message>
         <source>0/unconfirmed, %1</source>
@@ -3327,8 +3174,28 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%1 ยืนยัน</translation>
     </message>
     <message>
+        <source>verified via InstantSend</source>
+        <translation>ยืนยันผ่าน InstantSend</translation>
+    </message>
+    <message>
+        <source>InstantSend verification in progress - %1 of %2 signatures</source>
+        <translation>การยืนยันของ InstantSend อยู่ระหว่างดำเนินการ - ลายเซ็น %1 ของ %2</translation>
+    </message>
+    <message>
+        <source>InstantSend verification failed</source>
+        <translation>การยืนยัน InstantSend ล้มเหลว</translation>
+    </message>
+    <message>
         <source>Status</source>
         <translation>สถานะ</translation>
+    </message>
+    <message>
+        <source>, has not been successfully broadcast yet</source>
+        <translation>ยังถ่ายทอดไม่สำเร็จ</translation>
+    </message>
+    <message numerus="yes">
+        <source>, broadcast through %n node(s)</source>
+        <translation><numerusform>, ถ่ายทอดผ่าน %n โหนด</numerusform></translation>
     </message>
     <message>
         <source>Date</source>
@@ -3485,6 +3352,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>เปิดจนถึง %1</translation>
     </message>
     <message>
+        <source>Offline</source>
+        <translation>ออฟไลน์</translation>
+    </message>
+    <message>
         <source>Unconfirmed</source>
         <translation>ไม่มีการยืนยัน</translation>
     </message>
@@ -3507,6 +3378,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Immature (%1 confirmations, will be available after %2)</source>
         <translation>ยังไม่สมบูรณ์ (การยืนยัน %1 จะพร้อมใช้งานหลังจาก %2)</translation>
+    </message>
+    <message>
+        <source>This block was not received by any other nodes and will probably not be accepted!</source>
+        <translation>บล็อกนี้ไม่ได้รับโดยโหนดอื่น ๆ และอาจจะไม่ได้รับการยอมรับ!</translation>
     </message>
     <message>
         <source>Generated but not accepted</source>
@@ -3553,6 +3428,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>PrivateSend สร้างหน่วยเงิน</translation>
     </message>
     <message>
+        <source>PrivateSend</source>
+        <translation>PrivateSend</translation>
+    </message>
+    <message>
         <source>watch-only</source>
         <translation>ดูเท่านั้น</translation>
     </message>
@@ -3581,6 +3460,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ไม่ว่าจะเป็นที่อยู่สำหรับดูอย่างเดียวหรือไม่ก็ตามก็เกี่ยวข้องกับธุรกรรมนี้</translation>
     </message>
     <message>
+        <source>Whether or not this transaction was locked by InstantSend.</source>
+        <translation>ไม่ว่าธุรกรรมนี้จะถูกล็อคโดย InstantSend หรือไม่</translation>
+    </message>
+    <message>
         <source>User-defined intent/purpose of the transaction.</source>
         <translation>เจตนา / วัตถุประสงค์ที่กำหนดโดยผู้ใช้ของธุรกรรม</translation>
     </message>
@@ -3594,6 +3477,14 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>All</source>
         <translation>ทั้งหมด</translation>
+    </message>
+    <message>
+        <source>Locked by InstantSend</source>
+        <translation>ล็อคโดย InstantSend</translation>
+    </message>
+    <message>
+        <source>Not locked by InstantSend</source>
+        <translation>ไม่ได้ถูกล็อคโดย InstantSend</translation>
     </message>
     <message>
         <source>Today</source>
@@ -3632,6 +3523,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ส่งถึง</translation>
     </message>
     <message>
+        <source>PrivateSend</source>
+        <translation>PrivateSend</translation>
+    </message>
+    <message>
         <source>PrivateSend Make Collateral Inputs</source>
         <translation>PrivateSend สร้างการป้อนข้อมูลหลักประกัน</translation>
     </message>
@@ -3660,8 +3555,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>อื่นๆ</translation>
     </message>
     <message>
-        <source>Enter address, transaction id, or label to search</source>
-        <translation>ป้อนที่อยู่, รหัสธุรกรรม, หรือฉลากที่จะค้นหา</translation>
+        <source>Enter address or label to search</source>
+        <translation>ป้อนที่อยู่หรือป้ายชื่อที่ต้องการค้นหา</translation>
     </message>
     <message>
         <source>Min amount</source>
@@ -3702,10 +3597,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Show transaction details</source>
         <translation>แสดงรายละเอียดธุรกรรม</translation>
-    </message>
-    <message>
-        <source>Show address QR code</source>
-        <translation>แสดงที่อยู่ของ QR code</translation>
     </message>
     <message>
         <source>Export Transaction History</source>
@@ -3760,10 +3651,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>บันทึกประวัติการทำธุรกรรมสำเร็จแล้วที่ %1</translation>
     </message>
     <message>
-        <source>QR code</source>
-        <translation>QR code</translation>
-    </message>
-    <message>
         <source>Range:</source>
         <translation>ช่วง: </translation>
     </message>
@@ -3783,7 +3670,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <name>WalletFrame</name>
     <message>
         <source>No wallet has been loaded.</source>
-        <translation>ไม่มีการโหลดกระเป๋าสตางค์</translation>
+        <translation>ไม่ได้มีการโหลด wallet </translation>
     </message>
 </context>
 <context>
@@ -3817,7 +3704,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Backup Wallet</source>
-        <translation>สำรองกระเป๋าสตางค์</translation>
+        <translation>สำรอง Wallet </translation>
     </message>
     <message>
         <source>Wallet Data (*.dat)</source>
@@ -3829,7 +3716,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>There was an error trying to save the wallet data to %1.</source>
-        <translation>เกิดข้อผิดพลาดขณะพยายามบันทึกข้อมูลกระเป๋าสตางค์ไปที่ %1</translation>
+        <translation>เกิดข้อผิดพลาดขณะพยายามบันทึกข้อมูล wallet ไปที่ %1</translation>
     </message>
     <message>
         <source>Backup Successful</source>
@@ -3837,7 +3724,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>The wallet data was successfully saved to %1.</source>
-        <translation>บันทึกข้อมูลกระเป๋าสตางค์สำเร็จแล้วที่ %1</translation>
+        <translation>บันทึกข้อมูล wallet สำเร็จแล้วที่ %1</translation>
     </message>
 </context>
 <context>
@@ -3856,7 +3743,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Execute command when a wallet transaction changes (%s in cmd is replaced by TxID)</source>
-        <translation>ดำเนินการคำสั่งเมื่อมีการเปลี่ยนแปลงธุรกรรมกระเป๋าสตางค์ (%s ใน cmd จะถูกแทนที่ด้วย TxID)</translation>
+        <translation>ดำเนินการคำสั่งเมื่อมีการเปลี่ยนแปลงธุรกรรม wallet  (%s ใน cmd จะถูกแทนที่ด้วย TxID)</translation>
     </message>
     <message>
         <source>Execute command when the best block changes (%s in cmd is replaced by block hash)</source>
@@ -3864,7 +3751,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Name to construct url for KeePass entry that stores the wallet passphrase</source>
-        <translation>ตั้งชื่อเพื่อสร้าง URL สำหรับเข้า KeePass ที่จัดเก็บวลีรหัสผ่านกระเป๋าสตางค์</translation>
+        <translation>ตั้งชื่อเพื่อสร้าง URL สำหรับเข้า KeePass ที่จัดเก็บวลีรหัสผ่าน wallet</translation>
+    </message>
+    <message>
+        <source>Set maximum size of high-priority/low-fee transactions in bytes (default: %d)</source>
+        <translation>ตั้งค่าขนาดสูงสุดของธุรกรรมที่มีความสำคัญสูง / ค่าธรรมเนียมต่ำเป็นไบต์ (ค่าเริ่มต้น: %d)</translation>
     </message>
     <message>
         <source>Set the number of script verification threads (%u to %d, 0 = auto, &lt;0 = leave that many cores free, default: %d)</source>
@@ -3887,6 +3778,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ยอมรับ command line และคำสั่ง JSON-RPC</translation>
     </message>
     <message>
+        <source>Add a node to connect to and attempt to keep the connection open</source>
+        <translation>เพิ่มโหนดเพื่อเชื่อมต่อและพยายามทำให้เปิดการเชื่อมต่อ</translation>
+    </message>
+    <message>
         <source>Allow DNS lookups for -addnode, -seednode and -connect</source>
         <translation>อนุญาต DNS ค้นหาสำหรับ -addnode, -seednode และ -connect</translation>
     </message>
@@ -3900,11 +3795,19 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Cannot downgrade wallet</source>
-        <translation>ไม่สามารถลดระดับกระเป๋าสตางค์ได้</translation>
+        <translation>ไม่สามารถลดระดับ wallet ได้</translation>
+    </message>
+    <message>
+        <source>Cannot write default address</source>
+        <translation>ไม่สามารถเขียนที่อยู่เริ่มต้นได้</translation>
     </message>
     <message>
         <source>Collateral not valid.</source>
         <translation>หลักประกันไม่ถูกต้อง</translation>
+    </message>
+    <message>
+        <source>Connect to a node to retrieve peer addresses, and disconnect</source>
+        <translation>เชื่อมต่อกับโหนดเพื่อดึงข้อมูลที่อยู่ของ peer และยกเลิกการเชื่อมต่อ</translation>
     </message>
     <message>
         <source>Connection options:</source>
@@ -3920,7 +3823,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Do not load the wallet and disable wallet RPC calls</source>
-        <translation>ห้ามโหลดกระเป๋าสตางค์และปิดการใช้งานกระเป๋าสตางค์ RPC</translation>
+        <translation>ห้ามโหลด wallet และปิดการใช้งาน wallet RPC</translation>
     </message>
     <message>
         <source>Do you want to rebuild the block database now?</source>
@@ -3940,7 +3843,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Error initializing wallet database environment %s!</source>
-        <translation>เริ่มต้นข้อผิดพลาดด้านสภาพแวดล้อมของฐานข้อมูลกระเป๋าสตางค์ %s!</translation>
+        <translation>เริ่มต้นข้อผิดพลาดด้านสภาพแวดล้อมของฐานข้อมูล Wallet %s!</translation>
     </message>
     <message>
         <source>Error loading block database</source>
@@ -3964,7 +3867,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Failed to listen on any port. Use -listen=0 if you want this.</source>
-        <translation>เกิดข้อผิดพลาดในการฟัง port ใด ๆ ใช้ -listen = 0 ถ้าต้องการ</translation>
+        <translation>เกิดข้อผิดพลาดในการฟังพอร์ตใด ๆ ใช้ -listen = 0 ถ้าต้องการ</translation>
     </message>
     <message>
         <source>(1 = keep tx meta data e.g. account owner and payment request information, 2 = drop tx meta data)</source>
@@ -3983,32 +3886,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ยอมรับการถ่ายทอดธุรกรรมที่ได้รับจาก whitelisted peers แม้ว่าจะไม่ได้ทำธุรกรรมแบบเดิมก็ตาม (ค่าเริ่มต้น: %d)</translation>
     </message>
     <message>
-        <source>Add a node to connect to and attempt to keep the connection open (see the `addnode` RPC command help for more info). This option can be specified multiple times to add multiple nodes.</source>
-        <translation>เพิ่มโหนดเพื่อเชื่อมต่อและพยายามที่จะให้เปิดการเชื่อมต่อ (ดู `addnode` คำสั่ง RPC สำหรับข้อมูลเพิ่มเติม) ตัวเลือกนี้จะสามารถระบุได้หลายครั้งเพื่อที่จะเพิ่มหลายโหนด</translation>
-    </message>
-    <message>
         <source>Allow JSON-RPC connections from specified source. Valid for &lt;ip&gt; are a single IP (e.g. 1.2.3.4), a network/netmask (e.g. 1.2.3.4/255.255.255.0) or a network/CIDR (e.g. 1.2.3.4/24). This option can be specified multiple times</source>
         <translation>อนุญาตให้ JSON-RPC เชื่อมต่อจากแหล่งที่ระบุ สามารถใช้ได้สำหรับ &lt;ip&gt; คือ IP เดียว (เช่น 1.2.3.4)  network / netmask (เช่น 1.2.3.4/255.255.255.0) หรือ network / CIDR (เช่น 1.2.3.4/24) สามารถระบุตัวเลือกนี้ได้หลายครั้ง</translation>
     </message>
     <message>
         <source>Bind to given address and whitelist peers connecting to it. Use [host]:port notation for IPv6</source>
-        <translation>เชื่อมโยงไปยังที่อยู่ที่กำหนดและ whitelist peers ที่เชื่อมต่ออยู่  ใช้ [host]:port สัญลักษณ์สำหรับ IPv6</translation>
-    </message>
-    <message>
-        <source>Bind to given address to listen for JSON-RPC connections. Do not expose the RPC server to untrusted networks such as the public internet! This option is ignored unless -rpcallowip is also passed. Port is optional and overrides -rpcport. Use [host]:port notation for IPv6. This option can be specified multiple times (default: 127.0.0.1 and ::1 i.e., localhost, or if -rpcallowip has been specified, 0.0.0.0 and :: i.e., all addresses)</source>
-        <translation>เชื่อมโยงกับที่อยู่ที่ระบุในการฟังสำหรับการเชื่อมต่อ JSON-RPC อย่าเปิดเผยเซิร์ฟเวอร์ RPC ไปสู่เครือข่ายที่ไม่น่าเชื่อถือเช่นอินเทอร์เน็ตสาธารณะ! ตัวเลือกนี้จะถูกเพิกเฉยเว้นแต่ -rpcallowip ถูกส่งผ่าน Port เป็นทั้งตัวเลือกและตัวลบล้าง -rpcport ใช้ [host]:port เครื่องหมายสำหรับ IPv6 ตัวเลือกนี้จะสามารถระบุได้หลายครั้ง (เริ่มต้น: 127.0.0.1 และ ::1 นั่นคือ localhost หรือถ้า -rpcallowip ได้รับการระบุและ 0.0.0.0 :: หรือที่อยู่ทั้งหมด)</translation>
-    </message>
-    <message>
-        <source>Cannot provide specific connections and have addrman find outgoing connections at the same.</source>
-        <translation>ไม่สามารถให้การเชื่อมต่อที่เฉพาะเจาะจงและมี addrman พบการเชื่อมต่อขาออกในเวลาเดียวกัน</translation>
-    </message>
-    <message>
-        <source>Connect only to the specified node; -connect=0 disables automatic connections (the rules for this peer are the same as for -addnode). This option can be specified multiple times to connect to multiple nodes.</source>
-        <translation>เชื่อมต่อไปยังโหนดเพียงระบุ; -connect=0 ปิดใช้งานการเชื่อมต่ออัตโนมัติ (กฎสำหรับเพียร์นี้เช่นเดียวกับ -addnode) ตัวเลือกนี้จะสามารถระบุได้หลายครั้งเพื่อเชื่อมต่อกับหลายโหนด</translation>
-    </message>
-    <message>
-        <source>Connect to a node to retrieve peer addresses, and disconnect. This option can be specified multiple times to connect to multiple nodes.</source>
-        <translation>เชื่อมต่อไปยังโหนดเพื่อดึงข้อมูลที่อยู่เพียร์และตัดการเชื่อมต่อ ตัวเลือกนี้จะสามารถระบุได้หลายครั้งเพื่อเชื่อมต่อกับหลายโหนด</translation>
+        <translation>เชื่อมโยงไปยังที่อยู่ที่กำหนดและ whitelist peers ที่เชื่อมต่ออยู่  ใช้ [โฮสต์]: สัญลักษณ์พอร์ตสำหรับ IPv6</translation>
     </message>
     <message>
         <source>Create new files with system default permissions, instead of umask 077 (only effective with disabled wallet functionality)</source>
@@ -4016,7 +3899,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Delete all wallet transactions and only recover those parts of the blockchain through -rescan on startup</source>
-        <translation>ลบการทำธุรกรรมทั้งหมดของกระเป๋าสตางค์และกู้เฉพาะส่วนของ blockchain ผ่านการสแกนใหม่เมื่อเริ่มต้น</translation>
+        <translation>ลบการทำธุรกรรมทั้งหมดของ wallet และกู้เฉพาะส่วนของ blockchain ผ่านการสแกนใหม่เมื่อเริ่มต้น</translation>
     </message>
     <message>
         <source>Enable publish raw transactions of attempted InstantSend double spend in &lt;address&gt;</source>
@@ -4025,6 +3908,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Enable publish transaction hashes of attempted InstantSend double spend in &lt;address&gt;</source>
         <translation>เปิดใช้งาน transaction hashes ของ InstantSend พยายามที่จะใช้จ่ายสองเท่าใน&lt;address&gt;</translation>
+    </message>
+    <message>
+        <source>Error loading %s: You can't enable HD on a already existing non-HD wallet</source>
+        <translation>เกิดข้อผิดพลาดในการโหลด %s: คุณไม่สามารถเปิดใช้งาน HD บน wallet ที่ไม่ใช่ของ HD ที่มีอยู่แล้ว</translation>
     </message>
     <message>
         <source>Found unconfirmed denominated outputs, will wait till they confirm to continue.</source>
@@ -4047,16 +3934,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>จำนวนเงินไม่ถูกต้องสำหรับ -maxtxfee = &lt;amount&gt;'%s' (ต้องมีอย่างน้อยค่าธรรมเนียงการส่งของ %s เพื่อป้องกันธุรกรรมที่ติดค้าง)</translation>
     </message>
     <message>
-        <source>Location of the auth cookie. Relative paths will be prefixed by a net-specific datadir location. (default: data dir)</source>
-        <translation>ตำแหน่งของคุกกี้รับรองความถูกต้อง เส้นทางความสัมพันธ์จะนำหน้าด้วยค่าสุทธิเฉพาะของตำแหน่ง datadir (ค่าเริ่มต้น: data dir)</translation>
-    </message>
-    <message>
         <source>Maintain a full transaction index, used by the getrawtransaction rpc call (default: %u)</source>
         <translation>รักษาดัชนีการทำรายการทั้งหมดโดยใช้การเรียก gettransaction rpc (ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
-        <source>Make outgoing connections only through network &lt;net&gt; (ipv4, ipv6 or onion). Incoming connections are not affected by this option. This option can be specified multiple times to allow multiple networks.</source>
-        <translation>ทำการเชื่อมต่อขาออกผ่านเครือข่ายเท่านั้น &lt;net&gt; (ipv4, ipv6 หรือ onion) การเชื่อมต่อขาเข้าจะไม่ได้รับผลกระทบจากตัวเลือกนี้ ตัวเลือกนี้จะสามารถระบุได้หลายครั้งเพื่อใช้ได้หลายเครือข่าย</translation>
+        <source>Make sure to encrypt your wallet and delete all non-encrypted backups after you verified that wallet works!</source>
+        <translation>ตรวจสอบให้แน่ใจว่าได้เข้ารหัส wallet ของคุณและลบสำเนาสำรองที่ไม่ได้เข้ารหัสทั้งหมดหลังจากยืนยันว่า wallet ของคุณทำงานได้!  </translation>
     </message>
     <message>
         <source>Maximum size of data in data carrier transactions we relay and mine (default: %u)</source>
@@ -4068,47 +3951,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Output debugging information (default: %u, supplying &lt;category&gt; is optional)</source>
-        <translation>ข้อมูลการแก้ไขจุดบกพร่องเอาท์พุท (ค่าเริ่มต้น: %u, supplying &lt;category&gt; เป็นตัวเลือก)</translation>
+        <translation>ข้อมูลการแก้ไขจุดบกพร่องของ Output (ค่าดีฟอลต์: %u &lt;category&gt; เป็นตัวเลือกเพิ่มเติม)</translation>
     </message>
     <message>
         <source>Overrides minimum spork signers to change spork value. Only useful for regtest and devnet. Using this on mainnet or testnet will ban you.</source>
         <translation>ยกเลิกจำนวนขั้นต่ำ spork signers เพื่อเปลี่ยนจำนวน  มีประโยชน์สำหรับ regtest และ devnet เท่านั้น หากใช้สิ่งนี้บน mainnet หรือ testnet  คุณจะถูกแบน</translation>
-    </message>
-    <message>
-        <source>PrivateSend uses exact denominated amounts to send funds, you might simply need to mix some more coins.</source>
-        <translation>การทำธุรกรรมแบบปกปิดข้อมูล PrivateSend ใช้จำนวนเงินตามสกุลเงินที่แน่นอน คุณอาจเพียงต้องผสมเหรียญเพิ่มเติม</translation>
-    </message>
-    <message>
-        <source>Reduce storage requirements by enabling pruning (deleting) of old blocks. This allows the pruneblockchain RPC to be called to delete specific blocks, and enables automatic pruning of old blocks if a target size in MiB is provided. This mode is incompatible with -txindex, -rescan and -disablegovernance=false. Warning: Reverting this setting requires re-downloading the entire blockchain. (default: 0 = disable pruning blocks, 1 = allow manual pruning via RPC, &gt;=%u = automatically prune block files to stay under the specified target size in MiB)</source>
-        <translation>ลดข้อกำหนดในการจัดเก็บโดยการตัดแต่ง (การลบ) บล็อกเก่า  ซึ่งจะช่วยให้สามารถเรียกใช้ RPM pruneblockchain เพื่อลบบล็อคที่ต้องการและช่วยให้การตัดบล็อกเก่าโดยอัตโนมัติหากมีการกำหนดขนาดเป้าหมายไว้ใน MiB โหมดนี้ไม่สามารถใช้ได้กับ -txindex, -rescan และ -disablegovernance=false                                                    คำเตือน: การคืนค่าการตั้งค่านี้จะต้องดาวน์โหลดใหม่ทั้งหมด blockchain  (ค่าเริ่มต้น: 0 = ปิดใช้งานการตัดบล็อค, 1 = อนุญาตการตัดด้วยตนเองผ่านทาง RPC, &gt;=%u = อัตโนมัติตัดไฟล์บล็อคเพื่อให้อยู่ภายใต้ขนาดเป้าหมายที่ระบุใน MiB)</translation>
-    </message>
-    <message>
-        <source>Send trace/debug info to console (default: 1 when no -daemon. To disable logging to file, set debuglogfile=0)</source>
-        <translation>ส่งข้อมูลการติดตาม/การแก้ปัญหาไปยังคอนโซล (ค่าเริ่มต้น: 1 เมื่อไม่มี -daemon ตั้งการปิดการใช้งานการเข้าสู่ระบบไปยังไฟล์ debuglogfile=0)</translation>
-    </message>
-    <message>
-        <source>Specify configuration file. Relative paths will be prefixed by datadir location. (default: %s)</source>
-        <translation>ระบุการตั้งค่าไฟล์ เส้นทางความสัมพันธ์จะนำหน้าด้วยตำแหน่งของ datadir (ค่าเริ่มต้น: %s)</translation>
-    </message>
-    <message>
-        <source>Specify directory to hold wallets (default: &lt;datadir&gt;/wallets if it exists, otherwise &lt;datadir&gt;)</source>
-        <translation>ระบุไดเรกทอรี่เพื่อครองครองกระเป๋าสตางค์ (ค่าเริ่มต้น: &lt;datadir&gt;/ในกรณีทีมีกระเป๋าสตางค์อยู่แล้ว &lt;datadir&gt;)</translation>
-    </message>
-    <message>
-        <source>Specify location of debug log file. Relative paths will be prefixed by a net-specific datadir location. (0 to disable; default: %s)</source>
-        <translation>ระบุตำแหน่งที่ตั้งของแฟ้มบันทึกการแก้ปัญหา เส้นทางความสัมพันธ์จะนำหน้าด้วยค่าสุทธิเฉพาะของตำแหน่ง datadir (0 ถึง ปิดการใช้งาน; ค่าเริ่มต้น: %s)</translation>
-    </message>
-    <message>
-        <source>Specify pid file. Relative paths will be prefixed by a net-specific datadir location. (default: %s)</source>
-        <translation>ระบุไฟล์ pid เส้นทางความสัมพันธ์จะนำหน้าด้วยค่าสุทธิเฉพาะของตำแหน่ง  datadir (ค่าเริ่มต้น: %s)</translation>
-    </message>
-    <message>
-        <source>Specify wallet database path. Can be specified multiple times to load multiple wallets. Path is interpreted relative to &lt;walletdir&gt; if it is not absolute, and will be created if it does not exist (as a directory containing a wallet.dat file and log files). For backwards compatibility this will also accept names of existing data files in &lt;walletdir&gt;.)</source>
-        <translation>ระบุเส้นทางฐานข้อมูลกระเป๋าสตางค์ สามารถระบุได้หลายครั้งในการโหลดหลายกระเป๋า เส้นทางถูกตีความเทียบกับ&lt;walletdir&gt; ถ้ามันไม่ได้ แน่นอนว่าจะได้รับการสร้างขึ้นถ้ามันไม่ได้มีอยู่แล้ว (เป็นไดเรกทอรีที่มีไฟล์ wallet.dat และไฟล์บันทึก) สำหรับการทำงานร่วมกันหลังนี้จะได้รับการยอมรับชื่อของไฟล์ข้อมูลที่มีอยู่แล้วใน &lt;walletdir&gt;)</translation>
-    </message>
-    <message>
-        <source>Transaction index can't be disabled with governance validation enabled. Either start with -disablegovernance command line switch or enable transaction index.</source>
-        <translation>ดัชนีการทำธุรกรรมไม่สามารถปิดการใช้งานกับการตรวจสอบการกำกับดูแลการเปิดใช้งาน ทั้งสองเริ่มต้นด้วย -disablegovernance command line switch หรือเปิดใช้งานดัชนีการทำธุรกรรม</translation>
     </message>
     <message>
         <source>Use N separate masternodes in parallel to mix funds (%u-%u, default: %u)</source>
@@ -4120,15 +3967,27 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>User defined mnemonic for HD wallet (bip39). Only has effect during wallet creation/first start (default: randomly generated)</source>
-        <translation>ผู้ใช้กำหนดเทคนิคช่วยจำสำหรับกระเป๋าสตางค์ HD (bip39) จะมีผลเฉพาะระหว่างการสร้าง wallet / การเริ่มครั้งแรก (ค่าเริ่มต้น: สร้างแบบสุ่ม)</translation>
+        <translation>ผู้ใช้กำหนดเทคนิคช่วยจำสำหรับ wallet HD (bip39) จะมีผลเฉพาะระหว่างการสร้าง wallet / การเริ่มครั้งแรก (ค่าเริ่มต้น: สร้างแบบสุ่ม)</translation>
     </message>
     <message>
         <source>User defined seed for HD wallet (should be in hex). Only has effect during wallet creation/first start (default: randomly generated)</source>
-        <translation>ผู้ใช้กำหนด seed สำหรับกระเป๋าสตางค์ HD (ควรเป็นเลขฐานสิบหก) มีผลเฉพาะระหว่างการสร้างกระเป๋าสตางค์/การเริ่มครั้งแรก (ค่าเริ่มต้น: สร้างแบบสุ่ม)</translation>
+        <translation>ผู้ใช้กำหนด seed สำหรับ wallet  HD (ควรเป็นเลขฐายสิบหก) มีผลเฉพาะระหว่างการสร้างกระเป๋าสตางค์ / การเริ่มครั้งแรก (ค่าเริ่มต้น: สร้างแบบสุ่ม)</translation>
     </message>
     <message>
         <source>Whitelisted peers cannot be DoS banned and their transactions are always relayed, even if they are already in the mempool, useful e.g. for a gateway</source>
         <translation>Whitelisted peers ไม่สามารถถูกห้ามโดย DoS และการทำธุรกรรมของพวกเขาจะถูกส่งถึงแม้ว่าจะมีอยู่ในกลุ่ม mempool แล้วก็ตามเช่น สำหรับเกตเวย์</translation>
+    </message>
+    <message>
+        <source>You need to rebuild the database using -reindex-chainstate to change -txindex</source>
+        <translation>คุณจำเป็นต้องสร้างฐานข้อมูลโดยใช้ -reindex-chainstate เพื่อเปลี่ยน -txindex</translation>
+    </message>
+    <message>
+        <source>You should specify a masternodeblsprivkey in the configuration. Please see documentation for help.</source>
+        <translation>คุณควรระบุ masternodeblsprivkey ในการกำหนดค่า โปรดดูเอกสารประกอบสำหรับความช่วยเหลือเพิ่มเติม</translation>
+    </message>
+    <message>
+        <source>(default: %s)</source>
+        <translation>(ค่าดีฟอลต์: %s)</translation>
     </message>
     <message>
         <source>Accept public REST requests (default: %u)</source>
@@ -4152,11 +4011,19 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Connect to KeePassHttp on port &lt;port&gt; (default: %u)</source>
-        <translation>เชื่อมต่อกับ KeePassHttp บน port  &lt;port&gt; (ค่าเริ่มต้น: %u)</translation>
+        <translation>เชื่อมต่อกับ KeePassHttp บนพอร์ต  &lt;port&gt; (ค่าเริ่มต้น: %u)</translation>
+    </message>
+    <message>
+        <source>Enable the client to act as a masternode (0-1, default: %u)</source>
+        <translation>เปิดใช้งานไคลเอ็นต์เพื่อทำหน้าที่เป็น masternode (0-1 ค่าดีฟอลต์: %u)</translation>
     </message>
     <message>
         <source>Entry exceeds maximum size.</source>
         <translation>รายการมีขนาดสูงเกินไป</translation>
+    </message>
+    <message>
+        <source>Error loading %s: You can't disable HD on a already existing HD wallet</source>
+        <translation>เกิดข้อผิดพลาดในการโหลด %s: คุณไม่สามารถปิดใช้งาน HD ใน wallet HD ที่มีอยู่แล้ว</translation>
     </message>
     <message>
         <source>Failed to load fulfilled requests cache from</source>
@@ -4215,12 +4082,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>เงินทุนไม่เพียงพอ</translation>
     </message>
     <message>
-        <source>Invalid amount for -discardfee=&lt;amount&gt;: '%s'</source>
-        <translation>จำนวนเงินไม่ถูกต้องสำหรับ -discardfee=&lt;amount&gt;: '%s'</translation>
-    </message>
-    <message>
         <source>Invalid amount for -paytxfee=&lt;amount&gt;: '%s' (must be at least %s)</source>
         <translation>จำนวนที่ไม่ถูกต้องสำหรับ -paytxfee = &lt;amount&gt;: '%s' (ต้องมีอย่างน้อย %s)</translation>
+    </message>
+    <message>
+        <source>Invalid masternodeblsprivkey. Please see documenation.</source>
+        <translation>masternodeprivkey ไม่ถูกต้อง โปรดดูเอกสารประกอบ</translation>
     </message>
     <message>
         <source>Invalid minimum number of spork signers specified with -minsporkkeys</source>
@@ -4283,12 +4150,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ไม่พบ Masternode ที่เข้ากันได้</translation>
     </message>
     <message>
-        <source>Not enough funds to mix.</source>
-        <translation>เงินไม่เพียงพอที่จะผสม</translation>
-    </message>
-    <message>
         <source>Not in the Masternode list.</source>
         <translation>ไม่อยู่ในรายการ Masternode</translation>
+    </message>
+    <message>
+        <source>Only connect to nodes in network &lt;net&gt; (ipv4, ipv6 or onion)</source>
+        <translation>เชื่อมต่อกับโหนดในเครือข่ายเท่านั้น &lt;net&gt; (ipv4, ipv6 หรือ onion)</translation>
     </message>
     <message>
         <source>Prepend debug output with timestamp (default: %u)</source>
@@ -4307,16 +4174,32 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ส่งข้อมูล trace / debug ไปยังไฟล์ debug.log (ค่าดีฟอลต์: %u)</translation>
     </message>
     <message>
+        <source>Send transactions as zero-fee transactions if possible (default: %u)</source>
+        <translation>ถ้าเป็นไปได้ส่งรายการเป็นธุรกรรมที่เป็น zero-fee  (ค่าเริ่มต้น: %u)</translation>
+    </message>
+    <message>
         <source>Set key pool size to &lt;n&gt; (default: %u)</source>
         <translation>ตั้งค่าขนาด key pool เป็น &lt;n&gt; (ค่าเริ่มต้น: %u)</translation>
+    </message>
+    <message>
+        <source>Set the masternode BLS private key</source>
+        <translation>ตั้งค่า The Masternode BLS private key</translation>
     </message>
     <message>
         <source>Set the number of threads to service RPC calls (default: %d)</source>
         <translation>กำหนดจำนวน threads เพื่อให้บริการการโทร RPC (ค่าเริ่มต้น: %d)</translation>
     </message>
     <message>
+        <source>Specify configuration file (default: %s)</source>
+        <translation>ระบุไฟล์การกำหนดค่า (ค่าดีฟอลต์: %s)</translation>
+    </message>
+    <message>
         <source>Specify connection timeout in milliseconds (minimum: 1, default: %d)</source>
         <translation>ระบุระยะหมดเวลาการเชื่อมต่อเป็นมิลลิวินาที (ต่ำสุด: 1 ค่าเริ่มต้น: %d)</translation>
+    </message>
+    <message>
+        <source>Specify pid file (default: %s)</source>
+        <translation>ระบุไฟล์ pid (ค่าดีฟอลต์: %s)</translation>
     </message>
     <message>
         <source>Spend unconfirmed change when sending transactions (default: %u)</source>
@@ -4327,12 +4210,28 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ส่งไปยัง masternode กำลังรอคิว %s</translation>
     </message>
     <message>
+        <source>Synchronization failed</source>
+        <translation>การซิงโครไนซ์ล้มเหลว</translation>
+    </message>
+    <message>
         <source>Synchronization finished</source>
         <translation>การซิงโครไนซ์สิ้นเสร็จ</translation>
     </message>
     <message>
+        <source>This is not a Masternode.</source>
+        <translation>นี่ไม่ใช่ Masternodes</translation>
+    </message>
+    <message>
         <source>Threshold for disconnecting misbehaving peers (default: %u)</source>
         <translation>เกณฑ์สำหรับการยกเลิกการเชื่อมต่อ peer ที่ทำงานผิดปกติ (ค่าเริ่มต้น: %u)</translation>
+    </message>
+    <message>
+        <source>Too many %f denominations, removing.</source>
+        <translation>จำนวนเงิน %f มากเกินไป, กำลังลบออก</translation>
+    </message>
+    <message>
+        <source>Too many %f denominations, skipping.</source>
+        <translation>จำนวน %f มากเกินไป , ข้าม</translation>
     </message>
     <message>
         <source>Tor control port password (default: empty)</source>
@@ -4364,7 +4263,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Upgrade wallet to latest format on startup</source>
-        <translation>อัปเดตกระเป๋าสตางค์เป็นรูปแบบล่าสุดเมื่อเริ่มต้น</translation>
+        <translation>อัปเดต wallet เป็นรูปแบบล่าสุดเมื่อเริ่มต้น</translation>
     </message>
     <message>
         <source>Use KeePass 2 integration using KeePassHttp plugin (default: %u)</source>
@@ -4381,10 +4280,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>User Agent comment (%s) contains unsafe characters.</source>
         <translation>ตัวแทนผู้ใช้แสดงความคิดเห็น (%s) มีอักขระที่ไม่ปลอดภัย</translation>
-    </message>
-    <message>
-        <source>Verifying wallet(s)...</source>
-        <translation>กำลังตรวจสอบ wallet(s)...</translation>
     </message>
     <message>
         <source>Will retry...</source>
@@ -4415,8 +4310,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>คีย์ KeePassHttp สำหรับการสื่อสารที่เข้ารหัสด้วย AES กับ KeePass</translation>
     </message>
     <message>
-        <source>%s file contains all private keys from this wallet. Do not share it with anyone!</source>
-        <translation>ไฟล์ %s มี private keys ทั้งหมดจากกระเป๋าสตางค์นี้  ห้ามเผยแพร่กับคนอื่น</translation>
+        <source>Keep at most &lt;n&gt; unconnectable transactions in memory (default: %u)</source>
+        <translation>เก็บให้ได้มากที่สุด&lt;n&gt;รายการที่ไม่สามารถยกเลิกการทำธุรกรรมในหน่วยความจำ (ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
         <source>Disable all Ion specific functionality (Masternodes, PrivateSend, InstantSend, Governance) (0-1, default: %u)</source>
@@ -4435,8 +4330,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>อย่าเก็บธุรกรรมไว้ใน mempool นานกว่า &lt;n&gt; ชั่วโมง (ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
+        <source>Enable InstantSend, show confirmations for locked transactions (0-1, default: %u)</source>
+        <translation>เปิดใช้งาน InstantSend แสดงการยืนยันสำหรับธุรกรรมที่ล็อกไว้ (0-1 ค่าดีฟอลต์: %u)</translation>
+    </message>
+    <message>
         <source>Enable multiple PrivateSend mixing sessions per block, experimental (0-1, default: %u)</source>
         <translation>เปิดใช้งานเซสชันการผสม PrivateSend ต่อบล็อค (0-1 ค่าดีฟอลต์: %u)</translation>
+    </message>
+    <message>
+        <source>Enable use of automated PrivateSend for funds stored in this wallet (0-1, default: %u)</source>
+        <translation>เปิดใช้งาน PrivateSend โดยอัตโนมัติสำหรับเก็บเงินไว้ใน wallet นี้ (0-1 ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
         <source>Execute command when a wallet InstantSend transaction is successfully locked (%s in cmd is replaced by TxID)</source>
@@ -4448,7 +4351,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Failed to create backup, file already exists! This could happen if you restarted wallet in less than 60 seconds. You can continue if you are ok with this.</source>
-        <translation>ไม่สามารถสร้างไฟล์สำรองข้อมูลได้แล้ว! กรณีนี้อาจเกิดขึ้นหากคุณรีสตาร์ทกระเป๋าสตางค์ภายในเวลาไม่ถึง 60 วินาที คุณสามารถดำเนินการต่อได้หากคุณต้องการ</translation>
+        <translation>ไม่สามารถสร้างไฟล์สำรองข้อมูลได้แล้ว! กรณีนี้อาจเกิดขึ้นหากคุณรีสตาร์ท wallet ภายในเวลาไม่ถึง 60 วินาที คุณสามารถดำเนินการต่อได้หากคุณต้องการ</translation>
     </message>
     <message>
         <source>Fees (in %s/kB) smaller than this are considered zero fee for relaying, mining and transaction creation (default: %s)</source>
@@ -4487,12 +4390,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>รักษาบริการเชื่อมต่อแบบ peer อย่างน้อย &lt;n&gt;  (ไม่รวมบริการเชื่อมต่อชั่วคราว) (ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
-        <source>Make sure to encrypt your wallet and delete all non-encrypted backups after you have verified that the wallet works!</source>
-        <translation>ตรวจสอบให้แน่ใจว่าได้เข้ารหัสกระเป๋าสตางค์ของคุณและลบสำเนาสำรองที่ไม่ได้เข้ารหัสทั้งหมดหลังจากยืนยันว่า wallet ของคุณทำงานได้!  </translation>
-    </message>
-    <message>
-        <source>Maximum total size of all orphan transactions in megabytes (default: %u)</source>
-        <translation>ขนาดสูงสุดของธุรกรรมที่ไม่สมบรูณ์ในหน่วยเมกะไบต์ (ค่าเริ่มต้น:%u)</translation>
+        <source>PrivateSend uses exact denominated amounts to send funds, you might simply need to anonymize some more coins.</source>
+        <translation>PrivateSend ใช้จำนวนเงินตามสกุลเงินที่แน่นอนในการส่งเงิน คุณอาจเพียงต้องการระบุชื่อเหรียญเพิ่มเติม</translation>
     </message>
     <message>
         <source>Prune configured below the minimum of %d MiB.  Please use a higher number.</source>
@@ -4500,11 +4399,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Prune: last wallet synchronisation goes beyond pruned data. You need to -reindex (download the whole blockchain again in case of pruned node)</source>
-        <translation>การซิงโครไนซ์กระเป๋าสตางค์ครั้งล่าสุดเหนือกว่าข้อมูล pruned คุณต้อง -reindex (ดาวน์โหลด blockchain ทั้งหมดอีกครั้งในกรณีของ pruned โหนด)</translation>
-    </message>
-    <message>
-        <source>Query for peer addresses via DNS lookup, if low on addresses (default: 1 unless -connect used)</source>
-        <translation>ข้อสงสัยสำหรับที่อยู่ของ peer ค้นหาได้ทาง DNS หากมีที่อยู่ต่ำ (ค่าเริ่มต้น: 1 เว้นแต่ -connect ถูกใช้)</translation>
+        <translation>การซิงโครไนซ์ wallet ครั้งล่าสุดเหนือกว่าข้อมูล pruned คุณต้อง -reindex (ดาวน์โหลด blockchain ทั้งหมดอีกครั้งในกรณีของ pruned โหนด)</translation>
     </message>
     <message>
         <source>Randomize credentials for every proxy connection. This enables Tor stream isolation (default: %u)</source>
@@ -4515,12 +4410,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Rescans ไม่สามารถทำได้ในโหมด pruned คุณจะต้องใช้ -reindex ซึ่งจะดาวน์โหลด blockchain ทั้งหมดอีกครั้ง</translation>
     </message>
     <message>
-        <source>Set the masternode BLS private key and enable the client to act as a masternode</source>
-        <translation>ตั้งค่า the masternode BLS private key และสามารถให้ผู้ใช้ปฏิบัติงานได้เข่นเดียวกับ masternode</translation>
-    </message>
-    <message>
         <source>Specify full path to directory for automatic wallet backups (must exist)</source>
-        <translation>ระบุ path แบบเต็มรูปแบบไปยังไดเรกทอรี่สำหรับการสำรองข้อมูลกระเป๋าสตางค์อัตโนมัติ (ที่ต้องมีอยู่)</translation>
+        <translation>ระบุแพทเต็มรูปแบบไปยังไดเรกทอรีสำหรับการสำรองข้อมูล wallet อัตโนมัติ (ต้องมีอยู่)</translation>
     </message>
     <message>
         <source>Support filtering of blocks and transaction with bloom filters (default: %u)</source>
@@ -4539,12 +4430,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ความยาวทั้งหมดของสตริงเวอร์ชันเครือข่าย (%i) เกินความยาวสูงสุด (%i)  ลดจำนวนหรือขนาดของ uacomments</translation>
     </message>
     <message>
-        <source>Tries to keep outbound traffic under the given target (in MiB per 24h), 0 = no limit (default: %d)</source>
-        <translation>พยายามให้การรับส่งข้อมูลขาออกตามเป้าหมายที่กำหนด (ใน MiB ต่อ 24 ชั่วโมง), 0 = ไม่มีขีด จำกัด (ค่าเริ่มต้น: %d)</translation>
+        <source>Transaction index can't be disabled in full mode. Either start with -litemode command line switch or enable transaction index.</source>
+        <translation>ไม่สามารถปิดใช้ดัชนีรายการในโหมดเต็มได้ นอกจากจะเริ่มต้นด้วยสวิตช์คำสั่ง - litemode หรือเปิดใช้งานรายการดัชนี</translation>
     </message>
     <message>
-        <source>Try to create at least N inputs of each denominated amount (%u-%u, default: %u)</source>
-        <translation>พยายามที่จะสร้างอย่างน้อย N ป้อนจำนวนเงินของแต่ละสกุล (%u-%u, default: %u)</translation>
+        <source>Tries to keep outbound traffic under the given target (in MiB per 24h), 0 = no limit (default: %d)</source>
+        <translation>พยายามให้การรับส่งข้อมูลขาออกตามเป้าหมายที่กำหนด (ใน MiB ต่อ 24 ชั่วโมง), 0 = ไม่มีขีด จำกัด (ค่าเริ่มต้น: %d)</translation>
     </message>
     <message>
         <source>Unable to locate enough PrivateSend denominated funds for this transaction.</source>
@@ -4563,16 +4454,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ใช้ UPnP เพื่อวางแผนพอร์ตการฟัง (ค่าเริ่มต้น: 1 เมื่อกำลังฟังและไม่มี -proxy)</translation>
     </message>
     <message>
-        <source>Username and hashed password for JSON-RPC connections. The field &lt;userpw&gt; comes in the format: &lt;USERNAME&gt;:&lt;SALT&gt;$&lt;HASH&gt;. A canonical python script is included in share/rpcauth. The client then connects normally using the rpcuser=&lt;USERNAME&gt;/rpcpassword=&lt;PASSWORD&gt; pair of arguments. This option can be specified multiple times</source>
-        <translation>ชื่อผู้ใช้และ hashed password สำหรับการเชื่อมต่อ JSON-RPC   ฟิลด์&lt;userpw&gt;มาในรูปแบบ:&lt;USERNAME&gt;: &lt;SALT&gt;$&lt;HASH&gt; สคริปต์จะรวมอยู่ใน share/rpcauth ลูกค้าเชื่อมต่อโดยปกติโดยใช้ rpcuser = &lt;USERNAME&gt; / rpcpassword = &lt;PASSWORD&gt; คู่อาร์กิวเมนต์ สามารถระบุตัวเลือกนี้ได้หลายครั้ง</translation>
-    </message>
-    <message>
         <source>WARNING! Failed to replenish keypool, please unlock your wallet to do so.</source>
-        <translation>คำเตือน! ไม่สามารถเติม keypool ได้  โปรดปลดล็อกกระเป๋าสตางค์ของคุณเพื่อทำเช่นนั้น</translation>
+        <translation>คำเตือน! ไม่สามารถเติม keypool ได้  โปรดปลดล็อก wallet ของคุณเพื่อทำเช่นนั้น</translation>
     </message>
     <message>
         <source>Wallet is locked, can't replenish keypool! Automatic backups and mixing are disabled, please unlock your wallet to replenish keypool.</source>
-        <translation>กระเป๋าสตางค์ถูกล็อคไม่สามารถเติม keypool! ปิดใช้งานการสำรองข้อมูลและการผสมข้อมูลอัตโนมัติ โปรดปลดล็อกเพื่อใส่พวง keypool</translation>
+        <translation>Wallet ถูกล็อคไม่สามารถเติม keypool! ปิดใช้งานการสำรองข้อมูลและการผสมข้อมูลอัตโนมัติ โปรดปลดล็อกเพื่อใส่พวง keypool</translation>
     </message>
     <message>
         <source>Warning: Unknown block versions being mined! It's possible unknown rules are in effect</source>
@@ -4589,10 +4476,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>(default: %u)</source>
         <translation>(ค่าเริ่มต้น: %u)</translation>
-    </message>
-    <message>
-        <source>-litemode is deprecated.</source>
-        <translation>-litemode ถูกคัดค้าน</translation>
     </message>
     <message>
         <source>-maxmempool must be at least %d MB</source>
@@ -4613,10 +4496,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Automatically create Tor hidden service (default: %d)</source>
         <translation>สร้างบริการ Tor ที่ซ่อนไว้โดยอัตโนมัติ (ค่าเริ่มต้น: %d)</translation>
-    </message>
-    <message>
-        <source>Disable governance validation (0-1, default: %u)</source>
-        <translation>การตรวจสอบการกำกับดูแลปิดการใช้งาน (0-1, default: %u)</translation>
     </message>
     <message>
         <source>ERROR! Failed to create automatic backup</source>
@@ -4655,36 +4534,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>เปิดใช้งานการทำธุรกรรมดิบใหม่ใน &lt;address&gt;</translation>
     </message>
     <message>
-        <source>Error upgrading evo database</source>
-        <translation>ฐานข้อมูลข้อผิดพลาดในการอัพเกรด evo</translation>
-    </message>
-    <message>
         <source>Error: A fatal internal error occurred, see debug.log for details</source>
         <translation>ข้อผิดพลาด: มีข้อผิดพลาดร้ายแรงภายในเกิดขึ้น โปรดดูที่ debug.log เพื่อดูรายละเอียด</translation>
-    </message>
-    <message>
-        <source>Error: failed to add socket to epollfd (epoll_ctl returned error %s)</source>
-        <translation>ข้อผิดพลาด: ล้มเหลวในการเพิ่ม socket to epollfd (epoll_ctl returned error %s) </translation>
-    </message>
-    <message>
-        <source>Exceeded max tries.</source>
-        <translation>เกินความพยายามสูงสุด</translation>
-    </message>
-    <message>
-        <source>Failed to clear fulfilled requests cache at</source>
-        <translation>ล้มเหลวในการเคลียคำร้อง cache ที่</translation>
-    </message>
-    <message>
-        <source>Failed to clear governance cache at</source>
-        <translation>ล้มเหลวในการเคลียการกำกับดูแล cache ที่</translation>
-    </message>
-    <message>
-        <source>Failed to clear masternode cache at</source>
-        <translation>ล้มเหลวในการเคลียร์ masternode cache ที่</translation>
-    </message>
-    <message>
-        <source>Failed to commit EvoDB</source>
-        <translation>ล้มเหลวในการกระทำ EvoDB</translation>
     </message>
     <message>
         <source>Failed to create backup %s!</source>
@@ -4699,12 +4550,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ไม่สามารถลบข้อมูลสำรอง  ผิดพลาด: %s</translation>
     </message>
     <message>
-        <source>Failed to load sporks cache from</source>
-        <translation>โหลดแคช sporks ล้มเหลว</translation>
+        <source>Failed to load InstantSend data cache from</source>
+        <translation>โหลดแคชข้อมูล InstantSend  ล้มเหลว</translation>
     </message>
     <message>
-        <source>Failed to rescan the wallet during initialization</source>
-        <translation>ล้มเหลวในการสแกนกระเป๋าสตางค์ในช่วงเริ่มต้น</translation>
+        <source>Failed to load sporks cache from</source>
+        <translation>โหลดแคช sporks ล้มเหลว</translation>
     </message>
     <message>
         <source>Fee (in %s/kB) to add to transactions you send (default: %s)</source>
@@ -4723,18 +4574,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>จำนวนเงินที่ไม่ถูกต้องสำหรับ -fallbackfee = 1: '%s'</translation>
     </message>
     <message>
-        <source>Invalid masternodeblsprivkey. Please see documentation.</source>
-        <translation>masternodeprivkey ไม่ถูกต้อง โปรดดูเอกสารประกอบ</translation>
-    </message>
-    <message>
-        <source>It has been replaced by -disablegovernance.</source>
-        <translation>มันได้ถูกแทนที่ด้วย -disablegovernance</translation>
-    </message>
-    <message>
-        <source>Its replacement -disablegovernance has been forced instead.</source>
-        <translation>-disablegovernance ได้รับการบังคับทดแทน</translation>
-    </message>
-    <message>
         <source>Keep the transaction memory pool below &lt;n&gt; megabytes (default: %u)</source>
         <translation>เก็บหน่วยความจำธุรกรรมไว้ต่ำกว่า 1 เมกะไบต์ (ค่าเริ่มต้น: %u)</translation>
     </message>
@@ -4745,6 +4584,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Last successful PrivateSend action was too recent.</source>
         <translation>การกระทำ PrivateSend ที่ประสบความสำเร็จล่าสุดเป็นข้อมูลล่าสุด</translation>
+    </message>
+    <message>
+        <source>Loading InstantSend data cache...</source>
+        <translation>กำลังโหลดแคชข้อมูล InstantSend ...</translation>
     </message>
     <message>
         <source>Loading block index...</source>
@@ -4767,8 +4610,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>กำลังโหลด Wallet ...</translation>
     </message>
     <message>
+        <source>Location of the auth cookie (default: data dir)</source>
+        <translation>ตำแหน่งของคุกกี้ที่ได้รับรองความถูกต้อง (ค่าดีฟอลต์: data dir)</translation>
+    </message>
+    <message>
         <source>Make the wallet broadcast transactions</source>
-        <translation>ดำเนินการในการเผยแพร่ธุรกรรมกระเป๋าสตางค์ </translation>
+        <translation>ดำเนินการในการเผยแพร่ธุรกรรม wallet</translation>
     </message>
     <message>
         <source>Masternode options:</source>
@@ -4803,6 +4650,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ตัวเลือกการถ่ายทอดโหนด:</translation>
     </message>
     <message>
+        <source>Non-standard public key detected.</source>
+        <translation>ตรวจพบคีย์สาธารณะที่ไม่เป็นไปตามมาตรฐาน</translation>
+    </message>
+    <message>
         <source>Not compatible with existing transactions.</source>
         <translation>ไม่สามารถใช้งานร่วมกับธุรกรรมที่มีอยู่ได้</translation>
     </message>
@@ -4811,8 +4662,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>มีคำอธิบายไฟล์เพียงพอ</translation>
     </message>
     <message>
+        <source>Not enough funds to anonymize.</source>
+        <translation>เงินไม่เพียงพอที่จะไม่ระบุชื่อ</translation>
+    </message>
+    <message>
         <source>Number of automatic wallet backups (default: %u)</source>
-        <translation>จำนวนการสำรองข้อมูลกระเป๋าสตางค์อัตโนมัติ (ค่าเริ่มต้น: %u)</translation>
+        <translation>จำนวนการสำรองข้อมูล Wallet อัตโนมัติ (ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
         <source>Options:</source>
@@ -4835,16 +4690,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ตัวเลือก PrivateSend:</translation>
     </message>
     <message>
+        <source>PrivateSend request complete:</source>
+        <translation>คำขอ PrivateSend สมบูรณ์:</translation>
+    </message>
+    <message>
         <source>PrivateSend request incomplete:</source>
         <translation>คำขอ PrivateSend ไม่สมบูรณ์:</translation>
     </message>
     <message>
         <source>Prune cannot be configured with a negative value.</source>
         <translation>Prune  ไม่สามารถกำหนดค่าได้ด้วยค่าลบ </translation>
-    </message>
-    <message>
-        <source>Prune mode is incompatible with -disablegovernance=false.</source>
-        <translation>Prune โหมด ไม่เข้ากันกับ -disablegovernance=ผิดพลาด</translation>
     </message>
     <message>
         <source>Prune mode is incompatible with -txindex.</source>
@@ -4856,47 +4711,11 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Rescan the block chain for missing wallet transactions on startup</source>
-        <translation>สแกน Block chain ใหม่สำหรับธุรกรรมกระเป๋าสตางค์ที่หายไปเมื่อเริ่มต้น</translation>
-    </message>
-    <message>
-        <source>Send reject messages per BIP61 (default: %u)</source>
-        <translation>ส่งข้อความปฏิเสธต่อ BIP61 (ค่าเริ่มต้น: %u)</translation>
-    </message>
-    <message>
-        <source>Socket events mode, which must be one of: %s (default: %s)</source>
-        <translation>Socket events mode, ซึ่งจะต้องเป็นหนึ่งใน: %s (default: %s)</translation>
-    </message>
-    <message>
-        <source>Specified -walletdir "%s" does not exist</source>
-        <translation>-walletdir "%s" ที่ระบุไม่มีอยู่</translation>
-    </message>
-    <message>
-        <source>Specified -walletdir "%s" is a relative path</source>
-        <translation>-walletdir "%s" ที่ระบุมีความสัมพันธ์กัน</translation>
-    </message>
-    <message>
-        <source>Specified -walletdir "%s" is not a directory</source>
-        <translation>-walletdir "%s" ที่ระบุไม่ใช่ไดเรกทอรี่</translation>
-    </message>
-    <message>
-        <source>Sync mempool from other nodes on start (default: %u)</source>
-        <translation>ซิงค์ mempool จากโหนดอื่น ๆ ในการเริ่มต้น (ค่าเริ่มต้น: %u)</translation>
-    </message>
-    <message>
-        <source>Synchronizing blockchain...</source>
-        <translation>กำลังซิงโครไนซ์ blockchain...</translation>
-    </message>
-    <message>
-        <source>Target PrivateSend balance (%u-%u, default: %u)</source>
-        <translation>ยอดเงินคงเหลือที่กำหนดไว้ในการทำธุรกรรมแบบ PrivateSend (%u-%u, ค่าเริ่มต้น: %u)</translation>
+        <translation>สแกน Block chain ใหม่สำหรับธุรกรรม Wallet ที่หายไปเมื่อเริ่มต้น</translation>
     </message>
     <message>
         <source>The wallet will avoid paying less than the minimum relay fee.</source>
-        <translation>กระเป๋าสตางค์นี้จะหลีกเลี่ยงการจ่ายเงินน้อยกว่าค่าโอนขั้นต่ำ</translation>
-    </message>
-    <message>
-        <source>This is expected because you are running a pruned node.</source>
-        <translation>สิ่งนี้คาดว่าเพราะคุณกำลังดำเนินงาน pruned โหนด </translation>
+        <translation>Wallet จะหลีกเลี่ยงการจ่ายเงินน้อยกว่าค่าโอนขั้นต่ำ</translation>
     </message>
     <message>
         <source>This is the minimum transaction fee you pay on every transaction.</source>
@@ -4931,10 +4750,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ไม่สามารถผูกกับ %s คอมพิวเตอร์เครื่องนี้ได้  %s อาจกำลังทำงานอยู่แล้ว</translation>
     </message>
     <message>
-        <source>Unable to generate initial keys</source>
-        <translation>ไม่สามารถสร้างคีย์เริ่มต้น</translation>
-    </message>
-    <message>
         <source>Upgrading UTXO database</source>
         <translation>การอัพเกรดฐานข้อมูล UTXO</translation>
     </message>
@@ -4943,16 +4758,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ใช้ devnet chain พร้อมชื่อที่ระบุ</translation>
     </message>
     <message>
-        <source>Wallet %s resides outside wallet directory %s</source>
-        <translation>กระเป๋าสตางค์ %s มีอยู่ด้านนอกไดเรกทอรี่ของกระเป๋าสตางค์ %s</translation>
+        <source>Wallet debugging/testing options:</source>
+        <translation>การแก้จุดบกพร่อง / ตัวเลือกการทดสอบ Wallet:</translation>
     </message>
     <message>
-        <source>Wallet debugging/testing options:</source>
-        <translation>การแก้จุดบกพร่อง/ตัวเลือกการทดสอบกระเป๋าสตางค์:</translation>
+        <source>Wallet is not initialized</source>
+        <translation>ยังไม่ได้ลงชื่อ wallet </translation>
     </message>
     <message>
         <source>Wallet needed to be rewritten: restart %s to complete</source>
-        <translation>กระเป๋าสตางค์ต้องการพิมพ์ใหม่: รีสตาร์ท %s ให้เสร็จสมบูรณ์</translation>
+        <translation>Wallet ต้องการพิมพ์ใหม่: รีสตาร์ท %s ให้เสร็จสมบูรณ์</translation>
     </message>
     <message>
         <source>Warning: unknown new rules activated (versionbit %i)</source>
@@ -4960,27 +4775,15 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Wasn't able to create wallet backup folder %s!</source>
-        <translation>ไม่สามารถสร้างโฟลเดอร์สำรองกระเป๋าสตางค์ได้ %s!</translation>
+        <translation>ไม่สามารถสร้างโฟลเดอร์สำรอง Wallet ได้ %s!</translation>
     </message>
     <message>
         <source>Whether to operate in a blocks only mode (default: %u)</source>
         <translation>ใช้งานในโหมดบล็อกเฉพาะ (ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
-        <source>You can not start a masternode with wallet enabled.</source>
-        <translation>คุณไม่สามารถเริ่มต้น masternode กับกระเป๋าสตางค์เปิดการใช้งาน</translation>
-    </message>
-    <message>
-        <source>You need to rebuild the database using -reindex to change -addressindex</source>
-        <translation>คุณจำเป็นต้องสร้างฐานข้อมูลโดยใช้ -reindex เพื่อเปลี่ยน -addressindex</translation>
-    </message>
-    <message>
-        <source>You need to rebuild the database using -reindex to change -spentindex</source>
-        <translation>คุณจำเป็นต้องสร้างฐานข้อมูลโดยใช้ -reindex เพื่อเปลี่ยน -spentindex</translation>
-    </message>
-    <message>
-        <source>You need to rebuild the database using -reindex to change -txindex</source>
-        <translation>คุณจำเป็นต้องสร้างฐานข้อมูลโดยใช้ -reindex-chainstate เพื่อเปลี่ยน -txindex</translation>
+        <source>You can not start a masternode in lite mode.</source>
+        <translation>คุณไม่สามารถเริ่มต้น masternode ใน Lite mode</translation>
     </message>
     <message>
         <source>ZeroMQ notification options:</source>
@@ -5007,28 +4810,24 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%s นักพัฒนา</translation>
     </message>
     <message>
+        <source>Accept connections from outside (default: 1 if no -proxy or -connect/-noconnect)</source>
+        <translation>ยอมรับการเชื่อมต่อจากภายนอก (ค่าเริ่มต้น: 1 ถ้าไม่มี -proxy หรือ - เชื่อมต่อ / -ไม่เชื่อมต่อ)</translation>
+    </message>
+    <message>
         <source>Cannot obtain a lock on data directory %s. %s is probably already running.</source>
-        <translation>ไม่สามารถรับการล็อกไดเรกทอรี่ข้อมูล %s ได้ %s ซึ่งมันอาจทำงานอยู่แล้ว</translation>
+        <translation>ไม่สามารถรับการล็อกไดเรกทอรีข้อมูล %s ได้ %s มันอาจทำงานอยู่แล้ว</translation>
+    </message>
+    <message>
+        <source>Connect only to the specified node(s); -noconnect or -connect=0 alone to disable automatic connections</source>
+        <translation>เชื่อมต่อกับโหนดที่ระบุเท่านั้น -noconnect หรือ -connect = 0 เพื่อยกเลิกการเชื่อมต่ออัตโนมัติ</translation>
     </message>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file %s or %s</source>
         <translation>เผยแพร่ภายใต้ใบอนุญาตซอฟต์แวร์ MIT โปรดดูที่ไฟล์ที่แนบมา %s หรือ %s</translation>
     </message>
     <message>
-        <source>Enable use of PrivateSend for funds stored in this wallet (0-1, default: %u)</source>
-        <translation>เปิดใช้งาน PrivateSend สำหรับเก็บเงินไว้ในกระเป๋าสตางค์นี้ (0-1 ค่าเริ่มต้น: %u)</translation>
-    </message>
-    <message>
-        <source>Error loading %s: You can't enable HD on an already existing non-HD wallet</source>
-        <translation>เกิดข้อผิดพลาดในการโหลด %s: คุณไม่สามารถเปิดใช้งาน HD บนกระเป๋าสตางค์ที่ไม่ใช่ของ HD ที่มีอยู่แล้ว</translation>
-    </message>
-    <message>
         <source>Error reading %s! All keys read correctly, but transaction data or address book entries might be missing or incorrect.</source>
         <translation>เกิดข้อผิดพลาดในการอ่าน %s! คีย์ทั้งหมดอ่านได้อย่างถูกต้อง แต่ข้อมูลธุรกรรมหรือรายการสมุดที่อยู่อาจหายไปหรือไม่ถูกต้อง</translation>
-    </message>
-    <message>
-        <source>Exclude debugging information for a category. Can be used in conjunction with -debug=1 to output debug logs for all categories except one or more specified categories.</source>
-        <translation>ไม่รวมข้อมูลการแก้ไขจุดบกพร่อง สามารถถูกใช้ในคำเชื่อมกับ -debug=1 ไปยัง output บันทึกดีบักสำหรับทุกประเภทนอกจากประเภทที่กำหนด</translation>
     </message>
     <message>
         <source>Force relay of transactions from whitelisted peers even if they violate local relay policy (default: %d)</source>
@@ -5044,7 +4843,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Maximum total fees (in %s) to use in a single wallet transaction or raw transaction; setting this too low may abort large transactions (default: %s)</source>
-        <translation>ค่าธรรมเนียมรวมสูงสุด (เป็น %s) ที่จะใช้ในธุรกรรมกระเป๋าสตางค์เดียวหรือธุรกรรมแบบดั้งเดิม การตั้งค่านี้ต่ำเกินไปอาจยกเลิกธุรกรรมที่มีขนาดใหญ่ (ค่าเริ่มต้น: %s)</translation>
+        <translation>ค่าธรรมเนียมรวมสูงสุด (เป็น %s) ที่จะใช้ในธุรกรรม Wallet เดียวหรือธุรกรรมแบบดั้งเดิม การตั้งค่านี้ต่ำเกินไปอาจยกเลิกธุรกรรมที่มีขนาดใหญ่ (ค่าเริ่มต้น: %s)</translation>
     </message>
     <message>
         <source>Override spork address. Only useful for regtest and devnet. Using this on mainnet or testnet will ban you.</source>
@@ -5059,16 +4858,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>โปรดให้การสนับสนุนหากคุณพบ %s ที่เป็นประโยชน์ ไปที่ %s เพื่อดูข้อมูลเพิ่มเติมเกี่ยวกับซอฟต์แวร์</translation>
     </message>
     <message>
+        <source>Provide liquidity to PrivateSend by infrequently mixing coins on a continual basis (%u-%u, default: %u, 1=very frequent, high fees, %u=very infrequent, low fees)</source>
+        <translation>ให้สภาพคล่องแก่ PrivateSend โดยการผสมเหรียญเป็นระยะ ๆ อย่างต่อเนื่อง  (%u-%u, ค่าเริ่มต้น: %u,  1 = บ่อยครั้งมากค่าธรรมเนียมสูง,%u = ไม่บ่อยมากค่าธรรมเนียมต่ำ)</translation>
+    </message>
+    <message>
+        <source>Query for peer addresses via DNS lookup, if low on addresses (default: 1 unless -connect/-noconnect)</source>
+        <translation>ข้อสงสัยสำหรับที่อยู่ของ peer ค้นหาได้ทาง DNS หากมีที่อยู่ต่ำ (ค่าเริ่มต้น: 1 เว้นแต่ -connect / -noconnect)</translation>
+    </message>
+    <message>
+        <source>Reduce storage requirements by enabling pruning (deleting) of old blocks. This allows the pruneblockchain RPC to be called to delete specific blocks, and enables automatic pruning of old blocks if a target size in MiB is provided. This mode is incompatible with -txindex and -rescan. Warning: Reverting this setting requires re-downloading the entire blockchain. (default: 0 = disable pruning blocks, 1 = allow manual pruning via RPC, &gt;%u = automatically prune block files to stay under the specified target size in MiB)</source>
+        <translation>ลดข้อกำหนดในการจัดเก็บโดยการตัดแต่ง (การลบ) บล็อกเก่า  ซึ่งจะช่วยให้สามารถเรียกใช้ RPM pruneblockchain เพื่อลบบล็อคที่ต้องการและช่วยให้การตัดบล็อกเก่าโดยอัตโนมัติหากมีการกำหนดขนาดเป้าหมายไว้ใน MiB โหมดนี้ไม่สามารถใช้ได้กับ -txtindex และ -rescan                                                    คำเตือน: การคืนค่าการตั้งค่านี้จะต้องดาวน์โหลดใหม่ทั้งหมด blockchain  (ค่าเริ่มต้น: 0 = ปิดใช้งานการตัดบล็อค, 1 = อนุญาตการตัดด้วยตนเองผ่านทาง RPC, &gt;%u = อัตโนมัติตัดไฟล์บล็อคเพื่อให้อยู่ภายใต้ขนาดเป้าหมายที่ระบุใน MiB)</translation>
+    </message>
+    <message>
         <source>Set lowest fee rate (in %s/kB) for transactions to be included in block creation. (default: %s)</source>
         <translation>กำหนดอัตราค่าธรรมเนียมต่ำสุด (%s / kB) สำหรับธุรกรรมที่ถูกรวมในการสร้างบล็อค (ค่าดีฟอลต์: %s)</translation>
-    </message>
-    <message>
-        <source>The fee rate (in %s/kB) that indicates your tolerance for discarding change by adding it to the fee (default: %s). Note: An output is discarded if it is dust at this rate, but we will always discard up to the dust relay fee and a discard fee above that is limited by the fee estimate for the longest target</source>
-        <translation>อัตราค่าธรรมเนียม (%s / kB) ที่บ่งบอกการยอมรับความคิดเห็นของคุณสำหรับละทิ้งการเปลี่ยนแปลงโดยเพิ่มไปยังค่าธรรมเนียม (default: %s). หมายเหตุ: Output จะถูกละทิ้งหาก dust ในอัตรานี้ เราจะละทิ้งถึงค่าธรรมเนียมโอน dust และการละทิ้งค่าธรรมเนียมที่สูงกว่าจะถูกจำกัดโดยค่าธรรมเนียมที่ประมาณสำหรับเป้าหมายที่ยาวที่สุด</translation>
-    </message>
-    <message>
-        <source>This is the transaction fee you may discard if change is smaller than dust at this level</source>
-        <translation>นี่คือค่าธรรมเนียมการทำธุรกรรมที่คุณอาจจะละทิ้ง ถ้าการเปลี่ยนแปลงเล็กกว่า dust ในเลเวลนี้</translation>
     </message>
     <message>
         <source>This is the transaction fee you may pay when fee estimates are not available.</source>
@@ -5083,40 +4886,32 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ไม่สามารถหาเงินทุนที่ไม่ใช่สกุลเงินที่ระบุ PrivateSend ได้มากพอสำหรับธุรกรรมนี้</translation>
     </message>
     <message>
-        <source>Unable to replay blocks. You will need to rebuild the database using -reindex-chainstate.</source>
-        <translation>ไม่สามารถ replay blocks คุณจะต้องสร้างฐานข้อมูลโดยใช้ -reindex-chainstate</translation>
-    </message>
-    <message>
         <source>Use N separate masternodes for each denominated input to mix funds (%u-%u, default: %u)</source>
         <translation>ใช้ N masternodes แยกต่างหากสำหรับแต่ละสกุลเงินที่ป้อนเพื่อผสมเงิน (%u-%u, ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
         <source>Use hierarchical deterministic key generation (HD) after BIP39/BIP44. Only has effect during wallet creation/first start</source>
-        <translation>ใช้คีย์ที่กำหนดตามลำดับชั้น (HD) หลังจาก BIP39/BIP44  มีผลเฉพาะระหว่างการสร้าง/การเริ่มต้นกระเป๋าสตางค์ ครั้งแรกเท่านั้น</translation>
+        <translation>ใช้คีย์ที่กำหนดตามลำดับชั้น (HD) หลังจาก BIP39 / BIP44  มีผลเฉพาะระหว่างการสร้าง / การเริ่มต้น wallet ครั้งแรก เท่านั้น</translation>
     </message>
     <message>
         <source>User defined mnemonic passphrase for HD wallet (BIP39). Only has effect during wallet creation/first start (default: empty string)</source>
         <translation>ผู้ใช้กำหนดรหัสผ่านสำหรับการจดจำรหัสผ่านสำหรับ HD Wallet  (BIP39) มีผลเฉพาะระหว่างการสร้าง Wallet / การเริ่มครั้งแรก (ค่าเริ่มต้น: ว่างเปล่า)</translation>
     </message>
     <message>
+        <source>Username and hashed password for JSON-RPC connections. The field &lt;userpw&gt; comes in the format: &lt;USERNAME&gt;:&lt;SALT&gt;$&lt;HASH&gt;. A canonical python script is included in share/rpcuser. The client then connects normally using the rpcuser=&lt;USERNAME&gt;/rpcpassword=&lt;PASSWORD&gt; pair of arguments. This option can be specified multiple times</source>
+        <translation>ชื่อผู้ใช้และ hashed password สำหรับการเชื่อมต่อ JSON-RPC   ฟิลด์&lt;userpw&gt;มาในรูปแบบ:&lt;USERNAME&gt;: &lt;SALT&gt;$&lt;HASH&gt; สคริปต์จะรวมอยู่ใน share / rpcuser ลูกค้าเชื่อมต่อโดยปกติโดยใช้ rpcuser = &lt;USERNAME&gt; / rpcpassword = &lt;PASSWORD&gt; คู่อาร์กิวเมนต์ สามารถระบุตัวเลือกนี้ได้หลายครั้ง</translation>
+    </message>
+    <message>
         <source>Wallet will not create transactions that violate mempool chain limits (default: %u)</source>
-        <translation>กระเป๋าสตางค์จะไม่สร้างธุรกรรมที่ละเมิดข้อจำกัดของ Mempool chain (ค่าเริ่มต้น: %u)</translation>
+        <translation>Wallet จะไม่สร้างธุรกรรมที่ละเมิดข้อจำกัดของ Mempool chain (ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
         <source>Warning: Wallet file corrupt, data salvaged! Original %s saved as %s in %s; if your balance or transactions are incorrect you should restore from a backup.</source>
-        <translation>คำเตือน: ไฟล์กระเป๋าสตางค์เสียหาย, ข้อมูลได้ถูกกู้! %s จากเดิมถูกบันทึกเป็น %s ใน %s; หากยอดคงเหลือหรือธุรกรรมของคุณไม่ถูกต้องคุณควรเรียกคืนจากสำเนาสำรอง</translation>
-    </message>
-    <message>
-        <source>Whether to save the mempool on shutdown and load on restart (default: %u)</source>
-        <translation>ไม่ว่าจะเซฟ mempool ในเลาปิดเครื่องและโหลดตอนรีสตาร์ท (ค่าเริ่มต้น: %u)</translation>
+        <translation>คำเตือน: ไฟล์ Wallet เสียหาย, ข้อมูลได้ถูกกู้! %s จากเดิมถูกบันทึกเป็น %s ใน %s; หากยอดคงเหลือหรือธุรกรรมของคุณไม่ถูกต้องคุณควรเรียกคืนจากสำเนาสำรอง</translation>
     </message>
     <message>
         <source>Whitelist peers connecting from the given IP address (e.g. 1.2.3.4) or CIDR notated network (e.g. 1.2.3.0/24). Can be specified multiple times.</source>
         <translation>Whitelist peers กำลังเชื่อมต่อจากที่อยู่ IP ที่ระบุ (เช่น 1.2.3.4) หรือเครือข่ายที่ได้รับการจดบันทึก CIDR (เช่น 1.2.3.0/24) สามารถระบุได้หลายครั้ง</translation>
-    </message>
-    <message>
-        <source>%d of last 100 blocks have unexpected version</source>
-        <translation>%d ของ 100 บล็อคล่าสุดมีเวอร์ชั่นที่ไม่คาดคิด</translation>
     </message>
     <message>
         <source>%s corrupt, salvage failed</source>
@@ -5131,6 +4926,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%s ถูกตั้งค่าไว้สูงมาก!</translation>
     </message>
     <message>
+        <source>(press q to shutdown and continue later)</source>
+        <translation>(กด q เพื่อปิดเครื่องและดำเนินการต่อในภายหลัง)</translation>
+    </message>
+    <message>
         <source>-devnet can only be specified once</source>
         <translation>--devnet สามารถระบุได้เพียงครั้งเดียวเท่านั้น</translation>
     </message>
@@ -5143,16 +4942,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>-rpcport ควรระบุเฉพาะเมื่อระบุ -devnet และ -server</translation>
     </message>
     <message>
-        <source>Accept connections from outside (default: 1 if no -proxy or -connect)</source>
-        <translation>ยอมรับการเชื่อมต่อจากภายนอก (ค่าเริ่มต้น: 1 ถ้าไม่มี -proxy หรือ - เชื่อมต่อ)</translation>
-    </message>
-    <message>
         <source>Allow RFC1918 addresses to be relayed and connected to (default: %u)</source>
         <translation>อนุญาตให้ที่อยู่ RFC1918 ถูกส่งต่อและเชื่อมต่อกับ (ค่าเริ่มต้น: %u)</translation>
     </message>
     <message>
         <source>Attempt to recover private keys from a corrupt wallet on startup</source>
-        <translation>พยายามกู้คืน Privatekeys จากกระเป๋าสตางค์ที่เสียหายเมื่อเริ่มต้น</translation>
+        <translation>พยายามกู้คืน Privatekeys จาก wallet  ที่เสียหายเมื่อเริ่มต้น</translation>
     </message>
     <message>
         <source>Cannot resolve -%s address: '%s'</source>
@@ -5167,28 +4962,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ลิขสิทธิ์ (C)</translation>
     </message>
     <message>
-        <source>Create up to N inputs of each denominated amount (%u-%u, default: %u)</source>
-        <translation>สร้างได้ถึงจำนวน N inputs ของแต่ละจำนวน (%u-%u, ค่าดีฟอลต์: %u)</translation>
-    </message>
-    <message>
         <source>Error loading %s</source>
         <translation>เกิดข้อผิดพลาดในการโหลด %s</translation>
     </message>
     <message>
         <source>Error loading %s: Wallet corrupted</source>
-        <translation>เกิดข้อผิดพลาดในการโหลด %s: กระเป๋าสตางค์เสียหาย</translation>
+        <translation>เกิดข้อผิดพลาดในการโหลด %s: Wallet เสียหาย</translation>
     </message>
     <message>
         <source>Error loading %s: Wallet requires newer version of %s</source>
-        <translation>เกิดข้อผิดพลาดในการโหลด %s: กระเป๋าสตางค์ต้องใช้เวอร์ชั่นที่ใหม่กว่า %s</translation>
-    </message>
-    <message>
-        <source>Error loading %s: You can't disable HD on an already existing HD wallet</source>
-        <translation>เกิดข้อผิดพลาดในการโหลด %s: คุณไม่สามารถปิดการใช้งาน HD บน HD wallet ที่มีอยู่แล้ว</translation>
-    </message>
-    <message>
-        <source>Error loading wallet %s. Duplicate -wallet filename specified.</source>
-        <translation>เกิดข้อผิดพลาดในการโหลด wallet %s. คัดลอกชื่อไฟล์ -wallet เฉพาะเจาะจง</translation>
+        <translation>เกิดข้อผิดพลาดในการโหลด %s: Wallet ต้องใช้เวอร์ชันที่ใหม่กว่า %s</translation>
     </message>
     <message>
         <source>Error upgrading chainstate database</source>
@@ -5207,18 +4990,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>การตรวจสอบความถูกต้องล้มเหลว  %s กำลังจะปิด</translation>
     </message>
     <message>
-        <source>Inputs vs outputs size mismatch.</source>
-        <translation>ขนาดของ inputs และ outputs ไม่สัมพันธ์กัน</translation>
-    </message>
-    <message>
-        <source>Invalid -onion address or hostname: '%s'</source>
-        <translation>ที่อยู่ - onion หรือ hostname ไม่ถูกต้อง: '%s'</translation>
-    </message>
-    <message>
-        <source>Invalid -proxy address or hostname: '%s'</source>
-        <translation>ที่อยู่ - proxy หรือ hostname ไม่ถูกต้อง: '%s'</translation>
-    </message>
-    <message>
         <source>Invalid amount for -%s=&lt;amount&gt;: '%s'</source>
         <translation>จำนวนเงินไม่ถูกต้องสำหรับ -%s = &lt;amount&gt;: '%s'</translation>
     </message>
@@ -5235,6 +5006,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>พิมพ์ข้อความช่วยเหลือนี้และออกจากโปรแกรม</translation>
     </message>
     <message>
+        <source>Receive and display P2P network alerts (default: %u)</source>
+        <translation>รับและแสดงการแจ้งเตือนของเครือข่าย P2P (ค่าเริ่มต้น: %u)</translation>
+    </message>
+    <message>
         <source>Reducing -maxconnections from %d to %d, because of system limitations.</source>
         <translation>ลดการเชื่อมต่อสูงสุดจาก %d ถึง %d เนื่องจากข้อจำกัดของระบบ</translation>
     </message>
@@ -5247,16 +5022,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ส่งผ่าน non-P2SH multisig (ค่าดีฟอลต์: %u)</translation>
     </message>
     <message>
-        <source>Replaying blocks...</source>
-        <translation>กำลัง reply blocks...</translation>
-    </message>
-    <message>
         <source>Rescanning...</source>
         <translation>กำลังสแกนใหม่...</translation>
     </message>
     <message>
         <source>Run in the background as a daemon and accept commands</source>
         <translation>เรียกใช้ในพื้นหลังเป็น daemon และยอมรับคำสั่ง</translation>
+    </message>
+    <message>
+        <source>Send trace/debug info to console instead of debug.log file</source>
+        <translation>ส่งข้อมูล trace / debug ไปยัง console แทนไฟล์ debug.log</translation>
     </message>
     <message>
         <source>Session not complete!</source>
@@ -5288,19 +5063,23 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>Specify data directory</source>
-        <translation>ระบุข้อมูลไดเร็กทอรี่</translation>
+        <translation>ระบุไดเร็กทอรีข้อมูล</translation>
+    </message>
+    <message>
+        <source>Specify wallet file (within data directory)</source>
+        <translation>ระบุไฟล์ wallet (ภายในไดเรกทอรีข้อมูล)</translation>
     </message>
     <message>
         <source>Specify your own public address</source>
         <translation>กำหนดที่อยู่สาธารณะของคุณเอง</translation>
     </message>
     <message>
-        <source>Start PrivateSend automatically (0-1, default: %u)</source>
-        <translation>เริ่มต้น PrivateSend อัตโนมัติ (0-1, ค่าดีฟอลต์: %u)</translation>
-    </message>
-    <message>
         <source>Starting network threads...</source>
         <translation>เริ่มต้นเธรดเครือข่าย ..</translation>
+    </message>
+    <message>
+        <source>Synchronization pending...</source>
+        <translation>กำลังรอการซิงค์</translation>
     </message>
     <message>
         <source>Synchronizing governance objects...</source>
@@ -5355,10 +5134,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>ไม่ทราบสถานะ : ไอดี = %u</translation>
     </message>
     <message>
-        <source>Unsupported logging category %s=%s.</source>
-        <translation>การบันทึกประเภทที่ไม่ได้รับการสนับสนุน %s=%s</translation>
-    </message>
-    <message>
         <source>Username for JSON-RPC connections</source>
         <translation>ชื่อผู้ใช้สำหรับการเชื่อมต่อ JSON-RPC</translation>
     </message>
@@ -5367,36 +5142,44 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>กำลังตรวจสอบบล็อค ...</translation>
     </message>
     <message>
+        <source>Verifying wallet...</source>
+        <translation>กำลังตรวจสอบ Wallet...</translation>
+    </message>
+    <message>
         <source>Very low number of keys left: %d</source>
         <translation>จำนวนคีย์ที่เหลืออยู่ต่ำมาก: %d</translation>
     </message>
     <message>
+        <source>Wallet %s resides outside data directory %s</source>
+        <translation>Wallet %s อยู่นอกไดเรกทอรีข้อมูล %s</translation>
+    </message>
+    <message>
         <source>Wallet is locked.</source>
-        <translation>กระเป๋าสตางค์ถูกล็อค</translation>
+        <translation>ล็อค Wallet </translation>
     </message>
     <message>
         <source>Wallet options:</source>
-        <translation>ตัวเลือกกระเป๋าสตางค์:</translation>
+        <translation>ตัวเลือก Wallet :</translation>
+    </message>
+    <message>
+        <source>Wallet window title</source>
+        <translation>ชื่อหน้าต่าง Wallet </translation>
     </message>
     <message>
         <source>Warning</source>
         <translation>คำเตือน</translation>
     </message>
     <message>
-        <source>You are starting with governance validation disabled.</source>
-        <translation>คุณกำลังเริ่มตรวจสอบการกำกับดูแลปิดการใช้งาน</translation>
-    </message>
-    <message>
-        <source>You can not disable governance validation on a masternode.</source>
-        <translation>คุณไม่สามารถตรวจสอบการกำกับดูแลปิดการใช้งานบน masternode</translation>
-    </message>
-    <message>
         <source>Your entries added successfully.</source>
         <translation>เพิ่มรายการของคุณเรียบร้อยแล้ว</translation>
     </message>
     <message>
+        <source>Your transaction was accepted into the pool!</source>
+        <translation>การทำธุรกรรมของคุณได้รับการยอมรับเข้าสู่  pool แล้ว</translation>
+    </message>
+    <message>
         <source>Zapping all transactions from wallet...</source>
-        <translation>กำลังลบการทำธุรกรรมทั้งหมดจากกระเป๋าสตางค์...</translation>
+        <translation>กำลังลบการทำธุรกรรมทั้งหมดจาก wallet...</translation>
     </message>
 </context>
 </TS>

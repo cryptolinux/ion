@@ -4,16 +4,22 @@
 
 #define BOOST_TEST_MODULE Bitcoin Test Suite
 
+<<<<<<< HEAD
 #include <net.h>
 #include <stacktraces.h>
 
 #include <memory>
+=======
+#include "net.h"
+#include "stacktraces.h"
+>>>>>>> merge fix old ion with new
 
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_monitor.hpp>
 
 std::unique_ptr<CConnman> g_connman;
 
+<<<<<<< HEAD
 [[noreturn]] void Shutdown(void* parg)
 {
   std::exit(EXIT_SUCCESS);
@@ -22,6 +28,16 @@ std::unique_ptr<CConnman> g_connman;
 [[noreturn]] void StartShutdown()
 {
   std::exit(EXIT_SUCCESS);
+=======
+void Shutdown(void* parg)
+{
+  exit(EXIT_SUCCESS);
+}
+
+void StartShutdown()
+{
+  exit(EXIT_SUCCESS);
+>>>>>>> merge fix old ion with new
 }
 
 bool ShutdownRequested()

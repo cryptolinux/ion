@@ -1,16 +1,16 @@
-// Copyright (c) 2017-2020 The Dash Core developers
+// Copyright (c) 2017-2019 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef ION_SIMPLIFIEDMNS_H
 #define ION_SIMPLIFIEDMNS_H
 
-#include <bls/bls.h>
-#include <merkleblock.h>
-#include <netaddress.h>
-#include <pubkey.h>
-#include <serialize.h>
-#include <version.h>
+#include "bls/bls.h"
+#include "merkleblock.h"
+#include "netaddress.h"
+#include "pubkey.h"
+#include "serialize.h"
+#include "version.h"
 
 class UniValue;
 class CDeterministicMNList;
@@ -33,7 +33,7 @@ public:
 
 public:
     CSimplifiedMNListEntry() {}
-    explicit CSimplifiedMNListEntry(const CDeterministicMN& dmn);
+    CSimplifiedMNListEntry(const CDeterministicMN& dmn);
 
     bool operator==(const CSimplifiedMNListEntry& rhs) const
     {
@@ -78,8 +78,8 @@ public:
 
 public:
     CSimplifiedMNList() {}
-    explicit CSimplifiedMNList(const std::vector<CSimplifiedMNListEntry>& smlEntries);
-    explicit CSimplifiedMNList(const CDeterministicMNList& dmnList);
+    CSimplifiedMNList(const std::vector<CSimplifiedMNListEntry>& smlEntries);
+    CSimplifiedMNList(const CDeterministicMNList& dmnList);
 
     uint256 CalcMerkleRoot(bool* pmutated = nullptr) const;
 };

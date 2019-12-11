@@ -1,12 +1,11 @@
-// Copyright (c) 2011-2013 The Bitcoin developers
-// Copyright (c) 2017 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_ADDRESSTABLEMODEL_H
 #define BITCOIN_QT_ADDRESSTABLEMODEL_H
 
-#include <base58.h>
+#include "base58.h"
 
 #include <QAbstractTableModel>
 #include <QStringList>
@@ -69,6 +68,7 @@ public:
     /* Look up label for address in address book, if not found return empty string.
      */
     QString labelForAddress(const QString &address) const;
+    QString labelForAddress(const CBitcoinAddress &address) const;
     QString labelForDestination(const CTxDestination &dest) const;
 
     /* Look up row index of an address in the model.

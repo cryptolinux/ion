@@ -1,13 +1,11 @@
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_CORE_IO_H
 #define BITCOIN_CORE_IO_H
 
-#include <amount.h>
+#include "amount.h"
 
 #include <string>
 #include <vector>
@@ -15,7 +13,7 @@
 class CBlock;
 class CScript;
 class CTransaction;
-class CTxOut;
+struct CMutableTransaction;
 class uint256;
 class UniValue;
 
@@ -31,12 +29,10 @@ uint256 ParseHashStr(const std::string&, const std::string& strName);
 std::vector<unsigned char> ParseHexUV(const UniValue& v, const std::string& strName);
 
 // core_write.cpp
-extern std::string FormatScript(const CScript& script);
-extern std::string EncodeHexTx(const CTransaction& tx);
-extern void ScriptPubKeyToUniv(const CScript& scriptPubKey,
-    UniValue& out,
-    bool fIncludeHex);
-extern void TxToUniv(const CTransaction& tx, const uint256& hashBlock, UniValue& entry);
-extern void TokenTxnoutToUniv(const CTxOut& txout, UniValue& out, bool& fExpectFirstOpReturn);
+UniValue ValueFromAmount(const CAmount& amount);
+std::string FormatScript(const CScript& script);
+std::string EncodeHexTx(const CTransaction& tx);
+void ScriptPubKeyToUniv(const CScript& scriptPubKey, UniValue& out, bool fIncludeHex);
+void TxToUniv(const CTransaction& tx, const uint256& hashBlock, UniValue& entry, const CSpentIndexTxInfo* ptxSpentInfo = nullptr);
 
 #endif // BITCOIN_CORE_IO_H

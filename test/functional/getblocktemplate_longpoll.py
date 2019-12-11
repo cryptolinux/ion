@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2014-2017 The Bitcoin Core developers
+# Copyright (c) 2014-2016 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test longpolling with getblocktemplate."""
@@ -20,7 +20,7 @@ class LongpollThread(threading.Thread):
         self.node = get_rpc_proxy(node.url, 1, timeout=600, coveragedir=node.coverage_dir)
 
     def run(self):
-        self.node.getblocktemplate({'longpollid':int(self.longpollid)})
+        self.node.getblocktemplate({'longpollid':self.longpollid})
 
 class GetBlockTemplateLPTest(BitcoinTestFramework):
     def set_test_params(self):

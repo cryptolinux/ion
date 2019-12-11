@@ -1,20 +1,18 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2016 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_MINER_H
 #define BITCOIN_MINER_H
 
-#include <primitives/block.h>
-#include <txmempool.h>
+#include "primitives/block.h"
+#include "txmempool.h"
 
 #include <stdint.h>
 #include <memory>
-#include <boost/multi_index_container.hpp>
-#include <boost/multi_index/ordered_index.hpp>
+#include "boost/multi_index_container.hpp"
+#include "boost/multi_index/ordered_index.hpp"
 
 class CBlockIndex;
 class CChainParams;
@@ -38,19 +36,13 @@ struct CBlockTemplate
 // Container for tracking updates to ancestor feerate as we include (parent)
 // transactions in a block
 struct CTxMemPoolModifiedEntry {
-    explicit CTxMemPoolModifiedEntry(CTxMemPool::txiter entry)
+    CTxMemPoolModifiedEntry(CTxMemPool::txiter entry)
     {
         iter = entry;
         nSizeWithAncestors = entry->GetSizeWithAncestors();
         nModFeesWithAncestors = entry->GetModFeesWithAncestors();
         nSigOpCountWithAncestors = entry->GetSigOpCountWithAncestors();
     }
-
-    int64_t GetModifiedFee() const { return iter->GetModifiedFee(); }
-    uint64_t GetSizeWithAncestors() const { return nSizeWithAncestors; }
-    CAmount GetModFeesWithAncestors() const { return nModFeesWithAncestors; }
-    size_t GetTxSize() const { return iter->GetTxSize(); }
-    const CTransaction& GetTx() const { return iter->GetTx(); }
 
     CTxMemPool::txiter iter;
     uint64_t nSizeWithAncestors;
@@ -78,6 +70,21 @@ struct modifiedentry_iter {
     }
 };
 
+// This matches the calculation in CompareTxMemPoolEntryByAncestorFee,
+// except operating on CTxMemPoolModifiedEntry.
+// TODO: refactor to avoid duplication of this logic.
+struct CompareModifiedEntry {
+    bool operator()(const CTxMemPoolModifiedEntry &a, const CTxMemPoolModifiedEntry &b) const
+    {
+        double f1 = (double)a.nModFeesWithAncestors * b.nSizeWithAncestors;
+        double f2 = (double)b.nModFeesWithAncestors * a.nSizeWithAncestors;
+        if (f1 == f2) {
+            return CTxMemPool::CompareIteratorByHash()(a.iter, b.iter);
+        }
+        return f1 > f2;
+    }
+};
+
 // A comparator that sorts transactions based on number of ancestors.
 // This is sufficient to sort an ancestor package in an order that is valid
 // to appear in a block.
@@ -102,7 +109,7 @@ typedef boost::multi_index_container<
             // Reuse same tag from CTxMemPool's similar index
             boost::multi_index::tag<ancestor_score>,
             boost::multi_index::identity<CTxMemPoolModifiedEntry>,
-            CompareTxMemPoolEntryByAncestorFee
+            CompareModifiedEntry
         >
     >
 > indexed_modified_transaction_set;
@@ -112,7 +119,7 @@ typedef indexed_modified_transaction_set::index<ancestor_score>::type::iterator 
 
 struct update_for_parent_inclusion
 {
-    explicit update_for_parent_inclusion(CTxMemPool::txiter it) : iter(it) {}
+    update_for_parent_inclusion(CTxMemPool::txiter it) : iter(it) {}
 
     void operator() (CTxMemPoolModifiedEntry &e)
     {
@@ -125,23 +132,38 @@ struct update_for_parent_inclusion
 };
 
 /** Generate a new block, without valid proof-of-work */
-CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, bool fProofOfStake);
-/** Modify the extranonce in a block */
-void IncrementExtraNonce(CBlock* pblock, CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
-/** Check mined block */
-void UpdateTime(CBlockHeader* block, const CBlockIndex* pindexPrev);
+class BlockAssembler
+{
+private:
+    // The constructed block template
+    std::unique_ptr<CBlockTemplate> pblocktemplate;
+    // A convenience pointer that always refers to the CBlock in pblocktemplate
+    CBlock* pblock;
 
-#ifdef ENABLE_WALLET
-    /** Run the miner threads */
-    void GenerateBitcoins(bool fGenerate, CWallet* pwallet, int nThreads);
-    /** Generate a new block, without valid proof-of-work */
-    CBlockTemplate* CreateNewBlockWithKey(CReserveKey& reservekey, CWallet* pwallet);
+    // Configuration parameters for the block size
+    unsigned int nBlockMaxSize;
+    CFeeRate blockMinFeeRate;
 
-    void BitcoinMiner(CWallet* pwallet, bool fProofOfStake);
-    void ThreadStakeMinter();
-#endif // ENABLE_WALLET
+    // Information on the current status of the block
+    uint64_t nBlockSize;
+    uint64_t nBlockTx;
+    unsigned int nBlockSigOps;
+    CAmount nFees;
+    CTxMemPool::setEntries inBlock;
 
-    explicit BlockAssembler(const CChainParams& params);
+    // Chain context for the block
+    int nHeight;
+    int64_t nLockTimeCutoff;
+    const CChainParams& chainparams;
+
+public:
+    struct Options {
+        Options();
+        size_t nBlockMaxSize;
+        CFeeRate blockMinFeeRate;
+    };
+
+    BlockAssembler(const CChainParams& params);
     BlockAssembler(const CChainParams& params, const Options& options);
 
     /** Construct a new block template with coinbase to scriptPubKeyIn */
@@ -164,7 +186,7 @@ private:
     /** Remove confirmed (inBlock) entries from given set */
     void onlyUnconfirmed(CTxMemPool::setEntries& testSet);
     /** Test if a new package would "fit" in the block */
-    bool TestPackage(uint64_t packageSize, unsigned int packageSigOps) const;
+    bool TestPackage(uint64_t packageSize, unsigned int packageSigOps);
     /** Perform checks on each transaction in a package:
       * locktime
       * These checks should always succeed, and they're here

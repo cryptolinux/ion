@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 # Copyright (c) 2014-2017 Wladimir J. van der Laan
-# Copyright (c) 2015-2018 The PIVX developers
-# Copyright (c) 2018-2019 The Ion developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 '''
@@ -132,9 +130,9 @@ def main():
         process_nodes(g, f, 'pnSeed6_main', 9999)
     g.write('\n')
     with open(os.path.join(indir,'nodes_test.txt'),'r') as f:
-        process_nodes(g, f, 'pnSeed6_test', 27170)
-    g.write('#endif // BITCOIN_CHAINPARAMSSEEDS_H\n')
-
+        process_nodes(g, f, 'pnSeed6_test', 19999)
+    g.write('#endif // ION_CHAINPARAMSSEEDS_H\n')
+            
 if __name__ == '__main__':
     main()
 

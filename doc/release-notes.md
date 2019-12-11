@@ -1,63 +1,26 @@
-(note: this is a temporary file, to be added-to by anybody, and moved to release-notes at release time)
+## ION Core version 5.0.99 is now available  
 
-ION Core version *version* is now available from:  <https://github.com/ioncoincore/ion/releases>
-
-This is a new major version release, including various bug fixes and performance improvements, as well as updated translations.
-
-Please report bugs using the issue tracker at github: <https://github.com/cevap/ion/issues>
-
-#### Downloads and statistics
-![GitHub Releases (by Release)](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/total.svg?style=social)
-- ###### windows
-  - [![Download ion installer for Windows 32-bit](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-win32-setup-unsigned.exe.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-win32-setup-unsigned.exe) [![Download ion installer for Windows 64-bit](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-win64-setup-unsigned.exe.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-win64-setup-unsigned.exe)
-  - [![Download ion binaries for Windows 32-bit](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-win32.zip.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-win32.zip) [![Download ion binaries for Windows 64-bit](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-win64.zip.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-win64.zip)
-- ###### linux Downloads
-  - _i686/x86_64_
-    - [![Download ion v*version* for Linux 32-bit (i686)](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-i686-pc-linux-gnu.tar.xz.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-i686-pc-linux-gnu.tar.xz) [![Download ion v*version* for Linux 64-bit (x86_x64)](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-x86_64-linux-gnu.tar.xz.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-x86_64-linux-gnu.tar.xz)
-  - _arm/aarch64/riscv64_
-    - [![Download ion v*version* for ARM Linux](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-arm-linux-gnueabihf.tar.xz.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-arm-linux-gnueabihf.tar.xz) [![Download ion v*version* for aarch64 Linux](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-aarch64-linux-gnu.tar.xz.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-aarch64-linux-gnu.tar.xz) [![Download ion v*version* for riscv64 Linux](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-riscv64-linux-gnu.tar.xz.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-riscv64-linux-gnu.tar.xz)
-- ###### mac os
-  - [![Download ion Setup for OSX 32-bit](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-osx-unsigned.dmg.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-osx-unsigned.dmg) [![Download ion Setup for OSX 64-bit](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/ion-*version*-osx64.tar.xz.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/ion-*version*-osx64.tar.xz)
-- ###### checksums
-  - [![Download SHA256SUMS.asc](https://img.shields.io/github/downloads/ioncoincore/ion/v*version*/SHA256SUMS.asc.svg)](https://github.com/ioncoincore/ion/releases/download/v*version*/SHA256SUMS.asc)
-
-Mandatory Update
-==============
-
-
-How to Upgrade
-==============
-
-If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/ION-Qt (on Mac) or iond/ion-qt (on Linux).
-
-
-Compatibility
-==============
-
-Ion Core is extensively tested on multiple operating systems using the Linux kernel, macOS 10.10+, and Windows 7 and later.
-
-Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBusiness/end-of-xp-support), No attempt is made to prevent installing or running the software on Windows XP, you can still do so at your own risk but be aware that there are known instabilities and issues. Please do not report issues about Windows XP to the issue tracker.
-
-Apple released it's last Mountain Lion update August 13, 2015, and officially ended support on [December 14, 2015](http://news.fnal.gov/2015/10/mac-os-x-mountain-lion-10-8-end-of-life-december-14/). ION Core software starting with v3.2.0 will no longer run on MacOS versions prior to Yosemite (10.10). Please do not report issues about MacOS versions prior to Yosemite to the issue tracker.
- 
-ION Core should also work on most other Unix-like systems but is not frequently tested on them.
- 
-Notable Changes
 Download at: https://github.com/ioncoincore/ion/releases
 
 This is a new major version release, including various bug fixes, performance improvements, implementation of the Atomic Token Protocol (ATP), as well as updated translations.
 
 Please report bugs using the issue tracker at github: https://github.com/ioncoincore/ion/issues
 
+### Mandatory Update
+___  
 
-RPC Changes
----------------------
-The `bip38decrypt` command has had it's parameter order changed to be more consistent with it's counterpart. The command now expects the Ion address as it's first parameter and the passphrase as it's second parameter.
+ION Core v5.0.99 is a mandatory update for all users. This release contains new consensus rules and improvements that are not backwards compatible with older versions. Users will have a grace period of up to two week to update their clients before enforcement of this update is enabled - a grace period that will end at block 1320000 the latest.
 
-See detailed [set of changes](https://github.com/dashpay/dash/compare/v0.16.1.0...dashpay:v0.16.1.1).
+### How to Upgrade
+___
+If you are running an older version, shut it down. Wait until it has completely shut down (which might take a few minutes for older versions), then run the installer (on Windows) or just copy over /Applications/ION-Qt (on Mac) or iond/ion-qt (on Linux).
 
-- [`ccef3b4836`](https://github.com/dashpay/dash/commit/ccef3b48363d8bff4b919d9119355182e3902ef3) qt: Fix wallet encryption dialog (#3816)
-=======
+### Compatibility
+ION Core is extensively tested on multiple operating systems using the Linux kernel, macOS 10.8+, and Windows Vista and later.
+
+Microsoft ended support for Windows XP on April 8th, 2014, No attempt is made to prevent installing or running the software on Windows XP, you can still do so at your own risk but be aware that there are known instabilities and issues. Please do not report issues about Windows XP to the issue tracker.
+
+ION Core should also work on most other Unix-like systems but is not frequently tested on them.
 Database space usage improvements
 --------------------------------
 Version 0.13.0.0 introduced a new database (evodb) which is found in the datadir of Ion Core. It turned
@@ -519,5 +482,105 @@ Detailed release notes follow. This overview includes changes that affect behavi
 ## Credits
 
 Thanks to everyone who directly contributed to this release:
+=======
 
-As well as everyone that helped translating on [Transifex](https://www.transifex.com/cevap/ioncoin/), the QA team during Testing and the Node hosts supporting our Testnet.
+#### Mac OSX High Sierra  
+Currently there are issues with the 4.x gitian release on MacOS version 10.13 (High Sierra), no reports of issues on older versions of MacOS.
+### Atomic Token Protocol (ATP)
+_____
+
+**Introduction:**  
+
+As part of the integration of game development functionality and blockchain technology, the ION community chose to adopt a token system as part of its blockchain core. The community approved proposal IIP 0002 was put to vote in July 2018, after which development started. Instead of developing a solution from scratch, the team assessed a number of proposals and implementations that were currently being worked on for other Bitcoin family coins. Selection criteria were:
+
+* Fully open, with active development
+* Emphasis on permissionless transactions
+* Efficient in terms of resource consumption
+* Simple and elegant underlying principles 
+
+The ATP system implemented is based on the Group Tokenization proposal by Andrew Stone / BU.
+
+**References:**
+
+[GROUP Tokenization specification by Andrew Stone](https://docs.google.com/document/d/1X-yrqBJNj6oGPku49krZqTMGNNEWnUJBRFjX7fJXvTs/edit#heading=h.sn65kz74jmuf)  
+[GROUP Tokenization reference implementation for Bitcoin Cash](https://github.com/gandrewstone/BitcoinUnlimited/commits/tokengroups)  
+
+For the technical principles underlying ION Group Tokenization, the above documentation is used as our standard.
+
+ION developers fine tuned, extended and customized the Group Tokenization implementation. This documentation aims to support the ION community in:
+
+* Using the ION group token system
+* Creating additional tests as part of the development process
+* Finding new use cases that need development support
+
+### Noteable Changes
+______
+- core: switch core from pivx to ion
+- updated dependencies
+- QT 5.9.8
+- expat 2.2.9
+- libevent 2.1.11
+- zeromq 4.3.2
+- dbus 1.13.12
+- miniupnpc 2.0.20180203
+- native_ds_storke 1.1.2
+- native_biplist 1.0.3
+- native_mac_alias 2.0.7
+
+##### Zerocoin
+- Reimplement zerocoin to new source
+
+##### Protocol change
+- 
+
+### New RPC Commands
+__________
+
+#### Tokens
+
+`configuremanagementtoken "ticker" "name" decimalpos "description_url" description_hash ( confirm_send )  `  
+`configuretoken "ticker" "name" ( decimalpos "description_url" description_hash ) ( confirm_send )  `  
+`createtokenauthorities "groupid" "ionaddress" authoritylist  `  
+`droptokenauthorities "groupid" "transactionid" outputnr [ authority1 ( authority2 ... ) ] `   
+`getsubgroupid "groupid" "data"  `  
+`gettokenbalance ( "groupid" )  `  
+`listtokenauthorities "groupid"`    
+`listtokenssinceblock "groupid" ( "blockhash" target-confirmations includeWatchonly ) `   
+`listtokentransactions "groupid" ( count from includeWatchonly ) `   
+`melttoken "groupid" quantity  `  
+`minttoken "groupid" "ionaddress" quantity  `  
+`sendtoken "groupid" "address" amount  `  
+`tokeninfo [list, all, stats, groupid, ticker, name] ( "specifier " )  `  
+`scantokens <action> ( <scanobjects> ) `
+
+#### Masternodes
+`createmasternodekey `  
+`getmasternodeoutputs `  
+`getmasternodecount`  
+`getmasternodeoutputs`  
+`getmasternodescores ( blocks )`  
+`getmasternodestatus`  
+`getmasternodewinners ( blocks "filter" )`  
+`startmasternode "local|all|many|missing|disabled|alias" lockwallet ( "alias" )`
+`listmasternodeconf ( "filter" )`  
+`listmasternodes ( "filter" )`
+
+
+### Deprecated RPC Commands
+___
+#### Masternodes
+`masternode count`  
+`masternode current`  
+`masternode debug`  
+`masternode genkey`  
+`masternode outputs`  
+`masternode start`  
+`masternode start-alias`  
+`masternode start-<mode>`  
+`masternode status`  
+`masternode list`  
+`masternode list-conf`  
+`masternode winners`  
+
+
+### 5.0.99 Change log

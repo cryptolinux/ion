@@ -1,8 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,12 +15,12 @@
 #include "config/ion-config.h"
 #endif
 
-#include <compat.h>
-#include <fs.h>
-#include <sync.h>
-#include <tinyformat.h>
-#include <utiltime.h>
-#include <amount.h>
+#include "compat.h"
+#include "fs.h"
+#include "sync.h"
+#include "tinyformat.h"
+#include "utiltime.h"
+#include "amount.h"
 
 #include <atomic>
 #include <exception>
@@ -32,34 +30,43 @@
 #include <stdint.h>
 #include <string>
 #include <unordered_map>
-#include <unordered_set>
 #include <vector>
 
-#include <boost/filesystem/path.hpp>
-#include <boost/thread/exceptions.hpp>
-#include <boost/thread/condition_variable.hpp> // for boost::thread_interrupted
+#include <boost/signals2/signal.hpp>
 
-//ION only features
+// Debugging macros
 
-extern bool fMasterNode;
+// Uncomment the following line to enable debugging messages
+// or enable on a per file basis prior to inclusion of util.h
+//#define ENABLE_ION_DEBUG
+#ifdef ENABLE_ION_DEBUG
+#define DBG( x ) x
+#else
+#define DBG( x )
+#endif
+
+//Ion only features
+
+extern bool fMasternodeMode;
 extern bool fLiteMode;
-extern bool fEnableSwiftTX;
-extern int nSwiftTXDepth;
-extern int nZeromintPercentage;
-extern const int64_t AUTOMINT_DELAY;
-extern int nPreferredDenom;
-extern bool fEnableZeromint;
-extern bool fEnableAutoConvert;
-extern int64_t enforceMasternodePaymentsTime;
-extern std::string strMasterNodeAddr;
-extern int keysLoaded;
-extern bool fSucessfullyLoaded;
-extern std::vector<int64_t> obfuScationDenominations;
-extern std::string strBudgetMode;
+extern int nWalletBackups;
 
-extern std::map<std::string, std::string> mapArgs;
-extern std::map<std::string, std::vector<std::string> > mapMultiArgs;
-extern bool fDebug;
+// Application startup time (used for uptime calculation)
+int64_t GetStartupTime();
+
+static const bool DEFAULT_LOGTIMEMICROS  = false;
+static const bool DEFAULT_LOGIPS         = false;
+static const bool DEFAULT_LOGTIMESTAMPS  = true;
+static const bool DEFAULT_LOGTHREADNAMES = false;
+
+/** Signals for translation. */
+class CTranslationInterface
+{
+public:
+    /** Translate a message to the native language of the user. */
+    boost::signals2::signal<std::string (const char* psz)> Translate;
+};
+
 extern bool fPrintToConsole;
 extern bool fPrintToDebugLog;
 
@@ -159,41 +166,27 @@ std::vector<CLogCategoryActive> ListActiveLogCategories();
 /** Return true if str parses as a log category and set the flags in f */
 bool GetLogCategory(uint64_t *f, const std::string *str);
 
-/** Get format string from VA_ARGS for error reporting */
-template<typename... Args> std::string FormatStringFromLogArgs(const char *fmt, const Args&... args) { return fmt; }
-
 /**
  * Convert string into true/false
  *
  * @param strValue String to parse as a boolean
  * @return true or false
  */
-#define MAKE_ERROR_AND_LOG_FUNC(n)                                                              \
-    /**   Print to debug.log if -debug=category switch is given OR category is NULL. */         \
-    template <TINYFORMAT_ARGTYPES(n)>                                                           \
-    static inline int LogPrint(const char* category, const char* format, TINYFORMAT_VARARGS(n)) \
-    {                                                                                           \
-        if (!LogAcceptCategory(category)) return 0;                                             \
-        std::string _log_msg_; /* Unlikely name to avoid shadowing variables */                 \
-        try {                                                                                   \
-            _log_msg_ = tfm::format(format, TINYFORMAT_PASSARGS(n));                            \
-        } catch (std::runtime_error &e) {                                                       \
-            _log_msg_ = "Error \"" + std::string(e.what()) + "\" while formatting log message: " + FormatStringFromLogArgs(format, TINYFORMAT_PASSARGS(n));\
-        }                                                                                       \
-        return LogPrintStr(_log_msg_);                                                          \
-    }                                                                                           \
-    /**   Log error and return false */                                                         \
-    template <TINYFORMAT_ARGTYPES(n)>                                                           \
-    static inline bool error(const char* format, TINYFORMAT_VARARGS(n))                         \
-    {                                                                                           \
-        std::string _log_msg_; /* Unlikely name to avoid shadowing variables */                 \
-        try {                                                                                   \
-            _log_msg_ = tfm::format(format, TINYFORMAT_PASSARGS(n));                            \
-        } catch (std::runtime_error &e) {                                                       \
-            _log_msg_ = "Error \"" + std::string(e.what()) + "\" while formatting log message: " + FormatStringFromLogArgs(format, TINYFORMAT_PASSARGS(n));\
-        }                                                                                       \
-        LogPrintStr(std::string("ERROR: ") + _log_msg_ + "\n");                                 \
-        return false;                                                                           \
+bool InterpretBool(const std::string &strValue);
+
+/** Send a string to the log output */
+int LogPrintStr(const std::string &str);
+
+/** Formats a string without throwing exceptions. Instead, it'll return an error string instead of formatted string. */
+template<typename... Args>
+std::string SafeStringFormat(const std::string& fmt, const Args&... args)
+{
+    try {
+        return tinyformat::format(fmt, args...);
+    } catch (std::runtime_error& fmterr) {
+        std::string message = tinyformat::format("\n****TINYFORMAT ERROR****\n    err=\"%s\"\n    fmt=\"%s\"\n", fmterr.what(), fmt);
+        fprintf(stderr, "%s", message.c_str());
+        return message;
     }
 }
 
@@ -206,10 +199,6 @@ template<typename T, typename... Args> static inline void MarkUsed(const T& t, c
     (void)t;
     MarkUsed(args...);
 }
-
-// Be conservative when using LogPrintf/error or other things which
-// unconditionally log to debug.log! It should not be the case that an inbound
-// peer can fill up a users disk with debug.log entries.
 
 #ifdef USE_COVERAGE
 #define LogPrintf(...) do { MarkUsed(__VA_ARGS__); } while(0)
@@ -240,18 +229,18 @@ bool error(const char* fmt, const Args&... args)
     return false;
 }
 
-void PrintExceptionContinue(const std::exception_ptr pex, const char* pszExceptionOrigin);
+void PrintExceptionContinue(const std::exception_ptr pex, const char* pszThread);
 void FileCommit(FILE *file);
 bool TruncateFile(FILE *file, unsigned int length);
 int RaiseFileDescriptorLimit(int nMinFD);
-void AllocateFileRange(FILE* file, unsigned int offset, unsigned int length);
-bool RenameOver(boost::filesystem::path src, boost::filesystem::path dest);
-bool TryCreateDirectory(const boost::filesystem::path& p);
-boost::filesystem::path GetDefaultDataDir();
-const boost::filesystem::path &GetDataDir(bool fNetSpecific = true);
+void AllocateFileRange(FILE *file, unsigned int offset, unsigned int length);
+bool RenameOver(fs::path src, fs::path dest);
+bool TryCreateDirectories(const fs::path& p);
+fs::path GetDefaultDataDir();
+const fs::path &GetDataDir(bool fNetSpecific = true);
+fs::path GetBackupsDir();
 void ClearDatadirCache();
-boost::filesystem::path GetConfigFile();
-boost::filesystem::path GetMasternodeConfigFile();
+fs::path GetConfigFile(const std::string& confPath);
 #ifndef WIN32
 fs::path GetPidFile();
 void CreatePidFile(const fs::path &path, pid_t pid);
@@ -259,20 +248,9 @@ void CreatePidFile(const fs::path &path, pid_t pid);
 #ifdef WIN32
 fs::path GetSpecialFolderPath(int nFolder, bool fCreate = true);
 #endif
-fs::path GetDebugLogPath();
-bool OpenDebugLog();
+void OpenDebugLog();
 void ShrinkDebugFile();
 void runCommand(const std::string& strCommand);
-
-/**
- * Most paths passed as configuration arguments are treated as relative to
- * the datadir if they are not absolute.
- *
- * @param path The path to be conditionally prefixed with datadir.
- * @param net_specific Forwarded to GetDataDir().
- * @return The normalized path.
- */
-fs::path AbsPathForConfigVal(const fs::path& path, bool net_specific = true);
 
 inline bool IsSwitchChar(char c)
 {
@@ -286,56 +264,13 @@ inline bool IsSwitchChar(char c)
 class ArgsManager
 {
 protected:
-    friend class ArgsManagerHelper;
-
-    mutable CCriticalSection cs_args;
-    std::map<std::string, std::vector<std::string>> m_override_args;
-    std::map<std::string, std::vector<std::string>> m_config_args;
-    std::string m_network;
-    std::set<std::string> m_network_only_args;
-
-    void ReadConfigStream(std::istream& stream);
-
-/**
- * Convert string into true/false
- *
- * @param strValue String to parse as a boolean
- * @return true or false
- */
-bool InterpretBool(const std::string &strValue);
-
-/**
- * Set an argument if it doesn't already have a value
- *
- * @param strArg Argument to set (e.g. "-foo")
- * @param strValue Value (e.g. "1")
- * @return true if argument gets set, false if it already had a value
- */
-bool SoftSetArg(const std::string& strArg, const std::string& strValue);
-
-    /**
-     * Select the network in use
-     */
-    void SelectConfigNetwork(const std::string& network);
-
+    CCriticalSection cs_args;
+    std::map<std::string, std::string> mapArgs;
+    std::map<std::string, std::vector<std::string> > mapMultiArgs;
+public:
     void ParseParameters(int argc, const char*const argv[]);
     void ReadConfigFile(const std::string& confPath);
-
-    /**
-     * Log warnings for options in m_section_only_args when
-     * they are specified in the default section but not overridden
-     * on the command line or in a network-specific section in the
-     * config file.
-     */
-    void WarnForSectionOnlyArgs();
-
-    /**
-     * Return a vector of strings of the given argument
-     *
-     * @param strArg Argument to get (e.g. "-foo")
-     * @return command-line arguments
-     */
-    std::vector<std::string> GetArgs(const std::string& strArg) const;
+    std::vector<std::string> GetArgs(const std::string& strArg);
 
     /**
      * Return true if the given argument has been manually set
@@ -343,16 +278,7 @@ bool SoftSetArg(const std::string& strArg, const std::string& strValue);
      * @param strArg Argument to get (e.g. "-foo")
      * @return true if the argument has been set
      */
-    bool IsArgSet(const std::string& strArg) const;
-
-    /**
-     * Return true if the argument was originally passed as a negated option,
-     * i.e. -nofoo.
-     *
-     * @param strArg Argument to get (e.g. "-foo")
-     * @return true if the argument was passed negated
-     */
-    bool IsArgNegated(const std::string& strArg) const;
+    bool IsArgSet(const std::string& strArg);
 
     /**
      * Return string argument or default value
@@ -361,7 +287,7 @@ bool SoftSetArg(const std::string& strArg, const std::string& strValue);
      * @param strDefault (e.g. "1")
      * @return command-line argument or default value
      */
-    std::string GetArg(const std::string& strArg, const std::string& strDefault) const;
+    std::string GetArg(const std::string& strArg, const std::string& strDefault);
 
     /**
      * Return integer argument or default value
@@ -370,7 +296,7 @@ bool SoftSetArg(const std::string& strArg, const std::string& strValue);
      * @param nDefault (e.g. 1)
      * @return command-line argument (0 if invalid number) or default value
      */
-    int64_t GetArg(const std::string& strArg, int64_t nDefault) const;
+    int64_t GetArg(const std::string& strArg, int64_t nDefault);
 
     /**
      * Return boolean argument or default value
@@ -379,7 +305,7 @@ bool SoftSetArg(const std::string& strArg, const std::string& strValue);
      * @param fDefault (true or false)
      * @return command-line argument or default value
      */
-    bool GetBoolArg(const std::string& strArg, bool fDefault) const;
+    bool GetBoolArg(const std::string& strArg, bool fDefault);
 
     /**
      * Set an argument if it doesn't already have a value
@@ -402,20 +328,8 @@ bool SoftSetArg(const std::string& strArg, const std::string& strValue);
     // Forces an arg setting. Called by SoftSetArg() if the arg hasn't already
     // been set. Also called directly in testing.
     void ForceSetArg(const std::string& strArg, const std::string& strValue);
+    void ForceSetMultiArgs(const std::string& strArg, const std::vector<std::string>& values);
     void ForceRemoveArg(const std::string& strArg);
-
-    /**
-     * Looks for -regtest, -testnet and returns the appropriate BIP70 chain name.
-     * @return CBaseChainParams::MAIN by default; raises runtime error if an invalid combination is given.
-     */
-    std::string GetChainName() const;
-
-    /**
-     * Looks for -devnet and returns either "devnet-<name>" or simply "devnet" if no name was specified.
-     * This function should never be called for non-devnets.
-     * @return either "devnet-<name>" or "devnet"; raises runtime error if no -devent was specified.
-     */
-    std::string GetDevNetName() const;
 };
 
 extern ArgsManager gArgs;
@@ -455,7 +369,7 @@ void RenameThreadPool(ctpl::thread_pool& tp, const char* baseName);
 /**
  * .. and a wrapper that just calls func once
  */
-template <typename Callable> void TraceThread(const std::string name,  Callable func)
+template <typename Callable> void TraceThread(const char* name,  Callable func)
 {
     std::string s = strprintf("ion-%s", name);
     RenameThread(s.c_str());
@@ -471,7 +385,7 @@ template <typename Callable> void TraceThread(const std::string name,  Callable 
         throw;
     }
     catch (...) {
-        PrintExceptionContinue(std::current_exception(), name.c_str());
+        PrintExceptionContinue(std::current_exception(), name);
         throw;
     }
 }
@@ -505,12 +419,5 @@ std::string IntVersionToString(uint32_t nVersion);
  */
 std::string SafeIntVersionToString(uint32_t nVersion);
 
-
-//! Substitute for C++14 std::make_unique.
-template <typename T, typename... Args>
-std::unique_ptr<T> MakeUnique(Args&&... args)
-{
-    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-}
 
 #endif // BITCOIN_UTIL_H

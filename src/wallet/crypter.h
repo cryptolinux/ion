@@ -1,17 +1,13 @@
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2017-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_WALLET_CRYPTER_H
 #define BITCOIN_WALLET_CRYPTER_H
 
-#include <keystore.h>
-#include <serialize.h>
-#include <support/allocators/secure.h>
-
-#include <atomic>
+#include "keystore.h"
+#include "serialize.h"
+#include "support/allocators/secure.h"
 
 const unsigned int WALLET_CRYPTO_KEY_SIZE = 32;
 const unsigned int WALLET_CRYPTO_SALT_SIZE = 8;
@@ -93,8 +89,8 @@ public:
 
     void CleanKey()
     {
-        memory_cleanse(chKey, sizeof(chKey));
-        memory_cleanse(chIV, sizeof(chIV));
+        memory_cleanse(vchKey.data(), vchKey.size());
+        memory_cleanse(vchIV.data(), vchIV.size());
         fKeySet = false;
     }
 
@@ -121,6 +117,7 @@ bool DecryptAES256(const SecureString& sKey, const std::string& sCiphertext, con
 class CCryptoKeyStore : public CBasicKeyStore
 {
 private:
+    CryptedKeyMap mapCryptedKeys;
     CHDChain cryptedHDChain;
 
     CKeyingMaterial vMasterKey;
@@ -147,7 +144,6 @@ protected:
     bool SetCryptedHDChain(const CHDChain& chain);
 
     bool Unlock(const CKeyingMaterial& vMasterKeyIn, bool fForMixingOnly = false);
-    CryptedKeyMap mapCryptedKeys;
 
 public:
     CCryptoKeyStore() : fUseCrypto(false), fDecryptionThoroughlyChecked(false), fOnlyMixingAllowed(false)
@@ -158,22 +154,68 @@ public:
     bool IsLocked(bool fForMixing = false) const;
     bool Lock(bool fForMixing = false);
 
+    // This function should be used in a different combinations to determine
+    // if CCryptoKeyStore is fully locked so that no operations requiring access
+    // to private keys are possible:
+    //      IsLocked(true)
+    // or if CCryptoKeyStore's private keys are available for mixing only:
+    //      !IsLocked(true) && IsLocked()
+    // or if they are available for everything:
+    //      !IsLocked()
+    bool IsLocked(bool fForMixing = false) const
+    {
+        if (!IsCrypted())
+            return false;
+        bool result;
+        {
+            LOCK(cs_KeyStore);
+            result = vMasterKey.empty();
+        }
+        // fForMixing   fOnlyMixingAllowed  return
+        // ---------------------------------------
+        // true         true                result
+        // true         false               result
+        // false        true                true
+        // false        false               result
+
+        if(!fForMixing && fOnlyMixingAllowed) return true;
+
+        return result;
+    }
+
+    bool Lock(bool fAllowMixing = false);
+
     virtual bool AddCryptedKey(const CPubKey &vchPubKey, const std::vector<unsigned char> &vchCryptedSecret);
     bool AddKeyPubKey(const CKey& key, const CPubKey &pubkey) override;
-    bool HaveKey(const CKeyID &address) const override;
+    bool HaveKey(const CKeyID &address) const override
+    {
+        {
+            LOCK(cs_KeyStore);
+            if (!IsCrypted())
+                return CBasicKeyStore::HaveKey(address);
+            return mapCryptedKeys.count(address) > 0;
+        }
+        return false;
+    }
     bool GetKey(const CKeyID &address, CKey& keyOut) const override;
     bool GetPubKey(const CKeyID &address, CPubKey& vchPubKeyOut) const override;
-    std::set<CKeyID> GetKeys() const override;
+    void GetKeys(std::set<CKeyID> &setAddress) const override
+    {
+        if (!IsCrypted())
+        {
+            CBasicKeyStore::GetKeys(setAddress);
+            return;
+        }
+        setAddress.clear();
+        CryptedKeyMap::const_iterator mi = mapCryptedKeys.begin();
+        while (mi != mapCryptedKeys.end())
+        {
+            setAddress.insert((*mi).first);
+            mi++;
+        }
+    }
 
     virtual bool GetHDChain(CHDChain& hdChainRet) const override;
-
-    bool GetDeterministicSeed(const uint256& hashSeed, uint256& seed);
-    bool AddDeterministicSeed(const uint256& seed);
-
-
-    bool GetDeterministicSeed(const uint256& hashSeed, uint256& seed);
-    bool AddDeterministicSeed(const uint256& seed);
-
 
     /**
      * Wallet status (encrypted, locked) changed.

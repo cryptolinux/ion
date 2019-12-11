@@ -11,9 +11,6 @@
 #include "config/ion-config.h"
 #endif
 
-#if defined(USE_NUM_OPENSSL)
-#include <openssl/bn.h>
-#endif
 #if defined(USE_NUM_GMP)
 #include <gmp.h>
 #endif
@@ -37,9 +34,6 @@ public:
 /** C++ wrapper for BIGNUM */
 class CBigNum
 {
-#if defined(USE_NUM_OPENSSL)
-    BIGNUM* bn;
-#endif
 #if defined(USE_NUM_GMP)
     mpz_t bn;
 #endif
@@ -60,6 +54,7 @@ public:
     CBigNum(unsigned int n);
     CBigNum(unsigned long n);
     CBigNum(unsigned long long n);
+    explicit CBigNum(arith_uint256 n);
     explicit CBigNum(uint256 n);
     explicit CBigNum(const std::vector<unsigned char>& vch);
 
@@ -87,8 +82,8 @@ public:
     int getint() const;
     void setint64(int64_t sn);
     void setuint64(uint64_t n);
-    void setuint256(uint256 n);
-    uint256 getuint256() const;
+    void setuint256(arith_uint256 n);
+    arith_uint256 getuint256() const;
     void setvch(const std::vector<unsigned char>& vch);
     std::vector<unsigned char> getvch() const;
     void SetDec(const std::string& str);
@@ -174,9 +169,6 @@ public:
     *                          default causes error rate of 2^-80.
     * @return true if prime
     */
-#if defined(USE_NUM_OPENSSL)
-    bool isPrime(const int checks=BN_prime_checks) const;
-#endif
 #if defined(USE_NUM_GMP)
     bool isPrime(const int checks=15) const;
 #endif
@@ -209,84 +201,6 @@ public:
     friend inline bool operator<(const CBigNum& a, const CBigNum& b);
     friend inline bool operator>(const CBigNum& a, const CBigNum& b);
 };
-
-#if defined(USE_NUM_OPENSSL)
-class CAutoBN_CTX
-{
-protected:
-    BN_CTX* pctx;
-    BN_CTX* operator=(BN_CTX* pnew) { return pctx = pnew; }
-
-public:
-    CAutoBN_CTX()
-    {
-        pctx = BN_CTX_new();
-        if (pctx == NULL)
-            throw bignum_error("CAutoBN_CTX : BN_CTX_new() returned NULL");
-    }
-
-    ~CAutoBN_CTX()
-    {
-        if (pctx != NULL)
-            BN_CTX_free(pctx);
-    }
-
-    operator BN_CTX*() { return pctx; }
-    BN_CTX& operator*() { return *pctx; }
-    BN_CTX** operator&() { return &pctx; }
-    bool operator!() { return (pctx == NULL); }
-};
-
-inline const CBigNum operator+(const CBigNum& a, const CBigNum& b) {
-    CBigNum r;
-    mpz_add(r.bn, a.bn, b.bn);
-    return r;
-}
-inline const CBigNum operator-(const CBigNum& a, const CBigNum& b) {
-    CBigNum r;
-    mpz_sub(r.bn, a.bn, b.bn);
-    return r;
-}
-inline const CBigNum operator-(const CBigNum& a) {
-    CBigNum r(a);
-    BN_set_negative(r.bn, !BN_is_negative(r.bn));
-    return r;
-}
-inline const CBigNum operator*(const CBigNum& a, const CBigNum& b) {
-    CAutoBN_CTX pctx;
-    CBigNum r;
-    mpz_mul(r.bn, a.bn, b.bn);
-    return r;
-}
-inline const CBigNum operator/(const CBigNum& a, const CBigNum& b) {
-    CAutoBN_CTX pctx;
-    CBigNum r;
-    mpz_tdiv_q(r.bn, a.bn, b.bn);
-    return r;
-}
-inline const CBigNum operator%(const CBigNum& a, const CBigNum& b) {
-    CAutoBN_CTX pctx;
-    CBigNum r;
-    mpz_mmod(r.bn, a.bn, b.bn);
-    return r;
-}
-inline const CBigNum operator<<(const CBigNum& a, unsigned int shift) {
-    CBigNum r;
-    mpz_mul_2exp(r.bn, a.bn, shift);
-    return r;
-}
-inline const CBigNum operator>>(const CBigNum& a, unsigned int shift) {
-    CBigNum r = a;
-    r >>= shift;
-    return r;
-}
-inline bool operator==(const CBigNum& a, const CBigNum& b) { return (BN_cmp(a.bn, b.bn) == 0); }
-inline bool operator!=(const CBigNum& a, const CBigNum& b) { return (BN_cmp(a.bn, b.bn) != 0); }
-inline bool operator<=(const CBigNum& a, const CBigNum& b) { return (BN_cmp(a.bn, b.bn) <= 0); }
-inline bool operator>=(const CBigNum& a, const CBigNum& b) { return (BN_cmp(a.bn, b.bn) >= 0); }
-inline bool operator<(const CBigNum& a, const CBigNum& b)  { return (BN_cmp(a.bn, b.bn) < 0); }
-inline bool operator>(const CBigNum& a, const CBigNum& b)  { return (BN_cmp(a.bn, b.bn) > 0); }
-#endif
 
 #if defined(USE_NUM_GMP)
 inline const CBigNum operator+(const CBigNum& a, const CBigNum& b) {

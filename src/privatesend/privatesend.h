@@ -1,19 +1,18 @@
-// Copyright (c) 2014-2020 The Dash Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef PRIVATESEND_H
 #define PRIVATESEND_H
 
-#include <bls/bls.h>
-#include <chain.h>
-#include <chainparams.h>
-#include <primitives/transaction.h>
-#include <pubkey.h>
-#include <sync.h>
-#include <spork.h>
-#include <timedata.h>
-#include <tinyformat.h>
+#include "bls/bls.h"
+#include "chain.h"
+#include "chainparams.h"
+#include "primitives/transaction.h"
+#include "pubkey.h"
+#include "sync.h"
+#include "timedata.h"
+#include "tinyformat.h"
 
 class CPrivateSend;
 class CConnman;
@@ -43,7 +42,7 @@ enum PoolMessage : int32_t {
     ERR_MAXIMUM,
     ERR_MN_LIST,
     ERR_MODE,
-    ERR_NON_STANDARD_PUBKEY, // not used
+    ERR_NON_STANDARD_PUBKEY,
     ERR_NOT_A_MN, // not used
     ERR_QUEUE_FULL,
     ERR_RECENT,
@@ -66,8 +65,9 @@ enum PoolState : int32_t {
     POOL_STATE_ACCEPTING_ENTRIES,
     POOL_STATE_SIGNING,
     POOL_STATE_ERROR,
+    POOL_STATE_SUCCESS,
     POOL_STATE_MIN = POOL_STATE_IDLE,
-    POOL_STATE_MAX = POOL_STATE_ERROR
+    POOL_STATE_MAX = POOL_STATE_SUCCESS
 };
 template<> struct is_serializable_enum<PoolState> : std::true_type {};
 
@@ -372,8 +372,6 @@ protected:
 
     void SetNull();
 
-    bool IsValidInOuts(const std::vector<CTxIn>& vin, const std::vector<CTxOut>& vout, PoolMessage& nMessageIDRet, bool* fConsumeCollateralRet) const;
-
 public:
     int nSessionDenom; // Users must submit a denom matching this
 
@@ -440,21 +438,17 @@ public:
     static int GetDenominationsByAmounts(const std::vector<CAmount>& vecAmount);
 
     static bool IsDenominatedAmount(CAmount nInputAmount);
-    static bool IsValidDenomination(int nDenom);
 
-    static int AmountToDenomination(CAmount nInputAmount);
-    static CAmount DenominationToAmount(int nDenom);
-    static std::string DenominationToString(int nDenom);
+    /// Get the denominations for a list of outputs (returns a bitshifted integer)
+    static int GetDenominations(const std::vector<CTxOut>& vecTxOut, bool fSingleRandomDenom = false);
+    static std::string GetDenominationsToString(int nDenom);
+    static bool GetDenominationsBits(int nDenom, std::vector<int>& vecBitsRet);
 
     static std::string GetMessageByID(PoolMessage nMessageID);
 
     /// Get the minimum/maximum number of participants for the pool
-    static int GetMinPoolParticipants() { return sporkManager.IsSporkActive(SPORK_22_PS_MORE_PARTICIPANTS) ?
-                                                 Params().PoolNewMinParticipants() :
-                                                 Params().PoolMinParticipants(); }
-    static int GetMaxPoolParticipants() { return sporkManager.IsSporkActive(SPORK_22_PS_MORE_PARTICIPANTS) ?
-                                                 Params().PoolNewMaxParticipants() :
-                                                 Params().PoolMaxParticipants(); }
+    static int GetMinPoolParticipants() { return Params().PoolMinParticipants(); }
+    static int GetMaxPoolParticipants() { return Params().PoolMaxParticipants(); }
 
     static CAmount GetMaxPoolAmount() { return vecStandardDenominations.empty() ? 0 : PRIVATESEND_ENTRY_MAX_SIZE * vecStandardDenominations.front(); }
 
@@ -469,7 +463,6 @@ public:
     static CPrivateSendBroadcastTx GetDSTX(const uint256& hash);
 
     static void UpdatedBlockTip(const CBlockIndex* pindex);
-    static void NotifyChainLock(const CBlockIndex* pindex);
 
     static void UpdateDSTXConfirmedHeight(const CTransactionRef& tx, int nHeight);
     static void TransactionAddedToMempool(const CTransactionRef& tx);

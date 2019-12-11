@@ -2,12 +2,12 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <chain.h>
-#include <chainparams.h>
-#include <streams.h>
-#include <zmq/zmqpublishnotifier.h>
-#include <validation.h>
-#include <util.h>
+#include "chain.h"
+#include "chainparams.h"
+#include "streams.h"
+#include "zmqpublishnotifier.h"
+#include "validation.h"
+#include "util.h"
 
 static std::multimap<std::string, CZMQAbstractPublishNotifier*> mapPublishNotifiers;
 
@@ -326,7 +326,7 @@ bool CZMQPublishRawTransactionLockSigNotifier::NotifyTransactionLock(const CTran
 bool CZMQPublishRawGovernanceVoteNotifier::NotifyGovernanceVote(const CGovernanceVote &vote)
 {
     uint256 nHash = vote.GetHash();
-    LogPrint(BCLog::ZMQ, "zmq: Publish rawgovernanceobject: hash = %s, vote = %d\n", nHash.ToString(), vote.ToString());
+    LogPrint(BCLog::ZMQ, "gobject: Publish rawgovernanceobject: hash = %s, vote = %d\n", nHash.ToString(), vote.ToString());
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
     ss << vote;
     return SendMessage(MSG_RAWGVOTE, &(*ss.begin()), ss.size());
@@ -335,7 +335,7 @@ bool CZMQPublishRawGovernanceVoteNotifier::NotifyGovernanceVote(const CGovernanc
 bool CZMQPublishRawGovernanceObjectNotifier::NotifyGovernanceObject(const CGovernanceObject &govobj)
 {
     uint256 nHash = govobj.GetHash();
-    LogPrint(BCLog::ZMQ, "zmq: Publish rawgovernanceobject: hash = %s, type = %d\n", nHash.ToString(), govobj.GetObjectType());
+    LogPrint(BCLog::ZMQ, "gobject: Publish rawgovernanceobject: hash = %s, type = %d\n", nHash.ToString(), govobj.GetObjectType());
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
     ss << govobj;
     return SendMessage(MSG_RAWGOBJ, &(*ss.begin()), ss.size());

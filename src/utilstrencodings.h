@@ -1,7 +1,5 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -29,22 +27,6 @@ enum SafeChars
     SAFE_CHARS_FILENAME, //!< Chars allowed in filenames
 };
 
-/** Used by SanitizeString() */
-enum SafeChars
-{
-    SAFE_CHARS_DEFAULT, //!< The full set of allowed chars
-    SAFE_CHARS_UA_COMMENT, //!< BIP-0014 subset
-    SAFE_CHARS_FILENAME, //!< Chars allowed in filenames
-};
-
-/** Used by SanitizeString() */
-enum SafeChars
-{
-    SAFE_CHARS_DEFAULT, //!< The full set of allowed chars
-    SAFE_CHARS_UA_COMMENT, //!< BIP-0014 subset
-    SAFE_CHARS_FILENAME, //!< Chars allowed in filenames
-};
-
 /**
 * Remove unsafe chars. Safe chars chosen to allow simple messages/URLs/email
 * addresses, but avoid anything even possibly remotely dangerous like & or >
@@ -53,16 +35,6 @@ enum SafeChars
 * @return           A new string without unsafe chars
 */
 std::string SanitizeString(const std::string& str, int rule = SAFE_CHARS_DEFAULT);
-
-/**
-* Check URL format for conformance for validity to a defined pattern
-* @param[in] strURL   The string to be processed for validity
-* @param[in] stdErr   A string that will be loaded with any validation error message
-* @param[in] maxSize  An unsigned int, defaulted to 64, to restrict the length
-* @return             A bool, true if valid, false if not (reason in stdErr)
-*/
-bool validateURL(std::string strURL, std::string& strErr, unsigned int maxSize = 64);
-
 std::vector<unsigned char> ParseHex(const char* psz);
 std::vector<unsigned char> ParseHex(const std::string& str);
 signed char HexDigit(char c);
@@ -177,27 +149,43 @@ bool TimingResistantEqual(const T& a, const T& b)
  */
 bool ParseFixedPoint(const std::string &val, int decimals, int64_t *amount_out);
 
-/** Convert from one power-of-2 number base to another. */
-template<int frombits, int tobits, bool pad, typename O, typename I>
-bool ConvertBits(O& out, I it, I end) {
+/**
+ * Convert from one power-of-2 number base to another.
+ *
+ * If padding is enabled, this always return true. If not, then it returns true
+ * of all the bits of the input are encoded in the output.
+ */
+template <int frombits, int tobits, bool pad, typename O, typename I>
+bool ConvertBits(O &out, I it, I end)
+{
     size_t acc = 0;
     size_t bits = 0;
     constexpr size_t maxv = (1 << tobits) - 1;
     constexpr size_t max_acc = (1 << (frombits + tobits - 1)) - 1;
-    while (it != end) {
+    while (it != end)
+    {
         acc = ((acc << frombits) | *it) & max_acc;
         bits += frombits;
-        while (bits >= tobits) {
+        while (bits >= tobits)
+        {
             bits -= tobits;
             out.push_back((acc >> bits) & maxv);
         }
         ++it;
     }
-    if (pad) {
-        if (bits) out.push_back((acc << (tobits - bits)) & maxv);
-    } else if (bits >= frombits || ((acc << (tobits - bits)) & maxv)) {
+
+    // We have remaining bits to encode but do not pad.
+    if (!pad && bits)
+    {
         return false;
     }
+
+    // We have remaining bits to encode so we do pad.
+    if (pad && bits)
+    {
+        out.push_back((acc << (tobits - bits)) & maxv);
+    }
+
     return true;
 }
 

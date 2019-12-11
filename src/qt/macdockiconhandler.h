@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2018 The Bitcoin Core developers
+// Copyright (c) 2011-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,6 +14,11 @@ class MacDockIconHandler : public QObject
     Q_OBJECT
 
 public:
+    ~MacDockIconHandler();
+
+    QMenu *dockMenu();
+    void setIcon(const QIcon &icon);
+    void setMainWindow(QMainWindow *window);
     static MacDockIconHandler *instance();
     static void cleanup();
 
@@ -22,6 +27,10 @@ Q_SIGNALS:
 
 private:
     MacDockIconHandler();
+
+    QWidget *m_dummyWidget;
+    QMenu *m_dockMenu;
+    QMainWindow *mainWindow;
 };
 
 #endif // BITCOIN_QT_MACDOCKICONHANDLER_H

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2020 The Dash Core developers
+# Copyright (c) 2015-2018 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -22,18 +22,11 @@ class LLMQChainLocksTest(IonTestFramework):
 
     def run_test(self):
 
-        # Connect all nodes to node1 so that we always have the whole network connected
-        # Otherwise only masternode connections will be established between nodes, which won't propagate TXs/blocks
-        # Usually node0 is the one that does this, but in this test we isolate it multiple times
-        for i in range(len(self.nodes)):
-            if i != 1:
-                connect_nodes(self.nodes[i], 1)
-
         self.log.info("Wait for dip0008 activation")
 
         while self.nodes[0].getblockchaininfo()["bip9_softforks"]["dip0008"]["status"] != "active":
             self.nodes[0].generate(10)
-        self.sync_blocks(self.nodes, timeout=60*5)
+        sync_blocks(self.nodes, timeout=60*5)
 
         self.nodes[0].spork("SPORK_18_QUORUM_DKG_ENABLED", 0)
         self.wait_for_sporks_same()
@@ -136,7 +129,7 @@ class LLMQChainLocksTest(IonTestFramework):
         # for the mined TXs, which will then allow the network to create a CLSIG
         self.log.info("Reenable network on first node and wait for chainlock")
         reconnect_isolated_node(self.nodes[0], 1)
-        self.wait_for_chainlocked_block(self.nodes[0], self.nodes[0].getbestblockhash(), timeout=30)
+        self.wait_for_chainlocked_block(self.nodes[0], self.nodes[0].getbestblockhash(), 30)
 
     def create_chained_txs(self, node, amount):
         txid = node.sendtoaddress(node.getnewaddress(), amount)

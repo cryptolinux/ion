@@ -1,12 +1,10 @@
-// Copyright (c) 2012-2014 The Bitcoin Core developers
-// Copyright (c) 2018 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2012-2015 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "wallet/wallet.h"
-#include "wallet/walletdb.h"
 
-#include "test/test_ion.h"
+#include "wallet/test/wallet_test_fixture.h"
 
 #include <stdint.h>
 
@@ -14,16 +12,16 @@
 
 extern CWallet* pwalletMain;
 
-BOOST_FIXTURE_TEST_SUITE(accounting_tests, TestingSetup)
+BOOST_FIXTURE_TEST_SUITE(accounting_tests, WalletTestingSetup)
 
 static void
-GetResults(CWallet& wallet, std::map<CAmount, CAccountingEntry>& results)
+GetResults(std::map<CAmount, CAccountingEntry>& results)
 {
     std::list<CAccountingEntry> aes;
 
     results.clear();
-    BOOST_CHECK(walletdb.ReorderTransactions(pwalletMain) == DB_LOAD_OK);
-    walletdb.ListAccountCreditDebit("", aes);
+    BOOST_CHECK(pwalletMain->ReorderTransactions() == DB_LOAD_OK);
+    pwalletMain->ListAccountCreditDebit("", aes);
     for (CAccountingEntry& ae : aes)
     {
         results[ae.nOrderPos] = ae;
@@ -44,7 +42,7 @@ BOOST_AUTO_TEST_CASE(acc_orderupgrade)
     ae.nTime = 1333333333;
     ae.strOtherAccount = "b";
     ae.strComment = "";
-    m_wallet.AddAccountingEntry(ae);
+    pwalletMain->AddAccountingEntry(ae);
 
     wtx.mapValue["comment"] = "z";
     m_wallet.AddToWallet(wtx);
@@ -54,9 +52,9 @@ BOOST_AUTO_TEST_CASE(acc_orderupgrade)
 
     ae.nTime = 1333333336;
     ae.strOtherAccount = "c";
-    m_wallet.AddAccountingEntry(ae);
+    pwalletMain->AddAccountingEntry(ae);
 
-    GetResults(m_wallet, results);
+    GetResults(results);
 
     BOOST_CHECK(m_wallet.nOrderPosNext == 3);
     BOOST_CHECK(2 == results.size());
@@ -69,10 +67,10 @@ BOOST_AUTO_TEST_CASE(acc_orderupgrade)
 
     ae.nTime = 1333333330;
     ae.strOtherAccount = "d";
-    ae.nOrderPos = m_wallet.IncOrderPosNext();
-    m_wallet.AddAccountingEntry(ae);
+    ae.nOrderPos = pwalletMain->IncOrderPosNext();
+    pwalletMain->AddAccountingEntry(ae);
 
-    GetResults(m_wallet, results);
+    GetResults(results);
 
     BOOST_CHECK(results.size() == 3);
     BOOST_CHECK(m_wallet.nOrderPosNext == 4);
@@ -104,7 +102,7 @@ BOOST_AUTO_TEST_CASE(acc_orderupgrade)
     vpwtx[2]->nTimeReceived = (unsigned int)1333333329;
     vpwtx[2]->nOrderPos = -1;
 
-    GetResults(m_wallet, results);
+    GetResults(results);
 
     BOOST_CHECK(results.size() == 3);
     BOOST_CHECK(m_wallet.nOrderPosNext == 6);
@@ -120,9 +118,9 @@ BOOST_AUTO_TEST_CASE(acc_orderupgrade)
     ae.nTime = 1333333334;
     ae.strOtherAccount = "e";
     ae.nOrderPos = -1;
-    m_wallet.AddAccountingEntry(ae);
+    pwalletMain->AddAccountingEntry(ae);
 
-    GetResults(m_wallet, results);
+    GetResults(results);
 
     BOOST_CHECK(results.size() == 4);
     BOOST_CHECK(m_wallet.nOrderPosNext == 7);

@@ -16,8 +16,8 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "ION"
-            VALUE "FileDescription",    "iond (OSS daemon/client for ION)"
+            VALUE "CompanyName",        "Ion"
+            VALUE "FileDescription",    "iond (Ion node with a JSON-RPC server)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "iond"
             VALUE "LegalCopyright",     COPYRIGHT_STR

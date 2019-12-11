@@ -22,7 +22,11 @@ class WalletTest(BitcoinTestFramework):
         connect_nodes_bi(self.nodes,0,1)
         connect_nodes_bi(self.nodes,1,2)
         connect_nodes_bi(self.nodes,0,2)
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
 
     def check_fee_amount(self, curr_balance, balance_with_fee, fee_per_byte, tx_size):
         """Return curr_balance after asserting the fee was in range"""
@@ -44,9 +48,15 @@ class WalletTest(BitcoinTestFramework):
         assert_equal(walletinfo['immature_balance'], 500)
         assert_equal(walletinfo['balance'], 0)
 
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
         self.nodes[1].generate(101)
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+        self.nodes[1].generate(101)
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
 
         assert_equal(self.nodes[0].getbalance(), 500)
         assert_equal(self.nodes[1].getbalance(), 500)
@@ -95,18 +105,27 @@ class WalletTest(BitcoinTestFramework):
 
         # Have node0 mine a block, thus it will collect its own fee.
         self.nodes[0].generate(1)
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
 
         # Exercise locking of unspent outputs
         unspent_0 = self.nodes[2].listunspent()[0]
         unspent_0 = {"txid": unspent_0["txid"], "vout": unspent_0["vout"]}
+<<<<<<< HEAD
         assert_raises_rpc_error(-8, "Invalid parameter, expected locked output", self.nodes[2].lockunspent, True, [unspent_0])
         self.nodes[2].lockunspent(False, [unspent_0])
         assert_raises_rpc_error(-8, "Invalid parameter, output already locked", self.nodes[2].lockunspent, False, [unspent_0])
+=======
+        self.nodes[2].lockunspent(False, [unspent_0])
+>>>>>>> merge fix old ion with new
         assert_raises_rpc_error(-4, "Insufficient funds", self.nodes[2].sendtoaddress, self.nodes[2].getnewaddress(), 200)
         assert_equal([unspent_0], self.nodes[2].listlockunspent())
         self.nodes[2].lockunspent(True, [unspent_0])
         assert_equal(len(self.nodes[2].listlockunspent()), 0)
+<<<<<<< HEAD
         assert_raises_rpc_error(-8, "Invalid parameter, unknown transaction",
                               self.nodes[2].lockunspent, False,
                               [{"txid": "0000000000000000000000000000000000", "vout": 0}])
@@ -117,6 +136,12 @@ class WalletTest(BitcoinTestFramework):
         # Have node1 generate 100 blocks (so node0 can recover the fee)
         self.nodes[1].generate(100)
         self.sync_all(self.nodes[0:3])
+=======
+
+        # Have node1 generate 100 blocks (so node0 can recover the fee)
+        self.nodes[1].generate(100)
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
 
         # node0 should end up with 1000 ION in block rewards plus fees, but
         # minus the 210 plus fees sent to node2
@@ -148,7 +173,11 @@ class WalletTest(BitcoinTestFramework):
 
         # Have node1 mine a block to confirm transactions:
         self.nodes[1].generate(1)
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
 
         assert_equal(self.nodes[0].getbalance(), 0)
         assert_equal(self.nodes[2].getbalance(), 1000 - totalfee)
@@ -160,14 +189,22 @@ class WalletTest(BitcoinTestFramework):
         self.nodes[2].settxfee(fee_per_byte * 1000)
         txid = self.nodes[2].sendtoaddress(address, 100, "", "", False)
         self.nodes[2].generate(1)
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
         node_2_bal = self.check_fee_amount(self.nodes[2].getbalance(), Decimal('900') - totalfee, fee_per_byte, count_bytes(self.nodes[2].getrawtransaction(txid)))
         assert_equal(self.nodes[0].getbalance(), Decimal('100'))
 
         # Send 100 ION with subtract fee from amount
         txid = self.nodes[2].sendtoaddress(address, 100, "", "", True)
         self.nodes[2].generate(1)
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
         node_2_bal -= Decimal('100')
         assert_equal(self.nodes[2].getbalance(), node_2_bal)
         node_0_bal = self.check_fee_amount(self.nodes[0].getbalance(), Decimal('200'), fee_per_byte, count_bytes(self.nodes[2].getrawtransaction(txid)))
@@ -175,7 +212,11 @@ class WalletTest(BitcoinTestFramework):
         # Sendmany 100 ION
         txid = self.nodes[2].sendmany('from1', {address: 100}, 0, False, "", [])
         self.nodes[2].generate(1)
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
         node_0_bal += Decimal('100')
         node_2_bal = self.check_fee_amount(self.nodes[2].getbalance(), node_2_bal - Decimal('100'), fee_per_byte, count_bytes(self.nodes[2].getrawtransaction(txid)))
         assert_equal(self.nodes[0].getbalance(), node_0_bal)
@@ -183,7 +224,11 @@ class WalletTest(BitcoinTestFramework):
         # Sendmany 100 ION with subtract fee from amount
         txid = self.nodes[2].sendmany('from1', {address: 100}, 0, False, "", [address])
         self.nodes[2].generate(1)
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
         node_2_bal -= Decimal('100')
         assert_equal(self.nodes[2].getbalance(), node_2_bal)
         node_0_bal = self.check_fee_amount(self.nodes[0].getbalance(), node_0_bal + Decimal('100'), fee_per_byte, count_bytes(self.nodes[2].getrawtransaction(txid)))
@@ -194,6 +239,7 @@ class WalletTest(BitcoinTestFramework):
         # EXPECT: nodes[3] should have those transactions in its mempool.
         txid1 = self.nodes[0].sendtoaddress(self.nodes[1].getnewaddress(), 1)
         txid2 = self.nodes[1].sendtoaddress(self.nodes[0].getnewaddress(), 1)
+<<<<<<< HEAD
         self.sync_mempools(self.nodes[0:2])
 
         self.start_node(3)
@@ -203,6 +249,17 @@ class WalletTest(BitcoinTestFramework):
         relayed = self.nodes[0].resendwallettransactions()
         assert_equal(set(relayed), {txid1, txid2})
         self.sync_mempools()
+=======
+        sync_mempools(self.nodes[0:2])
+
+        self.start_node(3)
+        connect_nodes_bi(self.nodes, 0, 3)
+        sync_blocks(self.nodes)
+
+        relayed = self.nodes[0].resendwallettransactions()
+        assert_equal(set(relayed), {txid1, txid2})
+        sync_mempools(self.nodes)
+>>>>>>> merge fix old ion with new
 
         assert(txid1 in self.nodes[3].getrawmempool())
 
@@ -224,7 +281,11 @@ class WalletTest(BitcoinTestFramework):
         signedRawTx = self.nodes[1].signrawtransaction(rawTx)
         decRawTx = self.nodes[1].decoderawtransaction(signedRawTx['hex'])
         zeroValueTxid= decRawTx['txid']
+<<<<<<< HEAD
         self.nodes[1].sendrawtransaction(signedRawTx['hex'])
+=======
+        sendResp = self.nodes[1].sendrawtransaction(signedRawTx['hex'])
+>>>>>>> merge fix old ion with new
 
         self.sync_all()
         self.nodes[1].generate(1) #mine a block
@@ -246,18 +307,30 @@ class WalletTest(BitcoinTestFramework):
         connect_nodes_bi(self.nodes,0,1)
         connect_nodes_bi(self.nodes,1,2)
         connect_nodes_bi(self.nodes,0,2)
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
 
         txIdNotBroadcasted  = self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), 2)
         txObjNotBroadcasted = self.nodes[0].gettransaction(txIdNotBroadcasted)
         self.nodes[1].generate(1) #mine a block, tx should not be in there
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
         assert_equal(self.nodes[2].getbalance(), node_2_bal) #should not be changed because tx was not broadcasted
 
         #now broadcast from another node, mine a block, sync, and check the balance
         self.nodes[1].sendrawtransaction(txObjNotBroadcasted['hex'])
         self.nodes[1].generate(1)
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
         node_2_bal += 2
         txObjNotBroadcasted = self.nodes[0].gettransaction(txIdNotBroadcasted)
         assert_equal(self.nodes[2].getbalance(), node_2_bal)
@@ -273,10 +346,17 @@ class WalletTest(BitcoinTestFramework):
         connect_nodes_bi(self.nodes,0,1)
         connect_nodes_bi(self.nodes,1,2)
         connect_nodes_bi(self.nodes,0,2)
+<<<<<<< HEAD
         self.sync_blocks(self.nodes[0:3])
 
         self.nodes[0].generate(1)
         self.sync_blocks(self.nodes[0:3])
+=======
+        sync_blocks(self.nodes[0:3])
+
+        self.nodes[0].generate(1)
+        sync_blocks(self.nodes[0:3])
+>>>>>>> merge fix old ion with new
         node_2_bal += 2
 
         #tx should be added to balance because after restarting the nodes tx should be broadcastet
@@ -307,7 +387,11 @@ class WalletTest(BitcoinTestFramework):
         address_to_import = self.nodes[2].getnewaddress()
         txid = self.nodes[0].sendtoaddress(address_to_import, 1)
         self.nodes[0].generate(1)
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
 
         # 2. Import address from node2 to node1
         self.nodes[1].importaddress(address_to_import)
@@ -333,15 +417,25 @@ class WalletTest(BitcoinTestFramework):
         cbAddr = self.nodes[1].getnewaddress()
         blkHash = self.nodes[0].generatetoaddress(1, cbAddr)[0]
         cbTxId = self.nodes[0].getblock(blkHash)['tx'][0]
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
 
         # Check that the txid and balance is found by node1
         self.nodes[1].gettransaction(cbTxId)
 
         # check if wallet or blockchain maintenance changes the balance
+<<<<<<< HEAD
         self.sync_all(self.nodes[0:3])
         blocks = self.nodes[0].generate(2)
         self.sync_all(self.nodes[0:3])
+=======
+        self.sync_all([self.nodes[0:3]])
+        blocks = self.nodes[0].generate(2)
+        self.sync_all([self.nodes[0:3]])
+>>>>>>> merge fix old ion with new
         balance_nodes = [self.nodes[i].getbalance() for i in range(3)]
         block_count = self.nodes[0].getblockcount()
 
@@ -375,9 +469,15 @@ class WalletTest(BitcoinTestFramework):
             self.start_node(0, [m, "-limitancestorcount="+str(chainlimit)])
             self.start_node(1, [m, "-limitancestorcount="+str(chainlimit)])
             self.start_node(2, [m, "-limitancestorcount="+str(chainlimit)])
+<<<<<<< HEAD
             if m == '-reindex':
                 # reindex will leave rpc warm up "early"; Wait for it to finish
                 wait_until(lambda: [block_count] * 3 == [self.nodes[i].getblockcount() for i in range(3)])
+=======
+            while m == '-reindex' and [block_count] * 3 != [self.nodes[i].getblockcount() for i in range(3)]:
+                # reindex will leave rpc warm up "early"; Wait for it to finish
+                time.sleep(0.1)
+>>>>>>> merge fix old ion with new
             assert_equal(balance_nodes, [self.nodes[i].getbalance() for i in range(3)])
 
         # Exercise listsinceblock with the last two blocks

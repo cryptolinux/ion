@@ -1,29 +1,26 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2016-2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_COINS_H
 #define BITCOIN_COINS_H
 
+#include "primitives/transaction.h"
 #include "compressor.h"
+#include "core_memusage.h"
+#include "hash.h"
 #include "memusage.h"
-#include "script/standard.h"
 #include "serialize.h"
 #include "uint256.h"
-#include "undo.h"
 
 #include <assert.h>
 #include <stdint.h>
 
-#include <boost/unordered_map.hpp>
+#include <unordered_map>
 
-/** 
-
-    ****Note - for ION we added fCoinStake to the 2nd bit. Keep in mind when reading the following and adjust as needed.
- * Pruned version of CTransaction: only retains metadata and unspent transaction outputs
+/**
+ * A UTXO entry.
  *
  * Serialized format:
  * - VARINT((coinbase ? 1 : 0) | (height << 1))
@@ -58,13 +55,12 @@ public:
         return fCoinBase;
     }
 
-    void ClearUnspendable()
-    {
-        for (CTxOut& txout : vout) {
-            if (txout.scriptPubKey.IsUnspendable())
-                txout.SetNull();
-        }
-        Cleanup();
+    template<typename Stream>
+    void Serialize(Stream &s) const {
+        assert(!IsSpent());
+        uint32_t code = nHeight * 2 + fCoinBase;
+        ::Serialize(s, VARINT(code));
+        ::Serialize(s, CTxOutCompressor(REF(out)));
     }
 
     template<typename Stream>
@@ -85,151 +81,7 @@ public:
     }
 };
 
-/**
- * A UTXO entry.
- *
- * Serialized format:
- * - VARINT((coinbase ? 1 : 0) | (coinstake ? 2 : 0) | (height << 2))
- * - the non-spent CTxOut (via CTxOutCompressor)
- */
-class Coin
-{
-public:
-    //! unspent transaction output
-    CTxOut out;
-
-    //! whether containing transaction was a coinbase
-    unsigned int fCoinBase : 1;
-
-    //! whether containing transaction was a coinstake
-    unsigned int fCoinStake : 1;
-
-    //! at which height this containing transaction was included in the active block chain
-    uint32_t nHeight : 31;
-
-    //! construct a Coin from a CTxOut and height/coinbase information.
-    Coin(CTxOut &&outIn, int nHeightIn, bool fCoinBaseIn, bool fCoinStakeIn)
-        : out(std::move(outIn)), fCoinBase(fCoinBaseIn), fCoinStake(fCoinStakeIn), nHeight(nHeightIn)
-    {
-    }
-    Coin(const CTxOut &outIn, int nHeightIn, bool fCoinBaseIn, bool fCoinStakeIn) : out(outIn), fCoinBase(fCoinBaseIn), fCoinStake(fCoinStakeIn), nHeight(nHeightIn)
-    {
-    }
-    Coin (const CCoins &coinsIn, uint32_t n)
-        : out(coinsIn.vout.at(n)), fCoinBase(coinsIn.fCoinBase), fCoinStake(coinsIn.fCoinStake), nHeight(coinsIn.nHeight)
-    {
-    }
-
-    void Clear()
-    {
-        out.SetNull();
-        fCoinBase = false;
-        fCoinStake = false;
-        nHeight = 0;
-    }
-
-    //! empty constructor
-    Coin() : fCoinBase(false), fCoinStake(false), nHeight(0) {}
-    bool IsCoinBase() const { return fCoinBase; }
-    bool IsCoinStake() const { return fCoinStake; }
-    template <typename Stream>
-    void Serialize(Stream &s) const
-    {
-        assert(!IsSpent());
-        uint32_t code = nHeight * 4 + fCoinStake * 2 + fCoinBase;
-        ::Serialize(s, VARINT(code));
-        ::Serialize(s, CTxOutCompressor(REF(out)));
-    }
-
-    template <typename Stream>
-    void Unserialize(Stream &s)
-    {
-        return (nPos < vout.size() && !vout[nPos].IsNull() && !vout[nPos].IsZerocoinMint());
-    }
-
-    //! check whether the entire CCoins is spent
-    //! note that only !IsPruned() CCoins can be serialized
-    bool IsPruned() const
-    {
-        for (const CTxOut& out : vout)
-            if (!out.IsNull())
-                return false;
-        return true;
-    }
-};
-
-/**
- * A UTXO entry.
- *
- * Serialized format:
- * - VARINT((coinbase ? 1 : 0) | (coinstake ? 2 : 0) | (height << 2))
- * - the non-spent CTxOut (via CTxOutCompressor)
- */
-class Coin
-{
-public:
-    //! unspent transaction output
-    CTxOut out;
-
-    //! whether containing transaction was a coinbase
-    unsigned int fCoinBase : 1;
-
-    //! whether containing transaction was a coinstake
-    unsigned int fCoinStake : 1;
-
-    //! at which height this containing transaction was included in the active block chain
-    uint32_t nHeight : 31;
-
-    //! construct a Coin from a CTxOut and height/coinbase information.
-    Coin(CTxOut &&outIn, int nHeightIn, bool fCoinBaseIn, bool fCoinStakeIn)
-        : out(std::move(outIn)), fCoinBase(fCoinBaseIn), fCoinStake(fCoinStakeIn), nHeight(nHeightIn)
-    {
-    }
-    Coin(const CTxOut &outIn, int nHeightIn, bool fCoinBaseIn, bool fCoinStakeIn) : out(outIn), fCoinBase(fCoinBaseIn), fCoinStake(fCoinStakeIn), nHeight(nHeightIn)
-    {
-    }
-    Coin (const CCoins &coinsIn, uint32_t n)
-        : out(coinsIn.vout.at(n)), fCoinBase(coinsIn.fCoinBase), fCoinStake(coinsIn.fCoinStake), nHeight(coinsIn.nHeight)
-    {
-    }
-
-    void Clear()
-    {
-        out.SetNull();
-        fCoinBase = false;
-        fCoinStake = false;
-        nHeight = 0;
-    }
-
-    //! empty constructor
-    Coin() : fCoinBase(false), fCoinStake(false), nHeight(0) {}
-    bool IsCoinBase() const { return fCoinBase; }
-    bool IsCoinStake() const { return fCoinStake; }
-    template <typename Stream>
-    void Serialize(Stream &s) const
-    {
-        assert(!IsSpent());
-        uint32_t code = nHeight * 4 + fCoinStake * 2 + fCoinBase;
-        ::Serialize(s, VARINT(code));
-        ::Serialize(s, CTxOutCompressor(REF(out)));
-    }
-
-    template <typename Stream>
-    void Unserialize(Stream &s)
-    {
-        uint32_t code = 0;
-        ::Unserialize(s, VARINT(code));
-        nHeight = code >> 2;
-        fCoinBase = code & 1;
-        fCoinStake = (code >> 1) & 1;
-        ::Unserialize(s, REF(CTxOutCompressor(out)));
-    }
-
-    bool IsSpent() const { return out.IsNull(); }
-    size_t DynamicMemoryUsage() const { return memusage::DynamicUsage(out.scriptPubKey); }
-};
-
-class CCoinsKeyHasher
+class SaltedOutpointHasher
 {
 private:
     /** Salt */
@@ -275,9 +127,9 @@ class CCoinsViewCursor
 public:
     CCoinsViewCursor(const uint256 &hashBlockIn): hashBlock(hashBlockIn) {}
     virtual ~CCoinsViewCursor() {}
-    virtual bool GetKey(uint256 &key) const = 0;
-    virtual bool GetValue(CCoins &coins) const = 0;
-    /* Don't care about GetKeySize here */
+
+    virtual bool GetKey(COutPoint &key) const = 0;
+    virtual bool GetValue(Coin &coin) const = 0;
     virtual unsigned int GetValueSize() const = 0;
 
     virtual bool Valid() const = 0;
@@ -333,24 +185,15 @@ protected:
     CCoinsView *base;
 
 public:
-    CCoinsViewBacked(CCoinsView* viewIn);
-    bool GetCoins(const uint256& txid, CCoins& coins) const;
-    bool HaveCoins(const uint256& txid) const;
-    uint256 GetBestBlock() const;
-    void SetBackend(CCoinsView& viewIn);
-    bool BatchWrite(CCoinsMap& mapCoins, const uint256& hashBlock);
+    CCoinsViewBacked(CCoinsView *viewIn);
+    bool GetCoin(const COutPoint &outpoint, Coin &coin) const override;
+    bool HaveCoin(const COutPoint &outpoint) const override;
+    uint256 GetBestBlock() const override;
+    std::vector<uint256> GetHeadBlocks() const override;
+    void SetBackend(CCoinsView &viewIn);
+    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock) override;
     CCoinsViewCursor *Cursor() const override;
-};
-
-class CCoinsViewCache;
-
-/** Flags for nSequence and nLockTime locks */
-enum {
-    /* Interpret sequence numbers as relative lock-time constraints. */
-    LOCKTIME_VERIFY_SEQUENCE = (1 << 0),
-
-    /* Use GetMedianTimePast() instead of nTime for end point timestamp. */
-    LOCKTIME_MEDIAN_TIME_PAST = (1 << 1),
+    size_t EstimateSize() const override;
 };
 
 
@@ -371,20 +214,22 @@ protected:
 public:
     CCoinsViewCache(CCoinsView *baseIn);
 
-    /**
-     * By deleting the copy constructor, we prevent accidentally using it when one intends to create a cache on top of a base cache.
-     */
-    CCoinsViewCache(const CCoinsViewCache &) = delete;
-
     // Standard CCoinsView methods
-    bool GetCoins(const uint256& txid, CCoins& coins) const;
-    bool HaveCoins(const uint256& txid) const;
-    uint256 GetBestBlock() const;
-    void SetBestBlock(const uint256& hashBlock);
-    bool BatchWrite(CCoinsMap& mapCoins, const uint256& hashBlock);
-    CCoinsViewCursor* Cursor() const {
+    bool GetCoin(const COutPoint &outpoint, Coin &coin) const override;
+    bool HaveCoin(const COutPoint &outpoint) const override;
+    uint256 GetBestBlock() const override;
+    void SetBestBlock(const uint256 &hashBlock);
+    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock) override;
+    CCoinsViewCursor* Cursor() const override {
         throw std::logic_error("CCoinsViewCache cursor iteration not supported.");
     }
+
+    /**
+     * Check if we have the given utxo already loaded in this cache.
+     * The semantics are the same as HaveCoin(), but no calls to
+     * the backing CCoinsView are made.
+     */
+    bool HaveCoinInCache(const COutPoint &outpoint) const;
 
     /**
      * Return a reference to Coin in the cache, or a pruned one if not found. This is
@@ -405,27 +250,9 @@ public:
     void AddCoin(const COutPoint& outpoint, Coin&& coin, bool potential_overwrite);
 
     /**
-     * Wrapper to provide a single utxo entry.
-     * 
-     * Return a reference to Coin in the cache, or a pruned one if not found. This is
-     * more efficient than GetCoin. Modifications to other cache entries are
-     * allowed while accessing the returned pointer.
-     */
-    const Coin AccessCoin(const COutPoint &output) const;
-
-    /**
-     * Wrapper to provide a single utxo entry.
-     *
-     * Return a reference to Coin in the cache, or a pruned one if not found. This is
-     * more efficient than GetCoin. Modifications to other cache entries are
-     * allowed while accessing the returned pointer.
-     */
-    const Coin AccessCoin(const COutPoint &output) const;
-
-    /**
-     * Return a modifiable reference to a CCoins. If no entry with the given
-     * txid exists, a new one is created. Simultaneous modifications are not
-     * allowed.
+     * Spend a coin. Pass moveto in order to get the deleted data.
+     * If no unspent output exists for the passed outpoint, this call
+     * has no effect.
      */
     bool SpendCoin(const COutPoint &outpoint, Coin* moveto = nullptr);
 
@@ -463,6 +290,25 @@ public:
 
 private:
     CCoinsMap::iterator FetchCoin(const COutPoint &outpoint) const;
+
+    /**
+     * By making the copy constructor private, we prevent accidentally using it when one intends to create a cache on top of a base cache.
+     */
+    CCoinsViewCache(const CCoinsViewCache &);
 };
+
+//! Utility function to add all of a transaction's outputs to a cache.
+// When check is false, this assumes that overwrites are only possible for coinbase transactions.
+// When check is true, the underlying view may be queried to determine whether an addition is
+// an overwrite.
+// TODO: pass in a boolean to limit these possible overwrites to known
+// (pre-BIP34) cases.
+void AddCoins(CCoinsViewCache& cache, const CTransaction& tx, int nHeight, bool check = false);
+
+//! Utility function to find any unspent output with a given txid.
+// This function can be quite expensive because in the event of a transaction
+// which is not found in the cache, it can cause up to MAX_OUTPUTS_PER_BLOCK
+// lookups to database, so it should be used with care.
+const Coin& AccessByTxid(const CCoinsViewCache& cache, const uint256& txid);
 
 #endif // BITCOIN_COINS_H

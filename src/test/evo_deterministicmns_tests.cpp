@@ -246,8 +246,8 @@ BOOST_FIXTURE_TEST_CASE(dip3_activation, TestChainDIP3BeforeActivationSetup)
     auto utxos = BuildSimpleUtxoMap(coinbaseTxns);
     CKey ownerKey;
     CBLSSecretKey operatorKey;
-    CTxDestination payoutDest = DecodeDestination("yRq1Ky1AfFmf597rnotj7QRxsDUKePVWNF");
-    auto tx = CreateProRegTx(utxos, 1, GetScriptForDestination(payoutDest), coinbaseKey, ownerKey, operatorKey);
+    CBitcoinAddress payoutAddress("yRq1Ky1AfFmf597rnotj7QRxsDUKePVWNF");
+    auto tx = CreateProRegTx(utxos, 1, GetScriptForDestination(payoutAddress.Get()), coinbaseKey, ownerKey, operatorKey);
     std::vector<CMutableTransaction> txns = {tx};
 
     int nHeight = chainActive.Height();
@@ -277,7 +277,9 @@ BOOST_FIXTURE_TEST_CASE(dip3_protx, TestChainDIP3Setup)
     CKey sporkKey;
     sporkKey.MakeNewKey(false);
     CBitcoinSecret sporkSecret(sporkKey);
-    sporkManager.SetSporkAddress(EncodeDestination(sporkKey.GetPubKey().GetID()));
+    CBitcoinAddress sporkAddress;
+    sporkAddress.Set(sporkKey.GetPubKey().GetID());
+    sporkManager.SetSporkAddress(sporkAddress.ToString());
     sporkManager.SetPrivKey(sporkSecret.ToString());
 
     auto utxos = BuildSimpleUtxoMap(coinbaseTxns);

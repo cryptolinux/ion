@@ -1,6 +1,5 @@
-// Copyright (c) 2011-2013 The Bitcoin developers
-// Copyright (c) 2017 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <qt/receiverequestdialog.h>
@@ -17,6 +16,9 @@
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QPixmap>
+#if QT_VERSION < 0x050000
+#include <QUrl>
+#endif
 
 #if defined(HAVE_CONFIG_H)
 #include "config/ion-config.h" /* for USE_QRCODE */
@@ -86,9 +88,10 @@ void QRImageWidget::contextMenuEvent(QContextMenuEvent *event)
     contextMenu->exec(event->globalPos());
 }
 
-ReceiveRequestDialog::ReceiveRequestDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
-                                                              ui(new Ui::ReceiveRequestDialog),
-                                                              model(0)
+ReceiveRequestDialog::ReceiveRequestDialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::ReceiveRequestDialog),
+    model(0)
 {
     ui->setupUi(this);
 
@@ -136,11 +139,10 @@ void ReceiveRequestDialog::update()
     QString uri = GUIUtil::formatBitcoinURI(info);
     ui->btnSaveAs->setEnabled(false);
     QString html;
-    html += "<html>";
-    html += "<b>" + tr("Payment information") + "</b><br><br>";
+    html += "<html><font face='verdana, arial, helvetica, sans-serif'>";
+    html += "<b>"+tr("Payment information")+"</b><br>";
     html += "<b>"+tr("URI")+"</b>: ";
-    html += QString("<a style=\"%1\"href=\"").arg(GUIUtil::getThemedStyleQString(GUIUtil::ThemedStyle::TS_COMMAND)) +
-            uri + "\">" + GUIUtil::HtmlEscape(uri) + "</a><br>";
+    html += "<a href=\""+uri+"\">" + GUIUtil::HtmlEscape(uri) + "</a><br>";
     html += "<b>"+tr("Address")+"</b>: " + GUIUtil::HtmlEscape(info.address) + "<br>";
     if(info.amount)
         html += "<b>"+tr("Amount")+"</b>: " + BitcoinUnits::formatHtmlWithUnit(model->getDisplayUnit(), info.amount) + "<br>";
@@ -165,39 +167,28 @@ void ReceiveRequestDialog::update()
                 ui->lblQRCode->setText(tr("Error encoding URI into QR Code."));
                 return;
             }
-            QImage qrImage = QImage(code->width + 6, code->width + 6, QImage::Format_RGB32);
-            qrImage.fill(GUIUtil::getThemedQColor(GUIUtil::ThemedColor::BACKGROUND_WIDGET));
+            QImage qrImage = QImage(code->width + 8, code->width + 8, QImage::Format_RGB32);
+            qrImage.fill(0xffffff);
             unsigned char *p = code->data;
             for (int y = 0; y < code->width; y++)
             {
                 for (int x = 0; x < code->width; x++)
                 {
-                    qrImage.setPixel(x + 3, y + 3, ((*p & 1) ? GUIUtil::getThemedQColor(GUIUtil::ThemedColor::QR_PIXEL).rgb() : GUIUtil::getThemedQColor(GUIUtil::ThemedColor::BACKGROUND_WIDGET).rgb()));
+                    qrImage.setPixel(x + 4, y + 4, ((*p & 1) ? 0x0 : 0xffffff));
                     p++;
                 }
             }
             QRcode_free(code);
-            // Create the image with respect to the device pixel ratio
-            int qrAddrImageWidth = QR_IMAGE_SIZE;
-            int qrAddrImageHeight = QR_IMAGE_SIZE + 20;
-            qreal scale = qApp->devicePixelRatio();
-            QImage qrAddrImage = QImage(qrAddrImageWidth * scale, qrAddrImageHeight * scale, QImage::Format_RGB32);
-            qrAddrImage.setDevicePixelRatio(scale);
+
+            QImage qrAddrImage = QImage(QR_IMAGE_SIZE, QR_IMAGE_SIZE+20, QImage::Format_RGB32);
+            qrAddrImage.fill(0xffffff);
             QPainter painter(&qrAddrImage);
-            // Fill the whole image with border color
-            qrAddrImage.fill(GUIUtil::getThemedQColor(GUIUtil::ThemedColor::BORDER_WIDGET));
-            // Create a 2px/2px smaller rect and fill it with background color to keep the 1px border with the border color
-            QRect paddedRect = QRect(1, 1, qrAddrImageWidth - 2, qrAddrImageHeight - 2);
-            painter.fillRect(paddedRect, GUIUtil::getThemedQColor(GUIUtil::ThemedColor::BACKGROUND_WIDGET));
-            painter.drawImage(2, 2, qrImage.scaled(QR_IMAGE_SIZE - 4, QR_IMAGE_SIZE - 4));
-            // calculate ideal font size
-            QFont font = GUIUtil::getFontNormal();
-            qreal font_size = GUIUtil::calculateIdealFontSize((paddedRect.width() - 20), info.address, font);
-            font.setPointSizeF(font_size);
-            // paint the address
+            painter.drawImage(0, 0, qrImage.scaled(QR_IMAGE_SIZE, QR_IMAGE_SIZE));
+            QFont font = GUIUtil::fixedPitchFont();
+            font.setPixelSize(12);
             painter.setFont(font);
-            painter.setPen(GUIUtil::getThemedQColor(GUIUtil::ThemedColor::QR_PIXEL));
-            paddedRect.setHeight(QR_IMAGE_SIZE + 3);
+            QRect paddedRect = qrAddrImage.rect();
+            paddedRect.setHeight(QR_IMAGE_SIZE+12);
             painter.drawText(paddedRect, Qt::AlignBottom|Qt::AlignCenter, info.address);
             painter.end();
 

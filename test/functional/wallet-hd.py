@@ -6,7 +6,10 @@
 
 import sys
 import shutil
+<<<<<<< HEAD
 import os
+=======
+>>>>>>> merge fix old ion with new
 
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import *
@@ -55,7 +58,11 @@ class WalletHDTest(BitcoinTestFramework):
         for i in range(num_hd_adds):
             hd_add = self.nodes[1].getnewaddress()
             hd_info = self.nodes[1].validateaddress(hd_add)
+<<<<<<< HEAD
             assert_equal(hd_info["hdkeypath"], "m/44'/1'/0'/0/"+str(i))
+=======
+            assert_equal(hd_info["hdkeypath"], "m/44'/1'/0'/0/"+str(i+1))
+>>>>>>> merge fix old ion with new
             assert_equal(hd_info["hdchainid"], chainid)
             self.nodes[0].sendtoaddress(hd_add, 1)
             self.nodes[0].generate(1)
@@ -74,11 +81,19 @@ class WalletHDTest(BitcoinTestFramework):
         self.stop_node(1)
         # we need to delete the complete regtest directory
         # otherwise node1 would auto-recover all funds in flag the keypool keys as used
+<<<<<<< HEAD
         shutil.rmtree(os.path.join(tmpdir, "node1/regtest/blocks"))
         shutil.rmtree(os.path.join(tmpdir, "node1/regtest/chainstate"))
         shutil.rmtree(os.path.join(tmpdir, "node1/regtest/evodb"))
         shutil.rmtree(os.path.join(tmpdir, "node1/regtest/llmq"))
         shutil.copyfile(os.path.join(tmpdir, "hd.bak"), os.path.join(tmpdir, "node1/regtest/wallets/wallet.dat"))
+=======
+        shutil.rmtree(tmpdir + "/node1/regtest/blocks")
+        shutil.rmtree(tmpdir + "/node1/regtest/chainstate")
+        shutil.rmtree(tmpdir + "/node1/regtest/evodb")
+        shutil.rmtree(tmpdir + "/node1/regtest/llmq")
+        shutil.copyfile(tmpdir + "/hd.bak", tmpdir + "/node1/regtest/wallet.dat")
+>>>>>>> merge fix old ion with new
         self.start_node(1)
 
         # Assert that derivation is deterministic
@@ -86,7 +101,11 @@ class WalletHDTest(BitcoinTestFramework):
         for _ in range(num_hd_adds):
             hd_add_2 = self.nodes[1].getnewaddress()
             hd_info_2 = self.nodes[1].validateaddress(hd_add_2)
+<<<<<<< HEAD
             assert_equal(hd_info_2["hdkeypath"], "m/44'/1'/0'/0/"+str(_))
+=======
+            assert_equal(hd_info_2["hdkeypath"], "m/44'/1'/0'/0/"+str(_+1))
+>>>>>>> merge fix old ion with new
             assert_equal(hd_info_2["hdchainid"], chainid)
         assert_equal(hd_add, hd_add_2)
         connect_nodes_bi(self.nodes, 0, 1)
@@ -97,6 +116,7 @@ class WalletHDTest(BitcoinTestFramework):
         self.start_node(1, extra_args=self.extra_args[1] + ['-rescan'])
         assert_equal(self.nodes[1].getbalance(), num_hd_adds + 1)
 
+<<<<<<< HEAD
         # Try a RPC based rescan
         self.stop_node(1)
         shutil.rmtree(os.path.join(tmpdir, "node1/regtest/blocks"))
@@ -115,6 +135,8 @@ class WalletHDTest(BitcoinTestFramework):
         assert_equal(out['stop_height'], self.nodes[1].getblockcount())
         assert_equal(self.nodes[1].getbalance(), num_hd_adds + 1)
 
+=======
+>>>>>>> merge fix old ion with new
         # send a tx and make sure its using the internal chain for the changeoutput
         txid = self.nodes[1].sendtoaddress(self.nodes[0].getnewaddress(), 1)
         outs = self.nodes[1].decoderawtransaction(self.nodes[1].gettransaction(txid)['hex'])['vout']

@@ -1,6 +1,4 @@
-// Copyright (c) 2014-2017 The Bitcoin developers
-// Copyright (c) 2017-2018 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2014-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -8,12 +6,14 @@
 #include "config/ion-config.h"
 #endif
 
-#include "netbase.h"
+#include "timedata.h"
+
+#include "netaddress.h"
 #include "sync.h"
-#include "guiinterface.h"
+#include "ui_interface.h"
 #include "util.h"
 #include "utilstrencodings.h"
-
+#include "warnings.h"
 
 
 static CCriticalSection cs_nTimeOffset;
@@ -49,6 +49,8 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
     LOCK(cs_nTimeOffset);
     // Ignore duplicates
     static std::set<CNetAddr> setKnown;
+    if (setKnown.size() == BITCOIN_TIMEDATA_MAX_SAMPLES)
+        return;
     if (!setKnown.insert(ip).second)
         return;
 
@@ -99,17 +101,20 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
                 if (!fMatch)
                 {
                     fDone = true;
-                    std::string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong Ion Core will not work properly.");
-                    strMiscWarning = strMessage;
-                    LogPrintf("*** %s\n", strMessage);
+                    std::string strMessage = strprintf(_("Please check that your computer's date and time are correct! If your clock is wrong, %s will not work properly."), _(PACKAGE_NAME));
+                    SetMiscWarning(strMessage);
                     uiInterface.ThreadSafeMessageBox(strMessage, "", CClientUIInterface::MSG_WARNING);
                 }
             }
         }
-        if (fDebug) {
-            for (int64_t n : vSorted)
-                LogPrintf("%+d  ", n);
-            LogPrintf("|  ");
+
+        if (LogAcceptCategory(BCLog::NET)) {
+            for (int64_t n : vSorted) {
+                LogPrint(BCLog::NET, "%+d  ", n);
+            }
+            LogPrint(BCLog::NET, "|  ");
+
+            LogPrint(BCLog::NET, "nTimeOffset = %+d  (%+d minutes)\n", nTimeOffset, nTimeOffset/60);
         }
     }
 }

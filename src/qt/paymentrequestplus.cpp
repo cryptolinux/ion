@@ -1,5 +1,4 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2011-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,6 +11,8 @@
 
 #include <util.h>
 
+#include "util.h"
+
 #include <stdexcept>
 
 #include <openssl/x509_vfy.h>
@@ -23,7 +24,7 @@
 class SSLVerifyError : public std::runtime_error
 {
 public:
-    explicit SSLVerifyError(std::string err) : std::runtime_error(err) { }
+    SSLVerifyError(std::string err) : std::runtime_error(err) { }
 };
 
 bool PaymentRequestPlus::parse(const QByteArray& data)
@@ -98,10 +99,12 @@ bool PaymentRequestPlus::getMerchant(X509_STORE* certStore, QString& merchant) c
             qWarning() << "PaymentRequestPlus::getMerchant: Payment request: certificate expired or not yet active: " << qCert;
             return false;
         }
+#if QT_VERSION >= 0x050000
         if (qCert.isBlacklisted()) {
             qWarning() << "PaymentRequestPlus::getMerchant: Payment request: certificate blacklisted: " << qCert;
             return false;
         }
+#endif
         const unsigned char *data = (const unsigned char *)certChain.certificate(i).data();
         X509 *cert = d2i_X509(nullptr, &data, certChain.certificate(i).size());
         if (cert)

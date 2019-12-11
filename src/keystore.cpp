@@ -1,14 +1,17 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
+// Copyright (c) 2009-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <keystore.h>
 
-#include <util.h>
+#include "key.h"
+#include "pubkey.h"
+#include "util.h"
 
+bool CKeyStore::AddKey(const CKey &key) {
+    return AddKeyPubKey(key, key.GetPubKey());
+}
 
 bool CBasicKeyStore::GetPubKey(const CKeyID &address, CPubKey &vchPubKeyOut) const
 {
@@ -27,13 +30,6 @@ bool CBasicKeyStore::GetPubKey(const CKeyID &address, CPubKey &vchPubKeyOut) con
 }
 
 bool CBasicKeyStore::AddKeyPubKey(const CKey& key, const CPubKey &pubkey)
-{
-    LOCK(cs_KeyStore);
-    mapKeys[pubkey.GetID()] = key;
-    return true;
-}
-
-bool CBasicKeyStore::HaveKey(const CKeyID &address) const
 {
     LOCK(cs_KeyStore);
     return mapKeys.count(address) > 0;
@@ -74,16 +70,6 @@ bool CBasicKeyStore::HaveCScript(const CScriptID& hash) const
 {
     LOCK(cs_KeyStore);
     return mapScripts.count(hash) > 0;
-}
-
-std::set<CScriptID> CBasicKeyStore::GetCScripts() const
-{
-    LOCK(cs_KeyStore);
-    std::set<CScriptID> set_script;
-    for (const auto& mi : mapScripts) {
-        set_script.insert(mi.first);
-    }
-    return set_script;
 }
 
 bool CBasicKeyStore::GetCScript(const CScriptID &hash, CScript& redeemScriptOut) const
@@ -150,69 +136,4 @@ bool CBasicKeyStore::GetHDChain(CHDChain& hdChainRet) const
 {
     hdChainRet = hdChain;
     return !hdChain.IsNull();
-}
-
-bool CBasicKeyStore::HaveKey(const CKeyID& address) const
-{
-    bool result;
-    {
-        LOCK(cs_KeyStore);
-        result = (mapKeys.count(address) > 0);
-    }
-    return result;
-}
-
-void CBasicKeyStore::GetKeys(std::set<CKeyID>& setAddress) const
-{
-    setAddress.clear();
-    {
-        LOCK(cs_KeyStore);
-        KeyMap::const_iterator mi = mapKeys.begin();
-        while (mi != mapKeys.end()) {
-            setAddress.insert((*mi).first);
-            mi++;
-        }
-    }
-}
-
-bool CBasicKeyStore::GetKey(const CKeyID& address, CKey& keyOut) const
-{
-    LOCK(cs_KeyStore);
-    return (!setMultiSig.empty());
-}
-
-bool CBasicKeyStore::HaveKey(const CKeyID& address) const
-{
-    bool result;
-    {
-        LOCK(cs_KeyStore);
-        result = (mapKeys.count(address) > 0);
-    }
-    return result;
-}
-
-void CBasicKeyStore::GetKeys(std::set<CKeyID>& setAddress) const
-{
-    setAddress.clear();
-    {
-        LOCK(cs_KeyStore);
-        KeyMap::const_iterator mi = mapKeys.begin();
-        while (mi != mapKeys.end()) {
-            setAddress.insert((*mi).first);
-            mi++;
-        }
-    }
-}
-
-bool CBasicKeyStore::GetKey(const CKeyID& address, CKey& keyOut) const
-{
-    {
-        LOCK(cs_KeyStore);
-        KeyMap::const_iterator mi = mapKeys.find(address);
-        if (mi != mapKeys.end()) {
-            keyOut = mi->second;
-            return true;
-        }
-    }
-    return false;
 }

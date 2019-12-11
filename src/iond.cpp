@@ -1,24 +1,27 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2018-2019 The Ion developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#if defined(HAVE_CONFIG_H)
+#include "config/ion-config.h"
+#endif
+
+#include "chainparams.h"
 #include "clientversion.h"
-#include "init.h"
-#include "main.h"
-#include "masternodeconfig.h"
-#include "noui.h"
+#include "compat.h"
+#include "fs.h"
 #include "rpc/server.h"
-#include "guiinterface.h"
+#include "init.h"
+#include "noui.h"
+#include "scheduler.h"
 #include "util.h"
 #include "httpserver.h"
 #include "httprpc.h"
+#include "utilstrencodings.h"
+#include "stacktraces.h"
 
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/thread.hpp>
 
 #include <stdio.h>
@@ -29,8 +32,8 @@
  *
  * \section intro_sec Introduction
  *
- * This is the developer documentation of the reference client for an experimental new digital currency called ION (http://www.ioncoin.org),
- * which enables instant payments to anyone, anywhere in the world. ION uses peer-to-peer technology to operate
+ * This is the developer documentation of the reference client for an experimental new digital currency called Ion (https://www.ionomy.com/),
+ * which enables instant payments to anyone, anywhere in the world. Ion uses peer-to-peer technology to operate
  * with no central authority: managing transactions and issuing money are carried out collectively by the network.
  *
  * The software is a community-driven open source project, released under the MIT license.
@@ -39,16 +42,20 @@
  * Use the buttons <code>Namespaces</code>, <code>Classes</code> or <code>Files</code> at the top of the page to start navigating the code.
  */
 
-static bool fDaemon;
-
-void WaitForShutdown()
+void WaitForShutdown(boost::thread_group* threadGroup)
 {
-    while (!ShutdownRequested())
+    bool fShutdown = ShutdownRequested();
+    // Tell the main threads to shutdown.
+    while (!fShutdown)
     {
         MilliSleep(200);
         fShutdown = ShutdownRequested();
     }
-    Interrupt();
+    if (threadGroup)
+    {
+        Interrupt(*threadGroup);
+        threadGroup->join_all();
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -57,6 +64,9 @@ void WaitForShutdown()
 //
 bool AppInit(int argc, char* argv[])
 {
+    boost::thread_group threadGroup;
+    CScheduler scheduler;
+
     bool fRet = false;
 
     //
@@ -113,7 +123,7 @@ bool AppInit(int argc, char* argv[])
         }
         // Check for -testnet or -regtest parameter (Params() calls are only valid after this clause)
         try {
-            SelectParams(gArgs.GetChainName());
+            SelectParams(ChainNameFromCommandLine());
         } catch (const std::exception& e) {
             fprintf(stderr, "Error: %s\n", e.what());
             return false;
@@ -127,7 +137,7 @@ bool AppInit(int argc, char* argv[])
             }
         }
 
-        // -server defaults to true for dashd but not for the GUI so do this here
+        // -server defaults to true for bitcoind but not for the GUI so do this here
         gArgs.SoftSetBoolArg("-server", true);
         // Set this early so that parameter interactions go to console
         InitLogging();
@@ -135,17 +145,17 @@ bool AppInit(int argc, char* argv[])
         if (!AppInitBasicSetup())
         {
             // InitError will have been called with detailed error, which ends up on console
-            return false;
+            exit(EXIT_FAILURE);
         }
         if (!AppInitParameterInteraction())
         {
             // InitError will have been called with detailed error, which ends up on console
-            return false;
+            exit(EXIT_FAILURE);
         }
         if (!AppInitSanityChecks())
         {
             // InitError will have been called with detailed error, which ends up on console
-            return false;
+            exit(EXIT_FAILURE);
         }
         if (gArgs.GetBoolArg("-daemon", false))
         {
@@ -162,20 +172,23 @@ bool AppInit(int argc, char* argv[])
             return false;
 #endif // HAVE_DECL_DAEMON
         }
-#endif
-        SoftSetBoolArg("-server", true);
-
-        fRet = AppInit2();
-    } catch (std::exception& e) {
-        PrintExceptionContinue(&e, "AppInit()");
+        // Lock data directory after daemonization
+        if (!AppInitLockDataDirectory())
+        {
+            // If locking the data directory failed, exit immediately
+            exit(EXIT_FAILURE);
+        }
+        fRet = AppInitMain(threadGroup, scheduler);
     } catch (...) {
         PrintExceptionContinue(std::current_exception(), "AppInit()");
     }
 
-    if (!fRet) {
-        Interrupt();
+    if (!fRet)
+    {
+        Interrupt(threadGroup);
+        threadGroup.join_all();
     } else {
-        WaitForShutdown();
+        WaitForShutdown(&threadGroup);
     }
     Shutdown();
 

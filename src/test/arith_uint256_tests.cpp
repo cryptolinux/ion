@@ -1,5 +1,4 @@
-// Copyright (c) 2011-2013 The Bitcoin Core developers
-// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2011-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -68,7 +67,7 @@ std::string ArrayToString(const unsigned char A[], unsigned int width)
 BOOST_AUTO_TEST_CASE( basics ) // constructors, equality, inequality
 {
     BOOST_CHECK(1 == 0+1);
-    // constructor arith_uint256(std::vector<char>):
+    // constructor arith_uint256(vector<char>):
     BOOST_CHECK(R1L.ToString() == ArrayToString(R1Array,32));
     BOOST_CHECK(R2L.ToString() == ArrayToString(R2Array,32));
     BOOST_CHECK(ZeroL.ToString() == ArrayToString(ZeroArray,32));
@@ -84,7 +83,7 @@ BOOST_AUTO_TEST_CASE( basics ) // constructors, equality, inequality
     BOOST_CHECK(~MaxL == ZeroL);
     BOOST_CHECK( ((R1L ^ R2L) ^ R1L) == R2L);
 
-    uint64_t Tmp64 = 0xe1dab720d9c7acaaULL;
+    uint64_t Tmp64 = 0xc4dab720d9c7acaaULL;
     for (unsigned int i = 0; i < 256; ++i)
     {
         BOOST_CHECK(ZeroL != (OneL << i));

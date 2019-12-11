@@ -1,12 +1,10 @@
-// Copyright (c) 2011-2013 The Bitcoin developers
-// Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2011-2014 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <qt/guiutil.h>
-#include <qt/transactiondescdialog.h>
-#include <qt/forms/ui_transactiondescdialog.h>
+#include "guiutil.h"
+#include "transactiondescdialog.h"
+#include "ui_transactiondescdialog.h"
 
 #include <qt/transactiontablemodel.h>
 
@@ -14,12 +12,15 @@
 #include <QSettings>
 #include <QString>
 
-TransactionDescDialog::TransactionDescDialog(const QModelIndex& idx, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint),
-                                                                                        ui(new Ui::TransactionDescDialog)
+TransactionDescDialog::TransactionDescDialog(const QModelIndex &idx, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::TransactionDescDialog)
 {
     ui->setupUi(this);
-    GUIUtil::updateFonts();
     setWindowTitle(tr("Details for %1").arg(idx.data(TransactionTableModel::TxIDRole).toString()));
+    /* Open CSS when configured */
+    this->setStyleSheet(GUIUtil::loadStyleSheet());
+
     QString desc = idx.data(TransactionTableModel::LongDescriptionRole).toString();
     ui->detailText->setHtml(desc);
 }
