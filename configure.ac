@@ -20,12 +20,362 @@ AC_INIT([univalue], [1.0.2],
 dnl make the compilation flags quiet unless V=1 is used
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-AC_PREREQ(2.60)
-AC_CONFIG_SRCDIR([lib/univalue.cpp])
-AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_MACRO_DIR([build-aux/m4])
-AC_CONFIG_HEADERS([univalue-config.h])
-AM_INIT_AUTOMAKE([subdir-objects foreign])
+dnl Compiler checks (here before libtool).
+if test "x${CXXFLAGS+set}" = "xset"; then
+  CXXFLAGS_overridden=yes
+else
+  CXXFLAGS_overridden=no
+fi
+AC_PROG_CXX
+
+dnl By default, libtool for mingw refuses to link static libs into a dll for
+dnl fear of mixing pic/non-pic objects, and import/export complications. Since
+dnl we have those under control, re-enable that functionality.
+case $host in
+  *mingw*)
+     lt_cv_deplibs_check_method="pass_all"
+  ;;
+esac
+dnl Require C++14 compiler (no GNU extensions)
+AX_CXX_COMPILE_STDCXX([14], [noext], [mandatory], [nodefault])
+dnl Check if -latomic is required for <std::atomic>
+CHECK_ATOMIC
+
+dnl Unless the user specified OBJCXX, force it to be the same as CXX. This ensures
+dnl that we get the same -std flags for both.
+m4_ifdef([AC_PROG_OBJCXX],[
+if test "x${OBJCXX+set}" = "x"; then
+  OBJCXX="${CXX}"
+fi
+AC_PROG_OBJCXX
+])
+
+dnl Libtool init checks.
+LT_INIT([pic-only])
+
+dnl Check/return PATH for base programs.
+AC_PATH_TOOL(AR, ar)
+AC_PATH_TOOL(RANLIB, ranlib)
+AC_PATH_TOOL(STRIP, strip)
+AC_PATH_TOOL(GCOV, gcov)
+AC_PATH_PROG(LCOV, lcov)
+dnl Python 3.x is supported from 3.4 on (see https://github.com/bitcoin/bitcoin/issues/7893)
+AC_PATH_PROGS([PYTHON], [python3.6 python3.5 python3.4 python3 python2.7 python2 python])
+AC_PATH_PROG(GENHTML, genhtml)
+AC_PATH_PROG([GIT], [git])
+AC_PATH_PROG(CCACHE,ccache)
+AC_PATH_PROG(XGETTEXT,xgettext)
+AC_PATH_PROG(HEXDUMP,hexdump)
+AC_PATH_TOOL(READELF, readelf)
+AC_PATH_TOOL(CPPFILT, c++filt)
+AC_PATH_TOOL(OBJCOPY, objcopy)
+AC_PATH_TOOL(DSYMUTIL, dsymutil)
+AC_PATH_PROG(DOXYGEN, doxygen)
+if test -z "$DOXYGEN"; then
+   AC_MSG_WARN([Doxygen not found])
+fi
+AM_CONDITIONAL([HAVE_DOXYGEN], [test -n "$DOXYGEN"])
+
+AC_ARG_VAR(PYTHONPATH, Augments the default search path for python module files)
+
+# Enable wallet
+AC_ARG_ENABLE([wallet],
+  [AS_HELP_STRING([--disable-wallet],
+  [disable wallet (enabled by default)])],
+  [enable_wallet=$enableval],
+  [enable_wallet=yes])
+
+AC_ARG_WITH([miniupnpc],
+  [AS_HELP_STRING([--with-miniupnpc],
+  [enable UPNP (default is yes if libminiupnpc is found)])],
+  [use_upnp=$withval],
+  [use_upnp=auto])
+
+AC_ARG_ENABLE([upnp-default],
+  [AS_HELP_STRING([--enable-upnp-default],
+  [if UPNP is enabled, turn it on at startup (default is no)])],
+  [use_upnp_default=$enableval],
+  [use_upnp_default=no])
+
+AC_ARG_ENABLE(tests,
+    AS_HELP_STRING([--disable-tests],[do not compile tests (default is to compile)]),
+    [use_tests=$enableval],
+    [use_tests=yes])
+
+AC_ARG_ENABLE(gui-tests,
+    AS_HELP_STRING([--disable-gui-tests],[do not compile GUI tests (default is to compile if GUI and tests enabled)]),
+    [use_gui_tests=$enableval],
+    [use_gui_tests=$use_tests])
+
+AC_ARG_ENABLE(bench,
+    AS_HELP_STRING([--disable-bench],[do not compile benchmarks (default is to compile)]),
+    [use_bench=$enableval],
+    [use_bench=yes])
+
+AC_ARG_ENABLE([extended-functional-tests],
+    AS_HELP_STRING([--enable-extended-functional-tests],[enable expensive functional tests when using lcov (default no)]),
+    [use_extended_functional_tests=$enableval],
+    [use_extended_functional_tests=no])
+
+AC_ARG_WITH([qrencode],
+  [AS_HELP_STRING([--with-qrencode],
+  [enable QR code support (default is yes if qt is enabled and libqrencode is found)])],
+  [use_qr=$withval],
+  [use_qr=auto])
+
+AC_ARG_ENABLE([hardening],
+  [AS_HELP_STRING([--disable-hardening],
+  [do not attempt to harden the resulting executables (default is to harden)])],
+  [use_hardening=$enableval],
+  [use_hardening=yes])
+
+AC_ARG_ENABLE([reduce-exports],
+  [AS_HELP_STRING([--enable-reduce-exports],
+  [attempt to reduce exported symbols in the resulting executables (default is no)])],
+  [use_reduce_exports=$enableval],
+  [use_reduce_exports=no])
+
+AC_ARG_ENABLE([ccache],
+  [AS_HELP_STRING([--disable-ccache],
+  [do not use ccache for building (default is to use if found)])],
+  [use_ccache=$enableval],
+  [use_ccache=auto])
+
+AC_ARG_ENABLE([lcov],
+  [AS_HELP_STRING([--enable-lcov],
+  [enable lcov testing (default is no)])],
+  [use_lcov=yes],
+  [use_lcov=no])
+  
+AC_ARG_ENABLE([lcov-branch-coverage],
+  [AS_HELP_STRING([--enable-lcov-branch-coverage],
+  [enable lcov testing branch coverage (default is no)])],
+  [use_lcov_branch=yes],
+  [use_lcov_branch=no])
+
+AC_ARG_ENABLE([glibc-back-compat],
+  [AS_HELP_STRING([--enable-glibc-back-compat],
+  [enable backwards compatibility with glibc])],
+  [use_glibc_compat=$enableval],
+  [use_glibc_compat=no])
+
+AC_ARG_ENABLE([asm],
+  [AS_HELP_STRING([--disable-asm],
+  [disable assembly routines (enabled by default)])],
+  [use_asm=$enableval],
+  [use_asm=yes])
+
+if test "x$use_asm" = xyes; then
+  AC_DEFINE(USE_ASM, 1, [Define this symbol to build in assembly routines])
+fi
+
+AC_ARG_WITH([system-univalue],
+  [AS_HELP_STRING([--with-system-univalue],
+  [Build with system UniValue (default is no)])],
+  [system_univalue=$withval],
+  [system_univalue=no]
+)
+AC_ARG_ENABLE([zmq],
+  [AS_HELP_STRING([--disable-zmq],
+  [disable ZMQ notifications])],
+  [use_zmq=$enableval],
+  [use_zmq=yes])
+
+AC_ARG_WITH([zerocoin-bignum],
+  [AS_HELP_STRING([--with-zerocoin-bignum=gmp|auto],
+  [Specify Bignum Implementation. Default is auto])],
+  [req_bignum=$withval],
+  [req_bignum=auto])
+
+AC_ARG_WITH([protoc-bindir],[AS_HELP_STRING([--with-protoc-bindir=BIN_DIR],[specify protoc bin path])], [protoc_bin_path=$withval], [])
+
+AC_ARG_ENABLE(man,
+    [AS_HELP_STRING([--disable-man],
+                    [do not install man pages (default is to install)])],,
+    enable_man=yes)
+AM_CONDITIONAL(ENABLE_MAN, test "$enable_man" != no)
+
+# Enable debug
+AC_ARG_ENABLE([debug],
+    [AS_HELP_STRING([--enable-debug],
+                    [use debug compiler flags and macros (default is no)])],
+    [enable_debug=$enableval],
+    [enable_debug=no])
+
+# Enable crash hooks
+AC_ARG_ENABLE([crash-hooks],
+    [AS_HELP_STRING([--enable-crash-hooks],
+                    [hook into exception/signal/assert handling to gather stack traces (default is no)])],
+    [enable_crashhooks=$enableval],
+    [enable_crashhooks=no])
+
+# Enable in-wallet miner
+AC_ARG_ENABLE([miner],
+    [AS_HELP_STRING([--enable-miner],
+                    [enable in-wallet miner (default is yes)])],
+    [enable_miner=$enableval],
+    [enable_miner=yes])
+AM_CONDITIONAL([ENABLE_MINER], [test x$enable_miner = xyes])
+if test "x$enable_miner" = xyes; then
+    AC_DEFINE(ENABLE_MINER, 1, [Define this symbol if in-wallet miner should be enabled])
+fi
+
+# Turn warnings into errors
+AC_ARG_ENABLE([werror],
+    [AS_HELP_STRING([--enable-werror],
+                    [Treat certain compiler warnings as errors (default is no)])],
+    [enable_werror=$enableval],
+    [enable_werror=no])
+
+AC_LANG_PUSH([C++])
+AX_CHECK_COMPILE_FLAG([-Werror],[CXXFLAG_WERROR="-Werror"],[CXXFLAG_WERROR=""])
+
+if test "x$enable_debug" = xyes; then
+    CPPFLAGS="$CPPFLAGS -DDEBUG"
+    if test "x$GCC" = xyes; then
+        CFLAGS="$CFLAGS -g3 -O0"
+    fi
+
+    if test "x$GXX" = xyes; then
+        CXXFLAGS="$CXXFLAGS -g3 -O0"
+    fi
+else
+    # We always enable at at least -g1 debug info to support proper stacktraces in crash infos
+    # Stacktraces will be suboptimal due to optimization, but better than nothing. Also, -fno-omit-frame-pointer
+    # mitigates this a little bit
+    if test "x$GCC" = xyes; then
+        CFLAGS="$CFLAGS -g1 -fno-omit-frame-pointer"
+    fi
+
+    if test "x$GXX" = xyes; then
+        CXXFLAGS="$CXXFLAGS -g1 -fno-omit-frame-pointer"
+    fi
+fi
+
+AM_CONDITIONAL([ENABLE_CRASH_HOOKS], [test x$enable_crashhooks = xyes])
+if test "x$enable_crashhooks" = xyes; then
+    AC_DEFINE(ENABLE_CRASH_HOOKS, 1, [Define this symbol if crash hooks should be enabled])
+fi
+AX_CHECK_LINK_FLAG([-Wl,-wrap=__cxa_allocate_exception], [LINK_WRAP_SUPPORTED=yes],,,)
+AM_CONDITIONAL([CRASH_HOOKS_WRAPPED_CXX_ABI],[test x$LINK_WRAP_SUPPORTED = xyes])
+
+if test x$LINK_WRAP_SUPPORTED = "xyes"; then
+  AC_DEFINE(CRASH_HOOKS_WRAPPED_CXX_ABI, 1, [Define this symbol to use wrapped CXX ABIs for exception stacktraces])
+fi
+
+# Needed for MinGW targets when debug symbols are enabled as compiled objects get very large
+AX_CHECK_COMPILE_FLAG([-Wa,-mbig-obj], [CXXFLAGS="$CXXFLAGS -Wa,-mbig-obj"],,,)
+
+ERROR_CXXFLAGS=
+if test "x$enable_werror" = "xyes"; then
+  if test "x$CXXFLAG_WERROR" = "x"; then
+    AC_MSG_ERROR("enable-werror set but -Werror is not usable")
+  fi
+  AX_CHECK_COMPILE_FLAG([-Werror=vla],[ERROR_CXXFLAGS="$ERROR_CXXFLAGS -Werror=vla"],,[[$CXXFLAG_WERROR]])
+fi
+
+if test "x$CXXFLAGS_overridden" = "xno"; then
+  AX_CHECK_COMPILE_FLAG([-Wall],[CXXFLAGS="$CXXFLAGS -Wall"],,[[$CXXFLAG_WERROR]])
+  AX_CHECK_COMPILE_FLAG([-Wextra],[CXXFLAGS="$CXXFLAGS -Wextra"],,[[$CXXFLAG_WERROR]])
+  AX_CHECK_COMPILE_FLAG([-Wformat],[CXXFLAGS="$CXXFLAGS -Wformat"],,[[$CXXFLAG_WERROR]])
+  AX_CHECK_COMPILE_FLAG([-Wvla],[CXXFLAGS="$CXXFLAGS -Wvla"],,[[$CXXFLAG_WERROR]])
+  AX_CHECK_COMPILE_FLAG([-Wformat-security],[CXXFLAGS="$CXXFLAGS -Wformat-security"],,[[$CXXFLAG_WERROR]])
+
+  ## Some compilers (gcc) ignore unknown -Wno-* options, but warn about all
+  ## unknown options if any other warning is produced. Test the -Wfoo case, and
+  ## set the -Wno-foo case if it works.
+  AX_CHECK_COMPILE_FLAG([-Wunused-parameter],[CXXFLAGS="$CXXFLAGS -Wno-unused-parameter"],,[[$CXXFLAG_WERROR]])
+  AX_CHECK_COMPILE_FLAG([-Wself-assign],[CXXFLAGS="$CXXFLAGS -Wno-self-assign"],,[[$CXXFLAG_WERROR]])
+  AX_CHECK_COMPILE_FLAG([-Wunused-local-typedef],[CXXFLAGS="$CXXFLAGS -Wno-unused-local-typedef"],,[[$CXXFLAG_WERROR]])
+  AX_CHECK_COMPILE_FLAG([-Wdeprecated-register],[CXXFLAGS="$CXXFLAGS -Wno-deprecated-register"],,[[$CXXFLAG_WERROR]])
+  AX_CHECK_COMPILE_FLAG([-Wimplicit-fallthrough],[CXXFLAGS="$CXXFLAGS -Wno-implicit-fallthrough"],,[[$CXXFLAG_WERROR]])
+fi
+
+enable_hwcrc32=no
+enable_sse41=no
+enable_avx2=no
+enable_shani=no
+
+if test "x$use_asm" = "xyes"; then
+
+# Check for optional instruction set support. Enabling these does _not_ imply that all code will
+# be compiled with them, rather that specific objects/libs may use them after checking for runtime
+# compatibility.
+AX_CHECK_COMPILE_FLAG([-msse4.2],[[SSE42_CXXFLAGS="-msse4.2"]],,[[$CXXFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-msse4.1],[[SSE41_CXXFLAGS="-msse4.1"]],,[[$CXXFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-mavx -mavx2],[[AVX2_CXXFLAGS="-mavx -mavx2"]],,[[$CXXFLAG_WERROR]])
+AX_CHECK_COMPILE_FLAG([-msse4 -msha],[[SHANI_CXXFLAGS="-msse4 -msha"]],,[[$CXXFLAG_WERROR]])
+
+TEMP_CXXFLAGS="$CXXFLAGS"
+CXXFLAGS="$CXXFLAGS $SSE42_CXXFLAGS"
+AC_MSG_CHECKING(for assembler crc32 support)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #if defined(_MSC_VER)
+    #include <intrin.h>
+    #elif defined(__GNUC__) && defined(__SSE4_2__)
+    #include <nmmintrin.h>
+    #endif
+  ]],[[
+    uint64_t l = 0;
+    l = _mm_crc32_u8(l, 0);
+    l = _mm_crc32_u32(l, 0);
+    l = _mm_crc32_u64(l, 0);
+    return l;
+  ]])],
+ [ AC_MSG_RESULT(yes); enable_hwcrc32=yes],
+ [ AC_MSG_RESULT(no)]
+)
+CXXFLAGS="$TEMP_CXXFLAGS"
+
+TEMP_CXXFLAGS="$CXXFLAGS"
+CXXFLAGS="$CXXFLAGS $SSE41_CXXFLAGS"
+AC_MSG_CHECKING(for SSE4.1 intrinsics)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+  ]],[[
+    __m128i l = _mm_set1_epi32(0);
+    return _mm_extract_epi32(l, 3);
+  ]])],
+ [ AC_MSG_RESULT(yes); enable_sse41=yes; AC_DEFINE(ENABLE_SSE41, 1, [Define this symbol to build code that uses SSE4.1 intrinsics]) ],
+ [ AC_MSG_RESULT(no)]
+)
+CXXFLAGS="$TEMP_CXXFLAGS"
+
+TEMP_CXXFLAGS="$CXXFLAGS"
+CXXFLAGS="$CXXFLAGS $AVX2_CXXFLAGS"
+AC_MSG_CHECKING(for AVX2 intrinsics)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+  ]],[[
+    __m256i l = _mm256_set1_epi32(0);
+    return _mm256_extract_epi32(l, 7);
+  ]])],
+ [ AC_MSG_RESULT(yes); enable_avx2=yes; AC_DEFINE(ENABLE_AVX2, 1, [Define this symbol to build code that uses AVX2 intrinsics]) ],
+ [ AC_MSG_RESULT(no)]
+)
+CXXFLAGS="$TEMP_CXXFLAGS"
+
+TEMP_CXXFLAGS="$CXXFLAGS"
+CXXFLAGS="$CXXFLAGS $SHANI_CXXFLAGS"
+AC_MSG_CHECKING(for SHA-NI intrinsics)
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+    #include <stdint.h>
+    #include <immintrin.h>
+  ]],[[
+    __m128i i = _mm_set1_epi32(0);
+    __m128i j = _mm_set1_epi32(1);
+    __m128i k = _mm_set1_epi32(2);
+    return _mm_extract_epi32(_mm_sha256rnds2_epu32(i, i, k), 0);
+  ]])],
+ [ AC_MSG_RESULT(yes); enable_shani=yes; AC_DEFINE(ENABLE_SHANI, 1, [Define this symbol to build code that uses SHA-NI intrinsics]) ],
+ [ AC_MSG_RESULT(no)]
+)
+CXXFLAGS="$TEMP_CXXFLAGS"
+
+fi
 
 LIBUNIVALUE_MAJOR_VERSION=libunivalue_major_version
 LIBUNIVALUE_MINOR_VERSION=libunivalue_minor_version
@@ -1029,17 +1379,102 @@ case $set_bignum in
 gmp)
   AC_DEFINE(USE_NUM_GMP, 1, [Define this symbol to use the gmp implementation])
   ;;
+openssl)
+  AC_DEFINE(USE_NUM_OPENSSL, 1, [Define this symbol to use openssl implementation])
+  ;;
 *)
   AC_MSG_ERROR([invalid bignum implementation])
   ;;
 esac
 
-AC_CONFIG_FILES([
-    Makefile
-    pc/libunivalue.pc
-    pc/libunivalue-uninstalled.pc])
+AM_CONDITIONAL([USE_NUM_GMP], [test "x$set_bignum" = "xgmp"])
+AM_CONDITIONAL([USE_NUM_OPENSSL], [test "x$set_bignum" = "xopenssl"])
+AC_MSG_CHECKING([whether to build test_ion])
+if test x$use_tests = xyes; then
+  AC_MSG_RESULT([yes])
+  BUILD_TEST="yes"
+else
+  AC_MSG_RESULT([no])
+  BUILD_TEST=""
+fi
+
+AC_MSG_CHECKING([whether to reduce exports])
+if test x$use_reduce_exports = xyes; then
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
+fi
+
+# When compiled natively on MacOS, we need to specify -flat to avoid producing a dSYM bundle
+# When cross-compiled on linux, we're using a different version of the tool that only supports flat symbol files
+AC_MSG_CHECKING([whether dsymutil needs -flat])
+if test x$DSYMUTIL != x && ($DSYMUTIL --help | grep -q \\-flat); then
+AC_MSG_RESULT([yes])
+	DSYMUTIL_FLAT="$DSYMUTIL -flat"
+else
+	AC_MSG_RESULT([no])
+	DSYMUTIL_FLAT="$DSYMUTIL"
+fi
+AC_MSG_RESULT($dsymutil_needs_flat)
+
+if test x$build_bitcoin_utils$build_bitcoin_libs$build_bitcoind$bitcoin_enable_qt$use_bench$use_tests = xnononononono; then
+  AC_MSG_ERROR([No targets! Please specify at least one of: --with-utils --with-libs --with-daemon --with-gui --enable-bench or --enable-tests])
+fi
 
 AC_SUBST(LIBTOOL_APP_LDFLAGS)
-AC_SUBST(BUILD_EXEEXT)
+AC_SUBST(USE_UPNP)
+AC_SUBST(USE_QRCODE)
+AC_SUBST(BOOST_LIBS)
+AC_SUBST(TESTDEFS)
+AC_SUBST(LEVELDB_TARGET_FLAGS)
+AC_SUBST(MINIUPNPC_CPPFLAGS)
+AC_SUBST(MINIUPNPC_LIBS)
+AC_SUBST(CRYPTO_LIBS)
+AC_SUBST(SSL_LIBS)
+AC_SUBST(EVENT_LIBS)
+AC_SUBST(EVENT_PTHREADS_LIBS)
+AC_SUBST(ZMQ_LIBS)
+AC_SUBST(PROTOBUF_LIBS)
+AC_SUBST(QR_LIBS)
+AC_SUBST(DSYMUTIL_FLAT)
+AC_SUBST(USE_NUM_GMP)
+AC_SUBST(USE_NUM_OPENSSL)
+AC_CONFIG_FILES([Makefile src/Makefile doc/man/Makefile share/setup.nsi share/qt/Info.plist test/config.ini])
+AC_CONFIG_FILES([contrib/devtools/split-debug.sh],[chmod +x contrib/devtools/split-debug.sh])
+AM_COND_IF([HAVE_DOXYGEN], [AC_CONFIG_FILES([doc/Doxyfile])])
+AC_CONFIG_LINKS([contrib/filter-lcov.py:contrib/filter-lcov.py])
+AC_CONFIG_LINKS([test/functional/test_runner.py:test/functional/test_runner.py])
+AC_CONFIG_LINKS([test/util/bitcoin-util-test.py:test/util/bitcoin-util-test.py])
+
+dnl boost's m4 checks do something really nasty: they export these vars. As a
+dnl result, they leak into secp256k1's configure and crazy things happen.
+dnl Until this is fixed upstream and we've synced, we'll just un-export them.
+CPPFLAGS_TEMP="$CPPFLAGS"
+unset CPPFLAGS
+CPPFLAGS="$CPPFLAGS_TEMP"
+
+LDFLAGS_TEMP="$LDFLAGS"
+unset LDFLAGS
+LDFLAGS="$LDFLAGS_TEMP"
+
+LIBS_TEMP="$LIBS"
+unset LIBS
+LIBS="$LIBS_TEMP"
+
+PKGCONFIG_PATH_TEMP="$PKG_CONFIG_PATH"
+unset PKG_CONFIG_PATH
+PKG_CONFIG_PATH="$PKGCONFIG_PATH_TEMP"
+
+PKGCONFIG_LIBDIR_TEMP="$PKG_CONFIG_LIBDIR"
+unset PKG_CONFIG_LIBDIR
+PKG_CONFIG_LIBDIR="$PKGCONFIG_LIBDIR_TEMP"
+
+if test x$need_bundled_univalue = xyes; then
+  AC_CONFIG_SUBDIRS([src/univalue])
+fi
+
+ac_configure_args="${ac_configure_args} --disable-shared --with-pic --with-bignum=no --enable-module-recovery --disable-jni"
+AC_CONFIG_SUBDIRS([src/secp256k1])
+
 AC_OUTPUT
 
