@@ -43,5 +43,115 @@ test-suite.log
 *.pc
 *.trs
 
-.dirstamp
-.libs
+# Compilation and Qt preprocessor part
+*.qm
+Makefile
+ion-qt
+Ion-Qt.app
+!/depends/Makefile
+
+# Unit-tests
+Makefile.test
+ion-qt_test
+src/test/buildenv.py
+
+# Resources cpp
+qrc_*.cpp
+
+# Mac specific
+.DS_Store
+build
+
+#lcov
+*.gcno
+*.gcda
+/*.info
+test_ion.coverage/
+total.coverage/
+coverage_percent.txt
+
+#build tests
+linux-coverage-build
+linux-build
+win32-build
+qa/pull-tester/tests_config.py
+qa/pull-tester/tests_config.ini
+qa/cache/*
+
+!src/leveldb*/Makefile
+
+test/config.ini
+
+.cproject
+.project
+.autotools
+/doc/doxygen/
+
+libionconsensus.pc
+contrib/devtools/split-debug.sh
+src/qt/ion-qt.bash
+qa/pull-tester/tests-config.sh
+
+# gpg
+contrib/gitian-additional-scripts/gpgtemplate
+
+#development symlinks
+ion-cli
+iond
+ion-qt
+make
+
+/docker/bin
+
+# CLion
+.idea
+cmake-build-debug
+
+# exclude additional archives/images
+*.tar
+*.tar.xz
+*.tar.bz2
+*.zip
+*.iso
+*.img
+
+# exclude 5.hfs file created by the script
+*.hfs
+*.dmg
+MacOSX10.11.sdk/
+
+# VSCode
+!.vscode/launch.json
+.vscode/settings.json
+.vscode/tags
+
+#SNAP
+parts/
+prime/
+snap/.snapcraft/
+stage/
+*.snap
+
+# datadir
+datadir/
+datadir*/
+
+# debian build
+debian/.debhelper/
+debian/files
+debian/ion-cli.substvars
+debian/ion-cli/
+debian/ion-dev.substvars
+debian/ion-dev/
+debian/ion-full.substvars
+debian/ion-full/
+debian/ion-qt.substvars
+debian/ion-tx.substvars
+debian/ion-tx/
+debian/iond.substvars
+debian/iond/
+debian/tmp/
+
+# depends
+depends/config.guess
+depends/config.sub
