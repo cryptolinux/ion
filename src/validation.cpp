@@ -577,7 +577,7 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
     // This ensures that someone won't create an invalid OP_GROUP tx that sits in the mempool until after activation,
     // potentially causing this node to create a bad block.
     if (IsAnyOutputGrouped(tx)) {
-        if ((unsigned int)chainActive.Tip()->nHeight < chainparams.GetConsensus().ATPStartHeight)
+        if (chainActive.Tip()->nHeight < chainparams.GetConsensus().ATPStartHeight)
         {
             return state.DoS(0, false, REJECT_NONSTANDARD, "premature-op_group-tx");
         } else if (!IsAnyOutputGroupedCreation(tx, TokenGroupIdFlags::MGT_TOKEN) && !tokenGroupManager->ManagementTokensCreated()){
@@ -1057,7 +1057,7 @@ CAmount GetBlockSubsidyION(int nPrevBits, int nPrevHeight, const Consensus::Para
     // TESTNET and REGTEST
     if (Params().NetworkIDString() == CBaseChainParams::REGTEST && nHeight < 86400) {
         if (nHeight == 0) {
-            nSubsidy = 250 * COIN;
+            nSubsidy = 1 * COIN;
         } else if (nHeight < 200 && nHeight > 0) {
             nSubsidy = 250000 * COIN;
         } else if (nHeight < 86400 && nHeight >= 200) {
@@ -1067,8 +1067,10 @@ CAmount GetBlockSubsidyION(int nPrevBits, int nPrevHeight, const Consensus::Para
         if (nHeight == 0) {
             nSubsidy = 1 * COIN;
         } else if (nHeight == 1) {
+            nSubsidy = 1 * COIN;
+        } else if (nHeight == 2) {
             nSubsidy = 16400000 * COIN;
-        } else if (nHeight >= 2 && nHeight <= 125146) {
+        } else if (nHeight >= 3 && nHeight <= 125146) {
             nSubsidy = 23 * COIN;
         } else if (nHeight > 125146 && nHeight <= 570062) {
             nSubsidy = 17 * COIN;
@@ -1087,7 +1089,7 @@ CAmount GetBlockSubsidyION(int nPrevBits, int nPrevHeight, const Consensus::Para
         }
     } else {
         if (nHeight == 0) {
-            nSubsidy = 0 * COIN;
+            nSubsidy = 1 * COIN;
         } else if (nHeight == 1) {
             nSubsidy = 16400000 * COIN;
         } else if (nHeight <= 125146) {
@@ -1410,7 +1412,7 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsVi
 {
     if (!tx.IsCoinBase() && !tx.HasZerocoinSpendInputs())
     {
-        if ((unsigned int)chainActive.Tip()->nHeight >= Params().GetConsensus().ATPStartHeight) {
+        if (chainActive.Tip()->nHeight >= Params().GetConsensus().ATPStartHeight) {
             std::unordered_map<CTokenGroupID, CTokenGroupBalance> tgMintMeltBalance;
             CBlockIndex* pindexPrev = mapBlockIndex.find(inputs.GetBestBlock())->second;
             if (!CheckTokenGroups(tx, state, inputs, tgMintMeltBalance))
@@ -1637,7 +1639,7 @@ int ApplyTxInUndo(Coin&& undo, CCoinsViewCache& view, const COutPoint& out)
 
 /** Undo the effects of this block (with given index) on the UTXO set represented by coins.
  *  When FAILED is returned, view is left in an indeterminate state. */
-static DisconnectResult DisconnectBlock(const CBlock& block, const CBlockIndex* pindex, CCoinsViewCache& view)
+static DisconnectResult DisconnectBlock(const CBlock& block, const CBlockIndex* pindex, CCoinsViewCache& view, bool fDisconnectTokens = true)
 {
     std::vector<CTokenGroupID> toRemoveTokenGroupIDs;
 
@@ -1783,7 +1785,7 @@ static DisconnectResult DisconnectBlock(const CBlock& block, const CBlockIndex* 
                 }
 
             }
-            if (IsAnyOutputGroupedCreation(tx)) {
+            if (IsAnyOutputGroupedCreation(tx) && fDisconnectTokens) {
                 CTokenGroupID toRemoveTokenGroupID;
                 if (tokenGroupManager->RemoveTokenGroup(tx, toRemoveTokenGroupID))
                     toRemoveTokenGroupIDs.push_back(toRemoveTokenGroupID);
@@ -3614,8 +3616,9 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     }
 
     // Check timestamp against prev
-    if (block.GetBlockTime() <= pindexPrev->GetMedianTimePast() && nHeight >= consensusParams.MidasStartHeight)
+    if (block.GetBlockTime() < pindexPrev->GetMedianTimePast() && nHeight >= consensusParams.MidasStartHeight) {
         return state.Invalid(false, REJECT_INVALID, "time-too-old", strprintf("block's timestamp is too early %d %d", block.GetBlockTime(), pindexPrev->GetMedianTimePast()));
+    }
 
     // Check timestamp
     if (block.GetBlockTime() > nAdjustedTime + MAX_FUTURE_BLOCK_TIME)
@@ -4378,7 +4381,7 @@ bool CVerifyDB::VerifyDB(const CChainParams& chainparams, CCoinsView *coinsview,
         // check level 3: check for inconsistencies during memory-only disconnect of tip blocks
         if (nCheckLevel >= 3 && pindex == pindexState && (coins.DynamicMemoryUsage() + pcoinsTip->DynamicMemoryUsage()) <= nCoinCacheUsage) {
             assert(coins.GetBestBlock() == pindex->GetBlockHash());
-            DisconnectResult res = DisconnectBlock(block, pindex, coins);
+            DisconnectResult res = DisconnectBlock(block, pindex, coins, nCheckLevel > 3);
             if (res == DISCONNECT_FAILED) {
                 return error("VerifyDB(): *** irrecoverable inconsistency in block data at %d, hash=%s", pindex->nHeight, pindex->GetBlockHash().ToString());
             }
@@ -4477,7 +4480,7 @@ bool ReplayBlocks(const CChainParams& params, CCoinsView* view)
                 return error("RollbackBlock(): ReadBlockFromDisk() failed at %d, hash=%s", pindexOld->nHeight, pindexOld->GetBlockHash().ToString());
             }
             LogPrintf("Rolling back %s (%i)\n", pindexOld->GetBlockHash().ToString(), pindexOld->nHeight);
-            DisconnectResult res = DisconnectBlock(block, pindexOld, cache);
+            DisconnectResult res = DisconnectBlock(block, pindexOld, cache, false);
             if (res == DISCONNECT_FAILED) {
                 return error("RollbackBlock(): DisconnectBlock failed at %d, hash=%s", pindexOld->nHeight, pindexOld->GetBlockHash().ToString());
             }
