@@ -378,7 +378,25 @@ void SendCoinsDialog::send(QList<SendCoinsRecipient> recipients, QString strFee,
     }
 
     QString questionString = tr("Are you sure you want to send?");
-    questionString.append("<br /><br />%1");
+    questionString.append("<br /><br />");
+    questionString.append(formatted.join("<br />"));
+    questionString.append("<br />");
+
+
+    if(ctrl.IsUsingPrivateSend()) {
+        questionString.append(tr("using") + " <b>" + tr("PrivateSend funds only") + "</b>");
+    } else {
+        questionString.append(tr("using") + " <b>" + tr("any available funds") + "</b>");
+    }
+
+    if (displayedEntries < messageEntries) {
+        questionString.append("<br />");
+        questionString.append("<span style='" + GUIUtil::getThemedStyleQString(GUIUtil::ThemedStyle::TS_ERROR) + "'>");
+        questionString.append(tr("<b>(%1 of %2 entries displayed)</b>").arg(displayedEntries).arg(messageEntries));
+        questionString.append("</span>");
+    }
+
+    CAmount txFee = currentTransaction.getTransactionFee();
 
     if(txFee > 0)
     {
