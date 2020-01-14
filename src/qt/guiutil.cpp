@@ -981,202 +981,23 @@ double getScaledFontSize(int nSize)
 
 bool loadFonts()
 {
-    // Before any font changes store the applications default font to use it as SystemDefault.
-    osDefaultFont = std::make_unique<QFont>(QApplication::font());
-
-    QString family = fontFamilyToString(FontFamily::Montserrat);
-    QString italic = "Italic";
-
-    std::map<QString, bool> mapStyles{
-        {"Thin", true},
-        {"ExtraLight", true},
-        {"Light", true},
-        {"Italic", false},
-        {"Regular", false},
-        {"Medium", true},
-        {"SemiBold", true},
-        {"Bold", true},
-        {"ExtraBold", true},
-        {"Black", true},
-    };
-
-    QFontDatabase database;
-    std::vector<int> vecFontIds;
-
-    for (const auto& it : mapStyles) {
-        QString font = ":fonts/" + family + "-" + it.first;
-        vecFontIds.push_back(QFontDatabase::addApplicationFont(font));
-        qDebug() << __func__ << ": " << font << " loaded with id " << vecFontIds.back();
-        if (it.second) {
-            vecFontIds.push_back(QFontDatabase::addApplicationFont(font + italic));
-            qDebug() << __func__ << ": " << font + italic << " loaded with id " << vecFontIds.back();
-        }
-    }
-
-    // Fail if an added id is -1 which means QFontDatabase::addApplicationFont failed.
-    if (std::find(vecFontIds.begin(), vecFontIds.end(), -1) != vecFontIds.end()) {
-        return false;
-    }
-
-    // Print debug logs for added fonts fetched by the added ids
-    for (const auto& i : vecFontIds) {
-        auto families = QFontDatabase::applicationFontFamilies(i);
-        for (const QString& f : families) {
-            qDebug() << __func__ << ": - Font id " << i << " is family: " << f;
-            const QStringList fontStyles = database.styles(f);
-            for (const QString& style : fontStyles) {
-                qDebug() << __func__ << ": Style for family " << f << " with id: " << i << ": " << style;
-            }
-        }
-    }
-    // Print debug logs for added fonts fetched by the family name
-    const QStringList fontFamilies = database.families();
-    for (const QString& f : fontFamilies) {
-        if (f.contains(family)) {
-            const QStringList fontStyles = database.styles(f);
-            for (const QString& style : fontStyles) {
-                qDebug() << __func__ << ": Family: " << f << ", Style: " << style;
-            }
-        }
-    }
-
-    // Load font related settings
     QSettings settings;
-    QFont::Weight weight;
+    QString theme = settings.value("theme", "").toString();
 
-    if (!gArgs.IsArgSet("-font-family")) {
-        fontFamily = fontFamilyFromString(settings.value("fontFamily").toString());
+    QDir themes(":themes");
+    // Make sure settings are pointing to an existent theme
+    // Set "Light" theme by default if settings are missing or incorrect
+    if (theme.isEmpty() || !themes.exists(theme)) {
+        theme = "Light";
+        settings.setValue("theme", theme);
     }
 
-    if (!gArgs.IsArgSet("-font-scale")) {
-        fontScale = settings.value("fontScale").toInt();
+    QFile qFile(":themes/" + theme);
+    if (qFile.open(QFile::ReadOnly)) {
+        return QLatin1String(qFile.readAll());
     }
 
-    if (!gArgs.IsArgSet("-font-weight-normal") && weightFromArg(settings.value("fontWeightNormal").toInt(), weight)) {
-        fontWeightNormal = weight;
-    }
-
-    if (!gArgs.IsArgSet("-font-weight-bold") && weightFromArg(settings.value("fontWeightBold").toInt(), weight)) {
-        fontWeightBold = weight;
-    }
-
-    setApplicationFont();
-
-    // Initialize supported font weights for all available fonts
-    // Generate a vector with supported font weights by comparing the width of a certain test text for all font weights
-    auto supportedWeights = [](FontFamily family) -> std::vector<QFont::Weight> {
-        auto getTestWidth = [&](QFont::Weight weight) -> int {
-            QFont font = getFont(family, weight, false, defaultFontSize);
-            return QFontMetrics(font).width("Check the width of this text to see if the weight change has an impact!");
-        };
-        std::vector<QFont::Weight> vecWeights{QFont::Thin, QFont::ExtraLight, QFont::Light,
-                                              QFont::Normal, QFont::Medium, QFont::DemiBold,
-                                              QFont::Bold, QFont::Black};
-        std::vector<QFont::Weight> vecSupported;
-        QFont::Weight prevWeight = vecWeights.front();
-        for (auto weight = vecWeights.begin() + 1; weight != vecWeights.end(); ++weight) {
-            if (getTestWidth(prevWeight) != getTestWidth(*weight)) {
-                if (vecSupported.empty()) {
-                    vecSupported.push_back(prevWeight);
-                }
-                vecSupported.push_back(*weight);
-            }
-            prevWeight = *weight;
-        }
-        return vecSupported;
-    };
-
-    mapSupportedWeights.insert(std::make_pair(FontFamily::SystemDefault, supportedWeights(FontFamily::SystemDefault)));
-    mapSupportedWeights.insert(std::make_pair(FontFamily::Montserrat, supportedWeights(FontFamily::Montserrat)));
-
-    return true;
-}
-
-    if(!theme.isEmpty()){
-        cssName = QString(":/css/") + theme;
-    }
-    else {
-        cssName = QString(":/css/light");
-        settings.setValue("theme", "light");
-    }
-
-    size_t nRemovedFontUpdates{0};
-    auto itn = mapFontUpdates.begin();
-    while (itn != mapFontUpdates.end()) {
-        if (itn->first.isNull()) {
-            itn = mapFontUpdates.erase(itn);
-            ++nRemovedFontUpdates;
-        } else {
-            ++itn;
-        }
-    }
-
-    size_t nUpdatable{0}, nUpdated{0};
-    std::map<QWidget*, QFont> mapWidgetFonts;
-    // Loop through all widgets
-    for (QWidget* w : qApp->allWidgets()) {
-        std::vector<QString> vecIgnore{
-            "QWidget", "QDialog", "QFrame", "QStackedWidget", "QDesktopWidget", "QDesktopScreenWidget",
-            "QTipLabel", "QMessageBox", "QMenu", "QComboBoxPrivateScroller", "QComboBoxPrivateContainer",
-            "QScrollBar", "QListView", "BitcoinGUI", "WalletView", "WalletFrame"
-        };
-        if (std::find(vecIgnore.begin(), vecIgnore.end(), w->metaObject()->className()) != vecIgnore.end()) {
-            continue;
-        }
-        ++nUpdatable;
-
-        QFont font = w->font();
-        assert(font.pointSize() > 0);
-        font.setFamily(qApp->font().family());
-        font.setWeight(getFontWeightNormal());
-        font.setStyleName(qApp->font().styleName());
-        font.setStyle(qApp->font().style());
-
-        // Insert/Get the default font size of the widget
-        auto itDefault = mapWidgetDefaultFontSizes.emplace(w, font.pointSize());
-
-        auto it = mapFontUpdates.find(w);
-        if (it != mapFontUpdates.end()) {
-            int nSize = std::get<2>(it->second);
-            if (nSize == -1) {
-                nSize = itDefault.first->second;
-            }
-            font = getFont(std::get<0>(it->second), std::get<1>(it->second), nSize);
-        } else {
-            font.setPointSizeF(getScaledFontSize(itDefault.first->second));
-        }
-
-        if (w->font() != font) {
-            auto itWidgetFont = mapWidgetFonts.emplace(w, font);
-            assert(itWidgetFont.second);
-            ++nUpdated;
-        }
-    }
-    qDebug().nospace() << __func__ << " - widget counts: updated/updatable/total(" << nUpdated << "/" << nUpdatable << "/" << qApp->allWidgets().size() << ")"
-             << ", removed items: mapWidgetDefaultFontSizes/mapFontUpdates(" << nRemovedDefaultFonts << "/" << nRemovedFontUpdates << ")";
-
-    // Perform the required font updates
-    // NOTE: This is done as seperate step to avoid scaling issues due to font inheritance
-    //       hence all fonts are calculated and stored in mapWidgetFonts above.
-    for (auto it : mapWidgetFonts) {
-        it.first->setFont(it.second);
-    }
-
-    // Scale the global font size for the classes in the map below
-    static std::map<std::string, int> mapClassFontUpdates{
-        {"QTipLabel", -1}, {"QMenu", -1}, {"QMessageBox", -1}
-    };
-    for (auto& it : mapClassFontUpdates) {
-        QFont fontClass = qApp->font(it.first.c_str());
-        if (it.second == -1) {
-            it.second = fontClass.pointSize();
-        }
-        double dSize = getScaledFontSize(it.second);
-        if (fontClass.pointSizeF() != dSize) {
-            fontClass.setPointSizeF(dSize);
-            qApp->setFont(fontClass, it.first.c_str());
-        }
-    }
+    return QString();
 }
 
 QFont getFont(FontFamily family, QFont::Weight qWeight, bool fItalic, int nPointSize)
