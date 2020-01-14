@@ -1,15 +1,13 @@
-// Copyright (c) 2011-2014 The Bitcoin developers
-// Copyright (c) 2014-2016 The Dash developers
-// Copyright (c) 2016-2017 The PIVX developers
-// Distributed under the MIT/X11 software license, see the accompanying
+// Copyright (c) 2011-2014 The Bitcoin Core developers
+// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_QT_TRANSACTIONRECORD_H
 #define BITCOIN_QT_TRANSACTIONRECORD_H
 
-#include <amount.h>
-#include <uint256.h>
-#include <base58.h>
+#include "amount.h"
+#include "uint256.h"
+#include "base58.h"
 
 class CWallet;
 class CWalletTx;
@@ -21,7 +19,7 @@ class TransactionStatus
 public:
     TransactionStatus():
         countsForBalance(false), lockedByInstantSend(false), lockedByChainLocks(false), sortKey(""),
-        matures_in(0), status(Unconfirmed), depth(0), open_for(0), cur_num_blocks(-1),
+        matures_in(0), status(Offline), depth(0), open_for(0), cur_num_blocks(-1),
         cachedChainLockHeight(-1), needsUpdate(false)
     { }
 
@@ -30,12 +28,14 @@ public:
         /// Normal (sent/received) transactions
         OpenUntilDate,      /**< Transaction not yet final, waiting for date */
         OpenUntilBlock,     /**< Transaction not yet final, waiting for block */
+        Offline,            /**< Not sent to any other nodes **/
         Unconfirmed,        /**< Not yet mined into a block **/
         Confirming,         /**< Confirmed, but waiting for the recommended number of confirmations **/
         Conflicted,         /**< Conflicts with other transaction or mempool **/
         Abandoned,          /**< Abandoned from the wallet **/
         /// Generated (mined) transactions
         Immature,           /**< Mined but waiting for maturity */
+        MaturesWarning,     /**< Transaction will likely not mature because no nodes have confirmed */
         NotAccepted         /**< Mined but not accepted */
     };
 
@@ -48,7 +48,7 @@ public:
     /// Sorting key based on status
     std::string sortKey;
     /// Label
-    QString label;
+    std::string label;
 
     /** @name Generated (mined) transactions
        @{*/
@@ -84,23 +84,18 @@ public:
         Other,
         Generated,
         StakeMint,
-        StakeXION,
+        MNReward,
         SendToAddress,
         SendToOther,
         RecvWithAddress,
         RecvFromOther,
         SendToSelf,
-        ZerocoinMint,
-        ZerocoinSpend,
-        RecvFromZerocoinSpend,
-        ZerocoinSpend_Change_xIon,
-        ZerocoinSpend_FromMe,
-        RecvWithObfuscation,
-        ObfuscationDenominate,
-        ObfuscationCollateralPayment,
-        ObfuscationMakeCollaterals,
-        ObfuscationCreateDenominations,
-        Obfuscated
+        RecvWithPrivateSend,
+        PrivateSendDenominate,
+        PrivateSendCollateralPayment,
+        PrivateSendMakeCollaterals,
+        PrivateSendCreateDenominations,
+        PrivateSend
     };
 
     /** Number of confirmation recommended for accepting a transaction */
@@ -109,25 +104,32 @@ public:
     TransactionRecord():
             hash(), time(0), type(Other), strAddress(""), debit(0), credit(0), idx(0)
     {
-        txDest = DecodeDestination(strAddress);
+        address = CBitcoinAddress(strAddress);
+        txDest = address.Get();
     }
 
-    TransactionRecord(uint256 hash, int64_t time) : hash(hash), time(time), type(Other), address(""), debit(0),
-                                                   credit(0), idx(0)
+    TransactionRecord(uint256 _hash, int64_t _time):
+            hash(_hash), time(_time), type(Other), strAddress(""), debit(0),
+            credit(0), idx(0)
     {
-        txDest = DecodeDestination(strAddress);
+        address = CBitcoinAddress(strAddress);
+        txDest = address.Get();
     }
 
-    TransactionRecord(uint256 hash, int64_t time, Type type, const std::string& address, const CAmount& debit, const CAmount& credit) : hash(hash), time(time), type(type), address(address), debit(debit), credit(credit),
-                                                                                                                                       idx(0)
+    TransactionRecord(uint256 _hash, int64_t _time,
+                Type _type, const std::string &_strAddress,
+                const CAmount& _debit, const CAmount& _credit):
+            hash(_hash), time(_time), type(_type), strAddress(_strAddress), debit(_debit), credit(_credit),
+            idx(0)
     {
-        txDest = DecodeDestination(strAddress);
+        address = CBitcoinAddress(strAddress);
+        txDest = address.Get();
     }
 
     /** Decompose CWallet transaction to model transaction records.
      */
-    static bool showTransaction(const CWalletTx& wtx);
-    static std::vector<TransactionRecord> decomposeTransaction(const CWallet* wallet, const CWalletTx& wtx);
+    static bool showTransaction(const CWalletTx &wtx);
+    static std::vector<TransactionRecord> decomposeTransaction(const CWallet *wallet, const CWalletTx &wtx);
 
     /** @name Immutable transaction attributes
       @{*/
@@ -135,6 +137,7 @@ public:
     int64_t time;
     Type type;
     std::string strAddress;
+    CBitcoinAddress address;
     CTxDestination txDest;
 
     CAmount debit;
@@ -162,8 +165,7 @@ public:
 
     /** Return whether a status update is needed.
      */
-    bool statusUpdateNeeded();
-
+    bool statusUpdateNeeded(int chainLockHeight);
 
     /**
      * Return stringified transaction record type
@@ -175,7 +177,6 @@ public:
      * Return stringified transaction status
      */
     std::string GetTransactionStatus() const;
-    std::string GetTransactionStatus(TransactionStatus::Status status) const;
-};
+    std::string GetTransactionStatus(TransactionStatus::Status status) const;};
 
 #endif // BITCOIN_QT_TRANSACTIONRECORD_H
