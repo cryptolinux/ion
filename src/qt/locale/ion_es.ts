@@ -1363,6 +1363,10 @@
         <translation>Esta cantidad actúa como un límite para desactivar PrivateSend una vez que se alcanza ese límite.</translation>
     </message>
     <message>
+        <source>Target PrivateSend balance</source>
+        <translation>Saldo objetivo de PrivateSend</translation>
+    </message>
+    <message>
         <source>Automatically open the Ion Core client port on the router. This only works when your router supports UPnP and it is enabled.</source>
         <translation>Abrir automáticamente el puerto del cliente Ion Core en el enrutador. Esto solo funciona cuando su enrutador admite UPnP y está habilitado.</translation>
     </message>
@@ -1750,6 +1754,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Denominated</source>
         <translation>Denominadas</translation>
+    </message>
+    <message>
+        <source>Partially mixed</source>
+        <translation>Parcialmente mezclado</translation>
     </message>
     <message>
         <source>Mixed</source>
@@ -2883,6 +2891,10 @@ Máximo permitido:</translation>
         <translation>&lt;b&gt;(%1 de %2 registros mostrados)&lt;/b&gt;</translation>
     </message>
     <message>
+        <source>PrivateSend funds only</source>
+        <translation>Fondos de PrivateSend solamente</translation>
+    </message>
+    <message>
         <source>any available funds</source>
         <translation>cualquier fondo disponible</translation>
     </message>
@@ -2897,6 +2909,10 @@ Máximo permitido:</translation>
     <message>
         <source>Fee rate: %1</source>
         <translation>Tasa de comisión: %1</translation>
+    </message>
+    <message numerus="yes">
+        <source>This transaction will consume %n input(s)</source>
+        <translation><numerusform>Esta transacción consumirá %n entrada</numerusform><numerusform>Esta transacción consumirá %n entradas</numerusform></translation>
     </message>
     <message>
         <source>Warning: Using PrivateSend with %1 or more inputs can harm your privacy and is not recommended</source>
