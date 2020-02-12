@@ -1,10 +1,35 @@
-m4_define([libunivalue_major_version], [1])
-m4_define([libunivalue_minor_version], [1])
-m4_define([libunivalue_micro_version], [2])
-m4_define([libunivalue_interface_age], [2])
-# If you need a modifier for the version number. 
-# Normally empty, but can be used to make "fixup" releases.
-m4_define([libunivalue_extraversion], [])
+dnl require autoconf 2.60 (AS_ECHO/AS_ECHO_N)
+AC_PREREQ([2.60])
+define(_CLIENT_VERSION_MAJOR, 5)
+define(_CLIENT_VERSION_MINOR, 0)
+define(_CLIENT_VERSION_REVISION, 99)
+define(_CLIENT_VERSION_BUILD, 0)
+define(_CLIENT_VERSION_IS_RELEASE, false)
+define(_COPYRIGHT_YEAR, 2020)
+define(_COPYRIGHT_HOLDERS,[The %s developers])
+define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[[Ion Core]])
+AC_INIT([Ion Core],[_CLIENT_VERSION_MAJOR._CLIENT_VERSION_MINOR._CLIENT_VERSION_REVISION],[https://bitbucket.org/ioncoin/ion/issues],[ioncore],[https://ionomy.com/])
+AC_CONFIG_SRCDIR([src/validation.cpp])
+AC_CONFIG_HEADERS([src/config/ion-config.h])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_MACRO_DIR([build-aux/m4])
+
+BITCOIN_DAEMON_NAME=iond
+BITCOIN_GUI_NAME=ion-qt
+BITCOIN_CLI_NAME=ion-cli
+BITCOIN_TX_NAME=ion-tx
+
+dnl Unless the user specified ARFLAGS, force it to be cr
+AC_ARG_VAR(ARFLAGS, [Flags for the archiver, defaults to <cr> if not set])
+if test "x${ARFLAGS+set}" != "xset"; then
+  ARFLAGS="cr"
+fi
+
+AC_CANONICAL_HOST
+
+AH_TOP([#ifndef ION_CONFIG_H])
+AH_TOP([#define ION_CONFIG_H])
+AH_BOTTOM([#endif //ION_CONFIG_H])
 
 dnl libtool versioning from libunivalue
 m4_define([libunivalue_current], [m4_eval(100 * libunivalue_minor_version + libunivalue_micro_version - libunivalue_interface_age)])
