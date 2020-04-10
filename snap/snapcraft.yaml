@@ -135,7 +135,7 @@ parts:
   ion:
     source: https://bitbucket.org/ioncoin/ion
     source-type: git
-    source-tagː master
+    source-tag: master
     plugin: nil
     # We don't want to copy the full blockchain every time that the snap is   
     # updated, but there's no way to define a default data dir in ion-qt.
