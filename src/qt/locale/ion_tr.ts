@@ -4679,7 +4679,7 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
         <source>The %d developers</source>
-        <translation>%declare geliştiricileri</translation>
+        <translation>%d geliştiricileri</translation>
     </message>
     <message>
         <source>The %b developers</source>
