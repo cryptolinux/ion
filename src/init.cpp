@@ -1980,16 +1980,14 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
                 tokenGroupManager = std::shared_ptr<CTokenGroupManager>(new CTokenGroupManager());
 
                 // Drop all information from the tokenDB and repopulate
-                if (gArgs.GetBoolArg("-reindextokens", false)) {
-                    uiInterface.InitMessage(_("Reindexing token database..."));
-                    if (!ReindexTokenDB(strLoadError))
+                bool fReindexTokens = gArgs.GetBoolArg("-reindex-tokens", false);
+                if (!fReindexTokens) {
+                    // ION: load token data
+                    uiInterface.InitMessage(_("Loading token data..."));
+                    if (!pTokenDB->LoadTokensFromDB(strLoadError)) {
                         break;
+                    }
                 }
-
-                // ION: load token data
-                uiInterface.InitMessage(_("Loading token data..."));
-                if (!pTokenDB->LoadTokensFromDB(strLoadError))
-                    break;
 
                 pcoinsdbview = new CCoinsViewDB(nCoinDBCache, false, fReset || fReindexChainState);
                 pcoinscatcher = new CCoinsViewErrorCatcher(pcoinsdbview);
@@ -2020,7 +2018,19 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
                     assert(chainActive.Tip() != NULL);
                 }
 
+                if (fReindexTokens) {
+                    uiInterface.InitMessage(_("Reindexing token database..."));
+                    if (!ReindexTokenDB(strLoadError)) {
+                        break;
+                    }
+                }
+
                 deterministicMNManager->UpgradeDBIfNeeded();
+
+                uiInterface.InitMessage(_("Verifying tokens..."));
+                if (!VerifyTokenDB(strLoadError)) {
+                    break;
+                }
 
                 if (!is_coinsview_empty) {
                     uiInterface.InitMessage(_("Verifying blocks..."));
