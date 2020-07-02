@@ -64,6 +64,7 @@
 #include "xion/xionchain.h"
 #include "xion/zerocoindb.h"
 
+#include "tokens/groups.h"
 #include "tokens/tokendb.h"
 #include "tokens/tokengroupmanager.h"
 #include "tokens/tokengroupwallet.h"
@@ -2079,8 +2080,6 @@ static bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockInd
     std::vector<std::pair<libzerocoin::PublicCoin, uint256> > vMints;
     //! ATP
     std::vector<CTokenGroupCreation> newTokenGroups;
-    unsigned int nXDMCountInBlock = 0;
-    unsigned int nMagicCountInBlock = 0;
     CAmount nXDMMint = 0;
     CAmount nMagicMint = 0;
 
@@ -2362,7 +2361,8 @@ static bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockInd
                                     block.GetHash().GetHex(), pindex->nHeight), REJECT_INVALID);
 
     // Track XDM money supply in the block index
-    pindex->nXDMTransactions = nXDMCountInBlock;
+    pindex->nXDMTransactions = tokenGroupManager->GetXDMInBlock(block);
+    pindex->nChainXDMTransactions = (pindex->pprev ? pindex->pprev->nChainXDMTransactions : 0) + pindex->nXDMTransactions;
 
     // Ensure that accumulator checkpoints are valid and in the same state as this instance of the chain
     AccumulatorMap mapAccumulators(Params().Zerocoin_Params(pindex->nHeight < Params().GetConsensus().nBlockZerocoinV2));
@@ -2659,9 +2659,9 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams& chainParams) {
             DoWarning(strWarning);
         }
     }
-    std::string strMessage = strprintf("%s: new best=%s height=%d version=0x%08x log2_work=%.8f tx=%lu date='%s' progress=%f cache=%.1fMiB(%utxo)", __func__,
+    std::string strMessage = strprintf("%s: new best=%s height=%d version=0x%08x log2_work=%.8f tx=%lu xdm_tx=%lu date='%s' progress=%f cache=%.1fMiB(%utxo)", __func__,
       chainActive.Tip()->GetBlockHash().ToString(), chainActive.Height(), chainActive.Tip()->nVersion,
-      log(chainActive.Tip()->nChainWork.getdouble())/log(2.0), (unsigned long)chainActive.Tip()->nChainTx,
+      log(chainActive.Tip()->nChainWork.getdouble())/log(2.0), (unsigned long)chainActive.Tip()->nChainTx, (unsigned long)chainActive.Tip()->nChainXDMTransactions,
       DateTimeStrFormat("%Y-%m-%d %H:%M:%S", chainActive.Tip()->GetBlockTime()),
       GuessVerificationProgress(chainParams.TxData(), chainActive.Tip()), pcoinsTip->DynamicMemoryUsage() * (1.0 / (1<<20)), pcoinsTip->GetCacheSize());
     strMessage += strprintf(" evodb_cache=%.1fMiB", evoDb->GetMemoryUsage() * (1.0 / (1<<20)));
@@ -3312,6 +3312,8 @@ bool ReceivedBlockTransactions(const CBlock &block, CValidationState& state, CBl
     }
     pindexNew->nTx = block.vtx.size();
     pindexNew->nChainTx = 0;
+    pindexNew->nXDMTransactions = 0;
+    pindexNew->nChainXDMTransactions = 0;
     pindexNew->nFile = pos.nFile;
     pindexNew->nDataPos = pos.nPos;
     pindexNew->nUndoPos = 0;
@@ -4144,12 +4146,15 @@ bool static LoadBlockIndexDB(const CChainParams& chainparams)
             if (pindex->pprev) {
                 if (pindex->pprev->nChainTx) {
                     pindex->nChainTx = pindex->pprev->nChainTx + pindex->nTx;
+                    pindex->nChainXDMTransactions = pindex->pprev->nChainXDMTransactions + pindex->nXDMTransactions;
                 } else {
                     pindex->nChainTx = 0;
+                    pindex->nChainXDMTransactions = 0;
                     mapBlocksUnlinked.insert(std::make_pair(pindex->pprev, pindex));
                 }
             } else {
                 pindex->nChainTx = pindex->nTx;
+                pindex->nChainXDMTransactions = pindex->nXDMTransactions;
             }
         }
         if (!(pindex->nStatus & BLOCK_FAILED_MASK) && pindex->pprev && (pindex->pprev->nStatus & BLOCK_FAILED_MASK)) {
