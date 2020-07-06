@@ -1,94 +1,7 @@
 # ION Core release notes
 
-- [ION Core release notes](#ion-core-release-notes)
-  - [ION Core version 5.0.01 is now available](#ion-core-version-5001-is-now-available)
-    - [Mandatory Update](#mandatory-update)
-    - [How to Upgrade](#how-to-upgrade)
-    - [Compatibility](#compatibility)
-    - [Noteable Changes](#noteable-changes)
-      - [Migrate Travis as pipeline](#migrate-travis-as-pipeline)
-      - [Hybrid Proof-of-Work / Proof-of-Stake](#hybrid-proof-of-work--proof-of-stake)
-      - [Zerocoin](#zerocoin)
-      - [Masternodes](#masternodes)
-      - [Token implementation](#token-implementation)
-    - [New RPC Commands](#new-rpc-commands)
-      - [Evo](#evo)
-      - [Tokens](#tokens)
-      - [Util](#util)
-    - [Deprecated RPC Commands](#deprecated-rpc-commands)
-      - [Masternodes](#masternodes-1)
-    - [5.0.01 Change log](#5001-change-log)
+Add to this document for the next release.
 
-## ION Core version 5.0.01 is now available  
-
-Download at: https://bitbucket.org/ioncoin/ion/downloads/
-
-This is a new major version release, including a new base code, various bug fixes, performance improvements, upgrades to the Atomic Token Protocol (ATP), as well as updated translations.
-
-Please report bugs using the issue tracker at github: https://bitbucket.org/ioncoin/ion/issues?status=new&status=open
-
-### Mandatory Update
-
-ION Core v5.0.99 is an experimental release, intended only for TESTNET. It is not a mandatory update. This release contains new consensus rules and improvements for TESTNET only that are not backwards compatible with older versions. Users will have a grace period of up to one week to update their testnet clients before enforcement of this update is enabled.
-
-### How to Upgrade
-
-- If you are running an older version, shut it down. 
-- Wait until it has completely shut down (which might take a few minutes for older versions).
-- Copy the files in the testnet data folder to a backup medium, and delete all files in the testnet folder except ioncoin.conf and wallet.dat.
-- Run the installer (on Windows) or just copy over /Applications/ION-Qt (on Mac) or iond/ion-qt (on Linux).
-
-### Compatibility
-
-ION Core is extensively tested on multiple operating systems using the Linux kernel, macOS 10.8+, and Windows Vista and later.
-
-Microsoft ended support for Windows XP on April 8th, 2014, No attempt is made to prevent installing or running the software on Windows XP, you can still do so at your own risk but be aware that there are known instabilities and issues. Please do not report issues about Windows XP to the issue tracker.
-
-ION Core should also work on most other Unix-like systems but is not frequently tested on them.
-Database space usage improvements
---------------------------------
-Version 0.13.0.0 introduced a new database (evodb) which is found in the datadir of Ion Core. It turned
-out that this database grows quite fast when a lot of changes inside the deterministic masternode list happen,
-which is for example the case when a lot PoSe punishing/banning is happening. Such a situation happened
-immediately after the activation LLMQ DKGs, causing the database to grow a lot. This release introduces
-a new format in which information in "evodb" is stored, which causes it grow substantially slower.  
-
-Version 0.14.0.0 also introduced a new database (llmq) which is also found in the datadir of Ion Core.
-This database stores all LLMQ signatures for 7 days. After 7 days, a cleanup task removes old signatures.
-The idea was that the "llmq" database would grow in the beginning and then stay at an approximately constant
-size. The recent stress test on mainnet has however shown that the database grows too much and causes a risk
-of out-of-space situations. This release will from now also remove signatures when the corresponding InstantSend
-lock is fully confirmed on-chain (superseded by a ChainLock). This should remove >95% of all signatures from
-the database. After the upgrade, no space saving will be observed however as this logic is only applied to new
-signatures, which means that it will take 7 days until the whole "llmq" database gets to its minimum size.
-
-DKG and LLMQ signing failures fixed
------------------------------------
-Recent stress tests have shown that masternodes start to ban each other under high load and specific situations.
-This release fixes this and thus makes it a highly recommended upgrade for masternodes.
-
-MacOS: macOS: disable AppNap during sync and mixing
----------------------------------------------------
-AppNap is disabled now when Ion Core is syncing/reindexing or mixing.
-
-Signed binaries for Windows
----------------------------
-This release is the first one to include signed binaries for Windows.
-
-New RPC command: quorum memberof <proTxHash>
---------------------------------------------
-This RPC allows you to verify which quorums a masternode is supposed to be a member of. It will also show
-if the masternode succesfully participated in the DKG process.
-
-More information about number of InstantSend locks
---------------------------------------------------
-The debug console will now show how many InstantSend locks Ion Core knows about. Please note that this number
-does not necessarily equal the number of mempool transactions.
-
-The "getmempoolinfo" RPC also has a new field now which shows the same information.
-
-0.14.0.3 Change log
-===================
 
 See detailed [set of changes](https://bitbucket.org/ioncoin/ion/compare/v0.14.0.2...ionpay:v0.14.0.3).
 
@@ -651,3 +564,5 @@ ckti <ckti@i2pmail.org> (1):
 
 - `3ad7b4d` CircleCI is now being used for continuous integration
 - new version of QT solves the arm build issue where text could not be entered in the debug window
+=======
+## ION Core version 5.x.xx is now available
