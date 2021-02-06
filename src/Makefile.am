@@ -38,8 +38,7 @@ else
 LIBUNIVALUE = $(UNIVALUE_LIBS)
 endif
 
-BITCOIN_CONFIG_INCLUDES=-I$(builddir)/config
-BITCOIN_INCLUDES=-I$(builddir) -I$(builddir)/obj $(BDB_CPPFLAGS) $(BOOST_CPPFLAGS) $(LEVELDB_CPPFLAGS) $(CRYPTO_CFLAGS) $(SSL_CFLAGS)
+BITCOIN_INCLUDES=-I$(builddir) $(BDB_CPPFLAGS) $(BOOST_CPPFLAGS) $(LEVELDB_CPPFLAGS) $(CRYPTO_CFLAGS) $(SSL_CFLAGS)
 
 BITCOIN_INCLUDES += -I$(srcdir)/secp256k1/include
 BITCOIN_INCLUDES += $(UNIVALUE_CFLAGS)
@@ -238,8 +237,10 @@ BITCOIN_CORE_H = \
   rpc/client.h \
   rpc/mining.h \
   rpc/protocol.h \
+  rpc/safemode.h \
   rpc/server.h \
   rpc/register.h \
+  rpc/util.h \
   saltedhasher.h \
   scheduler.h \
   script/sigcache.h \
@@ -279,12 +280,15 @@ BITCOIN_CORE_H = \
   validation.h \
   validationinterface.h \
   versionbits.h \
+  walletinitinterface.h \
   wallet/coincontrol.h \
   wallet/crypter.h \
   wallet/db.h \
+  wallet/fees.h \
   wallet/rpcwallet.h \
   wallet/wallet.h \
   wallet/walletdb.h \
+  wallet/walletutil.h \
   warnings.h \
   xion/accumulators.h \
   xion/accumulatorcheckpoints.h \
@@ -383,6 +387,7 @@ libion_server_a_SOURCES = \
   rpc/rawtransaction.cpp \
   rpc/rpcevo.cpp \
   rpc/rpcquorums.cpp \
+  rpc/safemode.cpp \
   rpc/server.cpp \
   rpc/privatesend.cpp \
   script/sigcache.cpp \
@@ -433,15 +438,13 @@ libion_wallet_a_SOURCES = \
   transactionrecord.cpp \
   wallet/crypter.cpp \
   wallet/db.cpp \
+  wallet/fees.cpp \
+  wallet/init.cpp \
   wallet/rpcdump.cpp \
   wallet/rpcwallet.cpp \
   wallet/wallet.cpp \
   wallet/walletdb.cpp \
-  xion/deterministicmint.cpp \
-  xion/accumulators.cpp \
-  xion/xionmodule.cpp \
-  xion/witness.cpp \
-  xion/zerocoin.cpp \
+  wallet/walletutil.cpp \
   $(BITCOIN_CORE_H)
 
 libioncore_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
@@ -453,9 +456,9 @@ libioncore_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 #  ionlib/ionlib.cpp
 
 # crypto primitives library
-crypto_libion_crypto_base_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_CONFIG_INCLUDES) $(PIC_FLAGS)
-crypto_libion_crypto_base_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
-crypto_libion_crypto_base_a_SOURCES = \
+crypto_libdash_crypto_base_a_CPPFLAGS = $(AM_CPPFLAGS) $(PIC_FLAGS)
+crypto_libdash_crypto_base_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
+crypto_libdash_crypto_base_a_SOURCES = \
   crypto/aes.cpp \
   crypto/aes.h \
   crypto/chacha_poly_aead.h \
@@ -657,6 +660,7 @@ libion_util_a_SOURCES = \
   fs.cpp \
   random.cpp \
   rpc/protocol.cpp \
+  rpc/util.cpp \
   stacktraces.cpp \
   support/cleanse.cpp \
   sync.cpp \
@@ -800,11 +804,9 @@ CLEANFILES += univalue/*.gcda univalue/*.gcno
 CLEANFILES += wallet/*.gcda wallet/*.gcno
 CLEANFILES += wallet/test/*.gcda wallet/test/*.gcno
 CLEANFILES += zmq/*.gcda zmq/*.gcno
-CLEANFILES += xion/*.gcda xion/*.gcno
+CLEANFILES += obj/build.h
 
 IMMER_DIST = immer
-
-DISTCLEANFILES = obj/build.h
 
 EXTRA_DIST = $(CTAES_DIST)
 EXTRA_DIST += $(IMMER_DIST)
@@ -830,10 +832,6 @@ clean-local:
 	@test -f $(WINDRES)
 	## FIXME: How to get the appropriate modulename_CPPFLAGS in here?
 	$(AM_V_GEN) $(WINDRES) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CPPFLAGS) -DWINDRES_PREPROC -i $< -o $@
-
-#.mm.o:
-#	$(AM_V_CXX) $(OBJCXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-#	  $(CPPFLAGS) $(AM_CXXFLAGS) $(QT_INCLUDES) $(AM_CXXFLAGS) $(PIE_FLAGS) $(CXXFLAGS) -c -o $@ $<
 
 check-symbols: $(bin_PROGRAMS)
 if GLIBC_BACK_COMPAT

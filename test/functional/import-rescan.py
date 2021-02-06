@@ -127,7 +127,7 @@ class ImportRescanTest(BitcoinTestFramework):
                 # txindex is enabled by default in Ion and needs to be disabled for import-rescan.py
                 extra_args[i] += ["-prune=1", "-txindex=0", "-reindex"]
 
-        self.add_nodes(self.num_nodes, extra_args)
+        self.add_nodes(self.num_nodes, extra_args, stderr=sys.stdout)
         self.start_nodes()
         for i in range(1, self.num_nodes):
             connect_nodes(self.nodes[i], 0)
@@ -149,7 +149,7 @@ class ImportRescanTest(BitcoinTestFramework):
         timestamp = self.nodes[0].getblockheader(self.nodes[0].getbestblockhash())["time"]
         set_node_times(self.nodes, timestamp + TIMESTAMP_WINDOW + 1)
         self.nodes[0].generate(1)
-        sync_blocks(self.nodes)
+        self.sync_blocks()
 
         # For each variation of wallet key import, invoke the import RPC and
         # check the results from getbalance and listtransactions.
@@ -168,7 +168,6 @@ class ImportRescanTest(BitcoinTestFramework):
                 variant.check()
 
         # Create new transactions sending to each address.
-        fee = self.nodes[0].getnetworkinfo()["relayfee"]
         for i, variant in enumerate(IMPORT_VARIANTS):
             variant.sent_amount = 10 - (2 * i + 1) / 8.0
             variant.sent_txid = self.nodes[0].sendtoaddress(variant.address["address"], variant.sent_amount)
@@ -176,7 +175,7 @@ class ImportRescanTest(BitcoinTestFramework):
         # Generate a block containing the new transactions.
         self.nodes[0].generate(1)
         assert_equal(self.nodes[0].getrawmempool(), [])
-        sync_blocks(self.nodes)
+        self.sync_blocks()
 
         # Check the latest results from getbalance and listtransactions.
         for variant in IMPORT_VARIANTS:

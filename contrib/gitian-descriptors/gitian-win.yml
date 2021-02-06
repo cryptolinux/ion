@@ -1,5 +1,5 @@
 ---
-name: "ioncore-win-5.0"
+name: "dash-win-0.16"
 enable_cache: true
 distro: "ubuntu"
 suites:
@@ -23,8 +23,7 @@ packages:
 - "ca-certificates"
 - "python3"
 - "rename"
-- "cmake"
-- "doxygen"
+- "ccache"
 remotes:
 - "url": "https://bitbucket.org/ioncoin/ion.git"
   "dir": "ion"

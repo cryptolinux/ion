@@ -6,9 +6,9 @@
 #ifndef BITCOIN_QT_SIGNVERIFYMESSAGEDIALOG_H
 #define BITCOIN_QT_SIGNVERIFYMESSAGEDIALOG_H
 
+#include <QButtonGroup>
 #include <QDialog>
 
-class PlatformStyle;
 class WalletModel;
 
 namespace Ui {
@@ -20,7 +20,7 @@ class SignVerifyMessageDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SignVerifyMessageDialog(const PlatformStyle *platformStyle, QWidget *parent);
+    explicit SignVerifyMessageDialog(QWidget* parent);
     ~SignVerifyMessageDialog();
 
     void setModel(WalletModel *model);
@@ -36,9 +36,11 @@ protected:
 private:
     Ui::SignVerifyMessageDialog *ui;
     WalletModel *model;
-    const PlatformStyle *platformStyle;
+    QButtonGroup pageButtons;
 
 private Q_SLOTS:
+    /** custom tab buttons clicked */
+    void showPage(int index);
     /* sign message */
     void on_addressBookButton_SM_clicked();
     void on_pasteButton_SM_clicked();

@@ -130,6 +130,45 @@
     </message>
 </context>
 <context>
+    <name>AppearanceWidget</name>
+    <message>
+        <source>Lighter</source>
+        <translation>Daha Hafif</translation>
+    </message>
+    <message>
+        <source>Bolder</source>
+        <translation>Daha Kalın</translation>
+    </message>
+    <message>
+        <source>Font Weight Normal:</source>
+        <translation>Yazı Tipi Genişliği Normal:</translation>
+    </message>
+    <message>
+        <source>Smaller</source>
+        <translation>Daha Küçük</translation>
+    </message>
+    <message>
+        <source>Bigger</source>
+        <translation>Daha Büyük</translation>
+    </message>
+    <message>
+        <source>Font Scale:</source>
+        <translation>Yazı Tipi Ölçeği:</translation>
+    </message>
+    <message>
+        <source>Font Family:</source>
+        <translation>Yazı Tipi Ailesi:</translation>
+    </message>
+    <message>
+        <source>Theme:</source>
+        <translation>Tema:</translation>
+    </message>
+    <message>
+        <source>Font Weight Bold:</source>
+        <translation>Yazı Tipi Genişliği Kalın:</translation>
+    </message>
+</context>
+<context>
     <name>AskPassphraseDialog</name>
     <message>
         <source>Passphrase Dialog</source>
@@ -146,6 +185,10 @@
     <message>
         <source>Repeat new passphrase</source>
         <translation>Yeni parolayı tekrarlayınız</translation>
+    </message>
+    <message>
+        <source>Show password</source>
+        <translation>Şifreyi göster</translation>
     </message>
     <message>
         <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
@@ -256,6 +299,13 @@
     </message>
 </context>
 <context>
+    <name>BitcoinAmountField</name>
+    <message>
+        <source>Amount in %1</source>
+        <translation>%1 Cinsinden miktar</translation>
+    </message>
+</context>
+<context>
     <name>BitcoinGUI</name>
     <message>
         <source>A fatal error occurred. Ion Core can no longer continue safely and will quit.</source>
@@ -340,6 +390,10 @@
     <message>
         <source>&amp;About %1</source>
         <translation>%1 &amp;Hakkında</translation>
+    </message>
+    <message>
+        <source>PrivateSend coins to a Dash address</source>
+        <translation>Koinleri Dash adresine ÖzelGönder</translation>
     </message>
     <message>
         <source>Modify configuration options for %1</source>
@@ -498,6 +552,10 @@
         <translation>%1 istemci</translation>
     </message>
     <message>
+        <source>Wallet is &lt;b&gt;unencrypted&lt;/b&gt;</source>
+        <translation>Cüzdan &lt;b&gt;şifrelenmemiş&lt;/b&gt;</translation>
+    </message>
+    <message>
         <source>&amp;PrivateSend information</source>
         <translation>&amp;Özel Gönder bilgisi</translation>
     </message>
@@ -598,6 +656,30 @@
         <translation>Bilgi</translation>
     </message>
     <message>
+        <source>Received and sent multiple transactions</source>
+        <translation>Birden fazla işlem alındı ve gönderildi</translation>
+    </message>
+    <message>
+        <source>Sent multiple transactions</source>
+        <translation>Birden fazla işlem gönderildi</translation>
+    </message>
+    <message>
+        <source>Received multiple transactions</source>
+        <translation>Birden fazla işlem alındı</translation>
+    </message>
+    <message>
+        <source>Sent Amount: %1
+</source>
+        <translation>Gönderilen Tutar: %1
+</translation>
+    </message>
+    <message>
+        <source>Received Amount: %1
+</source>
+        <translation>Alınan Tutar: %1
+</translation>
+    </message>
+    <message>
         <source>Date: %1
 </source>
         <translation>Tarih: %1
@@ -638,10 +720,6 @@
     <message>
         <source>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</source>
         <translation>HD anahtar oluşturma &lt;b&gt;etkin&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <source>HD key generation is &lt;b&gt;disabled&lt;/b&gt;</source>
-        <translation>HD anahtar oluşturma &lt;b&gt;devre dışı&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
@@ -723,8 +801,8 @@
         <translation>Şu adresle alındı</translation>
     </message>
     <message>
-        <source>PS Rounds</source>
-        <translation>ÖG Turları</translation>
+        <source>Mixing Rounds</source>
+        <translation>Karıştırma Turları</translation>
     </message>
     <message>
         <source>Date</source>
@@ -811,6 +889,30 @@
         <translation>Girdi başına +/- %1 duff değişebilir.</translation>
     </message>
     <message>
+        <source>Some coins were unselected because they were spent.</source>
+        <translation>Bazı koinler harcandığı için seçilmedi.</translation>
+    </message>
+    <message>
+        <source>Some coins were unselected because they do not have enough mixing rounds.</source>
+        <translation>Yeterli karıştırma turları olmadığından bazı koinler seçilmedi.</translation>
+    </message>
+    <message>
+        <source>Show all coins</source>
+        <translation>Tüm koinleri göster</translation>
+    </message>
+    <message>
+        <source>Hide PrivateSend coins</source>
+        <translation>ÖzelGönder koinleri gizle</translation>
+    </message>
+    <message>
+        <source>Show all PrivateSend coins</source>
+        <translation>ÖzelGönder koinleri göster</translation>
+    </message>
+    <message>
+        <source>Show spendable coins only</source>
+        <translation>Harcanabilir koinleri göster</translation>
+    </message>
+    <message>
         <source>(no label)</source>
         <translation>(etiket yok)</translation>
     </message>
@@ -851,7 +953,7 @@
     </message>
     <message>
         <source>New receiving address</source>
-        <translation>Yeni alım adresi</translation>
+        <translation>Yeni alıcı adresi</translation>
     </message>
     <message>
         <source>New sending address</source>
@@ -940,6 +1042,22 @@
         <translation>Başlangıçta veri klasörü seç (varsayılan: %u)</translation>
     </message>
     <message>
+        <source>Set the font family. Possible values: %1. (default: %2)</source>
+        <translation>Yazı tipi ailesini belirleyin. Olası değerler: %1. (varsayılan: %2)</translation>
+    </message>
+    <message>
+        <source>Set a scale factor which gets applied to the base font size. Possible range %1 (smallest fonts) to %2 (largest fonts). (default: %3)</source>
+        <translation>Temel yazı tipi boyutuna uygulanacak ölçek faktörünü belirleyin. Olası aralık %1 (en küçük yazı tipleri) ile %2 (en büyük yazı tipleri).(varsayılan: %3)</translation>
+    </message>
+    <message>
+        <source>Set the font weight for bold texts. Possible range %1 to %2 (default: %3)</source>
+        <translation>Kalın metinler için yazı tipi genişliği belirleyin. Olası aralık %1 ile %2 (varsayılan: %3)</translation>
+    </message>
+    <message>
+        <source>Set the font weight for normal texts. Possible range %1 to %2 (default: %3)</source>
+        <translation>Normal metinler için yazı tipi genişliği belirleyin. Olası aralık %1 ile %2 (varsayılan: %3)</translation>
+    </message>
+    <message>
         <source>Set language, for example "de_DE" (default: system locale)</source>
         <translation>Lisan belirt, mesela "de_De" (varsayılan: sistem dili)</translation>
     </message>
@@ -963,7 +1081,11 @@
         <source>PrivateSend information</source>
         <translation>Özel Gönder bilgisi</translation>
     </message>
-    </context>
+    <message>
+        <source>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Dash in your wallet is comprised of different "inputs" which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two or more other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type="1"&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 DASH, 0.01 DASH, 0.1 DASH, 1 DASH and 10 DASH -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called "masternodes." These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know "who" you are.&lt;/li&gt; &lt;li&gt;When two or more other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users' wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it's called a "round." Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be mixed. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these "change addresses." Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more information, see the &lt;a style="%1" href="https://docs.dash.org/en/stable/wallets/dashcore/privatesend-instantsend.html"&gt;PrivateSend documentation&lt;/a&gt;.</source>
+        <translation>&lt;h3&gt;ÖzelGönder Temel Bilgiler&lt;/h3&gt; ÖzelGönder size paranızın gerçek kaynağını gizleyerek tam bir gizlilik imkanı sağlar. Cüzdanınızdaki Dash farklı "girdiler"den oluşur, bunu ayrı gizli paralar olarak düşünebilirsiniz.&lt;br&gt; ÖzelGönder sizin girdilerinizi başka iki kişinin girdileri ile karıştırmak için yenilikçi bir işlem kullanır ve bu sırada paranın cüzdanınızdan çıkmasına gerek kalmaz. Her an paranızın kontrolü sizdedir.&lt;hr&gt; &lt;b&gt;ÖzelGönder işlemi şöyle işler:&lt;/b&gt;&lt;ol type="1"&gt; &lt;li&gt;ÖzelGönder işlem girdilerinizi standart birimlere bölerek başlar. Bu birimler 0.001 DASH, 0.01 DASH, 0.1 DASH, 1 DASH ve 10 DASH'dir -- her gün kullandığınız kağıt para gibi düşünebilirsiniz.&lt;/li&gt; &lt;li&gt;Sonra cüzdanınız ağdaki özel ayarlanmış yazılım düğümlerine talepler gönderir, bunşara "ana düğümler" denir. Bu ana düğümlere sizin belli bir miktar birimi karıştırmak istediğiniz bilgisi gider. Ana düğümlere kimliğinizi açık edecek bir bilgi gönderilmez, bu yüzden "kim" olduğunuzu bilmezler.&lt;/li&gt; &lt;li&gt;Aynı birimleri karıştırmak istediğini belirten iki başka kişi daha benzer mesajlar gönderince, karıştırma işlemi başlar. Ana düğüm giridleri karıştırır ve üç kullanıcının da cüzdanına şimdi dönüştürülmüş olan girdiyi kendilerne ödemelerini emreder. Cüzdanınız bu birimleri doğrudan kendisine öder ama farklı bir adres kullanır (buna değişim adresi denir).&lt;/li&gt; &lt;li&gt;Paranızı tamamen gizlemek için cüzdanınız bu işlemi her birim için birkaç defa tekrar etmelidir. Her işlem tamamlandığına buna bir "tur" denir. Her bir ÖzelGönder turu paranızın kaynağının bulunmasını üstel olarak zorlaştırır.&lt;/li&gt; &lt;li&gt;Bu karışım işlemi arkaplanda sizin tarafınızdan bir müdahale olmadan gerçekleşir. Bir işlem yapmak istediğinizde bakiyeniz zaten karışmış olacaktır. Ek bir beklemeye gerek kalmaz.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;ÖNEMLİ:&lt;/b&gt; Cüzdanınızda bu "değişim adreslerinden" sadece 1000 tane vardır. Her bir karışım işleminde bu adreslerden 9 taneye kadar kullanılır. Bu da 1000 adresin yaklaşık 100 karışım işlemine yeteceği anlamına gelir. 900 tanesi kullanıldığı zaman, cüzdanınızın daha fazla adres oluşturması gerekir. Yalnız bunu ancak otomatik yedekleme etkinse yapabilir.&lt;br&gt; Sonuç olarak yedeklemeyi kapatan kullanıcılar aynı zamanda ÖzelGönderi de kapatmış olurlar. &lt;hr&gt;Daha fazla bilgi için lütfen &lt;a style="%1" href="https://docs.dash.org/en/stable/wallets/dashcore/privatesend-instantsend.html"&gt;ÖzelGönder dökümantasyonuna&lt;/a&gt; göz atın.         </translation>
+    </message>
+</context>
 <context>
     <name>Intro</name>
     <message>
@@ -1066,6 +1188,10 @@
         <translation>Sadece benim anadüğümlerim</translation>
     </message>
     <message>
+        <source>Service</source>
+        <translation>Hizmet</translation>
+    </message>
+    <message>
         <source>PoSe Score</source>
         <translation>PoSe Puanı</translation>
     </message>
@@ -1082,8 +1208,24 @@
         <translation>Gelecek Ödeme</translation>
     </message>
     <message>
+        <source>Payout Address</source>
+        <translation>Ödeme Adresleri</translation>
+    </message>
+    <message>
         <source>Operator Reward</source>
         <translation>Operatör Ödülü</translation>
+    </message>
+    <message>
+        <source>Collateral Address</source>
+        <translation>Teminat Adresi</translation>
+    </message>
+    <message>
+        <source>Owner Address</source>
+        <translation>Adres Sahibi</translation>
+    </message>
+    <message>
+        <source>Voting Address</source>
+        <translation>Oylama Adresi</translation>
     </message>
     <message>
         <source>Copy ProTx Hash</source>
@@ -1092,6 +1234,10 @@
     <message>
         <source>Copy Collateral Outpoint</source>
         <translation>Teminat Çıkış Noktasını Kopyala</translation>
+    </message>
+    <message>
+        <source>Updating...</source>
+        <translation>Güncelleştiriyor...</translation>
     </message>
     <message>
         <source>ENABLED</source>
@@ -1120,6 +1266,14 @@
     <message>
         <source>NONE</source>
         <translation>YOK</translation>
+    </message>
+    <message>
+        <source>Filter by any property (e.g. address or protx hash)</source>
+        <translation>Herhangi bir özelliğe göre filtreleyin (ör. adres veya protx hash'ı)</translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
+        <translation>Lütfen bekleyin...</translation>
     </message>
     <message>
         <source>Additional information for DIP3 Masternode %1</source>
@@ -1231,6 +1385,10 @@
         <translation>&amp;Cüzdan</translation>
     </message>
     <message>
+        <source>&amp;Appearance</source>
+        <translation>&amp;Görünüm</translation>
+    </message>
+    <message>
         <source>Show additional tab listing all your masternodes in first sub-tab&lt;br/&gt;and all masternodes on the network in second sub-tab.</source>
         <translation>İlk alt sekmede tüm ana düğümlerinizi gösteren ve&lt;br/&gt;ikinci alt sekmede tüm ana düğümleri gösteren ek bir sekme göster.</translation>
     </message>
@@ -1275,8 +1433,20 @@
         <translation>Bu tutar ulaşıldığında Özel Gönderi kapatacak bir eşik olarak çalışır.</translation>
     </message>
     <message>
-        <source>Automatically open the Ion Core client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Router'da otomatik olarak Ion Core istemcisi portu aç. Bu sadece router'ınız UPnP destekliyorsa ve etkinse çalışır.</translation>
+        <source>Target PrivateSend balance</source>
+        <translation>ÖzelGönder bakiyesi hedefle</translation>
+    </message>
+    <message>
+        <source>Automatically open the Dash Core client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Router'da otomatik olarak Dash Core istemcisi portu aç. Bu sadece router'ınız UPnP destekliyorsa ve etkinse çalışır.</translation>
+    </message>
+    <message>
+        <source>Accept connections from outside.</source>
+        <translation>Dışarıdan bağlantı kabul et</translation>
+    </message>
+    <message>
+        <source>Allow incomin&amp;g connections</source>
+        <translation>Gelen bağlantılara izin ver</translation>
     </message>
     <message>
         <source>Connect to the Ion network through a SOCKS5 proxy.</source>
@@ -1287,6 +1457,22 @@
         <translation>SOCKS5 vekil sunucusu aracılığıyla &amp;bağlan (varsayılan vekil sunucusu):</translation>
     </message>
     <message>
+        <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
+        <translation>Bu ağ türünde eşlere ulaşmak için varsayılan SOCKS5 proxy'nin kullanılıp kullanılmadığını gösterir.</translation>
+    </message>
+    <message>
+        <source>Use separate SOCKS&amp;5 proxy to reach peers via Tor hidden services:</source>
+        <translation>Eşlere gizli Tor servisleri kullanarak ulaşmak için ayrı SOCKS&amp;5 vekil sunucusu kullan:</translation>
+    </message>
+    <message>
+        <source>Hide the icon from the system tray.</source>
+        <translation>Simgeyi sistem çubuğunda gizle.</translation>
+    </message>
+    <message>
+        <source>&amp;Hide tray icon</source>
+        <translation>&amp;Sistem çubuğu simgesini gizle</translation>
+    </message>
+    <message>
         <source>Minimize instead of exit the application when the window is closed. When this option is enabled, the application will be closed only after selecting Exit in the menu.</source>
         <translation>Pencere kapatıldığında uygulamadan çıkmak yerine uygulamayı küçültür. Bu seçenek etkinleştirildiğinde, uygulama sadece menüden çıkış seçildiğinde kapanacaktır.</translation>
     </message>
@@ -1295,8 +1481,8 @@
         <translation>İşlemler sekmesinde bağlam menüsü ögeleri gibi görünen  üçüncü parti URLleri (ör. bir blok tarayıcısı).&lt;br/&gt;URL'deki %s işlem hashi ile değiştirilir. Birden fazla URL dikey çizgi | ile ayrılır.</translation>
     </message>
     <message>
-        <source>Expert</source>
-        <translation>Gelişmiş</translation>
+        <source>&amp;Third party transaction URLs</source>
+        <translation>&amp;Üçüncü taraf işlem URL'leri</translation>
     </message>
     <message>
         <source>Whether to show coin control features or not.</source>
@@ -1325,6 +1511,10 @@
     <message>
         <source>&amp;Spend unconfirmed change</source>
         <translation>Teyit edilmemiş para üstünü &amp;harca</translation>
+    </message>
+    <message>
+        <source>This setting determines the amount of individual masternodes that an input will be mixed through.&lt;br/&gt;More rounds of mixing gives a higher degree of privacy, but also costs more in fees.</source>
+        <translation>Bu ayar, girdinin karıştırılma işlemi boyunca gerekecek anadüğüm sayısını belirler.&lt;br/&gt;Karıştırma turu ne kadar yüksek olursa gizlilik derecesi o kadar artar fakat daha maliyetli olur.</translation>
     </message>
     <message>
         <source>&amp;Network</source>
@@ -1379,22 +1569,6 @@
         <translation>Ion ağına gizli Tor servisleri için ayrı bir SOCKS5 vekil sunucusu aracılığıyla bağlan.</translation>
     </message>
     <message>
-        <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services:</source>
-        <translation>Eşlere Tor gizli servislerini kullanarak ulaşmak için ayrı SOCKS5 vekilleri kullan:</translation>
-    </message>
-    <message>
-        <source>&amp;Window</source>
-        <translation>&amp;Pencere</translation>
-    </message>
-    <message>
-        <source>&amp;Hide the icon from the system tray.</source>
-        <translation>Simgeyi sistem çubuğunda &amp;gizle.</translation>
-    </message>
-    <message>
-        <source>Hide tray icon</source>
-        <translation>Sistem çubuğu simgesini gizle</translation>
-    </message>
-    <message>
         <source>Show only a tray icon after minimizing the window.</source>
         <translation>Küçültüldükten sonra sadece çekmece ikonu göster.</translation>
     </message>
@@ -1425,10 +1599,6 @@ https://www.transifex.com/ioncoincore/ioncore/</source>
 https://www.transifex.com/ioncoincore/ioncore/</translation>
     </message>
     <message>
-        <source>User Interface Theme:</source>
-        <translation>Kullanıcı Arayüzü Teması:</translation>
-    </message>
-    <message>
         <source>&amp;Unit to show amounts in:</source>
         <translation>Meblağları göstermek için &amp;birim:</translation>
     </message>
@@ -1439,10 +1609,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Decimal digits</source>
         <translation>Ondalık haneler</translation>
-    </message>
-    <message>
-        <source>Third party transaction URLs</source>
-        <translation>Üçüncü taraf muamele URL'leri</translation>
     </message>
     <message>
         <source>Active command-line options that override above options:</source>
@@ -1467,10 +1633,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>default</source>
         <translation>varsayılan</translation>
-    </message>
-    <message>
-        <source>none</source>
-        <translation>Boş</translation>
     </message>
     <message>
         <source>Confirm options reset</source>
@@ -1612,10 +1774,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Ana düğüme gönderdiğiniz birimler.&lt;br&gt;Karıştırmak için diğer kullanıcılar da tam olarak aynı birimleri göndermelidir.</translation>
     </message>
     <message>
-        <source>(Last Message)</source>
-        <translation>(Son Mesaj)</translation>
-    </message>
-    <message>
         <source>out of sync</source>
         <translation>eşleşme dışı</translation>
     </message>
@@ -1640,12 +1798,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation><numerusform>%n Tur</numerusform><numerusform>%n Tur</numerusform></translation>
     </message>
     <message>
-        <source>Found enough compatible inputs to anonymize %1</source>
+        <source>Found enough compatible inputs to mix %1</source>
         <translation>%1 anonim hale getirmek için yeterli uyumlu girdi bulundu</translation>
     </message>
     <message>
-        <source>Not enough compatible inputs to anonymize &lt;span style='color:red;'&gt;%1&lt;/span&gt;,&lt;br&gt;will anonymize &lt;span style='color:red;'&gt;%2&lt;/span&gt; instead</source>
-        <translation>&lt;span style='color:red;'&gt;%1&lt;/span&gt; anonim hale getirmek için yeterli uyumlu girdi yok,&lt;br&gt;onun yerine&lt;span style='color:red;'&gt;%2&lt;/span&gt; anonim hale getirilecek</translation>
+        <source>Not enough compatible inputs to mix &lt;span style='%1'&gt;%2&lt;/span&gt;,&lt;br&gt;will mix &lt;span style='%1'&gt;%3&lt;/span&gt; instead</source>
+        <translation>&lt;span style='%1'&gt;%2&lt;/span&gt;anonim hale getirmek için yeterli uyumlu girdi yok,&lt;br&gt;onun yerine &lt;span style='%1'&gt;%3&lt;/span&gt;  anonim hale getirilecek</translation>
     </message>
     <message>
         <source>Overall progress</source>
@@ -1654,6 +1812,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Denominated</source>
         <translation>Birimlendirildi</translation>
+    </message>
+    <message>
+        <source>Partially mixed</source>
+        <translation>Kısmen karıştırılmış</translation>
     </message>
     <message>
         <source>Mixed</source>
@@ -1676,8 +1838,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Son otomatik yedekten beri çok az sayıda anahtar kaldı!</translation>
     </message>
     <message>
-        <source>We are about to create a new automatic backup for you, however &lt;span style='color:red;'&gt; you should always make sure you have backups saved in some safe place&lt;/span&gt;!</source>
-        <translation>Sizin için yeni bir otomatik yedek oluşturmak üzereyiz ancak &lt;span style='color:red;'&gt; yedeklerinizin her zaman güvenli bir yerde taşındığından emin olmalısınız&lt;/span&gt;!</translation>
+        <source>We are about to create a new automatic backup for you, however &lt;span style='%1'&gt; you should always make sure you have backups saved in some safe place&lt;/span&gt;!</source>
+        <translation>Sizin için yeni bir otomatik yedek oluşturmak üzereyiz ancak &lt;span style='%1'&gt; yedeklerinizin her zaman güvenli bir yerde taşındığından emin olmalısınız&lt;/span&gt;!</translation>
     </message>
     <message>
         <source>Note: You can turn this message off in options.</source>
@@ -1706,12 +1868,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>WARNING! Failed to replenish keypool, please unlock your wallet to do so.</source>
         <translation>UYARI! Anahtar havuzu yenilenemedi, lütfen devam etmek için cüzdanınızın kilidini açın.</translation>
-    </message>
-    <message>
-        <source>Last PrivateSend message:
-</source>
-        <translation>Son Özel Gönder mesajı:
-</translation>
     </message>
     <message>
         <source>If you don't want to see internal PrivateSend fees/transactions select "Most Common" as Type on the "Transactions" tab.</source>
@@ -1835,6 +1991,14 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>Ping</source>
         <translation>Ping</translation>
     </message>
+    <message>
+        <source>Sent</source>
+        <translation>Gönderildi</translation>
+    </message>
+    <message>
+        <source>Received</source>
+        <translation>Alındı</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1849,6 +2013,18 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Enter a Ion address (e.g. %1)</source>
         <translation>Bir Ion adresi giriniz (mesela %1)</translation>
+    </message>
+    <message>
+        <source>Appearance Setup</source>
+        <translation>Görünüm Ayarları</translation>
+    </message>
+    <message>
+        <source>Please choose your preferred settings for the appearance of %1</source>
+        <translation>Lütfen %1 görünümü için tercih ettiğiniz ayarları seçin</translation>
+    </message>
+    <message>
+        <source>This can also be adjusted later in the "Appearance" tab of the preferences.</source>
+        <translation>Bu, daha sonra tercihlerin "Görünüm" sekmesinden de ayarlanabilir.</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -1907,6 +2083,22 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%1 ve %2</translation>
     </message>
     <message>
+        <source>%1 B</source>
+        <translation>%1 B</translation>
+    </message>
+    <message>
+        <source>%1 KB</source>
+        <translation>%1 KB</translation>
+    </message>
+    <message>
+        <source>%1 MB</source>
+        <translation>%1 MB</translation>
+    </message>
+    <message>
+        <source>%1 GB</source>
+        <translation>%1 GB</translation>
+    </message>
+    <message>
         <source>unknown</source>
         <translation>bilinmiyor</translation>
     </message>
@@ -1924,6 +2116,34 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Error: %1</source>
         <translation>Hata: %1</translation>
+    </message>
+    <message>
+        <source>Error: Failed to load application fonts.</source>
+        <translation>Hata: Uygulama yazı tipleri yüklenemedi.</translation>
+    </message>
+    <message>
+        <source>Error: Specified font-family invalid. Valid values: %1.</source>
+        <translation>Hata: Belirtilen yazı tipi ailesi geçersiz. Geçerli değerler: %1.</translation>
+    </message>
+    <message>
+        <source>Error: Specified font-weight-normal invalid. Valid range %1 to %2.</source>
+        <translation>Hata: Belirtilen yazı-tipi-genişliği-normal geçersiz. Geçerli aralık %1 ile %2.</translation>
+    </message>
+    <message>
+        <source>Error: Specified font-weight-bold invalid. Valid range %1 to %2.</source>
+        <translation>Hata: Belirtilen yazı-tipi-genişliği-kalın geçersiz. Geçerli aralık %1 ile %2.</translation>
+    </message>
+    <message>
+        <source>Error: Specified font-scale invalid. Valid range %1 to %2.</source>
+        <translation>Hata: Belirtilen yazı-tipi-ölçeği geçersiz. Geçerli aralık %1 ile %2.</translation>
+    </message>
+    <message>
+        <source>Error: Invalid -custom-css-dir path.</source>
+        <translation>Hata: Geçersiz -custom-css-dir yolu.</translation>
+    </message>
+    <message>
+        <source>Error: %1 CSS file(s) missing in -custom-css-dir path.</source>
+        <translation>Hata: %1 CSS dosya(larında)sında -custom-css-dir yolu eksik.</translation>
     </message>
 </context>
 <context>
@@ -2074,10 +2294,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>&amp;Şebeke trafiği</translation>
     </message>
     <message>
-        <source>Totals</source>
-        <translation>Toplamlar</translation>
-    </message>
-    <message>
         <source>Received</source>
         <translation>Alınan</translation>
     </message>
@@ -2134,8 +2350,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Veri konumu</translation>
     </message>
     <message>
+        <source>Last block hash</source>
+        <translation>Son block hash'ı</translation>
+    </message>
+    <message>
         <source>Open the %1 debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation>Güncel veri klasöründen %1 hata ayıklama kütük dosyasını açar. Büyük kütük dosyaları için bu birkaç saniye alabilir.</translation>
+    </message>
+    <message>
+        <source>InstantSend locks</source>
+        <translation>AnındaGönder kilitleri</translation>
     </message>
     <message>
         <source>Decrease font size</source>
@@ -2144,6 +2368,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Increase font size</source>
         <translation>Yazıtipi boyutunu büyült</translation>
+    </message>
+    <message>
+        <source>&amp;Reset</source>
+        <translation>&amp;Reset</translation>
     </message>
     <message>
         <source>Services</source>
@@ -2278,8 +2506,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%1 RPC konsoluna hoş geldiniz.</translation>
     </message>
     <message>
-        <source>Type &lt;b&gt;help&lt;/b&gt; for an overview of available commands.</source>
-        <translation>Mevcut komutların listesi için &lt;b&gt;help&lt;/b&gt; yazınız.</translation>
+        <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
+        <translation>Tarihçede gezinmek için imleç tuşlarını kullanınız, %1 ile de ekranı temizleyebilirsiniz.</translation>
+    </message>
+    <message>
+        <source>Type %1 for an overview of available commands.</source>
+        <translation>Kullanılabilir komutlara genel bakış için %1 yazın.</translation>
+    </message>
+    <message>
+        <source>For more information on using this console type %1.</source>
+        <translation>Bu konsolun kullanımı hakkında daha fazla bilgi için %1 yazın.</translation>
+    </message>
+    <message>
+        <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.</source>
+        <translation>UYARI: Kullanıcıların cüzdan içeriğini çalmak için buraya komut girmenizi söyleyen dolandırıcılar olabilir. Bir komutun ne anlama geldiğini tam olarak bilmiyorsanız bu konsolu kullanmayın.</translation>
     </message>
     <message>
         <source>In:</source>
@@ -2296,22 +2536,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Total: %1 (Enabled: %2)</source>
         <translation>Toplam: %1 (Etkinleştirilen: %2)</translation>
-    </message>
-    <message>
-        <source>%1 B</source>
-        <translation>%1 B</translation>
-    </message>
-    <message>
-        <source>%1 KB</source>
-        <translation>%1 KB</translation>
-    </message>
-    <message>
-        <source>%1 MB</source>
-        <translation>%1 MB</translation>
-    </message>
-    <message>
-        <source>%1 GB</source>
-        <translation>%1 GB</translation>
     </message>
     <message>
         <source>(node id: %1)</source>
@@ -2349,16 +2573,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
 <context>
     <name>ReceiveCoinsDialog</name>
     <message>
-        <source>Reuse one of the previously used receiving addresses.&lt;br&gt;Reusing addresses has security and privacy issues.&lt;br&gt;Do not use this unless re-generating a payment request made before.</source>
-        <translation>Öneden kullanılmış bir alım adresini tekrar kullan.&lt;br&gt;Adresleri tekrar kullanmak güvenlik ve gizlilik sorunlarına neden olur.&lt;br&gt;Eğer daha önce yapılmış bir ödeme talebi tekrar oluşturulmadıysa bunu kullanmayın.</translation>
-    </message>
-    <message>
-        <source>R&amp;euse an existing receiving address (not recommended)</source>
-        <translation>&amp;Hâlihazırda bulunan bir alım adresini kullan (önerilmez)</translation>
-    </message>
-    <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Ion network.</source>
-        <translation>Talep açıldığında gösterilecek, isteğinize dayalı, ödeme talebi ile ilişkilendirilecek bir ileti. Not: Bu ileti ödeme ile birlikte Ion ağı üzerinden gönderilmeyecektir.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Dash network.</source>
+        <translation>Talep açıldığında gösterilecek, isteğinize dayalı, ödeme talebi ile ilişkilendirilecek bir ileti. Not: Bu ileti ödeme ile birlikte Dash ağı üzerinden gönderilmeyecektir.</translation>
     </message>
     <message>
         <source>&amp;Message:</source>
@@ -2419,6 +2635,14 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Remove</source>
         <translation>Kaldır</translation>
+    </message>
+    <message>
+        <source>Enter a label to associate with the new receiving address</source>
+        <translation>Yeni alıcı adresiyle ilişkilendirmek için bir etiket girin</translation>
+    </message>
+    <message>
+        <source>Enter a message to attach to the payment request</source>
+        <translation>Ödeme talebine eklemek için bir mesaj girin</translation>
     </message>
     <message>
         <source>Copy URI</source>
@@ -2598,20 +2822,24 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Doğrulama süresi hedefi:</translation>
     </message>
     <message>
-        <source>PrivateSend</source>
-        <translation>Özel Gönder</translation>
-    </message>
-    <message>
         <source>If the custom fee is set to 1000 duffs and the transaction is only 250 bytes, then "per kilobyte" only pays 250 duffs in fee,&lt;br /&gt;while "at least" pays 1000 duffs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
         <translation>Eğer özel ücret 1000 duff olarak belirlendiyse ve işlem sadece 250 bayt ise "kilobayt başına" ücret olarak sadece 250 duff ödersiniz,&lt;br /&gt;bu da "en az" 1000 duff öder. Bir kilobayttan büyük işlemler için ikisi de kilobayt başına ödeme yapar.</translation>
     </message>
     <message>
-        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for ion transactions than the network can process.</source>
-        <translation>Bloklardaki alandan daha düşük işlem hacmi var olduğu sürece sadece minimum ücreti ödemek yeterli olur.&lt;br /&gt;Ama ağın işleyebileceğinden daha fazla ion işlemi talebi olursa, bunun işlemlerin asla teyit edilememesi gibi bir sonucu olabileceğini unutmayın.</translation>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for dash transactions than the network can process.</source>
+        <translation>Bloklardaki alandan daha düşük işlem hacmi var olduğu sürece sadece minimum ücreti ödemek yeterli olur.&lt;br /&gt;Ama ağın işleyebileceğinden daha fazla dash işlemi talebi olursa, bunun işlemlerin asla teyit edilememesi gibi bir sonucu olabileceğini unutmayın.</translation>
     </message>
     <message>
         <source>per kilobyte</source>
         <translation>kilobayt başı</translation>
+    </message>
+    <message>
+        <source>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</source>
+        <translation>Fallbackfee kullanmak, bir işlemin teyit edilmesinin satler veya günler almasına (ve hiçbir zaman teyit edilememesine) neden olabilir. Ücreti elle seçmeyi veya tüm zincirin onaylanmasını beklemeyi göz önünde bulundurun.</translation>
+    </message>
+    <message>
+        <source>Note: Not enough data for fee estimation, using the fallback fee instead.</source>
+        <translation>Not: Ücret tahmini için yeterli veri yok. Bunun yerine geri dönüş ücretini kullanılacak.</translation>
     </message>
     <message>
         <source>Hide</source>
@@ -2690,6 +2918,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Para üstünü kopyala</translation>
     </message>
     <message>
+        <source>%1 (%2 blocks)</source>
+        <translation>%1 (%2 blocks)</translation>
+    </message>
+    <message>
         <source>using</source>
         <translation>bunu kullanarak:</translation>
     </message>
@@ -2712,6 +2944,38 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>&lt;b&gt;(%1 of %2 entries displayed)&lt;/b&gt;</source>
         <translation>&lt;b&gt;(%1 / %2 girdi gösteriliyor)&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>Confirm the PrivateSend action</source>
+        <translation>ÖzelGönder işlemini onaylayın</translation>
+    </message>
+    <message>
+        <source>PrivateSend funds only</source>
+        <translation>Yalnızca ÖzelGönder fonları</translation>
+    </message>
+    <message>
+        <source>any available funds</source>
+        <translation>mevcut fonlar</translation>
+    </message>
+    <message>
+        <source>(PrivateSend transactions have higher fees usually due to no change output being allowed)</source>
+        <translation>(ÖzelGönder işlemlerinde genellikle değişken çıktıya izin verilmediği için ücretler daha yüksektir)</translation>
+    </message>
+    <message>
+        <source>Transaction size: %1</source>
+        <translation>İşlem Boyutu: %1</translation>
+    </message>
+    <message>
+        <source>Fee rate: %1</source>
+        <translation>Ücret oranı: %1</translation>
+    </message>
+    <message numerus="yes">
+        <source>This transaction will consume %n input(s)</source>
+        <translation><numerusform>Bu işlem %n girdi tüketecektir</numerusform><numerusform>Bu işlem %n girdi tüketecektir</numerusform></translation>
+    </message>
+    <message>
+        <source>Warning: Using PrivateSend with %1 or more inputs can harm your privacy and is not recommended</source>
+        <translation>Uyarı: %1 veya daha fazla girdi ile ÖzelGönder kullanmak gizliliğinize zarar verebilir ve tavsiye edilmez</translation>
     </message>
     <message>
         <source>Confirm send coins</source>
@@ -2835,6 +3099,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>S&amp;ubtract fee from amount</source>
         <translation>Ücreti tutardan düş</translation>
+    </message>
+    <message>
+        <source>Use available balance</source>
+        <translation>Mevcut bakiyeyi kullan</translation>
     </message>
     <message>
         <source>Message:</source>
@@ -2970,8 +3238,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Tüm mesaj kontrolü alanlarını sıfırla</translation>
     </message>
     <message>
+        <source>Enter a message to be signed</source>
+        <translation>İmzalanması için bir mesaj girin</translation>
+    </message>
+    <message>
         <source>Click "Sign Message" to generate signature</source>
         <translation>İmzayı oluşturmak için "İletiyi İmzala"ya tıklayın</translation>
+    </message>
+    <message>
+        <source>Enter a message to be verified</source>
+        <translation>Doğrulanması için bir mesaj girin</translation>
+    </message>
+    <message>
+        <source>Enter a signature for the message to be verified</source>
+        <translation>Doğrulanacak mesaj için bir imza girin</translation>
     </message>
     <message>
         <source>The entered address is invalid.</source>
@@ -3028,16 +3308,24 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <source>[testnet]</source>
         <translation>[testnet]</translation>
     </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Sürüm %1</translation>
-    </message>
 </context>
 <context>
     <name>TrafficGraphWidget</name>
     <message>
         <source>KB/s</source>
         <translation>KB/s</translation>
+    </message>
+    <message>
+        <source>Totals</source>
+        <translation>Toplam</translation>
+    </message>
+    <message>
+        <source>Received</source>
+        <translation>Alındı</translation>
+    </message>
+    <message>
+        <source>Sent</source>
+        <translation>Gönderildi</translation>
     </message>
 </context>
 <context>
@@ -3053,10 +3341,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>conflicted</source>
         <translation>Uyuşmadı</translation>
-    </message>
-    <message>
-        <source>%1/offline</source>
-        <translation>%1/çevrim dışı</translation>
     </message>
     <message>
         <source>0/unconfirmed, %1</source>
@@ -3083,24 +3367,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%1 doğrulama</translation>
     </message>
     <message>
-        <source>locked via LLMQ based ChainLocks</source>
-        <translation>ZincirKilidi temelli LLMQ ile kilitlendi.</translation>
+        <source>locked via ChainLocks</source>
+        <translation>ZincirKilidi ile kilitli</translation>
     </message>
     <message>
-        <source>verified via LLMQ based InstantSend</source>
-        <translation>AnındaGönder temelli LLMQ ile doğrulandı.</translation>
+        <source>verified via InstantSend</source>
+        <translation>AnındaGönder ile onaylandı</translation>
     </message>
     <message>
         <source>Status</source>
         <translation>Durum</translation>
-    </message>
-    <message>
-        <source>, has not been successfully broadcast yet</source>
-        <translation>, henüz başarılı bir şekilde yayınlanmadı</translation>
-    </message>
-    <message numerus="yes">
-        <source>, broadcast through %n node(s)</source>
-        <translation><numerusform>, %n düğümden yayın</numerusform><numerusform>, %n düğümden yayın</numerusform></translation>
     </message>
     <message>
         <source>Date</source>
@@ -3257,10 +3533,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%1 değerine dek açık</translation>
     </message>
     <message>
-        <source>Offline</source>
-        <translation>Çevrim dışı</translation>
-    </message>
-    <message>
         <source>Unconfirmed</source>
         <translation>Doğrulanmamış</translation>
     </message>
@@ -3285,12 +3557,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Olgunlaşmamış (%1 doğrulama, %2 doğrulama sonra kullanılabilir olacaktır)</translation>
     </message>
     <message>
-        <source>This block was not received by any other nodes and will probably not be accepted!</source>
-        <translation>Bu blok başka hiçbir düğüm tarafından alınmamıştır ve muhtemelen kabul edilmeyecektir!</translation>
-    </message>
-    <message>
         <source>Generated but not accepted</source>
         <translation>Oluşturuldu ama kabul edilmedi</translation>
+    </message>
+    <message>
+        <source>verified via InstantSend</source>
+        <translation>AnındaGönder ile onaylandı</translation>
+    </message>
+    <message>
+        <source>locked via ChainLocks</source>
+        <translation>ZincirKilidi ile kilitli</translation>
     </message>
     <message>
         <source>Received with</source>
@@ -3333,10 +3609,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Özel Gönder Birim Oluştur</translation>
     </message>
     <message>
-        <source>PrivateSend</source>
-        <translation>Özel Gönder</translation>
-    </message>
-    <message>
         <source>watch-only</source>
         <translation>Sadece izlenen</translation>
     </message>
@@ -3365,10 +3637,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Bu işleme sadece-izlenen bir adresin dahil edilip, edilmediği.</translation>
     </message>
     <message>
-        <source>Whether or not this transaction was locked by InstantSend.</source>
-        <translation>Bu işlem Anında Gönder ile kilitlendi mi gösterir.</translation>
-    </message>
-    <message>
         <source>User-defined intent/purpose of the transaction.</source>
         <translation>İşlemin kullanıcı tanımlı amacı.</translation>
     </message>
@@ -3382,14 +3650,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>All</source>
         <translation>Hepsi</translation>
-    </message>
-    <message>
-        <source>Locked by InstantSend</source>
-        <translation>Anında Gönder ile kilitlendi</translation>
-    </message>
-    <message>
-        <source>Not locked by InstantSend</source>
-        <translation>Anında Gönder ile kilitlenmedi</translation>
     </message>
     <message>
         <source>Today</source>
@@ -3428,10 +3688,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Gönderildiği adres</translation>
     </message>
     <message>
-        <source>PrivateSend</source>
-        <translation>Özel Gönder</translation>
-    </message>
-    <message>
         <source>PrivateSend Make Collateral Inputs</source>
         <translation>Özel Gönder Teminat Girdisi Yap</translation>
     </message>
@@ -3460,8 +3716,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Diğer</translation>
     </message>
     <message>
-        <source>Enter address or label to search</source>
-        <translation>Aranacak adres ya da etiket giriniz</translation>
+        <source>Enter address, transaction id, or label to search</source>
+        <translation>Arama için adres, işlem kimliği veya etiket girin</translation>
     </message>
     <message>
         <source>Min amount</source>
@@ -3695,16 +3951,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Cüzdan eski biçime geri alınamaz</translation>
     </message>
     <message>
-        <source>Cannot write default address</source>
-        <translation>Varsayılan adres yazılamadı</translation>
-    </message>
-    <message>
         <source>Collateral not valid.</source>
         <translation>Teminat geçerli değil.</translation>
-    </message>
-    <message>
-        <source>Connect to a node to retrieve peer addresses, and disconnect</source>
-        <translation>Eş adresleri elde etmek için bir düğüme bağlan ve ardından bağlantıyı kes</translation>
     </message>
     <message>
         <source>Connection options:</source>
@@ -3783,12 +4031,32 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>İşlemler aktarılmadığında dahi beyaz listedeki eşlerden aktarılan işlemleri kabul et (varsayılan: %d)</translation>
     </message>
     <message>
+        <source>Add a node to connect to and attempt to keep the connection open (see the `addnode` RPC command help for more info). This option can be specified multiple times to add multiple nodes.</source>
+        <translation>Bağlanmak için bir düğüm ekleyin ve bağlantıyı açık tutmaya çalışın (daha fazla bilgi için `addnode` RPC komut yardımına göz atın). Bu seçenek, birden çok düğüm eklemek için birden çok kez belirtilebilir.</translation>
+    </message>
+    <message>
         <source>Allow JSON-RPC connections from specified source. Valid for &lt;ip&gt; are a single IP (e.g. 1.2.3.4), a network/netmask (e.g. 1.2.3.4/255.255.255.0) or a network/CIDR (e.g. 1.2.3.4/24). This option can be specified multiple times</source>
         <translation>Belirtilen kaynaktan JSON-RPC bağlantılarını kabul et. Bir &lt;ip&gt; için geçerli olanlar şunlardır: IP adresi (mesela 1.2.3.4), bir ağ/ağ maskesi (örneğin 1.2.3.4/255.255.255.0) ya da bir ağ/CIDR (mesela 1.2.3.4/24). Bu seçenek birden fazla kez belirtilebilir</translation>
     </message>
     <message>
         <source>Bind to given address and whitelist peers connecting to it. Use [host]:port notation for IPv6</source>
         <translation>Belirtilen adrese bağlan ve ona bağlanan eşleri beyaz listeye al. IPv6 için [makine]:port imlasını kullanınız</translation>
+    </message>
+    <message>
+        <source>Bind to given address to listen for JSON-RPC connections. Do not expose the RPC server to untrusted networks such as the public internet! This option is ignored unless -rpcallowip is also passed. Port is optional and overrides -rpcport. Use [host]:port notation for IPv6. This option can be specified multiple times (default: 127.0.0.1 and ::1 i.e., localhost, or if -rpcallowip has been specified, 0.0.0.0 and :: i.e., all addresses)</source>
+        <translation>JSON-RPC bağlantılarını dinlemek için verilen adrese bağlayın. -Rpcallowip de geçilmezse bu seçenek yoksayılır. RPC sunucusunu halka açık internet gibi güvenilmeyen ağlara maruz bırakmayın! Port isteğe bağlıdır ve -rpcport geçersiz kılar. [Host] kullanın: IPv6 için port notasyonu. Bu seçenek birden çok kez belirtilebilir (varsayılan: 127.0.0.1 ve :: 1, localhost veya -rpcallowip belirtilmişse, 0.0.0.0 ve :: i.e., tüm adresler)</translation>
+    </message>
+    <message>
+        <source>Cannot provide specific connections and have addrman find outgoing connections at the same.</source>
+        <translation>Giden bağlantıları addrman araması ile aynı zamanda belirli bağlantılar sağlayamaz.</translation>
+    </message>
+    <message>
+        <source>Connect only to the specified node; -connect=0 disables automatic connections (the rules for this peer are the same as for -addnode). This option can be specified multiple times to connect to multiple nodes.</source>
+        <translation>Sadece belirtilen düğüme bağlanın; -connect=0 otomatik bağlantıları devre dışı bırakır (bu eş için kurallar -addnode ile aynıdır). Bu seçenek, birden çok düğüme bağlanmak için birden çok kez belirtilebilir.</translation>
+    </message>
+    <message>
+        <source>Connect to a node to retrieve peer addresses, and disconnect. This option can be specified multiple times to connect to multiple nodes.</source>
+        <translation>Eş adresleri almak için bir düğüme bağlanın ve bağlantıyı kesin. Bu seçenek, birden çok düğüme bağlanmak için birden çok kez belirtilebilir.</translation>
     </message>
     <message>
         <source>Create new files with system default permissions, instead of umask 077 (only effective with disabled wallet functionality)</source>
@@ -3823,12 +4091,24 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Eğer bu blok zincirde yer alıyorsa onun ve atalarının geçerli olduğunu varsay ve potansiyel olarak onların betik doğrulamasını atla.  (Tümünü doğrulamak için 0, varsayılan %s, testnet: %s)</translation>
     </message>
     <message>
+        <source>Invalid -socketevents ('%s') specified. Only these modes are supported: %s</source>
+        <translation>Geçersiz -socketevents ('%s') belirtildi. Yalnızca şu modlar desteklenir: %s</translation>
+    </message>
+    <message>
         <source>Invalid amount for -maxtxfee=&lt;amount&gt;: '%s' (must be at least the minrelay fee of %s to prevent stuck transactions)</source>
         <translation>-maxtxfee=&lt;tutar&gt; için geçersiz tutar: '%s' (Sıkışmış işlemleri önlemek için en az %s değerinde en düşük aktarım ücretine eşit olmalıdır)</translation>
     </message>
     <message>
+        <source>Location of the auth cookie. Relative paths will be prefixed by a net-specific datadir location. (default: data dir)</source>
+        <translation>Kimlik doğrulama çerezinin yeri. Göreli yollar ağa özgü bir veri konumu tarafından datadir olarak alınacaktır. (varsayılan: data dir)</translation>
+    </message>
+    <message>
         <source>Maintain a full transaction index, used by the getrawtransaction rpc call (default: %u)</source>
         <translation>İşlemlerin tamamının indeksini tut, getrawtransaction rpc çağrısı tarafından kullanılır (varsayılan: %u)</translation>
+    </message>
+    <message>
+        <source>Make outgoing connections only through network &lt;net&gt; (ipv4, ipv6 or onion). Incoming connections are not affected by this option. This option can be specified multiple times to allow multiple networks.</source>
+        <translation>Dışa dönük bağlantıları ağ üzerinden yapın &lt;net&gt; (ipv4, ipv6 veya onion). Gelen bağlantılar bu seçenekten etkilenmez. Bu seçenek, birden çok ağa izin vermek için birden çok kez belirtilebilir.</translation>
     </message>
     <message>
         <source>Maximum size of data in data carrier transactions we relay and mine (default: %u)</source>
@@ -3845,6 +4125,42 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Overrides minimum spork signers to change spork value. Only useful for regtest and devnet. Using this on mainnet or testnet will ban you.</source>
         <translation>Spork değerini değiştirmek için ereken spork imzacısı sayısını değiştirir. Sadece regtest ve devnet için kullanılır. Bunu mainnet veya testnette kullanırsanız atılırsınız.</translation>
+    </message>
+    <message>
+        <source>PrivateSend uses exact denominated amounts to send funds, you might simply need to mix some more coins.</source>
+        <translation>Özel Gönder para göndermek için tam olarak birimlendirilmiş meblağlar kullanır, sadece biraz daha fazla parayı anonim hale getirmeniz gerekiyor.</translation>
+    </message>
+    <message>
+        <source>Reduce storage requirements by enabling pruning (deleting) of old blocks. This allows the pruneblockchain RPC to be called to delete specific blocks, and enables automatic pruning of old blocks if a target size in MiB is provided. This mode is incompatible with -txindex, -rescan and -disablegovernance=false. Warning: Reverting this setting requires re-downloading the entire blockchain. (default: 0 = disable pruning blocks, 1 = allow manual pruning via RPC, &gt;=%u = automatically prune block files to stay under the specified target size in MiB)</source>
+        <translation>Eski blokları budamayı (silme) etkinleştirerek depolama gereksinimlerini azaltın. Bu belirli blokları silmek için pruneblockchain uzak yordam çağrısına RPC izin verir. Eğer bloklar hedef mebibyte boyutuna ulaşırsa eski blokların otomatik olarak budanmasını sağlar. Bu kip, -txindex, -rescan ve -disablegovernance=false ile uyumsuzdur. Uyarı: Bu ayarı geri almak, blok zincirinin tamamını yeniden yüklemeyi gerektirir. (varsayılan: 0 = blok budaması devre dışı, 1 = RPC üzerinden manuel budamaya izin verir, &gt;=%u = mebibyte olarak belirtilen hedef boyutun altında kalması için blok dosyalarını otomatik olarak budar)</translation>
+    </message>
+    <message>
+        <source>Send trace/debug info to console (default: 1 when no -daemon. To disable logging to file, set debuglogfile=0)</source>
+        <translation>İzleme/hata ayıklama bilgilerini konsola gönder (varsayılan: -daemon olmadığında 1. Dosya kaydını devre dışı bırakmak için debuglogfile=0 olarak ayarlayın)</translation>
+    </message>
+    <message>
+        <source>Specify configuration file. Relative paths will be prefixed by datadir location. (default: %s)</source>
+        <translation>Yapılandırma dosyasını belirtin. Göreli yollar bir veri konumu tarafından datadir olarak alınacaktır. (varsayılan: %s)</translation>
+    </message>
+    <message>
+        <source>Specify directory to hold wallets (default: &lt;datadir&gt;/wallets if it exists, otherwise &lt;datadir&gt;)</source>
+        <translation>Cüzdanların tutulacağı dizini belirtin (varsayılan: varsa &lt;datadir&gt;/wallets, aksi takdirde &lt;datadir&gt;)</translation>
+    </message>
+    <message>
+        <source>Specify location of debug log file. Relative paths will be prefixed by a net-specific datadir location. (0 to disable; default: %s)</source>
+        <translation>Hata ayıklama günlük dosyasının konumunu belirtin. Göreli yollar ağa özgü bir veri konumu tarafından datadir olarak alınacaktır. (Devre dışı bırakmak için 0; varsayılan: %s)</translation>
+    </message>
+    <message>
+        <source>Specify pid file. Relative paths will be prefixed by a net-specific datadir location. (default: %s)</source>
+        <translation>Pid dosyasını belirtin. Göreli yollar bir veri konumu tarafından datadir olarak alınacaktır. (varsayılan: %s)</translation>
+    </message>
+    <message>
+        <source>Specify wallet database path. Can be specified multiple times to load multiple wallets. Path is interpreted relative to &lt;walletdir&gt; if it is not absolute, and will be created if it does not exist (as a directory containing a wallet.dat file and log files). For backwards compatibility this will also accept names of existing data files in &lt;walletdir&gt;.)</source>
+        <translation>Cüzdan veritabanı yolunu belirtin. Birden çok cüzdan yüklemek için birden çok kez belirtilebilir. Yol mutlak değilse &lt;walletdir&gt;'e göre yorumlanır, yoksa oluşturulur (wallet.dat dosyası ve günlük dosyalarını içeren bir dizin olarak). Geriye dönük uyumluluk için &lt;walletdir&gt;.)'deki mevcut veri dosyalarının adlarını da kabul edecektir.</translation>
+    </message>
+    <message>
+        <source>Transaction index can't be disabled with governance validation enabled. Either start with -disablegovernance command line switch or enable transaction index.</source>
+        <translation>Yönetim doğrulaması etkinken işlem endeksi devre dışı bırakılamaz. Ya -disablegovernance komut satırı anahtarıyla başlayın ya da işlem endeksini etkinleştirin.</translation>
     </message>
     <message>
         <source>Use N separate masternodes in parallel to mix funds (%u-%u, default: %u)</source>
@@ -3865,10 +4181,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Whitelisted peers cannot be DoS banned and their transactions are always relayed, even if they are already in the mempool, useful e.g. for a gateway</source>
         <translation>Beyaz listeye alınan eşler DoS yasaklamasına uğramazlar ve işlemleri zaten mempool'da olsalar da daima aktarılır, bu mesela bir geçit için kullanışlıdır</translation>
-    </message>
-    <message>
-        <source>(default: %s)</source>
-        <translation>(varsayılan: %s)</translation>
     </message>
     <message>
         <source>Accept public REST requests (default: %u)</source>
@@ -3955,6 +4267,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Yetersiz bakiye.</translation>
     </message>
     <message>
+        <source>Invalid amount for -discardfee=&lt;amount&gt;: '%s'</source>
+        <translation>-discardfee=&lt;meblağ&gt; için geçersiz meblağ: '%s'</translation>
+    </message>
+    <message>
         <source>Invalid amount for -paytxfee=&lt;amount&gt;: '%s' (must be at least %s)</source>
         <translation>-paytxfee=&lt;tutar&gt;:'%s' unsurunda geçersiz tutar (asgari %s olması lazımdır)</translation>
     </message>
@@ -4023,12 +4339,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Hiç uyumlu Ana düğüm bulunamadı.</translation>
     </message>
     <message>
-        <source>Not in the Masternode list.</source>
-        <translation>Ana düğüm listesinde yok.</translation>
+        <source>Not enough funds to mix.</source>
+        <translation>Karıştırılacak yeterli bakiye yok.</translation>
     </message>
     <message>
-        <source>Only connect to nodes in network &lt;net&gt; (ipv4, ipv6 or onion)</source>
-        <translation>Sadece &lt;net&gt; ağındaki düğümlere bağlan (ipv4, ipv6 veya onion)</translation>
+        <source>Not in the Masternode list.</source>
+        <translation>Ana düğüm listesinde yok.</translation>
     </message>
     <message>
         <source>Prepend debug output with timestamp (default: %u)</source>
@@ -4055,16 +4371,8 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Hizmet RCP aramaları iş parçacığı sayısını belirle (varsayılan: %d)</translation>
     </message>
     <message>
-        <source>Specify configuration file (default: %s)</source>
-        <translation>Yapılandırma dosyası belirtiniz (varsayılan: %s)</translation>
-    </message>
-    <message>
         <source>Specify connection timeout in milliseconds (minimum: 1, default: %d)</source>
         <translation>Bağlantı zaman aşım süresini milisaniye olarak belirt (en düşüki: 1, varsayılan: %d)</translation>
-    </message>
-    <message>
-        <source>Specify pid file (default: %s)</source>
-        <translation>Pid dosyası belirtiniz (varsayılan: %s)</translation>
     </message>
     <message>
         <source>Spend unconfirmed change when sending transactions (default: %u)</source>
@@ -4075,24 +4383,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Ana düğüme gönderildi, kuyrukta bekleniyor %s</translation>
     </message>
     <message>
-        <source>Synchronization failed</source>
-        <translation>Eşleme başarısız</translation>
-    </message>
-    <message>
         <source>Synchronization finished</source>
         <translation>Eşleme bitti</translation>
     </message>
     <message>
         <source>Threshold for disconnecting misbehaving peers (default: %u)</source>
         <translation>Aksaklık gösteren eşlerle bağlantıyı kesme sınırı (varsayılan: %u)</translation>
-    </message>
-    <message>
-        <source>Too many %f denominations, removing.</source>
-        <translation>Çok fazla %f birimi, siliniyor.</translation>
-    </message>
-    <message>
-        <source>Too many %f denominations, skipping.</source>
-        <translation>Çok fazla %f birimi, geçiliyor.</translation>
     </message>
     <message>
         <source>Tor control port password (default: empty)</source>
@@ -4143,6 +4439,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Kullanıcı Aracı açıklaması (%s) güvensiz karakterler içermektedir.</translation>
     </message>
     <message>
+        <source>Verifying wallet(s)...</source>
+        <translation>Cüzdan(lar) doğrulanıyor...</translation>
+    </message>
+    <message>
         <source>Will retry...</source>
         <translation>Tekrar denenecek...</translation>
     </message>
@@ -4171,16 +4471,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>KeePass ile AES şifreli iletişim sağlamak için KeePassHttp anahtarı</translation>
     </message>
     <message>
-        <source>Disable all Ion specific functionality (Masternodes, PrivateSend, InstantSend, Governance) (0-1, default: %u)</source>
-        <translation>Tüm Ion spesifik işlevleri kapat (Ana Düğümler, Özel Gönder, Anında Gönder, Yönetim) (0-1, varsayılan: %u)</translation>
-    </message>
-    <message>
         <source>%s file contains all private keys from this wallet. Do not share it with anyone!</source>
         <translation>%s dosyası bu cüzdana ait tüm özel anahtarları tutuyor. Kimseyle paylaşmayın!</translation>
     </message>
     <message>
-        <source>Bind to given address to listen for JSON-RPC connections. This option is ignored unless -rpcallowip is also passed. Port is optional and overrides -rpcport. Use [host]:port notation for IPv6. This option can be specified multiple times (default: 127.0.0.1 and ::1 i.e., localhost, or if -rpcallowip has been specified, 0.0.0.0 and :: i.e., all addresses)</source>
-        <translation>JSON-RPC bağlantılarını dinlemek için verilen adrese bağlayın. -Rpcallowip de geçilmezse bu seçenek yoksayılır. Port isteğe bağlıdır ve -rpcport geçersiz kılar. [Host] kullanın: IPv6 için port notasyonu. Bu seçenek birden çok kez belirtilebilir (varsayılan: 127.0.0.1 ve :: 1, localhost veya -rpcallowip belirtilmişse, 0.0.0.0 ve :: i.e., tüm adresler)</translation>
+        <source>-masternode option is deprecated and ignored, specifying -masternodeblsprivkey is enough to start this node as a masternode.</source>
+        <translation>-masternode seçeneği kullanımdan kaldırılmış ve yoksayılmıştır, -masternodeblsprivkey belirtilmesi bu düğümü anadüğüm olarak başlatmak için yeterlidir.</translation>
     </message>
     <message>
         <source>Discover own IP addresses (default: 1 when listening and no -externalip or -proxy)</source>
@@ -4235,6 +4531,14 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Eşlerle en fazla &lt;n&gt; bağlantı sağla (geçici hizmet bağlantıları dahil değildir) (varsayılan: %u)</translation>
     </message>
     <message>
+        <source>Make sure to encrypt your wallet and delete all non-encrypted backups after you have verified that the wallet works!</source>
+        <translation>Cüzdanın çalıştığından emin olduktan sonra mutlaka cüzdanınızı şifreleyip şifrelenmemiş tüm yedekleri silin!</translation>
+    </message>
+    <message>
+        <source>Maximum total size of all orphan transactions in megabytes (default: %u)</source>
+        <translation>Tüm yetim işlemlerin megabayt cinsinden maksimum toplam boyutu (varsayılan: %u)</translation>
+    </message>
+    <message>
         <source>Prune configured below the minimum of %d MiB.  Please use a higher number.</source>
         <translation>Budama, en düşük değer olan %d MiB'den düşük olarak ayarlanmıştır. Lütfen daha yüksek bir sayı kullanınız.</translation>
     </message>
@@ -4243,12 +4547,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Budama: son cüzdan eşleşmesi budanmış verilerin ötesine gitmektedir. -reindex kullanmanız gerekmektedir (Budanmış düğüm ise tüm blok zincirini tekrar indirmeniz gerekir.)</translation>
     </message>
     <message>
+        <source>Query for peer addresses via DNS lookup, if low on addresses (default: 1 unless -connect used)</source>
+        <translation>Eğer adresler az ise, DNS arama yoluyla eş adres sorgulaması (-connect kullanılmadıkça default: 1)</translation>
+    </message>
+    <message>
         <source>Randomize credentials for every proxy connection. This enables Tor stream isolation (default: %u)</source>
         <translation>Her vekil bağlantısı için kimlik verilerini rastgele yap. Bu, Tor akış izolasyonunu etkinleştirir (varsayılan: %u)</translation>
     </message>
     <message>
         <source>Rescans are not possible in pruned mode. You will need to use -reindex which will download the whole blockchain again.</source>
         <translation>Tekrar taramalar budanmış kipte mümkün değildir. Tüm blok zincirini tekrar indirecek olan -reindex seçeneğini kullanmanız gerekecektir.</translation>
+    </message>
+    <message>
+        <source>Set the masternode BLS private key and enable the client to act as a masternode</source>
+        <translation>Ana düğüm BLS özel anahtarını belirle ve istemcinin anadüğüm işlevi görmesini sağla</translation>
     </message>
     <message>
         <source>Specify full path to directory for automatic wallet backups (must exist)</source>
@@ -4271,12 +4583,12 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Ağ sürümü zincirinin toplam boyutu (%i) en yüksek boyutu geçmektedir (%i). Kullanıcı aracı açıklamasının sayısı veya boyutunu azaltınız.</translation>
     </message>
     <message>
-        <source>Transaction index can't be disabled in full mode. Either start with -litemode command line switch or enable transaction index.</source>
-        <translation>Tam modda işlem endeksi kapatılamaz. Ya komut satırından -litemode ile başlatın ya da işlem endeksini açın.</translation>
-    </message>
-    <message>
         <source>Tries to keep outbound traffic under the given target (in MiB per 24h), 0 = no limit (default: %d)</source>
         <translation>Giden trafiği belirtilen hedefin altında tutmaya çalışır (24 saat başı MiB olarak), 0 = sınırsız (varsayılan: %d)</translation>
+    </message>
+    <message>
+        <source>Try to create at least N inputs of each denominated amount (%u-%u, default: %u)</source>
+        <translation>Her bir miktar için en az N kadar girdi oluşturmayı deneyin (%u-%u, varsayılan: %u)</translation>
     </message>
     <message>
         <source>Unable to locate enough PrivateSend denominated funds for this transaction.</source>
@@ -4295,6 +4607,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Dinlenecek portu haritalamak için UPnP kullan (varsayılan: dinlenildiğinde ve -proxy olmadığında 1)</translation>
     </message>
     <message>
+        <source>Username and hashed password for JSON-RPC connections. The field &lt;userpw&gt; comes in the format: &lt;USERNAME&gt;:&lt;SALT&gt;$&lt;HASH&gt;. A canonical python script is included in share/rpcauth. The client then connects normally using the rpcuser=&lt;USERNAME&gt;/rpcpassword=&lt;PASSWORD&gt; pair of arguments. This option can be specified multiple times</source>
+        <translation>JSON-RPC bağlantıları için kullanıcı adı ve karmalanmış parola. &lt;userpw&gt; alanı şu biçimdedir: &lt;USERNAME&gt;:&lt;SALT&gt;$&lt;HASH&gt;. Kanonik bir Python betiği share/rpcauth klasöründe bulunabilir. Ardından istemci normal şekilde rpcuser=&lt;USERNAME&gt;/rpcpassword=&lt;PASSWORD&gt; argüman çiftini kullanarak bağlanabilir. Bu seçenek birden çok kez belirtilebilir.</translation>
+    </message>
+    <message>
         <source>WARNING! Failed to replenish keypool, please unlock your wallet to do so.</source>
         <translation>UYARI! Anahtar havuzu yenilenemedi, lütfen devam etmek için cüzdanınızın kilidini açın.</translation>
     </message>
@@ -4307,12 +4623,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Uyarı: Bilinmeyen blok sürümü oluşturulmaya çalışılıyor. Bilinmeyen kuralların işlemesi mümkündür.</translation>
     </message>
     <message>
+        <source>You need to rebuild the database using -reindex to change -timestampindex</source>
+        <translation>-timestampindex'i değiştirmek için -reindex'i kullanarak veritabanını baştan kurmalısınız</translation>
+    </message>
+    <message>
         <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This will redownload the entire blockchain</source>
         <translation>Budama olmayan kipe dönmek için veritabanını -reindex ile tekrar derlemeniz gerekir. Bu, tüm blok zincirini tekrar indirecektir</translation>
     </message>
     <message>
         <source>(default: %u)</source>
         <translation>(varsayılan: %u)</translation>
+    </message>
+    <message>
+        <source>-litemode is deprecated.</source>
+        <translation>-litemode kullanımdan kaldırıldı.</translation>
     </message>
     <message>
         <source>-maxmempool must be at least %d MB</source>
@@ -4333,6 +4657,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Automatically create Tor hidden service (default: %d)</source>
         <translation>Otomatik olarak gizli Tor servisi oluştur (varsayılan: %d)</translation>
+    </message>
+    <message>
+        <source>Disable governance validation (0-1, default: %u)</source>
+        <translation>Yönetim doğrulamayı devre dışı bırak (0-1, varsayılan: %u)</translation>
     </message>
     <message>
         <source>ERROR! Failed to create automatic backup</source>
@@ -4371,8 +4699,36 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Ham işlemin &lt;adres&gt;te yayınlanmasını etkinleştir</translation>
     </message>
     <message>
+        <source>Error upgrading evo database</source>
+        <translation>Evo veritabanını yükseltirken hata oluştu</translation>
+    </message>
+    <message>
         <source>Error: A fatal internal error occurred, see debug.log for details</source>
         <translation>Hata: Ölümcül dahili bir hata meydana geldi, ayrıntılar için debug.log dosyasına bakınız</translation>
+    </message>
+    <message>
+        <source>Error: failed to add socket to epollfd (epoll_ctl returned error %s)</source>
+        <translation>Hata: epollfd'ye soket eklenemedi (epoll_ctl %s hatası verdi)</translation>
+    </message>
+    <message>
+        <source>Exceeded max tries.</source>
+        <translation>Maksimum deneme aşıldı.</translation>
+    </message>
+    <message>
+        <source>Failed to clear fulfilled requests cache at</source>
+        <translation>Yerine getirilmiş istek önbelleği temizlenemedi</translation>
+    </message>
+    <message>
+        <source>Failed to clear governance cache at</source>
+        <translation>Yönetim önbelliği temizlenemedi</translation>
+    </message>
+    <message>
+        <source>Failed to clear masternode cache at</source>
+        <translation>Anadüğüm önbelliği temizlenemedi</translation>
+    </message>
+    <message>
+        <source>Failed to commit EvoDB</source>
+        <translation>EvoDB gerçekleştirilemedi</translation>
     </message>
     <message>
         <source>Failed to create backup %s!</source>
@@ -4391,6 +4747,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Şuradan spork önbelleği yüklemesi başarısız:</translation>
     </message>
     <message>
+        <source>Failed to rescan the wallet during initialization</source>
+        <translation>Başlatma sırasında cüzdan yeniden taranamadı</translation>
+    </message>
+    <message>
         <source>Fee (in %s/kB) to add to transactions you send (default: %s)</source>
         <translation>Yolladığınız işlemlere eklenecek ücret (%s/kB olarak) (varsayılan: %s)</translation>
     </message>
@@ -4405,6 +4765,18 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Invalid amount for -fallbackfee=&lt;amount&gt;: '%s'</source>
         <translation> -fallbackfee=&lt;tutar&gt; için geçersiz tutar: '%s'</translation>
+    </message>
+    <message>
+        <source>Invalid masternodeblsprivkey. Please see documentation.</source>
+        <translation>Geçersiz masternodeblsprivkey. Lütfen dökümanlara göz atın.</translation>
+    </message>
+    <message>
+        <source>It has been replaced by -disablegovernance.</source>
+        <translation>-disablegovernance ile değiştirildi.</translation>
+    </message>
+    <message>
+        <source>Its replacement -disablegovernance has been forced instead.</source>
+        <translation>-disablegovernance bunun yerine zorlandı.</translation>
     </message>
     <message>
         <source>Keep the transaction memory pool below &lt;n&gt; megabytes (default: %u)</source>
@@ -4437,10 +4809,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Loading wallet...</source>
         <translation>Cüzdan yükleniyor...</translation>
-    </message>
-    <message>
-        <source>Location of the auth cookie (default: data dir)</source>
-        <translation>auth çerezinin konumu (varsayılan: veri klasörü)</translation>
     </message>
     <message>
         <source>Make the wallet broadcast transactions</source>
@@ -4479,10 +4847,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Düğüm aktarma seçenekleri:</translation>
     </message>
     <message>
-        <source>Non-standard public key detected.</source>
-        <translation>Standart olmayan herkese açık anahtar tespit edildi.</translation>
-    </message>
-    <message>
         <source>Not compatible with existing transactions.</source>
         <translation>Var olan işlemlerle uyumlu değil.</translation>
     </message>
@@ -4515,16 +4879,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Özel Gönder seçenekleri:</translation>
     </message>
     <message>
-        <source>PrivateSend request complete:</source>
-        <translation>Özel Gönder talebi tamamlandı:</translation>
-    </message>
-    <message>
         <source>PrivateSend request incomplete:</source>
         <translation>Özel Gönder talebi tamamlanmadı:</translation>
     </message>
     <message>
         <source>Prune cannot be configured with a negative value.</source>
         <translation>Budama negatif bir değerle yapılandırılamaz.</translation>
+    </message>
+    <message>
+        <source>Prune mode is incompatible with -disablegovernance=false.</source>
+        <translation>Prune modu -disablegovernance=false ile uyumsuz.</translation>
     </message>
     <message>
         <source>Prune mode is incompatible with -txindex.</source>
@@ -4539,12 +4903,44 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Başlangıçta blok zincirini eksik cüzdan işlemleri için tekrar tara</translation>
     </message>
     <message>
+        <source>Send reject messages per BIP61 (default: %u)</source>
+        <translation>BIP61 adetince reddedilme mesajları gönder (varsayılan: %u)</translation>
+    </message>
+    <message>
+        <source>Socket events mode, which must be one of: %s (default: %s)</source>
+        <translation>Bunlardan biri olması gereken soket etkinlikleri modu: %s (varsayılan: %s)</translation>
+    </message>
+    <message>
+        <source>Specified -walletdir "%s" does not exist</source>
+        <translation>Belirtilen -walletdir "%s" mevcut değil.</translation>
+    </message>
+    <message>
+        <source>Specified -walletdir "%s" is a relative path</source>
+        <translation>Belirtilen -walletdir "%s" göreli bir yoldur</translation>
+    </message>
+    <message>
+        <source>Specified -walletdir "%s" is not a directory</source>
+        <translation>Belirtilen -walletdir "%s" dizin değildir</translation>
+    </message>
+    <message>
+        <source>Sync mempool from other nodes on start (default: %u)</source>
+        <translation>Başlangıçta diğer düğümlerden mempool'u senkronize et (varsayılan: %u)</translation>
+    </message>
+    <message>
         <source>Synchronizing blockchain...</source>
         <translation>Blok zinciri eşleniyor...</translation>
     </message>
     <message>
+        <source>Target PrivateSend balance (%u-%u, default: %u)</source>
+        <translation>ÖzelGönder bakiyesini hedefle (%u-%u, varsayılan: %u)</translation>
+    </message>
+    <message>
         <source>The wallet will avoid paying less than the minimum relay fee.</source>
         <translation>Cüzdan en az aktarma ücretinden daha az ödeme yapmaktan sakınacaktır.</translation>
+    </message>
+    <message>
+        <source>This is expected because you are running a pruned node.</source>
+        <translation>Bu pruned düğümü çalıştırdığınız için beklenen bir durumdur.</translation>
     </message>
     <message>
         <source>This is the minimum transaction fee you pay on every transaction.</source>
@@ -4579,12 +4975,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Bu bilgisayarda %s unsuruna bağlanılamadı. %s muhtemelen hâlihazırda çalışmaktadır.</translation>
     </message>
     <message>
+        <source>Unable to generate initial keys</source>
+        <translation>Başlangıç anahtarları oluşturulamıyor</translation>
+    </message>
+    <message>
         <source>Upgrading UTXO database</source>
         <translation>UTXO veritabanı yükseltiliyor</translation>
     </message>
     <message>
         <source>Use devnet chain with provided name</source>
         <translation>Verilen ad ile devnet zinciri kullan</translation>
+    </message>
+    <message>
+        <source>Wallet %s resides outside wallet directory %s</source>
+        <translation>Cüzdan %s, %s cüzdan dizininin dışında bulunuyor</translation>
     </message>
     <message>
         <source>Wallet debugging/testing options:</source>
@@ -4607,8 +5011,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Sadece blok kipinde çalışılıp çalışılmayacağı (varsayılan: %u)</translation>
     </message>
     <message>
-        <source>You can not start a masternode in lite mode.</source>
-        <translation>Bir ana düğümü lite modda başlatamazsınız.</translation>
+        <source>You can not start a masternode with wallet enabled.</source>
+        <translation>Cüzdan etkinleştirilmişken bir ana düğüm başlatamazsınız.</translation>
+    </message>
+    <message>
+        <source>You need to rebuild the database using -reindex to change -addressindex</source>
+        <translation>-addressindex'i değiştirmek için -reindex'i kullanarak veritabanını baştan kurmalısınız</translation>
+    </message>
+    <message>
+        <source>You need to rebuild the database using -reindex to change -spentindex</source>
+        <translation>-spentindex'i değiştirmek için -spentindex'i kullanarak veritabanını baştan kurmalısınız</translation>
+    </message>
+    <message>
+        <source>You need to rebuild the database using -reindex to change -txindex</source>
+        <translation>-txindex'i değiştirmek için veritabanını -reindex kullanarak tekrar inşa etmeniz gerekmektedir</translation>
     </message>
     <message>
         <source>ZeroMQ notification options:</source>
@@ -4635,18 +5051,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%s geliştiricileri</translation>
     </message>
     <message>
-        <source>The %p developers</source>
-        <translation>%p geliştiricileri</translation>
-    </message>
-    <message>
-        <source>The %d developers</source>
-        <translation>%d geliştiricileri</translation>
-    </message>
-    <message>
-        <source>The %b developers</source>
-        <translation>%b geliştiricileri</translation>
-    </message>
-    <message>
         <source>Cannot obtain a lock on data directory %s. %s is probably already running.</source>
         <translation>%s veri dizininde kilit elde edilemedi. %s muhtemelen hâlihazırda çalışmaktadır.</translation>
     </message>
@@ -4655,8 +5059,20 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>MIT yazılım lisansı altında dağıtılmıştır, beraberindeki %s ya da %s dosyasına bakınız.</translation>
     </message>
     <message>
+        <source>Enable use of PrivateSend for funds stored in this wallet (0-1, default: %u)</source>
+        <translation>Bu cüzdanda saklanan fonlar için ÖzelGönder kullanımını etkinleştir (0-1, varsayılan: %u)</translation>
+    </message>
+    <message>
+        <source>Error loading %s: You can't enable HD on an already existing non-HD wallet</source>
+        <translation>%s yüklenirken hata: Zaten var olan bir HD olmayan cüzdanda HD etkinleştiremezsiniz</translation>
+    </message>
+    <message>
         <source>Error reading %s! All keys read correctly, but transaction data or address book entries might be missing or incorrect.</source>
         <translation>%s dosyasının okunması sırasında bir hata meydana geldi! Tüm anahtarlar doğru bir şekilde okundu, ancak işlem verileri ya da adres defteri ögeleri hatalı veya eksik olabilir.</translation>
+    </message>
+    <message>
+        <source>Exclude debugging information for a category. Can be used in conjunction with -debug=1 to output debug logs for all categories except one or more specified categories.</source>
+        <translation>Bir kategori için hata ayıklama bilgilerini hariç tut. Belirtilen bir veya daha fazla kategori dışındaki tüm kategoriler için hata ayıklama günlüklerini çıktılamak için -debug = 1 ile birlikte kullanılabilir.</translation>
     </message>
     <message>
         <source>Force relay of transactions from whitelisted peers even if they violate local relay policy (default: %d)</source>
@@ -4687,12 +5103,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%s programını faydalı buluyorsanız lütfen katkıda bulununuz. Yazılım hakkında daha fazla bilgi için %s adresini ziyaret ediniz.</translation>
     </message>
     <message>
-        <source>Reduce storage requirements by enabling pruning (deleting) of old blocks. This allows the pruneblockchain RPC to be called to delete specific blocks, and enables automatic pruning of old blocks if a target size in MiB is provided. This mode is incompatible with -txindex and -rescan. Warning: Reverting this setting requires re-downloading the entire blockchain. (default: 0 = disable pruning blocks, 1 = allow manual pruning via RPC, &gt;%u = automatically prune block files to stay under the specified target size in MiB)</source>
-        <translation>Eski blokları budamayı (silme) etkinleştirerek depolama gereksinimlerini azaltın. Bu belirli blokları silmek için pruneblockchain uzak yordam çağrısına (RPC) izin verir. Eğer bloklar hedef mebibyte boyutuna ulaşırsa eski blokların otomatik olarak budanmasını sağlar. Bu kip, -txindex ve -rescan ile uyumsuzdur. Uyarı: Bu ayarı geri almak, blok zincirinin tamamını yeniden yüklemeyi gerektirir. (varsayılan: 0 = blok budaması devre dışı, 1 = RPC üzerinden manuel budamaya izin verir, &gt;%u = mebibyte olarak belirtilen hedef boyutun altında kalması için blok dosyalarını otomatik olarak budar)</translation>
-    </message>
-    <message>
         <source>Set lowest fee rate (in %s/kB) for transactions to be included in block creation. (default: %s)</source>
         <translation>Blok oluşturmaya dahil olan işlemler için en düşük ücret oranını (%s/kB olarak) ayarla. (varsayılan: %s)</translation>
+    </message>
+    <message>
+        <source>The fee rate (in %s/kB) that indicates your tolerance for discarding change by adding it to the fee (default: %s). Note: An output is discarded if it is dust at this rate, but we will always discard up to the dust relay fee and a discard fee above that is limited by the fee estimate for the longest target</source>
+        <translation>Ücrette (%s/kB cinsinden) para üstünü iptal etme toleransınızı gösteren ve bunu ücrete ekleyen (default: %s). Not: Bu orandaki çıktı toz olarak atılır, ancak her zaman toz geçişi ücretine ve yukarıdaki en uzun hedef için yapılan ücret tahmininin sınırladığı bir miktar atar.</translation>
+    </message>
+    <message>
+        <source>This is the transaction fee you may discard if change is smaller than dust at this level</source>
+        <translation>Bu, para üstü seviyesi tozdan daha küçükse, iptal edebileceğiniz işlem ücretidir.</translation>
     </message>
     <message>
         <source>This is the transaction fee you may pay when fee estimates are not available.</source>
@@ -4707,6 +5127,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Bu işlem için yeterli Özel Gönder ile birimlendirilmemiş bakiye bulunamadı.</translation>
     </message>
     <message>
+        <source>Unable to replay blocks. You will need to rebuild the database using -reindex-chainstate.</source>
+        <translation>Bloklar tekrarlanamıyor. -Reindex-chainstate kullanarak veritabanını yeniden kurmanız gerekecek.</translation>
+    </message>
+    <message>
         <source>Use N separate masternodes for each denominated input to mix funds (%u-%u, default: %u)</source>
         <translation>Her birimlendirilmiş girdi tutarı için N ayrı ana düğüm kullan (%u-%u, varsayılan: %u)</translation>
     </message>
@@ -4719,10 +5143,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>HD cüzdan (BIP39) için kullanıcı tarafından belirlenmiş anımsatıcı parola. Sadece cüzdan oluşturma/ilk açılış sırasında etkilidir (varsayılan: boş metin)</translation>
     </message>
     <message>
-        <source>Username and hashed password for JSON-RPC connections. The field &lt;userpw&gt; comes in the format: &lt;USERNAME&gt;:&lt;SALT&gt;$&lt;HASH&gt;. A canonical python script is included in share/rpcuser. The client then connects normally using the rpcuser=&lt;USERNAME&gt;/rpcpassword=&lt;PASSWORD&gt; pair of arguments. This option can be specified multiple times</source>
-        <translation>JSON-RPC bağlantıları için kullanıcı adı ve karmalanmış parola. &lt;userpw&gt; alanı şu biçimdedir: &lt;KULLANICI ADI&gt;:&lt;SALT&gt;$&lt;HASH&gt;. Kanonik bir Python betiği share/rpcuser klasöründe bulunabilir. Ardından istemci normal şekilde rpcuser=&lt;KULLANICI ADI&gt;/rpcpassword=&lt;PAROLA&gt; argüman çiftini kullanarak bağlanabilir. Bu seçenek birden çok kez belirtilebilir.</translation>
-    </message>
-    <message>
         <source>Wallet will not create transactions that violate mempool chain limits (default: %u)</source>
         <translation>Cüzdan, zincir bellek alanı limitlerini ihlal eden işlem oluşturmayacak. (varsayılan: %u)</translation>
     </message>
@@ -4731,8 +5151,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Uyarı: wallet.dat bozuk, veriler geri kazanıldı! Özgün %s, %s olarak %s klasörüne kaydedildi; bakiyeniz ya da işlemleriniz yanlışsa bir yedeklemeden tekrar yüklemeniz gerekir.</translation>
     </message>
     <message>
+        <source>Whether to save the mempool on shutdown and load on restart (default: %u)</source>
+        <translation>Kapatma sırasında mempool'un kaydedilip kaydedilmemesi ve yeniden başlatma sırasında yüklenmesi (default: %u)</translation>
+    </message>
+    <message>
         <source>Whitelist peers connecting from the given IP address (e.g. 1.2.3.4) or CIDR notated network (e.g. 1.2.3.0/24). Can be specified multiple times.</source>
         <translation>Beyaz listeye eklenen eşler verilen IP adresinden (ör. 1.2.3.4) veya CIDR ağından (ör. 1.2.3.0/24) bağlanabilir. Değerler birden çok kez kullanılabilir.</translation>
+    </message>
+    <message>
+        <source>%d of last 100 blocks have unexpected version</source>
+        <translation>Son 100 bloğun %d'si beklenmedik versiyona sahip</translation>
     </message>
     <message>
         <source>%s corrupt, salvage failed</source>
@@ -4747,10 +5175,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>%s çok yüksek ayarlanmış!</translation>
     </message>
     <message>
-        <source>(press q to shutdown and continue later)</source>
-        <translation>(kapatıp daha sonra devam etmek için q tuşuna basın)</translation>
-    </message>
-    <message>
         <source>-devnet can only be specified once</source>
         <translation>-devnet sadece bir kere belirtilebilir</translation>
     </message>
@@ -4761,6 +5185,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>-rpcport must be specified when -devnet and -server are specified</source>
         <translation>-devnet ve -server belirtildiğinde -rpcport da belirtilmelidir</translation>
+    </message>
+    <message>
+        <source>Accept connections from outside (default: 1 if no -proxy or -connect)</source>
+        <translation>Dışarıdan gelen bağlantıları kabul et (varsayılan: -proxy veya -connect yoksa 1)</translation>
     </message>
     <message>
         <source>Allow RFC1918 addresses to be relayed and connected to (default: %u)</source>
@@ -4783,6 +5211,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Copyright (C)</translation>
     </message>
     <message>
+        <source>Create up to N inputs of each denominated amount (%u-%u, default: %u)</source>
+        <translation>Her bir miktar için en fazla N kadar giriş oluşturun (%u-%u, default: %u)</translation>
+    </message>
+    <message>
         <source>Error loading %s</source>
         <translation>%s unsurunun yüklenmesinde hata oluştu</translation>
     </message>
@@ -4793,6 +5225,14 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Error loading %s: Wallet requires newer version of %s</source>
         <translation>%s unsurunun yüklenmesinde hata oluştu: cüzdan %s programının yeni bir sürümüne ihtiyaç duyuyor</translation>
+    </message>
+    <message>
+        <source>Error loading %s: You can't disable HD on an already existing HD wallet</source>
+        <translation>%s yüklenirken hata: Zaten var olan bir HD cüzdanda HD'yi kapatamazsınız.</translation>
+    </message>
+    <message>
+        <source>Error loading wallet %s. Duplicate -wallet filename specified.</source>
+        <translation>%s cüzdan yüklenirken hata oluştu. Bu dosya adı zaten mevcut.</translation>
     </message>
     <message>
         <source>Error upgrading chainstate database</source>
@@ -4809,6 +5249,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
     <message>
         <source>Initialization sanity check failed. %s is shutting down.</source>
         <translation>Başlatma sınaması başarısız oldu. %s kapatılıyor.</translation>
+    </message>
+    <message>
+        <source>Inputs vs outputs size mismatch.</source>
+        <translation>Girdi ve çıktı boyutları tutarsız.</translation>
     </message>
     <message>
         <source>Invalid -onion address or hostname: '%s'</source>
@@ -4847,16 +5291,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>P2SH olmayan çoklu imzaları aktar (varsayılan: %u)</translation>
     </message>
     <message>
+        <source>Replaying blocks...</source>
+        <translation>Tekrarlanan bloklar...</translation>
+    </message>
+    <message>
         <source>Rescanning...</source>
         <translation>Yeniden tarama...</translation>
     </message>
     <message>
         <source>Run in the background as a daemon and accept commands</source>
         <translation>Arka planda daemon (servis) olarak çalış ve komutları kabul et</translation>
-    </message>
-    <message>
-        <source>Send trace/debug info to console instead of debug.log file</source>
-        <translation>İzleme/hata ayıklama verilerini debug.log dosyası yerine konsola gönder</translation>
     </message>
     <message>
         <source>Session not complete!</source>
@@ -4891,20 +5335,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Veri dizinini belirt</translation>
     </message>
     <message>
-        <source>Specify wallet file (within data directory)</source>
-        <translation>Cüzdan dosyası belirtiniz (veri klasörünün içinde)</translation>
-    </message>
-    <message>
         <source>Specify your own public address</source>
         <translation>Kendi genel adresinizi tanımlayın</translation>
     </message>
     <message>
-        <source>Starting network threads...</source>
-        <translation>Ağ iş parçacıkları başlatılıyor...</translation>
+        <source>Start PrivateSend automatically (0-1, default: %u)</source>
+        <translation>ÖzelGönder'i otomatik olarak başlat (0-1, default: %u)</translation>
     </message>
     <message>
-        <source>Synchronization pending...</source>
-        <translation>Eşleme bekliyor...</translation>
+        <source>Starting network threads...</source>
+        <translation>Ağ iş parçacıkları başlatılıyor...</translation>
     </message>
     <message>
         <source>Synchronizing governance objects...</source>
@@ -4959,6 +5399,10 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Bilinmeyen durum: id = %u</translation>
     </message>
     <message>
+        <source>Unsupported logging category %s=%s.</source>
+        <translation>Desteklenmeyen günlük kaydı kategorisi %s=%s.</translation>
+    </message>
+    <message>
         <source>Username for JSON-RPC connections</source>
         <translation>JSON-RPC bağlantıları için kullanıcı ismi</translation>
     </message>
@@ -4971,10 +5415,6 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Çok az sayıda anahtar kaldı: %d</translation>
     </message>
     <message>
-        <source>Wallet %s resides outside data directory %s</source>
-        <translation>%s cüzdan %s veri klasörünün dışında bulunuyor</translation>
-    </message>
-    <message>
         <source>Wallet is locked.</source>
         <translation>Cüzdan kilitli.</translation>
     </message>
@@ -4983,12 +5423,16 @@ https://www.transifex.com/ioncoincore/ioncore/</translation>
         <translation>Cüzdan seçenekleri:</translation>
     </message>
     <message>
-        <source>Wallet window title</source>
-        <translation>Cüzdan penceresi başlığı</translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation>Uyarı</translation>
+    </message>
+    <message>
+        <source>You are starting with governance validation disabled.</source>
+        <translation>Yönetim doğrulama devre dışı bırakılmış bir şekilde başlıyorsunuz.</translation>
+    </message>
+    <message>
+        <source>You can not disable governance validation on a masternode.</source>
+        <translation>Bir anadüğümde yönetim doğrulamasını devre dışı bırakamazsınız.</translation>
     </message>
     <message>
         <source>Your entries added successfully.</source>

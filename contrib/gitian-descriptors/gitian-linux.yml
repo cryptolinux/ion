@@ -1,5 +1,5 @@
 ---
-name: "ioncore-linux-5.0"
+name: "dash-linux-0.16"
 enable_cache: true
 distro: "ubuntu"
 suites:
@@ -42,8 +42,7 @@ packages:
 - "python3"
 - "cmake"
 - "libxkbcommon0"
-- "linux-libc-dev"
-- "doxygen"
+- "ccache"
 remotes:
 - "url": "https://bitbucket.org/ioncoin/ion.git"
   "dir": "ion"

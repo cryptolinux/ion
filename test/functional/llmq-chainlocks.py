@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2018 The Dash Core developers
-# Copyright (c) 2018-2020 The Ion Core developers
+# Copyright (c) 2015-2020 The Dash Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,15 +18,23 @@ Checks LLMQs based ChainLocks
 
 class LLMQChainLocksTest(IonTestFramework):
     def set_test_params(self):
-        self.set_ion_test_params(6, 5, [], fast_dip3_enforcement=True)
+        self.set_dash_test_params(4, 3, fast_dip3_enforcement=True)
+        self.set_dash_dip8_activation(10)
 
     def run_test(self):
+
+        # Connect all nodes to node1 so that we always have the whole network connected
+        # Otherwise only masternode connections will be established between nodes, which won't propagate TXs/blocks
+        # Usually node0 is the one that does this, but in this test we isolate it multiple times
+        for i in range(len(self.nodes)):
+            if i != 1:
+                connect_nodes(self.nodes[i], 1)
 
         self.log.info("Wait for dip0008 activation")
 
         while self.nodes[0].getblockchaininfo()["bip9_softforks"]["dip0008"]["status"] != "active":
             self.nodes[0].generate(10)
-        sync_blocks(self.nodes, timeout=60*5)
+        self.sync_blocks(self.nodes, timeout=60*5)
 
         self.nodes[0].spork("SPORK_18_QUORUM_DKG_ENABLED", 0)
         self.wait_for_sporks_same()

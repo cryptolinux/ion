@@ -3,7 +3,7 @@
 # Copyright (c) 2018-2020 The Ion Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test running bitcoind with -reindex and -reindex-chainstate options.
+"""Test running dashd with -reindex and -reindex-chainstate options.
 
 - Start a single node and generate 3 blocks.
 - Stop the node and restart it with -reindex. Verify that the node has reindexed up to block 3.
@@ -11,8 +11,7 @@
 """
 
 from test_framework.test_framework import BitcoinTestFramework
-from test_framework.util import assert_equal
-import time
+from test_framework.util import wait_until
 
 class ReindexTest(BitcoinTestFramework):
 
@@ -26,9 +25,7 @@ class ReindexTest(BitcoinTestFramework):
         self.stop_nodes()
         extra_args = [["-reindex-chainstate" if justchainstate else "-reindex", "-checkblockindex=1"]]
         self.start_nodes(extra_args)
-        while self.nodes[0].getblockcount() < blockcount:
-            time.sleep(0.1)
-        assert_equal(self.nodes[0].getblockcount(), blockcount)
+        wait_until(lambda: self.nodes[0].getblockcount() == blockcount)
         self.log.info("Success")
 
     def run_test(self):

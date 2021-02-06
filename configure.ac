@@ -1,10 +1,10 @@
 dnl require autoconf 2.60 (AS_ECHO/AS_ECHO_N)
 AC_PREREQ([2.60])
-define(_CLIENT_VERSION_MAJOR, 5)
-define(_CLIENT_VERSION_MINOR, 0)
-define(_CLIENT_VERSION_REVISION, 99)
-define(_CLIENT_VERSION_BUILD, 0)
-define(_CLIENT_VERSION_IS_RELEASE, false)
+define(_CLIENT_VERSION_MAJOR, 0)
+define(_CLIENT_VERSION_MINOR, 16)
+define(_CLIENT_VERSION_REVISION, 1)
+define(_CLIENT_VERSION_BUILD, 1)
+define(_CLIENT_VERSION_IS_RELEASE, true)
 define(_COPYRIGHT_YEAR, 2020)
 define(_COPYRIGHT_HOLDERS,[The %s developers])
 define(_COPYRIGHT_HOLDERS_SUBSTITUTION,[[Ion Core]])
@@ -174,7 +174,7 @@ AC_ARG_ENABLE([ccache],
 AC_ARG_ENABLE([lcov],
   [AS_HELP_STRING([--enable-lcov],
   [enable lcov testing (default is no)])],
-  [use_lcov=yes],
+  [use_lcov=$enableval],
   [use_lcov=no])
   
 AC_ARG_ENABLE([lcov-branch-coverage],
@@ -302,6 +302,7 @@ if test "x$enable_werror" = "xyes"; then
     AC_MSG_ERROR("enable-werror set but -Werror is not usable")
   fi
   AX_CHECK_COMPILE_FLAG([-Werror=vla],[ERROR_CXXFLAGS="$ERROR_CXXFLAGS -Werror=vla"],,[[$CXXFLAG_WERROR]])
+  AX_CHECK_COMPILE_FLAG([-Werror=thread-safety-analysis],[ERROR_CXXFLAGS="$ERROR_CXXFLAGS -Werror=thread-safety-analysis"],,[[$CXXFLAG_WERROR]])
 fi
 
 if test "x$CXXFLAGS_overridden" = "xno"; then
@@ -310,6 +311,7 @@ if test "x$CXXFLAGS_overridden" = "xno"; then
   AX_CHECK_COMPILE_FLAG([-Wformat],[CXXFLAGS="$CXXFLAGS -Wformat"],,[[$CXXFLAG_WERROR]])
   AX_CHECK_COMPILE_FLAG([-Wvla],[CXXFLAGS="$CXXFLAGS -Wvla"],,[[$CXXFLAG_WERROR]])
   AX_CHECK_COMPILE_FLAG([-Wformat-security],[CXXFLAGS="$CXXFLAGS -Wformat-security"],,[[$CXXFLAG_WERROR]])
+  AX_CHECK_COMPILE_FLAG([-Wthread-safety-analysis],[CXXFLAGS="$CXXFLAGS -Wthread-safety-analysis"],,[[$CXXFLAG_WERROR]])
 
   ## Some compilers (gcc) ignore unknown -Wno-* options, but warn about all
   ## unknown options if any other warning is produced. Test the -Wfoo case, and
@@ -799,49 +801,27 @@ AC_LINK_IFELSE([AC_LANG_SOURCE([
   ]
 )
 
-if test "x$use_thread_local" = xyes || { test "x$use_thread_local" = xauto && test "x$use_glibc_compat" = xno; }; then
-  TEMP_LDFLAGS="$LDFLAGS"
-  LDFLAGS="$TEMP_LDFLAGS $PTHREAD_CFLAGS"
-  AC_MSG_CHECKING([for thread_local support])
-  AC_LINK_IFELSE([AC_LANG_SOURCE([
-    #include <thread>
-    static thread_local int foo = 0;
-    static void run_thread() { foo++;}
-    int main(){
-    for(int i = 0; i < 10; i++) { std::thread(run_thread).detach();}
-    return foo;
-    }
-    ])],
-    [
-     case $host in
-       *mingw*)
-          dnl mingw32's implementation of thread_local has also been shown to behave
-          dnl erroneously under concurrent usage; see:
-          dnl https://gist.github.com/jamesob/fe9a872051a88b2025b1aa37bfa98605
-          AC_MSG_RESULT(no)
-          ;;
-        *darwin*)
-          dnl TODO enable thread_local on later versions of Darwin where it is
-          dnl supported (per https://stackoverflow.com/a/29929949)
-          AC_MSG_RESULT(no)
-          ;;
-        *freebsd*)
-          dnl FreeBSD's implementation of thread_local is also buggy (per
-          dnl https://groups.google.com/d/msg/bsdmailinglist/22ncTZAbDp4/Dii_pII5AwAJ)
-          AC_MSG_RESULT(no)
-          ;;
-        *)
-          AC_DEFINE(HAVE_THREAD_LOCAL,1,[Define if thread_local is supported.])
-          AC_MSG_RESULT(yes)
-          ;;
-      esac
-    ],
-    [
-      AC_MSG_RESULT(no)
-    ]
-  )
-  LDFLAGS="$TEMP_LDFLAGS"
-fi
+TEMP_LDFLAGS="$LDFLAGS"
+LDFLAGS="$TEMP_LDFLAGS $PTHREAD_CFLAGS"
+AC_MSG_CHECKING([for thread_local support])
+AC_LINK_IFELSE([AC_LANG_SOURCE([
+  #include <thread>
+  static thread_local int foo = 0;
+  static void run_thread() { foo++;}
+  int main(){
+  for(int i = 0; i < 10; i++) { std::thread(run_thread).detach();}
+  return foo;
+  }
+  ])],
+  [
+    AC_DEFINE(HAVE_THREAD_LOCAL,1,[Define if thread_local is supported.])
+    AC_MSG_RESULT(yes)
+  ],
+  [
+    AC_MSG_RESULT(no)
+  ]
+)
+LDFLAGS="$TEMP_LDFLAGS"
 
 # Check for different ways of gathering OS randomness
 AC_MSG_CHECKING(for Linux getrandom syscall)
@@ -973,7 +953,7 @@ define(MINIMUM_REQUIRED_BOOST, 1.47.0)
 dnl Check for boost libs
 AX_BOOST_BASE([MINIMUM_REQUIRED_BOOST])
 if test x$want_boost = xno; then
-    AC_MSG_ERROR([[only libionconsensus can be built without boost]])
+    AC_MSG_ERROR([[only libbitcoinconsensus can be built without boost]])
 fi
 AX_BOOST_SYSTEM
 AX_BOOST_FILESYSTEM

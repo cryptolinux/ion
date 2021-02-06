@@ -4,16 +4,15 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "transactionrecord.h"
+#include <qt/transactionrecord.h>
 
-#include "base58.h"
-#include "consensus/consensus.h"
-#include "validation.h"
-#include "pos/rewards.h"
-#include "timedata.h"
-#include "wallet/wallet.h"
+#include <base58.h>
+#include <consensus/consensus.h>
+#include <validation.h>
+#include <timedata.h>
+#include <wallet/wallet.h>
 
-#include "privatesend/privatesend.h"
+#include <privatesend/privatesend.h>
 
 #include <stdint.h>
 
@@ -233,13 +232,15 @@ std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWa
                 {
                     // Received by Ion Address
                     sub.type = TransactionRecord::RecvWithAddress;
-                    sub.strAddress = CBitcoinAddress(address).ToString();
+                    sub.strAddress = EncodeDestination(address);
+                    sub.txDest = address;
                 }
                 else
                 {
                     // Received by IP connection (deprecated features), or a multisignature or other non-simple transaction
                     sub.type = TransactionRecord::RecvFromOther;
                     sub.strAddress = mapValue["from"];
+                    sub.txDest = DecodeDestination(sub.strAddress);
                 }
                 if (wtx.IsCoinBase())
                 {
@@ -247,9 +248,7 @@ std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWa
                     sub.type = TransactionRecord::Generated;
                 }
 
-                sub.address.SetString(sub.strAddress);
-                sub.txDest = sub.address.Get();
-                parts.push_back(sub);
+                parts.append(sub);
             }
         }
     }
@@ -304,13 +303,15 @@ std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWa
                 CTxDestination address;
                 if (ExtractDestination(wtx.tx->vout[0].scriptPubKey, address))
                 {
-                    // Sent to Ion Address
-                    sub.strAddress = CBitcoinAddress(address).ToString();
+                    // Sent to Dash Address
+                    sub.strAddress = EncodeDestination(address);
+                    sub.txDest = address;
                 }
                 else
                 {
                     // Sent to IP, or other non-address transaction like OP_EVAL
                     sub.strAddress = mapValue["to"];
+                    sub.txDest = DecodeDestination(sub.strAddress);
                 }
             }
             else
@@ -323,13 +324,27 @@ std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWa
                 {
                     sub.type = TransactionRecord::PrivateSendCollateralPayment;
                 } else {
-                    for (const auto& txout : wtx.tx->vout) {
-                        if (txout.nValue == CPrivateSend::GetMaxCollateralAmount()) {
-                            sub.type = TransactionRecord::PrivateSendMakeCollaterals;
-                            continue; // Keep looking, could be a part of PrivateSendCreateDenominations
-                        } else if (CPrivateSend::IsDenominatedAmount(txout.nValue)) {
-                            sub.type = TransactionRecord::PrivateSendCreateDenominations;
-                            break; // Done, it's definitely a tx creating mixing denoms, no need to look any further
+                    bool fMakeCollateral{false};
+                    if (wtx.tx->vout.size() == 2) {
+                        CAmount nAmount0 = wtx.tx->vout[0].nValue;
+                        CAmount nAmount1 = wtx.tx->vout[1].nValue;
+                        // <case1>, see CPrivateSendClientSession::MakeCollateralAmounts
+                        fMakeCollateral = (nAmount0 == CPrivateSend::GetMaxCollateralAmount() && !CPrivateSend::IsDenominatedAmount(nAmount1) && nAmount1 >= CPrivateSend::GetCollateralAmount()) ||
+                                          (nAmount1 == CPrivateSend::GetMaxCollateralAmount() && !CPrivateSend::IsDenominatedAmount(nAmount0) && nAmount0 >= CPrivateSend::GetCollateralAmount()) ||
+                        // <case2>, see CPrivateSendClientSession::MakeCollateralAmounts
+                                          (nAmount0 == nAmount1 && CPrivateSend::IsCollateralAmount(nAmount0));
+                    } else if (wtx.tx->vout.size() == 1) {
+                        // <case3>, see CPrivateSendClientSession::MakeCollateralAmounts
+                        fMakeCollateral = CPrivateSend::IsCollateralAmount(wtx.tx->vout[0].nValue);
+                    }
+                    if (fMakeCollateral) {
+                        sub.type = TransactionRecord::PrivateSendMakeCollaterals;
+                    } else {
+                        for (const auto& txout : wtx.tx->vout) {
+                            if (CPrivateSend::IsDenominatedAmount(txout.nValue)) {
+                                sub.type = TransactionRecord::PrivateSendCreateDenominations;
+                                break; // Done, it's definitely a tx creating mixing denoms, no need to look any further
+                            }
                         }
                     }
                 }
@@ -339,10 +354,8 @@ std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWa
 
             sub.debit = -(nDebit - nChange);
             sub.credit = nCredit - nChange;
-            sub.address.SetString(sub.strAddress);
-            sub.txDest = sub.address.Get();
-            parts.push_back(sub);
-            parts.back().involvesWatchAddress = involvesWatchAddress;   // maybe pass to TransactionRecord as constructor argument
+            parts.append(sub);
+            parts.last().involvesWatchAddress = involvesWatchAddress;   // maybe pass to TransactionRecord as constructor argument
         }
         else if (fAllFromMe)
         {
@@ -384,13 +397,15 @@ std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWa
                 {
                     // Sent to Ion Address
                     sub.type = TransactionRecord::SendToAddress;
-                    sub.strAddress = CBitcoinAddress(address).ToString();
+                    sub.strAddress = EncodeDestination(address);
+                    sub.txDest = address;
                 }
                 else
                 {
                     // Sent to IP, or other non-address transaction like OP_EVAL
                     sub.type = TransactionRecord::SendToOther;
                     sub.strAddress = mapValue["to"];
+                    sub.txDest = DecodeDestination(sub.strAddress);
                 }
 
                 if(mapValue["DS"] == "1")
@@ -407,10 +422,7 @@ std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWa
                 }
                 sub.debit = -nValue;
 
-                sub.address.SetString(sub.strAddress);
-                sub.txDest = sub.address.Get();
-
-                parts.push_back(sub);
+                parts.append(sub);
             }
         }
         else
@@ -461,7 +473,7 @@ void TransactionRecord::updateStatus(const CWalletTx &wtx, int chainLockHeight)
         status.label = addrBookIt->second.name;
     }
 
-    if (!CheckFinalTx(wtx))
+    if (!CheckFinalTx(*wtx.tx))
     {
         if (wtx.tx->nLockTime < LOCKTIME_THRESHOLD)
         {
@@ -484,10 +496,6 @@ void TransactionRecord::updateStatus(const CWalletTx &wtx, int chainLockHeight)
             if (wtx.IsInMainChain())
             {
                 status.matures_in = wtx.GetBlocksToMaturity();
-
-                // Check if the block was requested by anyone
-                if (GetAdjustedTime() - wtx.nTimeReceived > 2 * 60 && wtx.GetRequestCount() == 0)
-                    status.status = TransactionStatus::MaturesWarning;
             }
             else
             {
@@ -516,10 +524,6 @@ void TransactionRecord::updateStatus(const CWalletTx &wtx, int chainLockHeight)
         {
             status.status = TransactionStatus::Conflicted;
         }
-        else if (GetAdjustedTime() - wtx.nTimeReceived > 2 * 60 && wtx.GetRequestCount() == 0)
-        {
-            status.status = TransactionStatus::Offline;
-        }
         else if (status.depth == 0)
         {
             status.status = TransactionStatus::Unconfirmed;
@@ -538,7 +542,7 @@ void TransactionRecord::updateStatus(const CWalletTx &wtx, int chainLockHeight)
     status.needsUpdate = false;
 }
 
-bool TransactionRecord::statusUpdateNeeded(int chainLockHeight)
+bool TransactionRecord::statusUpdateNeeded(int chainLockHeight) const
 {
     AssertLockHeld(cs_main);
     return status.cur_num_blocks != chainActive.Height() || status.needsUpdate

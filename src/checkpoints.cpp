@@ -1,16 +1,14 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018-2020 The Ion Core developers
+// Copyright (c) 2014-2020 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "checkpoints.h"
+#include <checkpoints.h>
 
-#include "chain.h"
-#include "chainparams.h"
-#include "reverse_iterator.h"
-#include "validation.h"
-#include "uint256.h"
+#include <chain.h>
+#include <chainparams.h>
+#include <reverse_iterator.h>
+#include <validation.h>
 
 #include <stdint.h>
 

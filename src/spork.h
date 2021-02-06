@@ -5,10 +5,10 @@
 #ifndef SPORK_H
 #define SPORK_H
 
-#include "hash.h"
-#include "net.h"
-#include "utilstrencodings.h"
-#include "key.h"
+#include <hash.h>
+#include <net.h>
+#include <utilstrencodings.h>
+#include <key.h>
 
 #include <unordered_map>
 #include <unordered_set>
@@ -21,26 +21,14 @@ class CSporkManager;
     - This would result in old clients getting confused about which spork is for what
 */
 enum SporkId : int32_t {
-    SPORK_1_SWIFTTX                                        = 10001,
-    SPORK_2_SWIFTTX_BLOCK_FILTERING                        = 10002,
-    SPORK_5_MAX_VALUE                                      = 10003,
-    SPORK_4_MASTERNODE_PAYMENT_ENFORCEMENT                 = 10004,
-    SPORK_5_MASTERNODE_BUDGET_ENFORCEMENT                  = 10005,
-    SPORK_6_MASTERNODE_ENABLE_SUPERBLOCKS                  = 10006,
-    SPORK_7_MASTERNODE_PAY_UPDATED_NODES                   = 10007,
-    SPORK_8_NEW_PROTOCOL_ENFORCEMENT                       = 10008,
-    SPORK_9_ZEROCOIN_MAINTENANCE_MODE                      = 10009,
-    SPORK_10_TOKENGROUP_MAINTENANCE_MODE                   = 10010,
-    SPORK_11_NEW_PROTOCOL_ENFORCEMENT_2                    = 10011,
-    SPORK_12_INSTANTSEND_ENABLED                           = 10012,
-    SPORK_13_INSTANTSEND_BLOCK_FILTERING                   = 10013,
-    SPORK_14_NEW_SIGS                                      = 10014,
-    SPORK_15_SUPERBLOCKS_ENABLED                           = 10015,
-    SPORK_16_DETERMINISTIC_MNS_ENABLED                     = 10016,
-    SPORK_17_INSTANTSEND_AUTOLOCKS                         = 10017,
-    SPORK_18_QUORUM_DKG_ENABLED                            = 10018,
-    SPORK_19_CHAINLOCKS_ENABLED                            = 10019,
-    SPORK_20_INSTANTSEND_LLMQ_BASED                        = 10020,
+    SPORK_2_INSTANTSEND_ENABLED                            = 10001,
+    SPORK_3_INSTANTSEND_BLOCK_FILTERING                    = 10002,
+    SPORK_9_SUPERBLOCKS_ENABLED                            = 10008,
+    SPORK_17_QUORUM_DKG_ENABLED                            = 10016,
+    SPORK_19_CHAINLOCKS_ENABLED                            = 10018,
+    SPORK_21_QUORUM_ALL_CONNECTED                          = 10020,
+    SPORK_22_PS_MORE_PARTICIPANTS                          = 10021,
+
     SPORK_INVALID                                          = -1,
 };
 template<> struct is_serializable_enum<SporkId> : std::true_type {};
@@ -132,13 +120,13 @@ public:
     /**
      * Sign will sign the spork message with the given key.
      */
-    bool Sign(const CKey& key, bool fSporkSixActive);
+    bool Sign(const CKey& key);
 
     /**
      * CheckSignature will ensure the spork signature matches the provided public
      * key hash.
      */
-    bool CheckSignature(const CKeyID& pubKeyId, bool fSporkSixActive) const;
+    bool CheckSignature(const CKeyID& pubKeyId) const;
 
     /**
      * GetSignerKeyID is used to recover the spork address of the key used to
@@ -147,7 +135,7 @@ public:
      * This method was introduced along with the multi-signer sporks feature,
      * in order to identify which spork key signed this message.
      */
-    bool GetSignerKeyID(CKeyID& retKeyidSporkSigner, bool fSporkSixActive);
+    bool GetSignerKeyID(CKeyID& retKeyidSporkSigner);
 
     /**
      * Relay is used to send this spork message to other peers.

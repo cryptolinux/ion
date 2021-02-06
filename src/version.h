@@ -1,6 +1,5 @@
 // Copyright (c) 2012-2014 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
-// Copyright (c) 2018-2020 The Ion Core developers
+// Copyright (c) 2014-2020 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,7 +11,7 @@
  */
 
 
-static const int PROTOCOL_VERSION = 96002;
+static const int PROTOCOL_VERSION = 70218;
 
 //! initial proto version, to be increased after version/verack negotiation
 static const int INIT_PROTO_VERSION = 901;
@@ -23,6 +22,9 @@ static const int GETHEADERS_VERSION = 96000;
 //! disconnect from peers older than this proto version
 static const int MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT = 95705;
 static const int MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT = 96002;
+
+//! minimum proto version of masternode to accept in DKGs
+static const int MIN_MASTERNODE_PROTO_VERSION = 70218;
 
 //! nTime field added to CAddress, starting with this version;
 //! if possible, avoid requesting addresses nodes older than this
@@ -52,5 +54,8 @@ static const int LLMQS_PROTO_VERSION = 96000;
 //! introduction of SENDDSQUEUE
 //! TODO we can remove this in 0.15.0.0
 static const int SENDDSQUEUE_PROTO_VERSION = 96000;
+
+//! protocol version is included in MNAUTH starting with this version
+static const int MNAUTH_NODE_VER_VERSION = 70218;
 
 #endif // BITCOIN_VERSION_H

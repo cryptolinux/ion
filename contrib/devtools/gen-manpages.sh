@@ -1,8 +1,4 @@
-#!/usr/bin/env bash
-# Copyright (c) 2016-2019 The Bitcoin Core developers
-# Copyright (c) 2020 The Ion Core developers
-# Distributed under the MIT software license, see the accompanying
-# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+#!/bin/bash
 
 export LC_ALL=C
 TOPDIR=${TOPDIR:-$(git rev-parse --show-toplevel)}
@@ -23,8 +19,8 @@ BITCOINQT=${BITCOINQT:-$BINDIR/qt/ion-qt}
 read -r -a BTCVER <<< "$($BITCOINCLI --version | head -n1 | awk -F'[ -]' '{ print $6, $7 }')"
 
 # Create a footer file with copyright content.
-# This gets autodetected fine for bitcoind if --version-string is not set,
-# but has different outcomes for bitcoin-qt and bitcoin-cli.
+# This gets autodetected fine for dashd if --version-string is not set,
+# but has different outcomes for dash-qt and dash-cli.
 echo "[COPYRIGHT]" > footer.h2m
 $BITCOIND --version | sed -n '1!p' >> footer.h2m
 

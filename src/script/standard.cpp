@@ -4,12 +4,12 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "script/standard.h"
+#include <script/standard.h>
 
-#include "pubkey.h"
-#include "script/script.h"
-#include "util.h"
-#include "utilstrencodings.h"
+#include <pubkey.h>
+#include <script/script.h>
+#include <util.h>
+#include <utilstrencodings.h>
 
 
 typedef std::vector<unsigned char> valtype;
@@ -35,9 +35,6 @@ const char* GetTxnOutputType(txnouttype t)
     return nullptr;
 }
 
-/**
- * Return public keys or hashes from scriptPubKey, for 'standard' transaction types.
- */
 bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::vector<unsigned char> >& vSolutionsRet)
 {
     // Templates
@@ -267,7 +264,7 @@ class CScriptVisitor : public boost::static_visitor<bool>
 private:
     CScript *script;
 public:
-    CScriptVisitor(CScript *scriptin) { script = scriptin; }
+    explicit CScriptVisitor(CScript *scriptin) { script = scriptin; }
 
     bool operator()(const CNoDestination &dest) const {
         script->clear();
