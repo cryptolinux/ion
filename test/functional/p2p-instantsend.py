@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-# Copyright (c) 2018-2020 The Dash Core developers
+# Copyright (c) 2018-2020 The XXXXXXX developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 from test_framework.mininode import *
-from test_framework.test_framework import DashTestFramework
+from test_framework.test_framework import IonTestFramework
 from test_framework.util import isolate_node, sync_mempools, reconnect_isolated_node, assert_equal, \
     assert_raises_rpc_error
 
@@ -16,7 +16,7 @@ Tests InstantSend functionality (prevent doublespend for unconfirmed transaction
 
 class InstantSendTest(IonTestFramework):
     def set_test_params(self):
-        self.set_dash_test_params(7, 3, fast_dip3_enforcement=True)
+        self.set_ion_test_params(7, 3, fast_dip3_enforcement=True)
         # set sender,  receiver,  isolated nodes
         self.isolated_idx = 1
         self.receiver_idx = 2

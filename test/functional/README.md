@@ -63,7 +63,7 @@ wrappers for them, `msg_block`, `msg_tx`, etc).
 with the iond(s) being tested (using python's asyncore package); the other
 implements the test logic.
 
-- `P2PConnection` is the class used to connect to a dashd.  `P2PInterface`
+- `P2PConnection` is the class used to connect to a iond.  `P2PInterface`
 contains the higher level logic for processing P2P payloads and connecting to
 the Bitcoin Core node application logic. For custom behaviour, subclass the
 P2PInterface object and override the callback methods.

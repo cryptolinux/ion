@@ -16,7 +16,7 @@ remotes:
   "dir": "signature"
 files:
 - "osslsigncode-2.0.tar.gz"
-- "dashcore-win-unsigned.tar.gz"
+- "ioncore-win-unsigned.tar.gz"
 script: |
   set -e -o pipefail
 

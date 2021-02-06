@@ -1,7 +1,7 @@
 [ ![pipelines](https://img.shields.io/bitbucket/pipelines/ioncoin/ion/master "pipelines") ](https://bitbucket.org/ioncoin/ion/addon/pipelines/home/ "pipelines") [![Snap Status](https://build.snapcraft.io/badge/ioncoincore/ion.svg)](https://build.snapcraft.io/user/ioncoincore/ion) [![CircleCI Build Status](https://img.shields.io/circleci/build/bitbucket/ioncoin/ion/master?style=plastic&token=88c8747ed5aaec6a61964b24b8bce84906fd6867)](https://circleci.com/bb/ioncoin/ion)
 [![BitBucket issues](https://img.shields.io/bitbucket/issues/ioncoin/ion.svg?style=social)](https://bitbucket.org/ioncoin/ion/issues?status=new&status=open)
 =======
-Dash Core staging tree 0.16
+Ion Core staging tree 5.00
 ===========================
 
 **Latest release** | **Contact us/Chat with us** | **ionomy.com homepage status** |
@@ -16,10 +16,10 @@ _If you want to encrypt your email/files, please use public pgp key provided bel
   We offer different installation and distribution methods covering most user needs.
   Below you can see
 
-Dash is an experimental digital currency that enables instant, private
-payments to anyone, anywhere in the world. Dash uses peer-to-peer technology
+Ion is an experimental digital currency that enables instant, private
+payments to anyone, anywhere in the world. Ion uses peer-to-peer technology
 to operate with no central authority: managing transactions and issuing money
-are carried out collectively by the network. Dash Core is the name of the open
+are carried out collectively by the network. Ion Core is the name of the open
 source software which enables the use of this currency.
 
 _For full information about usage and possible installation methods and Branches, please check out [Ioncore Snap Builds](snap/README.md#ioncore-snap-builds)_
@@ -45,9 +45,9 @@ We forked from [PIVX](https://github.com/PIVX-Project/PIVX) and integrated ION's
 
 By doing so, we connect to an enthusiastic and active community - leaving behind old Ion code that inherits from less actively developed and maintained code. Our main sources are now derived from:
 
-pivx | dash | bitcoin
+pivx | ion | bitcoin
 :-: | :--: | :-: |
-[![](https://github.com/PIVX-Project/PIVX/raw/master/share/pixmaps/pivx64.png)](https://github.com/PIVX-Project/PIVX) | [![](https://github.com/dashpay/dash/raw/master/share/pixmaps/dash32.png)](https://github.com/dashpay/dash) | [![](https://github.com/bitcoin/bitcoin/raw/master/share/pixmaps/bitcoin32.png)](https://github.com/bitcoin/bitcoin)
+[![](https://github.com/PIVX-Project/PIVX/raw/master/share/pixmaps/pivx64.png)](https://github.com/PIVX-Project/PIVX) | [![](https://github.com/ioncoincore/ion/raw/master/share/pixmaps/ion32.png)](https://github.com/ioncoincore/ion) | [![](https://github.com/bitcoin/bitcoin/raw/master/share/pixmaps/bitcoin32.png)](https://github.com/bitcoin/bitcoin)
 
 More information at [ionomy.com](https://www.ionomy.com) Visit our ANN thread at [BitcoinTalk](https://bitcointalk.org/index.php?topic=1443633.7200)
 

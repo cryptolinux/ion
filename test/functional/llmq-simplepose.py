@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2020 The Dash Core developers
+# Copyright (c) 2015-2020 The XXXXXXX developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,8 +17,8 @@ Checks simple PoSe system based on LLMQ commitments
 
 class LLMQSimplePoSeTest(IonTestFramework):
     def set_test_params(self):
-        self.set_dash_test_params(6, 5, fast_dip3_enforcement=True)
-        self.set_dash_llmq_test_params(5, 3)
+        self.set_ion_test_params(6, 5, fast_dip3_enforcement=True)
+        self.set_ion_llmq_test_params(5, 3)
 
     def run_test(self):
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2020 The Dash Core developers
+// Copyright (c) 2019-2020 The XXXXXXX developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -152,10 +152,10 @@ UniValue getprivatesendinfo(const JSONRPCRequest& request)
 static const CRPCCommand commands[] =
     { //  category              name                      actor (function)         argNames
         //  --------------------- ------------------------  ---------------------------------
-        { "dash",               "getpoolinfo",            &getpoolinfo,            {} },
-        { "dash",               "getprivatesendinfo",     &getprivatesendinfo,     {} },
+        { "ion",               "getpoolinfo",            &getpoolinfo,            {} },
+        { "ion",               "getprivatesendinfo",     &getprivatesendinfo,     {} },
 #ifdef ENABLE_WALLET
-        { "dash",               "privatesend",            &privatesend,            {} },
+        { "ion",               "privatesend",            &privatesend,            {} },
 #endif // ENABLE_WALLET
 };
 

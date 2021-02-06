@@ -3,7 +3,7 @@ Dash Core version 0.16.1.0
 
 Release is now available from:
 
-  <https://www.dash.org/downloads/#wallets>
+  <https://www.ioncore.org/downloads>
 
 This is a new minor version release, bringing various bugfixes and improvements.
 

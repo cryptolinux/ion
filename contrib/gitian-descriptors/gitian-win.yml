@@ -1,5 +1,5 @@
 ---
-name: "dash-win-0.16"
+name: "ion-win-5.00"
 enable_cache: true
 distro: "ubuntu"
 suites:

@@ -8,8 +8,8 @@ There are currently two sets of tests in this directory:
 - [functional](/test/functional) which test the functionality of 
 iond and ion-qt by interacting with them through the RPC and P2P
 interfaces.
-- [util](/test/util) which tests the dash utilities, currently only
-dash-tx.
+- [util](/test/util) which tests the ion utilities, currently only
+ion-tx.
 
 The util tests are run as part of `make check` target. The functional
 tests are run by the travis continuous build process whenever a pull
@@ -23,10 +23,10 @@ Build for your system first. Be sure to enable wallet, utils and daemon when you
 
 #### Dependencies
 
-Many Dash specific tests require dash_hash. To install it:
+Many Ion specific tests require ion_hash. To install it:
 
-- Clone the repo `git clone https://github.com/dashpay/dash_hash`
-- Install dash_hash `cd dash_hash && python3 setup.py install`
+- Clone the repo `git clone https://github.com/ioncoincore/ion_hash`
+- Install ion_hash `cd ion_hash && python3 setup.py install`
 
 The ZMQ functional test requires a python ZMQ library. To install it:
 

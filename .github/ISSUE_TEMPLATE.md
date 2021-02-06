@@ -2,7 +2,7 @@
 
 This issue tracker is only for technical issues related to Ion Core.
 
-General Ion questions and/or support requests and are best directed to the [Ionpay Reddit](https://www.reddit.com/r/ionpay/).
+General Ion questions and/or support requests and are best directed to the [Ionpay Reddit](https://www.reddit.com/r/ioncoincore/).
 
 To report critical security issues, email support@ionomy.com and/or see the ION bug bounty program on [Bugcrowd](https://bugcrowd.com/iondigitalcash) instead of creating Github issues.
 

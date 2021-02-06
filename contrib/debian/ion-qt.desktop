@@ -1,5 +1,5 @@
 [Desktop Entry]
-Encoding=UTF-8
+Version=1.0
 Name=Ion Core
 Comment=Ion P2P Cryptocurrency
 Comment[de]=Verbinde mit dem Ion peer-to-peer Netzwerk
@@ -11,3 +11,4 @@ Type=Application
 Icon=ion128
 MimeType=x-scheme-handler/ion;
 Categories=Office;Finance;
+StartupWMClass=Ion-qt

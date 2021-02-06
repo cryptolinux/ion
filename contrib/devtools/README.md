@@ -45,22 +45,22 @@ copyright\_header.py update \<base\_directory\> [verbose]
 Updates all the copyright headers of `The Ion Core developers` which were
 changed in a year more recent than is listed. For example:
 ```
-// Copyright (c) <firstYear>-<lastYear> The Dash Core developers
+// Copyright (c) <firstYear>-<lastYear> The XXXXXXX developers
 ```
 will be updated to:
 ```
-// Copyright (c) <firstYear>-<lastModifiedYear> The Dash Core developers
+// Copyright (c) <firstYear>-<lastModifiedYear> The XXXXXXX developers
 ```
 where `<lastModifiedYear>` is obtained from the `git log` history.
 
 This subcommand also handles copyright headers that have only a single year. In
 those cases:
 ```
-// Copyright (c) <year> The Dash Core developers
+// Copyright (c) <year> The XXXXXXX developers
 ```
 will be updated to:
 ```
-// Copyright (c) <year>-<lastModifiedYear> The Dash Core developers
+// Copyright (c) <year>-<lastModifiedYear> The XXXXXXX developers
 ```
 where the update is appropriate.
 
@@ -112,7 +112,7 @@ For example:
   ./github-merge.py 3077
 
 (in any git repository) will help you merge pull request #3077 for the
-ionpay/ion repository.
+ioncoincore/ion repository.
 
 What it does:
 * Fetch master and the pull request.
@@ -132,7 +132,7 @@ Setup
 ---------
 Configuring the github-merge tool for the bitcoin repository is done in the following way:
 
-    git config githubmerge.repository ionpay/ion
+    git config githubmerge.repository ioncoincore/ion
     git config githubmerge.testcmd "make -j4 check" (adapt to whatever you want to use for testing)
     git config --global user.signingkey mykeyid (if you want to GPG sign)
 

@@ -66,10 +66,10 @@ can then be controlled by group membership.
 
 ### Mac OS X
 
-Binary:              `/usr/local/bin/dashd`  
-Configuration file:  `~/Library/Application Support/DashCore/dash.conf`  
-Data directory:      `~/Library/Application Support/DashCore`  
-Lock file:           `~/Library/Application Support/DashCore/.lock`  
+Binary:              `/usr/local/bin/iond`  
+Configuration file:  `~/Library/Application Support/IonCore/ion.conf`  
+Data directory:      `~/Library/Application Support/IonCore`  
+Lock file:           `~/Library/Application Support/IonCore/.lock`  
 
 Installing Service Configuration
 -----------------------------------

@@ -5,7 +5,7 @@
 
 #include <compressor.h>
 #include <util.h>
-#include <test/test_dash.h>
+#include <test/test_ion.h>
 
 #include <stdint.h>
 

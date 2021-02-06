@@ -1,8 +1,8 @@
-// Copyright (c) 2020 The Dash Core developers
+// Copyright (c) 2020 The XXXXXXX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <test/test_dash.h>
+#include <test/test_ion.h>
 
 #include <amount.h>
 #include <consensus/validation.h>

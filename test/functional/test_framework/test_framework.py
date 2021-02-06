@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Copyright (c) 2014-2016 The Bitcoin Core developers
-# Copyright (c) 2014-2020 The Dash Core developers
+# Copyright (c) 2014-2020 The XXXXXXX developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Base class for RPC testing."""
@@ -105,9 +105,9 @@ class BitcoinTestFramework():
         parser.add_option("--pdbonfailure", dest="pdbonfailure", default=False, action="store_true",
                           help="Attach a python debugger if test fails")
         parser.add_option("--usecli", dest="usecli", default=False, action="store_true",
-                          help="use dash-cli instead of RPC for all commands")
-        parser.add_option("--dashd-arg", dest="dashd_extra_args", default=[], type='string', action='append',
-                          help="Pass extra args to all dashd instances")
+                          help="use ion-cli instead of RPC for all commands")
+        parser.add_option("--iond-arg", dest="iond_extra_args", default=[], type='string', action='append',
+                          help="Pass extra args to all iond instances")
         self.add_options(parser)
         (self.options, self.args) = parser.parse_args()
 
@@ -119,7 +119,7 @@ class BitcoinTestFramework():
 
         self.options.cachedir = os.path.abspath(self.options.cachedir)
 
-        self.extra_args_from_options = self.options.dashd_extra_args
+        self.extra_args_from_options = self.options.iond_extra_args
 
         # Set up temp directory and start logging
         if self.options.tmpdir:
@@ -167,7 +167,7 @@ class BitcoinTestFramework():
         else:
             for node in self.nodes:
                 node.cleanup_on_exit = False
-            self.log.info("Note: dashds were not stopped and may still be running")
+            self.log.info("Note: ionds were not stopped and may still be running")
 
         if not self.options.nocleanup and not self.options.noshutdown and success != TestStatus.FAILED:
             self.log.info("Cleaning up")
@@ -262,7 +262,7 @@ class BitcoinTestFramework():
             self.nodes.append(TestNode(old_num_nodes + i, self.options.tmpdir, extra_args[i], self.extra_args_from_options, rpchost, timewait=timewait, binary=binary[i], stderr=stderr, mocktime=self.mocktime, coverage_dir=self.options.coveragedir, use_cli=self.options.usecli))
 
     def start_node(self, i, *args, **kwargs):
-        """Start a dashd"""
+        """Start a iond"""
 
         node = self.nodes[i]
 
@@ -273,7 +273,7 @@ class BitcoinTestFramework():
             coverage.write_all_rpc_commands(self.options.coveragedir, node.rpc)
 
     def start_nodes(self, extra_args=None, stderr=None, *args, **kwargs):
-        """Start multiple dashds"""
+        """Start multiple ionds"""
 
         if extra_args is None:
             extra_args = [None] * self.num_nodes
@@ -518,8 +518,8 @@ class MasternodeInfo:
         self.collateral_vout = collateral_vout
 
 
-class DashTestFramework(BitcoinTestFramework):
-    def set_dash_test_params(self, num_nodes, masterodes_count, extra_args=None, fast_dip3_enforcement=False):
+class IonTestFramework(BitcoinTestFramework):
+    def set_ion_test_params(self, num_nodes, masterodes_count, extra_args=None, fast_dip3_enforcement=False):
         self.mn_count = masterodes_count
         self.num_nodes = num_nodes
         self.mninfo = []
@@ -540,13 +540,13 @@ class DashTestFramework(BitcoinTestFramework):
         self.llmq_size = 3
         self.llmq_threshold = 2
 
-    def set_dash_dip8_activation(self, activate_after_block):
+    def set_ion_dip8_activation(self, activate_after_block):
         window = int((activate_after_block + 2) / 3)
         threshold = int((window + 1) / 2)
         for i in range(0, self.num_nodes):
             self.extra_args[i].append("-vbparams=dip0008:0:999999999999:%d:%d" % (window, threshold))
 
-    def set_dash_llmq_test_params(self, llmq_size, llmq_threshold):
+    def set_ion_llmq_test_params(self, llmq_size, llmq_threshold):
         self.llmq_size = llmq_size
         self.llmq_threshold = llmq_threshold
         for i in range(0, self.num_nodes):

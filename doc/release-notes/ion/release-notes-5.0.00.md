@@ -65,9 +65,9 @@ ION Core should also work on most other Unix-like systems but is not frequently 
   - Both the POW difficulty algorithm and the POS difficulty algorithm aim at producing 1 block every 2 minutes.
     - Combined, the ION chain will keep producing 1 block every 1 minute.
   - Miners do not receive ION rewards. Instead, they receive rewards in the Electron token (ELEC).
-  - Mining uses Dash' X11 algorithm.
+  - Mining uses Ion' X11 algorithm.
   - The block version number includes a bit to specify if it is a POW or a POS block.
-- Core: the core code has been rebased from PivX to Dash.
+- Core: the core code has been rebased from PivX to Ion.
   - The staking functionality has been ported to the new code base.
   - The token implementation (ATP) has been ported to the new code base.
   - The zerocoin functionality (xION) has been partially ported to the new code base.
@@ -117,8 +117,8 @@ ION Core should also work on most other Unix-like systems but is not frequently 
     - build, debug and scripts for vscode debugger
 - All sources spellchecked
 - BLS
-  - [BLS Signature Scheme](https://github.com/dashpay/dips/blob/master/dip-0006/bls_signature_scheme.md)
-  - [BLS M-of-N Threshold Scheme and Distributed Key Generation](https://github.com/dashpay/dips/blob/master/dip-0006/bls_m-of-n_threshold_scheme_and_dkg.md#bls-m-of-n-threshold-scheme-and-distributed-key-generation)
+  - [BLS Signature Scheme](https://github.com/ioncoincore/dips/blob/master/dip-0006/bls_signature_scheme.md)
+  - [BLS M-of-N Threshold Scheme and Distributed Key Generation](https://github.com/ioncoincore/dips/blob/master/dip-0006/bls_m-of-n_threshold_scheme_and_dkg.md#bls-m-of-n-threshold-scheme-and-distributed-key-generation)
 - New version keeps all languages which our old sources had. For more info please check [translation process](translation_process.md).
 - New hardcoded seeds
 
@@ -154,12 +154,12 @@ Since 50% of the blocks will be POS blocks, stakers will receive an average of 3
 
 #### Masternodes
 
-The full documentation on ION v5 masternodes can be found in the Dash Documentation section
+The full documentation on ION v5 masternodes can be found in the Ion Documentation section
 on [Setting up Masternodes](https://docs.dash.org/en/stable/masternodes/setup.html).
 
 An example of how this can be done using an ION controller wallet and an ION remote masternode
 can be found at the ionomy wiki entry on
-[Setting up ION coin Masternodes](https://github.com/ionomy/ion/wiki/HOW-TO:-Setup-ION-coin-Masternode-with-Ubuntu-remote-and-local-QT-wallet-(DASH-Rebase)).
+[Setting up ION coin Masternodes](https://github.com/ionomy/ion/wiki/HOW-TO:-Setup-ION-coin-Masternode-with-Ubuntu-remote-and-local-QT-wallet-(ION-Rebase)).
 
 - Testnet masternodes require using the `protx` command:
 - Ensure a 20k collateral is available (`masternode outputs`).

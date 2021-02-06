@@ -29,7 +29,7 @@ if [ "$SOCKETEVENTS" = "" ]; then
   fi
 fi
 echo "Using socketevents mode: $SOCKETEVENTS"
-EXTRA_ARGS="--dashd-arg=-socketevents=$SOCKETEVENTS"
+EXTRA_ARGS="--iond-arg=-socketevents=$SOCKETEVENTS"
 
 set +e
 ./test/functional/test_runner.py --ci --coverage --failfast --nocleanup --tmpdir=$(pwd)/testdatadirs $PASS_ARGS $EXTRA_ARGS

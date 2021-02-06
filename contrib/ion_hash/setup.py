@@ -18,5 +18,5 @@ ion_hash_module = Extension('ion_hash',
 
 setup (name = 'ion_hash',
        version = '1.3.1',
-       description = 'Binding for Dash X11 proof of work hashing.',
+       description = 'Binding for Ion X11 proof of work hashing.',
        ext_modules = [ion_hash_module])

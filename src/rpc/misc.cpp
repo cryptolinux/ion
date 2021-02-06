@@ -1,6 +1,6 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2020 The Dash Core developers
+// Copyright (c) 2014-2020 The XXXXXXX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -343,7 +343,7 @@ UniValue createmultisig(const JSONRPCRequest& request)
             "It returns a json object with the address and redeemScript.\n"
             "DEPRECATION WARNING: Using addresses with createmultisig is deprecated. Clients must\n"
             "transition to using addmultisigaddress to create multisig addresses with addresses known\n"
-            "to the wallet before upgrading to v0.17. To use the deprecated functionality, start dashd with -deprecatedrpc=createmultisig\n"
+            "to the wallet before upgrading to v0.17. To use the deprecated functionality, start iond with -deprecatedrpc=createmultisig\n"
             "\nArguments:\n"
             "1. nrequired                    (numeric, required) The number of required signatures out of the n keys or addresses.\n"
             "2. \"keys\"                       (string, required) A json array of hex-encoded public keys\n"
@@ -382,9 +382,9 @@ UniValue createmultisig(const JSONRPCRequest& request)
                 pubkeys.push_back(AddrToPubKey(pwallet, keys[i].get_str()));
             } else
 #endif
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintf("Invalid public key: %s\nNote that from v0.16, createmultisig no longer accepts addresses."
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintf("Invalid public key: %s\nNote that from v5.00, createmultisig no longer accepts addresses."
             " Clients must transition to using addmultisigaddress to create multisig addresses with addresses known to the wallet before upgrading to v0.17."
-            " To use the deprecated functionality, start dashd with -deprecatedrpc=createmultisig", keys[i].get_str()));
+            " To use the deprecated functionality, start iond with -deprecatedrpc=createmultisig", keys[i].get_str()));
         }
     }
 
@@ -1115,7 +1115,7 @@ UniValue logging(const JSONRPCRequest& request)
             "The valid logging categories are: " + ListLogCategories() + "\n"
             "In addition, the following are available as category names with special meanings:\n"
             "  - \"all\",  \"1\" : represent all logging categories.\n"
-            "  - \"dash\" activates all Dash-specific categories at once.\n"
+            "  - \"ion\" activates all Ion-specific categories at once.\n"
             "To deactivate all categories at once you can specify \"all\" in <exclude>.\n"
             "  - \"none\", \"0\" : even if other logging categories are specified, ignore all of them.\n"
             "\nArguments:\n"
@@ -1180,7 +1180,7 @@ UniValue echo(const JSONRPCRequest& request)
             "echo|echojson \"message\" ...\n"
             "\nSimply echo back the input arguments. This command is for testing.\n"
             "\nThe difference between echo and echojson is that echojson has argument conversion enabled in the client-side table in"
-            "dash-cli and the GUI. There is no server-side difference."
+            "ion-cli and the GUI. There is no server-side difference."
         );
 
     return request.params;
@@ -1190,11 +1190,11 @@ static UniValue getinfo_deprecated(const JSONRPCRequest& request)
 {
     throw JSONRPCError(RPC_METHOD_NOT_FOUND,
         "getinfo\n"
-        "\nThis call was removed in version 0.16.0. Use the appropriate fields from:\n"
+        "\nThis call was removed in version 5.00.0. Use the appropriate fields from:\n"
         "- getblockchaininfo: blocks, difficulty, chain\n"
         "- getnetworkinfo: version, protocolversion, timeoffset, connections, proxy, relayfee, warnings\n"
         "- getwalletinfo: balance, privatesend_balance, keypoololdest, keypoolsize, paytxfee, unlocked_until, walletversion\n"
-        "\ndash-cli has the option -getinfo to collect and format these in the old format."
+        "\nion-cli has the option -getinfo to collect and format these in the old format."
     );
 }
 
@@ -1217,9 +1217,9 @@ static const CRPCCommand commands[] =
     { "addressindex",       "getaddresstxids",        &getaddresstxids,        {"addresses"} },
     { "addressindex",       "getaddressbalance",      &getaddressbalance,      {"addresses"} },
 
-    /* Dash features */
-    { "dash",               "mnsync",                 &mnsync,                 {} },
-    { "dash",               "spork",                  &spork,                  {"arg0","value"} },
+    /* Ion features */
+    { "ion",               "mnsync",                 &mnsync,                 {} },
+    { "ion",               "spork",                  &spork,                  {"arg0","value"} },
 
     /* Not shown in help */
     { "hidden",             "setmocktime",            &setmocktime,            {"timestamp"}},

@@ -3,7 +3,7 @@ Dash Core version 0.14.0.4
 
 Release is now available from:
 
-  <https://www.dash.org/downloads/#wallets>
+  <https://www.ioncore.org/downloads>
 
 This is a new minor version release, bringing various bugfixes and improvements.
 
@@ -87,7 +87,7 @@ reasonable selection of UTXOs when sending PrivateSend funds.
 Fix for CVE-2017-18350
 ----------------------
 
-Bitcoin silently implemented a hidden fix for [CVE-2017-18350](https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2019-November/017453.html).
+Bitcoin silently implemented a hidden fix for [CVE-2017-18350](https://lists.linuxfoundationcore.org/pipermail/bitcoin-dev/2019-November/017453.html).
 in Bitcoin v0.15.1. This release of Dash Core includes a backport of this fix.
 
 

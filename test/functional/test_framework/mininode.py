@@ -54,7 +54,7 @@ MESSAGEMAP = {
     b"tx": msg_tx,
     b"verack": msg_verack,
     b"version": msg_version,
-    # Dash Specific
+    # Ion Specific
     b"clsig": msg_clsig,
     b"getmnlistd": msg_getmnlistd,
     b"getsporks": None,
@@ -103,7 +103,7 @@ class P2PConnection(asyncore.dispatcher):
         self.devnet_name = devnet_name
         self.disconnect = False
 
-        logger.debug('Connecting to Dash Node: %s:%d' % (self.dstaddr, self.dstport))
+        logger.debug('Connecting to Ion Node: %s:%d' % (self.dstaddr, self.dstport))
 
         try:
             self.connect((dstaddr, dstport))

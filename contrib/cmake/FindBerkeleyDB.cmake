@@ -70,7 +70,7 @@ set(BerkeleyDB_VERSION "${BerkeleyDB_VERSION_MAJOR}.${BerkeleyDB_VERSION_MINOR}.
 # Finds the target library for berkeley db, since they all follow the same naming conventions
 macro(findpackage_berkeleydb_get_lib _BERKELEYDB_OUTPUT_VARNAME _TARGET_BERKELEYDB_LIB)
     # Different systems sometimes have a version in the lib name...
-    # and some have a dash or underscore before the versions.
+    # and some have a ion or underscore before the versions.
     # CMake recommends to put unversioned names before versioned names
     find_library(${_BERKELEYDB_OUTPUT_VARNAME}
             NAMES

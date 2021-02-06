@@ -1,5 +1,5 @@
 ---
-name: "dash-linux-0.16"
+name: "ion-linux-5.00"
 enable_cache: true
 distro: "ubuntu"
 suites:

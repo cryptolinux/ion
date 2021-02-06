@@ -6,9 +6,9 @@ for cryptographic algorithms such as SHA1, SHA256, SHA512 and RIPEMD160. As well
 
 Running
 ---------------------
-After compiling Dash Core, the benchmarks can be run with:
+After compiling Ion Core, the benchmarks can be run with:
 
-    src/bench/bench_dash
+    src/bench/bench_ion
 
 The output will look similar to:
 ```
@@ -153,7 +153,7 @@ Help
 ---------------------
 `-?` will print a list of options and exit:
 
-    src/bench/bench_dash -?
+    src/bench/bench_ion -?
 
 Notes
 ---------------------

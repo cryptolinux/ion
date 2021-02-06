@@ -26,7 +26,7 @@
 #define BITCOIN_COPYRIGHT_HOLDERS "The %b developers"
 
 /* Copyright holder(s) before %d replacement */
-#define DASH_COPYRIGHT_HOLDERS "The %d developers"
+#define ION_COPYRIGHT_HOLDERS "The %d developers"
 
 /* Copyright holder(s) before %p replacement */
 #define PIVX_COPYRIGHT_HOLDERS "The %p developers"
@@ -34,7 +34,7 @@
 /* Copyright holder(s) */
 #define COPYRIGHT_HOLDERS_FINAL "The Ion Core developers"
 #define BITCOIN_COPYRIGHT_HOLDERS_FINAL "The Bitcoin Core developers"
-#define DASH_COPYRIGHT_HOLDERS_FINAL "The Dash Core developers"
+#define ION_COPYRIGHT_HOLDERS_FINAL "The XXXXXXX developers"
 #define PIVX_COPYRIGHT_HOLDERS_FINAL "The PIVX Core developers"
 
 /* Replacement for %s in copyright holders string */
@@ -44,7 +44,7 @@
 #define BITCOIN_COPYRIGHT_HOLDERS_SUBSTITUTION "Bitcoin Core"
 
 /* Replacement for %d in copyright holders string */
-#define DASH_COPYRIGHT_HOLDERS_SUBSTITUTION "Dash Core"
+#define ION_COPYRIGHT_HOLDERS_SUBSTITUTION "Ion Core"
 
 /* Replacement for %p in copyright holders string */
 #define PIVX_COPYRIGHT_HOLDERS_SUBSTITUTION "PIVX Core"

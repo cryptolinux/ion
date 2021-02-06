@@ -55,7 +55,7 @@ TEST_EXIT_SKIPPED = 77
 BASE_SCRIPTS= [
     # Scripts that are run by the travis build process.
     # Longest test should go first, to favor running tests in parallel
-    'dip3-deterministicmns.py', # NOTE: needs dash_hash to pass
+    'dip3-deterministicmns.py', # NOTE: needs ion_hash to pass
     'feature_block_reward_reallocation.py',
     'wallet-hd.py',
     'walletbackup.py',
@@ -70,15 +70,15 @@ BASE_SCRIPTS= [
     'wallet-dump.py',
     'listtransactions.py',
     'multikeysporks.py',
-    'llmq-signing.py', # NOTE: needs dash_hash to pass
-    'llmq-signing.py --spork21', # NOTE: needs dash_hash to pass
-    'llmq-chainlocks.py', # NOTE: needs dash_hash to pass
-    'llmq-connections.py', # NOTE: needs dash_hash to pass
-    'llmq-simplepose.py', # NOTE: needs dash_hash to pass
-    'llmq-is-cl-conflicts.py', # NOTE: needs dash_hash to pass
-    'llmq-is-retroactive.py', # NOTE: needs dash_hash to pass
-    'llmq-dkgerrors.py', # NOTE: needs dash_hash to pass
-    'dip4-coinbasemerkleroots.py', # NOTE: needs dash_hash to pass
+    'llmq-signing.py', # NOTE: needs ion_hash to pass
+    'llmq-signing.py --spork21', # NOTE: needs ion_hash to pass
+    'llmq-chainlocks.py', # NOTE: needs ion_hash to pass
+    'llmq-connections.py', # NOTE: needs ion_hash to pass
+    'llmq-simplepose.py', # NOTE: needs ion_hash to pass
+    'llmq-is-cl-conflicts.py', # NOTE: needs ion_hash to pass
+    'llmq-is-retroactive.py', # NOTE: needs ion_hash to pass
+    'llmq-dkgerrors.py', # NOTE: needs ion_hash to pass
+    'dip4-coinbasemerkleroots.py', # NOTE: needs ion_hash to pass
     # vv Tests less than 60s vv
     'token_test-pt1.py',
     #'sendheaders.py', # NOTE: needs ion_hash to pass -- not working TODO fix it
@@ -247,7 +247,7 @@ def main():
         sys.exit(0)
 
     if not (enable_wallet and enable_utils and enable_bitcoind):
-        print("No functional tests to run. Wallet, utils, and dashd must all be enabled")
+        print("No functional tests to run. Wallet, utils, and iond must all be enabled")
         print("Rerun `configure` with -enable-wallet, -with-utils and -with-daemon and rerun make")
         sys.exit(0)
 
@@ -312,7 +312,7 @@ def main():
 def run_tests(*, test_list, src_dir, build_dir, exeext, tmpdir, jobs=1, enable_coverage=False, args=None, failfast=False, runs_ci):
     args = args or []
 
-    # Warn if dashd is already running (unix only)
+    # Warn if iond is already running (unix only)
     try:
         pidof_output = subprocess.check_output(["pidof", "iond"])
         if not (pidof_output is None or pidof_output == b''):
@@ -434,7 +434,7 @@ class TestHandler:
         self.test_list = test_list
         self.flags = flags
         self.num_running = 0
-        # In case there is a graveyard of zombie dashds, we can apply a
+        # In case there is a graveyard of zombie ionds, we can apply a
         # pseudorandom offset to hopefully jump over them.
         # (625 is PORT_RANGE/MAX_NODES)
         self.portseed_offset = int(time.time() * 1000) % 625
@@ -543,7 +543,7 @@ class RPCCoverage():
     Coverage calculation works by having each test script subprocess write
     coverage files into a particular directory. These files contain the RPC
     commands invoked during testing, as well as a complete listing of RPC
-    commands per `dash-cli help` (`rpc_interface.txt`).
+    commands per `ion-cli help` (`rpc_interface.txt`).
 
     After all tests complete, the commands run are combined and diff'd against
     the complete list to calculate uncovered RPC commands.

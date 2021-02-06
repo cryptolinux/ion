@@ -1,11 +1,11 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2014-2019 The XXXXXXX developers
 // Copyright (c) 2018-2020 The Ion Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/dash-config.h>
+#include <config/ion-config.h>
 #endif
 
 #include <qt/rpcconsole.h>
@@ -1247,7 +1247,7 @@ void RPCConsole::changeEvent(QEvent* e)
 {
     if (e->type() == QEvent::StyleChange) {
         clear();
-        ui->promptIcon->setHidden(GUIUtil::dashThemeActive());
+        ui->promptIcon->setHidden(GUIUtil::ionThemeActive());
         // Adjust button icon colors on theme changes
         setButtonIcons();
     }

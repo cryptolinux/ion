@@ -31,27 +31,27 @@ static PyObject *ion_getpowhash(PyObject *self, PyObject *args)
     return value;
 }
 
-static PyMethodDef DashMethods[] = {
+static PyMethodDef IonMethods[] = {
     { "getPoWHash", ion_getpowhash, METH_VARARGS, "Returns the proof of work hash using ion hash" },
     { NULL, NULL, 0, NULL }
 };
 
 #if PY_MAJOR_VERSION >= 3
-static struct PyModuleDef DashModule = {
+static struct PyModuleDef IonModule = {
     PyModuleDef_HEAD_INIT,
     "ion_hash",
     "...",
     -1,
-    DashMethods
+    IonMethods
 };
 
 PyMODINIT_FUNC PyInit_ion_hash(void) {
-    return PyModule_Create(&DashModule);
+    return PyModule_Create(&IonModule);
 }
 
 #else
 
 PyMODINIT_FUNC inition_hash(void) {
-    (void) Py_InitModule("ion_hash", DashMethods);
+    (void) Py_InitModule("ion_hash", IonMethods);
 }
 #endif

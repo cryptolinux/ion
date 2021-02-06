@@ -5,10 +5,10 @@ and tests weren't explicitly disabled.
 
 After configuring, they can be run with `make check`.
 
-To run the dashd tests manually, launch `src/test/test_dash`. To recompile
+To run the iond tests manually, launch `src/test/test_ion`. To recompile
 after a test file was modified, run `make` and then run the test again. If you
 modify a non-test file, use `make -C src/test` to recompile only what's needed
-to run the dashd tests.
+to run the iond tests.
 
 To add more iond tests, add `BOOST_AUTO_TEST_CASE` functions to the existing
 .cpp files in the `test/` directory or add new .cpp files that
