@@ -13,47 +13,84 @@ src/ion-tx
 src/test/test_ion
 src/test/test_ion_fuzzy
 src/qt/test/test_ion-qt
+src/qt/res/css/colors/*
 src/bench/bench_ion
 
 # autoreconf
 Makefile.in
 aclocal.m4
 autom4te.cache/
-compile
+build-aux/config.guess
+build-aux/config.sub
+build-aux/depcomp
+build-aux/install-sh
+build-aux/ltmain.sh
+build-aux/m4/libtool.m4
+build-aux/m4/lt~obsolete.m4
+build-aux/m4/ltoptions.m4
+build-aux/m4/ltsugar.m4
+build-aux/m4/ltversion.m4
+build-aux/missing
+build-aux/compile
+build-aux/test-driver
 config.log
 config.status
-config.guess
-config.sub
 configure
-depcomp
-install-sh
-missing
-stamp-h1
-univalue-config.h*
-test-driver
 libtool
-ltmain.sh
-test-suite.log
+src/config/ion-config.h
+src/config/ion-config.h.in
+src/config/stamp-h1
+share/setup.nsi
+share/qt/Info.plist
 
-*.a
-*.la
-*.lo
-*.logs
+src/univalue/gen
+
+src/qt/*.moc
+src/qt/moc_*.cpp
+src/qt/forms/ui_*.h
+
+src/qt/test/moc*.cpp
+libconftest.dylib*
+
+.deps
+.dirstamp
+.libs
+.*.swp
+*.*~*
+*.bak
+*.rej
+*.orig
+*.pyc
 *.o
-*.pc
+*.o-*
+*.patch
+!depends/patches/*/*.patch
+*.a
+*.pb.cc
+*.pb.h
+
+*.log
 *.trs
+*.dmg
+
+*.json.h
+*.raw.h
+
+#libtool object files
+*.lo
+*.la
 
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
 ion-qt
 Ion-Qt.app
+background.tiff*
 !/depends/Makefile
 
 # Unit-tests
 Makefile.test
 ion-qt_test
-src/test/buildenv.py
 
 # Resources cpp
 qrc_*.cpp
@@ -74,14 +111,10 @@ coverage_percent.txt
 linux-coverage-build
 linux-build
 win32-build
-qa/pull-tester/tests_config.py
-qa/pull-tester/tests_config.ini
-qa/cache/*
+test/config.ini
 test/cache/*
 
 !src/leveldb*/Makefile
-
-test/config.ini
 
 .cproject
 .project
@@ -92,9 +125,6 @@ libionconsensus.pc
 contrib/devtools/split-debug.sh
 src/qt/ion-qt.bash
 qa/pull-tester/tests-config.sh
-
-# gpg
-contrib/gitian-additional-scripts/gpgtemplate
 
 #development symlinks
 ion-cli
@@ -108,34 +138,10 @@ make
 .idea
 cmake-build-debug
 
-# exclude additional archives/images
-*.tar
+# Additional archive types
 *.tar.xz
-*.tar.bz2
 *.zip
-*.iso
-*.img
-
-# exclude 5.hfs file created by the script
-*.hfs
-*.dmg
-MacOSX10.11.sdk/
-
-# VSCode
-!.vscode/launch.json
-.vscode/settings.json
-.vscode/tags
-
-#SNAP
-parts/
-prime/
-snap/.snapcraft/
-stage/
-*.snap
-
-# datadir
-datadir/
-datadir*/
+*.7z
 
 # debian build
 debian/.debhelper/
@@ -153,18 +159,17 @@ debian/iond.substvars
 debian/iond/
 debian/tmp/
 
-# depends
-depends/config.guess
-depends/config.sub
-
 # mac make deploy
 dist/
 dpi36.background.tiff
 dpi72.background.tiff
 
-# test builds and binaries
-ion-binaries/
-ioncore-binaries/
-
 # metadata for console
 metadata.*.meta
+
+# datadir
+datadir/
+datadir*/
+
+# VSCode
+.vscode
