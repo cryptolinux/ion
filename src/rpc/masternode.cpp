@@ -31,6 +31,9 @@
 
 #include "rpc/server.h"
 
+// ion related
+UniValue masternodelist(const JSONRPCRequest& request);
+
 void masternode_list_help()
 {
     throw std::runtime_error(

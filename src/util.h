@@ -145,6 +145,12 @@ namespace BCLog {
         NETCONN     = ((uint64_t)1 << 43),
         //End Ion
 
+        //Start ION
+        ZEROCOIN    = ((uint64_t)1 << 61),
+        STAKING     = ((uint64_t)1 << 62),
+        TOKEN       = ((uint64_t)1 << 63),
+        //End ION
+
         NET_NETCONN = NET | NETCONN, // use this to have something logged in NET and NETCONN as well
 
         ALL         = ~(uint64_t)0,
@@ -166,14 +172,6 @@ std::vector<CLogCategoryActive> ListActiveLogCategories();
 
 /** Return true if str parses as a log category and set the flags in f */
 bool GetLogCategory(uint64_t *f, const std::string *str);
-
-/**
- * Convert string into true/false
- *
- * @param strValue String to parse as a boolean
- * @return true or false
- */
-bool InterpretBool(const std::string &strValue);
 
 /** Send a string to the log output */
 int LogPrintStr(const std::string &str);

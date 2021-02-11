@@ -14,6 +14,8 @@
 #include <chain.h>
 #include <coins.h>
 #include <utilmoneystr.h>
+#include <tokens/groups.h>
+#include "invalid.h"
 
 bool IsFinalTx(const CTransaction &tx, int nBlockHeight, int64_t nBlockTime)
 {
@@ -230,13 +232,13 @@ bool Consensus::CheckTxInputs(const CTransaction& tx, CValidationState& state, c
         assert(!coin.IsSpent());
 
         // If prev is coinbase, coinstake or group authority confirguration, check that it's matured
-        if (coin.IsCoinStake() && nSpendHeight - coin.nHeight < (nSpendHeight <= 100 ? (int)10 : params.nCoinbaseMaturity)) {
+        if (coin.IsCoinStake() && nSpendHeight - coin.nHeight < (nSpendHeight <= 100 ? (int)10 : COINBASE_MATURITY)) {
             return state.Invalid(false,
                 REJECT_INVALID, "bad-txns-premature-spend-of-coinstake",
                 strprintf("tried to spend coinstake at depth %d", nSpendHeight - coin.nHeight));
         }
 
-        if (coin.IsCoinBase() && nSpendHeight - coin.nHeight < (nSpendHeight <= 100 ? (int)10 : params.nCoinbaseMaturity)) {
+        if (coin.IsCoinBase() && nSpendHeight - coin.nHeight < (nSpendHeight <= 100 ? (int)10 : COINBASE_MATURITY)) {
             return state.Invalid(false,
                 REJECT_INVALID, "bad-txns-premature-spend-of-coinbase",
                 strprintf("tried to spend coinbase at depth %d", nSpendHeight - coin.nHeight));

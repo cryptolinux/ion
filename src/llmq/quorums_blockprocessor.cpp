@@ -17,6 +17,9 @@
 #include <primitives/block.h>
 #include <validation.h>
 
+// TODO: remove spork
+#include <spork.h>
+
 namespace llmq
 {
 

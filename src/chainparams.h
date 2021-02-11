@@ -9,6 +9,7 @@
 
 #include <chainparamsbase.h>
 #include <consensus/params.h>
+#include <libzerocoin/Params.h>
 #include <primitives/block.h>
 #include <protocol.h>
 

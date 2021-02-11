@@ -296,7 +296,7 @@ bool RenewAuthority(const COutput &authority, std::vector<CRecipient> &outputs, 
         CPubKey pubkey;
         childAuthorityKey.GetReservedKey(pubkey, true);
         CTxDestination authDest = pubkey.GetID();
-        CScript script = GetScriptForDestination(authDest, tg.associatedGroup, (CAmount)(tg.controllingGroupFlags() & GroupAuthorityFlags::ALL_BITS));
+        CScript script = GetTokenScriptForDestination(authDest, tg.associatedGroup, (CAmount)(tg.controllingGroupFlags() & GroupAuthorityFlags::ALL_BITS));
         CRecipient recipient = {script, GROUPED_SATOSHI_AMT, false};
         outputs.push_back(recipient);
     }
@@ -352,7 +352,7 @@ void ConstructTx(CWalletTx &wtxNew, const std::vector<COutput> &chosenCoins, con
                     RPC_WALLET_KEYPOOL_RAN_OUT, "Error: Keypool ran out, please call keypoolrefill first");
 
             CTxOut txout(GROUPED_SATOSHI_AMT,
-                GetScriptForDestination(newKey.GetID(), grpID, totalGroupedAvailable - totalGroupedNeeded));
+                GetTokenScriptForDestination(newKey.GetID(), grpID, totalGroupedAvailable - totalGroupedNeeded));
             tx.vout.push_back(txout);
         }
 
@@ -365,7 +365,7 @@ void ConstructTx(CWalletTx &wtxNew, const std::vector<COutput> &chosenCoins, con
                     RPC_WALLET_KEYPOOL_RAN_OUT, "Error: Keypool ran out, please call keypoolrefill first");
 
             CTxOut txout(GROUPED_SATOSHI_AMT,
-                GetScriptForDestination(newKey.GetID(), tokenGroupManager->GetDarkMatterID(), totalXDMAvailable - totalXDMNeeded));
+                GetTokenScriptForDestination(newKey.GetID(), tokenGroupManager->GetDarkMatterID(), totalXDMAvailable - totalXDMNeeded));
             tx.vout.push_back(txout);
         }
 
@@ -619,7 +619,7 @@ bool EnsureXDMFee(std::vector<CRecipient> &outputs, CAmount XDMFee) {
                 CTokenGroupInfo tgInfo(output.scriptPubKey);
                 if (tokenGroupManager->MatchesDarkMatter(tgInfo.associatedGroup) && !tgInfo.isAuthority()) {
                     if (tgInfo.quantity < XDMFee) {
-                        CScript script = GetScriptForDestination(payeeDest, tgInfo.associatedGroup, XDMFee);
+                        CScript script = GetTokenScriptForDestination(payeeDest, tgInfo.associatedGroup, XDMFee);
                         CRecipient recipient = {script, GROUPED_SATOSHI_AMT, false};
 
                         output.scriptPubKey = script;
@@ -631,7 +631,7 @@ bool EnsureXDMFee(std::vector<CRecipient> &outputs, CAmount XDMFee) {
             }
         }
     }
-    CScript script = GetScriptForDestination(DecodeDestination(Params().GetConsensus().strTokenManagementKey), tokenGroupManager->GetDarkMatterID(), XDMFee);
+    CScript script = GetTokenScriptForDestination(DecodeDestination(Params().GetConsensus().strTokenManagementKey), tokenGroupManager->GetDarkMatterID(), XDMFee);
     CRecipient recipient = {script, GROUPED_SATOSHI_AMT, false};
     outputs.push_back(recipient);
 

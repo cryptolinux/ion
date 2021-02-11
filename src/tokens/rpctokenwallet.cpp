@@ -89,12 +89,12 @@ static unsigned int ParseGroupAddrValue(const JSONRPCRequest& request,
         CRecipient recipient;
         if (groupedOutputs)
         {
-            script = GetScriptForDestination(dst, grpID, amount);
+            script = GetTokenScriptForDestination(dst, grpID, amount);
             recipient = {script, GROUPED_SATOSHI_AMT, false};
         }
         else
         {
-            script = GetScriptForDestination(dst, NoGroup, 0);
+            script = GetTokenScriptForDestination(dst, NoGroup, 0);
             recipient = {script, amount, false};
         }
 
@@ -706,10 +706,13 @@ extern UniValue listtokenssinceblock(const JSONRPCRequest& request)
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter");
     }
 
+    // TODO: Fix token
+    /*
     curparam++;
     if (request.params.size() > curparam)
         if (InterpretBool(request.params[curparam].get_str()))
             filter = filter | ISMINE_WATCH_ONLY;
+    */
 
     int depth = pindex ? (1 + chainActive.Height() - pindex->nHeight) : -1;
 
@@ -854,7 +857,7 @@ extern UniValue configuretokendryrun(const JSONRPCRequest& request)
 
     CTokenGroupID grpID = findGroupId(coin.GetOutPoint(), opretScript, TokenGroupIdFlags::NONE, grpNonce);
 
-    CScript script = GetScriptForDestination(authDest, grpID, (CAmount)GroupAuthorityFlags::ALL | grpNonce);
+    CScript script = GetTokenScriptForDestination(authDest, grpID, (CAmount)GroupAuthorityFlags::ALL | grpNonce);
     CRecipient recipient = {script, GROUPED_SATOSHI_AMT, false};
     outputs.push_back(recipient);
 
@@ -1023,7 +1026,7 @@ extern UniValue configuretoken(const JSONRPCRequest& request)
 
     CTokenGroupID grpID = findGroupId(coin.GetOutPoint(), opretScript, TokenGroupIdFlags::NONE, grpNonce);
 
-    CScript script = GetScriptForDestination(authDest, grpID, (CAmount)GroupAuthorityFlags::ALL | grpNonce);
+    CScript script = GetTokenScriptForDestination(authDest, grpID, (CAmount)GroupAuthorityFlags::ALL | grpNonce);
     CRecipient recipient = {script, GROUPED_SATOSHI_AMT, false};
     outputs.push_back(recipient);
 
@@ -1160,7 +1163,7 @@ extern UniValue configuremanagementtoken(const JSONRPCRequest& request)
         CTxDestination address;
         ExtractDestination(coin.GetScriptPubKey(), address);
         CTokenGroupInfo tgMagicInfo(coin.GetScriptPubKey());
-        CScript script = GetScriptForDestination(address, magicID, tgMagicInfo.getAmount());
+        CScript script = GetTokenScriptForDestination(address, magicID, tgMagicInfo.getAmount());
         CRecipient recipient = {script, GROUPED_SATOSHI_AMT, false};
         outputs.push_back(recipient);
     } else {
@@ -1207,7 +1210,7 @@ extern UniValue configuremanagementtoken(const JSONRPCRequest& request)
     std::vector<COutput> chosenCoins;
     chosenCoins.push_back(coin);
 
-    CScript script = GetScriptForDestination(authDest, grpID, (CAmount)GroupAuthorityFlags::ALL | grpNonce);
+    CScript script = GetTokenScriptForDestination(authDest, grpID, (CAmount)GroupAuthorityFlags::ALL | grpNonce);
     CRecipient recipient = {script, GROUPED_SATOSHI_AMT, false};
     outputs.push_back(recipient);
 
@@ -1334,7 +1337,7 @@ extern UniValue createtokenauthorities(const JSONRPCRequest& request)
     RenewAuthority(chosenCoins[0], outputs, renewAuthorityKey);
 
     { // Construct the new authority
-        CScript script = GetScriptForDestination(dst, grpID, (CAmount)auth);
+        CScript script = GetTokenScriptForDestination(dst, grpID, (CAmount)auth);
         CRecipient recipient = {script, GROUPED_SATOSHI_AMT, false};
         outputs.push_back(recipient);
     }
@@ -1464,7 +1467,7 @@ extern UniValue droptokenauthorities(const JSONRPCRequest& request)
         throw JSONRPCError(RPC_INVALID_PARAMS, "Invalid parameter: wrong vout nr");
     }
 
-    pwallet->AvailableCoins(availableCoins, true, nullptr, 0, MAX_MONEY, MAX_MONEY, 0, 0, 9999999, true);
+    pwallet->AvailableCoins(availableCoins, true, nullptr, 0, MAX_MONEY, MAX_MONEY, 0, 0, 9999999);
     if (availableCoins.empty()) {
         throw JSONRPCError(RPC_INVALID_PARAMS, "Invalid parameter: provided output is not available");
     }
@@ -1540,7 +1543,7 @@ extern UniValue droptokenauthorities(const JSONRPCRequest& request)
         ret.push_back(Pair("status", "Dropping all authorities"));
     } else {
         // Construct the new authority
-        CScript script = GetScriptForDestination(dest, grpID, (CAmount)authoritiesToKeep);
+        CScript script = GetTokenScriptForDestination(dest, grpID, (CAmount)authoritiesToKeep);
         CRecipient recipient = {script, GROUPED_SATOSHI_AMT, false};
         outputs.push_back(recipient);
     }
@@ -1871,7 +1874,7 @@ UniValue listunspenttokens(const JSONRPCRequest& request)
     assert(pwallet != nullptr);
     LOCK2(cs_main, pwallet->cs_wallet);
 
-    pwallet->AvailableCoins(vecOutputs, !include_unsafe, nullptr, nMinimumAmount, nMaximumAmount, nMinimumSumAmount, nMaximumCount, nMinDepth, nMaxDepth, fIncludeGrouped);
+    pwallet->AvailableCoins(vecOutputs, !include_unsafe, nullptr, nMinimumAmount, nMaximumAmount, nMinimumSumAmount, nMaximumCount, nMinDepth, nMaxDepth);
     for (const COutput& out : vecOutputs) {
         CTxDestination address;
         const CScript& scriptPubKey = out.tx->tx->vout[out.i].scriptPubKey;
@@ -1929,19 +1932,19 @@ UniValue listunspenttokens(const JSONRPCRequest& request)
 
 static const CRPCCommand commands[] =
 { //  category              name                        actor (function)            okSafeMode
-  //  --------------------- --------------------------  --------------------------  ----------
-    { "tokens",             "listtokentransactions",    &listtokentransactions,     false, {}   },
-    { "tokens",             "listtokenssinceblock",     &listtokenssinceblock,      false, {}   },
-    { "tokens",             "listunspenttokens",        &listunspenttokens,         false, {"groupid","minconf","maxconf","addresses","include_unsafe","query_options"} },
-    { "tokens",             "gettokenbalance",          &gettokenbalance,           false, {}   },
-    { "tokens",             "sendtoken",                &sendtoken,                 false, {}   },
-    { "tokens",             "configuretoken",           &configuretoken,            false, {}   },
-    { "tokens",             "configuremanagementtoken", &configuremanagementtoken,  false, {}   },
-    { "tokens",             "createtokenauthorities",   &createtokenauthorities,    false, {}   },
-    { "tokens",             "listtokenauthorities",     &listtokenauthorities,      false, {}   },
-    { "tokens",             "droptokenauthorities",     &droptokenauthorities,      false, {}   },
-    { "tokens",             "minttoken",                &minttoken,                 false, {}   },
-    { "tokens",             "melttoken",                &melttoken,                 false, {}   },
+  //  --------------------- --------------------------  --------------------------  -------------------
+    { "tokens",             "listtokentransactions",    &listtokentransactions,     {}   },
+    { "tokens",             "listtokenssinceblock",     &listtokenssinceblock,      {}   },
+    { "tokens",             "listunspenttokens",        &listunspenttokens,         {"groupid","minconf","maxconf","addresses","include_unsafe","query_options"} },
+    { "tokens",             "gettokenbalance",          &gettokenbalance,           {}   },
+    { "tokens",             "sendtoken",                &sendtoken,                 {}   },
+    { "tokens",             "configuretoken",           &configuretoken,            {}   },
+    { "tokens",             "configuremanagementtoken", &configuremanagementtoken,  {}   },
+    { "tokens",             "createtokenauthorities",   &createtokenauthorities,    {}   },
+    { "tokens",             "listtokenauthorities",     &listtokenauthorities,      {}   },
+    { "tokens",             "droptokenauthorities",     &droptokenauthorities,      {}   },
+    { "tokens",             "minttoken",                &minttoken,                 {}   },
+    { "tokens",             "melttoken",                &melttoken,                 {}   },
 };
 
 void RegisterTokenWalletRPCCommands(CRPCTable &tableRPC)

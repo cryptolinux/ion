@@ -30,6 +30,17 @@
 #include <masternode/masternode-sync.h>
 #include <validationinterface.h>
 
+// Ion related
+#include <pos/kernel.h>
+#include <pos/stakeinput.h>
+#include <pos/rewards.h>
+#include <script/sign.h>
+
+#ifdef ENABLE_WALLET
+#include <wallet/wallet.h>
+#include <pos/blocksignature.h>
+#endif
+
 #include <evo/specialtx.h>
 #include <evo/cbtx.h>
 #include <evo/simplifiedmns.h>

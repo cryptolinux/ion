@@ -10,6 +10,7 @@
 
 #include <amount.h>
 #include <base58.h>
+#include <consensus/tokengroups.h>
 #include <policy/feerate.h>
 #include <saltedhasher.h>
 #include <streams.h>
@@ -44,6 +45,10 @@ bool RemoveWallet(CWallet* wallet);
 bool HasWallets();
 std::vector<CWallet*> GetWallets();
 CWallet* GetWallet(const std::string& name);
+
+// TODO: remove
+typedef CWallet* CWalletRef;
+std::vector<CWalletRef> vpwallets;
 
 /**
  * Settings
@@ -242,7 +247,7 @@ public:
         Init();
     }
 
-    explicit CMerkleTx(CTransactionRef arg)
+    CMerkleTx(CTransactionRef arg)
     {
         SetTx(std::move(arg));
         Init();
@@ -905,6 +910,9 @@ public:
     MasterKeyMap mapMasterKeys;
     unsigned int nMasterKeyMaxID;
 
+    // Staking
+    uint64_t nStakeSplitThreshold;
+
     /** Construct wallet with specified name and database implementation. */
     CWallet(std::string name, std::unique_ptr<WalletDatabase> database) : m_name(std::move(name)), database(std::move(database))
     {
@@ -969,6 +977,13 @@ public:
      * populate vCoins with vector of available COutputs.
      */
     void AvailableCoins(std::vector<COutput>& vCoins, bool fOnlySafe=true, const CCoinControl *coinControl = nullptr, const CAmount& nMinimumAmount = 1, const CAmount& nMaximumAmount = MAX_MONEY, const CAmount& nMinimumSumAmount = MAX_MONEY, const uint64_t nMaximumCount = 0, const int nMinDepth = 0, const int nMaxDepth = 9999999) const;
+
+    /**
+     * populate vCoins with vector of available COutputs, filtered by the passed lambda function.
+       Returns the number of matches.
+     */
+    unsigned int FilterCoins(std::vector<COutput> &vCoins,
+        std::function<bool(const CWalletTx *, const CTxOut *)>) const;
 
     /**
      * Return list of available coins and locked coins grouped by non-change output address.
@@ -1213,6 +1228,10 @@ public:
     const std::string& GetAccountName(const CScript& scriptPubKey) const;
 
     void GetScriptForMining(std::shared_ptr<CReserveScript> &script);
+    bool GetScriptForPowMining(CScript& script, const std::shared_ptr<CReserveKey> &reservedKey);
+    bool GetScriptForHybridMining(CScript& script, const std::shared_ptr<CReserveKey> &reservedKey, const CReward &reward);
+    bool GetKeyForMining(std::shared_ptr<CReserveKey> &reservedKey, CPubKey &pubkey);
+
     unsigned int GetKeyPoolSize()
     {
         AssertLockHeld(cs_wallet); // set{Ex,In}ternalKeyPool
@@ -1278,6 +1297,7 @@ public:
 
     /* Initializes the wallet, returns a new CWallet instance or a null pointer in case of an error */
     static CWallet* CreateWalletFromFile(const std::string& name, const fs::path& path);
+    static bool InitLoadWallet();
 
     /**
      * Wallet post-init setup

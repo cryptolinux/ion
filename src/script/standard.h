@@ -63,6 +63,8 @@ enum txnouttype
     TX_SCRIPTHASH,
     TX_MULTISIG,
     TX_NULL_DATA, //!< unspendable OP_RETURN script that carries data
+    TX_GRP_PUBKEYHASH,
+    TX_GRP_SCRIPTHASH,
 };
 
 class CNoDestination {
@@ -106,6 +108,13 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
  * P2PKH, and P2SH scripts.
  */
 bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet);
+
+/**
+ * TODO
+ * 
+ * Ion related
+ */
+bool ExtractDestinationAndType(const CScript &scriptPubKey, CTxDestination &addressRet, txnouttype &whichType);
 
 /**
  * Parse a standard scriptPubKey with one or more destination addresses. For

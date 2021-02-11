@@ -39,6 +39,9 @@
 #include <memory>
 #include <stdint.h>
 
+// Ion related
+#include "pos/rewards.h"
+
 unsigned int ParseConfirmTarget(const UniValue& value)
 {
     int target = value.get_int();

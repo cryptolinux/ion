@@ -20,7 +20,7 @@ class TransactionStatus
 public:
     TransactionStatus():
         countsForBalance(false), lockedByInstantSend(false), lockedByChainLocks(false), sortKey(""),
-        matures_in(0), status(Unconfirmed), depth(0), open_for(0), cur_num_blocks(-1),
+        matures_in(0), status(Offline), depth(0), open_for(0), cur_num_blocks(-1),
         cachedChainLockHeight(-1), needsUpdate(false)
     { }
 
@@ -29,12 +29,14 @@ public:
         /// Normal (sent/received) transactions
         OpenUntilDate,      /**< Transaction not yet final, waiting for date */
         OpenUntilBlock,     /**< Transaction not yet final, waiting for block */
+        Offline,            /**< Not sent to any other nodes **/
         Unconfirmed,        /**< Not yet mined into a block **/
         Confirming,         /**< Confirmed, but waiting for the recommended number of confirmations **/
         Conflicted,         /**< Conflicts with other transaction or mempool **/
         Abandoned,          /**< Abandoned from the wallet **/
         /// Generated (mined) transactions
         Immature,           /**< Mined but waiting for maturity */
+        MaturesWarning,     /**< Transaction will likely not mature because no nodes have confirmed */
         NotAccepted         /**< Mined but not accepted */
     };
 
@@ -133,6 +135,7 @@ public:
     int64_t time;
     Type type;
     std::string strAddress;
+    CBitcoinAddress address;
     CTxDestination txDest;
 
     CAmount debit;
@@ -161,6 +164,18 @@ public:
     /** Return whether a status update is needed.
      */
     bool statusUpdateNeeded(int chainLockHeight) const;
+
+    /**
+     * Return stringified transaction record type
+     */
+    std::string GetTransactionRecordType() const;
+    std::string GetTransactionRecordType(Type type) const;
+
+    /**
+     * Return stringified transaction status
+     */
+    std::string GetTransactionStatus() const;
+    std::string GetTransactionStatus(TransactionStatus::Status status) const;
 };
 
 #endif // BITCOIN_QT_TRANSACTIONRECORD_H

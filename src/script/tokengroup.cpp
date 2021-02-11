@@ -80,7 +80,7 @@ public:
     }
 };
 
-CScript GetScriptForDestination(const CTxDestination &dest, const CTokenGroupID &group, const CAmount &amount)
+CScript GetTokenScriptForDestination(const CTxDestination &dest, const CTokenGroupID &group, const CAmount &amount)
 {
     CScript script;
 

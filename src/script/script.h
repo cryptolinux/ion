@@ -20,6 +20,9 @@
 #include <string>
 #include <vector>
 
+// TODO: cleanup
+#include <script/script_error.h>
+
 // Maximum number of bytes pushable to the stack
 static const unsigned int MAX_SCRIPT_ELEMENT_SIZE = 520;
 
@@ -207,7 +210,7 @@ class scriptnum_error : public std::runtime_error
 {
 public:
     ScriptError errNum;
-    explicit scriptnum_error(ScriptError errnum, const std::string &str) : std::runtime_error(str), errNum(errnum) {}
+    explicit scriptnum_error(const std::string& str) : std::runtime_error(str) {}
 };
 
 class CScriptNum
@@ -233,7 +236,7 @@ public:
                         const size_t nMaxNumSize = nDefaultMaxNumSize)
     {
         if (vch.size() > nMaxNumSize) {
-            throw scriptnum_error(SCRIPT_ERR_NUMBER_OVERFLOW, "script number overflow");
+            throw scriptnum_error("script number overflow");
         }
         if (fRequireMinimal && vch.size() > 0) {
             // Check that the number is encoded with the minimum possible
@@ -249,7 +252,7 @@ public:
                 // is +-255, which encode to 0xff00 and 0xff80 respectively.
                 // (big-endian).
                 if (vch.size() <= 1 || (vch[vch.size() - 2] & 0x80) == 0) {
-                    throw scriptnum_error(SCRIPT_ERR_NUMBER_BAD_ENCODING, "non-minimally encoded script number");
+                    throw scriptnum_error("non-minimally encoded script number");
                 }
             }
         }

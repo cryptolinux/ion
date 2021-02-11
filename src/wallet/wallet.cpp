@@ -19,11 +19,14 @@
 #include <net.h>
 #include <policy/fees.h>
 #include <policy/policy.h>
+#include <pos/rewards.h>
 #include <primitives/block.h>
 #include <primitives/transaction.h>
 #include <script/script.h>
 #include <script/sign.h>
+#include <script/tokengroup.h>
 #include <timedata.h>
+#include <tokens/tokengroupwallet.h>
 #include <txmempool.h>
 #include <util.h>
 #include <utilmoneystr.h>
@@ -48,7 +51,9 @@
 #include <boost/thread.hpp>
 
 static CCriticalSection cs_wallets;
-static std::vector<CWallet*> vpwallets GUARDED_BY(cs_wallets);
+
+//**TODO** - cleanup from other files
+//static std::vector<CWallet*> vpwallets GUARDED_BY(cs_wallets);
 
 bool AddWallet(CWallet* wallet)
 {
@@ -3002,6 +3007,51 @@ CAmount CWallet::GetAvailableBalance(const CCoinControl* coinControl) const
     return balance;
 }
 
+unsigned int CWallet::FilterCoins(std::vector<COutput> &vCoins,
+    std::function<bool(const CWalletTx *, const CTxOut *)> func) const
+{
+    vCoins.clear();
+    unsigned int ret = 0;
+
+    {
+        LOCK2(cs_main, cs_wallet);
+        for (std::map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it)
+        {
+            const uint256 &wtxid = it->first;
+            const CWalletTx *pcoin = &(*it).second;
+
+            if (!CheckFinalTx(*pcoin->tx))
+                continue;
+
+            if (pcoin->IsGenerated() && pcoin->GetBlocksToMaturity() > 0)
+                continue;
+
+            int nDepth = pcoin->GetDepthInMainChain();
+            if (nDepth < 0)
+                continue;
+
+            // We should not consider coins which aren't at least in our mempool
+            // It's possible for these to be conflicted via ancestors which we may never be able to detect
+            if (nDepth == 0 && !pcoin->InMempool())
+                continue;
+
+            for (unsigned int i = 0; i < pcoin->tx->vout.size(); i++)
+            {
+                isminetype mine = IsMine(pcoin->tx->vout[i]);
+                if (!(IsSpent(wtxid, i)) && mine != ISMINE_NO && !IsLockedCoin((*it).first, i) &&
+                    func(pcoin, &pcoin->tx->vout[i]))
+                {
+                    // The UTXO is available
+                    COutput outpoint(pcoin, i, nDepth, (mine & ISMINE_SPENDABLE) != ISMINE_NO, false, false);
+                    vCoins.push_back(outpoint);
+                    ret++;
+                }
+            }
+        }
+    }
+    return ret;
+}
+
 void CWallet::AvailableCoins(std::vector<COutput> &vCoins, bool fOnlySafe, const CCoinControl *coinControl, const CAmount &nMinimumAmount, const CAmount &nMaximumAmount, const CAmount &nMinimumSumAmount, const uint64_t nMaximumCount, const int nMinDepth, const int nMaxDepth) const
 {
     vCoins.clear();
@@ -3038,10 +3088,8 @@ void CWallet::AvailableCoins(std::vector<COutput> &vCoins, bool fOnlySafe, const
                 continue;
 
             for (unsigned int i = 0; i < pcoin->tx->vout.size(); i++) {
-                if (!includeGrouped && IsOutputGrouped(pcoin->tx->vout[i]))
-                    continue;
-
                 bool found = false;
+
                 if (nCoinType == CoinType::ONLY_FULLY_MIXED) {
                     if (!CPrivateSend::IsDenominatedAmount(pcoin->tx->vout[i].nValue)) continue;
                     found = IsFullyMixed(COutPoint(wtxid, i));
@@ -5079,7 +5127,7 @@ bool CWallet::GetScriptForHybridMining(CScript& script, const std::shared_ptr<CR
     if (it == reward.tokenAmounts.end()) {
         script = CScript();
     } else {
-        script = GetScriptForDestination(dst, it->first, it->second);
+        script = GetTokenScriptForDestination(dst, it->first, it->second);
     }
     return true;
 }
@@ -5850,6 +5898,8 @@ bool CMerkleTx::IsChainLocked() const
     return false;
 }
 
+// **TODO - cleanup
+/*
 int CMerkleTx::GetBlocksToMaturity() const
 {
     if (!(IsCoinBase() || IsCoinStake() || IsAnyOutputGroupedAuthority((CTransaction(*this)))))
@@ -5858,9 +5908,15 @@ int CMerkleTx::GetBlocksToMaturity() const
     int minBlocksToMaturity = 0;
     if (IsAnyOutputGroupedAuthority((CTransaction(*this))))
         minBlocksToMaturity = std::max(0, (Params().GetConsensus().nOpGroupNewRequiredConfirmations + 1) - depth);
-    return std::max(minBlocksToMaturity, (Params().GetConsensus().nCoinbaseMaturity + 1) - depth);
+    return std::max(minBlocksToMaturity, (COINBASE_MATURITY + 1) - depth);
 }
-
+*/
+int CMerkleTx::GetBlocksToMaturity() const
+{
+    if (!(IsCoinBase() || IsCoinStake()))
+        return 0;
+    return std::max(0, (COINBASE_MATURITY+1) - GetDepthInMainChain());
+}
 
 bool CWalletTx::AcceptToMemoryPool(const CAmount& nAbsurdFee, CValidationState& state)
 {

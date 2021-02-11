@@ -15,4 +15,4 @@ CTokenGroupID GetTokenGroup(const CTxDestination &id);
 //* Initialize a group ID from a string representation
 CTokenGroupID GetTokenGroup(const std::string &ionAddrGrpId, const CChainParams &params = Params());
 //* Group script helper function
-CScript GetScriptForDestination(const CTxDestination &dest, const CTokenGroupID &group, const CAmount &amount);
+CScript GetTokenScriptForDestination(const CTxDestination &dest, const CTokenGroupID &group, const CAmount &amount);

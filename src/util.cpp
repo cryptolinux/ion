@@ -93,6 +93,7 @@ const int64_t nStartupTime = GetTime();
 //Ion only features
 bool fMasternodeMode = false;
 bool fDisableGovernance = false;
+bool fLiteMode = false;
 /**
     nWalletBackups:
         1..10   - number of automatic backups to keep

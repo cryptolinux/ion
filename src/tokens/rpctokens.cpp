@@ -618,7 +618,7 @@ UniValue createrawtokentransaction(const JSONRPCRequest& request)
             throw JSONRPCError(RPC_TYPE_ERROR, "Invalid parameter: token_amount");
         CScript script;
 
-        script = GetScriptForDestination(dst, tgID, nTokenAmount);
+        script = GetTokenScriptForDestination(dst, tgID, nTokenAmount);
         CTxOut txout(nAmount, script);
 
         rawTx.vout.push_back(txout);
@@ -628,12 +628,12 @@ UniValue createrawtokentransaction(const JSONRPCRequest& request)
 }
 
 static const CRPCCommand commands[] =
-{ //  category              name                         actor (function)            okSafeMode
-  //  --------------------- ---------------------------  --------------------------  ----------
-    { "tokens",             "tokeninfo",                 &tokeninfo,                 false, {}  },
-    { "tokens",             "gettokentransaction",       &gettokentransaction,       false, {}  },
-    { "tokens",             "getsubgroupid",             &getsubgroupid,             false, {}  },
-    { "tokens",             "createrawtokentransaction", &createrawtokentransaction, false, {}  },
+{ //  category              name                         actor (function)
+  //  --------------------- ---------------------------  --------------------------
+    { "tokens",             "tokeninfo",                 &tokeninfo, {}  },
+    { "tokens",             "gettokentransaction",       &gettokentransaction, {}  },
+    { "tokens",             "getsubgroupid",             &getsubgroupid, {}  },
+    { "tokens",             "createrawtokentransaction", &createrawtokentransaction, {}  },
 };
 
 void RegisterTokensRPCCommands(CRPCTable &tableRPC)

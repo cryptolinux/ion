@@ -1,7 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The XXXXXXX developers
-// Copyright (c) 2018-2020 The Ion Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -153,6 +152,19 @@ bool WalletBatch::WriteMinVersion(int nVersion)
     return WriteIC(std::string("minversion"), nVersion);
 }
 
+bool WalletBatch::WriteStakeSplitThreshold(uint64_t nStakeSplitThreshold)
+{
+    return WriteIC(std::string("stakeSplitThreshold"), nStakeSplitThreshold);
+}
+
+bool WalletBatch::WriteAutoCombineSettings(bool fEnable, CAmount nCombineThresholdAmount)
+{
+    std::pair<bool, CAmount> pSettings;
+    pSettings.first = fEnable;
+    pSettings.second = nCombineThresholdAmount;
+    return WriteIC(std::string("autocombinesettings"), pSettings);
+}
+
 bool WalletBatch::ReadAccount(const std::string& strAccount, CAccount& account)
 {
     account.SetNull();
@@ -282,7 +294,7 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
             CWalletTx wtx;
             ssValue >> wtx;
             CValidationState state;
-            if (!(CheckTransaction(*wtx.tx, state) && (wtx.GetHash() == hash) && state.IsValid()))
+            if (!(CheckTransaction(*wtx.tx, state, false) && (wtx.GetHash() == hash) && state.IsValid()))
                 return false;
 
             // Undo serialize changes in 31600
@@ -547,16 +559,6 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
                 strErr = "Error reading wallet database: LoadHDPubKey failed";
                 return false;
             }
-        }
-        else if (strType == "stakeSplitThreshold")
-        {
-            ssValue >> pwallet->nStakeSplitThreshold;
-        }
-        else if (strType == "autocombinesettings")
-        {
-            std::pair<bool, CAmount> pSettings;
-            ssValue >> pSettings;
-            rewardManager->AutoCombineSettings(pSettings.first, pSettings.second);
         }
     } catch (...)
     {

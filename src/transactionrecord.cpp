@@ -4,11 +4,12 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <qt/transactionrecord.h>
+#include <transactionrecord.h>
 
 #include <base58.h>
 #include <consensus/consensus.h>
 #include <validation.h>
+#include <pos/rewards.h>
 #include <timedata.h>
 #include <wallet/wallet.h>
 
@@ -248,7 +249,9 @@ std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWa
                     sub.type = TransactionRecord::Generated;
                 }
 
-                parts.append(sub);
+                sub.address.SetString(sub.strAddress);
+                sub.txDest = sub.address.Get();
+                parts.push_back(sub);
             }
         }
     }
@@ -354,8 +357,10 @@ std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWa
 
             sub.debit = -(nDebit - nChange);
             sub.credit = nCredit - nChange;
-            parts.append(sub);
-            parts.last().involvesWatchAddress = involvesWatchAddress;   // maybe pass to TransactionRecord as constructor argument
+            sub.address.SetString(sub.strAddress);
+            sub.txDest = sub.address.Get();
+            parts.push_back(sub);
+            parts.back().involvesWatchAddress = involvesWatchAddress;   // maybe pass to TransactionRecord as constructor argument
         }
         else if (fAllFromMe)
         {
@@ -422,7 +427,10 @@ std::vector<TransactionRecord> TransactionRecord::decomposeTransaction(const CWa
                 }
                 sub.debit = -nValue;
 
-                parts.append(sub);
+                sub.address.SetString(sub.strAddress);
+                sub.txDest = sub.address.Get();
+
+                parts.push_back(sub);
             }
         }
         else

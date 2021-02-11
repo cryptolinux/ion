@@ -142,12 +142,12 @@ bool ReindexTokenDB(std::string &strError) {
     }
     tokenGroupManager->ResetTokenGroups();
 
-    uiInterface.ShowProgress(_("Reindexing token database..."), 0);
+    uiInterface.ShowProgress(_("Reindexing token database..."), 0, false);
 
     CBlockIndex* pindex = chainActive[Params().GetConsensus().ATPStartHeight];
     std::vector<CTokenGroupCreation> vTokenGroups;
     while (pindex) {
-        uiInterface.ShowProgress(_("Reindexing token database..."), std::max(1, std::min(99, (int)((double)(pindex->nHeight - Params().GetConsensus().ATPStartHeight) / (double)(chainActive.Height() - Params().GetConsensus().ATPStartHeight) * 100))));
+        uiInterface.ShowProgress(_("Reindexing token database..."), std::max(1, std::min(99, (int)((double)(pindex->nHeight - Params().GetConsensus().ATPStartHeight) / (double)(chainActive.Height() - Params().GetConsensus().ATPStartHeight) * 100))), false);
 
         if (pindex->nHeight % 10000 == 0)
             LogPrintf("Reindexing token database: block %d...\n", pindex->nHeight);
@@ -177,7 +177,7 @@ bool ReindexTokenDB(std::string &strError) {
         pindex = chainActive.Next(pindex);
     }
 
-    uiInterface.ShowProgress("", 100);
+    uiInterface.ShowProgress("", 100, false);
 
     return true;
 }

@@ -1,6 +1,5 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Ion Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -57,7 +56,7 @@
 #include <llmq/quorums_signing_shares.h>
 
 #if defined(NDEBUG)
-# error "Ion Core cannot be compiled without assertions."
+# error "Dash Core cannot be compiled without assertions."
 #endif
 
 /** Maximum number of in-flight objects from a peer */
@@ -125,7 +124,7 @@ static const unsigned int AVG_ADDRESS_BROADCAST_INTERVAL = 30;
 static const unsigned int INVENTORY_BROADCAST_INTERVAL = 5;
 /** Maximum number of inventory items to send per transmission.
  *  Limits the impact of low-fee transaction floods.
- *  We have 4 times smaller block times in Ion, so we need to push 4 times more invs per 1MB. */
+ *  We have 4 times smaller block times in Dash, so we need to push 4 times more invs per 1MB. */
 static constexpr unsigned int INVENTORY_BROADCAST_MAX_PER_1MB_BLOCK = 4 * 7 * INVENTORY_BROADCAST_INTERVAL;
 
 // Internal stuff
@@ -1304,7 +1303,7 @@ bool static AlreadyHave(const CInv& inv) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
         return mapBlockIndex.count(inv.hash);
 
     /*
-        Ion Related Inventory Messages
+        Dash Related Inventory Messages
 
         --
 
@@ -2100,7 +2099,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
             return false;
         }
 
-        if (nVersion < connman->GetMinPeerVersion())
+        if (nVersion < MIN_PEER_PROTO_VERSION)
         {
             // disconnect from peers older than this proto version
             LogPrint(BCLog::NET, "peer=%d using obsolete version %i; disconnecting\n", pfrom->GetId(), nVersion);
@@ -2474,16 +2473,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
                 if (!state) {
                     continue;
                 }
-                // Get the block when we receive an unknown INV while connected to a legacy node
-                if (pfrom->nVersion < GETHEADERS_VERSION && state->fSyncStarted) {
-                    LOCK(cs_main);
-                    std::vector<CInv> vInv(1);
-                    vInv[0] = CInv(MSG_BLOCK, inv.hash);
-                    connman->PushMessage(pfrom, msgMaker.Make(NetMsgType::GETDATA, vInv));
 
-                    state->nStallingSince = GetTimeMicros();
-                    LogPrint(BCLog::NET, "Stall started peer=%s\n", state->name);
-                }
                 // Download if this is a nice peer, or we have no nice peers and this one might do.
                 bool fFetch = state->fPreferredDownload || (nPreferredDownload == 0 && !pfrom->fOneShot);
                 // Only actively request headers from a single peer, unless we're close to end of initial download.
@@ -3235,19 +3225,6 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         LogPrint(BCLog::NET, "received block %s peer=%d\n", pblock->GetHash().ToString(), pfrom->GetId());
 
         bool forceProcessing = false;
-
-        // In legacy mode, when the block does not connect, request the missing blocks and bail
-        if (pfrom->nVersion < GETHEADERS_VERSION) {
-            LOCK(cs_main);
-            if (mapBlockIndex.find(pblock->hashPrevBlock) == mapBlockIndex.end()) {
-                connman->PushMessage(pfrom, msgMaker.Make(NetMsgType::GETBLOCKS, chainActive.GetLocator(pindexBestHeader), pblock->GetHash()));
-                return true;
-            } else {
-                State(pfrom->GetId())->nStallingSince = 0;
-            }
-            forceProcessing = true;
-        }
-
         const uint256 hash(pblock->GetHash());
         {
             LOCK(cs_main);
@@ -4384,7 +4361,7 @@ bool PeerLogicValidation::SendMessages(CNode* pto, std::atomic<bool>& interruptM
             state.m_object_download.m_check_expiry_timer = current_time + GetObjectExpiryInterval(MSG_TX)/2 + GetRandMicros(GetObjectExpiryInterval(MSG_TX));
         }
 
-        // ION this code also handles non-TXs (Ion specific messages)
+        // DASH this code also handles non-TXs (Dash specific messages)
         auto& object_process_time = state.m_object_download.m_object_process_time;
         while (!object_process_time.empty() && object_process_time.begin()->first <= current_time && state.m_object_download.m_object_in_flight.size() < MAX_PEER_OBJECT_IN_FLIGHT) {
             const CInv inv = object_process_time.begin()->second;

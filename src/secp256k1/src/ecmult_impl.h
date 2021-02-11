@@ -10,7 +10,6 @@
 #include <string.h>
 #include <stdint.h>
 
-#include "util.h"
 #include "group.h"
 #include "scalar.h"
 #include "ecmult.h"
@@ -31,41 +30,17 @@
 #  endif
 #else
 /* optimal for 128-bit and 256-bit exponents. */
-#  define WINDOW_A 5
-/** Larger values for ECMULT_WINDOW_SIZE result in possibly better
- *  performance at the cost of an exponentially larger precomputed
- *  table. The exact table size is
- *      (1 << (WINDOW_G - 2)) * sizeof(secp256k1_ge_storage)  bytes,
- *  where sizeof(secp256k1_ge_storage) is typically 64 bytes but can
- *  be larger due to platform-specific padding and alignment.
- *  If the endomorphism optimization is enabled (USE_ENDOMORMPHSIM)
- *  two tables of this size are used instead of only one.
- */
-#  define WINDOW_G ECMULT_WINDOW_SIZE
-#endif
-
-/* Noone will ever need more than a window size of 24. The code might
- * be correct for larger values of ECMULT_WINDOW_SIZE but this is not
- * not tested.
- *
- * The following limitations are known, and there are probably more:
- * If WINDOW_G > 27 and size_t has 32 bits, then the code is incorrect
- * because the size of the memory object that we allocate (in bytes)
- * will not fit in a size_t.
- * If WINDOW_G > 31 and int has 32 bits, then the code is incorrect
- * because certain expressions will overflow.
- */
-#if ECMULT_WINDOW_SIZE < 2 || ECMULT_WINDOW_SIZE > 24
-#  error Set ECMULT_WINDOW_SIZE to an integer in range [2..24].
-#endif
-
+#define WINDOW_A 5
+/** larger numbers may result in slightly better performance, at the cost of
+    exponentially larger precomputed tables. */
 #ifdef USE_ENDOMORPHISM
-    #define WNAF_BITS 128
+/** Two tables for window size 15: 1.375 MiB. */
+#define WINDOW_G 15
 #else
-    #define WNAF_BITS 256
+/** One table for window size 16: 1.375 MiB. */
+#define WINDOW_G 16
 #endif
-#define WNAF_SIZE_BITS(bits, w) (((bits) + (w) - 1) / (w))
-#define WNAF_SIZE(w) WNAF_SIZE_BITS(WNAF_BITS, w)
+#endif
 
 #ifdef USE_ENDOMORPHISM
     #define WNAF_BITS 128
@@ -146,7 +121,7 @@ static void secp256k1_ecmult_odd_multiples_table(int n, secp256k1_gej *prej, sec
  *    It only operates on tables sized for WINDOW_A wnaf multiples.
  *  - secp256k1_ecmult_odd_multiples_table_storage_var, which converts its
  *    resulting point set to actually affine points, and stores those in pre.
- *    It operates on tables of any size.
+ *    It operates on tables of any size, but uses heap-allocated temporaries.
  *
  *  To compute a*P + b*G, we compute a table for P using the first function,
  *  and for G using the second (which requires an inverse, but it only needs to
@@ -319,13 +294,6 @@ static void secp256k1_ecmult_odd_multiples_table_storage_var(const int n, secp25
     } \
 } while(0)
 
-static const size_t SECP256K1_ECMULT_CONTEXT_PREALLOCATED_SIZE =
-    ROUND_TO_ALIGN(sizeof((*((secp256k1_ecmult_context*) NULL)->pre_g)[0]) * ECMULT_TABLE_SIZE(WINDOW_G))
-#ifdef USE_ENDOMORPHISM
-    + ROUND_TO_ALIGN(sizeof((*((secp256k1_ecmult_context*) NULL)->pre_g_128)[0]) * ECMULT_TABLE_SIZE(WINDOW_G))
-#endif
-    ;
-
 static void secp256k1_ecmult_context_init(secp256k1_ecmult_context *ctx) {
     ctx->pre_g = NULL;
 #ifdef USE_ENDOMORPHISM
@@ -333,10 +301,8 @@ static void secp256k1_ecmult_context_init(secp256k1_ecmult_context *ctx) {
 #endif
 }
 
-static void secp256k1_ecmult_context_build(secp256k1_ecmult_context *ctx, void **prealloc) {
+static void secp256k1_ecmult_context_build(secp256k1_ecmult_context *ctx, const secp256k1_callback *cb) {
     secp256k1_gej gj;
-    void* const base = *prealloc;
-    size_t const prealloc_size = SECP256K1_ECMULT_CONTEXT_PREALLOCATED_SIZE;
 
     if (ctx->pre_g != NULL) {
         return;
@@ -345,12 +311,7 @@ static void secp256k1_ecmult_context_build(secp256k1_ecmult_context *ctx, void *
     /* get the generator */
     secp256k1_gej_set_ge(&gj, &secp256k1_ge_const_g);
 
-    {
-        size_t size = sizeof((*ctx->pre_g)[0]) * ((size_t)ECMULT_TABLE_SIZE(WINDOW_G));
-        /* check for overflow */
-        VERIFY_CHECK(size / sizeof((*ctx->pre_g)[0]) == ((size_t)ECMULT_TABLE_SIZE(WINDOW_G)));
-        ctx->pre_g = (secp256k1_ge_storage (*)[])manual_alloc(prealloc, sizeof((*ctx->pre_g)[0]) * ECMULT_TABLE_SIZE(WINDOW_G), base, prealloc_size);
-    }
+    ctx->pre_g = (secp256k1_ge_storage (*)[])checked_malloc(cb, sizeof((*ctx->pre_g)[0]) * ECMULT_TABLE_SIZE(WINDOW_G));
 
     /* precompute the tables with odd multiples */
     secp256k1_ecmult_odd_multiples_table_storage_var(ECMULT_TABLE_SIZE(WINDOW_G), *ctx->pre_g, &gj);
@@ -360,10 +321,7 @@ static void secp256k1_ecmult_context_build(secp256k1_ecmult_context *ctx, void *
         secp256k1_gej g_128j;
         int i;
 
-        size_t size = sizeof((*ctx->pre_g_128)[0]) * ((size_t) ECMULT_TABLE_SIZE(WINDOW_G));
-        /* check for overflow */
-        VERIFY_CHECK(size / sizeof((*ctx->pre_g_128)[0]) == ((size_t)ECMULT_TABLE_SIZE(WINDOW_G)));
-        ctx->pre_g_128 = (secp256k1_ge_storage (*)[])manual_alloc(prealloc, sizeof((*ctx->pre_g_128)[0]) * ECMULT_TABLE_SIZE(WINDOW_G), base, prealloc_size);
+        ctx->pre_g_128 = (secp256k1_ge_storage (*)[])checked_malloc(cb, sizeof((*ctx->pre_g_128)[0]) * ECMULT_TABLE_SIZE(WINDOW_G));
 
         /* calculate 2^128*generator */
         g_128j = gj;
@@ -375,14 +333,22 @@ static void secp256k1_ecmult_context_build(secp256k1_ecmult_context *ctx, void *
 #endif
 }
 
-static void secp256k1_ecmult_context_finalize_memcpy(secp256k1_ecmult_context *dst, const secp256k1_ecmult_context *src) {
-    if (src->pre_g != NULL) {
-        /* We cast to void* first to suppress a -Wcast-align warning. */
-        dst->pre_g = (secp256k1_ge_storage (*)[])(void*)((unsigned char*)dst + ((unsigned char*)(src->pre_g) - (unsigned char*)src));
+static void secp256k1_ecmult_context_clone(secp256k1_ecmult_context *dst,
+                                           const secp256k1_ecmult_context *src, const secp256k1_callback *cb) {
+    if (src->pre_g == NULL) {
+        dst->pre_g = NULL;
+    } else {
+        size_t size = sizeof((*dst->pre_g)[0]) * ECMULT_TABLE_SIZE(WINDOW_G);
+        dst->pre_g = (secp256k1_ge_storage (*)[])checked_malloc(cb, size);
+        memcpy(dst->pre_g, src->pre_g, size);
     }
 #ifdef USE_ENDOMORPHISM
-    if (src->pre_g_128 != NULL) {
-        dst->pre_g_128 = (secp256k1_ge_storage (*)[])(void*)((unsigned char*)dst + ((unsigned char*)(src->pre_g_128) - (unsigned char*)src));
+    if (src->pre_g_128 == NULL) {
+        dst->pre_g_128 = NULL;
+    } else {
+        size_t size = sizeof((*dst->pre_g_128)[0]) * ECMULT_TABLE_SIZE(WINDOW_G);
+        dst->pre_g_128 = (secp256k1_ge_storage (*)[])checked_malloc(cb, size);
+        memcpy(dst->pre_g_128, src->pre_g_128, size);
     }
 #endif
 }
@@ -392,6 +358,10 @@ static int secp256k1_ecmult_context_is_built(const secp256k1_ecmult_context *ctx
 }
 
 static void secp256k1_ecmult_context_clear(secp256k1_ecmult_context *ctx) {
+    free(ctx->pre_g);
+#ifdef USE_ENDOMORPHISM
+    free(ctx->pre_g_128);
+#endif
     secp256k1_ecmult_context_init(ctx);
 }
 
@@ -403,7 +373,7 @@ static void secp256k1_ecmult_context_clear(secp256k1_ecmult_context *ctx) {
  *    than the number of bits in the (absolute value) of the input.
  */
 static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, int w) {
-    secp256k1_scalar s;
+    secp256k1_scalar s = *a;
     int last_set_bit = -1;
     int bit = 0;
     int sign = 1;
@@ -416,7 +386,6 @@ static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, 
 
     memset(wnaf, 0, len * sizeof(wnaf[0]));
 
-    s = *a;
     if (secp256k1_scalar_get_bits(&s, 255, 1)) {
         secp256k1_scalar_negate(&s, &s);
         sign = -1;
@@ -449,7 +418,7 @@ static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, 
     CHECK(carry == 0);
     while (bit < 256) {
         CHECK(secp256k1_scalar_get_bits(&s, bit++, 1) == 0);
-    }
+    } 
 #endif
     return last_set_bit + 1;
 }

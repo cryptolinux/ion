@@ -23,6 +23,7 @@ enum class CoinType
     // Attributes
     MIN_COIN_TYPE = ALL_COINS,
     MAX_COIN_TYPE = ONLY_PRIVATESEND_COLLATERAL,
+    STAKABLE_COINS,
 };
 
 /** Coin Control Features. */

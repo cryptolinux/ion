@@ -1635,31 +1635,6 @@ void CSigSharesManager::ForceReAnnouncement(const CQuorumCPtr& quorum, Consensus
     }
 }
 
-// causes all known sigShares to be re-announced
-void CSigSharesManager::ForceReAnnouncement(const CQuorumCPtr& quorum, Consensus::LLMQType llmqType, const uint256& id, const uint256& msgHash)
-{
-    LOCK(cs);
-    auto signHash = CLLMQUtils::BuildSignHash(llmqType, quorum->qc.quorumHash, id, msgHash);
-    auto sigs = sigShares.GetAllForSignHash(signHash);
-    if (sigs) {
-        for (auto& p : *sigs) {
-            // re-announce every sigshare to every node
-            sigSharesToAnnounce.Add(std::make_pair(signHash, p.first), true);
-        }
-    }
-    for (auto& p : nodeStates) {
-        CSigSharesNodeState& nodeState = p.second;
-        auto session = nodeState.GetSessionBySignHash(signHash);
-        if (!session) {
-            continue;
-        }
-        // pretend that the other node doesn't know about any shares so that we re-announce everything
-        session->knows.SetAll(false);
-        // we need to use a new session id as we don't know if the other node has run into a timeout already
-        session->sendSessionId = (uint32_t)-1;
-    }
-}
-
 void CSigSharesManager::HandleNewRecoveredSig(const llmq::CRecoveredSig& recoveredSig)
 {
     LOCK(cs);

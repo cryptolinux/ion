@@ -73,19 +73,25 @@ bool ParseDouble(const std::string& str, double *out)
 }
 }
 
+// TODO cleanup
+/*
 const std::vector<std::string>& UniValue::getKeys() const
 {
     if (typ != VOBJ)
         throw std::runtime_error("JSON value is not an object as expected");
     return keys;
 }
+*/
 
+// TODO cleanup
+/*
 const std::vector<UniValue>& UniValue::getValues() const
 {
     if (typ != VOBJ && typ != VARR)
         throw std::runtime_error("JSON value is not an object or array as expected");
     return values;
 }
+*/
 
 bool UniValue::get_bool() const
 {
@@ -94,12 +100,15 @@ bool UniValue::get_bool() const
     return getBool();
 }
 
+// TODO cleanup
+/*
 const std::string& UniValue::get_str() const
 {
     if (typ != VSTR)
         throw std::runtime_error("JSON value is not a string as expected");
     return getValStr();
 }
+*/
 
 int UniValue::get_int() const
 {

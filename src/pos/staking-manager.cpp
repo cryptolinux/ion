@@ -240,6 +240,7 @@ bool CStakingManager::IsStaking() {
         nStaking = true;
     else if (mapHashedBlocks.count(chainActive.Tip()->nHeight - 1) && nLastCoinStakeSearchInterval)
         nStaking = true;
+    return nStaking;
 }
 
 void CStakingManager::UpdatedBlockTip(const CBlockIndex* pindex)

@@ -130,7 +130,7 @@ void static IONMiner(CWallet * const pwallet)
                     if (it == coinbaseReward.tokenAmounts.end()) {
                         coinbase_script = CScript();
                     } else {
-                        coinbase_script = GetScriptForDestination(dst, it->first, it->second);
+                        coinbase_script = GetTokenScriptForDestination(dst, it->first, it->second);
                     }
 
                     pblocktemplate = BlockAssembler(Params()).CreateNewBlock(coinbase_script);

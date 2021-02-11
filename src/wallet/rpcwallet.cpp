@@ -12,15 +12,23 @@
 #include <httpserver.h>
 #include <keepass.h>
 #include <net.h>
+#include "masternode/masternode-sync.h"
+#include "miner.h"
+#include "mining-manager.h"
 #include <policy/feerate.h>
 #include <policy/fees.h>
+#include <pos/staker.h>
+#include <pos/staking-manager.h>
 #include <privatesend/privatesend-client.h>
+#include <reward-manager.h>
 #include <rpc/mining.h>
 #include <rpc/safemode.h>
 #include <rpc/server.h>
 #include <rpc/util.h>
 #include <timedata.h>
 #include <txmempool.h>
+#include <tokens/tokengroupwallet.h>
+#include <transactionrecord.h>
 #include <util.h>
 #include <utilmoneystr.h>
 #include <validation.h>
@@ -3604,7 +3612,7 @@ UniValue setstakesplitthreshold(const JSONRPCRequest& request)
     if (nStakeSplitThreshold > 999999)
         throw std::runtime_error("Value out of range, max allowed is 999999");
 
-    CWalletDB walletdb(pwallet->GetDBHandle());
+    WalletBatch walletdb(pwallet->GetDBHandle());
     LOCK(pwallet->cs_wallet);
 
     UniValue result(UniValue::VOBJ);
@@ -3654,7 +3662,7 @@ UniValue autocombinerewards(const JSONRPCRequest& request)
             throw std::runtime_error("Value out of range, minimum allowed is 0");
     }
 
-    CWalletDB walletdb(pwallet->GetDBHandle());
+    WalletBatch walletdb(pwallet->GetDBHandle());
     LOCK(pwallet->cs_wallet);
 
     UniValue result(UniValue::VOBJ);

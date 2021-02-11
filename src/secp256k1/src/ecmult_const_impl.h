@@ -59,12 +59,8 @@ static int secp256k1_wnaf_const(int *wnaf, secp256k1_scalar s, int w, int size) 
 
     int flip;
     int bit;
-    secp256k1_scalar s;
+    secp256k1_scalar neg_s;
     int not_neg_one;
-
-    VERIFY_CHECK(w > 0);
-    VERIFY_CHECK(size > 0);
-
     /* Note that we cannot handle even numbers by negating them to be odd, as is
      * done in other implementations, since if our scalars were specified to have
      * width < 256 for performance reasons, their negations would have width 256
@@ -81,11 +77,10 @@ static int secp256k1_wnaf_const(int *wnaf, secp256k1_scalar s, int w, int size) 
      * we need to special-case it in this logic. */
     flip = secp256k1_scalar_is_high(&s);
     /* We add 1 to even numbers, 2 to odd ones, noting that negation flips parity */
-    bit = flip ^ !secp256k1_scalar_is_even(scalar);
+    bit = flip ^ !secp256k1_scalar_is_even(&s);
     /* We check for negative one, since adding 2 to it will cause an overflow */
-    secp256k1_scalar_negate(&s, scalar);
-    not_neg_one = !secp256k1_scalar_is_one(&s);
-    s = *scalar;
+    secp256k1_scalar_negate(&neg_s, &s);
+    not_neg_one = !secp256k1_scalar_is_one(&neg_s);
     secp256k1_scalar_cadd_bit(&s, bit, not_neg_one);
     /* If we had negative one, flip == 1, s.d[0] == 0, bit == 1, so caller expects
      * that we added two to it and flipped it. In fact for -1 these operations are
@@ -114,7 +109,7 @@ static int secp256k1_wnaf_const(int *wnaf, secp256k1_scalar s, int w, int size) 
         wnaf[word++] = u_last * global_sign;
 
         u_last = u;
-    } while (word * w < size);
+    }
     wnaf[word] = u * global_sign;
 
     VERIFY_CHECK(secp256k1_scalar_is_zero(&s));
@@ -137,6 +132,7 @@ static void secp256k1_ecmult_const(secp256k1_gej *r, const secp256k1_ge *a, cons
     int wnaf_1[1 + WNAF_SIZE(WINDOW_A - 1)];
 
     int i;
+    secp256k1_scalar sc = *scalar;
 
     /* build wnaf representation for q. */
     int rsize = size;

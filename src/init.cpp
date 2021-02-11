@@ -30,6 +30,11 @@
 #include <policy/feerate.h>
 #include <policy/fees.h>
 #include <policy/policy.h>
+#ifdef ENABLE_WALLET
+#include "mining-manager.h"
+#include "pos/staking-manager.h"
+#include "reward-manager.h"
+#endif
 #include <rpc/server.h>
 #include <rpc/register.h>
 #include <rpc/safemode.h>
@@ -45,6 +50,17 @@
 #include <util.h>
 #include <utilmoneystr.h>
 #include <validationinterface.h>
+#include "xion/accumulatorcheckpoints.h"
+#include "xion/zerocoindb.h"
+// #include "libzerocoin/CoinSpend.h"
+/*
+#include "dbwrapper.h"
+#include "xion/zerocoin.h"
+#include "libzerocoin/Coin.h"
+*/
+#ifdef ENABLE_WALLET
+#include "wallet/wallet.h"
+#endif
 
 #include <masternode/activemasternode.h>
 #include <dsnotificationinterface.h>
@@ -60,6 +76,8 @@
 #include <spork.h>
 #include <warnings.h>
 #include <walletinitinterface.h>
+#include "tokens/tokengroupmanager.h"
+#include "tokens/tokendb.h"
 
 #include <evo/deterministicmns.h>
 #include <llmq/quorums_init.h>
@@ -1601,7 +1619,7 @@ bool AppInitLockDataDirectory()
     return true;
 }
 
-bool AppInitMain()
+bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
 {
     const CChainParams& chainparams = Params();
     // ********************************************************* Step 4a: application initialization
@@ -1824,6 +1842,32 @@ bool AppInitMain()
         nMaxOutboundLimit = gArgs.GetArg("-maxuploadtarget", DEFAULT_MAX_UPLOAD_TARGET)*1024*1024;
     }
 
+    // ********************************************************* Step 7a: check lite mode and load sporks
+
+    // lite mode disables all Ion-specific functionality
+    // TODO: remove or reenable litemode
+    /*
+    fLiteMode = gArgs.GetBoolArg("-litemode", false);
+    LogPrintf("fLiteMode %d\n", fLiteMode);
+
+    if(fLiteMode) {
+        InitWarning(_("You are starting in lite mode, most Ion-specific functionality is disabled."));
+    }
+
+    if((!fLiteMode && fTxIndex == false)
+       && chainparams.NetworkIDString() != CBaseChainParams::REGTEST) { // TODO remove this when pruning is fixed. See https://bitbucket.org/ioncoin/ion/pull/1817 and https://bitbucket.org/ioncoin/ion/pull/1743
+        return InitError(_("Transaction index can't be disabled in full mode. Either start with -litemode command line switch or enable transaction index."));
+    }
+
+    if (!fLiteMode) {
+        uiInterface.InitMessage(_("Loading sporks cache..."));
+        CFlatDB<CSporkManager> flatdb6("sporks.dat", "magicSporkCache");
+        if (!flatdb6.Load(sporkManager)) {
+            return InitError(_("Failed to load sporks cache from") + "\n" + (GetDataDir() / "sporks.dat").string());
+        }
+    }
+    */
+
     // ********************************************************* Step 7a: Load sporks
 
     uiInterface.InitMessage(_("Loading sporks cache..."));
@@ -1831,8 +1875,6 @@ bool AppInitMain()
     if (!flatdb6.Load(sporkManager)) {
         return InitError(_("Failed to load sporks cache from") + "\n" + (GetDataDir() / "sporks.dat").string());
     }
-
-    invalid_out::LoadScripts();
 
     // ********************************************************* Step 7b: load block chain
 
@@ -2242,7 +2284,11 @@ bool AppInitMain()
         miningManager->fEnableIONMining = false;
     } else {
         stakingManager = std::shared_ptr<CStakingManager>(new CStakingManager(vpwallets[0]));
+            // TODO: remove or reenable litemode
+        /*
         stakingManager->fEnableStaking = gArgs.GetBoolArg("-staking", !fLiteMode);
+        */
+        stakingManager->fEnableStaking = gArgs.GetBoolArg("-staking", true);
         stakingManager->fEnableIONStaking = gArgs.GetBoolArg("-staking", true);
 
         miningManager = std::shared_ptr<CMiningManager>(new CMiningManager(Params(), g_connman.get(), vpwallets[0]));
@@ -2263,7 +2309,9 @@ bool AppInitMain()
         }
         stakingManager->nReserveBalance = n;
     }
-
+    
+    // TODO: remove or reenable litemode
+    /*
     if (!fLiteMode) {
         if (stakingManager->fEnableStaking) {
             scheduler.scheduleEvery(boost::bind(&CStakingManager::DoMaintenance, boost::ref(stakingManager), boost::ref(*g_connman)), 5 * 1000);
@@ -2272,6 +2320,7 @@ bool AppInitMain()
             scheduler.scheduleEvery(boost::bind(&CRewardManager::DoMaintenance, boost::ref(rewardManager), boost::ref(*g_connman)), 3 * 60 * 1000);
         }
     }
+    */
 #endif // ENABLE_WALLET
 
     // ********************************************************* Step 11: import blocks
@@ -2417,6 +2466,12 @@ bool AppInitMain()
     uiInterface.InitMessage(_("Done loading"));
 
     g_wallet_init_interface->Start(scheduler);
+
+#ifdef ENABLE_WALLET
+    for (CWalletRef pwallet : vpwallets) {
+        pwallet->postInitProcess();
+    }
+#endif
 
     // Final check if the user requested to kill the GUI during one of the last operations. If so, exit.
     if (fRequestShutdown)
