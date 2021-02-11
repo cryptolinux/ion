@@ -11,6 +11,7 @@
 #include <messagesigner.h>
 #include <netfulfilledman.h>
 #include <netmessagemaker.h>
+#include <pos/rewards.h>
 #include <spork.h>
 #include <util.h>
 #include <validation.h>
@@ -339,6 +340,9 @@ bool CMasternodePayments::GetBlockTxOuts(int nBlockHeight, CBlockReward blockRew
 {
     voutMasternodePaymentsRet.clear();
 
+    // TODO: add token amount
+    CAmount masternodeReward = blockReward.GetMasternodeReward().IONAmount;// GetMasternodePayment(nBlockHeight, blockReward);
+
     const CBlockIndex* pindex;
     int nReallocActivationHeight{std::numeric_limits<int>::max()};
 
@@ -352,8 +356,6 @@ bool CMasternodePayments::GetBlockTxOuts(int nBlockHeight, CBlockReward blockRew
         }
     }
     uint256 proTxHash;
-
-    CAmount masternodeReward = GetMasternodePayment(nBlockHeight, blockReward, nReallocActivationHeight);
 
     auto dmnPayee = deterministicMNManager->GetListForBlock(pindex).GetMNPayee();
     if (!dmnPayee) {
@@ -378,7 +380,7 @@ bool CMasternodePayments::GetBlockTxOuts(int nBlockHeight, CBlockReward blockRew
     return true;
 }
 
-bool CMasternodePayments::IsTransactionValid(const CTransaction& txNew, int nBlockHeight, CAmount blockReward) const
+bool CMasternodePayments::IsTransactionValid(const CTransaction& txNew, int nBlockHeight, CBlockReward blockReward) const
 {
     if (!deterministicMNManager->IsDIP3Enforced(nBlockHeight)) {
         // can't verify historical blocks here
