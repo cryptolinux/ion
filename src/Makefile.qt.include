@@ -43,7 +43,6 @@ QT_FORMS_UI = \
   qt/forms/masternodelist.ui \
   qt/forms/qrdialog.ui \
   qt/forms/openuridialog.ui \
-  qt/forms/optionsdialog.ui \
   qt/forms/overviewpage.ui \
   qt/forms/receivecoinsdialog.ui \
   qt/forms/receiverequestdialog.ui \
