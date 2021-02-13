@@ -56,6 +56,9 @@
 #include <QTimer>
 #include <QTranslator>
 
+// TODO - cleanup
+#include "scheduler.h"
+
 #if defined(QT_STATICPLUGIN)
 #include <QtPlugin>
 #if QT_VERSION < 0x050000
@@ -198,6 +201,8 @@ Q_SIGNALS:
     void runawayException(const QString &message);
 
 private:
+    boost::thread_group threadGroup;
+    CScheduler scheduler;
 
     /// Pass fatal exception message to UI thread
     void handleRunawayException(const std::exception_ptr e);
