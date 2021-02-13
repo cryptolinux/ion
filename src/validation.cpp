@@ -81,6 +81,9 @@
 #define MICRO 0.000001
 #define MILLI 0.001
 
+/** Proof of Stake */
+std::map<uint256, uint256> mapProofOfStake;
+
 /**
  * Global state
  */
