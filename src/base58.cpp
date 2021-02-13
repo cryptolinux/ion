@@ -337,12 +337,15 @@ bool CBitcoinSecret::SetString(const std::string& strSecret)
     return SetString(strSecret.c_str());
 }
 
+//TODO cleanup
+/*
 std::string EncodeDestination(const CTxDestination& dest)
 {
     CBitcoinAddress addr(dest);
     if (!addr.IsValid()) return "";
     return addr.ToString();
 }
+*/
 
 namespace
 {
