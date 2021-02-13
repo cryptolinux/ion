@@ -46,6 +46,12 @@
 #include <mutex>
 #include <condition_variable>
 
+// TODO
+#include "base58.h"
+#include "consensus/tokengroups.h"
+#include "script/tokengroup.h"
+#include <tokens/tokengroupmanager.h>
+
 struct CUpdatedBlock
 {
     uint256 hash;
