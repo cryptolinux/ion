@@ -27,6 +27,9 @@
 
 #include <stdio.h>
 
+// TODO: cleanup
+#include <scheduler.h>
+
 /* Introduction text for doxygen: */
 
 /*! \mainpage Developer documentation
@@ -58,6 +61,9 @@ void WaitForShutdown()
 //
 bool AppInit(int argc, char* argv[])
 {
+    boost::thread_group threadGroup;
+    CScheduler scheduler;
+
     bool fRet = false;
 
     //
@@ -169,7 +175,7 @@ bool AppInit(int argc, char* argv[])
             // If locking the data directory failed, exit immediately
             return false;
         }
-        fRet = AppInitMain();
+        fRet = AppInitMain(threadGroup, scheduler);
     } catch (...) {
         PrintExceptionContinue(std::current_exception(), "AppInit()");
     }
