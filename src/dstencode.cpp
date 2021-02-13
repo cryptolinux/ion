@@ -22,11 +22,5 @@ CTxDestination DecodeDestination(const std::string &addr, const CChainParams &pa
     return DecodeLegacyAddr(addr, params);
 }
 
-bool IsValidDestinationString(const std::string &addr, const CChainParams &params)
-{
-    return IsValidDestination(DecodeDestination(addr, params));
-}
-
 std::string EncodeDestination(const CTxDestination &dst) { return EncodeDestination(dst, Params()); }
 CTxDestination DecodeDestination(const std::string &addr) { return DecodeDestination(addr, Params()); }
-bool IsValidDestinationString(const std::string &addr) { return IsValidDestinationString(addr, Params()); }
