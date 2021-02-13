@@ -6,6 +6,9 @@
 #include <policy/feerate.h>
 #include <test/test_ion.h>
 
+// Ion specific / POS
+#include <pos/rewards.h>
+
 #include <boost/test/unit_test.hpp>
 
 BOOST_FIXTURE_TEST_SUITE(amount_tests, BasicTestingSetup)
