@@ -408,3 +408,13 @@ CTxDestination DecodeLegacyAddr(const std::string &str, const CChainParams &para
 {
     return DecodeDestination(str, params);
 }
+
+bool IsValidDestinationString(const std::string& str, const CChainParams& params)
+{
+    return CBitcoinAddress(str).IsValid(params);
+}
+
+bool IsValidDestinationString(const std::string& str)
+{
+    return CBitcoinAddress(str).IsValid();
+}
