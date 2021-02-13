@@ -40,6 +40,10 @@
 
 #include <evo/providertx.h>
 
+//**TODO** - cleanup from other files
+#include <scheduler.h>
+#include <ui_interface.h>
+
 #include <llmq/quorums_instantsend.h>
 #include <llmq/quorums_chainlocks.h>
 
@@ -50,10 +54,11 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/thread.hpp>
 
-static CCriticalSection cs_wallets;
-
 //**TODO** - cleanup from other files
+std::vector<CWalletRef> vpwallets;
 //static std::vector<CWallet*> vpwallets GUARDED_BY(cs_wallets);
+
+static CCriticalSection cs_wallets;
 
 bool AddWallet(CWallet* wallet)
 {

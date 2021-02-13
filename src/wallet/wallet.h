@@ -48,7 +48,7 @@ CWallet* GetWallet(const std::string& name);
 
 // TODO: remove
 typedef CWallet* CWalletRef;
-std::vector<CWalletRef> vpwallets;
+extern std::vector<CWalletRef> vpwallets;
 
 /**
  * Settings
