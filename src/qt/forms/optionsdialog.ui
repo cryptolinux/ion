@@ -283,7 +283,7 @@
             <property name="text">
              <string>Enable PrivateSend features</string>
             </property>
-           </spacer>
+           </widget>
           </item>
          </layout>
        </item>
