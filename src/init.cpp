@@ -1,9 +1,3 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2020 The XXXXXXX developers
-// Distributed under the MIT software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
 #if defined(HAVE_CONFIG_H)
 #include <config/ion-config.h>
 #endif
@@ -30,11 +24,6 @@
 #include <policy/feerate.h>
 #include <policy/fees.h>
 #include <policy/policy.h>
-#ifdef ENABLE_WALLET
-#include "mining-manager.h"
-#include "pos/staking-manager.h"
-#include "reward-manager.h"
-#endif
 #include <rpc/server.h>
 #include <rpc/register.h>
 #include <rpc/safemode.h>
@@ -50,17 +39,6 @@
 #include <util.h>
 #include <utilmoneystr.h>
 #include <validationinterface.h>
-#include "xion/accumulatorcheckpoints.h"
-#include "xion/zerocoindb.h"
-// #include "libzerocoin/CoinSpend.h"
-/*
-#include "dbwrapper.h"
-#include "xion/zerocoin.h"
-#include "libzerocoin/Coin.h"
-*/
-#ifdef ENABLE_WALLET
-#include "wallet/wallet.h"
-#endif
 
 #include <masternode/activemasternode.h>
 #include <dsnotificationinterface.h>
@@ -76,8 +54,6 @@
 #include <spork.h>
 #include <warnings.h>
 #include <walletinitinterface.h>
-#include "tokens/tokengroupmanager.h"
-#include "tokens/tokendb.h"
 
 #include <evo/deterministicmns.h>
 #include <llmq/quorums_init.h>
@@ -514,7 +490,6 @@ std::string HelpMessage(HelpMessageMode mode)
             "Warning: Reverting this setting requires re-downloading the entire blockchain. "
             "(default: 0 = disable pruning blocks, 1 = allow manual pruning via RPC, >%u = automatically prune block files to stay under the specified target size in MiB)"), MIN_DISK_SPACE_FOR_BLOCK_FILES / 1024 / 1024));
     strUsage += HelpMessageOpt("-reindex-chainstate", _("Rebuild chain state from the currently indexed blocks"));
-    strUsage += HelpMessageOpt("-reindex-tokens", _("Reindex the token database"));
     strUsage += HelpMessageOpt("-reindex", _("Rebuild chain state and block index from the blk*.dat files on disk"));
 #ifndef WIN32
     strUsage += HelpMessageOpt("-sysperms", _("Create new files with system default permissions, instead of umask 077 (only effective with disabled wallet functionality)"));
@@ -682,20 +657,13 @@ std::string HelpMessage(HelpMessageMode mode)
         strUsage += HelpMessageOpt("-rpcservertimeout=<n>", strprintf("Timeout during HTTP requests (default: %d)", DEFAULT_HTTP_SERVER_TIMEOUT));
     }
 
-#ifdef ENABLE_WALLET
-    strUsage += HelpMessageGroup(_("Staking options:"));
-    strUsage += HelpMessageOpt("-staking=<n>", strprintf(_("Enable staking functionality (0-1, default: %u)"), 1));
-    strUsage += HelpMessageOpt("-ionstake=<n>", strprintf(_("Enable or disable staking functionality for ION inputs (0-1, default: %u)"), 1));
-    strUsage += HelpMessageOpt("-reservebalance=<amt>", _("Keep the specified amount available for spending at all times (default: 0)"));
-#endif // ENABLE_WALLET
-
     return strUsage;
 }
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://bitbucket.org/ioncoin/ion>";
-    const std::string URL_WEBSITE = "<https://ionomy.com>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/ioncoincore/ion>";
+    const std::string URL_WEBSITE = "<https://ioncore.org>";
 
     return CopyrightHolders(_("Copyright (C)"), 2018, COPYRIGHT_YEAR) + "\n" +
            "\n" +
@@ -1023,16 +991,6 @@ void InitParameterInteraction()
             LogPrintf("%s: parameter interaction: -prune=%d -> setting -txindex=false\n", __func__, nPruneArg);
         }
     }
-
-#ifdef ENABLE_WALLET
-    bool fDisableWallet = gArgs.GetBoolArg("-disablewallet", DEFAULT_DISABLE_WALLET);
-    if (fDisableWallet) {
-#endif
-        if (gArgs.SoftSetBoolArg("-staking", false))
-            LogPrintf("AppInit2 : parameter interaction: wallet functionality not enabled -> setting -staking=0\n");
-#ifdef ENABLE_WALLET
-    }
-#endif
 
     // Make sure additional indexes are recalculated correctly in VerifyDB
     // (we must reconnect blocks whenever we disconnect them for these indexes to work)
@@ -1619,7 +1577,7 @@ bool AppInitLockDataDirectory()
     return true;
 }
 
-bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
+bool AppInitMain()
 {
     const CChainParams& chainparams = Params();
     // ********************************************************* Step 4a: application initialization
@@ -1842,32 +1800,6 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
         nMaxOutboundLimit = gArgs.GetArg("-maxuploadtarget", DEFAULT_MAX_UPLOAD_TARGET)*1024*1024;
     }
 
-    // ********************************************************* Step 7a: check lite mode and load sporks
-
-    // lite mode disables all Ion-specific functionality
-    // TODO: remove or reenable litemode
-    /*
-    fLiteMode = gArgs.GetBoolArg("-litemode", false);
-    LogPrintf("fLiteMode %d\n", fLiteMode);
-
-    if(fLiteMode) {
-        InitWarning(_("You are starting in lite mode, most Ion-specific functionality is disabled."));
-    }
-
-    if((!fLiteMode && fTxIndex == false)
-       && chainparams.NetworkIDString() != CBaseChainParams::REGTEST) { // TODO remove this when pruning is fixed. See https://bitbucket.org/ioncoin/ion/pull/1817 and https://bitbucket.org/ioncoin/ion/pull/1743
-        return InitError(_("Transaction index can't be disabled in full mode. Either start with -litemode command line switch or enable transaction index."));
-    }
-
-    if (!fLiteMode) {
-        uiInterface.InitMessage(_("Loading sporks cache..."));
-        CFlatDB<CSporkManager> flatdb6("sporks.dat", "magicSporkCache");
-        if (!flatdb6.Load(sporkManager)) {
-            return InitError(_("Failed to load sporks cache from") + "\n" + (GetDataDir() / "sporks.dat").string());
-        }
-    }
-    */
-
     // ********************************************************* Step 7a: Load sporks
 
     uiInterface.InitMessage(_("Loading sporks cache..."));
@@ -1948,7 +1880,7 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
                 }
 
                 if (!fDisableGovernance && !fTxIndex
-                   && chainparams.NetworkIDString() != CBaseChainParams::REGTEST) { // TODO remove this when pruning is fixed. See https://github.com/ioncoincore/ion/pull/1817 and https://github.com/ioncoincore/ion/pull/1743
+                   && chainparams.NetworkIDString() != CBaseChainParams::REGTEST) { // TODO remove this when pruning is fixed. See https://github.com/dashpay/dash/pull/1817 and https://github.com/dashpay/dash/pull/1743
                     return InitError(_("Transaction index can't be disabled with governance validation enabled. Either start with -disablegovernance command line switch or enable transaction index."));
                 }
 
@@ -2043,11 +1975,6 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
                     break;
                 }
 
-                uiInterface.InitMessage(_("Verifying tokens..."));
-                if (!VerifyTokenDB(strLoadError)) {
-                    break;
-                }
-
                 if (!is_coinsview_empty) {
                     uiInterface.InitMessage(_("Verifying blocks..."));
                     if (fHavePruned && gArgs.GetArg("-checkblocks", DEFAULT_CHECKBLOCKS) > MIN_BLOCKS_TO_KEEP) {
@@ -2123,14 +2050,6 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
 
     // ********************************************************* Step 8: load wallet
     if (!g_wallet_init_interface->Open()) return false;
-
-    // As InitLoadWallet can take several minutes, it's possible the user
-    // requested to kill the GUI during the last operation. If so, exit.
-    if (fRequestShutdown)
-    {
-        LogPrintf("Shutdown requested. Exiting.\n");
-        return false;
-    }
 
     // As InitLoadWallet can take several minutes, it's possible the user
     // requested to kill the GUI during the last operation. If so, exit.
@@ -2270,59 +2189,6 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
 
     llmq::StartLLMQSystem();
 
-    // ********************************************************* Step 10d: setup and schedule ION-specific functionality
-
-#ifdef ENABLE_WALLET
-
-    if (vpwallets.empty()) {
-        stakingManager = std::shared_ptr<CStakingManager>(new CStakingManager());
-        stakingManager->fEnableStaking = false;
-        stakingManager->fEnableIONStaking = false;
-
-        miningManager = std::shared_ptr<CMiningManager>(new CMiningManager(Params(), g_connman.get()));
-        miningManager->fEnableMining = false;
-        miningManager->fEnableIONMining = false;
-    } else {
-        stakingManager = std::shared_ptr<CStakingManager>(new CStakingManager(vpwallets[0]));
-            // TODO: remove or reenable litemode
-        /*
-        stakingManager->fEnableStaking = gArgs.GetBoolArg("-staking", !fLiteMode);
-        */
-        stakingManager->fEnableStaking = gArgs.GetBoolArg("-staking", true);
-        stakingManager->fEnableIONStaking = gArgs.GetBoolArg("-staking", true);
-
-        miningManager = std::shared_ptr<CMiningManager>(new CMiningManager(Params(), g_connman.get(), vpwallets[0]));
-        miningManager->fEnableMining = true;
-        miningManager->fEnableIONMining = gArgs.GetBoolArg("-gen", false);
-
-        rewardManager->BindWallet(vpwallets[0]);
-        rewardManager->fEnableRewardManager = true;
-    }
-    if (Params().NetworkIDString() == CBaseChainParams::REGTEST) {
-        stakingManager->fEnableStaking = false;
-    }
-
-    if (gArgs.IsArgSet("-reservebalance")) {
-        CAmount n = 0;
-        if (!ParseMoney(gArgs.GetArg("-reservebalance", ""), n)) {
-            return InitError(AmountErrMsg("reservebalance", gArgs.GetArg("-reservebalance", "")));
-        }
-        stakingManager->nReserveBalance = n;
-    }
-    
-    // TODO: remove or reenable litemode
-    /*
-    if (!fLiteMode) {
-        if (stakingManager->fEnableStaking) {
-            scheduler.scheduleEvery(boost::bind(&CStakingManager::DoMaintenance, boost::ref(stakingManager), boost::ref(*g_connman)), 5 * 1000);
-        }
-        if (rewardManager->fEnableRewardManager) {
-            scheduler.scheduleEvery(boost::bind(&CRewardManager::DoMaintenance, boost::ref(rewardManager), boost::ref(*g_connman)), 3 * 60 * 1000);
-        }
-    }
-    */
-#endif // ENABLE_WALLET
-
     // ********************************************************* Step 11: import blocks
 
     if (!CheckDiskSpace())
@@ -2456,29 +2322,12 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
         return false;
     }
 
-    // Generate coins in the background
-    miningManager->GenerateBitcoins(gArgs.GetBoolArg("-gen", DEFAULT_GENERATE),
-        gArgs.GetArg("-genproclimit", DEFAULT_GENERATE_THREADS));
-
     // ********************************************************* Step 13: finished
 
     SetRPCWarmupFinished();
     uiInterface.InitMessage(_("Done loading"));
 
     g_wallet_init_interface->Start(scheduler);
-
-#ifdef ENABLE_WALLET
-    for (CWalletRef pwallet : vpwallets) {
-        pwallet->postInitProcess();
-    }
-#endif
-
-    // Final check if the user requested to kill the GUI during one of the last operations. If so, exit.
-    if (fRequestShutdown)
-    {
-        LogPrintf("Shutdown requested. Exiting.\n");
-        return false;
-    }
 
     return true;
 }
