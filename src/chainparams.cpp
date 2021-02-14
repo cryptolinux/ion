@@ -599,6 +599,7 @@ public:
         genesis = CreateGenesisBlock(1486045800, 1491737471, 2263997, 0x1e0ffff0, 1, 1 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x00000a5e695356de7ccae09478a4aa7053a402f7c2f57a40c44310d8fbe5d3c7"));
+        assert(genesis.hashMerkleRoot == uint256S("0x7af2e961c5262cb0411edcb7414ab7178133fc06257ceb47d349e4e5e35e2d40"));
 
         vFixedSeeds.clear();
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
@@ -774,13 +775,15 @@ public:
 
         genesis = CreateGenesisBlock(1486045800, 1491737471, 1096447, 0x207fffff, 1, 1 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
+        assert(genesis.hashMerkleRoot == uint256S("0x7af2e961c5262cb0411edcb7414ab7178133fc06257ceb47d349e4e5e35e2d40"));
 
         devnetGenesis = FindDevNetGenesisBlock(consensus, genesis, 1 * COIN);
         consensus.hashDevnetGenesisBlock = devnetGenesis.GetHash();
+        assert(devnetGenesis.hashMerkleRoot == uint256S("0x00335690bd7bed44678685dfb308769d9486d54d189f5cd04c5b99a739af488a"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        //vSeeds.push_back(CDNSSeedData("ionevo.org",  "devnet-seed.ionevo.org"));
+        //vSeeds.push_back(CDNSSeedData("ioncore.org",  "devnet-seed.ioncore.org"));
 
         // Testnet Ion addresses start with 'y'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,97);
@@ -948,7 +951,13 @@ public:
             }
         }
         consensus.hashGenesisBlock = genesis.GetHash();
+
+        // Print genesis
+        LogPrintf("genesis hash: %s\n", consensus.hashGenesisBlock.ToString().c_str());
+        LogPrintf("hashMerkleRoot: %s\n", genesis.hashMerkleRoot.ToString().c_str());
+
         assert(consensus.hashGenesisBlock == uint256S("096c2a836db3e72323c8486865a266f422778852a38f62e3af9691b95ae28eab"));
+        assert(genesis.hashMerkleRoot == uint256S("0xe197e9ade606f04456d1f2f4d214ea0fc68db784f3df2e37ca9f76953864c615"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -973,12 +982,12 @@ public:
 
         checkpointData = (CCheckpointData) {
             {
-                {0, uint256S("0x6cb21cdfc47afcd4a8fafcd024282a2ec0349b045b00234fb873f165ae11e91a")},
+                {0, genesis.GetHash()},
             }
         };
 
         chainTxData = ChainTxData{
-            0,
+            genesis.GetBlockTime(),
             0,
             0
         };
