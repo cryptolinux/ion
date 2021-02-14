@@ -6,10 +6,10 @@
 #ifndef ION_ZEROCOINDB_H
 #define ION_ZEROCOINDB_H
 
-#include "dbwrapper.h"
-#include "xion/zerocoin.h"
-#include "libzerocoin/Coin.h"
-#include "libzerocoin/CoinSpend.h"
+#include <dbwrapper.h>
+#include <xion/zerocoin.h>
+#include <libzerocoin/Coin.h>
+#include <libzerocoin/CoinSpend.h>
 
 /** Zerocoin database (zerocoin/) */
 class CZerocoinDB : public CDBWrapper

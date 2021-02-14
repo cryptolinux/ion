@@ -1,6 +1,6 @@
 #include <chainparams.h>
 #include <tinyformat.h>
-#include "witness.h"
+#include <witness.h>
 
 void CoinWitnessData::SetNull()
 {

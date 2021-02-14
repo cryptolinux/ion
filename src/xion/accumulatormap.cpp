@@ -2,12 +2,12 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "libzerocoin/Denominations.h"
-#include "txdb.h"
-#include "validation.h"
-#include "xion/accumulatormap.h"
-#include "xion/accumulators.h"
-#include "xion/zerocoindb.h"
+#include <libzerocoin/Denominations.h>
+#include <txdb.h>
+#include <validation.h>
+#include <xion/accumulatormap.h>
+#include <xion/accumulators.h>
+#include <xion/zerocoindb.h>
 
 //Construct accumulators for all denominations
 AccumulatorMap::AccumulatorMap(libzerocoin::ZerocoinParams* params)

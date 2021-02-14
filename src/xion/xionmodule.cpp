@@ -2,16 +2,16 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "xion/xionmodule.h"
+#include <xion/xionmodule.h>
 
-#include "consensus/validation.h"
-#include "hash.h"
-#include "iostream"
-#include "validation.h"
+#include <consensus/validation.h>
+#include <hash.h>
+#include <iostream>
+#include <validation.h>
 
-#include "libzerocoin/Commitment.h"
-#include "libzerocoin/Coin.h"
-#include "xion/xionchain.h"
+#include <libzerocoin/Commitment.h>
+#include <libzerocoin/Coin.h>
+#include <xion/xionchain.h>
 
 bool PublicCoinSpend::Verify(const libzerocoin::Accumulator& a, bool verifyParams) const {
     return validate();

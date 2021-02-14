@@ -3,10 +3,10 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <streams.h>
-#include "zerocoin.h"
-#include "hash.h"
-#include "util.h"
-#include "utilstrencodings.h"
+#include <zerocoin.h>
+#include <hash.h>
+#include <util.h>
+#include <utilstrencodings.h>
 
 bool CMintMeta::operator <(const CMintMeta& a) const
 {

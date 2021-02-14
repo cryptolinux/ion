@@ -5,19 +5,19 @@
 #ifndef ION_XIONMODULE_H
 #define ION_XIONMODULE_H
 
-#include "libzerocoin/bignum.h"
-#include "libzerocoin/Denominations.h"
-#include "libzerocoin/CoinSpend.h"
-#include "libzerocoin/Coin.h"
-#include "libzerocoin/SpendType.h"
-#include "primitives/transaction.h"
-#include "script/script.h"
-#include "serialize.h"
-#include "uint256.h"
+#include <libzerocoin/bignum.h>
+#include <libzerocoin/Denominations.h>
+#include <libzerocoin/CoinSpend.h>
+#include <libzerocoin/Coin.h>
+#include <libzerocoin/SpendType.h>
+#include <primitives/transaction.h>
+#include <script/script.h>
+#include <serialize.h>
+#include <uint256.h>
 #include <streams.h>
 #include <utilstrencodings.h>
-#include "xion/zerocoin.h"
-#include "chainparams.h"
+#include <xion/zerocoin.h>
+#include <chainparams.h>
 
 static int const COIN_SPEND_PUBLIC_SPEND_VERSION = 3;
 
