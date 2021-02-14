@@ -1,10 +1,12 @@
 # TOR SUPPORT IN ION CORE
 
+- [TOR SUPPORT IN ION CORE](#tor-support-in-ion-core)
 - [TOR SUPPORT IN ION](#tor-support-in-ion)
-	- [Run ION Core behind a Tor proxy](#run-ion-core-behind-a-tor-proxy)
-	- [Run a ION Core hidden server](#run-a-ion-core-hidden-server)
-	- [Automatically listen on Tor](#automatically-listen-on-tor)
-	- [Privacy recommendations](#privacy-recommendations)
+  - [1. Run Ion Core behind a Tor proxy](#1-run-ion-core-behind-a-tor-proxy)
+  - [2. Run a Ion Core hidden server](#2-run-a-ion-core-hidden-server)
+  - [3. List of known Ion Core Tor relays](#3-list-of-known-ion-core-tor-relays)
+  - [4. Automatically listen on Tor](#4-automatically-listen-on-tor)
+  - [5. Privacy recommendations](#5-privacy-recommendations)
 
 # TOR SUPPORT IN ION
 
@@ -93,7 +95,7 @@ as well, use `discover` instead:
 
     ./iond ... -discover
 
-and open port 51472 on your firewall (or use -upnp).
+and open port 37415 on your firewall (or use -upnp).
 
 If you only want to use Tor to reach .onion addresses, but not use it as a proxy
 for normal IPv4/IPv6 communication, use:
@@ -103,19 +105,9 @@ for normal IPv4/IPv6 communication, use:
 
 ## 3. List of known Ion Core Tor relays
 
-Note: All these nodes are hosted by masternodehosting.com
+Note: All these nodes are hosted by cevap
 
-* l7oq3v7ujau5tfrw.onion
-* vsmegqxisccimsir.onion
-* 4rbha5nrjso54l75.onion
-* 3473226fvgoenztx.onion
-* onn5v3aby2dioicx.onion
-* w5n7s2p3mdq5yf2d.onion
-* ec4qdvujskzasvrb.onion
-* g5e4hvsecwri3inf.onion
-* ys5upbdeotplam3y.onion
-* fijy6aikzxfea54i.onion
-
+* ajjhrmc7ungkr4l2.onion
 
 ## 4. Automatically listen on Tor
 
