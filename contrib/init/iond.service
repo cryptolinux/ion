@@ -5,14 +5,14 @@
 # See "man systemd.service" for details.
 
 # Note that almost all daemon options could be specified in
-# /etc/ion/ion.conf
+# /etc/ion/ioncoin.conf
 
 [Unit]
 Description=Ion daemon
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/iond -daemon -conf=/etc/ion/ion.conf -pid=/run/iond/iond.pid
+ExecStart=/usr/bin/iond -daemon -conf=/etc/ion/ioncoin.conf -pid=/run/iond/iond.pid
 # Creates /run/ion owned by ioncore
 RuntimeDirectory=iond
 User=ioncore

@@ -491,31 +491,34 @@ bool IsProofOfStakeHeight(const int nHeight, const Consensus::Params& params) {
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const Consensus::Params& params, const bool fHybridPow)
 {
+    int GetNextWorkRequiredResult;
     const int nHeight = pindexLast->nHeight + 1;
     bool fProofOfStake = IsProofOfStakeHeight(nHeight, params);
 
     // this is only active on devnets
     if (pindexLast->nHeight < params.nMinimumDifficultyBlocks) {
         unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
-        return nProofOfWorkLimit;
+        GetNextWorkRequiredResult = nProofOfWorkLimit;
     }
 
     // Most recent algo first
     if (nHeight >= params.POSPOWStartHeight) {
         if (fHybridPow) {
-            return HybridPoWDarkGravityWave(pindexLast, params);
+            GetNextWorkRequiredResult = HybridPoWDarkGravityWave(pindexLast, params);
         } else {
-            return HybridPoSPIVXDifficulty(pindexLast, params);
+            GetNextWorkRequiredResult = HybridPoSPIVXDifficulty(pindexLast, params);
         }
     } else if (pindexLast->nHeight >= params.DGWDifficultyStartHeight) {
-        return GetNextWorkRequiredPivx(pindexLast, params, fProofOfStake);
+        GetNextWorkRequiredResult = GetNextWorkRequiredPivx(pindexLast, params, fProofOfStake);
     }
     else if (pindexLast->nHeight >= params.MidasStartHeight) {
-        return GetNextWorkRequiredMidas(pindexLast, params, fProofOfStake);
+        GetNextWorkRequiredResult = GetNextWorkRequiredMidas(pindexLast, params, fProofOfStake);
     }
     else {
-        return GetNextWorkRequiredOrig(pindexLast, params, fProofOfStake);
+        GetNextWorkRequiredResult = GetNextWorkRequiredOrig(pindexLast, params, fProofOfStake);
     }
+
+    return GetNextWorkRequiredResult;
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params& params)

@@ -28,7 +28,6 @@
 #include <timedata.h>
 #include <txmempool.h>
 #include <tokens/tokengroupwallet.h>
-#include <transactionrecord.h>
 #include <util.h>
 #include <utilmoneystr.h>
 #include <validation.h>
@@ -1812,9 +1811,10 @@ UniValue listtransactions(const JSONRPCRequest& request)
     return ret;
 }
 
+/*
 void ListTransactionRecords(CWallet * const pwallet, const CWalletTx& wtx, const std::string& strAccount, int nMinDepth, bool fLong, UniValue& ret, const isminefilter& filter)
 {
-    std::vector<TransactionRecord> vRecs = TransactionRecord::decomposeTransaction(pwallet, wtx);
+    QList<TransactionRecord> vRecs = TransactionRecord::decomposeTransaction(pwallet, wtx);
     for(auto&& vRec: vRecs) {
         UniValue entry(UniValue::VOBJ);
         entry.push_back(Pair("type", vRec.GetTransactionRecordType()));
@@ -1840,7 +1840,9 @@ void ListTransactionRecords(CWallet * const pwallet, const CWalletTx& wtx, const
         ret.push_back(entry);
     }
 }
+*/
 
+/*
 UniValue listtransactionrecords(const JSONRPCRequest& request)
 {
     CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
@@ -1971,6 +1973,7 @@ UniValue listtransactionrecords(const JSONRPCRequest& request)
 
     return ret;
 }
+*/
 
 UniValue listaccounts(const JSONRPCRequest& request)
 {

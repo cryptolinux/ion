@@ -1,23 +1,23 @@
 // Copyright (c) 2009-2016 The Bitcoin Core developers
-// Copyright (c) 2014-2017 The XXXXXXX developers
+// Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018-2020 The Ion Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/ion-config.h>
+#include "config/ion-config.h"
 #endif
 
-#include <chainparams.h>
-#include <qt/test/rpcnestedtests.h>
-#include <util.h>
-#include <qt/test/uritests.h>
-#include <qt/test/compattests.h>
-#include <qt/test/trafficgraphdatatests.h>
+#include "chainparams.h"
+#include "rpcnestedtests.h"
+#include "util.h"
+#include "uritests.h"
+#include "compattests.h"
+#include "trafficgraphdatatests.h"
 
 #ifdef ENABLE_WALLET
-#include <qt/test/paymentservertests.h>
-#include <qt/test/wallettests.h>
+#include "paymentservertests.h"
+#include "wallettests.h"
 #endif
 
 #include <QApplication>
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     bool fInvalid = false;
 
     // Prefer the "minimal" platform for the test instead of the normal default
-    // platform ("xcb", "windows", or "cocoa") so tests can't unintentionally
+    // platform ("xcb", "windows", or "cocoa") so tests can't unintentially
     // interfere with any background GUIs and don't require extra resources.
     #if defined(WIN32)
         _putenv_s("QT_QPA_PLATFORM", "minimal");

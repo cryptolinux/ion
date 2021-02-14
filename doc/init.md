@@ -67,7 +67,7 @@ can then be controlled by group membership.
 ### Mac OS X
 
 Binary:              `/usr/local/bin/iond`  
-Configuration file:  `~/Library/Application Support/IonCore/ion.conf`  
+Configuration file:  `~/Library/Application Support/IonCore/ioncoin.conf`  
 Data directory:      `~/Library/Application Support/IonCore`  
 Lock file:           `~/Library/Application Support/IonCore/.lock`  
 

@@ -103,7 +103,7 @@ bool fLiteMode = false;
 */
 int nWalletBackups = 10;
 
-const char * const BITCOIN_CONF_FILENAME = "ion.conf";
+const char * const BITCOIN_CONF_FILENAME = "ioncoin.conf";
 const char * const BITCOIN_PID_FILENAME = "iond.pid";
 const char * const DEFAULT_DEBUGLOGFILE = "debug.log";
 
@@ -1011,7 +1011,7 @@ void ArgsManager::ReadConfigFile(const std::string& confPath)
     if (stream.good()) {
         ReadConfigStream(stream);
     } else {
-        // Create an empty ion.conf if it does not excist
+        // Create an empty ioncoin.conf if it does not excist
         FILE* configFile = fopen(GetConfigFile(confPath).string().c_str(), "a");
         if (configFile != nullptr)
             fclose(configFile);

@@ -4,7 +4,7 @@
 * blocks/rev000??.dat; block undo data (custom)
 * blocks/index/*; block index (LevelDB)
 * chainstate/*; block chain state database (LevelDB)
-* ion.conf: contains configuration settings for iond or ion-qt
+* ioncoin.conf: contains configuration settings for iond or ion-qt
 * iond.pid: stores the process id of iond while running
 * database/*: BDB database environment; only used for wallet; moved to wallets/ directory on new installs since 5.00.0
 * db.log: wallet database log file; moved to wallets/ directory on new installs since 5.00.0
