@@ -39,7 +39,7 @@ uint32_t GetChecksum(const CBigNum &bnValue)
 }
 
 
-// Find the first occurance of a certain accumulator checksum. Return 0 if not found.
+// Find the first occurrence of a certain accumulator checksum. Return 0 if not found.
 int GetChecksumHeight(uint32_t nChecksum, libzerocoin::CoinDenomination denomination)
 {
     CBlockIndex* pindex = chainActive[Params().GetConsensus().nBlockZerocoinV2];
@@ -266,7 +266,7 @@ bool CalculateAccumulatorCheckpoint(int nHeight, uint256& nCheckpoint, Accumulat
     //Whether this should filter out invalid/fraudulent outpoints
     bool fFilterInvalid = false;// nHeight >= Params().Zerocoin_Block_RecalculateAccumulators();
 
-    //Accumulate all coins over the last ten blocks that havent been accumulated (height - 20 through height - 11)
+    //Accumulate all coins over the last ten blocks that haven not been accumulated (height - 20 through height - 11)
     int nTotalMintsFound = 0;
     CBlockIndex *pindex = chainActive[nHeightCheckpoint >= 20 ? nHeightCheckpoint - 20 : 0];
 
@@ -699,7 +699,7 @@ bool calculateAccumulatedBlocksFor(
 bool CalculateAccumulatorWitnessFor(
         const libzerocoin::ZerocoinParams* params,
         int startHeight,
-        int maxCalulationRange,
+        int maxCalculationRange,
         libzerocoin::CoinDenomination den,
         const CBloomFilter& filter,
         libzerocoin::Accumulator& accumulator,
@@ -735,8 +735,8 @@ bool CalculateAccumulatorWitnessFor(
         int nHeightStop = nChainHeight % 10;
         nHeightStop = nChainHeight - nHeightStop - 20; // at least two checkpoints deep
 
-        if (nHeightStop - startHeight > maxCalulationRange) {
-            int stop = (startHeight + maxCalulationRange);
+        if (nHeightStop - startHeight > maxCalculationRange) {
+            int stop = (startHeight + maxCalculationRange);
             int nHeightStop = stop % 10;
             nHeightStop = stop - nHeightStop - 20;
         }
