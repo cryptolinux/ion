@@ -16,6 +16,7 @@
 #include <rpc/server.h>
 #include <init.h>
 #include <noui.h>
+#include <scheduler.h>
 #include <util.h>
 #include <httpserver.h>
 #include <httprpc.h>
@@ -27,8 +28,6 @@
 
 #include <stdio.h>
 
-// TODO: cleanup
-#include <scheduler.h>
 
 /* Introduction text for doxygen: */
 

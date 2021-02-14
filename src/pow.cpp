@@ -85,16 +85,19 @@ unsigned int static HybridPoWDarkGravityWave(const CBlockIndex* pindexLastIn, co
 
 unsigned int static HybridPoSPIVXDifficulty(const CBlockIndex* pindexLastIn, const Consensus::Params& params)
 {
+    int bnResult;
     const CBlockIndex* pindexLast = ((pindexLastIn->nVersion & BLOCKTYPEBITS_MASK) == BlockTypeBits::BLOCKTYPE_STAKING) ?
         pindexLastIn : GetHybridPrevIndex(pindexLastIn, true, params.POSPOWStartHeight);
 
     // params.POSPOWStartHeight marks the first hybrid POS block. Start with a minimum difficulty block.
     if (pindexLast == nullptr || pindexLast->nHeight <= params.POSPOWStartHeight) {
-        return UintToArith256(params.posLimit).GetCompact();
+        bnResult = UintToArith256(params.posLimit).GetCompact();
+        //return UintToArith256(params.posLimit).GetCompact();
     }
 
     if (params.fPowNoRetargeting)
-        return pindexLast->nBits;
+        bnResult = pindexLast->nBits;
+        //return pindexLast->nBits;
 
     arith_uint256 bnTargetLimit = UintToArith256(params.posLimit);
     if (pindexLast->nHeight > params.POSStartHeight) {
@@ -121,8 +124,11 @@ unsigned int static HybridPoSPIVXDifficulty(const CBlockIndex* pindexLastIn, con
         if (bnNew <= 0 || bnNew > bnTargetLimit)
             bnNew = bnTargetLimit;
 
-        return bnNew.GetCompact();
+        //return bnNew.GetCompact();
+        bnResult = bnNew.GetCompact();
     }
+
+    return bnResult;
 }
 
 unsigned int static GetNextWorkRequiredPivx(const CBlockIndex* pindexLast, const Consensus::Params& params, const bool fProofOfStake)
