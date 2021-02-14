@@ -173,3 +173,6 @@ datadir*/
 
 # VSCode
 .vscode
+
+# bdb4
+db4/
