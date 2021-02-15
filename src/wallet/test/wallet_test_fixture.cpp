@@ -16,6 +16,7 @@ WalletTestingSetup::WalletTestingSetup(const std::string& chainName):
     RegisterValidationInterface(&m_wallet);
 
     RegisterWalletRPCCommands(tableRPC);
+    RegisterTokenWalletRPCCommands(tableRPC);
 }
 
 WalletTestingSetup::~WalletTestingSetup()

@@ -24,6 +24,11 @@
 #include <policy/feerate.h>
 #include <policy/fees.h>
 #include <policy/policy.h>
+#ifdef ENABLE_WALLET
+#include "mining-manager.h"
+#include "pos/staking-manager.h"
+#include "reward-manager.h"
+#endif
 #include <rpc/server.h>
 #include <rpc/register.h>
 #include <rpc/safemode.h>
@@ -39,6 +44,14 @@
 #include <util.h>
 #include <utilmoneystr.h>
 #include <validationinterface.h>
+#include <xion/accumulatorcheckpoints.h>
+#include <xion/zerocoindb.h>
+// #include <libzerocoin/CoinSpend.h>
+/*
+#include <dbwrapper.h>
+#include <xion/zerocoin.h>
+#include <libzerocoin/Coin.h>
+*/
 
 #include <masternode/activemasternode.h>
 #include <dsnotificationinterface.h>
@@ -52,6 +65,8 @@
 #include <netfulfilledman.h>
 #include <privatesend/privatesend-server.h>
 #include <spork.h>
+#include <tokens/tokengroupmanager.h>
+#include <tokens/tokendb.h>
 #include <warnings.h>
 #include <walletinitinterface.h>
 
@@ -321,6 +336,8 @@ void PrepareShutdown()
         llmq::DestroyLLMQSystem();
         deterministicMNManager.reset();
         evoDb.reset();
+        zerocoinDB.reset();
+        pTokenDB.reset();
     }
     g_wallet_init_interface->Stop();
 
@@ -490,6 +507,7 @@ std::string HelpMessage(HelpMessageMode mode)
             "Warning: Reverting this setting requires re-downloading the entire blockchain. "
             "(default: 0 = disable pruning blocks, 1 = allow manual pruning via RPC, >%u = automatically prune block files to stay under the specified target size in MiB)"), MIN_DISK_SPACE_FOR_BLOCK_FILES / 1024 / 1024));
     strUsage += HelpMessageOpt("-reindex-chainstate", _("Rebuild chain state from the currently indexed blocks"));
+    strUsage += HelpMessageOpt("-reindex-tokens", _("Reindex the token database"));
     strUsage += HelpMessageOpt("-reindex", _("Rebuild chain state and block index from the blk*.dat files on disk"));
 #ifndef WIN32
     strUsage += HelpMessageOpt("-sysperms", _("Create new files with system default permissions, instead of umask 077 (only effective with disabled wallet functionality)"));
@@ -1656,6 +1674,7 @@ bool AppInitMain()
      * available in the GUI RPC console even if external calls are disabled.
      */
     RegisterAllCoreRPCCommands(tableRPC);
+    RegisterTokenWalletRPCCommands(tableRPC);
     g_wallet_init_interface->RegisterRPC(tableRPC);
 
     /* Start the RPC server already.  It will be started in "warmup" mode
@@ -1857,8 +1876,13 @@ bool AppInitMain()
                 evoDb.reset(new CEvoDB(nEvoDbCache, false, fReset || fReindexChainState));
                 deterministicMNManager.reset();
                 deterministicMNManager.reset(new CDeterministicMNManager(*evoDb));
-
                 llmq::InitLLMQSystem(*evoDb, false, fReset || fReindexChainState);
+                // Same logic as above - zerocoin
+                zerocoinDB.reset();
+                zerocoinDB.reset(new CZerocoinDB(0, false, fReset || fReindexChainState));
+                // Same logic as above - token
+                pTokenDB.reset();
+                pTokenDB.reset(new CTokenDB(0, false, fReset || fReindexChainState));
 
                 if (fReset) {
                     pblocktree->WriteReindexing(true);
@@ -1935,6 +1959,22 @@ bool AppInitMain()
                 // At this point we're either in reindex or we've loaded a useful
                 // block tree into mapBlockIndex!
 
+                //ION: Load Accumulator Checkpoints according to network (main/test/regtest)
+                assert(AccumulatorCheckpoints::LoadCheckpoints(Params().NetworkIDString()));
+
+                tokenGroupManager = std::shared_ptr<CTokenGroupManager>(new CTokenGroupManager());
+
+                // Drop all information from the tokenDB and repopulate
+                bool fReindexTokens = gArgs.GetBoolArg("-reindex-tokens", false);
+                if (!fReindexTokens) {
+                    // ION: load token data
+                    uiInterface.InitMessage(_("Loading token data..."));
+                    if (!pTokenDB->LoadTokensFromDB(strLoadError)) {
+                    strLoadError = _("Error loading token database");
+                        break;
+                    }
+                }
+
                 pcoinsdbview.reset(new CCoinsViewDB(nCoinDBCache, false, fReset || fReindexChainState));
                 pcoinscatcher.reset(new CCoinsViewErrorCatcher(pcoinsdbview.get()));
 
@@ -1970,8 +2010,22 @@ bool AppInitMain()
                     assert(chainActive.Tip() != NULL);
                 }
 
+                if (fReindexTokens) {
+                    uiInterface.InitMessage(_("Reindexing token database..."));
+                    if (!ReindexTokenDB(strLoadError)) {
+                        strLoadError = _("Error reindexing token database");
+                        break;
+                    }
+                }
+
                 if (!deterministicMNManager->UpgradeDBIfNeeded()) {
                     strLoadError = _("Error upgrading evo database");
+                    break;
+                }
+
+                uiInterface.InitMessage(_("Verifying tokens..."));
+                if (!VerifyTokenDB(strLoadError)) {
+                    strLoadError = _("Error verifying token database");
                     break;
                 }
 

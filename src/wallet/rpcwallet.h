@@ -12,6 +12,7 @@ class CWallet;
 class JSONRPCRequest;
 
 void RegisterWalletRPCCommands(CRPCTable &t);
+void RegisterTokenWalletRPCCommands(CRPCTable &t);
 
 /**
  * Figures out what wallet, if any, to use for a JSONRPCRequest.
