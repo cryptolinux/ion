@@ -135,6 +135,7 @@ public:
     qint64 time;
     Type type;
     std::string strAddress;
+    CBitcoinAddress address;
     CTxDestination txDest;
 
     CAmount debit;

@@ -268,7 +268,7 @@ BITCOIN_CORE_H = \
   tokens/tokengroupmanager.h \
   tokens/tokengroupwallet.h \
   torcontrol.h \
-  transactionrecord.h \
+  qt/transactionrecord.h \
   txdb.h \
   txmempool.h \
   ui_interface.h \

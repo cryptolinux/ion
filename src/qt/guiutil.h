@@ -1,5 +1,4 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Ion Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -33,7 +32,7 @@ class QUrl;
 class QWidget;
 QT_END_NAMESPACE
 
-/** Utility functions used by the Ion Qt UI.
+/** Utility functions used by the Dash Qt UI.
  */
 namespace GUIUtil
 {
@@ -109,7 +108,7 @@ namespace GUIUtil
     // Setup appearance settings if not done yet
     void setupAppearance(QWidget* parent, OptionsModel* model);
 
-    // Parse "ion:" URI into recipient object, return true on successful parsing
+    // Parse "dash:" URI into recipient object, return true on successful parsing
     bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out);
     bool parseBitcoinURI(QString uri, SendCoinsRecipient *out);
     bool validateBitcoinURI(const QString& uri);
@@ -182,7 +181,7 @@ namespace GUIUtil
     // Open debug.log
     void openDebugLogfile();
 	
-    // Open ioncoin.conf
+    // Open dash.conf
     void openConfigfile();	
 
     // Browse backup folder
@@ -321,7 +320,7 @@ namespace GUIUtil
     /** get font size with GUIUtil::fontScale applied */
     double getScaledFontSize(int nSize);
 
-    /** Load ion specific appliciation fonts */
+    /** Load dash specific appliciation fonts */
     bool loadFonts();
 
     /** Set an application wide default font, depends on the selected theme */
@@ -357,7 +356,7 @@ namespace GUIUtil
     /** Return the name of the currently active theme.*/
     QString getActiveTheme();
 
-    /** Check if a ion specific theme is activated (light/dark).*/
+    /** Check if a dash specific theme is activated (light/dark).*/
     bool ionThemeActive();
 
     /** Load the theme and update all UI elements according to the appearance settings. */
