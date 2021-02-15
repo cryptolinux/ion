@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The XXXXXXX developers
+// Copyright (c) 2014-2019 The Dash Core developers
 // Copyright (c) 2018-2020 The Ion Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -16,7 +16,6 @@
 #include <rpc/server.h>
 #include <init.h>
 #include <noui.h>
-#include <scheduler.h>
 #include <util.h>
 #include <httpserver.h>
 #include <httprpc.h>
@@ -28,14 +27,13 @@
 
 #include <stdio.h>
 
-
 /* Introduction text for doxygen: */
 
 /*! \mainpage Developer documentation
  *
  * \section intro_sec Introduction
  *
- * This is the developer documentation of the reference client for an experimental new digital currency called Ion (https://www.ionomy.com/),
+ * This is the developer documentation of the reference client for an experimental new digital currency called Ion (https://www.ioncore.org/),
  * which enables instant payments to anyone, anywhere in the world. Ion uses peer-to-peer technology to operate
  * with no central authority: managing transactions and issuing money are carried out collectively by the network.
  *
@@ -60,9 +58,6 @@ void WaitForShutdown()
 //
 bool AppInit(int argc, char* argv[])
 {
-    boost::thread_group threadGroup;
-    CScheduler scheduler;
-
     bool fRet = false;
 
     //
@@ -174,7 +169,7 @@ bool AppInit(int argc, char* argv[])
             // If locking the data directory failed, exit immediately
             return false;
         }
-        fRet = AppInitMain(threadGroup, scheduler);
+        fRet = AppInitMain();
     } catch (...) {
         PrintExceptionContinue(std::current_exception(), "AppInit()");
     }
