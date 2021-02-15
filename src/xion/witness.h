@@ -4,7 +4,7 @@
 
 #include <libzerocoin/Accumulator.h>
 #include <libzerocoin/Coin.h>
-#include <zerocoin.h>
+#include <xion/zerocoin.h>
 #include <serialize.h>
 
 #define PRECOMPUTE_LRU_CACHE_SIZE 1000
