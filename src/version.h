@@ -14,7 +14,7 @@
 static const int PROTOCOL_VERSION = 96003;
 
 //! initial proto version, to be increased after version/verack negotiation
-static const int INIT_PROTO_VERSION = 901;
+static const int INIT_PROTO_VERSION = 903;
 
 //! In this version, 'getheaders' was introduced.
 static const int GETHEADERS_VERSION = 96000;
@@ -23,7 +23,7 @@ static const int GETHEADERS_VERSION = 96000;
 static const int MIN_PEER_PROTO_VERSION = 96002;
 
 //! minimum proto version of masternode to accept in DKGs
-static const int MIN_MASTERNODE_PROTO_VERSION = 96000;
+static const int MIN_MASTERNODE_PROTO_VERSION = 96002;
 
 //! nTime field added to CAddress, starting with this version;
 //! if possible, avoid requesting addresses nodes older than this
