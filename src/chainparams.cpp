@@ -479,6 +479,8 @@ public:
                 {750000, uint256S("0x1eaa2cc9f9fd33f5db56875bc865b099ce6d76d048791c2358f12ec5454c95e2")},
                 {888900, uint256S("0x83c285e469fcb47494df14990b37bd997cf7ff8692e945f662683f7ccc1e5760")},
                 {967800, uint256S("0xf714b07c1b25f0ec1c0217beec8e30e55410c6904e57e8e5969f679241e3e9fc")},
+                //{1012710, uint256S("0x60f47514361a41b6e39c2a2e37d90e9ea366b8fa38041af7206dc10f01afbf89")}, //validation fails
+                //{1012740, uint256S("0x1c88ce7ce7143a6d27fb1930c806b8b2d1ce105a99853a998adc4aa0cf94325f")}, //zerocoin v2 start
                 {1067570, uint256S("0x965e2c19d9037f5859f6e8467464763c1e1e547b18282aa7ce014daa0f2750e4")},
                 {1609911, uint256S("0xae74915570499671df74cc6e22672a734e2fc1e63e86285b45a3ba95ad3ca5d2")},
             }
@@ -716,11 +718,11 @@ public:
         consensus.nHybridPosTargetSpacing = 2 * consensus.nPowTargetSpacing; // target at 50% of blocks Pos
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
-        consensus.nPowKGWHeight = 4001; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
-        consensus.nPowDGWHeight = 4001;
+        consensus.nPowKGWHeight = 1; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
+        consensus.nPowDGWHeight = 1;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
-        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 25;
+        consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
         // ION
@@ -730,7 +732,7 @@ public:
         consensus.MidasStartHeight = 999999999;
         consensus.DGWStartHeight = 300;
         consensus.DGWDifficultyStartHeight = 300;
-        consensus.DGWStartTime = 1554332940;
+        consensus.DGWStartTime = 9999999999;
         consensus.posLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.nPosTargetTimespanMidas = 7 * 24 * 60 * 60; // 1 week
         consensus.nPosTargetSpacingMidas = 64;
@@ -738,11 +740,11 @@ public:
         consensus.nStakeMinDepth = 100;
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
-        consensus.nZerocoinStartHeight = 300;
-        consensus.nZerocoinStartTime = 1501776000;
-        consensus.nBlockZerocoinV2 = 1012710;
-        consensus.nPublicZCSpends = 5500;
-        consensus.nBlockStakeModifierV2 = 5530;
+        consensus.nZerocoinStartHeight = 9999999999;
+        consensus.nZerocoinStartTime = 9999999999;
+        consensus.nBlockZerocoinV2 = 9999999999;
+        consensus.nPublicZCSpends = 9999999999;
+        consensus.nBlockStakeModifierV2 = 9999999999;
         consensus.nFakeSerialBlockheightEnd = -1;
         consensus.nMintRequiredConfirmations = 20; //the maximum amount of confirmations until accumulated in 19
         consensus.nRequiredAccumulation = 1;
@@ -754,11 +756,53 @@ public:
             "31438167899885040445364023527381951378636564391212010397122822120720357";
 
         // ATP
-        consensus.ATPStartHeight = 5530; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 11 and higher
+        consensus.ATPStartHeight = 400; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 11 and higher
         consensus.strTokenManagementKey = "gBi3gDLnGfw8HA2rN4HmNxHk9hMC4GLFbh";
         consensus.nOpGroupNewRequiredConfirmations = 1;
         // POSPOW
         consensus.POSPOWStartHeight = std::numeric_limits<int>::max();
+
+        // Deployment of BIP68, BIP112, and BIP113.
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1506556800; // September 28th, 2017
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1538092800; // September 28th, 2018
+
+        // Deployment of DIP0001
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].bit = 1;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nStartTime = 1505692800; // Sep 18th, 2017
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nTimeout = 1537228800; // Sep 18th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThresholdStart = 50; // 50% of 100
+
+        // Deployment of BIP147
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].bit = 2;
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nStartTime = 1517792400; // Feb 5th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nTimeout = 1549328400; // Feb 5th, 2019
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nThresholdStart = 50; // 50% of 100
+
+        // Deployment of DIP0003
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].bit = 3;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nStartTime = 1535752800; // Sep 1st, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nTimeout = 1567288800; // Sep 1st, 2019
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nThresholdStart = 50; // 50% of 100
+
+        // Deployment of DIP0008
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].bit = 4;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nStartTime = 1553126400; // Mar 21st, 2019
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nTimeout = 1900281600; // Mar 21st, 2030
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nThresholdStart = 50; // 50% of 100
+
+        // Deployment of Block Reward Reallocation
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].bit = 5;
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nStartTime = 1598918400; // Sep 1st, 2020
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nTimeout = 1900281600; // Mar 21st, 2030
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nThresholdStart = 80; // 80% of 100
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nThresholdMin = 60; // 60% of 100
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nFalloffCoeff = 5; // this corresponds to 10 periods
 
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000000000000000000");
@@ -773,13 +817,38 @@ public:
         nDefaultPort = 19799;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1486045800, 1491737471, 1096447, 0x207fffff, 1, 1 * COIN);
+        genesis = CreateGenesisBlock(1486045800, 1491737471, 1, 0x207fffff, 1, 1 * COIN);
+        arith_uint256 bnTarget;
+        bnTarget.SetCompact(genesis.nBits);
+
+        for (uint32_t nNonce = 0; nNonce < UINT32_MAX; nNonce++) {
+            genesis.nNonce = nNonce;
+
+            uint256 hash = genesis.GetHash();
+            if (UintToArith256(hash) <= bnTarget) {
+                break;
+            }
+        }
         consensus.hashGenesisBlock = genesis.GetHash();
+        // Print genesis
+        LogPrintf("CreateGenesisBlock devnet genesis hash: %s\n", consensus.hashGenesisBlock.ToString().c_str());
+        LogPrintf("CreateGenesisBlock devnet hashMerkleRoot: %s\n", genesis.hashMerkleRoot.ToString().c_str());
+        assert(consensus.hashGenesisBlock == uint256S("0x3858fd27e764a08bb2ace75da3dfbc51364a494c51303bf739d0efc1d9f3744b"));
         assert(genesis.hashMerkleRoot == uint256S("0x7af2e961c5262cb0411edcb7414ab7178133fc06257ceb47d349e4e5e35e2d40"));
 
         devnetGenesis = FindDevNetGenesisBlock(consensus, genesis, 1 * COIN);
+        for (uint32_t nNonce = 0; nNonce < UINT32_MAX; nNonce++) {
+            devnetGenesis.nNonce = nNonce;
+
+            uint256 hash = devnetGenesis.GetHash();
+            if (UintToArith256(hash) <= bnTarget) {
+                break;
+            }
+        }
         consensus.hashDevnetGenesisBlock = devnetGenesis.GetHash();
-        assert(devnetGenesis.hashMerkleRoot == uint256S("0x00335690bd7bed44678685dfb308769d9486d54d189f5cd04c5b99a739af488a"));
+        // Print genesis
+        LogPrintf("FindDevNetGenesisBlock genesis hash: %s\n", consensus.hashDevnetGenesisBlock.ToString().c_str());
+        LogPrintf("FindDevNetGenesisBlock hashMerkleRoot: %s\n", devnetGenesis.hashMerkleRoot.ToString().c_str());
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -891,7 +960,7 @@ public:
         consensus.MidasStartHeight = 999999999;
         consensus.DGWStartHeight = 300;
         consensus.DGWDifficultyStartHeight = 300;
-        consensus.DGWStartTime = 1521414629;
+        consensus.DGWStartTime = 9999999999;
         consensus.posLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.nPosTargetTimespanMidas = 7 * 24 * 60 * 60; // 1 week
         consensus.nPosTargetSpacingMidas = 64;
@@ -900,9 +969,9 @@ public:
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
         consensus.nZerocoinStartHeight = 350;
-        consensus.nZerocoinStartTime = 1521414629;
-        consensus.nBlockZerocoinV2 = 351;
-        consensus.nPublicZCSpends = 5500;
+        consensus.nZerocoinStartTime = 9999999999;
+        consensus.nBlockZerocoinV2 = 9999999999;
+        consensus.nPublicZCSpends = 9999999999;
         consensus.nBlockStakeModifierV2 = 1;
         consensus.nFakeSerialBlockheightEnd = -1;
         consensus.nMintRequiredConfirmations = 20; //the maximum amount of confirmations until accumulated in 19
@@ -937,19 +1006,7 @@ public:
         nDefaultPort = 19994;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1575851148, 1575851149, 2263997, 0x207fffff, 1, 1 * COIN);
-
-        arith_uint256 bnTarget;
-        bnTarget.SetCompact(genesis.nBits);
-
-        for (uint32_t nNonce = 0; nNonce < UINT32_MAX; nNonce++) {
-            genesis.nNonce = nNonce;
-
-            uint256 hash = genesis.GetHash();
-            if (UintToArith256(hash) <= bnTarget) {
-                break;
-            }
-        }
+        genesis = CreateGenesisBlock(1575851148, 1575851149, 1, 0x207fffff, 1, 1 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
 
         // Print genesis
@@ -966,7 +1023,7 @@ public:
         fRequireStandard = false;
         fRequireRoutableExternalIP = false;
         fMineBlocksOnDemand = true;
-        fMiningRequiresPeers = true;
+        fMiningRequiresPeers = false;
         fAllowMultipleAddressesFromGroup = true;
         fAllowMultiplePorts = true;
 
@@ -980,14 +1037,14 @@ public:
         // regtest usually has no masternodes in most tests, so don't check for upgraged MNs
         fBIP9CheckMasternodesUpgraded = false;
 
-        checkpointData = (CCheckpointData) {
+        checkpointData = {
             {
-                {0, genesis.GetHash()},
+                {0, uint256S("0x096c2a836db3e72323c8486865a266f422778852a38f62e3af9691b95ae28eab")},
             }
         };
 
         chainTxData = ChainTxData{
-            genesis.GetBlockTime(),
+            0,
             0,
             0
         };
