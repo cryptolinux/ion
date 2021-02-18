@@ -102,6 +102,7 @@ bool IsBlockValueValid(const CBlock& block, const int nBlockHeight, const CBlock
 
     strErrorRet = "";
 
+    /*
     if (nBlockHeight < consensusParams.nBudgetPaymentsStartBlock) {
         // old budget system is not activated yet, just make sure we do not exceed the regular block reward
         if(!isBlockRewardValueMet) {
@@ -113,6 +114,7 @@ bool IsBlockValueValid(const CBlock& block, const int nBlockHeight, const CBlock
         // superblocks are not enabled yet, check if we can pass old budget rules
         return IsOldBudgetBlockValueValid(block, nBlockHeight, blockReward, coinstakeValueIn, strErrorRet);
     }
+    */
 
     LogPrint(BCLog::MNPAYMENTS, "block.vtx[0]->GetValueOut() %lld <= blockReward %lld\n", block.vtx[0]->GetValueOut(), blockReward.GetTotalRewards().IONAmount);
 
@@ -122,10 +124,12 @@ bool IsBlockValueValid(const CBlock& block, const int nBlockHeight, const CBlock
     LogPrint(BCLog::GOBJECT, "block.vtx[0]->GetValueOut() %lld <= nSuperblockMaxValue %lld\n", block.vtx[0]->GetValueOut(), nSuperblockMaxValue);
 
     if (!CSuperblock::IsValidBlockHeight(nBlockHeight)) {
-        // can't possibly be a superblock, so lets just check for block reward limits
-        if (!isBlockRewardValueMet) {
-            strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, only regular blocks are allowed at this height",
-                                    nBlockHeight, block.vtx[0]->GetValueOut(), blockReward.GetTotalRewards().IONAmount);
+        if (nBlockHeight != 1760268) {
+            // can't possibly be a superblock, so lets just check for block reward limits
+            if (!isBlockRewardValueMet) {
+                strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, only regular blocks are allowed at this height",
+                                        nBlockHeight, block.vtx[0]->GetValueOut(), blockReward.GetTotalRewards().IONAmount);
+            }
         }
         return isBlockRewardValueMet;
     }

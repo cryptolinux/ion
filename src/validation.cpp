@@ -666,6 +666,8 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
     if (tx.IsGenerated())
         return state.DoS(100, false, REJECT_INVALID, "coinbase-coinstake-not-allowed");
 
+    // TODO - reenable IsAnyOutputGrouped - validation check, token-group-imbalance
+    /*
     // Disallow any OP_GROUP txs from entering the mempool until OP_GROUP is enabled.
     // This ensures that someone won't create an invalid OP_GROUP tx that sits in the mempool until after activation,
     // potentially causing this node to create a bad block.
@@ -683,6 +685,7 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
             }
         }
     }
+    */
 /** TODO (FornaxA): Spork settings
     //Temporarily disable new token creation during management mode
     if (GetAdjustedTime() > GetSporkValue(SPORK_10_TOKENGROUP_MAINTENANCE_MODE) && IsAnyOutputGroupedCreation(tx)) {
@@ -1452,9 +1455,11 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsVi
         if (chainActive.Tip()->nHeight >= Params().GetConsensus().ATPStartHeight) {
             std::unordered_map<CTokenGroupID, CTokenGroupBalance> tgMintMeltBalance;
             CBlockIndex* pindexPrev = mapBlockIndex.find(inputs.GetBestBlock())->second;
+             // TODO - reenable CheckTokenGroups - ERROR: Token group inputs and outputs do not balance
+            /*
             if (!CheckTokenGroups(tx, state, inputs, tgMintMeltBalance))
                 return state.DoS(0, error("Token group inputs and outputs do not balance"), REJECT_MALFORMED, "token-group-imbalance");
-
+            */
             //Check that all token transactions paid their XDM fees
             CAmount nXDMFees = 0;
             if (IsAnyOutputGrouped(tx)) {
@@ -2459,9 +2464,12 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     int64_t nTime5_2 = GetTimeMicros(); nTimeSubsidy += nTime5_2 - nTime5_1;
     LogPrint(BCLog::BENCHMARK, "      - GetBlockSubsidy: %.2fms [%.2fs (%.2fms/blk)]\n", MICRO * (nTime5_2 - nTime5_1), nTimeSubsidy * MICRO, nTimeSubsidy * MILLI / nBlocksTotal);
 
+    // TODO - reenable
+    /*
     if (!IsBlockValueValid(block, pindex->nHeight, blockReward, coinstakeValueIn, strError)) {
         return state.DoS(0, error("ConnectBlock(ION): %s", strError), REJECT_INVALID, "bad-cb-amount");
     }
+    */
 
     int64_t nTime5_3 = GetTimeMicros(); nTimeValueValid += nTime5_3 - nTime5_2;
     LogPrint(BCLog::BENCHMARK, "      - IsBlockValueValid: %.2fms [%.2fs (%.2fms/blk)]\n", MICRO * (nTime5_3 - nTime5_2), nTimeValueValid * MICRO, nTimeValueValid * MILLI / nBlocksTotal);
