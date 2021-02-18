@@ -30,6 +30,7 @@
 
 #include <init.h>
 #include <rpc/server.h>
+#include <scheduler.h>
 #include <stacktraces.h>
 #include <ui_interface.h>
 #include <util.h>
@@ -55,9 +56,6 @@
 #include <QThread>
 #include <QTimer>
 #include <QTranslator>
-
-// TODO - cleanup
-#include "scheduler.h"
 
 #if defined(QT_STATICPLUGIN)
 #include <QtPlugin>

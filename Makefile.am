@@ -65,9 +65,11 @@ BIN_CHECKS=$(top_srcdir)/contrib/devtools/symbol-check.py \
 WINDOWS_PACKAGING = $(top_srcdir)/share/pixmaps/ion.ico \
   $(top_srcdir)/share/pixmaps/ion_testnet.ico \
   $(top_srcdir)/share/pixmaps/ion_regtest.ico \
+  $(top_srcdir)/share/pixmaps/ion_devnet.ico \
   $(top_srcdir)/share/pixmaps/iond.ico \
   $(top_srcdir)/share/pixmaps/iond_testnet.ico \
   $(top_srcdir)/share/pixmaps/iond_regtest.ico \
+  $(top_srcdir)/share/pixmaps/iond_devnet.ico \
   $(top_srcdir)/share/pixmaps/nsis-header.bmp \
   $(top_srcdir)/share/pixmaps/nsis-wizard.bmp \
   $(top_srcdir)/doc/README_windows.txt

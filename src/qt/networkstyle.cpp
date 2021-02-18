@@ -73,17 +73,22 @@ NetworkStyle::NetworkStyle(const QString &_appName, const int iconColorHueShift,
     GUIUtil::migrateQtSettings();
     // load pixmap
     QPixmap appIconPixmap(":/icons/bitcoin");
+    QPixmap splashImagePixmap(":/images/splash");
 
     if(iconColorHueShift != 0 && iconColorSaturationReduction != 0)
     {
         // generate QImage from QPixmap
         QImage appIconImg = appIconPixmap.toImage();
+        QImage splashImageImg = splashImagePixmap.toImage();
         rotateColors(appIconImg, iconColorHueShift, iconColorSaturationReduction);
+        rotateColors(splashImageImg, iconColorHueShift, iconColorSaturationReduction);
         //convert back to QPixmap
 #if QT_VERSION >= 0x040700
         appIconPixmap.convertFromImage(appIconImg);
+        splashImagePixmap.convertFromImage(splashImageImg);
 #else
         appIconPixmap = QPixmap::fromImage(appIconImg);
+        splashImagePixmap = QPixmap::fromImage(splashImageImg);
 #endif
         // tweak badge color
         rotateColor(badgeColor, iconColorHueShift, iconColorSaturationReduction);
@@ -91,7 +96,7 @@ NetworkStyle::NetworkStyle(const QString &_appName, const int iconColorHueShift,
 
     appIcon             = QIcon(appIconPixmap);
     trayAndWindowIcon   = QIcon(appIconPixmap.scaled(QSize(256,256)));
-    splashImage         = QPixmap(":/images/splash");
+    splashImage         = splashImagePixmap;
 }
 
 const NetworkStyle *NetworkStyle::instantiate(const QString &networkId)
