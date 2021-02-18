@@ -11,11 +11,11 @@
 #include <chainparams.h>
 #include <primitives/block.h>
 #include <uint256.h>
+#include <versionbits.h>
 
 #include <math.h>
 
 // ion related
-#include "versionbits.h"
 
 const CBlockIndex*  GetHybridPrevIndex(const CBlockIndex* pindex, const bool fPos, const int nMinHeight) {
     if (!pindex || !pindex->pprev || pindex->pprev->nHeight < nMinHeight)
@@ -39,6 +39,26 @@ unsigned int static HybridPoWDarkGravityWave(const CBlockIndex* pindexLastIn, co
     // make sure we have at least (nPastBlocks + 1) blocks, otherwise just return hybridPowLimit
     if (!pindexLast || pindexLast->nHeight < params.POSPOWStartHeight + nPastBlocks) {
         return bnPowLimit.GetCompact();
+    }
+
+    if (params.fPowAllowMinDifficultyBlocks) {
+        const CBlockIndex* pindexPrev = GetHybridPrevIndex(pindexLast, false, params.POSPOWStartHeight);
+        if (pindexPrev == nullptr) {
+            return bnPowLimit.GetCompact();
+        }
+        int64_t nPrevBlockTime = pindexPrev->GetBlockTime();
+        // recent block is more than 2 hours old
+        if (pindexLast->GetBlockTime() > nPrevBlockTime + 2 * 60 * 60) {
+            return bnPowLimit.GetCompact();
+        }
+        // recent block is more than 10 minutes old
+        if (pindexLast->GetBlockTime() > nPrevBlockTime + params.nPowTargetSpacing * 4) {
+            arith_uint256 bnNew = arith_uint256().SetCompact(pindexLast->nBits) * 10;
+            if (bnNew > bnPowLimit) {
+                bnNew = bnPowLimit;
+            }
+            return bnNew.GetCompact();
+        }
     }
 
     const CBlockIndex *pindex = pindexLast;
@@ -97,7 +117,6 @@ unsigned int static HybridPoSPIVXDifficulty(const CBlockIndex* pindexLastIn, con
 
     if (params.fPowNoRetargeting)
         bnResult = pindexLast->nBits;
-        //return pindexLast->nBits;
 
     arith_uint256 bnTargetLimit = UintToArith256(params.posLimit);
     if (pindexLast->nHeight > params.POSStartHeight) {
@@ -504,27 +523,25 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const Consensus:
     // this is only active on devnets
     if (pindexLast->nHeight < params.nMinimumDifficultyBlocks) {
         unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
-        GetNextWorkRequiredResult = nProofOfWorkLimit;
+        return nProofOfWorkLimit;
     }
 
     // Most recent algo first
     if (nHeight >= params.POSPOWStartHeight) {
         if (fHybridPow) {
-            GetNextWorkRequiredResult = HybridPoWDarkGravityWave(pindexLast, params);
+            return HybridPoWDarkGravityWave(pindexLast, params);
         } else {
-            GetNextWorkRequiredResult = HybridPoSPIVXDifficulty(pindexLast, params);
+            return HybridPoSPIVXDifficulty(pindexLast, params);
         }
     } else if (pindexLast->nHeight >= params.DGWDifficultyStartHeight) {
-        GetNextWorkRequiredResult = GetNextWorkRequiredPivx(pindexLast, params, fProofOfStake);
+        return GetNextWorkRequiredPivx(pindexLast, params, fProofOfStake);
     }
     else if (pindexLast->nHeight >= params.MidasStartHeight) {
-        GetNextWorkRequiredResult = GetNextWorkRequiredMidas(pindexLast, params, fProofOfStake);
+        return GetNextWorkRequiredMidas(pindexLast, params, fProofOfStake);
     }
     else {
-        GetNextWorkRequiredResult = GetNextWorkRequiredOrig(pindexLast, params, fProofOfStake);
+        return GetNextWorkRequiredOrig(pindexLast, params, fProofOfStake);
     }
-
-    return GetNextWorkRequiredResult;
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params& params)
