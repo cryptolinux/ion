@@ -3,6 +3,90 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Ion tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/test/test_ion",
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Ion daemon main net (normal)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/iond",
+            "args": ["--datadir=${workspaceFolder}/datadir", "--port=12345", "--rpcport=23456"],
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Ion daemon testnet (normal)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/iond",
+            "args": ["--datadir=${workspaceFolder}/datadir", "--testnet", "--port=12345", "--rpcport=23456"],
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Ion daemon regtest (normal)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/iond",
+            "args": ["--datadir=${workspaceFolder}/datadir", "--regtest=1", "--port=12345", "--rpcport=23456"],
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Ion cli regtest - generate 1 block",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/ion-cli",
+            "args": ["--datadir=${workspaceFolder}/datadir", "--regtest=1", "--port=12345", "--rpcport=23456", "generate", 1],
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
             "name": "Ion daemon devnet (normal)",
             "type": "cppdbg",
             "request": "launch",
@@ -20,11 +104,11 @@
             ]
         },
         {
-            "name": "Ion-QT testnet (normal)",
+            "name": "Ion-QT main (normal)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
-            "args": ["--datadir=${workspaceFolder}/datadir", "--devnet", "--port=12345", "--rpcport=23456"],
+            "args": ["--datadir=${workspaceFolder}/datadir", "--conf=${workspaceFolder}/datadir/ioncoin.conf"],
             "cwd": "${workspaceFolder}",
             "externalConsole": false,
             "MIMode": "gdb",
@@ -37,19 +121,62 @@
             ]
         },
         {
-            "name": "bitcoin-util test (verbos) (internal terminal)",
-            "type": "python",
-            "request": "launch",
-            "program": "${workspaceFolder}/test/util/bitcoin-util-test.py",
-            "args": ["-v"],
-            "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Ion tests",
+            "name": "Ion-QT testnet (normal)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/src/test/test_ion",
+            "program": "${workspaceFolder}/src/qt/ion-qt",
+            "args": ["--datadir=${workspaceFolder}/datadir", "--conf=${workspaceFolder}/datadir/ioncoin.conf", "--testnet=1", "--port=12345", "--rpcport=23456"],
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Ion-QT regtest (normal)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/qt/ion-qt",
+            "args": ["--datadir=${workspaceFolder}/datadir", "--conf=${workspaceFolder}/datadir/ioncoin.conf", "--regtest=1"],
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Ion-QT devnet (normal)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/qt/ion-qt",
+            "args": ["--datadir=${workspaceFolder}/datadir", "--conf=${workspaceFolder}/datadir/ioncoin.conf", "--devnet=1", "-exec info registers"],
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "Ion-QT main (reindex)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/qt/ion-qt",
+            "args": ["--datadir=${workspaceFolder}/datadir", "--conf=${workspaceFolder}/datadir/ioncoin.conf", "--reindex=1"],
             "cwd": "${workspaceFolder}",
             "externalConsole": false,
             "MIMode": "gdb",
@@ -78,72 +205,13 @@
             ]
         },
         {
-            "name": "Ion daemon main net (normal)",
-            "type": "cppdbg",
+            "name": "bitcoin-util test (verbos) (internal terminal)",
+            "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/src/iond",
-            "args": ["--datadir=${workspaceFolder}/datadir"],
+            "program": "${workspaceFolder}/test/util/bitcoin-util-test.py",
+            "args": ["-v"],
             "cwd": "${workspaceFolder}",
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        {
-            "name": "Ion daemon testnet (normal)",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/src/iond",
-            "args": ["--datadir=${workspaceFolder}/datadir", "--testnet"],
-            "cwd": "${workspaceFolder}",
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        {
-            "name": "Ion-QT main net (normal)",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/src/qt/ion-qt",
-            "args": ["--datadir=${workspaceFolder}/datadir"],
-            "cwd": "${workspaceFolder}",
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        {
-            "name": "Ion-QT testnet (normal)",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/src/qt/ion-qt",
-            "args": ["--datadir=${workspaceFolder}/datadir", "--testnet"],
-            "cwd": "${workspaceFolder}",
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
+            "console": "integratedTerminal"
         },
         {
             "name": "Ion daemon main net (debug)",
