@@ -6,9 +6,9 @@
 #ifndef ION_BLOCKSIGNATURE_H
 #define ION_BLOCKSIGNATURE_H
 
-#include "key.h"
-#include "primitives/block.h"
-#include "keystore.h"
+#include <key.h>
+#include <primitives/block.h>
+#include <keystore.h>
 
 bool GetKeyIDFromUTXO(const CTxOut& txout, CKeyID& keyID);
 bool SignBlockWithKey(CBlock& block, const CKey& key);
