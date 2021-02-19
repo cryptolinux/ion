@@ -177,9 +177,13 @@ void static IONMiner(CWallet * const pwallet)
 
                     LogPrintf("IONMiner:\n");
                     LogPrintf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", pblock->GetHash().GetHex(), pblock->nBits);
-                    std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(*pblock);
-                    if (!ProcessNewBlock(Params(), shared_pblock, true, nullptr)) {
-                        LogPrintf("ProcessNewBlock, block not accepted\n");
+                    bool fNegative;
+                    bool fOverflow;
+                    arith_uint256 hashTarget;
+                    hashTarget.SetCompact(pblock->nBits, &fNegative, &fOverflow);
+                    // Check range
+                    if (fNegative || hashTarget == 0 || fOverflow || hashTarget > UintToArith256(Params().GetConsensus().powLimit)) {
+                        LogPrintf("%s - Incorrect difficulty\n");
                         MilliSleep(500);
                         continue;
                     }
