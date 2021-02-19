@@ -318,14 +318,14 @@ public:
         consensus.BIP34Hash = uint256S("000000ed2f68cd6c7935831cc1d473da7c6decdb87e8b5dba0afff0b00002690");
         consensus.BIP65Height = 1014023; // Start enforcing BIP65 (CHECKLOCKTIMEVERIFY) for blocks with version 9 and higher
         consensus.BIP66Height = 1; // Start enforcing BIP66 (Strict DER signatures) for blocks with version 7 and higher
-        consensus.DIP0001Height = 1760000;
-        consensus.DIP0003Height = 1760000;
+        consensus.DIP0001Height = 1770000;
+        consensus.DIP0003Height = 1780000;
         consensus.DIP0003EnforcementHeight = std::numeric_limits<int>::max();
         consensus.DIP0003EnforcementHash = uint256();
-        consensus.IIP0006Height = 1760000;
-        consensus.CSVHeight = 1760000;
-        consensus.BIP147Height = 1760000;
-        consensus.DIP0008Height = 1760000;
+        consensus.IIP0006Height = 1790000;
+        consensus.CSVHeight = 1800000;
+        consensus.BIP147Height = 1810000;
+        consensus.DIP0008Height = 1820000;
         consensus.powLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.hybridPowLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.nPowTargetTimespan = 24 * 60 * 60; // Ion: 1 day
@@ -560,8 +560,8 @@ public:
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
         consensus.nZerocoinStartHeight = 300;
-        consensus.nZerocoinStartTime = 1501776000;
-        consensus.nBlockZerocoinV2 = 1012710;
+        consensus.nZerocoinStartTime = 9999999999;
+        consensus.nBlockZerocoinV2 = 99999999;
         consensus.nPublicZCSpends = 5500;
         consensus.nBlockStakeModifierV2 = 5530;
         consensus.nFakeSerialBlockheightEnd = -1;
@@ -655,21 +655,15 @@ public:
 
         checkpointData = (CCheckpointData) {
             {
-                {1, uint256S("0x16ac2683f6ccab2f095a6270d485087e5c441f39a18fd32e00c7bfa996cdf696")},
-                {5530, uint256S("0xa7332c2034d501bb11f686ae6c224dbcbdf5332c2522204a63224a8ca670c18b")},
-                {117000, uint256S("0x4c092ef6ad08622df9be8b5287ea29a1e9bfbe6756fd3056b9caebed61c697ca")},
-                {119254, uint256S("0x65442ee4e4b0116ca7f85fdce633c21cc9e0fafdc7710505adfa21e30c291f84")},
-                {119800, uint256S("0x445c9f1f85fc15cdadc04f5f9d58de3edfcc8419a0ec8a691e5b235f38a97bc7")},
-                {121351, uint256S("0x00000077c1541afff0949cf2bb5c698435148fd7ed26b30acc7379cd30fd0990")},
-                {121392, uint256S("0x00001f425f0e67e867a395f86131edfca5d41d3631bd898b985f2e15effa2004")},
+                {0, uint256S("0x00000a5e695356de7ccae09478a4aa7053a402f7c2f57a40c44310d8fbe5d3c7")},
             }
         };
 
         chainTxData = ChainTxData{
-            1593693263, // * UNIX timestamp of last known number of transactions (Block 119800)
-            242591,     // * total number of transactions between genesis and that timestamp
+            1486045800, // * UNIX timestamp of last known number of transactions (Block 119800)
+            0,     // * total number of transactions between genesis and that timestamp
                         //   (the tx=... number in the SetBestChain debug.log lines)
-            0.029999    // * estimated number of transactions per second after that timestamp (2 per minute)
+            0    // * estimated number of transactions per second after that timestamp (2 per minute)
         };
 
     }
