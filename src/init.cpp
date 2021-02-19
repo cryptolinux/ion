@@ -266,7 +266,7 @@ void PrepareShutdown()
     // using the other before destroying them.
     if (peerLogic) UnregisterValidationInterface(peerLogic.get());
     if (g_connman) g_connman->Stop();
-    // if (g_txindex) g_txindex->Stop(); //TODO watch out when backporting bitcoin#13033 (don't accidently put the reset here, as we've already backported bitcoin#13894)
+    // if (g_txindex) g_txindex->Stop(); //TODO watch out when backporting bitcoin#13033 (don't accidentally put the reset here, as we've already backported bitcoin#13894)
 
     // After everything has been shut down, but before things get flushed, stop the
     // CScheduler/checkqueue threadGroup
