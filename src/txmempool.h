@@ -322,6 +322,7 @@ public:
 // Multi_index tag names
 struct descendant_score {};
 struct entry_time {};
+struct mining_score {};
 struct ancestor_score {};
 
 class CBlockPolicyEstimator;
@@ -476,6 +477,12 @@ public:
                 boost::multi_index::tag<entry_time>,
                 boost::multi_index::identity<CTxMemPoolEntry>,
                 CompareTxMemPoolEntryByEntryTime
+            >,
+            // sorted by score (for mining prioritization)
+            boost::multi_index::ordered_unique<
+                boost::multi_index::tag<mining_score>,
+                boost::multi_index::identity<CTxMemPoolEntry>,
+                CompareTxMemPoolEntryByScore
             >,
             // sorted by fee rate with ancestors
             boost::multi_index::ordered_non_unique<
