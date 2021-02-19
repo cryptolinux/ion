@@ -22,6 +22,7 @@
 #include <ui_interface.h>
 #include <utilstrencodings.h>
 #include <validation.h>
+#include <version.h>
 
 #include <masternode/masternode-meta.h>
 #include <masternode/masternode-sync.h>
@@ -3479,20 +3480,27 @@ void CConnman::RelayTransaction(const CTransaction& tx)
     }
 }
 
-void CConnman::RelayInv(CInv &inv, const int minProtoVersion, bool fAllowMasternodeConnections) {
-    LOCK(cs_vNodes);
-    for (const auto& pnode : vNodes) {
-        if (pnode->nVersion < minProtoVersion || (pnode->fMasternode && !fAllowMasternodeConnections))
-            continue;
-        pnode->PushInventory(inv);
-    }
+void CConnman::RelayInv(CInv &inv) {
+    RelayInv(inv, GetMinPeerVersion());
 }
 
-void CConnman::RelayInvFiltered(CInv &inv, const CTransaction& relatedTx, const int minProtoVersion, bool fAllowMasternodeConnections)
+void CConnman::RelayInv(CInv &inv, const int minProtoVersion) {
+    LOCK(cs_vNodes);
+    for (const auto& pnode : vNodes)
+        if(pnode->nVersion >= minProtoVersion)
+            pnode->PushInventory(inv);
+}
+
+void CConnman::RelayInvFiltered(CInv &inv, const CTransaction& relatedTx)
+{
+    RelayInvFiltered(inv, relatedTx, GetMinPeerVersion());
+}
+
+void CConnman::RelayInvFiltered(CInv &inv, const CTransaction& relatedTx, const int minProtoVersion)
 {
     LOCK(cs_vNodes);
     for (const auto& pnode : vNodes) {
-        if (pnode->nVersion < minProtoVersion || (pnode->fMasternode && !fAllowMasternodeConnections))
+        if(pnode->nVersion < minProtoVersion)
             continue;
         {
             LOCK(pnode->cs_filter);
@@ -3503,12 +3511,16 @@ void CConnman::RelayInvFiltered(CInv &inv, const CTransaction& relatedTx, const 
     }
 }
 
-void CConnman::RelayInvFiltered(CInv &inv, const uint256& relatedTxHash, const int minProtoVersion, bool fAllowMasternodeConnections)
+void CConnman::RelayInvFiltered(CInv &inv, const uint256& relatedTxHash)
+{
+    RelayInvFiltered(inv, relatedTxHash, GetMinPeerVersion());
+}
+
+void CConnman::RelayInvFiltered(CInv &inv, const uint256& relatedTxHash, const int minProtoVersion)
 {
     LOCK(cs_vNodes);
     for (const auto& pnode : vNodes) {
-        if (pnode->nVersion < minProtoVersion || (pnode->fMasternode && !fAllowMasternodeConnections))
-            continue;
+        if(pnode->nVersion < minProtoVersion) continue;
         {
             LOCK(pnode->cs_filter);
             if(pnode->pfilter && !pnode->pfilter->contains(relatedTxHash)) continue;
@@ -3908,4 +3920,12 @@ void CConnman::UnregisterEvents(CNode *pnode)
                 epollfd, EPOLL_CTL_DEL, pnode->hSocket, NetworkErrorString(WSAGetLastError()));
     }
 #endif
+}
+
+int CConnman::GetMinPeerVersion() {
+    // SPORK_11 is used for 95705 (v3.3+)
+    if (sporkManager.IsSporkActive(SPORK_8_NEW_PROTOCOL_ENFORCEMENT))
+            return MIN_PEER_PROTO_VERSION_AFTER_ENFORCEMENT;
+
+    return MIN_PEER_PROTO_VERSION_BEFORE_ENFORCEMENT;
 }
