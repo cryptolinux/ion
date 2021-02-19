@@ -176,3 +176,8 @@ datadir*/
 
 # bdb4
 db4/
+
+# linearize
+contrib/linearize/linearize.cfg
+contrib/linearize/hashlist.txt
+contrib/linearize/ion_hash/
