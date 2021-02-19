@@ -213,13 +213,13 @@ class BlockDataCopier:
                 continue
 
             inMagic = inhdr[:4]
-            #if (inMagic != self.settings['netmagic']):
-            #    print("Invalid magic: " + hexlify(inMagic).decode('utf-8'))
-            #    return
+            if (inMagic != self.settings['netmagic']):
+                print("Invalid magic: " + hexlify(inMagic).decode('utf-8'))
+                return
             inLenLE = inhdr[4:]
             su = struct.unpack("<I", inLenLE)
             # Zerocoin started on block 550001 and adds 32 bytes to the block header.
-            if (self.blkCountOut < 550001):
+            if (self.blkCountOut < self.settings['zerocoin_start']):
                 inLen = su[0] - 80 # length without header
                 blk_hdr = self.inF.read(80)
             else:
@@ -287,9 +287,9 @@ if __name__ == '__main__':
     settings['rev_hash_bytes'] = settings['rev_hash_bytes'].lower()
 
     if 'netmagic' not in settings:
-        settings['netmagic'] = 'f9beb4d9'
+        settings['netmagic'] = 'c4e1d8ec'
     if 'genesis' not in settings:
-        settings['genesis'] = '000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f'
+        settings['genesis'] = '0000004cf5ffbf2e31a9aa07c86298efb01a30b8911b80af7473d1114715084b'
     if 'input' not in settings:
         settings['input'] = 'input'
     if 'hashlist' not in settings:
@@ -304,6 +304,8 @@ if __name__ == '__main__':
         settings['out_of_order_cache_sz'] = 100 * 1000 * 1000
     if 'debug_output' not in settings:
         settings['debug_output'] = 'false'
+    if 'zerocoin_start' not in settings:
+        settings['zerocoin_start'] = 550001
 
     settings['max_out_sz'] = int(settings['max_out_sz'])
     settings['split_timestamp'] = int(settings['split_timestamp'])
