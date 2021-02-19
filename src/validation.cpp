@@ -667,7 +667,6 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
         return state.DoS(100, false, REJECT_INVALID, "coinbase-coinstake-not-allowed");
 
     // TODO - reenable IsAnyOutputGrouped - validation check, token-group-imbalance
-    /*
     // Disallow any OP_GROUP txs from entering the mempool until OP_GROUP is enabled.
     // This ensures that someone won't create an invalid OP_GROUP tx that sits in the mempool until after activation,
     // potentially causing this node to create a bad block.
@@ -685,7 +684,6 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
             }
         }
     }
-    */
 /** TODO (FornaxA): Spork settings
     //Temporarily disable new token creation during management mode
     if (GetAdjustedTime() > GetSporkValue(SPORK_10_TOKENGROUP_MAINTENANCE_MODE) && IsAnyOutputGroupedCreation(tx)) {
@@ -1456,10 +1454,8 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsVi
             std::unordered_map<CTokenGroupID, CTokenGroupBalance> tgMintMeltBalance;
             CBlockIndex* pindexPrev = mapBlockIndex.find(inputs.GetBestBlock())->second;
              // TODO - reenable CheckTokenGroups - ERROR: Token group inputs and outputs do not balance
-            /*
             if (!CheckTokenGroups(tx, state, inputs, tgMintMeltBalance))
                 return state.DoS(0, error("Token group inputs and outputs do not balance"), REJECT_MALFORMED, "token-group-imbalance");
-            */
             //Check that all token transactions paid their XDM fees
             CAmount nXDMFees = 0;
             if (IsAnyOutputGrouped(tx)) {
@@ -2465,11 +2461,10 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     LogPrint(BCLog::BENCHMARK, "      - GetBlockSubsidy: %.2fms [%.2fs (%.2fms/blk)]\n", MICRO * (nTime5_2 - nTime5_1), nTimeSubsidy * MICRO, nTimeSubsidy * MILLI / nBlocksTotal);
 
     // TODO - reenable
-    /*
+
     if (!IsBlockValueValid(block, pindex->nHeight, blockReward, coinstakeValueIn, strError)) {
         return state.DoS(0, error("ConnectBlock(ION): %s", strError), REJECT_INVALID, "bad-cb-amount");
     }
-    */
 
     int64_t nTime5_3 = GetTimeMicros(); nTimeValueValid += nTime5_3 - nTime5_2;
     LogPrint(BCLog::BENCHMARK, "      - IsBlockValueValid: %.2fms [%.2fs (%.2fms/blk)]\n", MICRO * (nTime5_3 - nTime5_2), nTimeValueValid * MICRO, nTimeValueValid * MILLI / nBlocksTotal);
@@ -2503,7 +2498,6 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     pindex->nChainXDMTransactions = (pindex->pprev ? pindex->pprev->nChainXDMTransactions : 0) + pindex->nXDMTransactions;
 
     // Ensure that accumulator checkpoints are valid and in the same state as this instance of the chain
-    /*
     AccumulatorMap mapAccumulators(Params().Zerocoin_Params(pindex->nHeight < Params().GetConsensus().nBlockZerocoinV2));
     if (!ValidateAccumulatorCheckpoint(block, pindex, mapAccumulators)) {
         if (!ShutdownRequested()) {
@@ -2513,7 +2507,7 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
         return error("%s: Failed to validate accumulator checkpoint for block=%s height=%d because wallet is shutting down", __func__,
                 block.GetHash().GetHex(), pindex->nHeight);
     }
-    */
+
     if (fJustCheck)
         return true;
 
@@ -3672,8 +3666,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     const Consensus::Params& consensusParams = params.GetConsensus();
     bool fHybridPow = ((block.nVersion & BLOCKTYPEBITS_MASK) == BlockTypeBits::BLOCKTYPE_MINING) && (nHeight >= consensusParams.POSPOWStartHeight);
     if (block.nBits != GetNextWorkRequired(pindexPrev, consensusParams, fHybridPow)) {
-        if (nHeight < 1760000) // skip for now, TODO - reenable
-            return state.DoS(100, false, REJECT_INVALID, "bad-diffbits", false, strprintf("incorrect proof of work at %d", nHeight));
+        return state.DoS(100, false, REJECT_INVALID, "bad-diffbits", false, strprintf("incorrect proof of work at %d", nHeight));
     }
 
     // Check against checkpoints
