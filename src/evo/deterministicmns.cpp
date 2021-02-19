@@ -682,8 +682,8 @@ bool CDeterministicMNManager::BuildNewListFromBlock(const CBlock& block, const C
 
     DecreasePoSePenalties(newList);
 
-    // we skip the coinbase and coinstake
-    for (int i = block.IsProofOfStake() ? 2 : 1; i < (int)block.vtx.size(); i++) {
+    // we skip the coinbase
+    for (int i = 1; i < (int)block.vtx.size(); i++) {
         const CTransaction& tx = *block.vtx[i];
 
         if (tx.nVersion != 3) {
