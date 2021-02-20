@@ -213,15 +213,18 @@ class BlockDataCopier:
                 continue
 
             inMagic = inhdr[:4]
-            if (inMagic != self.settings['netmagic']):
-                print("Invalid magic: " + hexlify(inMagic).decode('utf-8'))
-                return
+            #if (inMagic != self.settings['netmagic']):
+            #    print("Invalid magic: " + hexlify(inMagic).decode('utf-8'))
+            #    return
             inLenLE = inhdr[4:]
             su = struct.unpack("<I", inLenLE)
             # Zerocoin started on block 550001 and adds 32 bytes to the block header.
             if (self.blkCountOut < self.settings['zerocoin_start']):
                 inLen = su[0] - 80 # length without header
                 blk_hdr = self.inF.read(80)
+            elif (self.blkCountOut < 1760000 and self.blkCountOut >= self.settings['zerocoin_start']):
+                inLen = su[0] - 112 # length without header
+                blk_hdr = self.inF.read(112)
             else:
                 inLen = su[0] - 112 # length without header
                 blk_hdr = self.inF.read(112)
