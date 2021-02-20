@@ -45,22 +45,22 @@ copyright\_header.py update \<base\_directory\> [verbose]
 Updates all the copyright headers of `The Ion Core developers` which were
 changed in a year more recent than is listed. For example:
 ```
-// Copyright (c) <firstYear>-<lastYear> The XXXXXXX developers
+// Copyright (c) <firstYear>-<lastYear> The Dash Core developers
 ```
 will be updated to:
 ```
-// Copyright (c) <firstYear>-<lastModifiedYear> The XXXXXXX developers
+// Copyright (c) <firstYear>-<lastModifiedYear> The Dash Core developers
 ```
 where `<lastModifiedYear>` is obtained from the `git log` history.
 
 This subcommand also handles copyright headers that have only a single year. In
 those cases:
 ```
-// Copyright (c) <year> The XXXXXXX developers
+// Copyright (c) <year> The Dash Core developers
 ```
 will be updated to:
 ```
-// Copyright (c) <year>-<lastModifiedYear> The XXXXXXX developers
+// Copyright (c) <year>-<lastModifiedYear> The Dash Core developers
 ```
 where the update is appropriate.
 

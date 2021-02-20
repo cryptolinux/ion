@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019 The XXXXXXX developers
+// Copyright (c) 2014-2019 The Dash Core developers
 
 #include <cachemultimap.h>
 

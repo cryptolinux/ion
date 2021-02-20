@@ -34,7 +34,7 @@
 /* Copyright holder(s) */
 #define COPYRIGHT_HOLDERS_FINAL "The Ion Core developers"
 #define BITCOIN_COPYRIGHT_HOLDERS_FINAL "The Bitcoin Core developers"
-#define ION_COPYRIGHT_HOLDERS_FINAL "The XXXXXXX developers"
+#define ION_COPYRIGHT_HOLDERS_FINAL "The Dash Core developers"
 #define PIVX_COPYRIGHT_HOLDERS_FINAL "The PIVX Core developers"
 
 /* Replacement for %s in copyright holders string */
