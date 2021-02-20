@@ -5,9 +5,9 @@
 #ifndef TOKEN_GROUP_DESCRIPTION_H
 #define TOKEN_GROUP_DESCRIPTION_H
 
-#include "amount.h"
-#include "script/script.h"
-#include "uint256.h"
+#include <amount.h>
+#include <script/script.h>
+#include <uint256.h>
 
 static CAmount COINFromDecimalPos(const uint8_t& nDecimalPos) {
     uint8_t n = nDecimalPos <= 16 ? nDecimalPos : 0;

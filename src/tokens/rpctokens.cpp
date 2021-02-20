@@ -3,16 +3,16 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "base58.h"
-#include "core_io.h"
-#include "dstencode.h"
-#include "ionaddrenc.h"
-#include "rpc/protocol.h"
-#include "rpc/server.h"
-#include "script/tokengroup.h"
-#include "tokens/tokengroupmanager.h"
-#include "utilmoneystr.h"
-#include "validation.h"
+#include <base58.h>
+#include <core_io.h>
+#include <dstencode.h>
+#include <ionaddrenc.h>
+#include <rpc/protocol.h>
+#include <rpc/server.h>
+#include <script/tokengroup.h>
+#include <tokens/tokengroupmanager.h>
+#include <utilmoneystr.h>
+#include <validation.h>
 
 #include <boost/lexical_cast.hpp>
 

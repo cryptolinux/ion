@@ -3,14 +3,14 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "arith_uint256.h"
-#include "chain.h"
-#include "kernel.h"
-#include "stakeinput.h"
-#include "validation.h"
-#include "wallet/wallet.h"
-#include "xion/accumulators.h"
-#include "xion/deterministicmint.h"
+#include <arith_uint256.h>
+#include <chain.h>
+#include <pos/kernel.h>
+#include <pos/stakeinput.h>
+#include <validation.h>
+#include <wallet/wallet.h>
+#include <xion/accumulators.h>
+#include <xion/deterministicmint.h>
 
 typedef std::vector<unsigned char> valtype;
 

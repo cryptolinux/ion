@@ -2,16 +2,16 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "tokens/tokengroupmanager.h"
+#include <tokens/tokengroupmanager.h>
 
-#include "chain.h"
-#include "coins.h"
-#include "dstencode.h"
-#include "ionaddrenc.h"
-#include "rpc/protocol.h"
-#include "script/tokengroup.h"
-#include "utilstrencodings.h"
-#include "tokens/tokengroupconfiguration.h"
+#include <chain.h>
+#include <coins.h>
+#include <dstencode.h>
+#include <ionaddrenc.h>
+#include <rpc/protocol.h>
+#include <script/tokengroup.h>
+#include <utilstrencodings.h>
+#include <tokens/tokengroupconfiguration.h>
 
 CTokenGroupManager::CTokenGroupManager() {
     vTokenGroupFilters.emplace_back(TGFilterCharacters);

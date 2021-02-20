@@ -40,7 +40,7 @@
 #include <stdint.h>
 
 // Ion related
-#include "pos/rewards.h"
+#include <pos/rewards.h>
 
 unsigned int ParseConfirmTarget(const UniValue& value)
 {

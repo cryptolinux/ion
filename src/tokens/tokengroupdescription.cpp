@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "tokens/tokengroupdescription.h"
-#include "util.h"
+#include <tokens/tokengroupdescription.h>
+#include <util.h>
 
 // Returns true if the first 5 bytes indicate the script contains a Token Group Description
 // Output descriptionData[] holds 0 or more unverified char vectors of description data

@@ -2,10 +2,10 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "pos/rewards.h"
+#include <pos/rewards.h>
 
-#include "chainparams.h"
-#include "tokens/tokengroupmanager.h"
+#include <chainparams.h>
+#include <tokens/tokengroupmanager.h>
 
 CAmount GetBlockSubsidyION(const int nPrevHeight, const bool fPos, const Consensus::Params& consensusParams)
 {

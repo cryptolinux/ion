@@ -26,10 +26,10 @@
 #include <wallet/wallet.h>
 #endif // ENABLE_WALLET
 
-#include "masternode/masternode-payments.h"
-#include "masternode/masternode-sync.h"
+#include <masternode/masternode-payments.h>
+#include <masternode/masternode-sync.h>
 
-#include "rpc/server.h"
+#include <rpc/server.h>
 
 // ion related
 UniValue masternodelist(const JSONRPCRequest& request);

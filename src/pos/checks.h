@@ -5,9 +5,9 @@
 #ifndef ION_CHECKS_H
 #define ION_CHECKS_H
 
-#include "consensus/validation.h"
-#include "libzerocoin/CoinSpend.h"
-#include "primitives/transaction.h"
+#include <consensus/validation.h>
+#include <libzerocoin/CoinSpend.h>
+#include <primitives/transaction.h>
 
 bool IsBlockHashInChain(const uint256& hashBlock);
 bool IsTransactionInChain(const uint256& txId, int& nHeightTx, CTransactionRef& tx);

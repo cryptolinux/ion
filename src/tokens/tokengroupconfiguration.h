@@ -5,9 +5,9 @@
 #ifndef TOKEN_GROUP_CONFIGURATION_H
 #define TOKEN_GROUP_CONFIGURATION_H
 
-#include "blockencodings.h"
-#include "consensus/tokengroups.h"
-#include "tokens/tokengroupdescription.h"
+#include <blockencodings.h>
+#include <consensus/tokengroups.h>
+#include <tokens/tokengroupdescription.h>
 
 #include <unordered_map>
 

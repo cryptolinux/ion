@@ -3,12 +3,12 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "clientversion.h"
-#include "coins.h"
-#include "dstencode.h"
-#include "ionaddrenc.h"
-#include "tokens/groups.h"
-#include "streams.h"
+#include <clientversion.h>
+#include <coins.h>
+#include <dstencode.h>
+#include <ionaddrenc.h>
+#include <tokens/groups.h>
+#include <streams.h>
 
 CTokenGroupID NoGroup; // No group specified.
 

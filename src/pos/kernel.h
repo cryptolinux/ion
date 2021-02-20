@@ -6,8 +6,8 @@
 #ifndef BITCOIN_KERNEL_H
 #define BITCOIN_KERNEL_H
 
-#include "validation.h"
-#include "stakeinput.h"
+#include <validation.h>
+#include <pos/stakeinput.h>
 
 
 // MODIFIER_INTERVAL: time to elapse before new modifier is computed

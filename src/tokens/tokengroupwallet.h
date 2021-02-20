@@ -6,9 +6,9 @@
 #ifndef TOKEN_GROUP_RPC_H
 #define TOKEN_GROUP_RPC_H
 
-#include "chainparams.h"
-#include "consensus/tokengroups.h"
-#include "wallet/wallet.h"
+#include <chainparams.h>
+#include <consensus/tokengroups.h>
+#include <wallet/wallet.h>
 #include <unordered_map>
 
 // Number of satoshis we will put into a grouped output

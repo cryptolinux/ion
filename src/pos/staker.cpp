@@ -5,21 +5,21 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "staker.h"
+#include <pos/staker.h>
 
-#include "chain.h"
-#include "chainparams.h"
-#include "miner.h"
-#include "pos/blocksignature.h"
-#include "pos/kernel.h"
-#include "pos/rewards.h"
-#include "pos/staking-manager.h"
-#include "pos/stakeinput.h"
-#include "rpc/protocol.h"
-#include "script/tokengroup.h"
-#include "tokens/tokengroupmanager.h"
-#include "validation.h"
-#include "wallet/wallet.h"
+#include <chain.h>
+#include <chainparams.h>
+#include <miner.h>
+#include <pos/blocksignature.h>
+#include <pos/kernel.h>
+#include <pos/rewards.h>
+#include <pos/staking-manager.h>
+#include <pos/stakeinput.h>
+#include <rpc/protocol.h>
+#include <script/tokengroup.h>
+#include <tokens/tokengroupmanager.h>
+#include <validation.h>
+#include <wallet/wallet.h>
 
 //////////////////////////////////////////////////////////////////////////////
 //

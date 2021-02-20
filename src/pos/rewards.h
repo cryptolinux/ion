@@ -5,10 +5,10 @@
 #ifndef ION_REWARDS_H
 #define ION_REWARDS_H
 
-#include "amount.h"
-#include "consensus/params.h"
-#include "primitives/block.h"
-#include "tokens/groups.h"
+#include <amount.h>
+#include <consensus/params.h>
+#include <primitives/block.h>
+#include <tokens/groups.h>
 
 class CReward {
 public:

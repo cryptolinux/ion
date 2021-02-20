@@ -6,11 +6,11 @@
 #ifndef ION_STAKEINPUT_H
 #define ION_STAKEINPUT_H
 
-#include "chain.h"
-#include "streams.h"
-#include "uint256.h"
+#include <chain.h>
+#include <streams.h>
+#include <uint256.h>
 
-#include "libzerocoin/CoinSpend.h"
+#include <libzerocoin/CoinSpend.h>
 
 class CKeyStore;
 class CWallet;

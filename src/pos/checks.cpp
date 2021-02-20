@@ -2,15 +2,16 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "chain.h"
-#include "chainparams.h"
-#include "checks.h"
-#include "util.h"
-
-#include "validation.h"
-#include "xion/xionchain.h"
-#include "xion/xionmodule.h"
-#include "xion/zerocoindb.h"
+#include <chain.h>
+#include <chainparams.h>
+#include <util.h>
+#include <validation.h>
+// Proof-of-Stake
+#include <pos/checks.h>
+// Zerocoin
+#include <xion/xionchain.h>
+#include <xion/xionmodule.h>
+#include <xion/zerocoindb.h>
 
 bool IsBlockHashInChain(const uint256& hashBlock)
 {

@@ -6,11 +6,11 @@
 #ifndef TOKENS_GROUPS_H
 #define TOKENS_GROUPS_H
 
-#include "amount.h"
-#include "pubkey.h"
-#include "primitives/transaction.h"
-#include "script/script.h"
-#include "util.h"
+#include <amount.h>
+#include <pubkey.h>
+#include <primitives/transaction.h>
+#include <script/script.h>
+#include <util.h>
 
 enum class TokenGroupIdFlags : uint8_t
 {

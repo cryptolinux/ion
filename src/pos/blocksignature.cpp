@@ -3,10 +3,10 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "blocksignature.h"
-#include "util.h"
-#include "utilstrencodings.h"
-#include "xion/xionchain.h"
+#include <pos/blocksignature.h>
+#include <util.h>
+#include <utilstrencodings.h>
+#include <xion/xionchain.h>
 
 typedef std::vector<unsigned char> valtype;
 

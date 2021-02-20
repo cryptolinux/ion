@@ -7,17 +7,19 @@
 #include <boost/assign/list_of.hpp>
 #include <algorithm>
 
-#include "consensus/tokengroups.h"
-#include "wallet/db.h"
-#include "kernel.h"
-#include "policy/policy.h"
-#include "pow.h"
-#include "script/interpreter.h"
-#include "timedata.h"
-#include "util.h"
-#include "stakeinput.h"
-#include "xion/xionchain.h"
-#include "xion/accumulators.h"
+#include <consensus/tokengroups.h>
+#include <wallet/db.h>
+#include <policy/policy.h>
+#include <pow.h>
+#include <script/interpreter.h>
+#include <timedata.h>
+#include <util.h>
+// Proof-of-Stake
+#include <pos/kernel.h>
+#include <pos/stakeinput.h>
+// Zerocoin
+#include <xion/xionchain.h>
+#include <xion/accumulators.h>
 
 // v1 modifier interval.
 static const int64_t OLD_MODIFIER_INTERVAL = 2087;

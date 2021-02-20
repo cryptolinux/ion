@@ -5,8 +5,8 @@
 #ifndef TOKEN_GROUP_MANAGER_H
 #define TOKEN_GROUP_MANAGER_H
 
-#include "consensus/tokengroups.h"
-#include "tokens/tokengroupconfiguration.h"
+#include <consensus/tokengroups.h>
+#include <tokens/tokengroupconfiguration.h>
 
 #include <unordered_map>
 

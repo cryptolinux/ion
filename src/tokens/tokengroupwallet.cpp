@@ -3,19 +3,19 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "tokens/tokengroupwallet.h"
+#include <tokens/tokengroupwallet.h>
 
-#include "consensus/tokengroups.h"
-#include "consensus/validation.h"
-#include "dstencode.h"
-#include "net.h"
-#include "rpc/protocol.h"
-#include "script/tokengroup.h"
-#include "tokens/tokengroupmanager.h"
-#include "utilmoneystr.h"
-#include "utilstrencodings.h"
-#include "validation.h" // for cs_main
-#include "wallet/wallet.h"
+#include <consensus/tokengroups.h>
+#include <consensus/validation.h>
+#include <dstencode.h>
+#include <net.h>
+#include <rpc/protocol.h>
+#include <script/tokengroup.h>
+#include <tokens/tokengroupmanager.h>
+#include <utilmoneystr.h>
+#include <utilstrencodings.h>
+#include <validation.h> // for cs_main
+#include <wallet/wallet.h>
 
 // allow this many times fee overpayment, rather than make a change output
 #define FEE_FUDGE 2

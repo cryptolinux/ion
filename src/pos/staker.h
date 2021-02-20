@@ -7,7 +7,7 @@
 #ifndef ION_STAKER_H
 #define ION_STAKER_H
 
-#include "script/script.h"
+#include <script/script.h>
 
 #include <univalue.h>
 

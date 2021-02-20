@@ -2,10 +2,10 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "tokens/tokendb.h"
-#include "tokens/tokengroupmanager.h"
-#include "ui_interface.h"
-#include "validation.h"
+#include <tokens/tokendb.h>
+#include <tokens/tokengroupmanager.h>
+#include <ui_interface.h>
+#include <validation.h>
 
 #include <boost/thread.hpp>
 

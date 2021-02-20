@@ -3,10 +3,10 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "script/tokengroup.h"
+#include <script/tokengroup.h>
 
-#include "consensus/tokengroups.h"
-#include "ionaddrenc.h"
+#include <consensus/tokengroups.h>
+#include <ionaddrenc.h>
 
 class CTxDestinationTokenGroupExtractor : public boost::static_visitor<CTokenGroupID>
 {

@@ -5,9 +5,9 @@
 #ifndef STAKING_CLIENT_H
 #define STAKING_CLIENT_H
 
-#include "amount.h"
-#include "script/script.h"
-#include "sync.h"
+#include <amount.h>
+#include <script/script.h>
+#include <sync.h>
 
 #include <univalue.h>
 

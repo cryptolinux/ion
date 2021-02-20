@@ -4,17 +4,17 @@
 
 /* clang-format off */
 // must be first for windows
-#include "compat.h"
+#include <compat.h>
 
 /* clang-format on */
-#include "base58.h"
-#include "primitives/transaction.h"
-#include "script/sign.h"
-#include "streams.h"
-#include "uint256.h"
-#include "utilstrencodings.h"
+#include <base58.h>
+#include <primitives/transaction.h>
+#include <script/sign.h>
+#include <streams.h>
+#include <uint256.h>
+#include <utilstrencodings.h>
 
-#include "stdio.h"
+#include <stdio.h>
 
 #include <openssl/rand.h>
 #include <string>

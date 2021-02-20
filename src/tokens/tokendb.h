@@ -5,7 +5,7 @@
 #ifndef ION_CTOKENDB_H
 #define ION_CTOKENDB_H
 
-#include "dbwrapper.h"
+#include <dbwrapper.h>
 
 #include <boost/filesystem/path.hpp>
 
