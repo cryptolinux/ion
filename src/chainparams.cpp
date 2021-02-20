@@ -397,8 +397,8 @@ public:
         nDefaultPort = 12700;
         nPruneAfterHeight = 100000;
 
-        consensus.nBits = 0x1e00ffff;
-        genesis = CreateGenesisBlock(1486045800, 1486045800, 28884498, consensus.Bits, 1, 1 * COIN);
+        consensus.nBits = 0x1e00ffff; // (int)503382015
+        genesis = CreateGenesisBlock(1486045800, 1486045800, 28884498, consensus.nBits, 1, 1 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x0000004cf5ffbf2e31a9aa07c86298efb01a30b8911b80af7473d1114715084b"));
         assert(genesis.hashMerkleRoot == uint256S("0x7af2e961c5262cb0411edcb7414ab7178133fc06257ceb47d349e4e5e35e2d40"));
@@ -599,7 +599,8 @@ public:
         nDefaultPort = 27170;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1486045800, 1491737471, 2263997, 0x1e0ffff0, 1, 1 * COIN);
+        consensus.nBits = 0x1e0ffff0; // (int)504365040
+        genesis = CreateGenesisBlock(1486045800, 1491737471, 2263997, consensus.nBits, 1, 1 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x00000a5e695356de7ccae09478a4aa7053a402f7c2f57a40c44310d8fbe5d3c7"));
         assert(genesis.hashMerkleRoot == uint256S("0x7af2e961c5262cb0411edcb7414ab7178133fc06257ceb47d349e4e5e35e2d40"));
@@ -812,7 +813,8 @@ public:
         nDefaultPort = 19799;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1486045800, 1491737471, 1, 0x207fffff, 1, 1 * COIN);
+        consensus.nBits = 0x207fffff; // (int)545259519
+        genesis = CreateGenesisBlock(1486045800, 1491737471, 1, consensus.nBits, 1, 1 * COIN);
         arith_uint256 bnTarget;
         bnTarget.SetCompact(genesis.nBits);
 
@@ -1001,7 +1003,8 @@ public:
         nDefaultPort = 19994;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1575851148, 1575851149, 1, 0x207fffff, 1, 1 * COIN);
+        consensus.nBits = 0x207fffff; // (int)545259519
+        genesis = CreateGenesisBlock(1575851148, 1575851149, 1, consensus.nBits, 1, 1 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
 
         // Print genesis
