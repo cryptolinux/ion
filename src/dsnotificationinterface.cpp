@@ -55,6 +55,8 @@ void CDSNotificationInterface::UpdatedBlockTip(const CBlockIndex *pindexNew, con
     if (pindexNew == pindexFork) // blocks were disconnected without any new ones
         return;
 
+    deterministicMNManager->UpdatedBlockTip(pindexNew);
+
     masternodeSync.UpdatedBlockTip(pindexNew, fInitialDownload, connman);
 
     // Update global DIP0001 activation status
@@ -69,6 +71,9 @@ void CDSNotificationInterface::UpdatedBlockTip(const CBlockIndex *pindexNew, con
     stakingManager->UpdatedBlockTip(pindexNew);
     miningManager->UpdatedBlockTip(pindexNew);
 #endif // ENABLE_WALLET
+
+    //if (fLiteMode)
+    //    return;
 
     llmq::quorumInstantSendManager->UpdatedBlockTip(pindexNew);
     llmq::chainLocksHandler->UpdatedBlockTip(pindexNew);
@@ -93,7 +98,7 @@ void CDSNotificationInterface::BlockConnected(const std::shared_ptr<const CBlock
     // state of transactions in our wallet is currently cleared when we
     // receive another notification and there is a race condition where
     // notification of a connected conflict might cause an outside process
-    // to abandon a transaction and then have it inadvertantly cleared by
+    // to abandon a transaction and then have it inadvertently cleared by
     // the notification that the conflicted transaction was evicted.
 
     llmq::quorumInstantSendManager->BlockConnected(pblock, pindex, vtxConflicted);
