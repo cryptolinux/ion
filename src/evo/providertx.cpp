@@ -186,12 +186,17 @@ bool CheckProRegTx(const CTransaction& tx, const CBlockIndex* pindexPrev, CValid
         if (mnList.HasUniqueProperty(ptx.keyIDOwner) || mnList.HasUniqueProperty(ptx.pubKeyOperator)) {
             return state.DoS(10, false, REJECT_DUPLICATE, "bad-protx-dup-key");
         }
-
+        // TODO - reenable
+        /*
+        ERROR: ConnectTip(): ConnectBlock 0000002ea4b5aed1405338b8a6ba63299bfc5f32742a730e3317ff4f41de89af failed with bad-protx-key-not-same (code 16)
+        */
+       /*
         if (!deterministicMNManager->IsDIP3Enforced(pindexPrev->nHeight)) {
             if (ptx.keyIDOwner != ptx.keyIDVoting) {
                 return state.DoS(10, false, REJECT_INVALID, "bad-protx-key-not-same");
             }
         }
+        */
     }
 
     if (!CheckInputsHash(tx, ptx, state)) {
@@ -331,11 +336,17 @@ bool CheckProUpRegTx(const CTransaction& tx, const CBlockIndex* pindexPrev, CVal
             }
         }
 
+        // TODO - reenable
+        /*
+        ERROR: ConnectTip(): ConnectBlock 0000002ea4b5aed1405338b8a6ba63299bfc5f32742a730e3317ff4f41de89af failed with bad-protx-key-not-same (code 16)
+        */
+       /*
         if (!deterministicMNManager->IsDIP3Enforced(pindexPrev->nHeight)) {
             if (dmn->pdmnState->keyIDOwner != ptx.keyIDVoting) {
                 return state.DoS(10, false, REJECT_INVALID, "bad-protx-key-not-same");
             }
         }
+        */
 
         if (!CheckInputsHash(tx, ptx, state)) {
             return false;
