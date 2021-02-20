@@ -102,7 +102,6 @@ bool IsBlockValueValid(const CBlock& block, const int nBlockHeight, const CBlock
 
     strErrorRet = "";
 
-    /*
     if (nBlockHeight < consensusParams.nBudgetPaymentsStartBlock) {
         // old budget system is not activated yet, just make sure we do not exceed the regular block reward
         if(!isBlockRewardValueMet) {
@@ -114,7 +113,6 @@ bool IsBlockValueValid(const CBlock& block, const int nBlockHeight, const CBlock
         // superblocks are not enabled yet, check if we can pass old budget rules
         return IsOldBudgetBlockValueValid(block, nBlockHeight, blockReward, coinstakeValueIn, strErrorRet);
     }
-    */
 
     LogPrint(BCLog::MNPAYMENTS, "block.vtx[0]->GetValueOut() %lld <= blockReward %lld\n", block.vtx[0]->GetValueOut(), blockReward.GetTotalRewards().IONAmount);
 
