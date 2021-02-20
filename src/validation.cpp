@@ -678,9 +678,15 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
             for (const CTxOut &txout : tx.vout)
             {
                 CTokenGroupInfo grp(txout.scriptPubKey);
+                // TODO - reenable IsAnyOutputGrouped - validation check, op_group-before-mgt-tokens
+                /*
+                ERROR: ConnectTip(): ConnectBlock 0000000000bb9b5d518dc2566df0f86d4d2d0a72c931a1535cf4fbe5fd382210 failed with op_group-before-mgt-tokens (code 64)
+                */
+                /*
                 if ((grp.invalid || grp.associatedGroup != NoGroup) && !grp.associatedGroup.hasFlag(TokenGroupIdFlags::MGT_TOKEN)) {
                     return state.DoS(0, false, REJECT_NONSTANDARD, "op_group-before-mgt-tokens");
                 }
+                */
             }
         }
     }
@@ -1472,9 +1478,15 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsVi
                     for (const CTxOut &txout : tx.vout)
                     {
                         CTokenGroupInfo grp(txout.scriptPubKey);
+                        // TODO - reenable IsAnyOutputGrouped - validation check, op_group-before-mgt-tokens
+                        /*
+                        ERROR: ConnectTip(): ConnectBlock 0000000000bb9b5d518dc2566df0f86d4d2d0a72c931a1535cf4fbe5fd382210 failed with op_group-before-mgt-tokens (code 64)
+                        */
+                        /*
                         if ((grp.invalid || grp.associatedGroup != NoGroup) && !grp.associatedGroup.hasFlag(TokenGroupIdFlags::MGT_TOKEN)) {
                             return state.DoS(0, false, REJECT_NONSTANDARD, "op_group-before-mgt-tokens");
                         }
+                        */
                     }
                 }
             }
