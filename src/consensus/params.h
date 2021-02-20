@@ -202,6 +202,7 @@ struct Params {
 
     /** ION specific consensus parameters */
     int nCoinbaseMaturity;
+    uint32_t nBits;
 
     /** Proof of stake parameters */
     uint256 posLimit;

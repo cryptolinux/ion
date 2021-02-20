@@ -319,13 +319,13 @@ public:
         consensus.BIP65Height = 1014023; // Start enforcing BIP65 (CHECKLOCKTIMEVERIFY) for blocks with version 9 and higher
         consensus.BIP66Height = 1; // Start enforcing BIP66 (Strict DER signatures) for blocks with version 7 and higher
         consensus.DIP0001Height = 1770000;
-        consensus.DIP0003Height = 1780000;
+        consensus.DIP0003Height = 1760000;
         consensus.DIP0003EnforcementHeight = std::numeric_limits<int>::max();
         consensus.DIP0003EnforcementHash = uint256();
-        consensus.IIP0006Height = 1790000;
-        consensus.CSVHeight = 1800000;
-        consensus.BIP147Height = 1810000;
-        consensus.DIP0008Height = 1820000;
+        consensus.IIP0006Height = 1760000;
+        consensus.CSVHeight = 1760000;
+        consensus.BIP147Height = 1760000;
+        consensus.DIP0008Height = 1760000;
         consensus.powLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.hybridPowLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.nPowTargetTimespan = 24 * 60 * 60; // Ion: 1 day
@@ -397,7 +397,8 @@ public:
         nDefaultPort = 12700;
         nPruneAfterHeight = 100000;
 
-        genesis = CreateGenesisBlock(1486045800, 1486045800, 28884498, 0x1e00ffff, 1, 1 * COIN);
+        consensus.nBits = 0x1e00ffff;
+        genesis = CreateGenesisBlock(1486045800, 1486045800, 28884498, consensus.Bits, 1, 1 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x0000004cf5ffbf2e31a9aa07c86298efb01a30b8911b80af7473d1114715084b"));
         assert(genesis.hashMerkleRoot == uint256S("0x7af2e961c5262cb0411edcb7414ab7178133fc06257ceb47d349e4e5e35e2d40"));
