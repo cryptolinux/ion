@@ -1,6 +1,8 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource prefix="/icons">
         <file alias="bitcoin">res/icons/ion.png</file>
+        <file alias="bitcoin_testnet">res/icons/ion_testnet.png</file>
+        <file alias="bitcoin_regtest">res/icons/ion_regtest.png</file>
         <file alias="prompticon">res/icons/chevron.png</file>
         <file alias="warning">res/icons/warning.png</file>
     </qresource>
@@ -11,6 +13,7 @@
         <file alias="connect_3">res/icons/connect3_16.png</file>
         <file alias="connect_4">res/icons/connect4_16.png</file>
         <file alias="transaction_0">res/icons/transaction0.png</file>
+        <file alias="transaction_confirmed">res/icons/transaction2.png</file>
         <file alias="transaction_1">res/icons/clock1.png</file>
         <file alias="transaction_2">res/icons/clock2.png</file>
         <file alias="transaction_3">res/icons/clock3.png</file>
@@ -23,10 +26,17 @@
         <file alias="editcopy">res/icons/editcopy.png</file>
         <file alias="synced">res/icons/synced.png</file>
         <file alias="remove">res/icons/remove.png</file>
+        <file alias="tx_mined">res/icons/tx_mined.png</file>
+        <file alias="tx_input">res/icons/tx_input.png</file>
+        <file alias="tx_output">res/icons/tx_output.png</file>
+        <file alias="tx_inout">res/icons/tx_inout.png</file>
         <file alias="lock_closed">res/icons/lock_closed.png</file>
         <file alias="lock_open">res/icons/lock_open.png</file>
+        <file alias="key">res/icons/key.png</file>
+        <file alias="filesave">res/icons/filesave.png</file>
         <file alias="verify">res/icons/verify.png</file>
         <file alias="hd_enabled">res/icons/hd_enabled.png</file>
+        <file alias="hd_disabled">res/icons/hd_disabled.png</file>
         <file alias="fontbigger">res/icons/fontbigger.png</file>
         <file alias="fontsmaller">res/icons/fontsmaller.png</file>
         <file alias="transaction_abandoned">res/icons/transaction_abandoned.png</file>
@@ -107,6 +117,8 @@
         <file alias="radio_normal_disabled_light">res/images/radio_normal_disabled_light.png</file>
         <file alias="radio_checked_disabled_light">res/images/radio_checked_disabled_light.png</file>
         <file alias="splash">res/images/splash.png</file>
+        <file alias="splash_testnet">res/images/splash_testnet.png</file>
+        <file alias="splash_regtest">res/images/splash_regtest.png</file>
     </qresource>
     <qresource prefix="/movies">
         <file alias="spinner-000">res/movies/spinner-000.png</file>

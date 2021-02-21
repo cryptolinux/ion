@@ -188,7 +188,10 @@ BITCOIN_QT_H = \
 RES_ICONS = \
   qt/res/icons/ion.ico \
   qt/res/icons/ion_testnet.ico \
+  qt/res/icons/ion_regtest.ico \
   qt/res/icons/ion.png \
+  qt/res/icons/ion_testnet.png \
+  qt/res/icons/ion_regtest.png \
   qt/res/icons/chevron.png \
   qt/res/icons/warning.png \
   qt/res/icons/address-book.png \
@@ -201,17 +204,26 @@ RES_ICONS = \
   qt/res/icons/connect2_16.png \
   qt/res/icons/connect3_16.png \
   qt/res/icons/connect4_16.png \
+  qt/res/icons/edit.png \
   qt/res/icons/editcopy.png \
   qt/res/icons/editpaste.png \
   qt/res/icons/eye.png \
   qt/res/icons/eye_minus.png \
   qt/res/icons/eye_plus.png \
   qt/res/icons/hd_enabled.png \
+  qt/res/icons/hd_disabled.png \
   qt/res/icons/lock_closed.png \
   qt/res/icons/lock_open.png \
+  qt/res/icons/key.png \
+  qt/res/icons/filesave.png \
   qt/res/icons/remove.png \
   qt/res/icons/synced.png \
   qt/res/icons/transaction0.png \
+  qt/res/icons/transaction2.png \
+  qt/res/icons/tx_inout.png \
+  qt/res/icons/tx_input.png \
+  qt/res/icons/tx_output.png \
+  qt/res/icons/tx_mined.png \
   qt/res/icons/verify.png \
   qt/res/icons/fontbigger.png \
   qt/res/icons/fontsmaller.png \
@@ -331,7 +343,9 @@ RES_IMAGES = \
   qt/res/images/radio_checked_hover_light.png \
   qt/res/images/radio_normal_disabled_light.png \
   qt/res/images/radio_checked_disabled_light.png \
-  qt/res/images/splash.png
+  qt/res/images/splash.png \
+  qt/res/images/splash_testnet.png \
+  qt/res/images/splash_regtest.png
 
 RES_CSS = \
   qt/res/css/dark.css \
