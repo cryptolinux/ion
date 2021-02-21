@@ -25,11 +25,9 @@
 #include <policy/feerate.h>
 #include <policy/fees.h>
 #include <policy/policy.h>
-#ifdef ENABLE_WALLET
 #include <mining-manager.h>
 #include <pos/staking-manager.h>
 #include <reward-manager.h>
-#endif
 #include <rpc/server.h>
 #include <rpc/register.h>
 #include <rpc/safemode.h>
@@ -854,13 +852,11 @@ void ThreadImport(std::vector<fs::path> vImportFiles)
     if (!ActivateBestChain(state, chainparams)) {
         LogPrintf("Failed to connect best block (%s)\n", FormatStateMessage(state));
         StartShutdown();
-        return;
     }
 
     if (gArgs.GetBoolArg("-stopafterblockimport", DEFAULT_STOPAFTERBLOCKIMPORT)) {
         LogPrintf("Stopping after block import\n");
         StartShutdown();
-        return;
     }
     } // End scope of CImportingNow
 
@@ -1038,6 +1034,9 @@ void InitParameterInteraction()
         gArgs.ForceSetArg("-checklevel", "4");
         LogPrintf("%s: parameter interaction: additional indexes -> setting -checklevel=4\n", __func__);
     }
+
+    if (gArgs.SoftSetBoolArg("-staking", false))
+        LogPrintf("AppInit2 : parameter interaction: wallet functionality not enabled -> setting -staking=0\n");
 
     // Warn if network-specific options (-addnode, -connect, etc) are
     // specified in default section of config file, but not overridden
@@ -1612,7 +1611,7 @@ bool AppInitLockDataDirectory()
     return true;
 }
 
-bool AppInitMain()
+bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
 {
     const CChainParams& chainparams = Params();
     // ********************************************************* Step 4a: application initialization
@@ -2194,6 +2193,11 @@ bool AppInitMain()
     }
 
     if(fMasternodeMode) {
+#ifdef ENABLE_WALLET
+        if (!vpwallets.empty()) {
+            return InitError(_("You can not start a masternode with wallet enabled."));
+        }
+#endif //ENABLE_WALLET
         // Create and register activeMasternodeManager, will init later in ThreadImport
         activeMasternodeManager = new CActiveMasternodeManager();
         RegisterValidationInterface(activeMasternodeManager);
@@ -2302,6 +2306,9 @@ bool AppInitMain()
         miningManager = std::shared_ptr<CMiningManager>(new CMiningManager(Params(), g_connman.get()));
         miningManager->fEnableMining = false;
         miningManager->fEnableIONMining = false;
+
+        rewardManager = std::shared_ptr<CRewardManager>(new CRewardManager());
+        rewardManager->fEnableRewardManager = false;
     } else {
         stakingManager = std::shared_ptr<CStakingManager>(new CStakingManager(vpwallets[0]));
         stakingManager->fEnableStaking = gArgs.GetBoolArg("-staking", !fLiteMode);
@@ -2311,10 +2318,11 @@ bool AppInitMain()
         miningManager->fEnableMining = true;
         miningManager->fEnableIONMining = gArgs.GetBoolArg("-gen", false);
 
+        rewardManager = std::shared_ptr<CRewardManager>(new CRewardManager());
         rewardManager->BindWallet(vpwallets[0]);
         rewardManager->fEnableRewardManager = true;
     }
-    if (Params().NetworkIDString() == CBaseChainParams::REGTEST) {
+    if (chainparams.NetworkIDString() == CBaseChainParams::REGTEST) {
         stakingManager->fEnableStaking = false;
     }
 
@@ -2473,6 +2481,12 @@ bool AppInitMain()
 
     SetRPCWarmupFinished();
     uiInterface.InitMessage(_("Done loading"));
+
+#ifdef ENABLE_WALLET
+    for (CWalletRef pwallet : vpwallets) {
+        pwallet->postInitProcess(scheduler);
+    }
+#endif
 
     g_wallet_init_interface->Start(scheduler);
 

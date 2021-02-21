@@ -5,9 +5,9 @@
 #ifndef REWARD_MANAGER_H
 #define REWARD_MANAGER_H
 
-#include "amount.h"
-#include "base58.h"
-#include "sync.h"
+#include <amount.h>
+#include <base58.h>
+#include <sync.h>
 
 class CConnman;
 class CRewardManager;

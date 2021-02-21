@@ -12,9 +12,9 @@
 #include <httpserver.h>
 #include <keepass.h>
 #include <net.h>
-#include "masternode/masternode-sync.h"
-#include "miner.h"
-#include "mining-manager.h"
+#include <masternode/masternode-sync.h>
+#include <miner.h>
+#include <mining-manager.h>
 #include <policy/feerate.h>
 #include <policy/fees.h>
 #include <pos/staker.h>
@@ -25,6 +25,7 @@
 #include <rpc/safemode.h>
 #include <rpc/server.h>
 #include <rpc/util.h>
+#include <scheduler.h>
 #include <timedata.h>
 #include <txmempool.h>
 #include <tokens/tokengroupwallet.h>
@@ -3165,7 +3166,8 @@ UniValue loadwallet(const JSONRPCRequest& request)
     }
     AddWallet(wallet);
 
-    wallet->postInitProcess();
+    CScheduler scheduler;
+    wallet->postInitProcess(scheduler);
 
     UniValue obj(UniValue::VOBJ);
     obj.pushKV("name", wallet->GetName());

@@ -16,6 +16,7 @@
 #include <rpc/server.h>
 #include <init.h>
 #include <noui.h>
+#include <scheduler.h>
 #include <util.h>
 #include <httpserver.h>
 #include <httprpc.h>
@@ -58,6 +59,9 @@ void WaitForShutdown()
 //
 bool AppInit(int argc, char* argv[])
 {
+    boost::thread_group threadGroup;
+    CScheduler scheduler;
+
     bool fRet = false;
 
     //
@@ -169,7 +173,7 @@ bool AppInit(int argc, char* argv[])
             // If locking the data directory failed, exit immediately
             return false;
         }
-        fRet = AppInitMain();
+        fRet = AppInitMain(threadGroup, scheduler);
     } catch (...) {
         PrintExceptionContinue(std::current_exception(), "AppInit()");
     }

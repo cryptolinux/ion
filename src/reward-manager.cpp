@@ -2,13 +2,13 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "reward-manager.h"
+#include <reward-manager.h>
 
-#include "init.h"
-#include "masternode/masternode-sync.h"
-#include "policy/policy.h"
-#include "validation.h"
-#include "wallet/wallet.h"
+#include <init.h>
+#include <masternode/masternode-sync.h>
+#include <policy/policy.h>
+#include <validation.h>
+#include <wallet/wallet.h>
 
 // fix windows build
 #include <boost/thread.hpp>
