@@ -895,13 +895,10 @@ void ThreadImport(std::vector<fs::path> vImportFiles)
     if (fMasternodeMode) {
         assert(activeMasternodeManager);
         const CBlockIndex* pindexTip;
-        // TODO - reenable
-        /*
         {
             LOCK(cs_main);
             pindexTip = chainActive.Tip();
         }
-        */
         pindexTip = chainActive.Tip();
         activeMasternodeManager->Init(pindexTip);
     }

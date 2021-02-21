@@ -682,11 +682,9 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
                 /*
                 ERROR: ConnectTip(): ConnectBlock 0000000000bb9b5d518dc2566df0f86d4d2d0a72c931a1535cf4fbe5fd382210 failed with op_group-before-mgt-tokens (code 64)
                 */
-                /*
                 if ((grp.invalid || grp.associatedGroup != NoGroup) && !grp.associatedGroup.hasFlag(TokenGroupIdFlags::MGT_TOKEN)) {
                     return state.DoS(0, false, REJECT_NONSTANDARD, "op_group-before-mgt-tokens");
                 }
-                */
             }
         }
     }
@@ -1461,13 +1459,11 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsVi
             CBlockIndex* pindexPrev = mapBlockIndex.find(inputs.GetBestBlock())->second;
             // TODO - reenable CheckTokenGroups - ERROR: Token group inputs and outputs do not balance
             // ConnectBlock fb2b6e84b0e166d8ffaf548e65aebe7f805d44073fe1832e93039b2f22694d9d failed with token-group-imbalance (code 1)
-            /*
             if (!CheckTokenGroups(tx, state, inputs, tgMintMeltBalance)) {
                 if (chainActive.Tip()->nHeight < Params().GetConsensus().ATPStartHeight) {
                     return state.DoS(0, error("Token group inputs and outputs do not balance"), REJECT_MALFORMED, "token-group-imbalance");
                 }
             }
-            */
             //Check that all token transactions paid their XDM fees
             CAmount nXDMFees = 0;
             if (IsAnyOutputGrouped(tx)) {
@@ -1482,11 +1478,9 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsVi
                         /*
                         ERROR: ConnectTip(): ConnectBlock 0000000000bb9b5d518dc2566df0f86d4d2d0a72c931a1535cf4fbe5fd382210 failed with op_group-before-mgt-tokens (code 64)
                         */
-                        /*
                         if ((grp.invalid || grp.associatedGroup != NoGroup) && !grp.associatedGroup.hasFlag(TokenGroupIdFlags::MGT_TOKEN)) {
                             return state.DoS(0, false, REJECT_NONSTANDARD, "op_group-before-mgt-tokens");
                         }
-                        */
                     }
                 }
             }
@@ -2482,11 +2476,9 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
 
     // TODO - reenable
     // ConnectTip(): ConnectBlock 000000f3ebcfc87ec4aea8dbbbe815e7173d0c3276eaa1200b266f6711736ebe failed with bad-cb-amount (code 16)
-    /*
     if (!IsBlockValueValid(block, pindex->nHeight, blockReward, coinstakeValueIn, strError)) {
         return state.DoS(0, error("ConnectBlock(ION): %s", strError), REJECT_INVALID, "bad-cb-amount");
     }
-    */
 
     int64_t nTime5_3 = GetTimeMicros(); nTimeValueValid += nTime5_3 - nTime5_2;
     LogPrint(BCLog::BENCHMARK, "      - IsBlockValueValid: %.2fms [%.2fs (%.2fms/blk)]\n", MICRO * (nTime5_3 - nTime5_2), nTimeValueValid * MICRO, nTimeValueValid * MILLI / nBlocksTotal);
@@ -2521,7 +2513,6 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
 
     // Ensure that accumulator checkpoints are valid and in the same state as this instance of the chain
     // TODO - reenable zerocoinv2 validation
-    /*
     AccumulatorMap mapAccumulators(Params().Zerocoin_Params(pindex->nHeight < Params().GetConsensus().nBlockZerocoinV2));
     if (!ValidateAccumulatorCheckpoint(block, pindex, mapAccumulators)) {
         if (!ShutdownRequested()) {
@@ -2531,7 +2522,6 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
         return error("%s: Failed to validate accumulator checkpoint for block=%s height=%d because wallet is shutting down", __func__,
                 block.GetHash().GetHex(), pindex->nHeight);
     }
-    */
 
     if (fJustCheck)
         return true;

@@ -216,7 +216,6 @@ bool InitializeAccumulators(const int nHeight, int& nHeightCheckpoint, Accumulat
 */
 
 // TODO - reenable zerocoinv2 validation
-/*
     if (nHeight >= Params().GetConsensus().nBlockZerocoinV2) {
         //after v2_start, accumulators need to use v2 params
         mapAccumulators.Reset(Params().Zerocoin_Params(false));
@@ -233,7 +232,6 @@ bool InitializeAccumulators(const int nHeight, int& nHeightCheckpoint, Accumulat
             return true;
         }
     }
-*/
 
     //Use the previous block's checkpoint to initialize the accumulator's state
     uint256 nCheckpointPrev = chainActive[nHeight - 1]->GetBlockHeader().nAccumulatorCheckpoint;
@@ -449,11 +447,10 @@ bool GetAccumulatorValue(int& nHeight, const libzerocoin::CoinDenomination denom
     //Every situation except for about 20 blocks should use this method
     uint256 nCheckpointBeforeMint = chainActive[nHeight]->GetBlockHeader().nAccumulatorCheckpoint;
     // TODO - reenable zerocoinv2 validation
-    /*
     if (nHeight > Params().GetConsensus().nBlockZerocoinV2 + 10000) {
         return GetAccumulatorValueFromDB(nCheckpointBeforeMint, denom, bnAccValue);
     }
-    */
+
     int nHeightCheckpoint = 0;
     AccumulatorCheckpoints::Checkpoint checkpoint = AccumulatorCheckpoints::GetClosestCheckpoint(nHeight, nHeightCheckpoint);
     if (nHeightCheckpoint < 0) {
