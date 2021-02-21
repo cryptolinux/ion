@@ -320,7 +320,7 @@ namespace GUIUtil
     /** get font size with GUIUtil::fontScale applied */
     double getScaledFontSize(int nSize);
 
-    /** Load dash specific appliciation fonts */
+    /** Load ion specific application fonts */
     bool loadFonts();
 
     /** Set an application wide default font, depends on the selected theme */
