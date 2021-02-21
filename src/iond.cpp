@@ -44,13 +44,20 @@
  * Use the buttons <code>Namespaces</code>, <code>Classes</code> or <code>Files</code> at the top of the page to start navigating the code.
  */
 
-void WaitForShutdown()
+void WaitForShutdown(boost::thread_group* threadGroup)
 {
-    while (!ShutdownRequested())
+    bool fShutdown = ShutdownRequested();
+    // Tell the main threads to shutdown.
+    while (!fShutdown)
     {
         MilliSleep(200);
+        fShutdown = ShutdownRequested();
     }
-    Interrupt();
+    if (threadGroup)
+    {
+        Interrupt(*threadGroup);
+        threadGroup->join_all();
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -180,9 +187,10 @@ bool AppInit(int argc, char* argv[])
 
     if (!fRet)
     {
-        Interrupt();
+        Interrupt(threadGroup);
+        threadGroup.join_all();
     } else {
-        WaitForShutdown();
+        WaitForShutdown(&threadGroup);
     }
     Shutdown();
 

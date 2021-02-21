@@ -25,7 +25,7 @@ void StartShutdown();
 void StartRestart();
 bool ShutdownRequested();
 /** Interrupt threads */
-void Interrupt();
+void Interrupt(boost::thread_group& threadGroup);
 void Shutdown();
 //!Initialize the logging infrastructure
 void InitLogging();
