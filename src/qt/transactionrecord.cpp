@@ -26,7 +26,7 @@ bool TransactionRecord::showTransaction(const CWalletTx &wtx)
     return true;
 }
 
-bool DecomposeReward(const CWallet* wallet, const CWalletTx& wtx, const CTxDestination address, const bool fPos, std::vector<TransactionRecord> &records) {
+bool DecomposeReward(const CWallet* wallet, const CWalletTx& wtx, const CTxDestination address, const bool fPos, QList<TransactionRecord> &records) {
     std::map<uint64_t, CTxOut> coinstakeRewards;
     std::map<uint64_t, CTxOut> coinbaseRewards;
     std::map<uint64_t, CTxOut> MNRewards;
@@ -173,8 +173,46 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
     uint256 hash = wtx.GetHash();
     std::map<std::string, std::string> mapValue = wtx.mapValue;
 
-    if (nNet > 0 || wtx.IsCoinBase())
-    {
+    if (wtx.tx->IsCoinStake()) {
+        TransactionRecord sub(hash, nTime);
+        CTxDestination address;
+        if (!ExtractDestination(wtx.tx->vout[1].scriptPubKey, address))
+            return parts;
+
+        if (DecomposeReward(wallet, wtx, address, true, parts)) {
+            return parts;
+        }
+
+        if (isminetype mine = wallet->IsMine(wtx.tx->vout[1])) {
+            // ION stake reward
+            sub.involvesWatchAddress = mine & ISMINE_WATCH_ONLY;
+            sub.type = TransactionRecord::StakeMint;
+            sub.strAddress = CBitcoinAddress(address).ToString();
+            sub.credit = nNet;
+        } else {
+            //Masternode reward
+            CTxDestination destMN;
+            int nIndexMN = wtx.tx->vout.size() - 1;
+            if (ExtractDestination(wtx.tx->vout[nIndexMN].scriptPubKey, destMN) && IsMine(*wallet, destMN)) {
+                isminetype mine = wallet->IsMine(wtx.tx->vout[nIndexMN]);
+                sub.involvesWatchAddress = mine & ISMINE_WATCH_ONLY;
+                sub.type = TransactionRecord::MNReward;
+                sub.strAddress = CBitcoinAddress(destMN).ToString();
+                sub.credit = wtx.tx->vout[nIndexMN].nValue;
+            }
+        }
+
+        sub.address.SetString(sub.strAddress);
+        sub.txDest = sub.address.Get();
+        parts.push_back(sub);
+    } else if (nNet > 0 || wtx.IsCoinBase()) {
+        if (wtx.tx->IsCoinBase()) {
+            TransactionRecord sub(hash, nTime);
+            CTxDestination address;
+            if (ExtractDestination(wtx.tx->vout[0].scriptPubKey, address) && DecomposeReward(wallet, wtx, address, false, parts)) {
+                return parts;
+            }
+        }
         //
         // Credit
         //
@@ -191,7 +229,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 sub.involvesWatchAddress = mine & ISMINE_WATCH_ONLY;
                 if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*wallet, address))
                 {
-                    // Received by Dash Address
+                    // Received by Ion Address
                     sub.type = TransactionRecord::RecvWithAddress;
                     sub.strAddress = EncodeDestination(address);
                     sub.txDest = address;

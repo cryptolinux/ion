@@ -132,7 +132,7 @@ public:
     /** @name Immutable transaction attributes
       @{*/
     uint256 hash;
-    qint64 time;
+    int64_t time;
     Type type;
     std::string strAddress;
     CBitcoinAddress address;
