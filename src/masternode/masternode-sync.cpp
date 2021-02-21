@@ -366,6 +366,17 @@ void CMasternodeSync::UpdatedBlockTip(const CBlockIndex *pindexNew, bool fInitia
 
     LogPrint(BCLog::MNSYNC, "CMasternodeSync::UpdatedBlockTip -- pindexNew->nHeight: %d pindexBestHeader->nHeight: %d fInitialDownload=%d fReachedBestHeader=%d\n",
                 pindexNew->nHeight, pindexBestHeader->nHeight, fInitialDownload, fReachedBestHeader);
+
+    if (!IsBlockchainSynced() && fReachedBestHeader) {
+        if (fLiteMode) {
+            // nothing to do in lite mode, just finish the process immediately
+            nCurrentAsset = MASTERNODE_SYNC_FINISHED;
+            return;
+        }
+        // Reached best header while being in initial mode.
+        // We must be at the tip already, let's move to the next asset.
+        SwitchToNextAsset(connman);
+    }
 }
 
 void CMasternodeSync::DoMaintenance(CConnman &connman)

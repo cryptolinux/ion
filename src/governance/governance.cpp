@@ -87,6 +87,8 @@ bool CGovernanceManager::SerializeVoteForHash(const uint256& nHash, CDataStream&
 
 void CGovernanceManager::ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman)
 {
+    // lite mode is not supported
+    if (fLiteMode) return;
     if (fDisableGovernance) return;
     if (!masternodeSync.IsBlockchainSynced()) return;
 
@@ -546,7 +548,7 @@ struct sortProposalsByVotes {
 
 void CGovernanceManager::DoMaintenance(CConnman& connman)
 {
-    if (fDisableGovernance || !masternodeSync.IsSynced() || ShutdownRequested()) return;
+    if (fDisableGovernance || fLiteMode || !masternodeSync.IsSynced() || ShutdownRequested()) return;
 
     // CHECK OBJECTS WE'VE ASKED FOR, REMOVE OLD ENTRIES
 

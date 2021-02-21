@@ -53,6 +53,7 @@
 extern bool fMasternodeMode;
 extern bool fDisableGovernance;
 extern int nWalletBackups;
+extern bool fLiteMode;
 
 // Application startup time (used for uptime calculation)
 int64_t GetStartupTime();

@@ -434,7 +434,7 @@ void BitcoinGUI::createActions()
 
 #ifdef ENABLE_WALLET
     QSettings settings;
-    if (settings.value("fShowMasternodesTab").toBool()) {
+    if (!fLiteMode && settings.value("fShowMasternodesTab").toBool()) {
         masternodeAction = new QToolButton(this);
         masternodeAction->setText(tr("&Masternodes"));
         masternodeAction->setStatusTip(tr("Browse masternodes"));
@@ -678,7 +678,7 @@ void BitcoinGUI::createToolBars()
         toolbar->addWidget(historyAction);
 
         QSettings settings;
-        if (settings.value("fShowMasternodesTab").toBool() && masternodeAction) {
+        if (!fLiteMode && settings.value("fShowMasternodesTab").toBool() && masternodeAction) {
             masternodeAction->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
             toolbar->addWidget(masternodeAction);
         }
@@ -846,7 +846,7 @@ void BitcoinGUI::setWalletActionsEnabled(bool enabled)
     receiveCoinsMenuAction->setEnabled(enabled);
     historyAction->setEnabled(enabled);
     QSettings settings;
-    if (settings.value("fShowMasternodesTab").toBool() && masternodeAction) {
+    if (!fLiteMode && settings.value("fShowMasternodesTab").toBool() && masternodeAction) {
         masternodeAction->setEnabled(enabled);
     }
     encryptWalletAction->setEnabled(enabled);
@@ -1027,7 +1027,7 @@ void BitcoinGUI::gotoHistoryPage()
 void BitcoinGUI::gotoMasternodePage()
 {
     QSettings settings;
-    if (settings.value("fShowMasternodesTab").toBool() && masternodeAction) {
+    if (!fLiteMode && settings.value("fShowMasternodesTab").toBool() && masternodeAction) {
         masternodeAction->setChecked(true);
         if (walletFrame) walletFrame->gotoMasternodePage();
     }
@@ -1326,6 +1326,8 @@ void BitcoinGUI::setNumBlocks(int count, const QDateTime& blockDate, const QStri
         tooltip += QString("<br>");
         tooltip += tr("Transactions after this will not yet be visible.");
     } else if (fDisableGovernance) {
+        setAdditionalDataSyncProgress(1);
+    } else if (fLiteMode) {
         setAdditionalDataSyncProgress(1);
     }
 

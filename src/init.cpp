@@ -15,6 +15,7 @@
 #include <fs.h>
 #include <httpserver.h>
 #include <httprpc.h>
+#include <invalid.h>
 #include <key.h>
 #include <validation.h>
 #include <miner.h>
@@ -52,6 +53,9 @@
 #include <xion/zerocoin.h>
 #include <libzerocoin/Coin.h>
 */
+#ifdef ENABLE_WALLET
+#include "wallet/wallet.h"
+#endif
 
 #include <masternode/activemasternode.h>
 #include <dsnotificationinterface.h>
@@ -882,10 +886,14 @@ void ThreadImport(std::vector<fs::path> vImportFiles)
     if (fMasternodeMode) {
         assert(activeMasternodeManager);
         const CBlockIndex* pindexTip;
+        // TODO - reenable
+        /*
         {
             LOCK(cs_main);
             pindexTip = chainActive.Tip();
         }
+        */
+        pindexTip = chainActive.Tip();
         activeMasternodeManager->Init(pindexTip);
     }
 
@@ -1828,7 +1836,32 @@ bool AppInitMain()
         nMaxOutboundLimit = gArgs.GetArg("-maxuploadtarget", DEFAULT_MAX_UPLOAD_TARGET)*1024*1024;
     }
 
-    // ********************************************************* Step 7a: Load sporks
+    // ********************************************************* Step 7a: check lite mode and load sporks
+
+    // lite mode disables all Ion-specific functionality
+    fLiteMode = gArgs.GetBoolArg("-litemode", false);
+    LogPrintf("fLiteMode %d\n", fLiteMode);
+
+    if(fLiteMode) {
+        InitWarning(_("You are starting in lite mode, most Ion-specific functionality is disabled."));
+    }
+
+    if((!fLiteMode && fTxIndex == false)
+       && chainparams.NetworkIDString() != CBaseChainParams::REGTEST) { // TODO remove this when pruning is fixed. See https://bitbucket.org/ioncoin/ion/pull/1817 and https://bitbucket.org/ioncoin/ion/pull/1743
+        return InitError(_("Transaction index can't be disabled in full mode. Either start with -litemode command line switch or enable transaction index."));
+    }
+
+    if (!fLiteMode) {
+        uiInterface.InitMessage(_("Loading sporks cache..."));
+        CFlatDB<CSporkManager> flatdb6("sporks.dat", "magicSporkCache");
+        if (!flatdb6.Load(sporkManager)) {
+            return InitError(_("Failed to load sporks cache from") + "\n" + (GetDataDir() / "sporks.dat").string());
+        }
+    }
+
+    invalid_out::LoadScripts();
+
+    // ********************************************************* Step 7b: Load sporks
 
     uiInterface.InitMessage(_("Loading sporks cache..."));
     CFlatDB<CSporkManager> flatdb6("sporks.dat", "magicSporkCache");
@@ -2182,7 +2215,7 @@ bool AppInitMain()
 
     // LOAD SERIALIZED DAT FILES INTO DATA CACHES FOR INTERNAL USE
 
-    bool fLoadCacheFiles = !(fReindex || fReindexChainState);
+    bool fLoadCacheFiles = !(fLiteMode || fReindex || fReindexChainState);
     {
         LOCK(cs_main);
         // was blocks/chainstate deleted?
@@ -2238,8 +2271,13 @@ bool AppInitMain()
 
     // ********************************************************* Step 10c: schedule Ion-specific tasks
 
-    scheduler.scheduleEvery(boost::bind(&CNetFulfilledRequestManager::DoMaintenance, boost::ref(netfulfilledman)), 60 * 1000);
-    scheduler.scheduleEvery(boost::bind(&CMasternodeSync::DoMaintenance, boost::ref(masternodeSync), boost::ref(*g_connman)), 1 * 1000);
+    if (!fLiteMode) {
+        scheduler.scheduleEvery(boost::bind(&CNetFulfilledRequestManager::DoMaintenance, boost::ref(netfulfilledman)), 60 * 1000);
+        scheduler.scheduleEvery(boost::bind(&CMasternodeSync::DoMaintenance, boost::ref(masternodeSync), boost::ref(*g_connman)), 1 * 1000);
+
+        scheduler.scheduleEvery(boost::bind(&CGovernanceManager::DoMaintenance, boost::ref(governance), boost::ref(*g_connman)), 60 * 5 * 1000);
+    }
+
     scheduler.scheduleEvery(boost::bind(&CMasternodeUtils::DoMaintenance, boost::ref(*g_connman)), 1 * 1000);
 
     if (!fDisableGovernance) {
@@ -2251,6 +2289,52 @@ bool AppInitMain()
     }
 
     llmq::StartLLMQSystem();
+
+    // ********************************************************* Step 10d: setup and schedule ION-specific functionality
+
+#ifdef ENABLE_WALLET
+
+    if (vpwallets.empty()) {
+        stakingManager = std::shared_ptr<CStakingManager>(new CStakingManager());
+        stakingManager->fEnableStaking = false;
+        stakingManager->fEnableIONStaking = false;
+
+        miningManager = std::shared_ptr<CMiningManager>(new CMiningManager(Params(), g_connman.get()));
+        miningManager->fEnableMining = false;
+        miningManager->fEnableIONMining = false;
+    } else {
+        stakingManager = std::shared_ptr<CStakingManager>(new CStakingManager(vpwallets[0]));
+        stakingManager->fEnableStaking = gArgs.GetBoolArg("-staking", !fLiteMode);
+        stakingManager->fEnableIONStaking = gArgs.GetBoolArg("-staking", true);
+
+        miningManager = std::shared_ptr<CMiningManager>(new CMiningManager(Params(), g_connman.get(), vpwallets[0]));
+        miningManager->fEnableMining = true;
+        miningManager->fEnableIONMining = gArgs.GetBoolArg("-gen", false);
+
+        rewardManager->BindWallet(vpwallets[0]);
+        rewardManager->fEnableRewardManager = true;
+    }
+    if (Params().NetworkIDString() == CBaseChainParams::REGTEST) {
+        stakingManager->fEnableStaking = false;
+    }
+
+    if (gArgs.IsArgSet("-reservebalance")) {
+        CAmount n = 0;
+        if (!ParseMoney(gArgs.GetArg("-reservebalance", ""), n)) {
+            return InitError(AmountErrMsg("reservebalance", gArgs.GetArg("-reservebalance", "")));
+        }
+        stakingManager->nReserveBalance = n;
+    }
+
+    if (!fLiteMode) {
+        if (stakingManager->fEnableStaking) {
+            scheduler.scheduleEvery(boost::bind(&CStakingManager::DoMaintenance, boost::ref(stakingManager), boost::ref(*g_connman)), 5 * 1000);
+        }
+        if (rewardManager->fEnableRewardManager) {
+            scheduler.scheduleEvery(boost::bind(&CRewardManager::DoMaintenance, boost::ref(rewardManager), boost::ref(*g_connman)), 3 * 60 * 1000);
+        }
+    }
+#endif // ENABLE_WALLET
 
     // ********************************************************* Step 11: import blocks
 

@@ -245,7 +245,7 @@ bool CStakingManager::IsStaking() {
 
 void CStakingManager::UpdatedBlockTip(const CBlockIndex* pindex)
 {
-    LOCK(cs);
+    //LOCK(cs);
 
     tipIndex = pindex;
 

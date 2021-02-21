@@ -36,7 +36,10 @@ UniValue privatesend(const JSONRPCRequest& request)
         throw JSONRPCError(RPC_INTERNAL_ERROR, "Client-side mixing is not supported on masternodes");
 
     if (!privateSendClient.fEnablePrivateSend) {
-        if (!gArgs.GetBoolArg("-enableprivatesend", true)) {
+        if (fLiteMode) {
+            // mixing is disabled by default in lite mode
+            throw JSONRPCError(RPC_INTERNAL_ERROR, "Mixing is disabled in lite mode, use -enableprivatesend command line option to enable mixing again");
+        } else if (!gArgs.GetBoolArg("-enableprivatesend", true)) {
             // otherwise it's on by default, unless cmd line option says otherwise
             throw JSONRPCError(RPC_INTERNAL_ERROR, "Mixing is disabled via -enableprivatesend=0 command line option, remove it to enable mixing again");
         } else {

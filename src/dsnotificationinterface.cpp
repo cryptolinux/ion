@@ -27,7 +27,7 @@
 void CDSNotificationInterface::InitializeCurrentBlockTip()
 {
     LOCK(cs_main);
-    SynchronousUpdatedBlockTip(chainActive.Tip(), nullptr, IsInitialBlockDownload());
+    //SynchronousUpdatedBlockTip(chainActive.Tip(), nullptr, IsInitialBlockDownload());
     UpdatedBlockTip(chainActive.Tip(), nullptr, IsInitialBlockDownload());
 }
 
@@ -72,8 +72,8 @@ void CDSNotificationInterface::UpdatedBlockTip(const CBlockIndex *pindexNew, con
     miningManager->UpdatedBlockTip(pindexNew);
 #endif // ENABLE_WALLET
 
-    //if (fLiteMode)
-    //    return;
+    if (fLiteMode)
+        return;
 
     llmq::quorumInstantSendManager->UpdatedBlockTip(pindexNew);
     llmq::chainLocksHandler->UpdatedBlockTip(pindexNew);
