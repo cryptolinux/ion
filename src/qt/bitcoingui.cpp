@@ -920,9 +920,11 @@ void BitcoinGUI::optionsClicked()
 
     OptionsDialog dlg(this, enableWallet);
     dlg.setModel(clientModel->getOptionsModel());
+    /*
     connect(&dlg, &OptionsDialog::appearanceChanged, [=]() {
         updateWidth();
     });
+    */
     dlg.exec();
 
     updatePrivateSendVisibility();
