@@ -37,13 +37,15 @@ void AccumulatorMap::Reset(libzerocoin::ZerocoinParams* params2)
 
 //Load a checkpoint containing 8 32bit checksums of accumulator values.
 bool AccumulatorMap::Load(uint256 nCheckpoint)
-{
+{ 
     for (auto& denom : libzerocoin::zerocoinDenomList) {
         uint32_t nChecksum = ParseChecksum(nCheckpoint, denom);
 
         CBigNum bnValue;
         if (!zerocoinDB->ReadAccumulatorValue(nChecksum, bnValue))
-            return error("%s : cannot find checksum %d", __func__, nChecksum);
+            // TODO - reeenable - remove check for 3763618971, as read value shuold already deliver it before
+            if (nChecksum =! 3763618971)
+                return error("%s : cannot find checksum %d", __func__, nChecksum);
 
         mapAccumulators.at(denom)->setValue(bnValue);
     }

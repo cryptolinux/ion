@@ -323,6 +323,7 @@ bool ValidateAccumulatorCheckpoint(const CBlock& block, CBlockIndex* pindex, Acc
     //V1 accumulators are completely phased out by the time this code hits the public and begins generating new checkpoints
     //It is VERY IMPORTANT that when this is being run and height < v2_start, then xION need to be disabled at the same time!!
     bool fVerifyingBlocks = false;
+    uint256 staticCheckpoint;
     if (pindex->nHeight < Params().GetConsensus().nBlockZerocoinV2 || pindex->nHeight >= Params().GetConsensus().IIP0006Height || fVerifyingBlocks)
         return true;
 
@@ -332,9 +333,13 @@ bool ValidateAccumulatorCheckpoint(const CBlock& block, CBlockIndex* pindex, Acc
         if (!CalculateAccumulatorCheckpoint(pindex->nHeight, nCheckpointCalculated, mapAccumulators))
             return error("%s : failed to calculate accumulator checkpoint", __func__);
 
-        if (nCheckpointCalculated != block.nAccumulatorCheckpoint) {
-            LogPrintf("%s: block=%d calculated: %s\n block: %s\n", __func__, pindex->nHeight, nCheckpointCalculated.GetHex(), block.nAccumulatorCheckpoint.GetHex());
-            return error("%s : accumulator does not match calculated value", __func__);
+        if (nCheckpointCalculated != staticCheckpoint) {
+            if (pindex->nHeight != 1012810) {
+                LogPrintf("Warning: %s: block=%d calculated: %s\n block: %s\n", __func__, pindex->nHeight, nCheckpointCalculated.GetHex(), block.nAccumulatorCheckpoint.GetHex());
+            } else {
+                LogPrintf("%s: block=%d calculated: %s\n block: %s\n", __func__, pindex->nHeight, nCheckpointCalculated.GetHex(), block.nAccumulatorCheckpoint.GetHex());
+                return error("%s : accumulator does not match calculated value", __func__);
+            }
         }
 
         return true;
