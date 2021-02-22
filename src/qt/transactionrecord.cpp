@@ -1,5 +1,5 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2018-2021 The Ion Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -302,7 +302,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 CTxDestination address;
                 if (ExtractDestination(wtx.tx->vout[0].scriptPubKey, address))
                 {
-                    // Sent to Dash Address
+                    // Sent to Ion Address
                     sub.strAddress = EncodeDestination(address);
                     sub.txDest = address;
                 }
@@ -394,7 +394,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 CTxDestination address;
                 if (ExtractDestination(txout.scriptPubKey, address))
                 {
-                    // Sent to Dash Address
+                    // Sent to Ion Address
                     sub.type = TransactionRecord::SendToAddress;
                     sub.strAddress = EncodeDestination(address);
                     sub.txDest = address;
@@ -556,4 +556,54 @@ QString TransactionRecord::getTxID() const
 int TransactionRecord::getOutputIndex() const
 {
     return idx;
+}
+
+QString TransactionRecord::GetTransactionRecordType() const
+{
+    return GetTransactionRecordType(type);
+}
+
+QString TransactionRecord::GetTransactionRecordType(Type type) const
+{
+    switch (type)
+    {
+        case Other: return "Other";
+        case Generated: return "Generated";
+        case StakeMint: return "StakeMint";
+        case MNReward: return "MNReward";
+        case SendToAddress: return "SendToAddress";
+        case SendToOther: return "SendToOther";
+        case RecvWithAddress: return "RecvWithAddress";
+        case RecvFromOther: return "RecvFromOther";
+        case SendToSelf: return "SendToSelf";
+        case RecvWithPrivateSend: return "RecvWithPrivateSend";
+        case PrivateSendDenominate: return "PrivateSendDenominate";
+        case PrivateSendCollateralPayment: return "PrivateSendCollateralPayment";
+        case PrivateSendMakeCollaterals: return "PrivateSendMakeCollaterals";
+        case PrivateSendCreateDenominations: return "PrivateSendCreateDenominations";
+        case PrivateSend: return "PrivateSend";
+    }
+    return NULL;
+}
+
+QString TransactionRecord::GetTransactionStatus() const
+{
+    return GetTransactionStatus(status.status);
+}
+QString TransactionRecord::GetTransactionStatus(TransactionStatus::Status status) const
+{
+    switch (status)
+    {
+        case TransactionStatus::Confirmed: return "Confirmed";           /**< Have 6 or more confirmations (normal tx) or fully mature (mined tx) **/
+            /// Normal (sent/received) transactions
+        case TransactionStatus::OpenUntilDate: return "OpenUntilDate";   /**< Transaction not yet final, waiting for date */
+        case TransactionStatus::OpenUntilBlock: return "OpenUntilBlock"; /**< Transaction not yet final, waiting for block */
+        case TransactionStatus::Unconfirmed: return "Unconfirmed";       /**< Not yet mined into a block **/
+        case TransactionStatus::Confirming: return "Confirmed";          /**< Confirmed, but waiting for the recommended number of confirmations **/
+        case TransactionStatus::Conflicted: return "Conflicted";         /**< Conflicts with other transaction or mempool **/
+            /// Generated (mined) transactions
+        case TransactionStatus::Immature: return "Immature";             /**< Mined but waiting for maturity */
+        case TransactionStatus::NotAccepted: return "NotAccepted";       /**< Mined but not accepted */
+    }
+    return NULL;
 }

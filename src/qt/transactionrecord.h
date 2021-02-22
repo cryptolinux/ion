@@ -1,4 +1,5 @@
 // Copyright (c) 2011-2014 The Bitcoin Core developers
+// Copyright (c) 2018-2021 The Ion Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -132,7 +133,7 @@ public:
     /** @name Immutable transaction attributes
       @{*/
     uint256 hash;
-    int64_t time;
+    qint64 time;
     Type type;
     std::string strAddress;
     CBitcoinAddress address;
@@ -164,6 +165,18 @@ public:
     /** Return whether a status update is needed.
      */
     bool statusUpdateNeeded(int chainLockHeight) const;
+
+    /**
+     * Return stringified transaction record type
+     */
+    QString GetTransactionRecordType() const;
+    QString GetTransactionRecordType(Type type) const;
+
+    /**
+     * Return stringified transaction status
+     */
+    QString GetTransactionStatus() const;
+    QString GetTransactionStatus(TransactionStatus::Status status) const;
 };
 
 #endif // BITCOIN_QT_TRANSACTIONRECORD_H

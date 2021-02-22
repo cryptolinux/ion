@@ -1,5 +1,5 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2018-2020 The Ion Core developers
+// Copyright (c) 2018-2021 The Ion Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -31,11 +31,10 @@ public:
     enum ColumnIndex {
         Status = 0,
         Watchonly = 1,
-        InstantSend = 2,
-        Date = 3,
-        Type = 4,
-        ToAddress = 5,
-        Amount = 6
+        Date = 2,
+        Type = 3,
+        ToAddress = 4,
+        Amount = 5
     };
 
     /** Roles to get specific information from a transaction row.
