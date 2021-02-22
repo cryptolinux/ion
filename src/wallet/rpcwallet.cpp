@@ -3803,6 +3803,56 @@ UniValue getgenerate(const JSONRPCRequest& request)
 }
 #endif //ENABLE_MINING
 
+UniValue getstakingstatus(const JSONRPCRequest& request)
+{
+    CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
+    if (!EnsureWalletIsAvailable(pwallet, request.fHelp)) {
+        return NullUniValue;
+    }
+
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+            "getstakingstatus\n"
+            "\nReturns an object containing various staking information.\n"
+
+            "\nResult:\n"
+            "{\n"
+            "  \"validtime\": true|false,          (boolean) if the chain tip is within staking phases\n"
+            "  \"haveconnections\": true|false,    (boolean) if network connections are present\n"
+            "  \"walletunlocked\": true|false,     (boolean) if the wallet is unlocked\n"
+            "  \"mintablecoins\": true|false,      (boolean) if the wallet has mintable coins\n"
+            "  \"enoughcoins\": true|false,        (boolean) if available coins are greater than reserve balance\n"
+            "  \"mnsync\": true|false,             (boolean) if masternode data is synced\n"
+            "  \"staking status\": true|false,     (boolean) if the wallet is staking or not\n"
+            "}\n"
+
+            "\nExamples:\n" +
+            HelpExampleCli("getstakingstatus", "") + HelpExampleRpc("getstakingstatus", ""));
+
+    LOCK2(cs_main, pwallet->cs_wallet);
+
+    bool fValidTime = chainActive.Tip()->nTime > 1471482000;
+    bool fHaveConnections = !g_connman ? false : g_connman->GetNodeCount(CConnman::CONNECTIONS_ALL) > 0;
+    bool fWalletUnlocked = !pwallet->IsLocked();
+    bool fMintableCoins = stakingManager->MintableCoins();
+    bool fEnoughCoins = stakingManager->nReserveBalance <= pwallet->GetBalance();
+    bool fMnSync = masternodeSync.IsSynced();
+    bool fStakingStatus = stakingManager->IsStaking();
+
+    UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("validtime", fValidTime));
+    obj.push_back(Pair("haveconnections", fHaveConnections));
+    if (pwallet) {
+        obj.push_back(Pair("walletunlocked", fWalletUnlocked));
+        obj.push_back(Pair("mintablecoins", fMintableCoins));
+        obj.push_back(Pair("enoughcoins", fEnoughCoins));
+    }
+    obj.push_back(Pair("mnsync", fMnSync));
+    obj.push_back(Pair("staking_status", fStakingStatus));
+
+    return obj;
+}
+
 UniValue rescanblockchain(const JSONRPCRequest& request)
 {
     CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
@@ -3962,11 +4012,17 @@ static const CRPCCommand commands[] =
 
 #if ENABLE_MINER
     { "generating",         "generate",                 &generate,                 {"nblocks","maxtries"} },
+    { "generating",         "setgenerate",              &setgenerate,              {"generate","genproclimit"} },
+    { "generating",         "getgenerate",              &getgenerate,              {} },
 #endif //ENABLE_MINER
     { "wallet",             "keepass",                  &keepass,                  {} },
     { "hidden",             "instantsendtoaddress",     &instantsendtoaddress,     {} },
     { "wallet",             "dumphdinfo",               &dumphdinfo,               {} },
     { "wallet",             "importelectrumwallet",     &importelectrumwallet,     {"filename", "index"} },
+
+    { "wallet",             "getstakingstatus",         &getstakingstatus,         {} },
+    { "wallet",             "setstakesplitthreshold",   &setstakesplitthreshold,   {"value"} },
+    { "wallet",             "autocombinerewards",       &autocombinerewards,       {"enable", "threshold"} },
 };
 
 void RegisterWalletRPCCommands(CRPCTable &t)
