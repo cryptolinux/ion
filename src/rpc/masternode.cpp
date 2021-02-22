@@ -109,10 +109,10 @@ void masternode_count_help()
     throw std::runtime_error(
             "masternode count (\"mode\")\n"
             "  Get information about number of masternodes. Mode\n"
-            "  usage is depricated, call without mode params returns\n"
+            "  usage is deprecated, call without mode params returns\n"
             "  all values in JSON format.\n"
             "\nArguments:\n"
-            "1. \"mode\"      (string, optional, DEPRICATED) Option to get number of masternodes in different states\n"
+            "1. \"mode\"      (string, optional, DEPRECATED) Option to get number of masternodes in different states\n"
             "\nAvailable modes:\n"
             "  total         - total number of masternodes"
             "  ps            - number of PrivateSend compatible masternodes"

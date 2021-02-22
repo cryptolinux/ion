@@ -216,7 +216,7 @@ public:
     };
     uint64_t nStakeModifier;             // hash modifier for proof-of-stake
     uint256 nStakeModifierV2;
-    unsigned int nStakeModifierChecksum; // checksum of index; in-memeory only
+    unsigned int nStakeModifierChecksum; // checksum of index; in-memory only
 
     //! zerocoin specific fields
     std::map<libzerocoin::CoinDenomination, uint16_t> mapZerocoinSupply;

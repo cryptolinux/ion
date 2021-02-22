@@ -36,7 +36,7 @@ class set_transient;
  *
  * @rst
  *
- * This cotainer provides a good trade-off between cache locality,
+ * This container provides a good trade-off between cache locality,
  * membership checks, update performance and structural sharing.  It
  * does so by storing the data in contiguous chunks of :math:`2^{B}`
  * elements.  When storing big objects, the size of these contiguous
@@ -66,7 +66,7 @@ public:
     using key_type = T;
     using value_type = T;
     using size_type = detail::hamts::size_t;
-    using diference_type = std::ptrdiff_t;
+    using difference_type = std::ptrdiff_t;
     using hasher = Hash;
     using key_equal = Equal;
     using reference = const T&;

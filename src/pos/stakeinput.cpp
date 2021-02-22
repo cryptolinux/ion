@@ -27,7 +27,7 @@ int CXIonStake::GetChecksumHeightFromMint()
 {
     int nHeightChecksum = chainActive.Height() - Params().GetConsensus().nZerocoinRequiredStakeDepth;
 
-    //Need to return the first occurance of this checksum in order for the validation process to identify a specific
+    //Need to return the first occurrence of this checksum in order for the validation process to identify a specific
     //block height
     uint32_t nChecksum = 0;
     nChecksum = ParseChecksum(chainActive[nHeightChecksum]->GetBlockHeader().nAccumulatorCheckpoint, denom);

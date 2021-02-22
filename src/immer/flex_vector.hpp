@@ -40,7 +40,7 @@ class flex_vector_transient;
  * :math:`O(log(size))` *concatenation*, *slicing* and *insertion* at
  * any point. Its performance characteristics are almost identical
  * until one of these operations is performed.  After that,
- * performance is degraded by a constant factor that usually oscilates
+ * performance is degraded by a constant factor that usually oscillates
  * in the range :math:`[1, 2)` depending on the operation and the
  * amount of flexible operations that have been performed.
  *
@@ -221,7 +221,7 @@ public:
     { return push_back_move(move_t{}, std::move(value)); }
 
     /*!
-     * Returns a flex_vector with `value` inserted at the frony.  It may
+     * Returns a flex_vector with `value` inserted at the front.  It may
      * allocate memory and its complexity is @f$ O(log(size)) @f$.
      *
      * @rst

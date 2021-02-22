@@ -404,7 +404,7 @@ struct ContributionVerifier {
         BLSVerificationVectorPtr vvec;
         CBLSSecretKey skShare;
 
-        // starts with 0 and is incremented if either vvec or skShare aggregation finishs. If it reaches 2, we know
+        // starts with 0 and is incremented if either vvec or skShare aggregation finishes. If it reaches 2, we know
         // that aggregation for this batch is fully done. We can then start verification.
         std::unique_ptr<std::atomic<int> > aggDone;
 

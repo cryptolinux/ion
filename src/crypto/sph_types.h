@@ -135,7 +135,7 @@
  *
  * @subsection context Context structure
  *
- * Each implemented hash fonction has its own context structure, available
+ * Each implemented hash function has its own context structure, available
  * under the type name <code>"sph_XXX_context"</code> for the hash function
  * with short name <code>"XXX"</code>. This structure holds all needed
  * state for a running hash computation.
@@ -161,7 +161,7 @@
  * computations may be performed in parallel, provided that they do not
  * operate on the same context. Moreover, a running computation can be
  * cloned by copying the context (with a simple <code>memcpy()</code>):
- * the context and its clone are then independant and may be updated
+ * the context and its clone are then independent and may be updated
  * with new data and/or closed without interfering with each other.
  * Similarly, a context structure can be moved in memory at will:
  * context structures contain no pointer, in particular no pointer to
@@ -169,7 +169,7 @@
  *
  * @subsection dataio Data input
  *
- * Hashed data is input with the <code>sph_XXX()</code> fonction, which
+ * Hashed data is input with the <code>sph_XXX()</code> function, which
  * takes as parameters a pointer to the context, a pointer to the data
  * to hash, and the number of data bytes to hash. The context is updated
  * with the new data.
@@ -560,7 +560,7 @@ typedef __arch_dependant__ sph_s64;
 
 /**
  * When defined, this macro indicates that unaligned memory accesses
- * are possible with only a minor penalty, and thus should be prefered
+ * are possible with only a minor penalty, and thus should be preferred
  * over strategies which first copy data to an aligned buffer.
  */
 #define SPH_UNALIGNED

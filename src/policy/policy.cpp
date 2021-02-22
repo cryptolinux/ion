@@ -4,7 +4,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-// NOTE: This file is intended to be customised by the end user, and includes only local node policy logic
+// NOTE: This file is intended to be customized by the end user, and includes only local node policy logic
 
 #include <policy/policy.h>
 

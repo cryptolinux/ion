@@ -293,7 +293,7 @@ public:
      * a spork to be considered active.
      *
      * This value must be at least a majority of the total number of spork
-     * keys, and for obvious resons cannot be larger than that number.
+     * keys, and for obvious reasons cannot be larger than that number.
      */
     bool SetMinSporkKeys(int minSporkKeys);
 

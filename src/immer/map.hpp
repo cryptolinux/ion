@@ -38,7 +38,7 @@ class map_transient;
  *
  * @rst
  *
- * This cotainer provides a good trade-off between cache locality,
+ * This container provides a good trade-off between cache locality,
  * search, update performance and structural sharing.  It does so by
  * storing the data in contiguous chunks of :math:`2^{B}` elements.
  * When storing big objects, the size of these contiguous chunks can
@@ -139,7 +139,7 @@ public:
     using mapped_type = T;
     using value_type = std::pair<K, T>;
     using size_type = detail::hamts::size_t;
-    using diference_type = std::ptrdiff_t;
+    using difference_type = std::ptrdiff_t;
     using hasher = Hash;
     using key_equal = Equal;
     using reference = const value_type&;
@@ -229,7 +229,7 @@ public:
      *   ``std::optional<const T&>`` but this construction is not valid
      *   in any current standard.  As a compromise we return a
      *   pointer, which has similar syntactic properties yet it is
-     *   unfortunatelly unnecessarily unrestricted.
+     *   unfortunately unnecessarily unrestricted.
      *
      * @endrst
      */

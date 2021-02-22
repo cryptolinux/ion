@@ -19,7 +19,7 @@
 
 namespace libzerocoin {
 
-/**A prove that a value insde the commitment commitmentToCoin is in an accumulator a.
+/**A prove that a value inside the commitment commitmentToCoin is in an accumulator a.
  *
  */
 class AccumulatorProofOfKnowledge {

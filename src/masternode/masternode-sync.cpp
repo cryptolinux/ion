@@ -260,7 +260,7 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
                         ) {
                             // We already asked for all objects, waited for MASTERNODE_SYNC_TIMEOUT_SECONDS
                             // after that and less then 0.01% or MASTERNODE_SYNC_TICK_SECONDS
-                            // (i.e. 1 per second) votes were recieved during the last tick.
+                            // (i.e. 1 per second) votes were received during the last tick.
                             // We can be pretty sure that we are done syncing.
                             LogPrintf("CMasternodeSync::ProcessTick -- nTick %d nCurrentAsset %d -- asked for all objects, nothing to do\n", nTick, nCurrentAsset);
                             // reset nTimeNoObjectsLeft to be able to use the same condition on resync

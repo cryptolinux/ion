@@ -1537,7 +1537,7 @@ bool CPrivateSendClientSession::CreateDenominated(CAmount nBalanceToDenominate, 
             auto needMoreOutputs = [&]() {
                 if (txBuilder.CouldAddOutput(nDenomValue)) {
                     if (fAddFinal && nBalanceToDenominate > 0 && nBalanceToDenominate < nDenomValue) {
-                        fAddFinal = false; // add final denom only once, only the smalest possible one
+                        fAddFinal = false; // add final denom only once, only the smallest possible one
                         LogPrint(BCLog::PRIVATESEND, "CPrivateSendClientSession::%s -- 1 - FINAL - nDenomValue: %f, nBalanceToDenominate: %f, nOutputs: %d, %s\n",
                                                      strFunc, (float) nDenomValue / COIN, (float) nBalanceToDenominate / COIN, nOutputs, txBuilder.ToString());
                         return true;

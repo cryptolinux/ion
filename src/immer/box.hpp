@@ -26,7 +26,7 @@ struct refcount_atom_impl;
 /*!
  * Immutable box for a single value of type `T`.
  *
- * The box is always copiable and movable. The `T` copy or move
+ * The box is always copyable and movable. The `T` copy or move
  * operations are never called.  Since a box is immutable, copying or
  * moving just copy the underlying pointers.
  */
@@ -116,7 +116,7 @@ public:
     /*! Comparison. */
     bool operator==(detail::exact_t<const box&> other) const
     { return impl_ == other.value.impl_ || get() == other.value.get(); }
-    // Note that the `exact_t` disambiguates comparisons against `T{}`
+    // Note that the `exact_t` disambiguate comparisons against `T{}`
     // directly.  In that case we want to use `operator T&` and
     // compare directly.  We definitely never want to convert a value
     // to a box (which causes an allocation) just to compare it.

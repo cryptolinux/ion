@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef ION_INVALID_SCRITPS_H
+#ifndef ION_INVALID_SCRIPTS_H
 #define ION_INVALID_SCRIPTS_H
 
 #include <string>

@@ -85,7 +85,7 @@ public:
     /** Used to accumulate a coin
      *
      * @param c the coin to accumulate
-     * @return a refrence to the updated accumulator.
+     * @return a reference to the updated accumulator.
      */
     Accumulator& operator +=(const PublicCoin& c);
     bool operator==(const Accumulator rhs) const;

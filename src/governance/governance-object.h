@@ -160,7 +160,7 @@ private:
     bool fCachedDelete;
 
     /** true == minimum network support has been reached flagging this object as endorsed by an elected representative body
-     * (e.g. business review board / technecial review board /etc)
+     * (e.g. business review board / technician review board /etc)
      */
     bool fCachedEndorsed;
 

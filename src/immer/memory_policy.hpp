@@ -77,7 +77,7 @@ constexpr auto get_use_transient_rvalues_v = get_use_transient_rvalues<T>::value
  * @tparam TransiencePolicy A *transience policy*, for example,
  *         @ref no_transience_policy.
  * @tparam PreferFewerBiggerObjects Boolean flag indicating whether
- *         the user should prefer to allocate memory in bigger chungs
+ *         the user should prefer to allocate memory in bigger chunks
  *         --e.g. by putting various objects in the same memory
  *         region-- or not.
  * @tparam UseTransientRValues Boolean flag indicating whether

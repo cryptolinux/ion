@@ -172,7 +172,7 @@ bool CDKGSessionHandler::InitNewQuorum(const CBlockIndex* pindexQuorum)
     auto mns = CLLMQUtils::GetAllQuorumMembers(params.type, pindexQuorum);
 
     if (!curSession->Init(pindexQuorum, mns, activeMasternodeInfo.proTxHash)) {
-        LogPrintf("CDKGSessionManager::%s -- quorum initialiation failed for %s\n", __func__, curSession->params.name);
+        LogPrintf("CDKGSessionManager::%s -- quorum initialization failed for %s\n", __func__, curSession->params.name);
         return false;
     }
 
@@ -304,7 +304,7 @@ void CDKGSessionHandler::SleepBeforePhase(QuorumPhase curPhase,
                 heightTmp = currentHeight;
             }
             if (phase != curPhase || quorumHash != expectedQuorumHash) {
-                // Smth went wrong and/or we missed quite a few blocks and it's just too late now
+                // Something went wrong and/or we missed quite a few blocks and it's just too late now
                 LogPrint(BCLog::LLMQ_DKG, "CDKGSessionManager::%s -- %s - aborting due unexpected phase/expectedQuorumHash change\n", __func__, params.name);
                 throw AbortPhaseException();
             }
