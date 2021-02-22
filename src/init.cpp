@@ -223,7 +223,7 @@ static std::unique_ptr<ECCVerifyHandle> globalVerifyHandle;
 static boost::thread_group threadGroup;
 static CScheduler scheduler;
 
-void Interrupt(boost::thread_group& threadGroup)
+void Interrupt()
 {
     InterruptHTTPServer();
     InterruptHTTPRPC();
@@ -233,7 +233,6 @@ void Interrupt(boost::thread_group& threadGroup)
     llmq::InterruptLLMQSystem();
     if (g_connman)
         g_connman->Interrupt();
-    threadGroup.interrupt_all();
 }
 
 /** Preparing steps before shutting down or restarting the wallet */
@@ -1625,7 +1624,7 @@ bool AppInitLockDataDirectory()
     return true;
 }
 
-bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
+bool AppInitMain()
 {
     const CChainParams& chainparams = Params();
     // ********************************************************* Step 4a: application initialization
@@ -2498,7 +2497,7 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
 
 #ifdef ENABLE_WALLET
     for (CWalletRef pwallet : vpwallets) {
-        pwallet->postInitProcess(scheduler);
+        pwallet->postInitProcess();
     }
 #endif
 

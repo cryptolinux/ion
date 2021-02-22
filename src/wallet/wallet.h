@@ -764,7 +764,6 @@ class WalletRescanReserver; //forward declarations for ScanForWalletTransactions
 class CWallet final : public CCryptoKeyStore, public CValidationInterface
 {
 private:
-    static std::atomic<bool> fFlushScheduled;
     std::atomic<bool> fAbortRescan;
     std::atomic<bool> fScanningWallet; //controlled by WalletRescanReserver
     std::atomic<int64_t> m_scanning_start{0};
@@ -1304,7 +1303,7 @@ public:
      * Wallet post-init setup
      * Gives the wallet a chance to register repetitive tasks and complete post-init tasks
      */
-    void postInitProcess(CScheduler& scheduler);
+    void postInitProcess();
 
     /* AutoBackup functionality */
     static bool InitAutoBackup();

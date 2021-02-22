@@ -358,7 +358,7 @@ bool WalletInit::Open()
 void WalletInit::Start(CScheduler& scheduler)
 {
     for (CWallet* pwallet : GetWallets()) {
-        pwallet->postInitProcess(scheduler);
+        pwallet->postInitProcess();
     }
 
     // Run a thread to flush wallet periodically

@@ -3166,8 +3166,7 @@ UniValue loadwallet(const JSONRPCRequest& request)
     }
     AddWallet(wallet);
 
-    CScheduler scheduler;
-    wallet->postInitProcess(scheduler);
+    wallet->postInitProcess();
 
     UniValue obj(UniValue::VOBJ);
     obj.pushKV("name", wallet->GetName());
