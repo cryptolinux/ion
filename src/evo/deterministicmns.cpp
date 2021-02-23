@@ -20,7 +20,7 @@
 #include <univalue.h>
 
 // TODO: remove 
-#include "spork.h"
+#include <spork.h>
 
 static const std::string DB_LIST_SNAPSHOT = "dmn_S";
 static const std::string DB_LIST_DIFF = "dmn_D";
