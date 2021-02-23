@@ -1,6 +1,6 @@
 #include <Python.h>
 
-#include "ion.h"
+#include <ion.h>
 
 static PyObject *ion_getpowhash(PyObject *self, PyObject *args)
 {

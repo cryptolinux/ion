@@ -34,7 +34,7 @@
 #include <string.h>
 #include <limits.h>
 
-#include "sph_luffa.h"
+#include <sph_luffa.h>
 
 #ifdef __cplusplus
 extern "C"{
