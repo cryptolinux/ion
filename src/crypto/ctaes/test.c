@@ -4,7 +4,7 @@
  * file COPYING or http://www.opensource.org/licenses/mit-license.php.*
  **********************************************************************/
 
-#include "ctaes.h"
+#include <ctaes/ctaes.h>
 
 #include <stdio.h>
 #include <string.h>
