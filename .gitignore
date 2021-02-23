@@ -181,6 +181,7 @@ db4/
 contrib/linearize/linearize.cfg
 contrib/linearize/hashlist.txt
 contrib/linearize/ion_hash/
+contrib/linearize/bootstrap.dat
 
 # debug
 src/chia_bls/

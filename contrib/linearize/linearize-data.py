@@ -316,6 +316,7 @@ if __name__ == '__main__':
     settings['netmagic'] = unhexlify(settings['netmagic'].encode('utf-8'))
     settings['out_of_order_cache_sz'] = int(settings['out_of_order_cache_sz'])
     settings['debug_output'] = settings['debug_output'].lower()
+    settings['zerocoin_start'] = int(settings['zerocoin_start'])
 
     if 'output_file' not in settings and 'output' not in settings:
         print("Missing output file / directory")
