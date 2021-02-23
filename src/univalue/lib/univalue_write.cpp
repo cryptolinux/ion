@@ -5,8 +5,8 @@
 #include <iomanip>
 #include <sstream>
 #include <stdio.h>
-#include "univalue.h"
-#include "univalue_escapes.h"
+#include <univalue.h>
+#include <lib/univalue_escapes.h>
 
 using namespace std;
 
