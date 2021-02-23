@@ -9,8 +9,8 @@
 
 #include <compat/endian.h>
 
-#include "libzerocoin/Denominations.h"
-#include "libzerocoin/SpendType.h"
+#include <libzerocoin/Denominations.h>
+#include <libzerocoin/SpendType.h>
 
 #include <algorithm>
 #include <assert.h>

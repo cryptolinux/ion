@@ -52,7 +52,7 @@
 #include <libzerocoin/Coin.h>
 */
 #ifdef ENABLE_WALLET
-#include "wallet/wallet.h"
+#include <wallet/wallet.h>
 #endif
 
 #include <masternode/activemasternode.h>

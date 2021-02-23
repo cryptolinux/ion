@@ -6,7 +6,7 @@
 #ifndef BITCOIN_IONADDRENC_H
 #define BITCOIN_IONADDRENC_H
 
-#include "script/standard.h"
+#include <script/standard.h>
 
 #include <string>
 #include <vector>

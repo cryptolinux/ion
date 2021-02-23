@@ -6,7 +6,7 @@
 #define ION_INVALID_H
 
 #include <univalue/include/univalue.h>
-#include "script/script.h"
+#include <script/script.h>
 
 namespace invalid_out
 {

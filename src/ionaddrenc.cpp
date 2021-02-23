@@ -3,13 +3,13 @@
 // Copyright (c) 2018-2020 The Ion Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#include "ionaddrenc.h"
-#include "bech32.h"
-#include "chainparams.h"
-#include "consensus/tokengroups.h"
-#include "pubkey.h"
-#include "script/script.h"
-#include "utilstrencodings.h"
+#include <ionaddrenc.h>
+#include <bech32.h>
+#include <chainparams.h>
+#include <consensus/tokengroups.h>
+#include <pubkey.h>
+#include <script/script.h>
+#include <utilstrencodings.h>
 
 #include <boost/variant/static_visitor.hpp>
 

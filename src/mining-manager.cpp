@@ -2,23 +2,23 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "mining-manager.h"
+#include <mining-manager.h>
 
-#include "chainparams.h"
-#include "init.h"
-#include "miner.h"
-#include "net.h"
-#include "policy/policy.h"
-#include "pos/blocksignature.h"
-#include "pos/kernel.h"
-#include "pos/rewards.h"
-#include "pos/stakeinput.h"
-#include "script/sign.h"
-#include "script/tokengroup.h"
-#include "tokens/tokengroupmanager.h"
-#include "utilmoneystr.h"
-#include "validation.h"
-#include "wallet/wallet.h"
+#include <chainparams.h>
+#include <init.h>
+#include <miner.h>
+#include <net.h>
+#include <policy/policy.h>
+#include <pos/blocksignature.h>
+#include <pos/kernel.h>
+#include <pos/rewards.h>
+#include <pos/stakeinput.h>
+#include <script/sign.h>
+#include <script/tokengroup.h>
+#include <tokens/tokengroupmanager.h>
+#include <utilmoneystr.h>
+#include <validation.h>
+#include <wallet/wallet.h>
 
 // fix windows build
 #include <boost/thread.hpp>

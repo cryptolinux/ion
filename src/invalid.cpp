@@ -2,11 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "invalid.h"
-#include "invalid_scripts.h"
+#include <invalid.h>
+#include <invalid_scripts.h>
 
-#include "utilstrencodings.h"
-#include "util.h"
+#include <utilstrencodings.h>
+#include <util.h>
 
 namespace invalid_out
 {
