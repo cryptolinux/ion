@@ -5,9 +5,9 @@
 #ifndef ION_ACCUMULATORMAP_H
 #define ION_ACCUMULATORMAP_H
 
-#include "libzerocoin/Accumulator.h"
-#include "libzerocoin/Coin.h"
-#include "xion/accumulatorcheckpoints.h"
+#include <libzerocoin/Accumulator.h>
+#include <libzerocoin/Coin.h>
+#include <xion/accumulatorcheckpoints.h>
 
 //A map with an accumulator for each denomination
 class AccumulatorMap
