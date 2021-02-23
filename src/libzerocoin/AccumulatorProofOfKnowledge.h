@@ -14,8 +14,8 @@
 #ifndef ACCUMULATEPROOF_H_
 #define ACCUMULATEPROOF_H_
 
-#include "Accumulator.h"
-#include "Commitment.h"
+#include <libzerocoin/Accumulator.h>
+#include <libzerocoin/Commitment.h>
 
 namespace libzerocoin {
 

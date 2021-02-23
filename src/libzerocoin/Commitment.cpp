@@ -11,8 +11,8 @@
  **/
 // Copyright (c) 2017-2018 The PIVX developers
 
-#include "Commitment.h"
-#include "hash.h"
+#include <libzerocoin/Commitment.h>
+#include <hash.h>
 
 namespace libzerocoin {
 

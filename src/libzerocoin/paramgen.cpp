@@ -16,7 +16,7 @@
 #include <fstream>
 //#include <curses.h>
 #include <exception>
-#include "Zerocoin.h"
+#include <Zerocoin.h>
 
 #define DEFAULT_MODULUS_SIZE    3072
 #define MIN_MODULUS_SIZE        1026

@@ -14,7 +14,7 @@
 #ifndef ACCUMULATOR_H_
 #define ACCUMULATOR_H_
 
-#include "Coin.h"
+#include <libzerocoin/Coin.h>
 
 namespace libzerocoin {
 /**

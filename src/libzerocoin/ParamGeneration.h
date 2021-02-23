@@ -12,7 +12,7 @@
 #ifndef PARAMGENERATION_H_
 #define PARAMGENERATION_H_
 
-#include "Params.h"
+#include <libzerocoin/Params.h>
 
 namespace libzerocoin {
 

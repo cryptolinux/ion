@@ -4,14 +4,14 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "bignum.h"
+#include <libzerocoin/bignum.h>
 
 #if defined(USE_NUM_GMP)
-#include "bignum_gmp.cpp"
+#include <libzerocoin/bignum_gmp.cpp>
 #endif
 
 #if defined(USE_NUM_OPENSSL)
-#include "bignum_openssl.cpp"
+#include <bignum_openssl.cpp>
 #endif
 
 std::string CBigNum::GetHex() const

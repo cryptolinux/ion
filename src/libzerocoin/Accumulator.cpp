@@ -13,8 +13,8 @@
 
 #include <sstream>
 #include <iostream>
-#include "Accumulator.h"
-#include "ZerocoinDefines.h"
+#include <libzerocoin/Accumulator.h>
+#include <libzerocoin/ZerocoinDefines.h>
 
 namespace libzerocoin {
 

@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "Denominations.h"
-#include "amount.h"
+#include <libzerocoin/Denominations.h>
+#include <amount.h>
 
 namespace libzerocoin {
 // All denomination values should only exist in these routines for consistency.

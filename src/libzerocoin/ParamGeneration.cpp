@@ -10,11 +10,11 @@
 /// \license    This project is released under the MIT license.
 // Copyright (c) 2017-2018 The PIVX developers
 
-#include "ParamGeneration.h"
+#include <libzerocoin/ParamGeneration.h>
 #include <string>
 #include <cmath>
-#include "hash.h"
-#include "uint256.h"
+#include <hash.h>
+#include <uint256.h>
 
 
 namespace libzerocoin {

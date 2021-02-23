@@ -12,7 +12,7 @@
 // Copyright (c) 2017-2019 The PIVX developers
 
 #include <streams.h>
-#include "SerialNumberSignatureOfKnowledge.h"
+#include <libzerocoin/SerialNumberSignatureOfKnowledge.h>
 
 namespace libzerocoin {
 

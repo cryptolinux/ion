@@ -17,13 +17,13 @@
 #include <list>
 #include <vector>
 #include <bitset>
-#include "Params.h"
-#include "Coin.h"
-#include "Commitment.h"
-#include "bignum.h"
-#include "serialize.h"
-#include "Accumulator.h"
-#include "hash.h"
+#include <libzerocoin/Params.h>
+#include <libzerocoin/Coin.h>
+#include <libzerocoin/Commitment.h>
+#include <libzerocoin/bignum.h>
+#include <serialize.h>
+#include <libzerocoin/Accumulator.h>
+#include <hash.h>
 
 namespace libzerocoin {
 

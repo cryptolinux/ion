@@ -11,7 +11,7 @@
  **/
 // Copyright (c) 2017-2019 The PIVX developers
 
-#include "CoinSpend.h"
+#include <libzerocoin/CoinSpend.h>
 #include <iostream>
 #include <sstream>
 

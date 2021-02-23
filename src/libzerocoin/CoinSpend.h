@@ -16,17 +16,17 @@
 
 #include <streams.h>
 #include <utilstrencodings.h>
-#include "Accumulator.h"
-#include "AccumulatorProofOfKnowledge.h"
-#include "Coin.h"
-#include "Commitment.h"
-#include "Params.h"
-#include "SerialNumberSignatureOfKnowledge.h"
-#include "SpendType.h"
+#include <libzerocoin/Accumulator.h>
+#include <libzerocoin/AccumulatorProofOfKnowledge.h>
+#include <libzerocoin/Coin.h>
+#include <libzerocoin/Commitment.h>
+#include <libzerocoin/Params.h>
+#include <libzerocoin/SerialNumberSignatureOfKnowledge.h>
+#include <libzerocoin/SpendType.h>
 
-#include "bignum.h"
-#include "pubkey.h"
-#include "serialize.h"
+#include <libzerocoin/bignum.h>
+#include <pubkey.h>
+#include <serialize.h>
 
 namespace libzerocoin
 {

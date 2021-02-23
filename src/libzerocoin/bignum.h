@@ -8,7 +8,7 @@
 #define BITCOIN_BIGNUM_H
 
 #if defined HAVE_CONFIG_H
-#include "config/ion-config.h"
+#include <config/ion-config.h>
 #endif
 
 #if defined(USE_NUM_OPENSSL)
@@ -22,10 +22,10 @@
 #include <vector>
 #include <limits.h>
 
-#include "serialize.h"
-#include "arith_uint256.h"
-#include "version.h"
-#include "random.h"
+#include <serialize.h>
+#include <arith_uint256.h>
+#include <version.h>
+#include <random.h>
 
 /** Errors thrown by the bignum class */
 class bignum_error : public std::runtime_error

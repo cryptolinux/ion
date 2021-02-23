@@ -11,8 +11,8 @@
 **/
 // Copyright (c) 2017-2018 The PIVX developers
 
-#include "Params.h"
-#include "ParamGeneration.h"
+#include <libzerocoin/Params.h>
+#include <libzerocoin/ParamGeneration.h>
 
 namespace libzerocoin {
 
