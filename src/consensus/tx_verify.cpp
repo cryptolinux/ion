@@ -15,7 +15,7 @@
 #include <coins.h>
 #include <utilmoneystr.h>
 #include <tokens/groups.h>
-#include "invalid.h"
+#include <invalid.h>
 
 bool IsFinalTx(const CTransaction &tx, int nBlockHeight, int64_t nBlockTime)
 {

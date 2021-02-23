@@ -6,11 +6,11 @@
 #ifndef CONSENSUS_TOKEN_GROUPS_H
 #define CONSENSUS_TOKEN_GROUPS_H
 
-#include "chainparams.h"
-#include "consensus/validation.h"
-#include "pubkey.h"
-#include "tokens/groups.h"
-#include "util.h"
+#include <chainparams.h>
+#include <consensus/validation.h>
+#include <pubkey.h>
+#include <tokens/groups.h>
+#include <util.h>
 #include <unordered_map>
 
 class CCoinsViewCache;

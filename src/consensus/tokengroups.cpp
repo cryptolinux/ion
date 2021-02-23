@@ -3,13 +3,13 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "coins.h"
-#include "consensus/tokengroups.h"
-#include "dstencode.h"
-#include "ionaddrenc.h"
-#include "rpc/server.h"
-#include "streams.h"
-#include "tokens/tokengroupmanager.h"
+#include <coins.h>
+#include <consensus/tokengroups.h>
+#include <dstencode.h>
+#include <ionaddrenc.h>
+#include <rpc/server.h>
+#include <streams.h>
+#include <tokens/tokengroupmanager.h>
 
 std::shared_ptr<CTokenGroupManager> tokenGroupManager;
 
