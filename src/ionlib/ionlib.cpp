@@ -4,13 +4,13 @@
 
 /* clang-format off */
 // must be first for windows
-#include "compat.h"
+#include <compat.h>
 
 /* clang-format on */
-#include "base58.h"
-#include "random.h"
-#include "streams.h"
-#include "utilstrencodings.h"
+#include <base58.h>
+#include <random.h>
+#include <streams.h>
+#include <utilstrencodings.h>
 
 #include <openssl/rand.h>
 #include <string>
@@ -37,7 +37,7 @@ CKey LoadKey(unsigned char *src)
     return secret;
 }
 
-// From core_read.cpp #include "core_io.h"
+// From core_read.cpp #include <core_io.h>
 bool DecodeHexTx(CMutableTransaction& tx, const std::string& strHexTx)
 {
     if (!IsHex(strHexTx))
