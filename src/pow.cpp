@@ -535,11 +535,10 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const Consensus:
         }
     } else if (pindexLast->nHeight >= params.DGWDifficultyStartHeight) {
         return GetNextWorkRequiredPivx(pindexLast, params, fProofOfStake);
-    }
-    else if (pindexLast->nHeight >= params.MidasStartHeight) {
+    // Check if Midas is active, required only on main network, on other than main networks, it is not used
+    } else if (pindexLast->nHeight >= params.MidasStartHeight && Params().NetworkIDString() == CBaseChainParams::MAIN) {
         return GetNextWorkRequiredMidas(pindexLast, params, fProofOfStake);
-    }
-    else {
+    } else {
         return GetNextWorkRequiredOrig(pindexLast, params, fProofOfStake);
     }
 }
