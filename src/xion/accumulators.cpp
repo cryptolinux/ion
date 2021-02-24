@@ -334,7 +334,8 @@ bool ValidateAccumulatorCheckpoint(const CBlock& block, CBlockIndex* pindex, Acc
             return error("%s : failed to calculate accumulator checkpoint", __func__);
 
         if (nCheckpointCalculated != staticCheckpoint) {
-            if (pindex->nHeight != 1012810) {
+            // do not return error, only if block height is 1012810 on main network
+            if (pindex->nHeight != 1012810 && Params().NetworkIDString() == CBaseChainParams::MAIN) {
                 LogPrintf("Warning: %s: block=%d calculated: %s\n block: %s\n", __func__, pindex->nHeight, nCheckpointCalculated.GetHex(), block.nAccumulatorCheckpoint.GetHex());
             } else {
                 LogPrintf("%s: block=%d calculated: %s\n block: %s\n", __func__, pindex->nHeight, nCheckpointCalculated.GetHex(), block.nAccumulatorCheckpoint.GetHex());
