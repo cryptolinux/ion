@@ -172,6 +172,7 @@ struct Params {
     int MidasStartHeight;
     int DGWStartHeight;
     int DGWDifficultyStartHeight;
+    int DGWPrevStakeModifierHeight;
     int64_t DGWStartTime;
     int ATPStartHeight;
     int POSPOWStartHeight;

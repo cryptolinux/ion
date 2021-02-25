@@ -346,6 +346,7 @@ public:
         consensus.DGWStartHeight = 550000;
         consensus.DGWDifficultyStartHeight = 550000;
         consensus.DGWStartTime = 1521851265;
+        consensus.DGWPrevStakeModifierHeight = 1126;
         consensus.posLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.nPosTargetTimespanMidas = 7 * 24 * 60 * 60; // 1 week
         consensus.nPosTargetSpacingMidas = 64;
@@ -553,6 +554,7 @@ public:
         consensus.DGWStartHeight = 300;
         consensus.DGWDifficultyStartHeight = 0;
         consensus.DGWStartTime = 1554332940;
+        consensus.DGWPrevStakeModifierHeight = 0;
         consensus.posLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.nPosTargetTimespanMidas = 7 * 24 * 60 * 60; // 1 week
         consensus.nPosTargetSpacingMidas = 64;
@@ -729,6 +731,7 @@ public:
         consensus.DGWStartHeight = 300;
         consensus.DGWDifficultyStartHeight = 300;
         consensus.DGWStartTime = 9999999999;
+        consensus.DGWPrevStakeModifierHeight = 0;
         consensus.posLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.nPosTargetTimespanMidas = 7 * 24 * 60 * 60; // 1 week
         consensus.nPosTargetSpacingMidas = 64;
@@ -736,11 +739,11 @@ public:
         consensus.nStakeMinDepth = 100;
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
-        consensus.nZerocoinStartHeight = 9999999999;
-        consensus.nZerocoinStartTime = 9999999999;
-        consensus.nBlockZerocoinV2 = 9999999999;
-        consensus.nPublicZCSpends = 9999999999;
-        consensus.nBlockStakeModifierV2 = 9999999999;
+        consensus.nZerocoinStartHeight = 300;
+        consensus.nZerocoinStartTime = 1614109200;
+        consensus.nBlockZerocoinV2 = 300;
+        consensus.nPublicZCSpends = 300;
+        consensus.nBlockStakeModifierV2 = 300;
         consensus.nFakeSerialBlockheightEnd = -1;
         consensus.nMintRequiredConfirmations = 20; //the maximum amount of confirmations until accumulated in 19
         consensus.nRequiredAccumulation = 1;
@@ -958,6 +961,7 @@ public:
         consensus.DGWStartHeight = 300;
         consensus.DGWDifficultyStartHeight = 300;
         consensus.DGWStartTime = 9999999999;
+        consensus.DGWPrevStakeModifierHeight = 0;
         consensus.posLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.nPosTargetTimespanMidas = 7 * 24 * 60 * 60; // 1 week
         consensus.nPosTargetSpacingMidas = 64;

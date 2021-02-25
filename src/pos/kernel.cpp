@@ -24,9 +24,12 @@
 // v1 modifier interval.
 static const int64_t OLD_MODIFIER_INTERVAL = 2087;
 
+// Hard checkpoints deterministic value
+static const int DETERMINISTIC_STAKE_MODIFIER = 234907403;
+
 // Hard checkpoints of stake modifiers to ensure they are deterministic
 static std::map<int, unsigned int> mapStakeModifierCheckpoints =
-    boost::assign::map_list_of(0, 234907403);
+    boost::assign::map_list_of(0, DETERMINISTIC_STAKE_MODIFIER);
 
 // Get the last stake modifier and its generation time from a given block
 static bool GetLastStakeModifier(const CBlockIndex* pindex, uint64_t& nStakeModifier, int64_t& nModifierTime)
@@ -133,6 +136,22 @@ bool ComputeStakeModifierV2(CBlockIndex* pindex, const uint256& kernel)
         ss << pindexPrev->nStakeModifierV2;
     }
     pindex->nStakeModifierV2 = ss.GetHash();
+
+    return true;
+}
+
+bool ComputeStakeModifierV1(const CBlock& block, CValidationState& state, CBlockIndex* pindexNew, bool& fGetStakeModifierChecksum) {
+    // compute v1 stake modifier
+    uint64_t nStakeModifier = 0;
+    bool fGeneratedStakeModifier = false;
+    if (!ComputeNextStakeModifier(pindexNew->pprev, nStakeModifier, fGeneratedStakeModifier))
+        return state.Invalid(error("%s : ComputeNextStakeModifier() failed", __func__));
+    pindexNew->SetStakeModifier(nStakeModifier, fGeneratedStakeModifier);
+    // Check stake modifier checksum should be set
+    if (fGetStakeModifierChecksum)
+        pindexNew->nStakeModifierChecksum = GetStakeModifierChecksum(pindexNew);
+    if (!CheckStakeModifierCheckpoints(pindexNew->nHeight, pindexNew->nStakeModifierChecksum))
+        return state.DoS(20, error("%s : Rejected by stake modifier checkpoint height=%d, modifier=%sn", pindexNew->nHeight, std::to_string(nStakeModifier), __func__));
 
     return true;
 }
@@ -492,10 +511,10 @@ bool GetKernelStakeModifierPreDGW(uint256 hashBlockFrom, uint64_t& nStakeModifie
     CBlockIndex* pindexNext = chainActive[pindexFrom->nHeight + 1];
 
     // loop to find the stake modifier later by a selection interval
-    int nDGWStartHeight = Params().GetConsensus().DGWStartHeight;
     while (nStakeModifierTime < pindexFrom->GetBlockTime() + nStakeModifierSelectionInterval) {
         if (!pindexNext) {
-            if (chainActive.Height() >= 1126 && chainActive.Height() <= nDGWStartHeight) {
+            // for main network it is 1126, this is fix on main network only
+            if (chainActive.Height() >= Params().GetConsensus().DGWPrevStakeModifierHeight && chainActive.Height() <= Params().GetConsensus().DGWStartHeight) {
                 return true;
             } else {
                 LogPrint(BCLog::STAKING, "Null pindexNext\n");
@@ -514,31 +533,37 @@ bool GetKernelStakeModifierPreDGW(uint256 hashBlockFrom, uint64_t& nStakeModifie
     return true;
 }
 
+bool SetPOSParemetersIsEqualOrHigher (int& nCompareHeight, const int64_t& nCompareWithHeight) {
+    if (nCompareHeight >= nCompareWithHeight) {
+        return true;
+    } else {
+        return false;
+    }    
+}
+
 bool SetPOSParemeters(const CBlock& block, CValidationState& state, CBlockIndex* pindexNew) {
     AssertLockHeld(cs_main);
 
-    if (pindexNew->nHeight >= Params().GetConsensus().POSPOWStartHeight) {
+    bool fIsProofOfStake = block.IsProofOfStake();
+    bool fIsBlockStakeModifierV2 = SetPOSParemetersIsEqualOrHigher(pindexNew->nHeight, Params().GetConsensus().nBlockStakeModifierV2);
+    bool fPOSPOWStartHeight = SetPOSParemetersIsEqualOrHigher(pindexNew->nHeight, Params().GetConsensus().POSPOWStartHeight);
+    bool fIsZerocoinV1 = SetPOSParemetersIsEqualOrHigher(pindexNew->nHeight, Params().GetConsensus().nZerocoinStartHeight);
+    bool fIsZerocoinV2 = SetPOSParemetersIsEqualOrHigher(pindexNew->nHeight, Params().GetConsensus().nBlockZerocoinV2);
+    bool fModifierV1PoW = true;
+
+    if (fPOSPOWStartHeight && fIsProofOfStake || fIsBlockStakeModifierV2 && fIsProofOfStake) {
         // compute v2 stake modifier
-        if (block.IsProofOfStake()) {
-            ComputeStakeModifierV2(pindexNew, block.vtx[1]->vin[0].prevout.hash);
-        } else {
-            ComputeStakeModifierV2(pindexNew, block.GetHash());
-        }
-    } else if (pindexNew->nHeight >= Params().GetConsensus().nBlockStakeModifierV2) {
+        ComputeStakeModifierV2(pindexNew, block.vtx[1]->vin[0].prevout.hash);
+    } else if (fPOSPOWStartHeight && !fIsProofOfStake) {
         // compute v2 stake modifier
-        if (block.IsProofOfStake()) {
-            ComputeStakeModifierV2(pindexNew, block.vtx[1]->vin[0].prevout.hash);
-        }
+        ComputeStakeModifierV2(pindexNew, block.GetHash());
+    } else if (!fIsBlockStakeModifierV2 && !fPOSPOWStartHeight && !fIsZerocoinV1 && !fIsZerocoinV2) {
+        // compute v1 stake modifier without StakeModifierChecksum
+        fModifierV1PoW = false;
+        ComputeStakeModifierV1(block, state, pindexNew, fModifierV1PoW);
     } else {
         // compute v1 stake modifier
-        uint64_t nStakeModifier = 0;
-        bool fGeneratedStakeModifier = false;
-        if (!ComputeNextStakeModifier(pindexNew->pprev, nStakeModifier, fGeneratedStakeModifier))
-            return state.Invalid(error("%s : ComputeNextStakeModifier() failed", __func__));
-        pindexNew->SetStakeModifier(nStakeModifier, fGeneratedStakeModifier);
-        pindexNew->nStakeModifierChecksum = GetStakeModifierChecksum(pindexNew);
-        if (!CheckStakeModifierCheckpoints(pindexNew->nHeight, pindexNew->nStakeModifierChecksum))
-            return state.DoS(20, error("%s : Rejected by stake modifier checkpoint height=%d, modifier=%sn", pindexNew->nHeight, std::to_string(nStakeModifier), __func__));
+        ComputeStakeModifierV1(block, state, pindexNew, fModifierV1PoW);
     }
     return true;
 }
