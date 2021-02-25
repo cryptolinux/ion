@@ -511,7 +511,7 @@ std::string GetMainCheckpoints() {
 std::string GetTestCheckpoints() {
     std::string strTestCheckpoints = "[\n"
             "  {\n"
-            "    \"height\": 1,\n"
+            "    \"height\": 300,\n"
             "    \"1\": \"3c1\",\n"
             "    \"5\": \"3c1\",\n"
             "    \"10\": \"3c1\",\n"
