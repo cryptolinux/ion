@@ -505,32 +505,36 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 210240;
-        consensus.nMasternodePaymentsStartBlock = 4010; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
-        consensus.nMasternodePaymentsIncreaseBlock = 4030;
+        consensus.nMasternodePaymentsStartBlock = 100; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
+        consensus.nMasternodePaymentsIncreaseBlock = 110;
         consensus.nMasternodePaymentsIncreasePeriod = 10;
         consensus.nInstantSendConfirmationsRequired = 2;
         consensus.nInstantSendKeepLock = 6;
-        consensus.nBudgetPaymentsStartBlock = 99999999;
+        consensus.nBudgetPaymentsStartBlock = 190;
         consensus.nBudgetPaymentsCycleBlocks = 50;
         consensus.nBudgetPaymentsWindowBlocks = 10;
-        consensus.nSuperblockStartBlock = 4200; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
-        consensus.nSuperblockStartHash = uint256(); // do not check this on testnet
+        consensus.nSuperblockStartBlock = 199; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
+        //consensus.nSuperblockStartHash = uint256(); // do not check this on testnet
+        consensus.nSuperblockStartHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
         consensus.nSuperblockCycle = 24; // Superblocks can be issued hourly on testnet
         consensus.nGovernanceMinQuorum = 1;
         consensus.nGovernanceFilterElements = 500;
         consensus.nMasternodeMinimumConfirmations = 1;
         consensus.BIP34Height = 1;
-        consensus.BIP34Hash = uint256S("16ac2683f6ccab2f095a6270d485087e5c441f39a18fd32e00c7bfa996cdf696");
+        //consensus.BIP34Hash = uint256();
+        consensus.BIP34Hash = uint256S("07e79833fbc3e7beb25c174c19f29bb52ac705511e8e011f30dbc3d144f64397");
         consensus.BIP65Height = 1; // Start enforcing BIP65 (CHECKLOCKTIMEVERIFY) for blocks with version 9 and higher
         consensus.BIP66Height = 1; // Start enforcing BIP66 (Strict DER signatures) for blocks with version 7 and higher
-        consensus.DIP0001Height = 117000;
-        consensus.DIP0003Height = 117000;
-        consensus.DIP0003EnforcementHeight = std::numeric_limits<int>::max();
-//        consensus.DIP0003EnforcementHash = uint256S("059e5ee39302d06e3df836154db9818cffb1fcefd2733179b6aec86fb454b9c3");
-        consensus.IIP0006Height = 117000;
-        consensus.CSVHeight = 117000;
-        consensus.BIP147Height = 117000;
-        consensus.DIP0008Height = 117000;
+        consensus.DIP0001Height = 1;
+        consensus.DIP0003Height = 100;
+        //consensus.DIP0003EnforcementHeight = std::numeric_limits<int>::max();
+        consensus.DIP0003EnforcementHeight = 199;
+        consensus.DIP0003EnforcementHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
+        //consensus.DIP0003EnforcementHash = uint256();
+        consensus.IIP0006Height = 1;
+        consensus.CSVHeight = 1;
+        consensus.BIP147Height = 1;
+        consensus.DIP0008Height = 1;
         consensus.powLimit = uint256S("3fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 2
         consensus.hybridPowLimit = ArithToUint256(~arith_uint256(0) >> 12);
         consensus.nPowTargetTimespan = 24 * 60 * 60; // Ion: 1 day
@@ -552,7 +556,7 @@ public:
         consensus.POSStartHeight = 203;
         consensus.MidasStartHeight = 0;
         consensus.DGWStartHeight = 300;
-        consensus.DGWDifficultyStartHeight = 0;
+        consensus.DGWDifficultyStartHeight = 1;
         consensus.DGWStartTime = 1554332940;
         consensus.DGWPrevStakeModifierHeight = 0;
         consensus.posLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
@@ -563,10 +567,10 @@ public:
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
         consensus.nZerocoinStartHeight = 300;
-        consensus.nZerocoinStartTime = 9999999999;
-        consensus.nBlockZerocoinV2 = 99999999;
-        consensus.nPublicZCSpends = 5500;
-        consensus.nBlockStakeModifierV2 = 5530;
+        consensus.nZerocoinStartTime = 1614345391;
+        consensus.nBlockZerocoinV2 = 300;
+        consensus.nPublicZCSpends = 450;
+        consensus.nBlockStakeModifierV2 = 300;
         consensus.nFakeSerialBlockheightEnd = -1;
         consensus.nMintRequiredConfirmations = 20; //the maximum amount of confirmations until accumulated in 19
         consensus.nRequiredAccumulation = 1;
@@ -581,12 +585,54 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
 
+        // Deployment of BIP68, BIP112, and BIP113.
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1544655600; // Dec 13th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1576191600; // Dec 13th, 2019
+
+        // Deployment of DIP0001
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].bit = 1;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nStartTime = 1544655600; // Dec 13th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nTimeout = 1576191600; // Dec 13th, 2019
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThresholdStart = 50; // 50% of 100
+
+        // Deployment of BIP147
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].bit = 2;
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nStartTime = 1544655600; // Dec 13th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nTimeout = 1576191600; // Dec 13th, 2019
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nThresholdStart = 50; // 50% of 100
+
+        // Deployment of DIP0003
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].bit = 3;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nStartTime = 1544655600; // Dec 13th, 2018
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nTimeout = 1576191600; // Dec 13th, 2019
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nThresholdStart = 50; // 50% of 100
+
+        // Deployment of DIP0008
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].bit = 4;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nStartTime = 1553126400; // Mar 21st, 2019
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nTimeout = 1584748800; // Mar 21st, 2020
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nThresholdStart = 50; // 50% of 100
+
+        // Deployment of Block Reward Reallocation
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].bit = 5;
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nStartTime = 1598918400; // Sep 1st, 2020
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nTimeout = 1630454400; // Sep 1st, 2021
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nWindowSize = 100;
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nThresholdStart = 80; // 80% of 100
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nThresholdMin = 60; // 60% of 100
+        consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nFalloffCoeff = 5; // this corresponds to 10 periods
+
         // ATP
-        consensus.ATPStartHeight = 5530; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 11 and higher
-        consensus.strTokenManagementKey = "gBi3gDLnGfw8HA2rN4HmNxHk9hMC4GLFbh";
+        consensus.ATPStartHeight = 290; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 11 and higher
+        consensus.strTokenManagementKey = "g8Szua9xwHzUknsnNyZCBdyRmJrMKaQbGx";
         consensus.nOpGroupNewRequiredConfirmations = 1;
         // POSPOW
-        consensus.POSPOWStartHeight = 117000;
+        consensus.POSPOWStartHeight = 1000;
 
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000106cee2b2baf64cba"); // 119800
@@ -597,7 +643,7 @@ public:
         pchMessageStart[0] = 0xdb;
         pchMessageStart[1] = 0x86;
         pchMessageStart[2] = 0xfc;
-        pchMessageStart[3] = 0x69;
+        pchMessageStart[3] = 0x79;
         nDefaultPort = 27170;
         nPruneAfterHeight = 1000;
 
@@ -653,21 +699,22 @@ public:
         nPoolNewMaxParticipants = 20;
         nFulfilledRequestExpireTime = 5*60; // fulfilled requests expire in 5 minutes
 
-        vSporkAddresses = {"gPp4w9xaDFjsiQ4KhTT5K9ATo8CVNhT7G2"};
+        vSporkAddresses = {"gJ3wHTpjsiaaqnJvuC8aBDhKkVtZrvQwx3"};
         nMinSporkKeys = 1;
         fBIP9CheckMasternodesUpgraded = true;
 
         checkpointData = (CCheckpointData) {
             {
-                {0, uint256S("0x00000a5e695356de7ccae09478a4aa7053a402f7c2f57a40c44310d8fbe5d3c7")},
+                {0, uint256S("0x00000a5e695356de7ccae09478a4aa7053a402f7c2f57a40c44310d8fbe5d3c7")},    // 1491737471,0,0
+                {199, uint256S("0x07e79833fbc3e7beb25c174c19f29bb52ac705511e8e011f30dbc3d144f64397")},  // 1614345949,236,0.000001925
+                {291, uint256S("0x00000023a1becf9632a6b86ed4ec99e63c4c8290c6a5b183e6dc734abc5091c0")},  // 1614366219,367,0.00453873
             }
         };
-
         chainTxData = ChainTxData{
-            1486045800, // * UNIX timestamp of last known number of transactions (Block 119800)
-            0,     // * total number of transactions between genesis and that timestamp
+            1614366219, // * UNIX timestamp of last known number of transactions (Block 119800)
+            367,     // * total number of transactions between genesis and that timestamp
                         //   (the tx=... number in the SetBestChain debug.log lines)
-            0    // * estimated number of transactions per second after that timestamp (2 per minute)
+            0.00453873    // * estimated number of transactions per second after that timestamp (2 per minute)
         };
 
     }
