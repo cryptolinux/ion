@@ -549,9 +549,10 @@ bool SetPOSParemeters(const CBlock& block, CValidationState& state, CBlockIndex*
     bool fPOSPOWStartHeight = SetPOSParemetersIsEqualOrHigher(pindexNew->nHeight, Params().GetConsensus().POSPOWStartHeight);
     bool fIsZerocoinV1 = SetPOSParemetersIsEqualOrHigher(pindexNew->nHeight, Params().GetConsensus().nZerocoinStartHeight);
     bool fIsZerocoinV2 = SetPOSParemetersIsEqualOrHigher(pindexNew->nHeight, Params().GetConsensus().nBlockZerocoinV2);
-    bool fModifierV1PoW = true;
+    bool fATPStartHeight = SetPOSParemetersIsEqualOrHigher(pindexNew->nHeight, Params().GetConsensus().ATPStartHeight);
+    bool fIsBlockStakeModifierV1PoW = false;
 
-    if (fPOSPOWStartHeight && fIsProofOfStake || fIsBlockStakeModifierV2 && fIsProofOfStake) {
+    if (fIsBlockStakeModifierV2 && fIsProofOfStake || fIsBlockStakeModifierV2 && fIsProofOfStake) {
         // compute v2 stake modifier
         ComputeStakeModifierV2(pindexNew, block.vtx[1]->vin[0].prevout.hash);
     } else if (fPOSPOWStartHeight && !fIsProofOfStake) {
@@ -559,11 +560,12 @@ bool SetPOSParemeters(const CBlock& block, CValidationState& state, CBlockIndex*
         ComputeStakeModifierV2(pindexNew, block.GetHash());
     } else if (!fIsBlockStakeModifierV2 && !fPOSPOWStartHeight && !fIsZerocoinV1 && !fIsZerocoinV2) {
         // compute v1 stake modifier without StakeModifierChecksum
-        fModifierV1PoW = false;
-        ComputeStakeModifierV1(block, state, pindexNew, fModifierV1PoW);
+        ComputeStakeModifierV1(block, state, pindexNew, fIsBlockStakeModifierV1PoW);
     } else {
+        if (Params().NetworkIDString() == CBaseChainParams::MAIN)
+            fIsBlockStakeModifierV1PoW = true;
         // compute v1 stake modifier
-        ComputeStakeModifierV1(block, state, pindexNew, fModifierV1PoW);
+        ComputeStakeModifierV1(block, state, pindexNew, fIsBlockStakeModifierV1PoW);
     }
     return true;
 }
