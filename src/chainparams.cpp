@@ -352,6 +352,7 @@ public:
         consensus.nPosTargetSpacingMidas = 64;
         consensus.nPosTargetSpacing = 1 * 60; // 1 minute
         consensus.nStakeMinDepth = 600;
+        consensus.nFirstBlockStakeModifier = 93825007363294;
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
         consensus.nZerocoinStartHeight = 550001;
@@ -564,6 +565,7 @@ public:
         consensus.nPosTargetSpacingMidas = 64;
         consensus.nPosTargetSpacing = 1 * 60; // 1 minute
         consensus.nStakeMinDepth = 100;
+        consensus.nFirstBlockStakeModifier = 93825007363294;
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
         consensus.nZerocoinStartHeight = 300;
@@ -784,6 +786,7 @@ public:
         consensus.nPosTargetSpacingMidas = 64;
         consensus.nPosTargetSpacing = 1 * 60; // 1 minute
         consensus.nStakeMinDepth = 100;
+        consensus.nFirstBlockStakeModifier = 93825007363294;
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
         consensus.nZerocoinStartHeight = 300;
@@ -1014,6 +1017,7 @@ public:
         consensus.nPosTargetSpacingMidas = 64;
         consensus.nPosTargetSpacing = 1 * 60; // 1 minute
         consensus.nStakeMinDepth = 1;
+        consensus.nFirstBlockStakeModifier = 93825007363294;
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
         consensus.nZerocoinStartHeight = 350;

@@ -212,6 +212,7 @@ struct Params {
     int64_t nPosTargetSpacing;
     int32_t nStakeMinDepth;
     int64_t nBlockStakeModifierV2;
+    uint64_t nFirstBlockStakeModifier;
 
     /** Zerocoin */
     int64_t nZerocoinStartHeight;
