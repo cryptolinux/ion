@@ -305,11 +305,11 @@ public:
         consensus.nMasternodePaymentsIncreasePeriod = 576*30; // 17280 - actual historical value
         consensus.nInstantSendConfirmationsRequired = 6;
         consensus.nInstantSendKeepLock = 24;
-        consensus.nBudgetPaymentsStartBlock = 99999999; // currently not activated
+        consensus.nBudgetPaymentsStartBlock = 1760267; // currently not activated
         consensus.nBudgetPaymentsCycleBlocks = 16616; // ~(60*24*30)/2.6, actual number of blocks per month is 200700 / 12 = 16725
         consensus.nBudgetPaymentsWindowBlocks = 100;
-        consensus.nSuperblockStartBlock = 99999999; // The block at which 12.1 goes live (end of final 12.0 budget cycle)
-        consensus.nSuperblockStartHash = uint256S("0000000000020cb27c7ef164d21003d5d20cdca2f54dd9a9ca6d45f4d47f8aa3");
+        consensus.nSuperblockStartBlock = 1760268; // The block at which 12.1 goes live (end of final 12.0 budget cycle)
+        consensus.nSuperblockStartHash = uint256S("000000f3ebcfc87ec4aea8dbbbe815e7173d0c3276eaa1200b266f6711736ebe");
         consensus.nSuperblockCycle = 16616; // ~(60*24*30)/2.6, actual number of blocks per month is 200700 / 12 = 16725
         consensus.nGovernanceMinQuorum = 10;
         consensus.nGovernanceFilterElements = 20000;
@@ -515,23 +515,23 @@ public:
         consensus.nBudgetPaymentsCycleBlocks = 50;
         consensus.nBudgetPaymentsWindowBlocks = 10;
         consensus.nSuperblockStartBlock = 199; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
-        //consensus.nSuperblockStartHash = uint256(); // do not check this on testnet
         consensus.nSuperblockStartHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
+        //consensus.nSuperblockStartHash = uint256(); // do not check this on testnet
         consensus.nSuperblockCycle = 24; // Superblocks can be issued hourly on testnet
         consensus.nGovernanceMinQuorum = 1;
         consensus.nGovernanceFilterElements = 500;
         consensus.nMasternodeMinimumConfirmations = 1;
         consensus.BIP34Height = 1;
-        //consensus.BIP34Hash = uint256();
         consensus.BIP34Hash = uint256S("07e79833fbc3e7beb25c174c19f29bb52ac705511e8e011f30dbc3d144f64397");
+        //consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 1; // Start enforcing BIP65 (CHECKLOCKTIMEVERIFY) for blocks with version 9 and higher
         consensus.BIP66Height = 1; // Start enforcing BIP66 (Strict DER signatures) for blocks with version 7 and higher
         consensus.DIP0001Height = 1;
         consensus.DIP0003Height = 100;
         //consensus.DIP0003EnforcementHeight = std::numeric_limits<int>::max();
+        //consensus.DIP0003EnforcementHash = uint256();
         consensus.DIP0003EnforcementHeight = 199;
         consensus.DIP0003EnforcementHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
-        //consensus.DIP0003EnforcementHash = uint256();
         consensus.IIP0006Height = 1;
         consensus.CSVHeight = 1;
         consensus.BIP147Height = 1;
@@ -544,8 +544,8 @@ public:
         consensus.nHybridPosTargetSpacing = 2 * consensus.nPowTargetSpacing; // target at 50% of blocks Pos
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
-        consensus.nPowKGWHeight = 4002; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
-        consensus.nPowDGWHeight = 4002;
+        consensus.nPowKGWHeight = 1000; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
+        consensus.nPowDGWHeight = 1000;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 25;
@@ -554,7 +554,7 @@ public:
         // ION
         consensus.nCoinbaseMaturity = 15;
         // POS
-        consensus.POSStartHeight = 203;
+        consensus.POSStartHeight = 1001;
         consensus.MidasStartHeight = 0;
         consensus.DGWStartHeight = 300;
         consensus.DGWDifficultyStartHeight = 1;
