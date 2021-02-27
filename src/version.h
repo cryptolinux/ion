@@ -56,6 +56,6 @@ static const int LLMQS_PROTO_VERSION = 96000;
 static const int SENDDSQUEUE_PROTO_VERSION = 96000;
 
 //! protocol version is included in MNAUTH starting with this version
-static const int MNAUTH_NODE_VER_VERSION = 96002;
+static const int MNAUTH_NODE_VER_VERSION = 96003;
 
 #endif // BITCOIN_VERSION_H
