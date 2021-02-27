@@ -482,18 +482,17 @@ public:
                 {750000, uint256S("0x1eaa2cc9f9fd33f5db56875bc865b099ce6d76d048791c2358f12ec5454c95e2")},
                 {888900, uint256S("0x83c285e469fcb47494df14990b37bd997cf7ff8692e945f662683f7ccc1e5760")},
                 {967800, uint256S("0xf714b07c1b25f0ec1c0217beec8e30e55410c6904e57e8e5969f679241e3e9fc")},
-                //{1012710, uint256S("0x60f47514361a41b6e39c2a2e37d90e9ea366b8fa38041af7206dc10f01afbf89")}, //validation fails
-                //{1012740, uint256S("0x1c88ce7ce7143a6d27fb1930c806b8b2d1ce105a99853a998adc4aa0cf94325f")}, //zerocoin v2 start
                 {1067570, uint256S("0x965e2c19d9037f5859f6e8467464763c1e1e547b18282aa7ce014daa0f2750e4")},
                 {1609911, uint256S("0xae74915570499671df74cc6e22672a734e2fc1e63e86285b45a3ba95ad3ca5d2")},
+                {2060827, uint256S("0x000000000526c69c6e77559c4a25ed3ae0ddc18121b28ee6e1705f0e7a883a3d")},
             }
         };
 
         chainTxData = ChainTxData{
-            1586156579, // * UNIX timestamp of last known number of transactions (Block 1571132)
-            3999193,    // * total number of transactions between genesis and that timestamp
+            1614448009, // * UNIX timestamp of last known number of transactions (Block 1571132)
+            4936603,    // * total number of transactions between genesis and that timestamp
                         //   (the tx=... number in the SetBestChain debug.log lines)
-            1.000001    // * estimated number of transactions per second after that timestamp
+            0.033134    // * estimated number of transactions per second after that timestamp
         };
     }
 };
