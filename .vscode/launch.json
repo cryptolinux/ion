@@ -1,8 +1,8 @@
 {
+    // Copyright (c) 2018-2020 The Ion developers
     "sourceFileMap": {
         "${workspaceFolder}/depends/x86_64-pc-linux-gnu": "${workspaceFolder}/depends/x86_64-pc-linux-gnu"
     },
-    // Copyright (c) 2018-2020 The Ion developers
     "version": "0.2.0",
     "configurations": [
         {
@@ -128,7 +128,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/src/qt/ion-qt",
-            "args": ["--datadir=${workspaceFolder}/datadir", "--conf=${workspaceFolder}/datadir/ioncoin.conf", "--testnet=1", "--port=12345", "--rpcport=23456"],
+            "args": ["--datadir=${workspaceFolder}/datadir", "--conf=${workspaceFolder}/datadir/ioncoin.conf", "--testnet=1"],
             "cwd": "${workspaceFolder}",
             "externalConsole": false,
             "MIMode": "gdb",
