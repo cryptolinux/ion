@@ -633,7 +633,7 @@ public:
         consensus.strTokenManagementKey = "g8Szua9xwHzUknsnNyZCBdyRmJrMKaQbGx";
         consensus.nOpGroupNewRequiredConfirmations = 1;
         // POSPOW
-        consensus.POSPOWStartHeight = 1000;
+        consensus.POSPOWStartHeight = 1001;
 
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000106cee2b2baf64cba"); // 119800
