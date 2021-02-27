@@ -122,11 +122,37 @@ bool IsBlockValueValid(const CBlock& block, const int nBlockHeight, const CBlock
     LogPrint(BCLog::GOBJECT, "block.vtx[0]->GetValueOut() %lld <= nSuperblockMaxValue %lld\n", block.vtx[0]->GetValueOut(), nSuperblockMaxValue);
 
     if (!CSuperblock::IsValidBlockHeight(nBlockHeight)) {
-        if (nBlockHeight != 1760268) {
-            // can't possibly be a superblock, so lets just check for block reward limits
-            if (!isBlockRewardValueMet) {
+        // TODO -  reenable
+        // can't possibly be a superblock, so lets just check for block reward limits
+        //1760268 (actual=1 vs limit=35000000
+        //1760330 (actual=1 vs limit=35000980
+        //1760360 (actual=1 vs limit=35001150
+        //1760371 (actual=1 vs limit=35001890)
+        //18,349514563
+        //nBlockHeight >= Params().GetConsensus().nSuperblockStartBlock
+        if (!isBlockRewardValueMet) {
+            if (Params().NetworkIDString() != CBaseChainParams::MAIN) {
                 strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, only regular blocks are allowed at this height",
-                                        nBlockHeight, block.vtx[0]->GetValueOut(), blockReward.GetTotalRewards().IONAmount);
+                                        nBlockHeight, block.vtx[0]->GetValueOut(), blockReward.GetTotalRewards().IONAmount);            
+            } else {
+                if (nBlockHeight >= Params().GetConsensus().nSuperblockStartBlock) {
+                    if (block.vtx[0]->GetValueOut() == 1) {
+                        const int nIONBlocksSinceSuperblock = nBlockHeight - Params().GetConsensus().nSuperblockStartBlock;
+                        const int nIONAmountStartAmount = 35000000;
+                        CAmount IONAmountAvgPerBlock = (blockReward.GetTotalRewards().IONAmount - nIONAmountStartAmount) / nIONBlocksSinceSuperblock;
+                        if (blockReward.GetTotalRewards().IONAmount == nIONAmountStartAmount + (IONAmountAvgPerBlock * nIONBlocksSinceSuperblock)) {
+                            LogPrint(BCLog::MNPAYMENTS, "Enforce blockreward - coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, only regular blocks are allowed at this height\n",
+                                                        nBlockHeight, block.vtx[0]->GetValueOut(), blockReward.GetTotalRewards().IONAmount);
+                            isBlockRewardValueMet = true;
+                        } else {
+                            strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, only regular blocks are allowed at this height",
+                                                    nBlockHeight, block.vtx[0]->GetValueOut(), blockReward.GetTotalRewards().IONAmount);
+                        }
+                    } else {
+                        strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, only regular blocks are allowed at this height",
+                                                nBlockHeight, block.vtx[0]->GetValueOut(), blockReward.GetTotalRewards().IONAmount);
+                    }
+                }
             }
         }
         return isBlockRewardValueMet;
