@@ -334,9 +334,11 @@ bool ValidateAccumulatorCheckpoint(const CBlock& block, CBlockIndex* pindex, Acc
             return error("%s : failed to calculate accumulator checkpoint", __func__);
 
         if (nCheckpointCalculated != staticCheckpoint) {
-            // do not return error, only if block height is 1012810 on main network
-            if (pindex->nHeight != 1012810 && Params().NetworkIDString() == CBaseChainParams::MAIN) {
-                LogPrintf("Warning: %s: block=%d calculated: %s\n block: %s\n", __func__, pindex->nHeight, nCheckpointCalculated.GetHex(), block.nAccumulatorCheckpoint.GetHex());
+            // on main network, some hashes are invalid and need to be corrected
+            if (pindex->nHeight == 1012810 && Params().NetworkIDString() == CBaseChainParams::MAIN &&
+                            nCheckpointCalculated.GetHex() == std::string("58e0061458e0061458e0061458e0061458e0061458e0061458e0061458e00614") &&
+                     block.nAccumulatorCheckpoint.GetHex() == std::string("4b68d9b27ba0a5064d0b502cd5ef0a1a87e7069ff55ee8e919ab77a6f45484c9") {
+                LogPrintf("%s: enforcing validation block=%d calculated: %s\n block: %s\n", __func__, pindex->nHeight, nCheckpointCalculated.GetHex(), block.nAccumulatorCheckpoint.GetHex());                
             } else {
                 LogPrintf("%s: block=%d calculated: %s\n block: %s\n", __func__, pindex->nHeight, nCheckpointCalculated.GetHex(), block.nAccumulatorCheckpoint.GetHex());
                 return error("%s : accumulator does not match calculated value", __func__);
