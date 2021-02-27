@@ -2481,7 +2481,8 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     // TODO - reenable
     // ConnectTip(): ConnectBlock 000000f3ebcfc87ec4aea8dbbbe815e7173d0c3276eaa1200b266f6711736ebe failed with bad-cb-amount (code 16)
     if (!IsBlockValueValid(block, pindex->nHeight, blockReward, coinstakeValueIn, strError)) {
-        return state.DoS(0, error("ConnectBlock(ION): %s", strError), REJECT_INVALID, "bad-cb-amount");
+        if (pindex->nHeight != Params().GetConsensus().nSuperblockStartBlock && Params().NetworkIDString() == CBaseChainParams::MAIN || Params().NetworkIDString() != CBaseChainParams::MAIN)
+            return state.DoS(0, error("ConnectBlock(ION): %s", strError), REJECT_INVALID, "bad-cb-amount");
     }
 
     int64_t nTime5_3 = GetTimeMicros(); nTimeValueValid += nTime5_3 - nTime5_2;
