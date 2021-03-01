@@ -305,11 +305,12 @@ public:
         consensus.nMasternodePaymentsIncreasePeriod = 576*30; // 17280 - actual historical value
         consensus.nInstantSendConfirmationsRequired = 6;
         consensus.nInstantSendKeepLock = 24;
-        consensus.nBudgetPaymentsStartBlock = 1760267; // currently not activated
+        consensus.nBudgetPaymentsStartBlock = 99999999; // currently not activated
         consensus.nBudgetPaymentsCycleBlocks = 16616; // ~(60*24*30)/2.6, actual number of blocks per month is 200700 / 12 = 16725
         consensus.nBudgetPaymentsWindowBlocks = 100;
-        consensus.nSuperblockStartBlock = 1760268; // The block at which 12.1 goes live (end of final 12.0 budget cycle)
-        consensus.nSuperblockStartHash = uint256S("000000f3ebcfc87ec4aea8dbbbe815e7173d0c3276eaa1200b266f6711736ebe");
+        consensus.nSuperblockStartBlock = 99999999; // The block at which 12.1 goes live (end of final 12.0 budget cycle)
+        //consensus.nSuperblockStartHash = uint256();
+        consensus.nSuperblockStartHash = uint256S("000000ed2f68cd6c7935831cc1d473da7c6decdb87e8b5dba0afff0b00002690");
         consensus.nSuperblockCycle = 16616; // ~(60*24*30)/2.6, actual number of blocks per month is 200700 / 12 = 16725
         consensus.nGovernanceMinQuorum = 10;
         consensus.nGovernanceFilterElements = 20000;
@@ -505,36 +506,36 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 210240;
-        consensus.nMasternodePaymentsStartBlock = 100; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
-        consensus.nMasternodePaymentsIncreaseBlock = 110;
+        consensus.nMasternodePaymentsStartBlock = 4010; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
+        consensus.nMasternodePaymentsIncreaseBlock = 4030;
         consensus.nMasternodePaymentsIncreasePeriod = 10;
         consensus.nInstantSendConfirmationsRequired = 2;
         consensus.nInstantSendKeepLock = 6;
-        consensus.nBudgetPaymentsStartBlock = 190;
+        consensus.nBudgetPaymentsStartBlock = 99999999;
         consensus.nBudgetPaymentsCycleBlocks = 50;
         consensus.nBudgetPaymentsWindowBlocks = 10;
-        consensus.nSuperblockStartBlock = 199; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
-        consensus.nSuperblockStartHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
-        //consensus.nSuperblockStartHash = uint256(); // do not check this on testnet
+        consensus.nSuperblockStartBlock = 4200; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
+        //consensus.nSuperblockStartHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
+        consensus.nSuperblockStartHash = uint256(); // do not check this on testnet
         consensus.nSuperblockCycle = 24; // Superblocks can be issued hourly on testnet
         consensus.nGovernanceMinQuorum = 1;
         consensus.nGovernanceFilterElements = 500;
         consensus.nMasternodeMinimumConfirmations = 1;
         consensus.BIP34Height = 1;
-        consensus.BIP34Hash = uint256S("07e79833fbc3e7beb25c174c19f29bb52ac705511e8e011f30dbc3d144f64397");
-        //consensus.BIP34Hash = uint256();
+        //consensus.BIP34Hash = uint256S("07e79833fbc3e7beb25c174c19f29bb52ac705511e8e011f30dbc3d144f64397");
+        consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 1; // Start enforcing BIP65 (CHECKLOCKTIMEVERIFY) for blocks with version 9 and higher
         consensus.BIP66Height = 1; // Start enforcing BIP66 (Strict DER signatures) for blocks with version 7 and higher
-        consensus.DIP0001Height = 1;
-        consensus.DIP0003Height = 100;
+        consensus.DIP0001Height = 10000;
+        consensus.DIP0003Height = 11000;
         //consensus.DIP0003EnforcementHeight = std::numeric_limits<int>::max();
-        //consensus.DIP0003EnforcementHash = uint256();
-        consensus.DIP0003EnforcementHeight = 199;
-        consensus.DIP0003EnforcementHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
-        consensus.IIP0006Height = 1;
-        consensus.CSVHeight = 1;
-        consensus.BIP147Height = 1;
-        consensus.DIP0008Height = 1;
+        consensus.DIP0003EnforcementHash = uint256();
+        consensus.DIP0003EnforcementHeight = 10000;
+        //consensus.DIP0003EnforcementHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
+        consensus.IIP0006Height = 10000;
+        consensus.CSVHeight = 10000;
+        consensus.BIP147Height = 10000;
+        consensus.DIP0008Height = 10000;
         consensus.powLimit = uint256S("3fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 2
         consensus.hybridPowLimit = ArithToUint256(~arith_uint256(0) >> 12);
         consensus.nPowTargetTimespan = 24 * 60 * 60; // Ion: 1 day
@@ -543,8 +544,8 @@ public:
         consensus.nHybridPosTargetSpacing = 2 * consensus.nPowTargetSpacing; // target at 50% of blocks Pos
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
-        consensus.nPowKGWHeight = 1000; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
-        consensus.nPowDGWHeight = 1000;
+        consensus.nPowKGWHeight = 4002; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
+        consensus.nPowDGWHeight = 4002;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 25;
@@ -568,10 +569,10 @@ public:
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
         consensus.nZerocoinStartHeight = 300;
-        consensus.nZerocoinStartTime = 1614345391;
-        consensus.nBlockZerocoinV2 = 300;
-        consensus.nPublicZCSpends = 450;
-        consensus.nBlockStakeModifierV2 = 300;
+        consensus.nZerocoinStartTime = 1501776000;
+        consensus.nBlockZerocoinV2 = 1012710;
+        consensus.nPublicZCSpends = 5500;
+        consensus.nBlockStakeModifierV2 = 5530;
         consensus.nFakeSerialBlockheightEnd = -1;
         consensus.nMintRequiredConfirmations = 20; //the maximum amount of confirmations until accumulated in 19
         consensus.nRequiredAccumulation = 1;
@@ -629,7 +630,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nFalloffCoeff = 5; // this corresponds to 10 periods
 
         // ATP
-        consensus.ATPStartHeight = 290; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 11 and higher
+        consensus.ATPStartHeight = 5530; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 11 and higher
         consensus.strTokenManagementKey = "g8Szua9xwHzUknsnNyZCBdyRmJrMKaQbGx";
         consensus.nOpGroupNewRequiredConfirmations = 1;
         // POSPOW
@@ -707,16 +708,13 @@ public:
         checkpointData = (CCheckpointData) {
             {
                 {0, uint256S("0x00000a5e695356de7ccae09478a4aa7053a402f7c2f57a40c44310d8fbe5d3c7")},    // 1491737471,0,0
-                {199, uint256S("0x07e79833fbc3e7beb25c174c19f29bb52ac705511e8e011f30dbc3d144f64397")},  // 1614345949,236,0.000001925
-                {291, uint256S("0x00000023a1becf9632a6b86ed4ec99e63c4c8290c6a5b183e6dc734abc5091c0")},  // 1614366219,367,0.00453873
-                {999, uint256S("0x00000086c6f6fcee63fde01d115bbbfe5cc2b4191268dc63869604733806ce3b")},  // 1614440005,367,0.00453873
             }
         };
         chainTxData = ChainTxData{
-            1614440005, // * UNIX timestamp of last known number of transactions (Block 119800)
-            367,     // * total number of transactions between genesis and that timestamp
+            1491737471, // * UNIX timestamp of last known number of transactions (Block 119800)
+            0,     // * total number of transactions between genesis and that timestamp
                         //   (the tx=... number in the SetBestChain debug.log lines)
-            0.01418968    // * estimated number of transactions per second after that timestamp (2 per minute)
+            0    // * estimated number of transactions per second after that timestamp (2 per minute)
         };
 
     }
