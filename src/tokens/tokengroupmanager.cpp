@@ -87,7 +87,7 @@ void CTokenGroupManager::ResetTokenGroups() {
 
     CTokenGroupInfo tgInfoION(NoGroup, (CAmount)GroupAuthorityFlags::ALL);
     CTransaction tgTxION;
-    CTokenGroupDescription tgDescriptionION("ION", "Ion", 8, "https://www.ionomy.com", uint256());
+    CTokenGroupDescription tgDescriptionION("ELEC", "Electron " + Params().NetworkIDString(), 8, "https://raw.githubusercontent.com/cryptolinux/ATP-descriptions/master/ION-" + Params().NetworkIDString() + "-ELEC.json", uint256S("e8e078f63527990e06643048e9dfce484cb40a5d3c25b7d4f07d2b1d7346106b"));
     CTokenGroupStatus tokenGroupStatus;
     CTokenGroupCreation tgCreationION(MakeTransactionRef(tgTxION), uint256(), tgInfoION, tgDescriptionION, tokenGroupStatus);
     mapTokenGroups.insert(std::pair<CTokenGroupID, CTokenGroupCreation>(NoGroup, tgCreationION));
