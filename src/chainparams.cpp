@@ -637,10 +637,10 @@ public:
         consensus.POSPOWStartHeight = 1001;
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000000fcb0f984c"); // 910
+        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000000000011f851a277"); // 965
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x00000000397a5c26ddffd6d439b32a1983f9a9b9e42250d7cd984e304f931bc8"); // 900
+        consensus.defaultAssumeValid = uint256S("0x000000018a09f59fe237bff4a162366579001e045ab1216df21532d09ffdebd1"); // 963
 
         pchMessageStart[0] = 0xdb;
         pchMessageStart[1] = 0x86;
@@ -709,13 +709,14 @@ public:
             {
                 {0, uint256S("0x00000a5e695356de7ccae09478a4aa7053a402f7c2f57a40c44310d8fbe5d3c7")},    // 1491737471,0,0
                 {899, uint256S("0x000000063df159050bb6b285784144588d8383f2b15f19052f64daff04e6a9e5")},  // 1614791587,904  0.00000735
+                {960, uint256S("0x00000007623eb95f532b1d28649f2ede729cb03ce5d8cd9d5d03ef29f4a71b23")},  // 1614795338, 975  0.01892829
             }
         };
         chainTxData = ChainTxData{
-            1614791587, // * UNIX timestamp of last known number of transactions (Block 119800)
-            904,     // * total number of transactions between genesis and that timestamp
+            1614795338, // * UNIX timestamp of last known number of transactions (Block 119800)
+            975,     // * total number of transactions between genesis and that timestamp
                         //   (the tx=... number in the SetBestChain debug.log lines)
-            0.00000735    // * estimated number of transactions per second after that timestamp (2 per minute)
+            0.01892829    // * estimated number of transactions per second after that timestamp (2 per minute)
         };
 
     }
