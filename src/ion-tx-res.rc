@@ -20,7 +20,6 @@ BEGIN
             VALUE "FileDescription",    "ion-tx (CLI Ion transaction editor utility)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "ion-tx"
-            VALUE "LegalCopyright",     COPYRIGHT_STR
             VALUE "LegalTrademarks1",   "Distributed under the MIT software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
             VALUE "OriginalFilename",   "ion-tx.exe"
             VALUE "ProductName",        "ion-tx"
