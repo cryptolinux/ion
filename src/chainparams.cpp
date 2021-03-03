@@ -506,15 +506,15 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 210240;
-        consensus.nMasternodePaymentsStartBlock = 4010; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
-        consensus.nMasternodePaymentsIncreaseBlock = 4030;
+        consensus.nMasternodePaymentsStartBlock = 920; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
+        consensus.nMasternodePaymentsIncreaseBlock = 940;
         consensus.nMasternodePaymentsIncreasePeriod = 10;
         consensus.nInstantSendConfirmationsRequired = 2;
         consensus.nInstantSendKeepLock = 6;
-        consensus.nBudgetPaymentsStartBlock = 99999999;
+        consensus.nBudgetPaymentsStartBlock = 1100;
         consensus.nBudgetPaymentsCycleBlocks = 50;
         consensus.nBudgetPaymentsWindowBlocks = 10;
-        consensus.nSuperblockStartBlock = 4200; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
+        consensus.nSuperblockStartBlock = 1200; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
         //consensus.nSuperblockStartHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
         consensus.nSuperblockStartHash = uint256(); // do not check this on testnet
         consensus.nSuperblockCycle = 24; // Superblocks can be issued hourly on testnet
@@ -526,16 +526,16 @@ public:
         consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 1; // Start enforcing BIP65 (CHECKLOCKTIMEVERIFY) for blocks with version 9 and higher
         consensus.BIP66Height = 1; // Start enforcing BIP66 (Strict DER signatures) for blocks with version 7 and higher
-        consensus.DIP0001Height = 10000;
-        consensus.DIP0003Height = 11000;
+        consensus.DIP0001Height = 920;
+        consensus.DIP0003Height = 930;
         //consensus.DIP0003EnforcementHeight = std::numeric_limits<int>::max();
         consensus.DIP0003EnforcementHash = uint256();
-        consensus.DIP0003EnforcementHeight = 10000;
+        consensus.DIP0003EnforcementHeight = 920;
         //consensus.DIP0003EnforcementHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
-        consensus.IIP0006Height = 10000;
-        consensus.CSVHeight = 10000;
-        consensus.BIP147Height = 10000;
-        consensus.DIP0008Height = 10000;
+        consensus.IIP0006Height = 920;
+        consensus.CSVHeight = 920;
+        consensus.BIP147Height = 920;
+        consensus.DIP0008Height = 920;
         consensus.powLimit = uint256S("3fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 2
         consensus.hybridPowLimit = ArithToUint256(~arith_uint256(0) >> 12);
         consensus.nPowTargetTimespan = 24 * 60 * 60; // Ion: 1 day
@@ -558,7 +558,7 @@ public:
         consensus.MidasStartHeight = 0;
         consensus.DGWStartHeight = 300;
         consensus.DGWDifficultyStartHeight = 1;
-        consensus.DGWStartTime = 1554332940;
+        consensus.DGWStartTime = 1614576356;
         consensus.DGWPrevStakeModifierHeight = 0;
         consensus.posLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.nPosTargetTimespanMidas = 7 * 24 * 60 * 60; // 1 week
@@ -569,10 +569,10 @@ public:
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
         consensus.nZerocoinStartHeight = 300;
-        consensus.nZerocoinStartTime = 1501776000;
-        consensus.nBlockZerocoinV2 = 1012710;
-        consensus.nPublicZCSpends = 5500;
-        consensus.nBlockStakeModifierV2 = 5530;
+        consensus.nZerocoinStartTime = 1614576356;
+        consensus.nBlockZerocoinV2 = 921;
+        consensus.nPublicZCSpends = 925;
+        consensus.nBlockStakeModifierV2 = 955;
         consensus.nFakeSerialBlockheightEnd = -1;
         consensus.nMintRequiredConfirmations = 20; //the maximum amount of confirmations until accumulated in 19
         consensus.nRequiredAccumulation = 1;
@@ -630,17 +630,17 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nFalloffCoeff = 5; // this corresponds to 10 periods
 
         // ATP
-        consensus.ATPStartHeight = 5530; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 11 and higher
+        consensus.ATPStartHeight = 1; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 11 and higher
         consensus.strTokenManagementKey = "g8Szua9xwHzUknsnNyZCBdyRmJrMKaQbGx";
         consensus.nOpGroupNewRequiredConfirmations = 1;
         // POSPOW
         consensus.POSPOWStartHeight = 1001;
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000106cee2b2baf64cba"); // 119800
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000000fcb0f984c"); // 910
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x0000000005ae4db9746d6cad8e0ccebdef1e05afec9c40809f31457fdaf7d843"); // 95930
+        consensus.defaultAssumeValid = uint256S("0x00000000397a5c26ddffd6d439b32a1983f9a9b9e42250d7cd984e304f931bc8"); // 900
 
         pchMessageStart[0] = 0xdb;
         pchMessageStart[1] = 0x86;
@@ -708,13 +708,14 @@ public:
         checkpointData = (CCheckpointData) {
             {
                 {0, uint256S("0x00000a5e695356de7ccae09478a4aa7053a402f7c2f57a40c44310d8fbe5d3c7")},    // 1491737471,0,0
+                {899, uint256S("0x000000063df159050bb6b285784144588d8383f2b15f19052f64daff04e6a9e5")},  // 1614791587,904  0.00000735
             }
         };
         chainTxData = ChainTxData{
-            1491737471, // * UNIX timestamp of last known number of transactions (Block 119800)
-            0,     // * total number of transactions between genesis and that timestamp
+            1614791587, // * UNIX timestamp of last known number of transactions (Block 119800)
+            904,     // * total number of transactions between genesis and that timestamp
                         //   (the tx=... number in the SetBestChain debug.log lines)
-            0    // * estimated number of transactions per second after that timestamp (2 per minute)
+            0.00000735    // * estimated number of transactions per second after that timestamp (2 per minute)
         };
 
     }
