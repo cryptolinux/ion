@@ -26,6 +26,8 @@ private:
     std::unique_ptr<CTokenGroupCreation> tgDarkMatterCreation;
     std::unique_ptr<CTokenGroupCreation> tgAtomCreation;
     std::unique_ptr<CTokenGroupCreation> tgElectronCreation;
+    std::unique_ptr<CTokenGroupCreation> tgIonCreation;
+    std::unique_ptr<CTokenGroupCreation> tgIonomyCreation;
 
 public:
     CTokenGroupManager();
@@ -74,6 +76,8 @@ public:
     bool GetXDMFee(const CBlockIndex* pindex, CAmount& fee);
 
     bool CheckXDMFees(const CTransaction &tx, const std::unordered_map<CTokenGroupID, CTokenGroupBalance>& tgMintMeltBalance, CValidationState& state, CBlockIndex* pindex, CAmount& nXDMFees);
+
+    void ResetToken(CTokenGroupDescription& td, const std::string& networkId);
 };
 
 #endif

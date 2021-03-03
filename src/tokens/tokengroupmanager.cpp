@@ -2,6 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#include <chainparams.h>
+#include <string>
 #include <tokens/tokengroupmanager.h>
 
 #include <chain.h>
@@ -81,17 +83,37 @@ bool CTokenGroupManager::AddTokenGroups(const std::vector<CTokenGroupCreation>& 
     return true;
 }
 
+void CTokenGroupManager::ResetToken(CTokenGroupDescription& td, const std::string& networkId) {
+    CTokenGroupInfo tgInfo(NoGroup, (CAmount)GroupAuthorityFlags::ALL);
+    CTransaction tgTx;
+
+    /** Set testnet name suffix for static tokens */
+    if (networkId  != CBaseChainParams::MAIN) { td.strName = td.strName + " " + networkId; }
+
+    CTokenGroupDescription tgDescription(td.strTicker, td.strName, td.nDecimalPos, td.strDocumentUrl, td.documentHash);
+    CTokenGroupStatus tokenGroupStatus;
+    CTokenGroupCreation tgCreation(MakeTransactionRef(tgTx), uint256(), tgInfo, tgDescription, tokenGroupStatus);
+    mapTokenGroups.insert(std::pair<CTokenGroupID, CTokenGroupCreation>(NoGroup, tgCreation));
+}
+
 void CTokenGroupManager::ResetTokenGroups() {
+    const auto& networkId = Params().NetworkIDString();
     mapTokenGroups.clear();
     ClearManagementTokenGroups();
+    //CTokenGroupDescription tgDescriptionATOM(   "ATOM",     "Atom",        8, "https://www.ionomy.com/ATP-descriptors/token-ATOM.json", uint256S("6588befcd905050a3750716dd53ccf8204e7dc05c2edcbbf4d0577384b5f144e"));
+    CTokenGroupDescription tgDescriptionELEC(   "ELEC",     "Electron",    8, "https://ioncoin.org/ATP-descriptors/token-ELEC.json", uint256S("6de2409add060ec4ef03d61c0966dc46508ed3498e202e9459e492a372ddccf5"));
+    CTokenGroupDescription tgDescriptionION(    "ION",      "Ion",         8, "https://www.ionomy.com", uint256());
+    //CTokenGroupDescription tgDescriptionIONOMY( "IONOMY",   "Ionomy",      8, "https://tokens.ionomy.com/ionomy/ionomy.json", uint256S("581b4e6a10cb0013e76bfc640addb1aa633d92d16b5bc8ff728a45c68d4dacb3"));
+    //CTokenGroupDescription tgDescriptionMAGIC(  "MAGIC",    "MAGIC",       4, "https://ioncoin.org/ATP-descriptors/token-MAGIC.json", uint256S("3f916c73409814dced8dfb7aecc4bc2620ae104e6e35bfa3db3e1a802bab7b8b"));
+    //CTokenGroupDescription tgDescriptionXDM(    "XDM",      "DarkMatter", 13, "https://www.darkmatter.info/ATP-descriptors/token-XDM.json", uint256S("9f1029e8f2814063b639e9e7a67e79640f4919e9194df35670408169eddb87ab"));
+    //CTokenGroupDescription tgDescriptionPLAY(   "PLAY",     "Playcoin",    0, "https://raw.githubusercontent.com/playcoin-org/project/main/playcoin-definition.json", uint256S("b5827b777cb730af2c8d8d5b15c3e302e62c8dd9fa6bae366becda5a3900ccd7"));
 
-    CTokenGroupInfo tgInfoION(NoGroup, (CAmount)GroupAuthorityFlags::ALL);
-    CTransaction tgTxION;
-    CTokenGroupDescription tgDescriptionION("ELEC", "Electron " + Params().NetworkIDString(), 8, "https://raw.githubusercontent.com/cryptolinux/ATP-descriptions/master/ION-" + Params().NetworkIDString() + "-ELEC.json", uint256S("e8e078f63527990e06643048e9dfce484cb40a5d3c25b7d4f07d2b1d7346106b"));
-    CTokenGroupStatus tokenGroupStatus;
-    CTokenGroupCreation tgCreationION(MakeTransactionRef(tgTxION), uint256(), tgInfoION, tgDescriptionION, tokenGroupStatus);
-    mapTokenGroups.insert(std::pair<CTokenGroupID, CTokenGroupCreation>(NoGroup, tgCreationION));
-
+    // on main network only ION was included before protocol was enabled
+    if (networkId  == CBaseChainParams::MAIN) {
+        ResetToken(tgDescriptionION, networkId);
+    } else {
+        ResetToken(tgDescriptionELEC, networkId);
+    }
 }
 
 bool CTokenGroupManager::RemoveTokenGroup(CTransaction tx, CTokenGroupID &toRemoveTokenGroupID) {
