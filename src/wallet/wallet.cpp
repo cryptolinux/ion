@@ -4323,7 +4323,7 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
                     break;
                 }
 
-                // We have a change output and we don't need to subtruct fees, which means the transaction is ready.
+                // We have a change output and we don't need to subtract fees, which means the transaction is ready.
                 if (nChangePosInOut != -1 && nSubtractFeeFromAmount == 0) {
                     break;
                 }
@@ -5903,23 +5903,16 @@ bool CMerkleTx::IsChainLocked() const
     return false;
 }
 
-// **TODO - cleanup
-/*
 int CMerkleTx::GetBlocksToMaturity() const
 {
     if (!(IsCoinBase() || IsCoinStake() || IsAnyOutputGroupedAuthority((CTransaction(*this)))))
         return 0;
     int depth = GetDepthInMainChain();
     int minBlocksToMaturity = 0;
-    if (IsAnyOutputGroupedAuthority((CTransaction(*this))))
-        minBlocksToMaturity = std::max(0, (Params().GetConsensus().nOpGroupNewRequiredConfirmations + 1) - depth);
-    return std::max(minBlocksToMaturity, (COINBASE_MATURITY + 1) - depth);
-}
-*/
-int CMerkleTx::GetBlocksToMaturity() const
-{
-    if (!(IsCoinBase() || IsCoinStake()))
-        return 0;
+    /** TODO - reenable
+    if (IsAnyOutputGroupedAuthority((CMerkleTx(*this))))
+        minBlocksToMaturity = std::max(0, (Params().GetConsensus().nOpGroupNewRequiredConfirmations + 1) - GetDepthInMainChain());
+    */
     return std::max(0, (COINBASE_MATURITY+1) - GetDepthInMainChain());
 }
 
