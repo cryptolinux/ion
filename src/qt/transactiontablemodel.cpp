@@ -345,12 +345,6 @@ QString TransactionTableModel::formatTxStatus(const TransactionRecord *wtx) cons
     case TransactionStatus::OpenUntilDate:
         status = tr("Open until %1").arg(GUIUtil::dateTimeStr(wtx->status.open_for));
         break;
-    // TODO - Cleanup
-    /*
-    case TransactionStatus::Offline:
-        status = tr("Offline");
-        break;
-    */
     case TransactionStatus::Unconfirmed:
         status = tr("Unconfirmed");
         break;
@@ -570,11 +564,6 @@ QVariant TransactionTableModel::txStatusDecoration(const TransactionRecord *wtx)
     case TransactionStatus::OpenUntilBlock:
     case TransactionStatus::OpenUntilDate:
         return GUIUtil::getThemedQColor(GUIUtil::ThemedColor::TX_STATUS_OPENUNTILDATE);
-    // TODO - cleanup
-    /*
-    case TransactionStatus::Offline:
-        return GUIUtil::getThemedQColor(GUIUtil::ThemedColor::TX_STATUS_OFFLINE);
-    */
     case TransactionStatus::Unconfirmed:
         return QIcon(":/icons/transaction_0");
     case TransactionStatus::Abandoned:
@@ -597,10 +586,6 @@ QVariant TransactionTableModel::txStatusDecoration(const TransactionRecord *wtx)
         int part = (wtx->status.depth * 5 / total) + 1;
         return QIcon(QString(":/icons/transaction_%1").arg(part));
         }
-        // TODO - cleanup
-        /*
-    case TransactionStatus::MaturesWarning:
-        */
     case TransactionStatus::NotAccepted:
         return QIcon(":/icons/transaction_0");
     default:
