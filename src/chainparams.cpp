@@ -335,8 +335,8 @@ public:
         consensus.nHybridPosTargetSpacing = 2 * consensus.nPowTargetSpacing; // target at 50% of blocks Pos
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
-        consensus.nPowKGWHeight = 99999999;
-        consensus.nPowDGWHeight = 99999999;
+        consensus.nPowKGWHeight = std::numeric_limits<int>::max();
+        consensus.nPowDGWHeight = std::numeric_limits<int>::max();
         consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         // ION
@@ -383,10 +383,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000ab5cc326ba5cc01516"); // 1571132
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000b7861a001f3ff11323"); // 2069884
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x1599d484cfd57e3dc0ef8a2e8bc428c6b12ed8f8f73d6f5afd6c405c100f9a15"); // 1571132
+        consensus.defaultAssumeValid = uint256S("0x0000000002ace708a0e552f59029632e01a719954627f0d57d434317fcc918bb"); // 2069915
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
