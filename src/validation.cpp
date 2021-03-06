@@ -666,7 +666,6 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
     if (tx.IsGenerated())
         return state.DoS(100, false, REJECT_INVALID, "coinbase-coinstake-not-allowed");
 
-    // TODO - reenable IsAnyOutputGrouped - validation check, token-group-imbalance
     // Disallow any OP_GROUP txs from entering the mempool until OP_GROUP is enabled.
     // This ensures that someone won't create an invalid OP_GROUP tx that sits in the mempool until after activation,
     // potentially causing this node to create a bad block.
@@ -678,15 +677,9 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
             for (const CTxOut &txout : tx.vout)
             {
                 CTokenGroupInfo grp(txout.scriptPubKey);
-                // TODO - reenable IsAnyOutputGrouped - validation check, op_group-before-mgt-tokens
-                /*
-                ERROR: ConnectTip(): ConnectBlock 0000000000bb9b5d518dc2566df0f86d4d2d0a72c931a1535cf4fbe5fd382210 failed with op_group-before-mgt-tokens (code 64)
-                */
-               /*
                 if ((grp.invalid || grp.associatedGroup != NoGroup) && !grp.associatedGroup.hasFlag(TokenGroupIdFlags::MGT_TOKEN)) {
                     return state.DoS(0, false, REJECT_NONSTANDARD, "op_group-before-mgt-tokens");
                 }
-                */
             }
         }
     }
@@ -1459,8 +1452,6 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsVi
         if (chainActive.Tip()->nHeight >= Params().GetConsensus().ATPStartHeight) {
             std::unordered_map<CTokenGroupID, CTokenGroupBalance> tgMintMeltBalance;
             CBlockIndex* pindexPrev = mapBlockIndex.find(inputs.GetBestBlock())->second;
-            // TODO - reenable CheckTokenGroups - ERROR: Token group inputs and outputs do not balance
-            // ConnectBlock fb2b6e84b0e166d8ffaf548e65aebe7f805d44073fe1832e93039b2f22694d9d failed with token-group-imbalance (code 1)
             if (!CheckTokenGroups(tx, state, inputs, tgMintMeltBalance)) {
                 if (chainActive.Tip()->nHeight < Params().GetConsensus().ATPStartHeight) {
                     return state.DoS(0, error("Token group inputs and outputs do not balance"), REJECT_MALFORMED, "token-group-imbalance");
@@ -1476,15 +1467,9 @@ bool CheckInputs(const CTransaction& tx, CValidationState &state, const CCoinsVi
                     for (const CTxOut &txout : tx.vout)
                     {
                         CTokenGroupInfo grp(txout.scriptPubKey);
-                        // TODO - reenable IsAnyOutputGrouped - validation check, op_group-before-mgt-tokens
-                        /*
-                        ERROR: ConnectTip(): ConnectBlock 0000000000bb9b5d518dc2566df0f86d4d2d0a72c931a1535cf4fbe5fd382210 failed with op_group-before-mgt-tokens (code 64)
-                        */
-                       /*
                         if ((grp.invalid || grp.associatedGroup != NoGroup) && !grp.associatedGroup.hasFlag(TokenGroupIdFlags::MGT_TOKEN)) {
                             return state.DoS(0, false, REJECT_NONSTANDARD, "op_group-before-mgt-tokens");
                         }
-                        */
                     }
                 }
             }
@@ -2478,8 +2463,6 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     int64_t nTime5_2 = GetTimeMicros(); nTimeSubsidy += nTime5_2 - nTime5_1;
     LogPrint(BCLog::BENCHMARK, "      - GetBlockSubsidy: %.2fms [%.2fs (%.2fms/blk)]\n", MICRO * (nTime5_2 - nTime5_1), nTimeSubsidy * MICRO, nTimeSubsidy * MILLI / nBlocksTotal);
 
-    // TODO - reenable
-    // ConnectTip(): ConnectBlock 000000f3ebcfc87ec4aea8dbbbe815e7173d0c3276eaa1200b266f6711736ebe failed with bad-cb-amount (code 16)
     if (!IsBlockValueValid(block, pindex->nHeight, blockReward, coinstakeValueIn, strError)) {
         if (pindex->nHeight != Params().GetConsensus().nSuperblockStartBlock && Params().NetworkIDString() == CBaseChainParams::MAIN || Params().NetworkIDString() != CBaseChainParams::MAIN)
             return state.DoS(0, error("ConnectBlock(ION): %s", strError), REJECT_INVALID, "bad-cb-amount");
@@ -2517,7 +2500,6 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     pindex->nChainXDMTransactions = (pindex->pprev ? pindex->pprev->nChainXDMTransactions : 0) + pindex->nXDMTransactions;
 
     // Ensure that accumulator checkpoints are valid and in the same state as this instance of the chain
-    // TODO - reenable zerocoinv2 validation
     AccumulatorMap mapAccumulators(Params().Zerocoin_Params(pindex->nHeight < Params().GetConsensus().nBlockZerocoinV2));
     if (!ValidateAccumulatorCheckpoint(block, pindex, mapAccumulators)) {
         if (!ShutdownRequested()) {
@@ -3685,10 +3667,6 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationSta
     // Check proof of work
     const Consensus::Params& consensusParams = params.GetConsensus();
     bool fHybridPow = ((block.nVersion & BLOCKTYPEBITS_MASK) == BlockTypeBits::BLOCKTYPE_MINING) && (nHeight >= consensusParams.POSPOWStartHeight);
-    // TODO - reenable
-    /*
-    ERROR: AcceptBlockHeader: Consensus::ContextualCheckBlockHeader: 9441994e707c35d5537efa06626e0d6072a8e17a55bfcf95796b2618479a59b8, bad-diffbits, incorrect proof of work at 1760000 (code 16)
-    */
     uint32_t nBits = GetNextWorkRequired(pindexPrev, consensusParams, fHybridPow);
     if (block.nBits != nBits) {
         if (nHeight >= consensusParams.POSPOWStartHeight && block.nBits != consensusParams.nBits) //503382015
