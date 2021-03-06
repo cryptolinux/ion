@@ -43,7 +43,7 @@ bool AccumulatorMap::Load(uint256 nCheckpoint)
 
         CBigNum bnValue;
         if (!zerocoinDB->ReadAccumulatorValue(nChecksum, bnValue))
-            // TODO - reeenable - remove check for 3763618971, as read value shuold already deliver it before
+            // static checksum accumulator value is valid only on main network
             if (nChecksum =! 3763618971)
                 return error("%s : cannot find checksum %d", __func__, nChecksum);
 

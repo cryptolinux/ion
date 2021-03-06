@@ -199,8 +199,8 @@ bool InitializeAccumulators(const int nHeight, int& nHeightCheckpoint, Accumulat
     if (nHeight < Params().GetConsensus().nBlockZerocoinV2)
         return error("%s: height is below zerocoin activated", __func__);
 
-    //On a specific block, a recalculation of the accumulators will be forced
-/*
+    /** @brief On a specific block, a recalculation of the accumulators will be forced */
+    /*
     if (nHeight == Params().Zerocoin_Block_RecalculateAccumulators() && Params().NetworkIDString() != CBaseChainParams::REGTEST) {
         mapAccumulators.Reset();
         if (!mapAccumulators.Load(chainActive[Params().Zerocoin_Block_LastGoodCheckpoint()]->GetBlockHeader().nAccumulatorCheckpoint))
@@ -213,9 +213,9 @@ bool InitializeAccumulators(const int nHeight, int& nHeightCheckpoint, Accumulat
         nHeightCheckpoint = Params().Zerocoin_Block_LastGoodCheckpoint();
         return true;
     }
-*/
+    */
 
-// TODO - reenable zerocoinv2 validation
+    /** @brief zerocoinv2 accumulator checkpoint validation */
     if (nHeight >= Params().GetConsensus().nBlockZerocoinV2) {
         //after v2_start, accumulators need to use v2 params
         mapAccumulators.Reset(Params().Zerocoin_Params(false));
@@ -453,7 +453,7 @@ bool GetAccumulatorValue(int& nHeight, const libzerocoin::CoinDenomination denom
 
     //Every situation except for about 20 blocks should use this method
     uint256 nCheckpointBeforeMint = chainActive[nHeight]->GetBlockHeader().nAccumulatorCheckpoint;
-    // TODO - reenable zerocoinv2 validation
+    // zerocoinv2 accumulator validation
     if (nHeight > Params().GetConsensus().nBlockZerocoinV2 + 10000) {
         return GetAccumulatorValueFromDB(nCheckpointBeforeMint, denom, bnAccValue);
     }
