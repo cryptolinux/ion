@@ -14,6 +14,7 @@ share/pixmaps/ion64.xpm usr/share/pixmaps/ion64.xpm
 share/pixmaps/iond.ico usr/share/pixmaps/iond.ico
 share/pixmaps/iond_regtest.ico usr/share/pixmaps/iond_regtest.ico
 share/pixmaps/iond_testnet.ico usr/share/pixmaps/iond_testnet.ico
+share/pixmaps/iond_devnet.ico usr/share/pixmaps/iond_devnet.ico
 share/pixmaps/ion.ico usr/share/pixmaps/ion.ico
 share/pixmaps/ion_regtest.ico usr/share/pixmaps/ion_regtest.ico
 share/pixmaps/ion_testnet.ico usr/share/pixmaps/ion_testnet.ico
@@ -26,3 +27,4 @@ debian/ion-qt_regtest.desktop usr/share/applications
 debian/ion-qt.protocol usr/share/kde4/services/
 debian/ion-qt_testnet.protocol usr/share/kde4/services/
 debian/ion-qt_regtest.protocol usr/share/kde4/services/
+debian/ion-qt_devnet.protocol usr/share/kde4/services/

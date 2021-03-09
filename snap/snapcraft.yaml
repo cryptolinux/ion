@@ -26,7 +26,7 @@ description: |
     test           - launches test_ion
     testqt         - launches test_ion-qt
   
-  Additional launchers for tegtest and testnet:
+  Additional launchers for regtest, testnet and devnet:
   
     ioncore.qt-testnet     - launches Ion Core QT with testnet=1
     ioncore.daemon-testnet - launches Ion Core daemon with testnet=1
@@ -35,6 +35,10 @@ description: |
     ioncore.qt-regtest     - launches Ion Core QT with regtest=1
     ioncore.daemon-regtest - launches Ion Core daemon with regtest=1
     ioncore.cli-regtest    - launches Ion Core RPC with regtest=1
+  
+    ioncore.qt-devnet     - launches Ion Core QT with devnet
+    ioncore.daemon-devnet - launches Ion Core daemon with devnet
+    ioncore.cli-devnet    - launches Ion Core RPC with devnet
   
   Documentation and wiki:
   
@@ -86,6 +90,12 @@ apps:
     plugs: [network, network-bind, network-status, home, removable-media]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+  daemon-devnet:
+    command: iond --devnet
+    desktop: iond_devnet.desktop
+    plugs: [network, network-bind, network-status, home, removable-media]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   qt:
     command: ion-qt
     plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
@@ -107,6 +117,13 @@ apps:
     environment:
       QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+  qt-devnet:
+    command: ion-qt --devnet
+    plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
+    desktop: ion-qt_devnet.desktop
+    environment:
+      QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   cli:
     command: ion-cli
     plugs: [network, network-bind, network-status, home]
@@ -119,6 +136,11 @@ apps:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
   cli-regtest:
     command: ion-cli --regtest
+    plugs: [network, network-bind, home]
+    environment:
+      XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
+  cli-devnet:
+    command: ion-cli --devnet
     plugs: [network, network-bind, home]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS

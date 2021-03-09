@@ -13,6 +13,7 @@ share/pixmaps/ion64.xpm usr/share/pixmaps/ion64.xpm
 share/pixmaps/iond.ico usr/share/pixmaps/iond.ico
 share/pixmaps/iond_regtest.ico usr/share/pixmaps/iond_regtest.ico
 share/pixmaps/iond_testnet.ico usr/share/pixmaps/iond_testnet.ico
+share/pixmaps/iond_devnet.ico usr/share/pixmaps/iond_devnet.ico
 share/pixmaps/ion.ico usr/share/pixmaps/ion.ico
 share/pixmaps/ion_regtest.ico usr/share/pixmaps/ion_regtest.ico
 share/pixmaps/ion_testnet.ico usr/share/pixmaps/ion_testnet.ico
