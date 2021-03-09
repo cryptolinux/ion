@@ -138,7 +138,11 @@
         "ratio": "cpp",
         "fstream": "cpp",
         "typeindex": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "rope": "cpp",
+        "slist": "cpp",
+        "regex": "cpp",
+        "valarray": "cpp"
     },
     "cSpell.words": [
         "ADDRDB",
@@ -416,6 +420,7 @@
         "addresstablemodel",
         "addrman",
         "adipiscing",
+        "advanced",
         "advapi",
         "ajjhrmc",
         "ajust",
@@ -1198,6 +1203,7 @@
         "psrlq",
         "psssup",
         "pstricks",
+        "psui",
         "pthis",
         "pthreads",
         "ptxn",
@@ -1353,6 +1359,7 @@
         "shorttxidhash",
         "shorttxidk",
         "shorttxids",
+        "show",
         "showinitializer",
         "shrinkdebugfile",
         "sicon",
@@ -1641,5 +1648,6 @@
         "zmqpubrawtx",
         "zmqpubrawtxlock",
         "zrv"
-    ]
+    ],
+    "python.pythonPath": "/usr/bin/python3"
 }
