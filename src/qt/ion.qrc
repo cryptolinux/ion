@@ -3,6 +3,7 @@
         <file alias="bitcoin">res/icons/ion.png</file>
         <file alias="bitcoin_testnet">res/icons/ion_testnet.png</file>
         <file alias="bitcoin_regtest">res/icons/ion_regtest.png</file>
+        <file alias="bitcoin_devnet">res/icons/ion_devnet.png</file>
         <file alias="prompticon">res/icons/chevron.png</file>
         <file alias="warning">res/icons/warning.png</file>
     </qresource>
@@ -119,6 +120,7 @@
         <file alias="splash">res/images/splash.png</file>
         <file alias="splash_testnet">res/images/splash_testnet.png</file>
         <file alias="splash_regtest">res/images/splash_regtest.png</file>
+        <file alias="splash_devnet">res/images/splash_devnet.png</file>
     </qresource>
     <qresource prefix="/movies">
         <file alias="spinner-000">res/movies/spinner-000.png</file>

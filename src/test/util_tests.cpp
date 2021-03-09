@@ -458,9 +458,8 @@ BOOST_AUTO_TEST_CASE(util_GetChainName)
 
     const char* argv_testnet[] = {"cmd", "-testnet"};
     const char* argv_regtest[] = {"cmd", "-regtest"};
-    const char* argv_devnet[] = {"cmd", "-devnet"};
     const char* argv_test_no_reg[] = {"cmd", "-testnet", "-noregtest"};
-    const char* argv_both[] = {"cmd", "-testnet", "-regtest", "-devnet"};
+    const char* argv_both[] = {"cmd", "-testnet", "-regtest"};
 
     // equivalent to "-testnet"
     // regtest in testnet section is ignored
@@ -474,9 +473,6 @@ BOOST_AUTO_TEST_CASE(util_GetChainName)
 
     test_args.ParseParameters(2, (char**)argv_regtest);
     BOOST_CHECK_EQUAL(test_args.GetChainName(), "regtest");
-
-    test_args.ParseParameters(2, (char**)argv_devnet);
-    BOOST_CHECK_EQUAL(test_args.GetChainName(), "devnet");
 
     test_args.ParseParameters(3, (char**)argv_test_no_reg);
     BOOST_CHECK_EQUAL(test_args.GetChainName(), "test");

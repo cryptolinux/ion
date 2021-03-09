@@ -591,10 +591,11 @@ int main(int argc, char *argv[])
 #endif
 
     Q_INIT_RESOURCE(ion);
+    Q_INIT_RESOURCE(ion_locale);
 
     // *TODO* - fix, undefined reference to `qInitResources_ion_locale()
     /*
-    Q_INIT_RESOURCE(ion_locale);
+
     */
 
 #if QT_VERSION > 0x050100

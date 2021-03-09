@@ -189,9 +189,11 @@ RES_ICONS = \
   qt/res/icons/ion.ico \
   qt/res/icons/ion_testnet.ico \
   qt/res/icons/ion_regtest.ico \
+  qt/res/icons/ion_devnet.ico \
   qt/res/icons/ion.png \
   qt/res/icons/ion_testnet.png \
   qt/res/icons/ion_regtest.png \
+  qt/res/icons/ion_devnet.png \
   qt/res/icons/chevron.png \
   qt/res/icons/warning.png \
   qt/res/icons/address-book.png \
@@ -345,7 +347,8 @@ RES_IMAGES = \
   qt/res/images/radio_checked_disabled_light.png \
   qt/res/images/splash.png \
   qt/res/images/splash_testnet.png \
-  qt/res/images/splash_regtest.png
+  qt/res/images/splash_regtest.png \
+  qt/res/images/splash_devnet.png
 
 RES_CSS = \
   qt/res/css/dark.css \
