@@ -40,13 +40,34 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     return genesis;
 }
 
-static CBlock CreateDevNetGenesisBlock(const uint256 &prevBlockHash, const std::string& devNetName, uint32_t nTxTime, uint32_t nTime, uint32_t nNonce, uint32_t nBits, const CAmount& genesisReward)
+static CBlock CreateGenesisBlockDevnet(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
+{
+    CMutableTransaction txNew;
+    txNew.nVersion = 1;
+    txNew.nTime = nTime + 1;
+    txNew.vin.resize(1);
+    txNew.vout.resize(1);
+    txNew.vin[0].scriptSig = CScript() << 1486045800 << CScriptNum(4) << std::vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
+    txNew.vout[0].nValue = genesisReward;
+    txNew.vout[0].scriptPubKey = genesisOutputScript;
+
+    CBlock genesis;
+    genesis.nTime    = nTime;
+    genesis.nBits    = nBits;
+    genesis.nNonce   = nNonce;
+    genesis.nVersion = nVersion;
+    genesis.vtx.push_back(MakeTransactionRef(std::move(txNew)));
+    genesis.hashPrevBlock.SetNull();
+    genesis.hashMerkleRoot = BlockMerkleRoot(genesis);
+    return genesis;
+}
+
+static CBlock CreateDevNetGenesisBlock(const uint256 &prevBlockHash, const std::string& devNetName, uint32_t nTime, uint32_t nNonce, uint32_t nBits, const CAmount& genesisReward)
 {
     assert(!devNetName.empty());
 
     CMutableTransaction txNew;
     txNew.nVersion = 1;
-    txNew.nTime = nTxTime;
     txNew.vin.resize(1);
     txNew.vout.resize(1);
     // put height (BIP34) and devnet name into coinbase
@@ -58,7 +79,7 @@ static CBlock CreateDevNetGenesisBlock(const uint256 &prevBlockHash, const std::
     genesis.nTime    = nTime;
     genesis.nBits    = nBits;
     genesis.nNonce   = nNonce;
-    genesis.nVersion = 4;
+    genesis.nVersion = 11;
     genesis.vtx.push_back(MakeTransactionRef(std::move(txNew)));
     genesis.hashPrevBlock = prevBlockHash;
     genesis.hashMerkleRoot = BlockMerkleRoot(genesis);
@@ -83,6 +104,35 @@ static CBlock CreateGenesisBlock(uint32_t nTxTime, uint32_t nTime, uint32_t nNon
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTxTime, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
+static CBlock CreateGenesisBlockDevnet(uint32_t nTxTime, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
+{
+    CBlock block;
+    const char* pszTimestamp = "The Guardian: [2nd Feb 2017] Finsbury Park mosque wins apology and damages from Thomson Reuters";
+    const CScript genesisOutputScript = CScript() << ParseHex("045622582bdfad9366cdff9652d35a562af17ea4e3462d32cd988b32919ba2ff4bc806485be5228185ad3f75445039b6e744819c4a63304277ca8d20c99a6acec8") << OP_CHECKSIG;
+
+    //return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTxTime, nTime, nNonce, nBits, nVersion, genesisReward);
+    block = CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTxTime, nTime, nNonce, nBits, nVersion, genesisReward);
+    arith_uint256 bnTarget;
+    bnTarget.SetCompact(block.nBits);
+    for (uint32_t nNonce = 0; nNonce < UINT32_MAX; nNonce++) {
+        block.nNonce = nNonce;
+        uint256 hash = block.GetHash();
+        LogPrintf("finding hash ... nNonce: %s, nTime: %s, nVersion: %s, devnet hash: %s\n", block.nNonce, block.nTime, block.nVersion, block.GetHash().ToString().c_str());
+        if (UintToArith256(hash) <= bnTarget)
+            LogPrintf("CreateGenesisBlockDevnet devnet hash: %s, MerkleRoot: %s, nNonce: %s, nTime: %s, nVersion: %s, AccumulatorCheckpoint: %s\n", block.GetHash().ToString().c_str(), block.hashMerkleRoot.ToString().c_str(), block.nNonce, block.nTime, block.nVersion, block.nAccumulatorCheckpoint.ToString().c_str());
+            return block;
+    }
+    LogPrintf("CreateGenesisBlockDevnet hash could not be found: %s\n", block.GetHash().ToString().c_str());
+    return block;
+}
+/*
+static CBlock CreateGenesisBlockDevnet(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
+{
+    const char* pszTimestamp = "The Guardian: [2nd Feb 2017] Finsbury Park mosque wins apology and damages from Thomson Reuters";
+    const CScript genesisOutputScript = CScript() << ParseHex("045622582bdfad9366cdff9652d35a562af17ea4e3462d32cd988b32919ba2ff4bc806485be5228185ad3f75445039b6e744819c4a63304277ca8d20c99a6acec8") << OP_CHECKSIG;
+    return CreateGenesisBlockDevnet(pszTimestamp, genesisOutputScript,nTime, nNonce, nBits, nVersion, genesisReward);
+}
+*/
 
 void CChainParams::UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout, int64_t nWindowSize, int64_t nThresholdStart, int64_t nThresholdMin, int64_t nFalloffCoeff)
 {
@@ -143,13 +193,12 @@ void CChainParams::UpdateLLMQDevnetParams(int size, int threshold)
     params.dkgBadVotesThreshold = threshold;
 }
 
-static CBlock FindDevNetGenesisBlock(const Consensus::Params& params, const CBlock &prevBlock, const CAmount& reward)
+static CBlock FindDevNetGenesisBlock(const CBlock &prevBlock, const CAmount& reward)
 {
     std::string devNetName = gArgs.GetDevNetName();
     assert(!devNetName.empty());
 
-    CBlock block = CreateDevNetGenesisBlock(prevBlock.GetHash(), devNetName.c_str(), prevBlock.nTime + 1, prevBlock.nTime + 2, 0, prevBlock.nBits, reward);
-
+    CBlock block = CreateDevNetGenesisBlock(prevBlock.GetHash(), devNetName.c_str(), prevBlock.nTime + 1, 0, prevBlock.nBits, reward);
     arith_uint256 bnTarget;
     bnTarget.SetCompact(block.nBits);
 
@@ -165,6 +214,21 @@ static CBlock FindDevNetGenesisBlock(const Consensus::Params& params, const CBlo
     // iteration of the above loop will give a result already
     error("FindDevNetGenesisBlock: could not find devnet genesis block for %s", devNetName);
     assert(false);
+}
+
+static CBlock GetDevnetGenesisBlockValues(const CBlock &genesis)
+{
+    CBlock block = genesis;
+    arith_uint256 bnTarget;
+    bnTarget.SetCompact(block.nBits);
+    for (uint32_t nNonce = 0; nNonce < UINT32_MAX; nNonce++) {
+        block.nNonce = nNonce;
+        uint256 hash = block.GetHash();
+        if (UintToArith256(hash) <= bnTarget)
+            LogPrintf("GetDevnetGenesisBlockValues devnet hash: %s, MerkleRoot: %s, nNonce: %s, nTime: %s, nVersion: %s, AccumulatorCheckpoint: %s\n", block.GetHash().ToString().c_str(), block.hashMerkleRoot.ToString().c_str(), block.nNonce, block.nTime, block.nVersion, block.nAccumulatorCheckpoint.ToString().c_str());
+            return block;
+    }
+    return block;
 }
 
 // this one is for testing only
@@ -730,30 +794,34 @@ public:
 class CDevNetParams : public CChainParams {
 public:
     CDevNetParams() {
-        strNetworkID = "dev";
+        strNetworkID = "devnet";
         consensus.nSubsidyHalvingInterval = 210240;
-        consensus.nMasternodePaymentsStartBlock = 4010; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
-        consensus.nMasternodePaymentsIncreaseBlock = 4030;
+        consensus.nMasternodePaymentsStartBlock = 920; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
+        consensus.nMasternodePaymentsIncreaseBlock = 940;
         consensus.nMasternodePaymentsIncreasePeriod = 10;
         consensus.nInstantSendConfirmationsRequired = 2;
         consensus.nInstantSendKeepLock = 6;
-        consensus.nBudgetPaymentsStartBlock = 4100;
+        consensus.nBudgetPaymentsStartBlock = 1100;
         consensus.nBudgetPaymentsCycleBlocks = 50;
         consensus.nBudgetPaymentsWindowBlocks = 10;
-        consensus.nSuperblockStartBlock = 4200; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
-        consensus.nSuperblockStartHash = uint256(); // do not check this on devnet
-        consensus.nSuperblockCycle = 24; // Superblocks can be issued hourly on devnet
+        consensus.nSuperblockStartBlock = 1200; // NOTE: Should satisfy nSuperblockStartBlock > nBudgetPeymentsStartBlock
+        //consensus.nSuperblockStartHash = uint256S("0000000513dfa1d315dfde30b8741227de24fcde26f157995d8770feb22abaf7");
+        consensus.nSuperblockStartHash = uint256(); // do not check this on testnet
+        consensus.nSuperblockCycle = 24; // Superblocks can be issued hourly on testnet
         consensus.nGovernanceMinQuorum = 1;
         consensus.nGovernanceFilterElements = 500;
         consensus.nMasternodeMinimumConfirmations = 1;
-        consensus.BIP34Height = 1; // BIP34 activated immediately on devnet
-        consensus.BIP65Height = 1; // BIP65 activated immediately on devnet
-        consensus.BIP66Height = 1; // BIP66 activated immediately on devnet
-        consensus.DIP0001Height = 2; // DIP0001 activated immediately on devnet
-        consensus.DIP0003Height = 2; // DIP0003 activated immediately on devnet
-        consensus.DIP0003EnforcementHeight = 2; // DIP0003 activated immediately on devnet
+        consensus.BIP34Height = 1;
+        //consensus.BIP34Hash = uint256S("07e79833fbc3e7beb25c174c19f29bb52ac705511e8e011f30dbc3d144f64397");
+        //consensus.BIP34Hash = uint256();
+        consensus.BIP65Height = 1; // Start enforcing BIP65 (CHECKLOCKTIMEVERIFY) for blocks with version 9 and higher
+        consensus.BIP66Height = 1; // Start enforcing BIP66 (Strict DER signatures) for blocks with version 7 and higher
+        consensus.DIP0001Height = 2;
+        consensus.DIP0003Height = 2;
+        //consensus.DIP0003EnforcementHeight = std::numeric_limits<int>::max();
+        consensus.DIP0003EnforcementHeight = 1;
         consensus.DIP0003EnforcementHash = uint256();
-        consensus.IIP0006Height = 1; // IIP0006 activated immediately on devnet
+        consensus.IIP0006Height = 2;
         consensus.CSVHeight = 2;
         consensus.BIP147Height = 2;
         consensus.DIP0008Height = 2;
@@ -765,8 +833,8 @@ public:
         consensus.nHybridPosTargetSpacing = 2 * consensus.nPowTargetSpacing; // target at 50% of blocks Pos
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
-        consensus.nPowKGWHeight = 1; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
-        consensus.nPowDGWHeight = 1;
+        consensus.nPowKGWHeight = 4001; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
+        consensus.nPowDGWHeight = 4001;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 25;
@@ -775,11 +843,11 @@ public:
         // ION
         consensus.nCoinbaseMaturity = 15;
         // POS
-        consensus.POSStartHeight = 250;
-        consensus.MidasStartHeight = 999999999;
+        consensus.POSStartHeight = 1;
+        consensus.MidasStartHeight = 0;
         consensus.DGWStartHeight = 300;
-        consensus.DGWDifficultyStartHeight = 300;
-        consensus.DGWStartTime = 9999999999;
+        consensus.DGWDifficultyStartHeight = 1;
+        consensus.DGWStartTime = 1614576356;
         consensus.DGWPrevStakeModifierHeight = 0;
         consensus.posLimit = uint256S("000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 24
         consensus.nPosTargetTimespanMidas = 7 * 24 * 60 * 60; // 1 week
@@ -790,10 +858,10 @@ public:
         // Zerocoin
         consensus.nZerocoinRequiredStakeDepth = 200;
         consensus.nZerocoinStartHeight = 300;
-        consensus.nZerocoinStartTime = 1614109200;
-        consensus.nBlockZerocoinV2 = 300;
-        consensus.nPublicZCSpends = 300;
-        consensus.nBlockStakeModifierV2 = 300;
+        consensus.nZerocoinStartTime = 1614576356;
+        consensus.nBlockZerocoinV2 = 921;
+        consensus.nPublicZCSpends = 925;
+        consensus.nBlockStakeModifierV2 = 955;
         consensus.nFakeSerialBlockheightEnd = -1;
         consensus.nMintRequiredConfirmations = 20; //the maximum amount of confirmations until accumulated in 19
         consensus.nRequiredAccumulation = 1;
@@ -803,13 +871,6 @@ public:
             "7259085141865462043576798423387184774447920739934236584823824281198163815010674810451660377306056201619676256133"
             "8441436038339044149526344321901146575444541784240209246165157233507787077498171257724679629263863563732899121548"
             "31438167899885040445364023527381951378636564391212010397122822120720357";
-
-        // ATP
-        consensus.ATPStartHeight = 400; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 11 and higher
-        consensus.strTokenManagementKey = "gBi3gDLnGfw8HA2rN4HmNxHk9hMC4GLFbh";
-        consensus.nOpGroupNewRequiredConfirmations = 1;
-        // POSPOW
-        consensus.POSPOWStartHeight = std::numeric_limits<int>::max();
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
@@ -853,6 +914,13 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nThresholdMin = 60; // 60% of 100
         consensus.vDeployments[Consensus::DEPLOYMENT_REALLOC].nFalloffCoeff = 5; // this corresponds to 10 periods
 
+        // ATP
+        consensus.ATPStartHeight = 1; // Start enforcing the Atomic Token Protocol (ATP) for blocks with version 11 and higher
+        consensus.strTokenManagementKey = "gFnLKQJfPJSMnnWcMrLW3jeB94jxJVBAhS"; // cS3xpnE6yRg51F4NvTCV9XKYrjnLmYKVjFF2RQEPiqm1UFWuUFbn
+        consensus.nOpGroupNewRequiredConfirmations = 1;
+        // POSPOW
+        consensus.POSPOWStartHeight = 1001;
+
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000000000000000000");
 
@@ -867,38 +935,16 @@ public:
         nPruneAfterHeight = 1000;
 
         consensus.nBits = 0x207fffff; // (int)545259519
-        genesis = CreateGenesisBlock(1486045800, 1491737471, 1, consensus.nBits, 1, 1 * COIN);
-        arith_uint256 bnTarget;
-        bnTarget.SetCompact(genesis.nBits);
-
-        for (uint32_t nNonce = 0; nNonce < UINT32_MAX; nNonce++) {
-            genesis.nNonce = nNonce;
-
-            uint256 hash = genesis.GetHash();
-            if (UintToArith256(hash) <= bnTarget) {
-                break;
-            }
-        }
+        genesis = CreateGenesisBlockDevnet(1486045800, 1491737471, 1, consensus.nBits, 1, 1 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        // Print genesis
-        LogPrintf("CreateGenesisBlock devnet genesis hash: %s\n", consensus.hashGenesisBlock.ToString().c_str());
-        LogPrintf("CreateGenesisBlock devnet hashMerkleRoot: %s\n", genesis.hashMerkleRoot.ToString().c_str());
         assert(consensus.hashGenesisBlock == uint256S("0x3858fd27e764a08bb2ace75da3dfbc51364a494c51303bf739d0efc1d9f3744b"));
         assert(genesis.hashMerkleRoot == uint256S("0x7af2e961c5262cb0411edcb7414ab7178133fc06257ceb47d349e4e5e35e2d40"));
 
-        devnetGenesis = FindDevNetGenesisBlock(consensus, genesis, 1 * COIN);
-        for (uint32_t nNonce = 0; nNonce < UINT32_MAX; nNonce++) {
-            devnetGenesis.nNonce = nNonce;
-
-            uint256 hash = devnetGenesis.GetHash();
-            if (UintToArith256(hash) <= bnTarget) {
-                break;
-            }
-        }
+        devnetGenesis = FindDevNetGenesisBlock(genesis, 1 * COIN);
+        devnetGenesis = GetDevnetGenesisBlockValues(devnetGenesis);
         consensus.hashDevnetGenesisBlock = devnetGenesis.GetHash();
-        // Print genesis
-        LogPrintf("FindDevNetGenesisBlock genesis hash: %s\n", consensus.hashDevnetGenesisBlock.ToString().c_str());
-        LogPrintf("FindDevNetGenesisBlock hashMerkleRoot: %s\n", devnetGenesis.hashMerkleRoot.ToString().c_str());
+        consensus.BIP34Hash = consensus.hashDevnetGenesisBlock;
+        consensus.DIP0003EnforcementHash = consensus.hashDevnetGenesisBlock;
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -921,6 +967,7 @@ public:
         nExtCoinType = 1;
 
         // long living quorum params
+        consensus.llmqs[Consensus::LLMQ_DEVNET] = llmq_devnet;
         consensus.llmqs[Consensus::LLMQ_50_60] = llmq50_60;
         consensus.llmqs[Consensus::LLMQ_400_60] = llmq400_60;
         consensus.llmqs[Consensus::LLMQ_400_85] = llmq400_85;
@@ -929,29 +976,33 @@ public:
 
         fDefaultConsistencyChecks = false;
         fRequireStandard = false;
+        fRequireRoutableExternalIP = true;
         fMineBlocksOnDemand = false;
-        fMiningRequiresPeers = true;
         fAllowMultipleAddressesFromGroup = true;
         fAllowMultiplePorts = true;
+        nLLMQConnectionRetryTimeout = 60;
 
+        nPoolMinParticipants = 3;
+        nPoolNewMinParticipants = 2;
         nPoolMinParticipants = 3;
         nPoolMaxParticipants = 5;
         nFulfilledRequestExpireTime = 5*60; // fulfilled requests expire in 5 minutes
 
-        vSporkAddresses = {"g6JXj9btw63aVnVhJCYc8frJqPF4ZggAes"};
+        vSporkAddresses = {"g9Kt5d9bfcdG8Gpz7HrbeA3wrmLV74Gezq"}; // cU2KuPrFHw5AoP415jsBF3cvyZMs2VvBHrCK5XwkMcczhX87NwjW
         nMinSporkKeys = 1;
         // devnets are started with no blocks and no MN, so we can't check for upgraded MN (as there are none)
         fBIP9CheckMasternodesUpgraded = false;
 
         checkpointData = (CCheckpointData) {
             {
-                {0, genesis.GetHash()},
+                { 0, uint256S("0x3858fd27e764a08bb2ace75da3dfbc51364a494c51303bf739d0efc1d9f3744b")},
+                { 1, devnetGenesis.GetHash() },
             }
         };
 
         chainTxData = ChainTxData{
-            genesis.GetBlockTime(), // * UNIX timestamp of devnet genesis block
-            1,                            // * we only have 2 coinbase transactions when a devnet is started up
+            devnetGenesis.GetBlockTime(), // * UNIX timestamp of devnet genesis block
+            2,                            // * we only have 2 coinbase transactions when a devnet is started up
             0.01                          // * estimated number of transactions per second
         };
     }
