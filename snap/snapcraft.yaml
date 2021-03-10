@@ -13,7 +13,7 @@ description: |
   
     iond, ion-cli, ion-tx, ion-qt, test_ion, test_ion-qt
   
-  Default homefolder:
+  Default home folder:
   
     ~/snap/ioncore/common/.ioncoin
   
