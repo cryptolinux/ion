@@ -64,7 +64,7 @@ UniValue generateHybridBlocks(std::shared_ptr<CReserveKey> coinbaseKey, int nGen
             };
         } else {
             if (fPosPowPhase) {
-                if (!tokenGroupManager->ElectronTokensCreated()) {
+                if (!tokenGroupManager->ElectronTokensCreated() && Params().NetworkIDString() == CBaseChainParams::MAIN) {
                     throw JSONRPCError(RPC_MISC_ERROR, "Error: Mining in hybrid mode, but the Electron token group is not yet created");
                 }
                 CScript coinbase_script;
