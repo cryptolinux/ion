@@ -530,7 +530,7 @@ class IonTestFramework(BitcoinTestFramework):
             extra_args = [[]] * num_nodes
         assert_equal(len(extra_args), num_nodes)
         self.extra_args = [copy.deepcopy(a) for a in extra_args]
-        self.extra_args[0] += ["-sporkkey=cP4EKFyJsHT39LDqgdcB43Y3YXjNyjb5Fuas1GQSeAtjnZWmZEQK"]
+        self.extra_args[0] += ["-sporkkey=cU2KuPrFHw5AoP415jsBF3cvyZMs2VvBHrCK5XwkMcczhX87NwjW"]
         self.fast_dip3_enforcement = fast_dip3_enforcement
         if fast_dip3_enforcement:
             for i in range(0, num_nodes):
@@ -586,6 +586,8 @@ class IonTestFramework(BitcoinTestFramework):
 
         port = p2p_port(len(self.nodes) + idx)
         if (idx % 2) == 0:
+            self.log.info("Index %s" % idx)
+            self.log.info("BLS %s" % bls)
             self.nodes[0].lockunspent(True, [{'txid': txid, 'vout': collateral_vout}])
             proTxHash = self.nodes[0].protx('register_fund', address, '127.0.0.1:%d' % port, ownerAddr, bls['public'], votingAddr, 0, rewardsAddr, address)
         else:
