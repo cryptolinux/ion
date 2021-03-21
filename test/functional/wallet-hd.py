@@ -51,7 +51,7 @@ class WalletHDTest(BitcoinTestFramework):
         # Also send funds to each add
         self.nodes[0].generate(101)
         hd_add = None
-        num_hd_adds = 300
+        num_hd_adds = 100
         for i in range(num_hd_adds):
             hd_add = self.nodes[1].getnewaddress()
             hd_info = self.nodes[1].validateaddress(hd_add)

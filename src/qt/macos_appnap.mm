@@ -3,7 +3,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <macos_appnap.h>
+#include "macos_appnap.h"
 
 #include <AvailabilityMacros.h>
 #include <Foundation/NSProcessInfo.h>
