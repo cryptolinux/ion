@@ -486,7 +486,7 @@ class BitcoinTestFramework():
 
             for i in range(MAX_NODES):
                 for entry in os.listdir(cache_path(i)):
-                    if entry not in ['wallets', 'chainstate', 'blocks', 'evodb', 'llmq', 'backups']:
+                    if entry not in ['wallets', 'chainstate', 'blocks', 'evodb', 'llmq', 'backups', 'zerocoin', 'tokens']:
                         os.remove(cache_path(i, entry))
 
         for i in range(self.num_nodes):
@@ -586,8 +586,6 @@ class IonTestFramework(BitcoinTestFramework):
 
         port = p2p_port(len(self.nodes) + idx)
         if (idx % 2) == 0:
-            self.log.info("Index %s" % idx)
-            self.log.info("BLS %s" % bls)
             self.nodes[0].lockunspent(True, [{'txid': txid, 'vout': collateral_vout}])
             proTxHash = self.nodes[0].protx('register_fund', address, '127.0.0.1:%d' % port, ownerAddr, bls['public'], votingAddr, 0, rewardsAddr, address)
         else:

@@ -577,7 +577,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         inputs = []
         outputs = {self.nodes[2].getnewaddress() : watchonly_amount / 2}
         rawtx = self.nodes[3].createrawtransaction(inputs, outputs)
-        self.nodes[3].generate(17)
+        self.nodes[3].generate(100)
         result = self.nodes[3].fundrawtransaction(rawtx, {'includeWatching': True })
         res_dec = self.nodes[0].decoderawtransaction(result["hex"])
         assert_equal(len(res_dec["vin"]), 1)
@@ -617,7 +617,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         #######################
 
         # Make sure there is exactly one input so coin selection can't skew the result
-        assert_equal(len(self.nodes[3].listunspent(1)), 4)
+        assert_equal(len(self.nodes[3].listunspent(1)), 42)
 
         inputs = []
         outputs = {self.nodes[3].getnewaddress() : 1}
@@ -649,7 +649,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         ######################################
 
         # Make sure there is exactly one input so coin selection can't skew the result
-        assert_equal(len(self.nodes[3].listunspent(1)), 4)
+        assert_equal(len(self.nodes[3].listunspent(1)), 42)
 
         inputs = []
         outputs = {self.nodes[2].getnewaddress(): 1}
