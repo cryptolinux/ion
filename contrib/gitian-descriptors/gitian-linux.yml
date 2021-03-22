@@ -194,6 +194,8 @@ script: |
     case $i in
        aarch64-*) : ;;
        arm-*) : ;;
+       riscv64*) : ;;
+       powerpc64le*) : ;;
        *) make ${MAKEOPTS} -C src check-symbols ;;
     esac
 
