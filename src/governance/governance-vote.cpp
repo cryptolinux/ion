@@ -229,21 +229,20 @@ bool CGovernanceVote::Sign(const CBLSSecretKey& key)
     if (!sig.IsValid()) {
         return false;
     }
-    sig.GetBuf(vchSig);
+    vchSig = sig.ToByteVector();
     return true;
 }
 
+
 bool CGovernanceVote::CheckSignature(const CBLSPublicKey& pubKey) const
 {
-    uint256 hash = GetSignatureHash();
-    CBLSSignature sig;
-    sig.SetBuf(vchSig);
-    if (!sig.VerifyInsecure(pubKey, hash)) {
+    if (!CBLSSignature(vchSig).VerifyInsecure(pubKey, GetSignatureHash())) {
         LogPrintf("CGovernanceVote::CheckSignature -- VerifyInsecure() failed\n");
         return false;
     }
     return true;
 }
+
 
 bool CGovernanceVote::IsValid(bool useVotingKey) const
 {

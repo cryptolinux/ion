@@ -1,0 +1,12 @@
+--- 5.9.8-6fc4ed28961/qtbase/src/corelib/tools/qbytearray.h.orig	2021-06-17 15:43:00.880280809 +0100
++++ 5.9.8-6fc4ed28961/qtbase/src/corelib/tools/qbytearray.h	2021-06-17 15:43:31.703740899 +0100
+@@ -52,6 +52,9 @@
+ #include <string>
+ #include <iterator>
+ 
++#include <limits>
++#include <algorithm>
++
+ #ifdef truncate
+ #error qbytearray.h must be included before any header file that defines truncate
+ #endif
